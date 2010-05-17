@@ -337,6 +337,7 @@ tt {
 
 tt.xref, a tt {
     background-color: #FBFBFB;
+    text-decoration: none!important;
 }
 
 a:hover tt {
