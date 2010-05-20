@@ -17,7 +17,7 @@ Resizing:
     $imageManager = new StandardImageManager();
     $image = $imageManager->fetch('/tmp/my_new_image.jpg');
     $image->resize(40, 50);
-    $image->setName('resizedImage');
+    $image->setName('resized');
     $imageManager->save($image); // create resized.jpg
 
 Cropping:
