@@ -1,10 +1,10 @@
 <?php
 namespace Imagine;
 
-require_once '../lib/Image.php';
-require_once '../lib/ImageManager.php';
-require_once '../lib/StandardImage.php';
-require_once '../lib/StandardImageManager.php';
+require_once '../../lib/Image.php';
+require_once '../../lib/ImageManager.php';
+require_once '../../lib/StandardImage.php';
+require_once '../../lib/StandardImageManager.php';
 
 class FunctionalTest extends \PHPUnit_Framework_TestCase {
     
