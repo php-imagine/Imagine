@@ -4,19 +4,18 @@ namespace Imagine\Processor;
 
 use Imagine\Image;
 
-class ResizeCommand implements Command {
+class ResizeCommand extends AbstractCommand {
 
     protected $width;
     protected $height;
     protected $resource;
-    protected $initial = array();
 
     public function __construct($width, $height) {
         $this->width = (true === $width) ? true : (int) $width;
         $this->height = (true === $height) ? true : (int) $height;
     }
 
-    public function process(Image $image) {
+    protected function _process(Image $image) {
         $srcImage = $image->getResource();
         $this->adjustSize($image);
         $destImage = imagecreatetruecolor($this->width, $this->height);
@@ -24,26 +23,15 @@ class ResizeCommand implements Command {
             throw new \RuntimeException('Could not resize the image');
         }
         imagedestroy($srcImage);
-        $this->initial = array(
-            'content' => $image->getContent(),
-            'width' => $image->getWidth(),
-            'height' => $image->getHeight(),
-        );
         $image->setWidth($this->width);
         $image->setHeight($this->height);
-        $this->resource = $destImage;
+        return $destImage;
     }
 
-    public function restore(Image $image) {
-        $image->setContent($this->initial['content']);
-        $image->setWidth($this->initial['width']);
-        $image->setHeight($this->initial['height']);
-        $this->initial = array();
-        $this->resource = null;
-    }
-
-    public function getImageResource() {
-        return $this->resource;
+    protected function _restore(Image $image, array $snapshot) {
+        $image->setContent($snapshot['content']);
+        $image->setWidth($snapshot['width']);
+        $image->setHeight($snapshot['height']);
     }
 
     // @todo: looks kinda ugly, need to find a better way to calculate side ratios

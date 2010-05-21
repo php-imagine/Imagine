@@ -16,4 +16,5 @@ interface Image {
     public function getWidth();
     public function setWidth($width);
     public function getResource();
+	public function getPath();
 }

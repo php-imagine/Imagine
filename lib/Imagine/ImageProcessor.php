@@ -6,16 +6,7 @@ use Imagine\Processor\Command;
 
 class ImageProcessor {
 
-    protected $image;
     protected $commands = array();
-
-    public function  __construct(Image $image = null) {
-        $this->image = $image;
-    }
-
-    public function getImage() {
-        return $this->image;
-    }
 
     public function resize($width, $height) {
         $command = new Processor\ResizeCommand($width, $height);
@@ -29,39 +20,30 @@ class ImageProcessor {
         return $this;
     }
 
+	public function delete() {
+		$command = new Processor\DeleteCommand();
+        $this->addCommand($command);
+        return $this;
+	}
+	
+	public function save($dir) {
+		$command = new Processor\SaveCommand($dir);
+		$this->addCommand($command);
+		return $this;
+	}
+
     // @todo: this is heavy, need to find a more lightweight implementation
-    public function process(Image $image = null) {
-        if (null === $image) {
-            $image = $this->image;
-        }
+    public function process(Image $image) {
         foreach ($this->commands as $command) {
             $command->process($image);
-            $resource = $command->getImageResource();
-            if (isset ($resource)) {
-                ob_start();
-                switch ($type = $image->getType()) {
-                    case \IMAGETYPE_GIF:
-                        imagegif($resource);
-                        break;
-                    case \IMAGETYPE_JPEG:
-                        imagejpeg($resource);
-                        break;
-                    case \IMAGETYPE_PNG:
-                        imagepng($resource);
-                        break;
-                    default:
-                        throw new \InvalidArgumentException(
-                            'Unsupported image type: ' . $type
-                        );
-                }
-                $image->setContentType(image_type_to_mime_type($type));
-                $image->setContent(ob_get_clean());
-            }
-        }
+		}
     }
 
     public function restore(Image $image) {
-
+		foreach (array_reverse($this->commands) as $key => $command) {
+			$command->restore($image);
+			unset ($this->commands[$key]);
+		}
     }
 
     public function addCommand(Command $command) {

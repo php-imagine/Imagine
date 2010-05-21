@@ -14,44 +14,65 @@ Resizing:
 
     <?php
     // create filesystem image manager, more managers to come...
-    $imageManager = new Imagine\StandardImageManager();
-    $image = $imageManager->fetch('/tmp/my_new_image.jpg');
+    $image = new Imagine\StandardImage('/tmp/my_new_image.jpg');
+    $image->setName('resized'); // set new image name to be resized
     $imageProcessor = new Imagine\ImageProcessor();
+    // create image processor, that knows to resize and save the image
     $imageProcessor->resize(40, 50);
-    $imageProcessor->process($image);
-    $image->setName('resized');
-    $imageManager->save($image); // create resized.jpg
+    $imageProcessor->save();
+    $imageProcessor->process($image); // create resized.jpg
 
 Cropping:
 
     <?php
     //...
-    $imageProcessor->crop(0, 0, 40, 50); // will crop image to 40 px width and 50 px height, starting at 0y and 0x position
-    $imageProcessor->process($image);
+    // will crop image to 40 px width and 50 px height, starting at 0y and 0x
     $image->setName('cropped');
-    $imageManager->save($image); // create cropped.jpg
+    $imageProcessor->crop(0, 0, 40, 50);
+    $imageProcessor->save();
+    $imageProcessor->process($image); // create cropped.jpg
 
 Combination of processes:
 
     <?php
     //...
+    // will resize image to 50x50, constraining proportions and cropping the bottom
+    // will replace the existing image with the new one
     $imageProcessor->resize(50, true)
         ->crop(0, 0, 50, 50)
-        ->process($image); // will resize image to 50x50, constraining proportions and cropping the bottom
+        ->save()
+        ->process($image);
 
-Bulk processing:
+You can also undo image modifications:
 
     <?php
     //...
+    $imageProcessor->restore($image);
+    // note, that you have to re-save restored image;
+    $imageProcessor->save()
+        ->process($image);
+
+> Note: You can undo any number of modifications stacked on image processor instance.
+> After ImageProcessor::restore() method is called, all commands are cleared from
+> ImageProcessor instance. You will have to re-stack ImageProcessor to continue
+> image processing
+
+Bulk processing (awesome):
+
+    <?php
+    //...
+    // create create processor, that resizes images, to 50 px width, maintains
+    // image proportions, crops the extra height, from the bottom, and re-saves
+    // the updated image
     $imageProcessor->resize(50, true)
-        ->crop(0, 0, 50, 50);
+        ->crop(0, 0, 50, 50)
+        ->save();
 
     foreach (glob(*.jpg) as $path) {
         $image = new Imagine\StandardImage($path);
-        $imageProcessor->process($image);
-        $image->setName($image->getName() . '_processed');
-        $imageManager->save($image);
-        unset ($image);
+        $image->setName($image->getName() . '_processed'); // rename updated image
+        $imageProcessor->process($image); // processe and saves appending '_processed' to file name
+        unset ($image); // clean up memory.
     }
 
 Happy coding!
