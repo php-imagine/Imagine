@@ -13,24 +13,27 @@ Well, now I can.
 Resizing:
 
     <?php
-    // create filesystem image manager, more managers to come...
+    // create image
     $image = new Imagine\StandardImage('/tmp/my_new_image.jpg');
-    $image->setName('resized'); // set new image name to be resized
-    $imageProcessor = new Imagine\ImageProcessor();
+    // set new image name to be resized, this is used when image is saved
+    $image->setName('resized');
     // create image processor, that knows to resize and save the image
-    $imageProcessor->resize(40, 50);
-    $imageProcessor->save('/tmp/');
-    $imageProcessor->process($image); // create resized.jpg
+    $imageProcessor = new Imagine\ImageProcessor();
+    $imageProcessor
+        ->resize(40, 50)
+        ->save('/tmp/') //destination directory
+        ->process($image); // create resized.jpg
 
 Cropping:
 
     <?php
     //...
-    // will crop image to 40 px width and 50 px height, starting at 0y and 0x
     $image->setName('cropped');
-    $imageProcessor->crop(0, 0, 40, 50);
-    $imageProcessor->save('/tmp/');
-    $imageProcessor->process($image); // create cropped.jpg
+    // will crop image to 40 px width and 50 px height, starting at 0y and 0x
+    $imageProcessor
+        ->crop(0, 0, 40, 50)
+        ->save('/tmp/') //destination directory
+        ->process($image); // create cropped.jpg
 
 Combination of processes:
 
