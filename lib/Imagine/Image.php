@@ -4,11 +4,17 @@ namespace Imagine;
 
 interface Image {
     public function getName();
+    public function setName($name);
     public function getType();
+    public function setType($type);
     public function getContentType();
+    public function setContentType($contentType);
     public function getContent();
+    public function setContent($content);
     public function getHeight();
+    public function setHeight($height);
     public function getWidth();
-    public function resize($width, $height);
-    public function crop($x, $y, $width, $height);
+    public function setWidth($width);
+	public function setSize($width, $height);
+	public function getResource();
 }
