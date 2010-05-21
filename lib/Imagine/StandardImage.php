@@ -12,7 +12,6 @@ class StandardImage implements Image {
     protected $top;
     protected $left;
     protected $path;
-    protected $processedImage;
 
     public function  __construct($path) {
         $pathInfo = pathinfo($path);
@@ -66,9 +65,6 @@ class StandardImage implements Image {
     }
     public function getPath() {
         return $this->path;
-    }
-    public function getProcessedImage() {
-        return $this->processedImage;
     }
     public function getResource() {
         $content = $this->getContent();
