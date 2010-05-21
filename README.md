@@ -19,7 +19,7 @@ Resizing:
     $imageProcessor = new Imagine\ImageProcessor();
     // create image processor, that knows to resize and save the image
     $imageProcessor->resize(40, 50);
-    $imageProcessor->save();
+    $imageProcessor->save('/tmp/');
     $imageProcessor->process($image); // create resized.jpg
 
 Cropping:
@@ -29,7 +29,7 @@ Cropping:
     // will crop image to 40 px width and 50 px height, starting at 0y and 0x
     $image->setName('cropped');
     $imageProcessor->crop(0, 0, 40, 50);
-    $imageProcessor->save();
+    $imageProcessor->save('/tmp/');
     $imageProcessor->process($image); // create cropped.jpg
 
 Combination of processes:
@@ -40,7 +40,7 @@ Combination of processes:
     // will replace the existing image with the new one
     $imageProcessor->resize(50, true)
         ->crop(0, 0, 50, 50)
-        ->save()
+        ->save('/tmp/')
         ->process($image);
 
 You can also undo image modifications:
@@ -49,7 +49,7 @@ You can also undo image modifications:
     //...
     $imageProcessor->restore($image);
     // note, that you have to re-save restored image;
-    $imageProcessor->save()
+    $imageProcessor->save('/tmp/')
         ->process($image);
 
 > Note: You can undo any number of modifications stacked on image processor instance.
@@ -66,7 +66,7 @@ Bulk processing (awesome):
     // the updated image
     $imageProcessor->resize(50, true)
         ->crop(0, 0, 50, 50)
-        ->save();
+        ->save('/tmp/');
 
     foreach (glob(*.jpg) as $path) {
         $image = new Imagine\StandardImage($path);

@@ -10,7 +10,7 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase {
         $imageProcessor = new ImageProcessor();
         
         $imageProcessor->delete();
-		$imageProcessor->process($image);
+        $imageProcessor->process($image);
         $this->assertFalse(file_exists('tests/fixtures/logo1w.png'));
         $imageProcessor->restore($image);
         $this->assertTrue(file_exists('tests/fixtures/logo1w.png'));
@@ -25,13 +25,13 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase {
         $imageProcessor->process($image);
         $this->assertEquals(40, $image->getWidth());
         $this->assertEquals(40, $image->getHeight());
-		$save = new Processor\SaveCommand('tests/fixtures');
-		$save->process($image);
+        $save = new Processor\SaveCommand('tests/fixtures');
+        $save->process($image);
         unset($image);
         $image = new StandardImage('tests/fixtures/logo1w.png');
         $this->assertEquals(40, $image->getWidth());
         $this->assertEquals(40, $image->getHeight());
-		$imageProcessor->restore($image);
+        $imageProcessor->restore($image);
         $save->process($image);
         unset($image);
         $image = new StandardImage('tests/fixtures/logo1w.png');
@@ -43,7 +43,7 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase {
         $image = new StandardImage('tests/fixtures/logo1w.png');
         $imageProcessor = new ImageProcessor();
         $imageProcessor->crop(20, 20, 200, 20);
-		$imageProcessor->save('tests/fixtures');
+        $imageProcessor->save('tests/fixtures');
         $imageProcessor->process($image);
         $this->assertEquals(200, $image->getWidth());
         $this->assertEquals(20, $image->getHeight());
@@ -52,11 +52,11 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(200, $image->getWidth());
         $this->assertEquals(20, $image->getHeight());
         $imageProcessor->restore($image);
-		$imageProcessor->save('tests/fixtures');
+        $imageProcessor->save('tests/fixtures');
         $imageProcessor->process($image);
         $this->assertEquals(275, $image->getWidth());
         $this->assertEquals(95, $image->getHeight());
-		unset ($image);
+        unset ($image);
         $image = new StandardImage('tests/fixtures/logo1w.png');
         $this->assertEquals(275, $image->getWidth());
         $this->assertEquals(95, $image->getHeight());

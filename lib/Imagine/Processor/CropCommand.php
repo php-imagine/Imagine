@@ -27,7 +27,7 @@ class CropCommand extends AbstractCommand {
         imagedestroy($srcImage);
         $image->setWidth($this->width);
         $image->setHeight($this->height);
-		return $destImage;
+        return $destImage;
     }
 
     public function _restore(Image $image, array $snapshot) {

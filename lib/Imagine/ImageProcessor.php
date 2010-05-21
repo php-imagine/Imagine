@@ -20,30 +20,30 @@ class ImageProcessor {
         return $this;
     }
 
-	public function delete() {
-		$command = new Processor\DeleteCommand();
+    public function delete() {
+        $command = new Processor\DeleteCommand();
         $this->addCommand($command);
         return $this;
-	}
-	
-	public function save($dir) {
-		$command = new Processor\SaveCommand($dir);
-		$this->addCommand($command);
-		return $this;
-	}
+    }
+    
+    public function save($dir) {
+        $command = new Processor\SaveCommand($dir);
+        $this->addCommand($command);
+        return $this;
+    }
 
     // @todo: this is heavy, need to find a more lightweight implementation
     public function process(Image $image) {
         foreach ($this->commands as $command) {
             $command->process($image);
-		}
+        }
     }
 
     public function restore(Image $image) {
-		foreach (array_reverse($this->commands) as $key => $command) {
-			$command->restore($image);
-			unset ($this->commands[$key]);
-		}
+        foreach (array_reverse($this->commands) as $key => $command) {
+            $command->restore($image);
+            unset ($this->commands[$key]);
+        }
     }
 
     public function addCommand(Command $command) {

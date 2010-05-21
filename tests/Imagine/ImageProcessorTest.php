@@ -26,7 +26,7 @@ class ImageProcessorTest extends \PHPUnit_Framework_TestCase {
         $processor->expects($this->exactly(2))
             ->method('addCommand');
         $processor->resize(80, 35)
-			->crop(5, 5, 45, 45);
+            ->crop(5, 5, 45, 45);
     }
     
 }
