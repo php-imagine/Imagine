@@ -26,7 +26,7 @@ class SaveCommand extends AbstractCommand {
 	}
 
 	protected function _restore(Image $image, array $snapshot) {
-		$this->_process($image);
+//		$this->_process($image);
 //        $file = $this->getFileName($image);
 //		if (file_exists($file)) {
 //			if (false === file_put_contents($file, $snapshot['content'])) {
