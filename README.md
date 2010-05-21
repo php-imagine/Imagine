@@ -48,7 +48,8 @@ You can also undo image modifications:
     <?php
     //...
     $imageProcessor->restore($image);
-    // note, that you have to re-save restored image;
+    // note, that you have to re-save restored image if you had save() command
+    // on stack when you were initially processing the image
     $imageProcessor->save('/tmp/')
         ->process($image);
 
