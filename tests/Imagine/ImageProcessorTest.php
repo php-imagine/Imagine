@@ -2,48 +2,35 @@
 
 namespace Imagine;
 
-require_once 'lib/Imagine/Image.php';
-require_once 'lib/Imagine/ImageManager.php';
-require_once 'lib/Imagine/StandardImage.php';
-require_once 'lib/Imagine/StandardImageManager.php';
-require_once 'lib/Imagine/ImageProcessor.php';
-require_once 'lib/Imagine/Processor/ProcessCommand.php';
-require_once 'lib/Imagine/Processor/SetSizeCommand.php';
+require_once 'tests/Imagine/TestInit.php';
 
 class ImageProcessorTest extends \PHPUnit_Framework_TestCase {
-	
-	protected $processor;
-	protected $image;
-	
-	public function setUp() {
-		$this->image = new StandardImage('tests/fixtures/logo1w.png');
-		$this->image->setSize(40, 40);
-		$this->processor = new ImageProcessor($this->image);
-	}
-	
-	public function tearDown() {
-		unset ($this->processor, $this->image);
-	}
+    
+    protected $processor;
+    protected $image;
+    
+    public function setUp() {
+        $this->image = new StandardImage('tests/fixtures/logo1w.png');
+        $this->image->setHeight(40);
+        $this->image->setWidth(40);
 
-	public function testConstructorSetsImage() {
-		$this->assertEquals($this->image, $this->processor->getImage());
-	}
+        $this->processor = new ImageProcessor($this->image);
+    }
+    
+    public function tearDown() {
+        unset ($this->processor, $this->image);
+    }
 
-	public function testSetSize() {
-		$oldContent = $this->image->getContent();
-		$this->processor->setSize(80, 35);
-		$this->assertEquals(40, $this->image->getHeight());
-		$this->assertEquals(40, $this->image->getWidth());
+    public function testConstructorSetsImage() {
+        $this->assertEquals($this->image, $this->processor->getImage());
+    }
 
-		$this->processor->process();
-		$this->assertEquals(80, $this->image->getWidth());
-		$this->assertEquals(35, $this->image->getHeight());
-		$this->assertNotEquals($oldContent, $this->image->getContent());
-	}
-
-	public function testKeepRatio() {
-		$this->processor->keepRatio(true);
-		$this->assertTrue($this->processor->keepRatio());
-	}
-	
+    public function testAddsCommands() {
+        $processor = $this->getMock('Imagine\ImageProcessor', array('addCommand'), array($this->image));
+        $processor->expects($this->exactly(2))
+            ->method('addCommand');
+        $processor->resize(80, 35)
+                ->crop(5, 5, 45, 45);
+    }
+    
 }

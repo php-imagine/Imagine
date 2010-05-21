@@ -15,6 +15,5 @@ interface Image {
     public function setHeight($height);
     public function getWidth();
     public function setWidth($width);
-	public function setSize($width, $height);
-	public function getResource();
+    public function getResource();
 }
