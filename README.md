@@ -71,7 +71,7 @@ Bulk processing (awesome):
     foreach (glob(*.jpg) as $path) {
         $image = new Imagine\StandardImage($path);
         $image->setName($image->getName() . '_processed'); // rename updated image
-        $imageProcessor->process($image); // processe and saves appending '_processed' to file name
+        $imageProcessor->process($image); // processes and saves appending '_processed' to file name
         unset ($image); // clean up memory.
     }
 
