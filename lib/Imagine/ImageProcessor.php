@@ -9,25 +9,25 @@ class ImageProcessor {
     protected $commands = array();
 
     public function resize($width, $height) {
-        $command = new Processor\ResizeCommand($width, $height);
+        $command = new Processor\Resize($width, $height);
         $this->addCommand($command);
         return $this;
     }
 
     public function crop($x, $y, $width, $height) {
-        $command = new Processor\CropCommand($x, $y, $width, $height);
+        $command = new Processor\Crop($x, $y, $width, $height);
         $this->addCommand($command);
         return $this;
     }
 
     public function delete() {
-        $command = new Processor\DeleteCommand();
+        $command = new Processor\Delete();
         $this->addCommand($command);
         return $this;
     }
     
     public function save($dir) {
-        $command = new Processor\SaveCommand($dir);
+        $command = new Processor\Save($dir);
         $this->addCommand($command);
         return $this;
     }

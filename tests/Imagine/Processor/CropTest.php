@@ -6,7 +6,7 @@ use Imagine\StandardImage;
 
 require_once 'tests/Imagine/TestInit.php';
 
-class CropCommandTest extends \PHPUnit_Framework_TestCase {
+class CropTest extends \PHPUnit_Framework_TestCase {
 
     protected $image;
     protected $command;
@@ -22,7 +22,7 @@ class CropCommandTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testCrop() {
-        $this->command = new CropCommand(0, 0, 50, 50);
+        $this->command = new Crop(0, 0, 50, 50);
         $this->assertEquals(275, $this->image->getWidth());
         $this->assertEquals(95, $this->image->getHeight());
         $this->command->process($this->image);

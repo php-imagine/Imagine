@@ -6,7 +6,7 @@ use Imagine\StandardImage;
 
 require_once 'tests/Imagine/TestInit.php';
 
-class ResizeCommandTest extends \PHPUnit_Framework_TestCase {
+class ResizeTest extends \PHPUnit_Framework_TestCase {
 
     protected $image;
     protected $command;
@@ -22,7 +22,7 @@ class ResizeCommandTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testResizeNormal() {
-        $this->command = new ResizeCommand(100, 200);
+        $this->command = new Resize(100, 200);
         $this->assertNotEquals(100, $this->image->getWidth());
         $this->assertNotEquals(200, $this->image->getHeight());
         $this->assertNull($this->command->getImageResource());
@@ -37,7 +37,7 @@ class ResizeCommandTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testResizeWidthWithRatio() {
-        $this->command = new ResizeCommand(55, true);
+        $this->command = new Resize(55, true);
         $this->assertNull($this->command->getImageResource());
         $this->command->process($this->image);
         $this->assertEquals(55, $this->image->getWidth());
@@ -50,7 +50,7 @@ class ResizeCommandTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testResizeHeightWithRatio() {
-        $this->command = new ResizeCommand(true, 19);
+        $this->command = new Resize(true, 19);
         $this->assertNull($this->command->getImageResource());
         $this->command->process($this->image);
         $this->assertEquals(55, $this->image->getWidth());

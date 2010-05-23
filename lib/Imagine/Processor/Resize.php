@@ -4,7 +4,7 @@ namespace Imagine\Processor;
 
 use Imagine\Image;
 
-class ResizeCommand extends AbstractCommand {
+class Resize extends AbstractCommand {
 
     protected $width;
     protected $height;

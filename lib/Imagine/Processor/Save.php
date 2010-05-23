@@ -4,7 +4,7 @@ namespace Imagine\Processor;
 
 use Imagine\Image;
 
-class SaveCommand extends AbstractCommand {
+class Save extends AbstractCommand {
     protected $path;
 
     public function __construct($path) {

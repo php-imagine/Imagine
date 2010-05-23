@@ -4,7 +4,7 @@ namespace Imagine\Processor;
 
 use Imagine\Image;
 
-class DeleteCommand extends AbstractCommand {
+class Delete extends AbstractCommand {
 
     protected function _process(Image $image) {
         if ( ! unlink($image->getPath())) {

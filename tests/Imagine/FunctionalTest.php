@@ -25,7 +25,7 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase {
         $imageProcessor->process($image);
         $this->assertEquals(40, $image->getWidth());
         $this->assertEquals(40, $image->getHeight());
-        $save = new Processor\SaveCommand('tests/fixtures');
+        $save = new Processor\Save('tests/fixtures');
         $save->process($image);
         unset($image);
         $image = new StandardImage('tests/fixtures/logo1w.png');

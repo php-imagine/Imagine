@@ -4,7 +4,7 @@ namespace Imagine\Processor;
 
 use Imagine\Image;
 
-class CropCommand extends AbstractCommand {
+class Crop extends AbstractCommand {
     
     protected $x;
     protected $y;
