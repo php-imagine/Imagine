@@ -311,6 +311,11 @@ dl {
 dl dd {
     margin-left: 30px;
 }
+
+blockquote {
+    margin: 0 0 0 30px;
+    padding: 0;
+}
  
 pre {
     background: #eee;
@@ -319,7 +324,7 @@ pre {
     line-height: 1.3em;
 }
 
-dl pre {
+dl pre, blockquote pre {
     margin-left: -60px;
     padding-left: 60px;
 }
