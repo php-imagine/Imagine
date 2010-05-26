@@ -8,6 +8,9 @@
  * :license: BSD, see LICENSE for details.
  *
  */
+
+{% set page_width = '940px' %}
+{% set sidebar_width = '220px' %}
  
 @import url("basic.css");
  
@@ -16,14 +19,15 @@
 body {
     font-family: 'Georgia', serif;
     font-size: 17px;
-    background-color: #ddd;
+    background-color: white;
     color: #000;
     margin: 0;
     padding: 0;
 }
 
 div.document {
-    background: #fafafa;
+    width: {{ page_width }};
+    margin: 30px auto 0 auto;
 }
 
 div.documentwrapper {
@@ -32,7 +36,11 @@ div.documentwrapper {
 }
 
 div.bodywrapper {
-    margin: 0 0 0 230px;
+    margin: 0 0 0 {{ sidebar_width }};
+}
+
+div.sphinxsidebar {
+    width: {{ sidebar_width }};
 }
 
 hr {
@@ -42,7 +50,7 @@ hr {
 div.body {
     background-color: #ffffff;
     color: #3E4349;
-    padding: 0 30px 30px 30px;
+    padding: 0 30px 0 30px;
     min-height: 34em;
 }
 
@@ -52,31 +60,15 @@ img.floatingflask {
 }
  
 div.footer {
-    position: absolute;
-    right: 0;
-    margin-top: -70px;
-    text-align: right;
-    color: #888;
-    padding: 10px;
+    width: {{ page_width }};
+    margin: 20px auto 30px auto;
     font-size: 14px;
-}
- 
-div.footer a {
     color: #888;
-    text-decoration: underline;
-}
- 
-div.related {
-    line-height: 32px;
-    color: #888;
+    text-align: right;
 }
 
-div.related ul {
-    padding: 0 0 0 10px;
-}
- 
-div.related a {
-    color: #444;
+div.footer a {
+    color: #888;
 }
  
 div.sphinxsidebar {
@@ -85,11 +77,11 @@ div.sphinxsidebar {
 }
 
 div.sphinxsidebarwrapper {
-    padding: 0 20px;
+    padding: 18px 10px;
 }
 
 div.sphinxsidebarwrapper p.logo {
-    padding: 20px 0 10px 0;
+    padding: 0 0 20px 0;
     margin: 0;
     text-align: center;
 }
@@ -97,10 +89,10 @@ div.sphinxsidebarwrapper p.logo {
 div.sphinxsidebar h3,
 div.sphinxsidebar h4 {
     font-family: 'Garamond', 'Georgia', serif;
-    color: #222;
+    color: #444;
     font-size: 24px;
     font-weight: normal;
-    margin: 20px 0 5px 0;
+    margin: 0 0 5px 0;
     padding: 0;
 }
 
@@ -149,10 +141,6 @@ a:hover {
     color: #6D4100;
     text-decoration: underline;
 }
-
-div.body {
-    padding-bottom: 40px; /* saved for footer */
-}
  
 div.body h1,
 div.body h2,
@@ -166,7 +154,7 @@ div.body h6 {
     padding: 0;
 }
  
-div.body h1 { margin-top: 0; padding-top: 20px; font-size: 240%; }
+div.body h1 { margin-top: 0; padding-top: 0; font-size: 240%; }
 div.body h2 { font-size: 180%; }
 div.body h3 { font-size: 150%; }
 div.body h4 { font-size: 130%; }
