@@ -51,7 +51,6 @@ div.body {
     background-color: #ffffff;
     color: #3E4349;
     padding: 0 30px 0 30px;
-    min-height: 34em;
 }
 
 img.floatingflask {
