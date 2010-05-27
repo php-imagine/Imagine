@@ -74,6 +74,16 @@ div.related {
     display: none;
 }
  
+div.sphinxsidebar a {
+    color: #444;
+    text-decoration: none;
+    border-bottom: 1px dotted #999;
+}
+
+div.sphinxsidebar a:hover {
+    border-bottom: 1px solid #999;
+}
+ 
 div.sphinxsidebar {
     font-size: 14px;
     line-height: 1.5;
@@ -106,6 +116,13 @@ div.sphinxsidebar h4 {
 div.sphinxsidebar h3 a {
     color: #444;
 }
+
+div.sphinxsidebar p.logo a,
+div.sphinxsidebar h3 a,
+div.sphinxsidebar p.logo a:hover,
+div.sphinxsidebar h3 a:hover {
+    border: none;
+}
  
 div.sphinxsidebar p {
     color: #555;
@@ -116,15 +133,6 @@ div.sphinxsidebar ul {
     margin: 10px 0;
     padding: 0;
     color: #000;
-}
- 
-div.sphinxsidebar a {
-    color: #444;
-    text-decoration: none;
-}
-
-div.sphinxsidebar a:hover {
-    text-decoration: underline;
 }
  
 div.sphinxsidebar input {
