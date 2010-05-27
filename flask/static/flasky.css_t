@@ -337,6 +337,10 @@ tt.xref, a tt {
     text-decoration: none!important;
 }
 
+a.reference {
+    text-decoration: none;
+}
+
 a:hover tt {
     background: #EEE;
 }
