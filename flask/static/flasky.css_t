@@ -70,6 +70,10 @@ div.footer {
 div.footer a {
     color: #888;
 }
+
+div.related {
+    display: none;
+}
  
 div.sphinxsidebar {
     font-size: 14px;
