@@ -28,7 +28,7 @@ class UploadedImage extends StandardImage
             }
             throw new \RuntimeException($message);
         }
-        parent::__construct($imageData['tmp_name']);
+        parent::__construct($data['tmp_name']);
         $this->setName($data['name']);
     }
 }
