@@ -23,7 +23,7 @@ class StandardImage implements Image {
         $this->setHeight($size[1]);
         $this->setType($size[2]);
         $this->setContentType($size['mime']);
-        $this->path = realpath($path);
+        $this->setPath($path);
         $this->setName(basename($pathInfo['filename']));
         $this->setContent(file_get_contents($path));
     }
@@ -86,6 +86,11 @@ class StandardImage implements Image {
     public function getWidth()
     {
         return $this->width;
+    }
+
+    public function setPath($path)
+    {
+        $this->path = realpath($path);
     }
 
     public function getPath()

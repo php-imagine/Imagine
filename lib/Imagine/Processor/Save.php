@@ -23,9 +23,11 @@ class Save extends AbstractCommand {
         if (false === file_put_contents($file, $image->getContent())) {
             throw new \RuntimeException('Could not write file ' . $file);
         }
+        $image->setPath($file);
     }
 
     protected function _restore(Image $image, array $snapshot) {
+        $image->setPath($snapshot['path']);
 //        $this->_process($image);
 //        $file = $this->getFileName($image);
 //        if (file_exists($file)) {
