@@ -24,7 +24,7 @@ class StandardImage implements Image {
         $this->setType($size[2]);
         $this->setContentType($size['mime']);
         $this->path = realpath($path);
-        $this->setName($pathInfo['filename']);
+        $this->setName(basename($pathInfo['filename']));
         $this->setContent(file_get_contents($path));
     }
 
