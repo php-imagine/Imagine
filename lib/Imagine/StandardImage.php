@@ -112,4 +112,9 @@ class StandardImage implements Image {
         $this->setHeight($height);
     }
 
+    public function getExtension()
+    {
+        return image_type_to_extension($this->getType());
+    }
+
 }

@@ -44,6 +44,6 @@ class Save extends AbstractCommand {
 
     private function getFileName(Image $image) {
         return $this->path . DIRECTORY_SEPARATOR . $image->getName() .
-            image_type_to_extension($image->getType());
+            $image->getExtension();
     }
 }

@@ -18,4 +18,5 @@ interface Image {
     public function getResource();
     public function setPath($path);
     public function getPath();
+    public function getExtension();
 }
