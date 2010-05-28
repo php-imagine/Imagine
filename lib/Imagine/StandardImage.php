@@ -13,7 +13,8 @@ class StandardImage implements Image {
     protected $left;
     protected $path;
 
-    public function  __construct($path) {
+    public function  __construct($path)
+    {
         $pathInfo = pathinfo($path);
         if (false === ($size = getimagesize($path))) {
             throw new \InvalidArgumentException('Could not determine image info');
@@ -27,46 +28,73 @@ class StandardImage implements Image {
         $this->setContent(file_get_contents($path));
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
-    public function setType($type) {
+
+    public function setType($type)
+    {
         $this->type = $type;
     }
-    public function getType() {
+
+    public function getType()
+    {
         return $this->type;
     }
-    public function setContentType($contentType) {
+
+    public function setContentType($contentType)
+    {
         $this->contentType = $contentType;
     }
-    public function getContentType() {
+
+    public function getContentType()
+    {
         return $this->contentType;
     }
-    public function setContent($content) {
+
+    public function setContent($content)
+    {
         $this->content = $content;
     }
-    public function getContent() {
+
+    public function getContent()
+    {
         return $this->content;
     }
-    public function setHeight($height) {
+
+    public function setHeight($height)
+    {
         $this->height = $height;
     }
-    public function getHeight() {
+
+    public function getHeight()
+    {
         return $this->height;
     }
-    public function setWidth($width) {
+
+    public function setWidth($width)
+    {
         $this->width = $width;
     }
-    public function getWidth() {
+
+    public function getWidth()
+    {
         return $this->width;
     }
-    public function getPath() {
+
+    public function getPath()
+    {
         return $this->path;
     }
-    public function getResource() {
+
+    public function getResource()
+    {
         $content = $this->getContent();
         if (empty ($content)) {
             throw new \RuntimeException('Image was not instantiated or doesn\'t have content');
