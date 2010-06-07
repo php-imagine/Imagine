@@ -288,6 +288,13 @@ table.footnote {
     margin: 15px 0;
     width: 100%;
     border: 1px solid #eee;
+    background: #fdfdfd;
+    font-size: 0.9em;
+}
+
+table.footnote + table.footnote {
+    margin-top: -15px;
+    border-top: none;
 }
 
 table.field-list th {
@@ -298,8 +305,13 @@ table.field-list td {
     padding: 0;
 }
 
+table.footnote td.label {
+    width: 0px;
+    padding: 0.3em 0 0.3em 0.5em;
+}
+
 table.footnote td {
-    padding: 0.5em;
+    padding: 0.3em 0.5em;
 }
 
 dl {
@@ -346,6 +358,17 @@ tt.xref, a tt {
 
 a.reference {
     text-decoration: none;
+}
+
+a.footnote-reference {
+    text-decoration: none;
+    font-size: 0.7em;
+    vertical-align: top;
+    border-bottom: 1px dotted #004B6B;
+}
+
+a.footnote-reference:hover {
+    border-bottom: 1px solid #6D4100;
 }
 
 a:hover tt {
