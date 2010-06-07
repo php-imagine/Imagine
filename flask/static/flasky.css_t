@@ -353,11 +353,16 @@ tt {
 
 tt.xref, a tt {
     background-color: #FBFBFB;
-    text-decoration: none!important;
+    border-bottom: 1px solid white;
 }
 
 a.reference {
     text-decoration: none;
+    border-bottom: 1px dotted #004B6B;
+}
+
+a.reference:hover {
+    border-bottom: 1px solid #6D4100;
 }
 
 a.footnote-reference {
