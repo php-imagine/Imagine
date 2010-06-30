@@ -324,6 +324,11 @@ blockquote {
     margin: 0 0 0 30px;
     padding: 0;
 }
+
+ul {
+    margin: 10px 0 10px 30px;
+    padding: 0;
+}
  
 pre {
     background: #eee;
@@ -332,7 +337,7 @@ pre {
     line-height: 1.3em;
 }
 
-dl pre, blockquote pre {
+dl pre, blockquote pre, li pre {
     margin-left: -60px;
     padding-left: 60px;
 }
