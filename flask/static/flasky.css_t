@@ -192,6 +192,11 @@ div.admonition {
     border-bottom: 1px solid #ccc;
 }
 
+dd div.admonition {
+    margin-left: -60px;
+    padding-left: 60px;
+}
+
 div.admonition p.admonition-title {
     font-family: 'Garamond', 'Georgia', serif;
     font-weight: normal;
