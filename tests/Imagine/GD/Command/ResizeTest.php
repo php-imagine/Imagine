@@ -34,18 +34,35 @@ class ResizeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(is_resource($oldResource));
     }
 
-    public function testResizeInferHeight()
+    public function testResizeModeInferHeight()
     {
-        $command = new Resize(55, true);
+        $command = new Resize(55, null, Resize::INFER_HEIGHT);
         $command->process($this->image);
         $this->assertEquals(55, $this->image->getWidth());
         $this->assertEquals(19, $this->image->getHeight());
     }
 
-    public function testResizeInferWidth() {
-        $command = new Resize(true, 19);
+    public function testResizeModeInferWidth()
+    {
+        $command = new Resize(null, 19, Resize::INFER_WIDTH);
         $command->process($this->image);
         $this->assertEquals(55, $this->image->getWidth());
         $this->assertEquals(19, $this->image->getHeight());
+    }
+
+    public function testResizeModeArAround()
+    {
+        $command = new Resize(150, 150, Resize::AR_AROUND);
+        $command->process($this->image);
+        $this->assertEquals(434, $this->image->getWidth());
+        $this->assertEquals(150, $this->image->getHeight());
+    }
+
+    public function testResizeModeArWithin()
+    {
+        $command = new Resize(150, 150, Resize::AR_WITHIN);
+        $command->process($this->image);
+        $this->assertEquals(150, $this->image->getWidth());
+        $this->assertEquals(52, $this->image->getHeight());
     }
 }
