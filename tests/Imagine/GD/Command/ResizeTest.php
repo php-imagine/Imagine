@@ -63,6 +63,6 @@ class ResizeTest extends \PHPUnit_Framework_TestCase
         $command = new Resize(150, 150, Resize::AR_WITHIN);
         $command->process($this->image);
         $this->assertEquals(150, $this->image->getWidth());
-        $this->assertEquals(52, $this->image->getHeight());
+        $this->assertEquals(51, $this->image->getHeight());
     }
 }

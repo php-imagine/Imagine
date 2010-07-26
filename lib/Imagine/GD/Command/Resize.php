@@ -143,11 +143,11 @@ class Resize implements \Imagine\Command
             // Calculate the new size based on the chosen ratio
             if ($preserveAR) {
                 $ratio = $atLeast ? max($xRatio, $yRatio) : min($xRatio, $yRatio);
-                $calcX = round($subjectX * $ratio);
-                $calcY = round($subjectY * $ratio);
+                $calcX = intval($subjectX * $ratio);
+                $calcY = intval($subjectY * $ratio);
             } else {
-                $calcX = round($subjectX * $xRatio);
-                $calcY = round($subjectY * $yRatio);
+                $calcX = intval($subjectX * $xRatio);
+                $calcY = intval($subjectY * $yRatio);
             }
         }
 
