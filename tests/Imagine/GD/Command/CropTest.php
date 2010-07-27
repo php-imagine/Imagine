@@ -33,5 +33,4 @@ class CropTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_resource($newResource));
         $this->assertFalse(is_resource($oldResource));
     }
-
 }

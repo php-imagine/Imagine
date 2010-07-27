@@ -8,7 +8,7 @@ namespace Imagine\GD;
  * @author Bulat Shakirzyanov <mallluhuct@gmail.com>
  * @author Jeremy Mikola <jmikola@gmail.com>
  */
-class Utils
+class Utils extends \Imagine\Utils
 {
     /**
      * Mapping of image types to function name components.

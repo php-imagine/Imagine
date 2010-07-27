@@ -67,10 +67,10 @@ class Crop implements \Imagine\Command
         }
 
         $srcImage = $image->getResource();
-        $destImage = imagecreatetruecolor($this->width, $this->height);
-        if (! imagecopy($destImage, $srcImage, 0, 0, $this->x, $this->y, $this->width, $this->height)) {
+        $dstImage = imagecreatetruecolor($this->width, $this->height);
+        if (! imagecopy($dstImage, $srcImage, 0, 0, $this->x, $this->y, $this->width, $this->height)) {
             throw new \RuntimeException('Could not crop the image');
         }
-        $image->setResource($destImage);
+        $image->setResource($dstImage);
     }
 }
