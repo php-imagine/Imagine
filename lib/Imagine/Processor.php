@@ -27,7 +27,7 @@ class Processor
      */
     public function __call($name, array $args) {
         // TODO: Allow support for multiple adapter libraries
-        $commandClass = 'Imagine\\GD\\Command\\' . ucfirst(strtolower($name));
+        $commandClass = 'Imagine\\GD\\Command\\' . ucfirst($name);
 
         if (! class_exists($commandClass)) {
             throw new \BadMethodCallException('Command class not exist: ' . $commandClass);
