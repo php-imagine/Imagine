@@ -20,7 +20,8 @@ class Utils
      * @param boolean $around      Around if true, within if false
      * @return array (width, height)
      */
-    public static function getBoxForAspectRatio($boxAR, $refWidth, $refHeight, $around) {
+    public static function getBoxForAspectRatio($boxAR, $refWidth, $refHeight, $around)
+    {
         $boxAR = (float) $boxAR;
         $refWidth = (int) $refWidth;
         $refHeight = (int) $refHeight;
