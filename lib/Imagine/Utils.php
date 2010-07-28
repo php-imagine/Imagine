@@ -11,43 +11,51 @@ namespace Imagine;
 class Utils
 {
     /**
-     * Perform box calculations on "subject" dimensions with respect to "pov".
+     * Calculate integer dimensions for a box having the given aspect ratio and
+     * either around (at least) or within (at most) reference dimensions.
      *
-     * @param integer $subjectX   Subject (x dimension)
-     * @param integer $subjectY   Subject (y dimension)
-     * @param integer $povX       POV (x dimension)
-     * @param integer $povY       POV (y dimension)
-     * @param boolean $atLeast    At least "subject" dimensions?
-     * @param boolean $preserveAR Preserve aspect ratio?
-     * @param boolean $scaleUp    Scale "subject" up?
-     * @return array (x, y)
+     * @param float   $boxAR       Aspect ratio (width / height)
+     * @param int     $refWidth    Reference width
+     * @param int     $refHeight   Reference height
+     * @param boolean $around      Around if true, within if false
+     * @return array (width, height)
      */
-    public static function calcBox($subjectX, $subjectY, $povX, $povY, $atLeast = false, $preserveAR = true, $scaleUp = true) {
-        if (!($subjectX > 0 && $subjectY > 0 && $povX > 0 && $povY > 0)) {
-            throw new \InvalidArgumentException('Dimensions must be positive integers');
+    public static function getBoxForAspectRatio($boxAR, $refWidth, $refHeight, $around) {
+        $boxAR = (float) $boxAR;
+        $refWidth = (int) $refWidth;
+        $refHeight = (int) $refHeight;
+
+        if ($boxAR <= 0) {
+            throw new \InvalidArgumentException('Aspect ratio must be a positive number');
         }
 
-        // Initialize return values, in case resizing doesn't take place
-        $calcX = $subjectX;
-        $calcY = $subjectY;
+        if ($refWidth <= 0 || $refHeight <= 0) {
+            throw new \InvalidArgumentException('Reference dimensions must be positive integers');
+        }
 
-        // Only resize "from" if "pov" is smaller, or explicitly scaling up
-        if ($subjectX >= $povX || $subjectY >= $povX || $scaleUp) {
-            // Calculate scale ratios ("pov":"from") for each dimension
-            $xRatio = $povX / $subjectX;
-            $yRatio = $povY / $subjectY;
+        $refAR = $refWidth / $refHeight;
 
-            // Calculate the new size based on the chosen ratio
-            if ($preserveAR) {
-                $ratio = $atLeast ? max($xRatio, $yRatio) : min($xRatio, $yRatio);
-                $calcX = intval($subjectX * $ratio);
-                $calcY = intval($subjectY * $ratio);
+        if ($boxAR > $refAR) {
+            if ($around) {
+                $boxWidth = $refHeight * $boxAR;
+                $boxHeight = $refHeight;
             } else {
-                $calcX = intval($subjectX * $xRatio);
-                $calcY = intval($subjectY * $yRatio);
+                $boxWidth = $refWidth;
+                $boxHeight = $refWidth / $boxAR;
             }
+        } elseif ($boxAR < $refAR) {
+            if ($around) {
+                $boxWidth = $refWidth;
+                $boxHeight = $refWidth / $boxAR;
+            } else {
+                $boxWidth = $refHeight * $boxAR;
+                $boxHeight = $refHeight;
+            }
+        } else {
+            $boxWidth = $refWidth;
+            $boxHeight = $refHeight;
         }
 
-        return array($calcX, $calcY);
+        return array((int) $boxWidth, (int) $boxHeight);
     }
 }

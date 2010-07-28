@@ -106,14 +106,12 @@ class Resize implements \Imagine\Command
                 break;
 
             case self::AR_AROUND:
-                list($this->width, $this->height) = Utils::calcBox($image->getWidth(), $image->getHeight(), $this->width, $this->height, true);
+                list($this->width, $this->height) = Utils::getBoxForAspectRatio($image->getWidth() / $image->getHeight(), $this->width, $this->height, true);
                 break;
 
             case self::AR_WITHIN:
-                list($this->width, $this->height) = Utils::calcBox($image->getWidth(), $image->getHeight(), $this->width, $this->height);
+                list($this->width, $this->height) = Utils::getBoxForAspectRatio($image->getWidth() / $image->getHeight(), $this->width, $this->height, false);
                 break;
         }
     }
-
-    
 }
