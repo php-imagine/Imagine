@@ -45,35 +45,36 @@ class CanvasResize implements \Imagine\Command
     /**
      * Constructs a canvas resize operation.
      *
+     * The canvas fill color may be three (RGB) or four (RGBa) integer values,
+     * which will be used as arguments to imagecolorallocate() or
+     * imagecolorallocatealpha(), respectively.  Opaque white will be used if
+     * no fill color is given.
+     *
      * One of the following mode constants may optionally be specified:
      *
      *  - CENTER: Center the original image on the resized canvas
-     *
-     * The canvas fill color may be three (RGB) or four (RGBa) integer values,
-     * which will be used as arguments to imagecolorallocate() or
-     * imagecolorallocatealpha(), respectively.
      *
      * @link http://php.net/manual/en/function.imagecolorallocate.php
      * @link http://php.net/manual/en/function.imagecolorallocatealpha.php
      * @param int   $width
      * @param int   $height
+     * @param array $fillColor
      * @param int   $mode
-     * @param array $fillColor Defaults to opaque white
      * @throws \InvalidArgumentException
      */
-    public function __construct($width, $height, $mode = self::CENTER, array $fillColor = null)
+    public function __construct($width, $height, array $fillColor = null, $mode = self::CENTER)
     {
         $this->width = (int) $width;
         $this->height = (int) $height;
-        $this->mode = $mode;
         $this->fillColor = $fillColor ?: array(255, 255, 255);
-
-        if (isset($mode) && !in_array($mode, array(self::CENTER))) {
-            throw new \InvalidArgumentException('Invalid mode parameter: ' . $mode);
-        }
+        $this->mode = $mode;
 
         if (! in_array(count($this->fillColor), array(3, 4))) {
             throw new \InvalidArgumentException('Invalid fillColor parameter: ' . $mode);
+        }
+
+        if (isset($mode) && !in_array($mode, array(self::CENTER))) {
+            throw new \InvalidArgumentException('Invalid mode parameter: ' . $mode);
         }
     }
 

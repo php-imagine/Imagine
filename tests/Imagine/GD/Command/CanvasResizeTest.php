@@ -21,7 +21,7 @@ class CanvasResizeTest extends \PHPUnit_Framework_TestCase
         $oldResource = $this->image->getResource();
         $this->assertTrue(is_resource($oldResource));
 
-        $command = new CanvasResize(200, 200, CanvasResize::CENTER);
+        $command = new CanvasResize(200, 200);
         $this->assertNotEquals(200, $this->image->getWidth());
         $this->assertNotEquals(200, $this->image->getHeight());
 
