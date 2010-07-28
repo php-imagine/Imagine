@@ -2,6 +2,8 @@
 
 namespace Imagine\GD\Command;
 
+use Imagine\GD\Utils;
+
 /**
  * GD crop command
  *
@@ -67,7 +69,8 @@ class Crop implements \Imagine\Command
         }
 
         $srcImage = $image->getResource();
-        $dstImage = imagecreatetruecolor($this->width, $this->height);
+        $dstImage = Utils::createResource($this->width, $this->height, $image->getType());
+
         if (! imagecopy($dstImage, $srcImage, 0, 0, $this->x, $this->y, $this->width, $this->height)) {
             throw new \RuntimeException('Could not crop the image');
         }

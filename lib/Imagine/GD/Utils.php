@@ -2,6 +2,8 @@
 
 namespace Imagine\GD;
 
+use Imagine\Image;
+
 /**
  * GD utility functions
  *
@@ -60,5 +62,35 @@ class Utils extends \Imagine\Utils
     public static function isResource($resource)
     {
         return (is_resource($resource) && 'gd' === get_resource_type($resource));
+    }
+
+    /**
+     * Creates a new GD image resource.
+     *
+     * If $type is given, it will be used to initialize type-specific settings
+     * on the resource, such as PNG alpha channel support.
+     *
+     * @param int $width
+     * @param int $height
+     * @param int $type
+     * @return resource
+     */
+    public static function createResource($width, $height, $type = null)
+    {
+        if (false === ($resource = imagecreatetruecolor($width, $height))) {
+            throw new \RuntimeException('Could not create image resource');
+        }
+
+        if ($type == \IMAGETYPE_PNG) {
+            if (! imagealphablending($resource, false)) {
+                throw new \RuntimeException('Could not set alpha blending');
+            }
+
+            if (! imagesavealpha($resource, true)) {
+                throw new \RuntimeException('Could not toggle saving of alpha channel');
+            }
+        }
+
+        return $resource;
     }
 }

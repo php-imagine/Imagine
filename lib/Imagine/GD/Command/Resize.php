@@ -81,7 +81,8 @@ class Resize implements \Imagine\Command
         }
 
         $srcImage = $image->getResource();
-        $dstImage = imagecreatetruecolor($this->width, $this->height);
+        $dstImage = Utils::createResource($this->width, $this->height, $image->getType());
+
         if (! imagecopyresampled($dstImage, $srcImage, 0, 0, 0, 0, $this->width, $this->height, $image->getWidth(), $image->getHeight())) {
             throw new \RuntimeException('Could not resize the image');
         }
