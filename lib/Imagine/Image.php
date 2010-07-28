@@ -3,7 +3,7 @@
 namespace Imagine;
 
 // TODO: Allow adapter library to be selected upon construction
-use Imagine\GD\Utils;
+use Imagine\GD\Utils as GDUtls;
 
 /**
  * Image
@@ -79,7 +79,7 @@ class Image
         $this->height = $size[1];
         $this->type = $size[2];
         $this->mimeType = $size['mime'];
-        $this->loadFunction = Utils::getLoadFunction($this->type);
+        $this->loadFunction = GDUtls::getLoadFunction($this->type);
     }
 
     /**
@@ -157,11 +157,11 @@ class Image
      */
     public function setResource($resource)
     {
-        if (! Utils::isResource($resource)) {
+        if (! GDUtls::isResource($resource)) {
             throw new \InvalidArgumentException('Invalid resource');
         }
 
-        if (Utils::isResource($this->resource)) {
+        if (GDUtls::isResource($this->resource)) {
             imagedestroy($this->resource);
         }
 
@@ -175,7 +175,7 @@ class Image
      */
     public function __destruct()
     {
-        if (Utils::isResource($this->resource)) {
+        if (GDUtls::isResource($this->resource)) {
             imagedestroy($this->resource);
         }
     }
