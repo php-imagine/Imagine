@@ -32,8 +32,5 @@ class CanvasResizeTest extends \PHPUnit_Framework_TestCase
         $newResource = $this->image->getResource();
         $this->assertTrue(is_resource($newResource));
         $this->assertFalse(is_resource($oldResource));
-
-        $command = new Save('foo.png');
-        $command->process($this->image);
     }
 }
