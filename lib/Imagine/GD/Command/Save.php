@@ -69,6 +69,10 @@ class Save implements \Imagine\Command
         $path = $this->path ?: $image->getPath();
         $saveParams = array_merge(array($image->getResource(), $path), $this->saveParams);
 
+        if(array_key_exists('quality', $saveParams)) {
+            $saveParams['quality'] = Utils::getSaveQuality($this->type ?: $image->getType(), $saveParams['quality']);
+        }
+
         if (! is_dir($pathDir = dirname($path))) {
             if (! @mkdir($pathDir, 0777, true)) {
                 throw new \RuntimeException('Cannot create directory: ' . $pathDir);

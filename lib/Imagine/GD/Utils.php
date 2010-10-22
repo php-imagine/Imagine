@@ -54,6 +54,28 @@ class Utils extends \Imagine\Utils
     }
 
     /**
+     * Get the save quality for an image type.
+     *
+     * @param int $type
+     * @param int $quality between 0 and 100 inclusive
+     * @return int
+     * @throws \InvalidArgumentException
+     */
+    public static function getSaveQuality($type, $quality)
+    {
+        if($quality < 0 || $quality > 100) {
+            throw new \InvalidArgumentException(sprintf('Save quality must be comprised between 0 and 100 inclusive, "%d" given'));
+        }
+
+        if(IMAGETYPE_PNG === $type) {
+            // Transform quality to PNG compression level
+            $quality = abs(($quality - 100) / 11.111111);
+        }
+
+        return round($quality);
+    }
+
+    /**
      * Checks whether the parameter is a valid GD image resource.
      *
      * @param resource $resource
