@@ -76,14 +76,12 @@ class Resize implements \Imagine\Command
      */
     public function process(\Imagine\Image $image)
     {
-        if ($this->mode) {
-            $this->adjustSize($image);
-        }
+        list($width, $height) = $this->adjustSize($image);
 
         $srcImage = $image->getResource();
-        $dstImage = Utils::createResource($this->width, $this->height, $image->getType());
+        $dstImage = Utils::createResource($width, $height, $image->getType());
 
-        if (! imagecopyresampled($dstImage, $srcImage, 0, 0, 0, 0, $this->width, $this->height, $image->getWidth(), $image->getHeight())) {
+        if (! imagecopyresampled($dstImage, $srcImage, 0, 0, 0, 0, $width, $height, $image->getWidth(), $image->getHeight())) {
             throw new \RuntimeException('Could not resize the image');
         }
         $image->setResource($dstImage);
@@ -94,25 +92,35 @@ class Resize implements \Imagine\Command
      * from the other dimension and the image's aspect ratio.
      *
      * @param \Imagine\Image $image
+     * @return array width, height
      */
     private function adjustSize(\Imagine\Image $image)
     {
         switch ($this->mode) {
             case self::INFER_HEIGHT:
-                $this->height = intval($this->width * $image->getHeight() / $image->getWidth());
+                $width  = $this->width;
+                $height = intval($this->width * $image->getHeight() / $image->getWidth());
                 break;
 
             case self::INFER_WIDTH:
-                $this->width = intval($this->height * $image->getWidth() / $image->getHeight());
+                $width  = intval($this->height * $image->getWidth() / $image->getHeight());
+                $height = $this->height;
                 break;
 
             case self::AR_AROUND:
-                list($this->width, $this->height) = Utils::getBoxForAspectRatio($image->getWidth() / $image->getHeight(), $this->width, $this->height, true);
+                list($width, $height) = Utils::getBoxForAspectRatio($image->getWidth() / $image->getHeight(), $this->width, $this->height, true);
                 break;
 
             case self::AR_WITHIN:
-                list($this->width, $this->height) = Utils::getBoxForAspectRatio($image->getWidth() / $image->getHeight(), $this->width, $this->height, false);
+                list($width, $height) = Utils::getBoxForAspectRatio($image->getWidth() / $image->getHeight(), $this->width, $this->height, false);
+                break;
+
+            default:
+                $width  = $this->width;
+                $height = $this->height;
                 break;
         }
+
+        return array($width, $height);
     }
 }
