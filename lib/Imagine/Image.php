@@ -89,8 +89,7 @@ class Image
      */
     public function __toString()
     {
-        $pathinfo = pathinfo($this->getPath());
-        return $pathinfo['basename'];
+        return pathinfo($this->getPath(), PATHINFO_BASENAME);
     }
 
     /**
