@@ -16,8 +16,7 @@ class Show implements \Imagine\Command
      */
      public function process(\Imagine\Image $image)
      {
-        if(headers_sent())
-        {
+        if(headers_sent()) {
             throw new \RuntimeException('Can not use '.__METHOD__.' when headers already are sent');
         }
         header("Content-type: ".$image->getMimeType());
