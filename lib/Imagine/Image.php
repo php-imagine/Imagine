@@ -83,13 +83,14 @@ class Image
     }
 
     /**
-     * Return the image's path
+     * Return the image's filename
      *
      * @return string
      */
     public function __toString()
     {
-        return $this->getPath();
+        $pathinfo = pathinfo($this->getPath());
+        return $pathinfo['basename'];
     }
 
     /**
