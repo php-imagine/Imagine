@@ -73,12 +73,11 @@ class Processor
     {
         $commandReflection = new \ReflectionClass($commandClass);
 
-	// Since the constructor arguments are optional, they can not be part
-	// of the interface although, we must check for it
-	if($commandReflection->hasMethod('__construct'))
-	{
-	    return $commandReflection->newInstanceArgs($args);
-	}
-	return $commandReflection->newInstance();
+        // Since the constructor arguments are optional, they can not be part
+        // of the interface although, we must check for it
+        if($commandReflection->hasMethod('__construct')) {
+            return $commandReflection->newInstanceArgs($args);
+        }
+        return $commandReflection->newInstance();
     }
 }
