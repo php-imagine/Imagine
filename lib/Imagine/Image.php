@@ -83,6 +83,16 @@ class Image
     }
 
     /**
+     * Return the image's filename
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return pathinfo($this->getPath(), PATHINFO_BASENAME);
+    }
+
+    /**
      * Get image type
      *
      * @link http://php.net/manual/en/image.constants.php
