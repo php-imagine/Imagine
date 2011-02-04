@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Exception\RuntimeException;
+
 use Imagine\Exception\InvalidArgumentException;
 
 use Imagine\ImageInterface;
@@ -65,8 +67,14 @@ final class FileImage extends Image
                 $format, implode('", "', $this->supported())));
         }
 
+        $this->resource = call_user_func('imagecreatefrom'.$format, $path);
+
+        if (false === $this->resource) {
+            throw new RuntimeException(sprintf('File "%s" could not be opened',
+                $path));
+        }
+
         $this->width    = $width;
         $this->height   = $height;
-        $this->resource = call_user_func('imagecreatefrom'.$format, $path);
     }
 }
