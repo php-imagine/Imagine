@@ -112,6 +112,8 @@ Here is how we would approach the problem with Imagine.
             break; // done
         }
     }
+    
+    $collage->save('/path/to/collage.jpg');
 
 Available methods
 =================
