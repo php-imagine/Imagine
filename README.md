@@ -1,11 +1,9 @@
-Imagine
-=======
+#Imagine#
 
 Image manupulation library for PHP 5.3 inspired by Python's PIL and other image
 librarires
 
-Requirements
-============
+#Requirements#
 
 The Imagine library has the following requirements:
 
@@ -16,11 +14,9 @@ Depending on chosen Image implementation, you might need on of the following:
  - GD2
  - Imagick
 
-Basic usage
-===========
+#Basic usage#
 
-Open Existing Image
--------------------
+##Open Existing Image##
 
 To open an existing image, all you need is to instantiate a correct image
 implementation with the path to image on local/remote FS as the only argument
@@ -47,8 +43,7 @@ Now that you opened an image, you can perform manupulations on it:
         ->crop(0, 0, 45, 45)
         ->save('/path/to/new/image.jpg');
 
-Create new image
-----------------
+##Create new image##
 
 Imagine also let's you create a new empty image:
 
@@ -68,8 +63,7 @@ Again, for Dependency Injection fans:
 
 Both above examples would create an empty image of width 400px and height 300px
 
-Color class
------------
+##Color class##
 
 `Color` is a class in Imagine, it takes two arguments in constructor - the
 color and transparency percent
@@ -93,8 +87,7 @@ and Alpha (transparency) values:
         'A' => $white->getAlpha()
     ));
 
-Advanced example - images collage:
-==================================
+#Advanced example - images collage#
 
 Assume we were tasked with a not so easy task - create a four by four collage
 of 16 people photos for school (each photo is 30x40 px). We need a four rows
@@ -144,8 +137,7 @@ Here is how we would approach the problem with Imagine.
     
     $collage->save('/path/to/collage.jpg');
 
-Available methods
-=================
+#Available methods#
 
  - `->copy()` - duplicates current image and returns new ImageInterface
      instance
@@ -178,8 +170,7 @@ Available methods
  - `->show($format, array $options = array())` - outputs image content. Options
      are the same as in save() method
 
-Image Transformations
-=====================
+#Image Transformations#
 
 Imagine also provides so-called image transformations.
 
@@ -213,24 +204,21 @@ like the following:
             ->save('/path/to/resized/'.md5($path).'.jpg');
     }
 
-Complex Filters
-===============
+#Complex Filters#
 
 Although `Transformation` lets you pre-define any complex tranformations, it
 is sometimes a tedious task to perform, therefore Imagine comes with some of
 the most common transformations pre-built, they're called advanced filters
 and can be found under `Imagine\Filter\Advanced` namespace.
 
-Thumbnail
----------
+##Thumbnail##
 
 Thumbnail generation is probably the most wide-spread image processing tesk a
 PHP developer faces.
 
 Using Imagine its no problem anymore.
 
-Simple Thumbnail Generation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+###Simple Thumbnail Generation###
 
     <?php
     // make thumbnail filter for generating 50x50 px thumbs
@@ -254,16 +242,14 @@ steps:
  5. Crop the middle of the image out to get rid of excess size.
  6. Return the cropped image.
 
-    NOTE: to change the background color fill, you have to instantiate
-    `Thumbnail` filter with UPSCALE_COLOR strategy and fourth argument being
-    the actual color
-    
+NOTE: to change the background color fill, you have to instantiate `Thumbnail`
+filter with UPSCALE_COLOR strategy and fourth argument being the actual color
+
     <?php
     // make thumbnail background black and 50% transparent
     $filter = new Imagine\Filter\Advanced\Thumbnail(50, 50, Imagine\Filter\Advanced\Thumbnail::UPSCALE_COLOR, new Imagine\Color('000', 50));
 
-Thumbnail upscaling
-~~~~~~~~~~~~~~~~~~~
+###Thumbnail upscaling###
 
 Another strategy for thumbnail generation is by first upscaling the image to
 meet the minimum thumbnail measurement requirements and then crop the excess
@@ -272,8 +258,7 @@ size from the middle.
     <?php
     $filter = new Imagine\Filter\Advanced\Thumbnail(50, 50, Imagine\Filter\Advanced\Thumbnail::UPSCALE_RESIZE)
 
-Thumbnail stretching
-~~~~~~~~~~~~~~~~~~~~
+###Thumbnail stretching###
 
 The last generation strategy is to strech side that is smaller than its target
 couterpart to fit minimum length constraint.
@@ -281,8 +266,7 @@ couterpart to fit minimum length constraint.
     <?php
     $filter = new Imagine\Filter\Advanced\Thumbnail(50, 50, Imagine\Filter\Advanced\Thumbnail::UPSCALE_STRETCH)
 
-Architechture
-=============
+#Architechture#
 
 The architechture is very flexible, as the filters don't need any processing
 logic other than calculating the variables based on some settings and invoke
@@ -293,8 +277,7 @@ The Tranformation object is an example of a composite filter, that represents
 a stack or queue of filters, that get applied to an Image upon application of
 the Tranformation itself.
 
-TODO
-====
+#TODO#
 
  - update the ImagineBundle to use the new library
  - implement Imagick library support
