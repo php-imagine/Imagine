@@ -98,7 +98,7 @@ Here is how we would approach the problem with Imagine.
     foreach (glob('/path/to/people/photos/*.jpg') as $path) {
         $photo = new Imagine\Gd\FileImage($path);
         
-        $collage->paste($photo, $x, $y);
+        $collage->paste($photo, $x, $y); // paste photo at current position
         
         $x += 30; // move position by 30px to the right
         
