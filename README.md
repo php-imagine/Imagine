@@ -57,7 +57,7 @@ Imagine also let's you create a new empty image:
     
     // or create a new image with fully transparent white background
     
-    $image = new Imagine\Gd\BlankImage(400, 300, new Imagine\Color('fff', 0));
+    $image = new Imagine\Gd\BlankImage(400, 300, new Imagine\Color('fff', 100));
 
 Again, for Dependency Injection fans:
 
@@ -67,6 +67,31 @@ Again, for Dependency Injection fans:
     $image = $factory->create(400, 300);
 
 Both above examples would create an empty image of width 400px and height 300px
+
+Color class
+-----------
+
+`Color` is a class in Imagine, it takes two arguments in constructor - the
+color and transparency percent
+
+Here is how you would create a fully transparent white color:
+
+    <?php
+    $white = new Imagine\Color('fff', 100);
+    $white = new Imagine\Color('ffffff', 100);
+    $white = new Imagine\Color('#fff', 100);
+    $white = new Imagine\Color('#ffffff', 100);
+
+After you have instantiated a color, you can easily get its Red, Green, Blue
+and Alpha (transparency) values:
+
+    <?php
+    var_dump(array(
+        'R' => $white->getRed(),
+        'G' => $white->getGreen(),
+        'B' => $white->getBlue(),
+        'A' => $white->getAlpha()
+    ));
 
 Advanced example - images collage:
 ==================================
