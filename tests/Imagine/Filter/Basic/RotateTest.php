@@ -11,18 +11,19 @@
 
 namespace Imagine\Filter\Basic;
 
-class CopyTest extends BasicFilterTestCase
+class RotateTest extends BasicFilterTestCase
 {
-    public function testShouldCopyAndReturnResultingImage()
+    public function testShouldRotateImageAndReturnResult()
     {
-        $command = new Copy();
         $image   = $this->getImage();
-        $clone   = $this->getImage();
+        $angle   = 90;
+        $command = new Rotate($angle);
 
         $image->expects($this->once())
-            ->method('copy')
-            ->will($this->returnValue($clone));
+            ->method('rotate')
+            ->with($angle)
+            ->will($this->returnValue($image));
 
-        $this->assertSame($clone, $command->apply($image));
+        $this->assertSame($image, $command->apply($image));
     }
 }

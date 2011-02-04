@@ -11,18 +11,19 @@
 
 namespace Imagine\Filter\Basic;
 
-class CopyTest extends BasicFilterTestCase
+class ShowTest extends BasicFilterTestCase
 {
-    public function testShouldCopyAndReturnResultingImage()
+    public function testShouldShowImageAndReturnResult()
     {
-        $command = new Copy();
         $image   = $this->getImage();
-        $clone   = $this->getImage();
+        $format  = 'jpg';
+        $command = new Show($format);
 
         $image->expects($this->once())
-            ->method('copy')
-            ->will($this->returnValue($clone));
+            ->method('show')
+            ->with($format)
+            ->will($this->returnValue($image));
 
-        $this->assertSame($clone, $command->apply($image));
+        $this->assertSame($image, $command->apply($image));
     }
 }
