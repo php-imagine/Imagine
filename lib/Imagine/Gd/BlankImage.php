@@ -31,12 +31,15 @@ final class BlankImage extends Image
     {
         $this->resource = imagecreatetruecolor($width, $height);
 
+        imagealphablending($this->resource, false);
+        imagesavealpha($this->resource, true);
+
         if (false === $this->resource) {
             throw new RuntimeException('Create operation failed');
         }
 
         if (null !== $color) {
-            $this->getColor($color);
+            imagefilledrectangle($this->resource, 0, 0, $width, $height, $this->getColor($color));
         }
 
         $this->width    = $width;

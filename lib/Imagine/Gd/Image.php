@@ -85,8 +85,6 @@ class Image implements ImageInterface, ImageMetadataInterface
      */
     final public function crop($x, $y, $width, $height)
     {
-        $dest = imagecreatetruecolor();
-
         if ($x < 0 || $y < 0 || $width < 1 || $height < 1 ||
             $this->width - ($x + $width) < 0 ||
             $this->height - ($y + $height) < 0) {
@@ -96,6 +94,11 @@ class Image implements ImageInterface, ImageMetadataInterface
                 'current image borders');
         }
 
+        $dest = imagecreatetruecolor($width, $height);
+
+        imagealphablending($dest, false);
+        imagesavealpha($dest, true);
+
         if (false === imagecopymerge($dest, $this->resource, 0, 0, $x, $y,
             $width, $height, 100)) {
             throw new RuntimeException('Image crop operation failed');
@@ -103,6 +106,8 @@ class Image implements ImageInterface, ImageMetadataInterface
 
         imagedestroy($this->resource);
 
+        $this->width    = $width;
+        $this->height   = $height;
         $this->resource = $dest;
 
         return $this;
@@ -147,6 +152,9 @@ class Image implements ImageInterface, ImageMetadataInterface
     {
         $dest = imagecreatetruecolor($width, $height);
 
+        imagealphablending($dest, false);
+        imagesavealpha($dest, true);
+
         if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
             $width, $height, $this->width, $this->height)) {
             throw new RuntimeException('Image resize operation failed');
@@ -177,6 +185,9 @@ class Image implements ImageInterface, ImageMetadataInterface
         }
 
         imagedestroy($this->resource);
+
+        $this->width    = imagesx($resource);
+        $this->height   = imagesy($resource);
         $this->resource = $resource;
 
         return $this;
@@ -216,6 +227,9 @@ class Image implements ImageInterface, ImageMetadataInterface
     {
         $dest = imagecreatetruecolor($this->width, $this->height);
 
+        imagealphablending($dest, false);
+        imagesavealpha($dest, true);
+
         for ($i = 0; $i < $this->width; $i++) {
             if (false === imagecopymerge($dest, $this->resource, $i, 0,
                 ($this->width - 1) - $i, 0, 1, $this->height, 100)) {
@@ -237,6 +251,9 @@ class Image implements ImageInterface, ImageMetadataInterface
     final public function flipVertically()
     {
         $dest = imagecreatetruecolor($this->width, $this->height);
+
+        imagealphablending($dest, false);
+        imagesavealpha($dest, true);
 
         for ($i = 0; $i < $this->height; $i++) {
             if (false === imagecopymerge($dest, $this->resource, 0, $i,
@@ -287,8 +304,13 @@ class Image implements ImageInterface, ImageMetadataInterface
             $args[] = $options['quality'];
         }
 
-        if ($format === 'png' && isset($options['filters'])) {
-            $args[] = $options['filters'];
+        if ($format === 'png') {
+            imagealphablending($this->resource, false);
+            imagesavealpha($this->resource, true);
+
+            if (isset($options['filters'])) {
+                $args[] = $options['filters'];
+            }
         }
 
         if (($format === 'wbmp' || $format === 'xbm') && isset($options['foreground'])) {
@@ -305,7 +327,6 @@ class Image implements ImageInterface, ImageMetadataInterface
         $color = imagecolorallocatealpha($this->resource, $color->getRed(),
             $color->getGreen(), $color->getBlue(),
             round(127 * $color->getAlpha() / 100));
-
         if (false === $color) {
             throw new RuntimeException(sprintf('Unable to allocate color '.
                 '"RGB(%s, %s, %s)" with transparency of %d percent',

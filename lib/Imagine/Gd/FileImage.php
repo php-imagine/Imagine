@@ -69,6 +69,11 @@ final class FileImage extends Image
 
         $this->resource = call_user_func('imagecreatefrom'.$format, $path);
 
+        if ('png' === $format) {
+            imagealphablending($this->resource, false);
+            imagesavealpha($this->resource, true);
+        }
+
         if (false === $this->resource) {
             throw new RuntimeException(sprintf('File "%s" could not be opened',
                 $path));

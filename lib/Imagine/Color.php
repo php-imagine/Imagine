@@ -25,9 +25,9 @@ final class Color
      *     - new Color(array(255, 255, 255)) - another way of getting white
      *
      * @param array|string $color
-     * @param int          $alpha
+     * @param integer      $alpha
      */
-    public function __construct($color, $alpha = 100)
+    public function __construct($color, $alpha = 0)
     {
         $this->setColor($color);
         $this->setAlpha($alpha);

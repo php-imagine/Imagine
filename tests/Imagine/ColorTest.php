@@ -20,7 +20,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(255, $color->getRed());
         $this->assertEquals(255, $color->getGreen());
         $this->assertEquals(255, $color->getBlue());
-        $this->assertEquals(100, $color->getAlpha());
+        $this->assertEquals(0, $color->getAlpha());
     }
 
     /**
