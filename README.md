@@ -54,6 +54,10 @@ Imagine also let's you create a new empty image:
 
     <?php
     $image = new Imagine\Gd\BlankImage(400, 300);
+    
+    // or create a new image with fully transparent white background
+    
+    $image = new Imagine\Gd\BlankImage(400, 300, new Imagine\Color('fff', 0));
 
 Again, for Dependency Injection fans:
 

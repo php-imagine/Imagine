@@ -169,9 +169,8 @@ class Image implements ImageInterface, ImageMetadataInterface
     {
         $color = $background ? $background : new Color('fff');
 
-        $resource = imagerotate($this->resource, $angle, imagecolorexact(
-            $this->resource, $color->getRed(), $color->getGreen(),
-            $color->getBlue()));
+        $resource = imagerotate($this->resource, $angle,
+            $this->getColor($background));
 
         if (false === $resource) {
             throw new RuntimeException('Image rotate operation failed');
@@ -299,6 +298,22 @@ class Image implements ImageInterface, ImageMetadataInterface
         if (false === call_user_func_array($save, $args)) {
             throw new RuntimeException('Save operation failed');
         }
+    }
+
+    protected function getColor(Color $color)
+    {
+        $color = imagecolorallocatealpha($this->resource, $color->getRed(),
+            $color->getGreen(), $color->getBlue(),
+            round(127 * $color->getAlpha() / 100));
+
+        if (false === $color) {
+            throw new RuntimeException(sprintf('Unable to allocate color '.
+                '"RGB(%s, %s, %s)" with transparency of %d percent',
+                $color->getRed(), $color->getGreen(), $color->getBlue(),
+                $color->getAlpha()));
+        }
+
+        return $color;
     }
 
     /**

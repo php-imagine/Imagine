@@ -17,16 +17,17 @@ use Imagine\Exception\InvalidArgumentException;
 interface ImageFactoryInterface
 {
     /**
-     * Creates a new empty image
+     * Creates a new empty image with an optional background color
      *
      * @param integer $width
      * @param integer $height
+     * @param Color   $color
      *
      * @throws InvalidArgumentException
      *
      * @return ImageInterface
      */
-    function create($width, $height);
+    function create($width, $height, Color $color = null);
 
     /**
      * Opens an existing image from $path

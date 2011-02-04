@@ -11,6 +11,7 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Color;
 use Imagine\ImageFactoryInterface;
 
 class ImageFactory implements ImageFactoryInterface
@@ -19,9 +20,9 @@ class ImageFactory implements ImageFactoryInterface
      * (non-PHPdoc)
      * @see Imagine.ImageFactoryInterface::create()
      */
-    public function create($width, $height)
+    public function create($width, $height, Color $color = null)
     {
-        return new BlankImage($width, $height);
+        return new BlankImage($width, $height, $color);
     }
 
     /**

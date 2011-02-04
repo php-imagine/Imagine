@@ -36,8 +36,7 @@ final class BlankImage extends Image
         }
 
         if (null !== $color) {
-            imagecolorallocatealpha($this->resource, $color->getRed(),
-                $color->getGreen(), $color->getBlue(), $color->getAlpha());
+            $this->getColor($color);
         }
 
         $this->width    = $width;
