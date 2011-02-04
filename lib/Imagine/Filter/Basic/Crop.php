@@ -18,6 +18,15 @@ class Crop implements FilterInterface
 {
     private $x, $y, $width, $height;
 
+    /**
+     * Constructs a Crop filter with given x, y, coordinates and crop width and
+     * height values
+     *
+     * @param integer $x
+     * @param integer $y
+     * @param integer $width
+     * @param integer $height
+     */
     public function __construct($x, $y, $width, $height)
     {
         $this->x      = $x;
@@ -26,6 +35,10 @@ class Crop implements FilterInterface
         $this->height = $height;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Filter.FilterInterface::apply()
+     */
     public function apply(ImageInterface $image)
     {
         return $image->crop($this->x, $this->y, $this->width, $this->height);

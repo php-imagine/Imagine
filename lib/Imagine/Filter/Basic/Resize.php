@@ -19,12 +19,22 @@ class Resize implements FilterInterface
     private $width;
     private $height;
 
+    /**
+     * Constructs Resize filter with given width and height
+     *
+     * @param integer $width
+     * @param integer $height
+     */
     public function __construct($width, $height)
     {
         $this->width  = $width;
         $this->height = $height;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Filter.FilterInterface::apply()
+     */
     public function apply(ImageInterface $image)
     {
         return $image->resize($this->width, $this->height);

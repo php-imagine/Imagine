@@ -20,12 +20,22 @@ class Rotate implements FilterInterface
     private $angle;
     private $background;
 
+    /**
+     * Constructs Rotate filter with given angle and background color
+     *
+     * @param integer $angle
+     * @param Color   $background
+     */
     public function __construct($angle, Color $background = null)
     {
         $this->angle      = $angle;
         $this->background = $background;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Filter.FilterInterface::apply()
+     */
     public function apply(ImageInterface $image)
     {
         return $image->rotate($this->angle, $this->background);

@@ -40,6 +40,14 @@ final class FileImage extends Image
         IMAGETYPE_XBM      => 'xbm'
     );
 
+    /**
+     * Constructs an image from file
+     * Throws exception if unsupported or non-existent image is given
+     *
+     * @param string $path
+     *
+     * @throws InvalidArgumentException
+     */
     public function __construct($path)
     {
         if (!file_exists($path)) {

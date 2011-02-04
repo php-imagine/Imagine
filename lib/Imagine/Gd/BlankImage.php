@@ -15,6 +15,15 @@ use Imagine\Exception\RuntimeException;
 
 final class BlankImage extends Image
 {
+    /**
+     * Constructs a blank image in memory for given dimensions
+     * Throws exception if image creation fails
+     *
+     * @param int $width
+     * @param int $height
+     *
+     * @throws RuntimeException
+     */
     public function __construct($width, $height)
     {
         $this->width    = $width;

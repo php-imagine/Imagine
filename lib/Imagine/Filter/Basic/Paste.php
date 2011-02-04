@@ -19,6 +19,14 @@ class Paste implements FilterInterface
     private $image;
     private $x, $y;
 
+    /**
+     * Constructs a Paste filter with given ImageInterface to paste and x, y
+     * coordinates of target position
+     *
+     * @param ImageInterface $image
+     * @param integer        $x
+     * @param integer        $y
+     */
     public function __construct(ImageInterface $image, $x, $y)
     {
         $this->image = $image;
@@ -26,6 +34,10 @@ class Paste implements FilterInterface
         $this->y     = $y;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Filter.FilterInterface::apply()
+     */
     public function apply(ImageInterface $image)
     {
         return $image->paste($this->image, $this->x, $this->y);

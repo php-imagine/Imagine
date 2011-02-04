@@ -37,21 +37,36 @@ class Image implements ImageInterface, ImageMetadataInterface
         $this->height   = imagesy($resource);
     }
 
+    /**
+     * Makes sure the current image resource is destroyed
+     */
     public function __destruct()
     {
         imagedestroy($this->resource);
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageMetadataInterface::getHeight()
+     */
     final public function getHeight()
     {
         return $this->height;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageMetadataInterface::getWidth()
+     */
     final public function getWidth()
     {
         return $this->width;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::copy()
+     */
     final public function copy()
     {
         $copy = new BlankImage($this->width, $this->height);
@@ -64,6 +79,10 @@ class Image implements ImageInterface, ImageMetadataInterface
         return $copy;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::crop()
+     */
     final public function crop($x, $y, $width, $height)
     {
         $dest = imagecreatetruecolor();
@@ -88,6 +107,10 @@ class Image implements ImageInterface, ImageMetadataInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::paste()
+     */
     final public function paste(ImageInterface $image, $x, $y)
     {
         if (!$image instanceof self) {
@@ -115,6 +138,10 @@ class Image implements ImageInterface, ImageMetadataInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::resize()
+     */
     final public function resize($width, $height)
     {
         $dest = imagecreatetruecolor($width, $height);
@@ -133,6 +160,10 @@ class Image implements ImageInterface, ImageMetadataInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::rotate()
+     */
     final public function rotate($angle, Color $background = null)
     {
         $color = $background ? $background : new Color('fff');
@@ -149,6 +180,10 @@ class Image implements ImageInterface, ImageMetadataInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::save()
+     */
     final public function save($path, array $options = array())
     {
         $info = pathinfo($path);
@@ -160,6 +195,10 @@ class Image implements ImageInterface, ImageMetadataInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::show()
+     */
     final public function show($format, array $options = array())
     {
         $this->saveOrOutput($format, $options);
@@ -167,6 +206,63 @@ class Image implements ImageInterface, ImageMetadataInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::flipHorizontally()
+     */
+    final public function flipHorizontally()
+    {
+        $dest = imagecreatetruecolor($this->width, $this->height);
+
+        for ($i = 0; $i < $this->width; $i++) {
+            if (!imagecopy($dest, $this->resource, $i, 0,
+                ($this->width - 1) - $i, 0, 1, $this->height)) {
+                throw new RuntimeException('Horizontal flip operation failed');
+            }
+        }
+
+        imagedestroy($this->resource);
+
+        $this->resource = $dest;
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::flipVertically()
+     */
+    final public function flipVertically()
+    {
+        $dest = imagecreatetruecolor($this->width, $this->height);
+
+        for ($i = 0; $i < $this->height; $i++) {
+            if (!imagecopy($dest, $this->resource, 0, $i,
+                0, ($this->height - 1) - $i, $this->width, 1)) {
+                throw new RuntimeException('Vartical flip operation failed');
+            }
+        }
+
+        imagedestroy($this->resource);
+
+        $this->resource = $dest;
+
+        return $this;
+
+    }
+
+    /**
+     * Internal
+     *
+     * Performs save or show operation using one of GD's image... functions
+     *
+     * @param string $format
+     * @param array  $options
+     * @param string $filename
+     *
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     */
     private function saveOrOutput($format, array $options, $filename = null)
     {
 
@@ -202,43 +298,15 @@ class Image implements ImageInterface, ImageMetadataInterface
         }
     }
 
-    final public function flipHorizontally()
-    {
-        $dest = imagecreatetruecolor($this->width, $this->height);
-
-        for ($i = 0; $i < $this->width; $i++) {
-            if (!imagecopy($dest, $this->resource, $i, 0,
-                ($this->width - 1) - $i, 0, 1, $this->height)) {
-                throw new RuntimeException('Horizontal flip operation failed');
-            }
-        }
-
-        imagedestroy($this->resource);
-
-        $this->resource = $dest;
-
-        return $this;
-    }
-
-    final public function flipVertically()
-    {
-        $dest = imagecreatetruecolor($this->width, $this->height);
-
-        for ($i = 0; $i < $this->height; $i++) {
-            if (!imagecopy($dest, $this->resource, 0, $i,
-                0, ($this->height - 1) - $i, $this->width, 1)) {
-                throw new RuntimeException('Vartical flip operation failed');
-            }
-        }
-
-        imagedestroy($this->resource);
-
-        $this->resource = $dest;
-
-        return $this;
-
-    }
-
+    /**
+     * Internal
+     *
+     * Checks whether a given format is supported by GD library
+     *
+     * @param string $format
+     *
+     * @return Boolean
+     */
     protected function supported(&$format = null)
     {
         $formats = array('gif', 'jpeg', 'png', 'wbmp', 'xbm');

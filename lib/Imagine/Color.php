@@ -33,26 +33,55 @@ final class Color
         $this->setAlpha($alpha);
     }
 
+    /**
+     * Returns RED value of the color
+     *
+     * @return integer
+     */
     public function getRed()
     {
         return $this->r;
     }
 
+    /**
+     * Returns GREEN value of the color
+     *
+     * @return integer
+     */
     public function getGreen()
     {
         return $this->g;
     }
 
+    /**
+     * Returns BLUE value of the color
+     *
+     * @return integer
+     */
     public function getBlue()
     {
         return $this->b;
     }
 
+    /**
+     * Returns percentage of transparency of the color
+     *
+     * @return integer
+     */
     public function getAlpha()
     {
         return $this->alpha;
     }
 
+    /**
+     * Internal
+     *
+     * Performs checks for validity of given alpha value and sets it
+     *
+     * @param integer $alpha
+     *
+     * @throws InvalidArgumentException
+     */
     private function setAlpha($alpha)
     {
         if (!is_int($alpha) || $alpha < 0 || $alpha > 100) {
@@ -62,6 +91,15 @@ final class Color
         $this->alpha = $alpha;
     }
 
+    /**
+     * Internal
+     *
+     * Performs checks for color validity (hex or array of array(R, G, B))
+     *
+     * @param string|array $color
+     *
+     * @throws InvalidArgumentException
+     */
     private function setColor($color)
     {
         if (!is_string($color) && !is_array($color)) {

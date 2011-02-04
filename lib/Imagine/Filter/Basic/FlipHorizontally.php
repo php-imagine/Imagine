@@ -16,6 +16,10 @@ use Imagine\ImageInterface;
 
 class FlipHorizontally implements FilterInterface
 {
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Filter.FilterInterface::apply()
+     */
     public function apply(ImageInterface $image)
     {
         return $image->flipHorizontally();
