@@ -11,25 +11,36 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Color;
 use Imagine\Exception\RuntimeException;
 
 final class BlankImage extends Image
 {
     /**
      * Constructs a blank image in memory for given dimensions
+     * If optional Color parameter is given, paints image into it
      * Throws exception if image creation fails
      *
-     * @param int $width
-     * @param int $height
+     * @param integer $width
+     * @param integer $height
+     * @param Color   $color
      *
      * @throws RuntimeException
      */
-    public function __construct($width, $height)
+    public function __construct($width, $height, Color $color = null)
     {
-        $this->width    = $width;
-        $this->height   = $height;
-        if (!($this->resource = imagecreatetruecolor($width, $height))) {
+        $this->resource = imagecreatetruecolor($width, $height);
+
+        if (false === $this->resource) {
             throw new RuntimeException('Create operation failed');
         }
+
+        if (null !== $color) {
+            imagecolorallocatealpha($this->resource, $color->getRed(),
+                $color->getGreen(), $color->getBlue(), $color->getAlpha());
+        }
+
+        $this->width    = $width;
+        $this->height   = $height;
     }
 }

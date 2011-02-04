@@ -71,8 +71,8 @@ class Image implements ImageInterface, ImageMetadataInterface
     {
         $copy = new BlankImage($this->width, $this->height);
 
-        if (!imagecopy($copy->resource, $this->resource, 0, 0, 0, 0,
-            $this->width, $this->height)) {
+        if (false === imagecopymerge($copy->resource, $this->resource, 0, 0, 0,
+            0, $this->width, $this->height, 100)) {
             throw new RuntimeException('Image copy operation failed');
         }
 
@@ -96,7 +96,8 @@ class Image implements ImageInterface, ImageMetadataInterface
                 'current image borders');
         }
 
-        if (!imagecopy($dest, $this->resource, 0, 0, $x, $y, $width, $height)) {
+        if (false === imagecopymerge($dest, $this->resource, 0, 0, $x, $y,
+            $width, $height, 100)) {
             throw new RuntimeException('Image crop operation failed');
         }
 
@@ -130,8 +131,8 @@ class Image implements ImageInterface, ImageMetadataInterface
             ));
         }
 
-        if (!imagecopy($this->resource, $image->resource, $x, $y, 0, 0,
-            $image->getWidth(), $image->getHeight())) {
+        if (false === imagecopymerge($this->resource, $image->resource, $x, $y,
+            0, 0, $image->getWidth(), $image->getHeight(), 100)) {
             throw new RuntimeException('Image paste operation failed');
         }
 
@@ -146,8 +147,8 @@ class Image implements ImageInterface, ImageMetadataInterface
     {
         $dest = imagecreatetruecolor($width, $height);
 
-        if (!imagecopyresampled($dest, $this->resource, 0, 0, 0, 0, $width,
-            $height, $this->width, $this->height)) {
+        if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
+            $width, $height, $this->width, $this->height)) {
             throw new RuntimeException('Image resize operation failed');
         }
 
@@ -168,9 +169,11 @@ class Image implements ImageInterface, ImageMetadataInterface
     {
         $color = $background ? $background : new Color('fff');
 
-        if (!($resource = imagerotate($this->resource, $angle, imagecolorexact(
+        $resource = imagerotate($this->resource, $angle, imagecolorexact(
             $this->resource, $color->getRed(), $color->getGreen(),
-            $color->getBlue())))) {
+            $color->getBlue()));
+
+        if (false === $resource) {
             throw new RuntimeException('Image rotate operation failed');
         }
 
@@ -215,8 +218,8 @@ class Image implements ImageInterface, ImageMetadataInterface
         $dest = imagecreatetruecolor($this->width, $this->height);
 
         for ($i = 0; $i < $this->width; $i++) {
-            if (!imagecopy($dest, $this->resource, $i, 0,
-                ($this->width - 1) - $i, 0, 1, $this->height)) {
+            if (false === imagecopymerge($dest, $this->resource, $i, 0,
+                ($this->width - 1) - $i, 0, 1, $this->height, 100)) {
                 throw new RuntimeException('Horizontal flip operation failed');
             }
         }
@@ -237,8 +240,8 @@ class Image implements ImageInterface, ImageMetadataInterface
         $dest = imagecreatetruecolor($this->width, $this->height);
 
         for ($i = 0; $i < $this->height; $i++) {
-            if (!imagecopy($dest, $this->resource, 0, $i,
-                0, ($this->height - 1) - $i, $this->width, 1)) {
+            if (false === imagecopymerge($dest, $this->resource, 0, $i,
+                0, ($this->height - 1) - $i, $this->width, 1, 100)) {
                 throw new RuntimeException('Vartical flip operation failed');
             }
         }
@@ -293,7 +296,7 @@ class Image implements ImageInterface, ImageMetadataInterface
             $args[] = $options['foreground'];
         }
 
-        if (!call_user_func_array($save, $args)) {
+        if (false === call_user_func_array($save, $args)) {
             throw new RuntimeException('Save operation failed');
         }
     }

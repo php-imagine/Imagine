@@ -26,5 +26,12 @@ class ImageTest extends \PHPUnit_Framework_TestCase
             ->save('tests/Imagine/Fixtures/clone.jpg', array('quality' => 100));
 
         unset($image);
+
+        $image = new FileImage('tests/Imagine/Fixtures/clone.jpg');
+
+        $this->assertEquals(364, $image->getWidth());
+        $this->assertEquals(126, $image->getHeight());
+
+        unlink('tests/Imagine/Fixtures/clone.jpg');
     }
 }
