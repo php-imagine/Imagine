@@ -28,6 +28,24 @@ final class Transformation implements FilterInterface, ImageInterface
     private $filters = array();
 
     /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::getHeight()
+     */
+    public function getHeight()
+    {
+
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::getWidth()
+     */
+    public function getWidth()
+    {
+
+    }
+
+    /**
      * Applies a given FilterInterface onto given ImageInterface and returns
      * modified ImageInterface
      *

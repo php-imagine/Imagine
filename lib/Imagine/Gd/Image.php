@@ -16,9 +16,8 @@ use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Color;
 use Imagine\ImageInterface;
-use Imagine\ImageMetadataInterface;
 
-class Image implements ImageInterface, ImageMetadataInterface
+class Image implements ImageInterface
 {
     protected $width, $height;
 
