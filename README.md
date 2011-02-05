@@ -226,4 +226,5 @@ the Tranformation itself.
 #TODO#
 
  - update the ImagineBundle to use the new library
- - implement Imagick library support
+ - remove Gd\FileImage and Gd\BlankImage classes in favor of using factories
+ - document new image class instantiation strategy (only factories)

@@ -28,12 +28,14 @@ class Image implements ImageInterface
      * imagecreatetruecolor()
      *
      * @param resource $resource
+     * @param integer  $width
+     * @param integer  $height
      */
-    public function __construct($resource)
+    public function __construct($resource, $width = null, $height = null)
     {
         $this->resource = $resource;
-        $this->width    = imagesx($resource);
-        $this->height   = imagesy($resource);
+        $this->width    = $width ? : imagesx($resource);
+        $this->height   = $height ? : imagesy($resource);
     }
 
     /**
@@ -149,6 +151,11 @@ class Image implements ImageInterface
      */
     final public function resize($width, $height)
     {
+        if ($width < 1 || $height < 1) {
+            throw new InvalidArgumentException('Width an height of the '.
+                'resize must be positive integers');
+        }
+
         $dest = imagecreatetruecolor($width, $height);
 
         imagealphablending($dest, false);
@@ -275,6 +282,11 @@ class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
+        if ($width < 1 || $height < 1) {
+            throw new InvalidArgumentException('Width an height of the '.
+                'resize must be positive integers');
+        }
+
         $thumbnail = $this->copy();
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
@@ -294,9 +306,7 @@ class Image implements ImageInterface
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
             $canvas = new BlankImage($width, $height, $background);
 
-            $canvas->paste($thumbnail, $x, $y);
-
-            $thumbnail = $canvas;
+            $thumbnail = $canvas->paste($thumbnail, $x, $y);
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             $thumbnail->crop($x, $y, $width, $height);
         }
