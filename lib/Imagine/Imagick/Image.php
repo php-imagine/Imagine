@@ -148,7 +148,8 @@ class Image implements ImageInterface
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Imagick\Image can '.
-                'only paste() Gd\Image instances, %s given', get_class($image)
+                'only paste() Imagick\Image instances, %s given',
+                get_class($image)
             ));
         }
 
