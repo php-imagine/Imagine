@@ -19,7 +19,8 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 {
     public function testRotate()
     {
-        $image = new FileImage('tests/Imagine/Fixtures/google.png');
+        $factory = new ImageFactory();
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
         $image->paste(
                 $image->copy()
@@ -31,7 +32,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
         unset($image);
 
-        $image = new FileImage('tests/Imagine/Fixtures/clone.jpg');
+        $image = $factory->open('tests/Imagine/Fixtures/clone.jpg');
 
         $this->assertEquals(364, $image->getWidth());
         $this->assertEquals(126, $image->getHeight());
@@ -41,7 +42,8 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
     public function testThumbnailGeneration()
     {
-        $image = new FileImage('tests/Imagine/Fixtures/google.png');
+        $factory = new ImageFactory();
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
         $image->thumbnail(50, 50, ImageInterface::THUMBNAIL_INSET, new Color('fff'))
             ->save('tests/Imagine/Fixtures/inset.png', array('quality' => 9));
@@ -49,12 +51,12 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $image->thumbnail(50, 50, ImageInterface::THUMBNAIL_OUTBOUND)
             ->save('tests/Imagine/Fixtures/outbound.png', array('quality' => 9));
 
-        $thumbnail = new FileImage('tests/Imagine/Fixtures/inset.png');
+        $thumbnail = $factory->open('tests/Imagine/Fixtures/inset.png');
         $this->assertEquals(50, $thumbnail->getWidth());
         $this->assertEquals(50, $thumbnail->getHeight());
         unlink('tests/Imagine/Fixtures/inset.png');
 
-        $thumbnail = new FileImage('tests/Imagine/Fixtures/outbound.png');
+        $thumbnail = $factory->open('tests/Imagine/Fixtures/outbound.png');
         $this->assertEquals(50, $thumbnail->getWidth());
         $this->assertEquals(50, $thumbnail->getHeight());
         unlink('tests/Imagine/Fixtures/outbound.png');

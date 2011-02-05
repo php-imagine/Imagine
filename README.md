@@ -19,21 +19,18 @@ Depending on chosen Image implementation, you might need on of the following:
 ##Open Existing Image##
 
 To open an existing image, all you need is to instantiate a correct image
-implementation with the path to image on local/remote FS as the only argument
-
-    <?php
-    $image = new Imagine\Gd\FileImage('/path/to/image.jpg');
-
-The FileImage constructor might throw one of the following exceptions:
- - Imagine\Exception\InvalidArgumentException
- - Imagine\Exception\RuntimeException
-
-For the Dependency Injection fans out there, there is an alternative syntax:
+factory and invoke `ImageFactory::open()` with `$path` to image as the  argument
 
     <?php
     $factory = new Imagine\Gd\ImageFactory();
+    // or
+    $factory = new Imagine\Imagick\ImageFactory();
     
     $image = $factory->open('/path/to/image.jpg');
+
+The `ImageFactory::open()` might throw one of the following exceptions:
+ - Imagine\Exception\InvalidArgumentException
+ - Imagine\Exception\RuntimeException
 
 Now that you opened an image, you can perform manupulations on it:
 
@@ -48,20 +45,18 @@ Now that you opened an image, you can perform manupulations on it:
 Imagine also let's you create a new empty image:
 
     <?php
-    $image = new Imagine\Gd\BlankImage(400, 300);
-    
-    // or create a new image with fully transparent white background
-    
-    $image = new Imagine\Gd\BlankImage(400, 300, new Imagine\Color('fff', 100));
-
-Again, for Dependency Injection fans:
-
-    <?php
-    $factory = new Imagine\Gd\ImageFactory();
-    
     $image = $factory->create(400, 300);
 
-Both above examples would create an empty image of width 400px and height 300px
+The above example would create an empty image of width 400px and height 300px
+
+You can optionally specify the colorfill of the newly created image (defaults
+to white):
+
+    <?php
+    $image = $factory->create(400, 300, new Imagine\Color('000', 100));
+
+The above example creates a new empty image with fully transparet black
+background
 
 ##Color class##
 
@@ -112,13 +107,13 @@ The collage would look something like the following:
 Here is how we would approach the problem with Imagine.
 
     <?php
-    $collage = new Imagine\Gd\BlankImage(120, 160);
+    $collage = $factory->open(120, 160);
     
     $x = 0;
     $y = 0;
 
     foreach (glob('/path/to/people/photos/*.jpg') as $path) {
-        $photo = new Imagine\Gd\FileImage($path);
+        $photo = $factory->open($path);
         
         $collage->paste($photo, $x, $y); // paste photo at current position
         
@@ -196,7 +191,7 @@ Example, naive thumbnail implementation:
     $transformation->thumbnail(30, 30)
         ->save('/path/to/resized/thumbnail.jpg');
     
-    $transformation->apply(new Imagine\Gd\FileImage('/path/to/image.jpg'));
+    $transformation->apply($factory->open('/path/to/image.jpg'));
 
 The result of transformation apply is the modified image instance itself, so if
 we wanted to create a mass processing thumbnail script, we would do something
@@ -208,7 +203,7 @@ like the following:
     $transformation->thumbnail(30, 30);
     
     foreach (glob(/path/to/lots/of/images/*.jpg) as $path) {
-        $transformation->apply(new Imagine\Gd\FileImage($path))
+        $transformation->apply($factory->open($path))
             ->save('/path/to/resized/'.md5($path).'.jpg');
     }
 
@@ -226,5 +221,3 @@ the Tranformation itself.
 #TODO#
 
  - update the ImagineBundle to use the new library
- - remove Gd\FileImage and Gd\BlankImage classes in favor of using factories
- - document new image class instantiation strategy (only factories)

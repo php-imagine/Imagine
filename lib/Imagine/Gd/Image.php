@@ -11,17 +11,34 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Color;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Color;
+use Imagine\Gd\ImageFactory;
 use Imagine\ImageInterface;
 
 class Image implements ImageInterface
 {
-    protected $width, $height;
+    /**
+     * @var integer
+     */
+    private $width;
 
-    protected $resource;
+    /**
+     * @var integer
+     */
+    private $height;
+
+    /**
+     * @var resource
+     */
+    private $resource;
+
+    /**
+     * @var ImageFactory
+     */
+    private $factory;
 
     /**
      * Constructs a new Image instance using the result of
@@ -31,11 +48,12 @@ class Image implements ImageInterface
      * @param integer  $width
      * @param integer  $height
      */
-    public function __construct($resource, $width = null, $height = null)
+    public function __construct($resource, $width, $height, ImageFactory $factory)
     {
         $this->resource = $resource;
-        $this->width    = $width ? : imagesx($resource);
-        $this->height   = $height ? : imagesy($resource);
+        $this->width    = $width;
+        $this->height   = $height;
+        $this->factory  = $factory;
     }
 
     /**
@@ -70,7 +88,7 @@ class Image implements ImageInterface
      */
     final public function copy()
     {
-        $copy = new BlankImage($this->width, $this->height);
+        $copy = $this->factory->create($this->width, $this->height);
 
         if (false === imagecopymerge($copy->resource, $this->resource, 0, 0, 0,
             0, $this->width, $this->height, 100)) {
@@ -304,7 +322,7 @@ class Image implements ImageInterface
         $y = abs(round(($height - $thumbnail->height) / 2));
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            $canvas = new BlankImage($width, $height, $background);
+            $canvas = $this->factory->create($width, $height, $background);
 
             $thumbnail = $canvas->paste($thumbnail, $x, $y);
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
