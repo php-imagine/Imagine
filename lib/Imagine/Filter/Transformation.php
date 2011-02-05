@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use Imagine\Filter\Transformation;
 namespace Imagine\Filter;
 
 use Imagine\ImageInterface;
@@ -23,27 +24,9 @@ use Imagine\Filter\Basic\Rotate;
 use Imagine\Filter\Basic\Save;
 use Imagine\Filter\Basic\Show;
 
-final class Transformation implements FilterInterface, ImageInterface
+final class Transformation implements FilterInterface
 {
     private $filters = array();
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine.ImageInterface::getHeight()
-     */
-    public function getHeight()
-    {
-
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine.ImageInterface::getWidth()
-     */
-    public function getWidth()
-    {
-
-    }
 
     /**
      * Applies a given FilterInterface onto given ImageInterface and returns
@@ -69,8 +52,9 @@ final class Transformation implements FilterInterface, ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::copy()
+     * Stacks a copy transformation into the current transformations queue
+     *
+     * @return Transformation
      */
     public function copy()
     {
@@ -78,8 +62,9 @@ final class Transformation implements FilterInterface, ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::crop()
+     * Stacks a crop transformation into the current transformations queue
+     *
+     * @return Transformation
      */
     public function crop($x, $y, $width, $height)
     {
@@ -87,8 +72,10 @@ final class Transformation implements FilterInterface, ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::flipHorizontally()
+     * Stacks a horizontal flip transformation into the current transformations
+     * queue
+     *
+     * @return Transformation
      */
     public function flipHorizontally()
     {
@@ -96,8 +83,10 @@ final class Transformation implements FilterInterface, ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::flipVertically()
+     * Stacks a vertical flip transformation into the current transformations
+     * queue
+     *
+     * @return Transformation
      */
     public function flipVertically()
     {
@@ -105,8 +94,13 @@ final class Transformation implements FilterInterface, ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::paste()
+     * Stacks a paste transformation into the current transformations queue
+     *
+     * @param ImageInterface $image
+     * @param integer        $x
+     * @param integer        $y
+     *
+     * @return Transformation
      */
     public function paste(ImageInterface $image, $x, $y)
     {
@@ -114,8 +108,12 @@ final class Transformation implements FilterInterface, ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::resize()
+     * Stacks a resize transformation into the current transformations queue
+     *
+     * @param integer width
+     * @param integer height
+     *
+     * @return Transformation
      */
     public function resize($width, $height)
     {
@@ -123,8 +121,12 @@ final class Transformation implements FilterInterface, ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::apply()
+     * Stacks a rotane transformation into the current transformations queue
+     *
+     * @param integer $angle
+     * @param Color   $background
+     *
+     * @return Transformation
      */
     public function rotate($angle, Color $background = null)
     {
@@ -132,8 +134,12 @@ final class Transformation implements FilterInterface, ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::save()
+     * Stacks a save transformation into the current transformations queue
+     *
+     * @param string $path
+     * @param array  $options
+     *
+     * @return Transformation
      */
     public function save($path, array $options = array())
     {
@@ -141,8 +147,12 @@ final class Transformation implements FilterInterface, ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::show()
+     * Stacks a show transformation into the current transformations queue
+     *
+     * @param string $path
+     * @param array  $options
+     *
+     * @return Transformation
      */
     public function show($format, array $options = array())
     {
