@@ -115,9 +115,7 @@ final class Color
         }
 
         if (is_string($color)) {
-            if ($color[0] === '#') {
-                $color = substr($color, 1);
-            }
+            $color = ltrim($color, '#');
 
             if (strlen($color) !== 3 && strlen($color) !== 6) {
                 throw new InvalidArgumentException(sprintf('Color must be a '.
@@ -133,5 +131,15 @@ final class Color
         }
 
         list($this->r, $this->g, $this->b) = array_values($color);
+    }
+
+    /**
+     * Returns hex representation of the color
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '#'.implode('', array_map('dechex', array($this->r, $this->g, $this->b)));
     }
 }

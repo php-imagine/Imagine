@@ -199,11 +199,7 @@ class Image implements ImageInterface, ImageMetadataInterface
      */
     final public function save($path, array $options = array())
     {
-        $info = pathinfo($path);
-
-        $format = $info['extension'];
-
-        $this->saveOrOutput($format, $options, $path);
+        $this->saveOrOutput(pathinfo($path, \PATHINFO_EXTENSION), $options, $path);
 
         return $this;
     }

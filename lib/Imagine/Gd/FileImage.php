@@ -52,11 +52,11 @@ final class FileImage extends Image
      */
     public function __construct($path)
     {
-        if (!file_exists($path)) {
+        if (!is_file($path)) {
             throw new InvalidArgumentException(sprintf('File %s doesn\'t '.
                 'exist', $path));
         }
-
+        //TODO: handle warning/notice wichs getimagesize can generate
         list($width, $height, $type) = getimagesize($path);
 
         $format = $this->types[$type];
