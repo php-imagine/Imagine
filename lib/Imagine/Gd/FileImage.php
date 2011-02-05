@@ -56,8 +56,14 @@ final class FileImage extends Image
             throw new InvalidArgumentException(sprintf('File %s doesn\'t '.
                 'exist', $path));
         }
-        //TODO: handle warning/notice wichs getimagesize can generate
-        list($width, $height, $type) = getimagesize($path);
+
+        $info = getimagesize($path);
+
+        if (false === $info) {
+            throw new RuntimeException('Could not collect image metadata');
+        }
+
+        list($width, $height, $type) = $info;
 
         $format = $this->types[$type];
 
