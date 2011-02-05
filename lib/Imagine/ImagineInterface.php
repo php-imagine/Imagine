@@ -14,7 +14,7 @@ namespace Imagine;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\InvalidArgumentException;
 
-interface ImageFactoryInterface
+interface ImagineInterface
 {
     /**
      * Creates a new empty image with an optional background color

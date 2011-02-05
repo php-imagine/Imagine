@@ -1,17 +1,22 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Imagick;
 
-use Imagine\Imagick\ImageFactory;
 use Imagine\Color;
-
 use Imagine\Exception\OutOfBoundsException;
-
 use Imagine\Exception\InvalidArgumentException;
-
 use Imagine\Exception\RuntimeException;
-
 use Imagine\ImageInterface;
+use Imagine\Imagick\Imagine;
 
 class Image implements ImageInterface
 {
@@ -21,16 +26,25 @@ class Image implements ImageInterface
     private $imagick;
 
     /**
-     * @var ImageFactory
+     * @var Imagine
      */
-    private $factory;
+    private $imagine;
 
-    public function __construct(\Imagick $imagick, ImageFactory $factory)
+    /**
+     * Constructs Image with Imagick and Imagine instances
+     *
+     * @param Imagick $imagick
+     * @param Imagine $imagine
+     */
+    public function __construct(\Imagick $imagick, Imagine $imagine)
     {
         $this->imagick = $imagick;
-        $this->factory = $factory;
+        $this->imagine = $imagine;
     }
 
+    /**
+     * Destroys allocated imagick resources
+     */
     public function __destruct()
     {
         if (null !== $this->imagick && $this->imagick instanceof \Imagick) {
@@ -39,11 +53,19 @@ class Image implements ImageInterface
         }
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::copy()
+     */
     public function copy()
     {
-        return new self($this->imagick->clone(), $this->factory);
+        return new self($this->imagick->clone(), $this->imagine);
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::crop()
+     */
     public function crop($x, $y, $width, $height)
     {
         if ($x < 0 || $y < 0 || $width < 1 || $height < 1 ||
@@ -62,6 +84,10 @@ class Image implements ImageInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::flipHorizontally()
+     */
     public function flipHorizontally()
     {
         if (false === $this->imagick->flopImage()) {
@@ -71,6 +97,10 @@ class Image implements ImageInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::flipVertically()
+     */
     public function flipVertically()
     {
         if (false === $this->imagick->flipImage()) {
@@ -80,6 +110,10 @@ class Image implements ImageInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::getHeight()
+     */
     public function getHeight()
     {
         try {
@@ -91,6 +125,10 @@ class Image implements ImageInterface
         return $height;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::getWidth()
+     */
     public function getWidth()
     {
         try {
@@ -102,6 +140,10 @@ class Image implements ImageInterface
         return $width;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::paste()
+     */
     public function paste(ImageInterface $image, $x, $y)
     {
         if (!$image instanceof self) {
@@ -131,6 +173,10 @@ class Image implements ImageInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::resize()
+     */
     public function resize($width, $height)
     {
         if ($width < 1 || $height < 1) {
@@ -145,6 +191,10 @@ class Image implements ImageInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::rotate()
+     */
     public function rotate($angle, Color $background = null)
     {
         if (false === $this->imagick->rotateimage(
@@ -155,6 +205,10 @@ class Image implements ImageInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::save()
+     */
     public function save($path, array $options = array())
     {
         if (false === $this->imagick->writeImage($path)) {
@@ -164,6 +218,10 @@ class Image implements ImageInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::show()
+     */
     public function show($format, array $options = array())
     {
         if (false === $this->imagick->setImageFormat($format)) {
@@ -175,6 +233,10 @@ class Image implements ImageInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::thumbnail()
+     */
     public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET, Color $background = null)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
@@ -194,7 +256,7 @@ class Image implements ImageInterface
                 throw new RuntimeException('Thumbnail operation failed');
             }
 
-            $canvas = $this->factory->create($width, $height, $background);
+            $canvas = $this->imagine->create($width, $height, $background);
             $x      = abs(round(($width - $thumbnail->getWidth()) / 2));
             $y      = abs(round(($height - $thumbnail->getHeight()) / 2));
 
@@ -208,6 +270,13 @@ class Image implements ImageInterface
         return $thumbnail;
     }
 
+    /**
+     * Gets specifically formatted color string from Color instance
+     *
+     * @param Color $color
+     *
+     * @return string
+     */
     protected function getColor(Color $color)
     {
         return new \ImagickPixel(sprintf('rgba(%d,%d,%d,%d)',

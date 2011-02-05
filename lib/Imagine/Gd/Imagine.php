@@ -16,9 +16,9 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Exception\InvalidArgumentException;
 
 use Imagine\Color;
-use Imagine\ImageFactoryInterface;
+use Imagine\ImagineInterface;
 
-class ImageFactory implements ImageFactoryInterface
+class Imagine implements ImagineInterface
 {
     private $types = array(
         IMAGETYPE_BMP      => 'bmp',
@@ -45,7 +45,7 @@ class ImageFactory implements ImageFactoryInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageFactoryInterface::create()
+     * @see Imagine.ImagineInterface::create()
      */
     public function create($width, $height, Color $color = null)
     {
@@ -75,7 +75,7 @@ class ImageFactory implements ImageFactoryInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageFactoryInterface::open()
+     * @see Imagine.ImagineInterface::open()
      */
     public function open($path)
     {

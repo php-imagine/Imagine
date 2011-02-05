@@ -19,7 +19,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 {
     public function testRotate()
     {
-        $factory = new ImageFactory();
+        $factory = new Imagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
         $image->paste(
@@ -42,7 +42,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
     public function testThumbnailGeneration()
     {
-        $factory = new ImageFactory();
+        $factory = new Imagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
         $image->thumbnail(50, 50, ImageInterface::THUMBNAIL_INSET, new Color('fff'))

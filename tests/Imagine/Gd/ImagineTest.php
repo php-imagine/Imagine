@@ -11,13 +11,13 @@
 
 namespace Imagine\Gd;
 
-class ImageFactoryTest extends \PHPUnit_Framework_TestCase
+class ImagineTest extends \PHPUnit_Framework_TestCase
 {
     private $factory;
 
     protected function setUp()
     {
-        $this->factory = new ImageFactory();
+        $this->factory = new Imagine();
     }
 
     public function testShouldCreateEmptyImage() {

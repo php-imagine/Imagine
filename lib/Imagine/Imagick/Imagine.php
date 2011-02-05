@@ -1,16 +1,25 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Imagick;
 
 use Imagine\Color;
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\ImageFactoryInterface;
+use Imagine\ImagineInterface;
 
-class ImageFactory implements ImageFactoryInterface
+class Imagine implements ImagineInterface
 {
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageFactoryInterface::open()
+     * @see Imagine.ImagineInterface::open()
      */
     public function open($path)
     {
@@ -24,7 +33,7 @@ class ImageFactory implements ImageFactoryInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageFactoryInterface::create()
+     * @see Imagine.ImagineInterface::create()
      */
     public function create($width, $height, Color $color = null)
     {
@@ -36,16 +45,12 @@ class ImageFactory implements ImageFactoryInterface
         $color = null !== $color ? $color : new Color('fff');
 
         $imagick = new \Imagick();
-        $imagick->newImage($width, $height, $this->getColor($color));
-
-        return new Image($imagick, $this);
-    }
-
-    protected function getColor(Color $color)
-    {
-        return new \ImagickPixel(sprintf('rgba(%d,%d,%d,%d)',
+        $imagick->newImage($width, $height, new \ImagickPixel(
+            sprintf('rgba(%d,%d,%d,%d)',
             $color->getRed(), $color->getGreen(), $color->getBlue(),
             abs(1 - round($color->getAlpha() / 100, 1))
-        ));
+        )));
+
+        return new Image($imagick, $this);
     }
 }

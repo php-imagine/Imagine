@@ -15,7 +15,7 @@ use Imagine\Color;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Gd\ImageFactory;
+use Imagine\Gd\Imagine;
 use Imagine\ImageInterface;
 
 class Image implements ImageInterface
@@ -36,9 +36,9 @@ class Image implements ImageInterface
     private $resource;
 
     /**
-     * @var ImageFactory
+     * @var Imagine
      */
-    private $factory;
+    private $imagine;
 
     /**
      * Constructs a new Image instance using the result of
@@ -48,12 +48,12 @@ class Image implements ImageInterface
      * @param integer  $width
      * @param integer  $height
      */
-    public function __construct($resource, $width, $height, ImageFactory $factory)
+    public function __construct($resource, $width, $height, Imagine $imagine)
     {
         $this->resource = $resource;
         $this->width    = $width;
         $this->height   = $height;
-        $this->factory  = $factory;
+        $this->imagine  = $imagine;
     }
 
     /**
@@ -88,7 +88,7 @@ class Image implements ImageInterface
      */
     final public function copy()
     {
-        $copy = $this->factory->create($this->width, $this->height);
+        $copy = $this->imagine->create($this->width, $this->height);
 
         if (false === imagecopymerge($copy->resource, $this->resource, 0, 0, 0,
             0, $this->width, $this->height, 100)) {
@@ -322,7 +322,7 @@ class Image implements ImageInterface
         $y = abs(round(($height - $thumbnail->height) / 2));
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            $canvas = $this->factory->create($width, $height, $background);
+            $canvas = $this->imagine->create($width, $height, $background);
 
             $thumbnail = $canvas->paste($thumbnail, $x, $y);
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
