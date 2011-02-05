@@ -17,6 +17,8 @@ use Imagine\Exception\RuntimeException;
 
 interface ImageInterface
 {
+    const THUMBNAIL_INSET    = 'inset';
+    const THUMBNAIL_OUTBOUND = 'outbound';
     /**
      * Gets current image height
      *
@@ -141,4 +143,17 @@ interface ImageInterface
      * @return ImageInterface
      */
     function flipVertically();
+
+    /**
+     * Generates a thumbnail from a current image
+     * Returns it as a new image, doesn't modify the current image
+     *
+     * @param integer $width
+     * @param integer $height
+     * @param string  $mode
+     * @param Color   $background
+     *
+     * @return ImageInterface
+     */
+    function thumbnail($width, $height, $mode = self::THUMBNAIL_INSET, Color $background = null);
 }

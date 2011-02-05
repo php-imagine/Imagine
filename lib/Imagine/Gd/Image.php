@@ -262,7 +262,46 @@ class Image implements ImageInterface
         $this->resource = $dest;
 
         return $this;
+    }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::thumbnail()
+     */
+    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET, Color $background = null)
+    {
+        if ($mode !== ImageInterface::THUMBNAIL_INSET &&
+            $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
+            throw new InvalidArgumentException('Invalid mode specified');
+        }
+
+        $thumbnail = $this->copy();
+
+        if ($mode === ImageInterface::THUMBNAIL_INSET) {
+            $ratio = min($width / $thumbnail->width, $height / $thumbnail->height);
+        } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+            $ratio = max($width / $thumbnail->width, $height / $thumbnail->height);
+        }
+
+        $thumbnail->resize(
+            round($thumbnail->width * $ratio),
+            round($thumbnail->height * $ratio)
+        );
+
+        $x = abs(round(($width - $thumbnail->width) / 2));
+        $y = abs(round(($height - $thumbnail->height) / 2));
+
+        if ($mode === ImageInterface::THUMBNAIL_INSET) {
+            $canvas = new BlankImage($width, $height, $background);
+
+            $canvas->paste($thumbnail, $x, $y);
+
+            $thumbnail = $canvas;
+        } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+            $thumbnail->crop($x, $y, $width, $height);
+        }
+
+        return $thumbnail;
     }
 
     /**

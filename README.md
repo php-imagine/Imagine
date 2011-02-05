@@ -169,6 +169,16 @@ Here is how we would approach the problem with Imagine.
      
  - `->show($format, array $options = array())` - outputs image content. Options
      are the same as in save() method
+     
+ - `->thumbnail($width, $height, $mode = self::THUMBNAIL_INSET, Color $background = null)`
+     - prepares image thumbnail, based on the target dimensions, constraining
+     proportions. If thumbnail mode is `ImageInterface::THUMBNAIL_INSET`, then
+     the thumbnail is resized so that it contains the full image, and the
+     excess empty spaced is filled with given `$color` (white by default), so
+     that thumbnail size constraints are met. If `ImageInterface::THUMBNAIL_OUTBOUND`
+     mode is chosen, then the thumbnail is resized to the so that its smallest
+     side equals to the appropriate side's target length and the excess picture
+     is cropped out.
 
 #Image Transformations#
 
@@ -183,8 +193,7 @@ Example, naive thumbnail implementation:
     <?php
     $transformation = new Imagine\Filter\Transformation();
     
-    $transformation->resize(40, 30)
-        ->crop(5, 0, 30, 30)
+    $transformation->thumbnail(30, 30)
         ->save('/path/to/resized/thumbnail.jpg');
     
     $transformation->apply(new Imagine\Gd\FileImage('/path/to/image.jpg'));
@@ -196,75 +205,12 @@ like the following:
     <?php
     $transformation = new Imagine\Filter\Transformation();
     
-    $transformation->resize(40, 30)
-        ->crop(5, 0, 30, 30);
+    $transformation->thumbnail(30, 30);
     
     foreach (glob(/path/to/lots/of/images/*.jpg) as $path) {
         $transformation->apply(new Imagine\Gd\FileImage($path))
             ->save('/path/to/resized/'.md5($path).'.jpg');
     }
-
-#Complex Filters#
-
-Although `Transformation` lets you pre-define any complex tranformations, it
-is sometimes a tedious task to perform, therefore Imagine comes with some of
-the most common transformations pre-built, they're called advanced filters
-and can be found under `Imagine\Filter\Advanced` namespace.
-
-##Thumbnail##
-
-Thumbnail generation is probably the most wide-spread image processing tesk a
-PHP developer faces.
-
-Using Imagine its no problem anymore.
-
-###Simple Thumbnail Generation###
-
-    <?php
-    // make thumbnail filter for generating 50x50 px thumbs
-    $filter = new Imagine\Filter\Advanced\Thumbnail(50, 50);
-    
-    $image = new Imagine\Gd\FileImage('/path/to/image.jpg');
-    
-    $filter->apply($image)
-        ->save('/path/to/save/thumbnail.jpg');
-
-The default thumbnail generation technique can be described in the following
-steps:
-
- 1. Check if one of the sides of the target image is less than target tumbnail
-    size, if false, proceed to step `4`.
- 2. Create a new empty image with white background. Make image of sides of
-    at least target thumbnail side length.
- 3. Place the source image at the center of the newly created image.
- 4. Resize image sides, constraining proportions so the smallest side is of
-    the length or according side of the target thumbnail dimensions.
- 5. Crop the middle of the image out to get rid of excess size.
- 6. Return the cropped image.
-
-NOTE: to change the background color fill, you have to instantiate `Thumbnail`
-filter with UPSCALE_COLOR strategy and fourth argument being the actual color
-
-    <?php
-    // make thumbnail background black and 50% transparent
-    $filter = new Imagine\Filter\Advanced\Thumbnail(50, 50, Imagine\Filter\Advanced\Thumbnail::UPSCALE_COLOR, new Imagine\Color('000', 50));
-
-###Thumbnail upscaling###
-
-Another strategy for thumbnail generation is by first upscaling the image to
-meet the minimum thumbnail measurement requirements and then crop the excess
-size from the middle.
-
-    <?php
-    $filter = new Imagine\Filter\Advanced\Thumbnail(50, 50, Imagine\Filter\Advanced\Thumbnail::UPSCALE_RESIZE)
-
-###Thumbnail stretching###
-
-The last generation strategy is to strech side that is smaller than its target
-couterpart to fit minimum length constraint.
-
-    <?php
-    $filter = new Imagine\Filter\Advanced\Thumbnail(50, 50, Imagine\Filter\Advanced\Thumbnail::UPSCALE_STRETCH)
 
 #Architechture#
 

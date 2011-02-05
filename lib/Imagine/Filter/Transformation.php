@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
-use Imagine\Filter\Transformation;
 namespace Imagine\Filter;
+
+use Imagine\Filter\Basic\Thumbnail;
+
+use Imagine\Color;
 
 use Imagine\ImageInterface;
 use Imagine\ImageFactoryInterface;
@@ -157,6 +160,19 @@ final class Transformation implements FilterInterface
     public function show($format, array $options = array())
     {
         return $this->add(new Show($format, $options));
+    }
+
+    /**
+     * Stacks a thumbnail transformation into the current transformation queue
+     *
+     * @param integer $width
+     * @param integer $height
+     * @param string  $mode
+     * @param Color   $background
+     */
+    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET, Color $background = null)
+    {
+        return $this->add(new Thumbnail($width, $height, $mode, $background));
     }
 
     /**
