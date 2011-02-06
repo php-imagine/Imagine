@@ -165,15 +165,17 @@ Here is how we would approach the problem with Imagine.
  - `->show($format, array $options = array())` - outputs image content. Options
      are the same as in save() method
      
- - `->thumbnail($width, $height, $mode = self::THUMBNAIL_INSET, Color
-     $background = null)` - prepares image thumbnail, based on the target
-     dimensions, constraining proportions. If thumbnail mode is
-     `ImageInterface::THUMBNAIL_INSET`, then the thumbnail is resized so that
-     it contains the full image, and the excess empty spaced is filled with
-     given `$color` (white by default), so that thumbnail size constraints are
-     met. If `ImageInterface::THUMBNAIL_OUTBOUND` mode is chosen, then the
-     thumbnail is resized to the so that its smallest side equals to the
-     appropriate side's target length and the excess picture is cropped out.
+ - `->thumbnail($width, $height, $mode = self::THUMBNAIL_INSET)` - prepares
+     image thumbnail, based on the target dimensions, constraining proportions.
+     Thumbnail operation doesn't modify the source image and returns a
+     processed copy of the original. If thumbnail mode is
+     `ImageInterface::THUMBNAIL_INSET`, the image is scaled down to cointain
+     the full original image. This mode does not necessarily produce thumbnails
+     of exact target size, it is rather ensuring that the whole image is
+     resized adaptively to not exceed the specified thumbnail box.
+     If `ImageInterface::THUMBNAIL_OUTBOUND` mode is chosen, then the thumbnail
+     is resized to the so that its smallest side equals to the appropriate
+     side's target length and the excess picture is cropped out.
 
 #Image Transformations#
 
