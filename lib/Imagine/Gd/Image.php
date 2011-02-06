@@ -293,7 +293,7 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::thumbnail()
      */
-    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET, Color $background = null)
+    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
@@ -321,11 +321,7 @@ class Image implements ImageInterface
         $x = abs(round(($width - $thumbnail->width) / 2));
         $y = abs(round(($height - $thumbnail->height) / 2));
 
-        if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            $canvas = $this->imagine->create($width, $height, $background);
-
-            $thumbnail = $canvas->paste($thumbnail, $x, $y);
-        } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+        if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             $thumbnail->crop($x, $y, $width, $height);
         }
 

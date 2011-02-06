@@ -238,7 +238,7 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::thumbnail()
      */
-    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET, Color $background = null)
+    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
@@ -256,12 +256,6 @@ class Image implements ImageInterface
             if (false === $thumbnail->imagick->thumbnailImage($width, $height, true)) {
                 throw new RuntimeException('Thumbnail operation failed');
             }
-
-            $canvas = $this->imagine->create($width, $height, $background);
-            $x      = abs(round(($width - $thumbnail->getWidth()) / 2));
-            $y      = abs(round(($height - $thumbnail->getHeight()) / 2));
-
-            $thumbnail = $canvas->paste($thumbnail,$x, $y);
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             if (false === $thumbnail->imagick->cropThumbnailImage($width, $height)) {
                 throw new RuntimeException('Thumbnail operation failed');

@@ -151,9 +151,8 @@ interface ImageInterface
      * @param integer $width
      * @param integer $height
      * @param string  $mode
-     * @param Color   $background
      *
      * @return ImageInterface
      */
-    function thumbnail($width, $height, $mode = self::THUMBNAIL_INSET, Color $background = null);
+    function thumbnail($width, $height, $mode = self::THUMBNAIL_INSET);
 }

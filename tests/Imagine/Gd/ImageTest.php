@@ -53,7 +53,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
         $thumbnail = $factory->open('tests/Imagine/Fixtures/inset.png');
         $this->assertEquals(50, $thumbnail->getWidth());
-        $this->assertEquals(50, $thumbnail->getHeight());
+        $this->assertEquals(17, $thumbnail->getHeight());
         unlink('tests/Imagine/Fixtures/inset.png');
 
         $thumbnail = $factory->open('tests/Imagine/Fixtures/outbound.png');
