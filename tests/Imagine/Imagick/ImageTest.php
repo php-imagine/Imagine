@@ -15,7 +15,7 @@ use Imagine\Color;
 
 use Imagine\ImageInterface;
 
-class ImageTest extends \PHPUnit_Framework_TestCase
+class ImageTest extends TestCase
 {
     public function testRotate()
     {

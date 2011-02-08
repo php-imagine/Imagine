@@ -11,12 +11,13 @@
 
 namespace Imagine\Imagick;
 
-class ImagineTest extends \PHPUnit_Framework_TestCase
+class ImagineTest extends TestCase
 {
     private $factory;
 
     protected function setUp()
     {
+        parent::setUp();
         $this->factory = new Imagine();
     }
 
