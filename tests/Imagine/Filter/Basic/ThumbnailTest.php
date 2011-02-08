@@ -16,7 +16,7 @@ class ThumbnailTest extends BasicFilterTestCase
 
         $image->expects($this->once())
             ->method('thumbnail')
-            ->with($width, $height, ImageInterface::THUMBNAIL_INSET, null)
+            ->with($width, $height, ImageInterface::THUMBNAIL_INSET)
             ->will($this->returnValue($thumbnail));
 
         $this->assertSame($thumbnail, $filter->apply($image));

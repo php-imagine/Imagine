@@ -20,7 +20,6 @@ class Thumbnail implements FilterInterface
     private $width;
     private $height;
     private $mode;
-    private $background;
 
     /**
      * Constructs the Thumbnail filter with given width, height, mode and
@@ -29,14 +28,12 @@ class Thumbnail implements FilterInterface
      * @param integer $width
      * @param integer $height
      * @param string  $mode
-     * @param Color   $background
      */
-        public function __construct($width, $height, $mode = ImageInterface::THUMBNAIL_INSET, Color $background = null)
+    public function __construct($width, $height, $mode = ImageInterface::THUMBNAIL_INSET)
     {
         $this->width      = $width;
         $this->height     = $height;
         $this->mode       = $mode;
-        $this->background = $background;
     }
 
     /**
@@ -45,6 +42,6 @@ class Thumbnail implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->thumbnail($this->width, $this->height, $this->mode, $this->background);
+        return $image->thumbnail($this->width, $this->height, $this->mode);
     }
 }
