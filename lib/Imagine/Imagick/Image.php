@@ -18,7 +18,7 @@ use Imagine\Exception\RuntimeException;
 use Imagine\ImageInterface;
 use Imagine\Imagick\Imagine;
 
-class Image implements ImageInterface
+final class Image implements ImageInterface
 {
     /**
      * @var Imagick
@@ -281,7 +281,7 @@ class Image implements ImageInterface
      *
      * @return string
      */
-    protected function getColor(Color $color)
+    private function getColor(Color $color)
     {
         return new \ImagickPixel(sprintf('rgba(%d,%d,%d,%d)',
             $color->getRed(), $color->getGreen(), $color->getBlue(),

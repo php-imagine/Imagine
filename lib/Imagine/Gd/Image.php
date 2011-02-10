@@ -18,7 +18,7 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 use Imagine\ImageInterface;
 
-class Image implements ImageInterface
+final class Image implements ImageInterface
 {
     /**
      * @var integer

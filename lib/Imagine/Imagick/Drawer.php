@@ -11,40 +11,48 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Color;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\ImageInterface;
 
 final class Drawer implements DrawerInterface
 {
-    private $draw;
+    private $imagick;
 
-    public function __construct(\ImagickDraw $draw)
+    public function __construct(\Imagick $imagick)
     {
-        $this->draw = $draw;
-    }
-
-    public function apply(ImageInterface $image)
-    {
-        if (!$image instanceof Image) {
-            throw new InvalidArgumentException('Imagick\Drawer can only '.
-                'process Imagick\Image instances');
-        }
-
-        $this->draw->drawImage($image->getImagick());
-
-        return $image;
+        $this->imagick = $imagick;
     }
 
     public function arc($x, $y, $width, $height, $start, $end, Color $outline)
     {
-        $this->draw->arc($x, $y, $x + $width, $y + $height, $start, $end);
+        $arc = new \ImagickDraw();
+        $arc->setStrokeColor($this->getColor($outline));
+        $arc->setStrokeWidth(1);
+        $arc->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+
+        $this->imagick->drawImage($arc);
+
+        return $this;
     }
 
-    public function chord($x, $y, $width, $height, $start, $end, Color $outline,
-    $fill = false)
+    public function chord($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
     {
-        // TODO Auto-generated method stub
+        $chord = new \ImagickDraw();
+        $chord->setStrokeColor($this->getColor($outline));
+        $chord->setStrokeWidth(1);
+
+        if ($fill) {
+            $chord->setFillColor($this->getColor($outline));
+        } else {
+            $chord->line($sx, $sy, $ex, $ey);
+        }
+
+        $chord->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+
+        $this->imagick->drawImage($chord);
+
+        return $this;
     }
 
     public function ellipse($x, $y, $width, $height, Color $outline,
@@ -72,5 +80,19 @@ final class Drawer implements DrawerInterface
     public function polygon(array $coordinates, Color $outline, $fill = false)
     {
         // TODO Auto-generated method stub
+    }
+
+    /**
+     * Gets specifically formatted color string from Color instance
+     *
+     * @param Color $color
+     *
+     * @return string
+     */
+    private function getColor(Color $color)
+    {
+        return new \ImagickPixel(sprintf('rgba(%d,%d,%d,%d)',
+            $color->getRed(), $color->getGreen(), $color->getBlue(),
+            round($color->getAlpha() / 100, 1)));
     }
 }

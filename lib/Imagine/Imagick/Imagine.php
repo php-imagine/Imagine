@@ -16,7 +16,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\ImageInterface;
 use Imagine\ImagineInterface;
 
-class Imagine implements ImagineInterface
+final class Imagine implements ImagineInterface
 {
     /**
      * (non-PHPdoc)
