@@ -11,9 +11,12 @@
 
 namespace Imagine;
 
+use Imagine\Gd\Image;
+
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Draw\DrawerInterface;
 
 interface ImageInterface
 {
@@ -155,4 +158,11 @@ interface ImageInterface
      * @return ImageInterface
      */
     function thumbnail($width, $height, $mode = self::THUMBNAIL_INSET);
+
+    /**
+     * Instantiates and returns a DrawerInterface instance for image drawing
+     *
+     * @return DrawerInterface
+     */
+    function draw();
 }

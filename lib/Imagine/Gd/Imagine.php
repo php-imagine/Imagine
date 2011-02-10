@@ -11,11 +11,10 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Exception\RuntimeException;
-
-use Imagine\Exception\InvalidArgumentException;
-
 use Imagine\Color;
+use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\RuntimeException;
+use Imagine\ImageInterface;
 use Imagine\ImagineInterface;
 
 class Imagine implements ImagineInterface

@@ -266,6 +266,15 @@ class Image implements ImageInterface
     }
 
     /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::draw()
+     */
+    public function draw()
+    {
+        return new Drawer($this->imagick);
+    }
+
+    /**
      * Gets specifically formatted color string from Color instance
      *
      * @param Color $color

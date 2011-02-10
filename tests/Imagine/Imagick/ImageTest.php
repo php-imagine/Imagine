@@ -12,7 +12,6 @@
 namespace Imagine\Imagick;
 
 use Imagine\Color;
-
 use Imagine\ImageInterface;
 
 class ImageTest extends TestCase

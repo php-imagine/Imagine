@@ -329,6 +329,15 @@ class Image implements ImageInterface
     }
 
     /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::draw()
+     */
+    public function draw()
+    {
+        return new Drawer($this->resource);
+    }
+
+    /**
      * Internal
      *
      * Performs save or show operation using one of GD's image... functions
@@ -380,7 +389,17 @@ class Image implements ImageInterface
         }
     }
 
-    protected function getColor(Color $color)
+    /**
+     * Internal
+     *
+     * Generates a GD color from Color instance
+     *
+     * @param  Color $color
+     * @throws RuntimeException
+     *
+     * @return resource
+     */
+    private function getColor(Color $color)
     {
         $color = imagecolorallocatealpha($this->resource, $color->getRed(),
             $color->getGreen(), $color->getBlue(),
@@ -404,7 +423,7 @@ class Image implements ImageInterface
      *
      * @return Boolean
      */
-    protected function supported(&$format = null)
+    private function supported(&$format = null)
     {
         $formats = array('gif', 'jpeg', 'png', 'wbmp', 'xbm');
 
