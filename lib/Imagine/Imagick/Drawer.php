@@ -44,10 +44,9 @@ final class Drawer implements DrawerInterface
 
         if ($fill) {
             $chord->setFillColor($this->getColor($outline));
-        } else {
-            $chord->line($sx, $sy, $ex, $ey);
         }
 
+//        $chord->line($sx, $sy, $ex, $ey);
         $chord->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
         $this->imagick->drawImage($chord);
@@ -55,21 +54,50 @@ final class Drawer implements DrawerInterface
         return $this;
     }
 
-    public function ellipse($x, $y, $width, $height, Color $outline,
-    $fill = false)
+    public function ellipse($x, $y, $width, $height, Color $outline, $fill = false)
     {
-        // TODO Auto-generated method stub
+        $ellipse = new \ImagickDraw();
+        $ellipse->setStrokeColor($this->getColor($outline));
+        $ellipse->setStrokeWidth(1);
+
+        if ($fill) {
+            $ellipse->setFillColor($this->getColor($outline));
+        }
+
+        $ellipse->ellipse($x, $y, $width, $height, 0, 360);
+
+        $this->imagick->drawImage($ellipse);
+
+        return $this;
     }
 
     public function line($x1, $y1, $x2, $y2, Color $outline)
     {
-        // TODO Auto-generated method stub
+        $line = new \ImagickDraw();
+        $line->setStrokeColor($this->getColor($outline));
+        $line->setStrokeWidth(1);
+        $line->line($x1, $y1, $x2, $y2);
+
+        $this->imagick->drawImage($line);
+
+        return $this;
     }
 
-    public function pieSlice($x, $y, $width, $height, $start, $end,
-    Color $outline, $fill = false)
+    public function pieSlice($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
     {
-        // TODO Auto-generated method stub
+        $slice = new \ImagickDraw();
+        $slice->setStrokeColor($this->getColor($outline));
+        $slice->setStrokeWidth(1);
+
+        if ($fill) {
+            $slice->setFillColor($this->getColor($outline));
+        }
+
+        $slice->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+
+        $this->imagick->drawImage($slice);
+
+        return $this;
     }
 
     public function point($x, $y, Color $color)
