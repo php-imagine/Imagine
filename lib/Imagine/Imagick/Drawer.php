@@ -24,6 +24,10 @@ final class Drawer implements DrawerInterface
         $this->imagick = $imagick;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Draw.DrawerInterface::arc()
+     */
     public function arc($x, $y, $width, $height, $start, $end, Color $outline)
     {
         $arc = new \ImagickDraw();
@@ -36,6 +40,10 @@ final class Drawer implements DrawerInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Draw.DrawerInterface::chord()
+     */
     public function chord($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
     {
         $chord = new \ImagickDraw();
@@ -59,6 +67,10 @@ final class Drawer implements DrawerInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Draw.DrawerInterface::ellipse()
+     */
     public function ellipse($x, $y, $width, $height, Color $outline, $fill = false)
     {
         $ellipse = new \ImagickDraw();
@@ -76,6 +88,10 @@ final class Drawer implements DrawerInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Draw.DrawerInterface::line()
+     */
     public function line($x1, $y1, $x2, $y2, Color $outline)
     {
         $line = new \ImagickDraw();
@@ -88,6 +104,10 @@ final class Drawer implements DrawerInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Draw.DrawerInterface::pieSlice()
+     */
     public function pieSlice($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
     {
         $slice = new \ImagickDraw();
@@ -118,6 +138,10 @@ final class Drawer implements DrawerInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Draw.DrawerInterface::point()
+     */
     public function point($x, $y, Color $color)
     {
         $point = new \ImagickDraw();
@@ -130,6 +154,10 @@ final class Drawer implements DrawerInterface
         return $this;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Draw.DrawerInterface::polygon()
+     */
     public function polygon(array $coordinates, Color $outline, $fill = false)
     {
         $polygon = new \ImagickDraw();
