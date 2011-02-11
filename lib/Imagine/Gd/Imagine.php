@@ -42,6 +42,13 @@ final class Imagine implements ImagineInterface
         IMAGETYPE_XBM      => 'xbm'
     );
 
+    public function __construct()
+    {
+        if (!function_exists('gd_info')) {
+            throw new RuntimeException('Gd not installed');
+        }
+    }
+
     /**
      * (non-PHPdoc)
      * @see Imagine.ImagineInterface::create()

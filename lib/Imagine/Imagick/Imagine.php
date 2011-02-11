@@ -18,6 +18,13 @@ use Imagine\ImagineInterface;
 
 final class Imagine implements ImagineInterface
 {
+    public function __construct()
+    {
+        if (!class_exists('Imagick')) {
+            throw new RuntimeException('Imagick not installed');
+        }
+    }
+
     /**
      * (non-PHPdoc)
      * @see Imagine.ImagineInterface::open()

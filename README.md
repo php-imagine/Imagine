@@ -9,7 +9,7 @@ The Imagine library has the following requirements:
 
  - PHP 5.3+
 
-Depending on chosen Image implementation, you might need on of the following:
+Depending on chosen Image implementation, you might need one of the following:
 
  - GD2
  - Imagick
@@ -107,12 +107,15 @@ The collage would look something like the following:
 Here is how we would approach the problem with Imagine.
 
     <?php
-    $collage = $imagine->open(120, 160);
+    // make an empty image (canvas) 120x160 px
+    $collage = $imagine->create(120, 160);
     
+    // start position for insertion of the first image
     $x = 0;
     $y = 0;
 
     foreach (glob('/path/to/people/photos/*.jpg') as $path) {
+        // open photo
         $photo = $imagine->open($path);
         
         $collage->paste($photo, $x, $y); // paste photo at current position
