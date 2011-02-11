@@ -203,7 +203,8 @@ class Image implements ImageInterface
         }
 
         try {
-            $this->gmagick->resizeimage($width, $height);
+            $this->gmagick->resizeimage($width, $height, 
+                \Gmagick::FILTER_UNDEFINED, 1);
         } catch (\GmagickException $e) {
             throw new RuntimeException($e->getMessage());
         }

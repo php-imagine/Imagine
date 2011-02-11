@@ -45,11 +45,11 @@ class Imagine implements ImagineInterface
         $color = null !== $color ? $color : new Color('fff');
 
         $gmagick = new \Gmagick();
-        $gmagick->newImage($width, $height, new \GmagickPixel(
-            sprintf('rgba(%d,%d,%d,%d)',
+        $pixel = new \GmagickPixel(sprintf('rgba(%d,%d,%d,%d)',
             $color->getRed(), $color->getGreen(), $color->getBlue(),
-            abs(1 - round($color->getAlpha() / 100, 1))
-        )));
+            abs(1 - round($color->getAlpha() / 100, 1)) 
+        ));
+        $gmagick->newImage($width, $height, $pixel->getcolor(false));
 
         return new Image($gmagick, $this);
     }
