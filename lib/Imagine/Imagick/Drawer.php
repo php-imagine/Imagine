@@ -42,11 +42,16 @@ final class Drawer implements DrawerInterface
         $chord->setStrokeColor($this->getColor($outline));
         $chord->setStrokeWidth(1);
 
+        $x1 = $width * cos($start);
+        $y1 = $height * cos($start);
+        $x2 = $width * cos($end);
+        $y2 = $height * cos($end);
+
+        $chord->line($x1, $y1, $x2, $y2);
+
         if ($fill) {
             $chord->setFillColor($this->getColor($outline));
         }
-
-//        $chord->line($sx, $sy, $ex, $ey);
         $chord->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
         $this->imagick->drawImage($chord);
@@ -89,8 +94,21 @@ final class Drawer implements DrawerInterface
         $slice->setStrokeColor($this->getColor($outline));
         $slice->setStrokeWidth(1);
 
+        $x1 = $width * cos($start);
+        $y1 = $height * cos($start);
+        $x2 = $width * cos($end);
+        $y2 = $height * cos($end);
+
         if ($fill) {
             $slice->setFillColor($this->getColor($outline));
+            $slice->polygon(array(
+                array($x, $y),
+                array($x1, $y1),
+                array($x2, $y2),
+            ));
+        } else {
+            $slice->line($x, $y, $x1, $y1);
+            $slice->line($x, $y, $x2, $y2);
         }
 
         $slice->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
@@ -102,12 +120,32 @@ final class Drawer implements DrawerInterface
 
     public function point($x, $y, Color $color)
     {
-        // TODO Auto-generated method stub
+        $point = new \ImagickDraw();
+
+        $point->setFillColor($this->getColor($color));
+        $point->point($x, $y);
+
+        $this->imagick->drawimage($point);
+
+        return $this;
     }
 
     public function polygon(array $coordinates, Color $outline, $fill = false)
     {
-        // TODO Auto-generated method stub
+        $polygon = new \ImagickDraw();
+
+        $polygon->setStrokeColor($this->getColor($outline));
+        $polygon->setStrokeWidth(1);
+
+        if ($fill) {
+            $polygon->setFillColor($this->getColor($outline));
+        }
+
+        $polygon->polygon($coordinates);
+
+        $this->imagick->drawImage($polygon);
+
+        return $this;
     }
 
     /**
