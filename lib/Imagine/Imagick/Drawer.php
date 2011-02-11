@@ -14,6 +14,7 @@ namespace Imagine\Imagick;
 use Imagine\Color;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\RuntimeException;
 
 final class Drawer implements DrawerInterface
 {
@@ -35,7 +36,9 @@ final class Drawer implements DrawerInterface
         $arc->setStrokeWidth(1);
         $arc->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
-        $this->imagick->drawImage($arc);
+        if (false === $this->imagick->drawImage($arc)) {
+            throw new RuntimeException('Draw arc operation failed');
+        }
 
         return $this;
     }
@@ -62,7 +65,9 @@ final class Drawer implements DrawerInterface
         }
         $chord->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
-        $this->imagick->drawImage($chord);
+        if (false === $this->imagick->drawImage($chord)) {
+            throw new RuntimeException('Draw chord operation failed');
+        }
 
         return $this;
     }
@@ -83,7 +88,9 @@ final class Drawer implements DrawerInterface
 
         $ellipse->ellipse($x, $y, $width, $height, 0, 360);
 
-        $this->imagick->drawImage($ellipse);
+        if (false === $this->imagick->drawImage($ellipse)) {
+            throw new RuntimeException('Ellipse operation failed');
+        }
 
         return $this;
     }
@@ -99,7 +106,9 @@ final class Drawer implements DrawerInterface
         $line->setStrokeWidth(1);
         $line->line($x1, $y1, $x2, $y2);
 
-        $this->imagick->drawImage($line);
+        if (false === $this->imagick->drawImage($line)) {
+            throw new RuntimeException('Draw line operation failed');
+        }
 
         return $this;
     }
@@ -133,7 +142,9 @@ final class Drawer implements DrawerInterface
 
         $slice->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
-        $this->imagick->drawImage($slice);
+        if (false === $this->imagick->drawImage($slice)) {
+            throw new RuntimeException('Draw pie slice operation failed');
+        }
 
         return $this;
     }
@@ -149,7 +160,9 @@ final class Drawer implements DrawerInterface
         $point->setFillColor($this->getColor($color));
         $point->point($x, $y);
 
-        $this->imagick->drawimage($point);
+        if (false === $this->imagick->drawimage($point)) {
+            throw new RuntimeException('Draw point operation failed');
+        }
 
         return $this;
     }
@@ -171,7 +184,9 @@ final class Drawer implements DrawerInterface
 
         $polygon->polygon($coordinates);
 
-        $this->imagick->drawImage($polygon);
+        if (false === $this->imagick->drawImage($polygon)) {
+            throw new RuntimeException('Draw polygon operation failed');
+        }
 
         return $this;
     }

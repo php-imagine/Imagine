@@ -31,10 +31,9 @@ final class Drawer implements DrawerInterface
      */
     public function arc($x, $y, $width, $height, $start, $end, Color $outline)
     {
-        if ($x < 0 || $y < 0 || $width < 1 || $height < 1) {
-            throw new OutOfBoundsException('Coordinates of the center or the '.
-                'arc and its dimensions must be withing and not exceed '.
-                'image dimensions respectively');
+        if ($width < 1 || $height < 1) {
+            throw new OutOfBoundsException('Dimensions of the arc must be '.
+                'positive numbers');
         }
 
         if (false === imagearc($this->resource, $x, $y, $width, $height,
@@ -51,10 +50,9 @@ final class Drawer implements DrawerInterface
      */
     public function chord($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
     {
-        if ($x < 0 || $y < 0 || $width < 1 || $height < 1) {
-            throw new OutOfBoundsException('Coordinates of the center or the '.
-                'chors and its dimensions must be within and not exceed '.
-                'image dimensions respectively');
+        if ($width < 1 || $height < 1) {
+            throw new OutOfBoundsException('Dimensions of the chord must be '.
+                'positive numbers');
         }
 
         $style = $fill ? IMG_ARC_CHORD : IMG_ARC_CHORD | IMG_ARC_NOFILL;
@@ -74,10 +72,9 @@ final class Drawer implements DrawerInterface
      */
     public function ellipse($x, $y, $width, $height, Color $outline, $fill = false)
     {
-        if ($x < 0 || $y < 0 || $width < 1 || $height < 1) {
-            throw new OutOfBoundsException('Coordinates of the center or the '.
-                'ellipse and its dimensions must be within and not exceed '.
-                'image dimensions respectively');
+        if ($width < 1 || $height < 1) {
+            throw new OutOfBoundsException('Dimensions of the ellipse must '.
+                'be positive numbers');
         }
 
         if ($fill) {
@@ -103,8 +100,7 @@ final class Drawer implements DrawerInterface
     {
         if ($x1 < 0 || $y1 < 0 || $x2 < 0 || $y2 < 0) {
             throw new OutOfBoundsException('Coordinates of the start and the '.
-             'end of the line must be positive numbers within the current '.
-             'image box');
+                'end of the line must be positive numbers');
         }
 
         if (false === imageline($this->resource, $x1, $y1, $x2,
@@ -121,10 +117,9 @@ final class Drawer implements DrawerInterface
      */
     public function pieSlice($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
     {
-        if ($x < 0 || $y < 0 || $width < 1 || $height < 1) {
-            throw new OutOfBoundsException('Coordinates of the center or the '.
-                'pie slice and its dimensions must be within and not exceed '.
-                'image dimensions respectively');
+        if ($width < 1 || $height < 1) {
+            throw new OutOfBoundsException('Dimensions of the pie slice must '.
+                'be positive numbers');
         }
 
         $style = (Boolean) $fill ? IMG_ARC_PIE : IMG_ARC_PIE | IMG_ARC_NOFILL;
@@ -143,7 +138,7 @@ final class Drawer implements DrawerInterface
      */
     public function point($x, $y, Color $color)
     {
-        if ($x < 0 || $y < 00) {
+        if ($x < 0 || $y < 0) {
             throw new OutOfBoundsException('Coordinates or the target pixel '.
                 'must start at minimum 0, 0 position from top left corner');
         }
