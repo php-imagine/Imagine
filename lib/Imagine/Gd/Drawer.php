@@ -11,6 +11,7 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Color;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
@@ -55,11 +56,15 @@ final class Drawer implements DrawerInterface
                 'positive numbers');
         }
 
-        $style = $fill ? IMG_ARC_CHORD : IMG_ARC_CHORD | IMG_ARC_NOFILL;
+        if ($fill) {
+            $style = IMG_ARC_EDGED;
+        } else {
+            $style = IMG_ARC_EDGED | IMG_ARC_NOFILL;
+        }
 
         if (false === imagefilledarc($this->resource, $x, $y,
-            $width, $height, $start, $end,
-            $this->getColor($outline), $style)) {
+            $width, $height, $start, $end, $this->getColor($outline),
+            $style)) {
             throw new RuntimeException('Draw chord operation failed');
         }
 
@@ -122,10 +127,26 @@ final class Drawer implements DrawerInterface
                 'be positive numbers');
         }
 
-        $style = (Boolean) $fill ? IMG_ARC_PIE : IMG_ARC_PIE | IMG_ARC_NOFILL;
+        $x1 = $width * cos($start);
+        $y1 = $height * cos($start);
+        $x2 = $width * cos($end);
+        $y2 = $height * cos($end);
+
+        if ($fill) {
+            $this->chord($x, $y, $width, $height, $start, $end, $outline, true);
+            $this->polygon(array(
+                array($x, $y),
+                array($x1, $y1),
+                array($x2, $y2),
+            ), $outline, true);
+        } else {
+            $this->arc($x, $y, $width, $height, $start, $end, $outline);
+            $this->line($x, $y, $x1, $y1, $outline);
+            $this->line($x, $y, $x2, $y2, $outline);
+        }
 
         if (false === imagefilledarc($this->resource, $x, $y, $width, $height,
-            $start, $end, $this->getColor($outline), $style)) {
+            $start, $end, $this->getColor($outline), 1)) {
             throw new RuntimeException('Draw pie slice operation failed');
         }
 
@@ -163,8 +184,22 @@ final class Drawer implements DrawerInterface
             ));
         }
 
+        $points = array();
+
+        foreach ($coordinates as $coordinate) {
+            if (!is_array($coordinate) || !count($coordinate) === 2) {
+                throw new InvalidArgumentException(sprintf('Each entry in coordinates '.
+                    'array must be an array of only two values - x, y, %s given', var_export($coordinate)));
+            }
+
+            list ($x, $y) = $coordinate;
+
+            $points[] = $x;
+            $points[] = $y;
+        }
+
         if ($fill) {
-            if (false === imagefilledpolygon($this->resource, $coordinates,
+            if (false === imagefilledpolygon($this->resource, $points,
                 count($coordinates), $this->getColor($outline))) {
                 throw new RuntimeException('Draw polygon operation failed');
             }
