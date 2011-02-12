@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Gd;
+namespace Imagine\Gmagick;
 
 use Imagine\AbstractImageTest;
 use Imagine\Color;
@@ -19,8 +19,8 @@ class ImageTest extends AbstractImageTest
 {
     protected function setUp()
     {
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
+        if (!class_exists('Gmagick')) {
+            $this->markTestSkipped('Gmagick is not installed');
         }
     }
 

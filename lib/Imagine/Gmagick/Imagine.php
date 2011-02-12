@@ -9,20 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Imagick;
+namespace Imagine\Gmagick;
 
 use Imagine\Color;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\ImageInterface;
 use Imagine\ImagineInterface;
 
-final class Imagine implements ImagineInterface
+class Imagine implements ImagineInterface
 {
     public function __construct()
     {
-        if (!class_exists('Imagick')) {
-            throw new RuntimeException('Imagick not installed');
+        if (!class_exists('Gmagick')) {
+            throw new RuntimeException('Gmagick not installed');
         }
     }
 
@@ -37,7 +36,7 @@ final class Imagine implements ImagineInterface
                 'exist', $path));
         }
 
-        return new Image(new \Imagick($path), $this);
+        return new Image(new \Gmagick($path), $this);
     }
 
     /**
@@ -53,13 +52,13 @@ final class Imagine implements ImagineInterface
 
         $color = null !== $color ? $color : new Color('fff');
 
-        $imagick = new \Imagick();
-        $imagick->newImage($width, $height, new \ImagickPixel(
-            sprintf('rgba(%d,%d,%d,%d)',
+        $gmagick = new \Gmagick();
+        $pixel = new \GmagickPixel(sprintf('rgba(%d,%d,%d,%d)',
             $color->getRed(), $color->getGreen(), $color->getBlue(),
             abs(1 - round($color->getAlpha() / 100, 1))
-        )));
+        ));
+        $gmagick->newImage($width, $height, $pixel->getcolor(false));
 
-        return new Image($imagick, $this);
+        return new Image($gmagick, $this);
     }
 }
