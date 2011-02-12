@@ -21,9 +21,8 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
 
         $canvas = $imagine->create(400, 300, new Color('000'));
 
-        $drawing = $canvas->draw();
-
-        $drawing->arc(200, 200, 200, 150, 0, 180, new Color('fff'))
+        $canvas->draw()
+            ->arc(200, 200, 200, 150, 0, 180, new Color('fff'))
             ->ellipse(125, 100, 50, 50, new Color('fff'))
             ->ellipse(275, 100, 50, 50, new Color('fff'));
 
@@ -40,10 +39,49 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
 
         $canvas = $imagine->create(400, 300, new Color('000'));
 
-        $drawing = $canvas->draw();
-
-        $drawing->pieSlice(200, 150, 100, 200, 0, 180, new Color('fff'), true);
+        $canvas->draw()
+            ->pieSlice(200, 150, 100, 200, 45, 135, new Color('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/pie.jpg');
+
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/pie.jpg'));
+
+        unlink('tests/Imagine/Fixtures/pie.jpg');
+    }
+
+
+    public function testDrawAChord()
+    {
+        $imagine = new Imagine();
+
+        $canvas = $imagine->create(400, 300, new Color('000'));
+
+        $canvas->draw()
+            ->chord(200, 150, 100, 200, 45, 135, new Color('fff'), false);
+
+        $canvas->save('tests/Imagine/Fixtures/chord.jpg');
+
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/chord.jpg'));
+
+        unlink('tests/Imagine/Fixtures/chord.jpg');
+    }
+    
+    public function testDrawALine()
+    {
+        $imagine = new Imagine();
+        
+        $canvas = $imagine->create(400, 300, new Color('000'));
+        
+        $canvas->draw()
+            ->line(50, 50, 350, 250, new Color('fff'))
+            ->line(50, 250, 350, 50, new Color('fff'));
+        
+        $canvas->save('tests/Imagine/Fixtures/lines.jpg', array(
+            'quality' => 100
+        ));
+
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/lines.jpg'));
+
+        unlink('tests/Imagine/Fixtures/lines.jpg');
     }
 }

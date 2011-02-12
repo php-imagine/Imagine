@@ -46,6 +46,8 @@ final class Drawer implements DrawerInterface
     }
 
     /**
+     * This function doesn't work properly because of a bug in GD
+     *
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::chord()
      */
@@ -57,9 +59,9 @@ final class Drawer implements DrawerInterface
         }
 
         if ($fill) {
-            $style = IMG_ARC_EDGED;
+            $style = IMG_ARC_CHORD;
         } else {
-            $style = IMG_ARC_EDGED | IMG_ARC_NOFILL;
+            $style = IMG_ARC_CHORD | IMG_ARC_NOFILL;
         }
 
         if (false === imagefilledarc($this->resource, $x, $y,
@@ -108,8 +110,8 @@ final class Drawer implements DrawerInterface
                 'end of the line must be positive numbers');
         }
 
-        if (false === imageline($this->resource, $x1, $y1, $x2,
-            $y2, $this->getColor($outline))) {
+        if (false === imageline($this->resource, $x1, $y1, $x2, $y2,
+            $this->getColor($outline))) {
             throw new RuntimeException('Draw line operation failed');
         }
 
@@ -127,27 +129,16 @@ final class Drawer implements DrawerInterface
                 'be positive numbers');
         }
 
-        $x1 = $width * cos($start);
-        $y1 = $height * cos($start);
-        $x2 = $width * cos($end);
-        $y2 = $height * cos($end);
-
         if ($fill) {
-            $this->chord($x, $y, $width, $height, $start, $end, $outline, true);
-            $this->polygon(array(
-                array($x, $y),
-                array($x1, $y1),
-                array($x2, $y2),
-            ), $outline, true);
+            $style = IMG_ARC_EDGED;
         } else {
-            $this->arc($x, $y, $width, $height, $start, $end, $outline);
-            $this->line($x, $y, $x1, $y1, $outline);
-            $this->line($x, $y, $x2, $y2, $outline);
+            $style = IMG_ARC_EDGED | IMG_ARC_NOFILL;
         }
 
-        if (false === imagefilledarc($this->resource, $x, $y, $width, $height,
-            $start, $end, $this->getColor($outline), 1)) {
-            throw new RuntimeException('Draw pie slice operation failed');
+        if (false === imagefilledarc($this->resource, $x, $y,
+            $width, $height, $start, $end, $this->getColor($outline),
+            $style)) {
+            throw new RuntimeException('Draw chord operation failed');
         }
 
         return $this;
@@ -217,7 +208,7 @@ final class Drawer implements DrawerInterface
      *
      * Generates a GD color from Color instance
      *
-     * @param  Color    $color
+     * @param  Color $color
      *
      * @throws RuntimeException
      *
