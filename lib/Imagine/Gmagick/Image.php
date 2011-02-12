@@ -80,7 +80,7 @@ class Image implements ImageInterface
         try {
             $this->gmagick->cropimage($width, $height, $x, $y);
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException('Crop operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -95,7 +95,8 @@ class Image implements ImageInterface
         try {
             $this->gmagick->flopimage();
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException('Horizontal flip operation failed',
+                $e->getCode(), $e);
         }
 
         return $this;
@@ -110,7 +111,8 @@ class Image implements ImageInterface
         try {
             $this->gmagick->flipimage();
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException('Vertical flip operation failed',
+                $e->getCode(), $e);
         }
 
         return $this;
@@ -125,7 +127,9 @@ class Image implements ImageInterface
         try {
             $height = $this->gmagick->getimageheight();
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Could not get height', $e->getCode(), $e
+            );
         }
 
         return $height;
@@ -140,7 +144,9 @@ class Image implements ImageInterface
         try {
             $width = $this->gmagick->getimagewidth();
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Could not get width', $e->getCode(), $e
+            );
         }
 
         return $width;
@@ -174,7 +180,9 @@ class Image implements ImageInterface
         try {
             $this->gmagick->compositeimage($image->gmagick, \Gmagick::COMPOSITE_DEFAULT, $x, $y);
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Paste operation failed', $e->getCode(), $e
+            );
         }
 
         /**
@@ -184,7 +192,9 @@ class Image implements ImageInterface
             try {
                 $this->gmagick->flattenImages();
             } catch (\GmagickException $e) {
-                throw new RuntimeException($e->getMessage());
+                throw new RuntimeException(
+                    'Paste operation failed', $e->getCode(), $e
+                );
             }
         }
 
@@ -206,7 +216,9 @@ class Image implements ImageInterface
             $this->gmagick->resizeimage($width, $height,
                 \Gmagick::FILTER_UNDEFINED, 1);
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Resize operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -222,7 +234,9 @@ class Image implements ImageInterface
             $this->gmagick->rotateimage(
                 $this->getColor($background), $angle);
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Rotate operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -237,7 +251,9 @@ class Image implements ImageInterface
         try {
             $this->gmagick->writeimage($path);
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Save operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -252,7 +268,9 @@ class Image implements ImageInterface
         try {
             $this->gmagick->setimageformat($format);
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Show operation failed', $e->getCode(), $e
+            );
         }
 
         echo $this->gmagick;
@@ -282,7 +300,9 @@ class Image implements ImageInterface
         try {
             $thumbnail->gmagick->thumbnailimage($width, $height, $inbound);
         } catch (\GmagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Thumbnail operation failed', $e->getCode(), $e
+            );
         }
 
         return $thumbnail;
