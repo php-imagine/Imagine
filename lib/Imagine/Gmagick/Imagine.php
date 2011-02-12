@@ -21,7 +21,7 @@ class Imagine implements ImagineInterface
     public function __construct()
     {
         if (!class_exists('Gmagick')) {
-            throw new RuntimeException('Imagick not installed');
+            throw new RuntimeException('Gmagick not installed');
         }
     }
 
