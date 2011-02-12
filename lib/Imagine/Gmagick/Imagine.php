@@ -13,10 +13,18 @@ namespace Imagine\Gmagick;
 
 use Imagine\Color;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\RuntimeException;
 use Imagine\ImagineInterface;
 
 class Imagine implements ImagineInterface
 {
+    public function __construct()
+    {
+        if (!class_exists('Gmagick')) {
+            throw new RuntimeException('Imagick not installed');
+        }
+    }
+
     /**
      * (non-PHPdoc)
      * @see Imagine.ImagineInterface::open()
@@ -47,7 +55,7 @@ class Imagine implements ImagineInterface
         $gmagick = new \Gmagick();
         $pixel = new \GmagickPixel(sprintf('rgba(%d,%d,%d,%d)',
             $color->getRed(), $color->getGreen(), $color->getBlue(),
-            abs(1 - round($color->getAlpha() / 100, 1)) 
+            abs(1 - round($color->getAlpha() / 100, 1))
         ));
         $gmagick->newImage($width, $height, $pixel->getcolor(false));
 

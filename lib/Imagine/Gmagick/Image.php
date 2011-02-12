@@ -80,7 +80,7 @@ class Image implements ImageInterface
         try {
             $this->gmagick->cropimage($width, $height, $x, $y);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Crop operation failed');
+            throw new RuntimeException($e->getMessage());
         }
 
         return $this;
@@ -95,7 +95,7 @@ class Image implements ImageInterface
         try {
             $this->gmagick->flopimage();
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Horizontal Flip operation failed');
+            throw new RuntimeException($e->getMessage());
         }
 
         return $this;
@@ -110,7 +110,7 @@ class Image implements ImageInterface
         try {
             $this->gmagick->flipimage();
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Vertical flip operation failed');
+            throw new RuntimeException($e->getMessage());
         }
 
         return $this;
@@ -203,7 +203,7 @@ class Image implements ImageInterface
         }
 
         try {
-            $this->gmagick->resizeimage($width, $height, 
+            $this->gmagick->resizeimage($width, $height,
                 \Gmagick::FILTER_UNDEFINED, 1);
         } catch (\GmagickException $e) {
             throw new RuntimeException($e->getMessage());
@@ -252,7 +252,7 @@ class Image implements ImageInterface
         try {
             $this->gmagick->setimageformat($format);
         } catch (\GmagickException $e) {
-            throw new InvalidArgumentException($e->getMessage());
+            throw new RuntimeException($e->getMessage());
         }
 
         echo $this->gmagick;
