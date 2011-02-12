@@ -1,25 +1,25 @@
 #Imagine#
 
-Image manupulation library for PHP 5.3 inspired by Python's PIL and other image
-librarires
+Image manipulation library for PHP 5.3 inspired by Python's PIL and other image
+libraries.
 
-#Requirements#
+##Requirements##
 
 The Imagine library has the following requirements:
 
  - PHP 5.3+
 
-Depending on chosen Image implementation, you might need on of the following:
+Depending on the chosen Image implementation, you may need one of the following:
 
  - GD2
  - Imagick
 
-#Basic usage#
+##Basic usage##
 
-##Open Existing Image##
+###Open Existing Images###
 
-To open an existing image, all you need is to instantiate a correct image
-factory and invoke `Imagine::open()` with `$path` to image as the  argument
+To open an existing image, all you need is to instantiate an image factory and
+invoke `Imagine::open()` with `$path` to image as the  argument
 
     <?php
     $imagine = new Imagine\Gd\Imagine();
@@ -28,11 +28,12 @@ factory and invoke `Imagine::open()` with `$path` to image as the  argument
     
     $image = $imagine->open('/path/to/image.jpg');
 
-The `Imagine::open()` might throw one of the following exceptions:
+The `Imagine::open()` method may throw one of the following exceptions:
+
  - Imagine\Exception\InvalidArgumentException
  - Imagine\Exception\RuntimeException
 
-Now that you opened an image, you can perform manupulations on it:
+Now that you've opened an image, you can perform manipulations on it:
 
     <?php
     $image->resize(15, 25)
@@ -40,30 +41,26 @@ Now that you opened an image, you can perform manupulations on it:
         ->crop(0, 0, 45, 45)
         ->save('/path/to/new/image.jpg');
 
-##Create new image##
+###Create New Images###
 
-Imagine also let's you create a new empty image:
+Imagine also lets you create new, empty images. The following example creates an
+empty image of width 400px and height 300px:
 
     <?php
     $image = $imagine->create(400, 300);
 
-The above example would create an empty image of width 400px and height 300px
-
-You can optionally specify the colorfill of the newly created image (defaults
-to white):
+You can optionally specify the fill color for the new image, which defaults to
+opaque white. The following example creates a new image with a fully-transparent
+black background:
 
     <?php
     $image = $imagine->create(400, 300, new Imagine\Color('000', 100));
 
-The above example creates a new empty image with fully transparet black
-background
+###Color Class###
 
-##Color class##
-
-`Color` is a class in Imagine, it takes two arguments in constructor - the
-color and transparency percent
-
-Here is how you would create a fully transparent white color:
+Color is a class in Imagine, which takes two arguments in its constructor: the
+RGB color code and a transparency percentage. The following examples are
+equivalent ways of defining a fully-transparent white color.
 
     <?php
     $white = new Imagine\Color('fff', 100);
@@ -71,8 +68,8 @@ Here is how you would create a fully transparent white color:
     $white = new Imagine\Color('#fff', 100);
     $white = new Imagine\Color('#ffffff', 100);
 
-After you have instantiated a color, you can easily get its Red, Green, Blue
-and Alpha (transparency) values:
+After you have instantiated a color, you can easily get its Red, Green, Blue and
+Alpha (transparency) values:
 
     <?php
     var_dump(array(
@@ -82,11 +79,11 @@ and Alpha (transparency) values:
         'A' => $white->getAlpha()
     ));
 
-#Advanced example - images collage#
+##Advanced Example - An Image Collage##
 
-Assume we were tasked with a not so easy task - create a four by four collage
-of 16 people photos for school (each photo is 30x40 px). We need a four rows
-and four column collage, that will be of 120x160 px in dimensions.
+Assume we were given the not-so-easy task of creating a four-by-four collage of
+16 student portraits for a school yearbook.  Each photo is 30x40px and we need
+four rows and columns in our collage, so the final product will be 120x160px.
 
 The collage would look something like the following:
 
@@ -104,25 +101,31 @@ The collage would look something like the following:
     |   |   |   |   |
     -----------------
 
-Here is how we would approach the problem with Imagine.
+Here is how we would approach this problem with Imagine.
 
     <?php
-    $collage = $imagine->open(120, 160);
+    // make an empty image (canvas) 120x160px
+    $collage = $imagine->create(120, 160);
     
+    // starting coordinates (in pixels) for inserting the first image
     $x = 0;
     $y = 0;
-
+    
     foreach (glob('/path/to/people/photos/*.jpg') as $path) {
+        // open photo
         $photo = $imagine->open($path);
         
-        $collage->paste($photo, $x, $y); // paste photo at current position
+        // paste photo at current position
+        $collage->paste($photo, $x, $y);
         
-        $x += 30; // move position by 30px to the right
+        // move position by 30px to the right
+        $x += 30;
         
         if ($x >= 120) {
-            // we reached the right border of our collage
-            $y += 40; // go to the next row
-            $x = 0; // start at the begining
+            // we reached the right border of our collage, so advance to the
+            // next row and reset our column to the left.
+            $y += 40;
+            $x = 0;
         }
         
         if ($y >= 160) {
@@ -132,60 +135,64 @@ Here is how we would approach the problem with Imagine.
     
     $collage->save('/path/to/collage.jpg');
 
-#Available methods#
+##Available Methods##
 
- - `->copy()` - duplicates current image and returns new ImageInterface
+ - `->copy()` - duplicates current image and returns a new ImageInterface
      instance
 
- - `->crop($x, $y, $width, $height)` - crops a part of image starting with $x,
-     $y coordinates and creating a rectangle of sepecified width and height
+ - `->crop($x, $y, $width, $height)` - crops the image, starting with the $x,
+     $y coordinates and extending to the specified width and height
 
  - `->flipHorizontally()` - creates a horizontal mirror reflection of image
 
  - `->flipVertically()` - creates a vertical mirror reflection of image
 
- - `->paste(ImageInterface $image, $x, $y)` - pastes another image onto source
-     image at the $x, $y coordinates
+ - `->paste(ImageInterface $image, $x, $y)` - pastes another image into the
+     source image at the $x, $y coordinates
 
  - `->resize($width, $height)` - resizes image to given height and width
      exactly
 
- - `->rotate($angle, Color $background = null)` - rotates image for a specified
-     angle CW, if the angle is negative - rotates CCW, background color fill
-     can be specified to determine how to fill empty part of the image, white
-     will be used by default
+ - `->rotate($angle, Color $background = null)` - rotates the image clockwise
+     by the given angle, or counter-clockwise if the angle is negative. If a
+     background color is given, it will be used to fill empty parts of the image
+     (white will be used by default).
      
- - `->save($path, array $options = array())` - saves current image at the
-     specified path, the target file extension will be used to determine save
-     format. For 'jpeg/jpg', 'png' images, 'quality' options of 0-100 and 0-9 is
-     available accordingly. 'png' images also accept 'filter' option, consult GD
-     manual for a list of available options. Images of type 'wbmp' or 'xbm',
-     'foreground' option might be specified
+ - `->save($path, array $options = array())` - saves current image to the
+     specified path. The target file extension will be used to infer the output
+     format. For 'jpeg/jpg' and 'png' images, a 'quality' option of 0-100 and
+     0-9 are accepted, respectively. 'png' images also accept a 'filter' option
+     (consult the GD manual for more information). For 'wbmp' or 'xbm' images, a
+     'foreground' option may be specified.
      
- - `->show($format, array $options = array())` - outputs image content. Options
-     are the same as in save() method
+ - `->show($format, array $options = array())` - outputs image content in the
+     given format, allowing the same options as the `save()` method
      
- - `->thumbnail($width, $height, $mode = self::THUMBNAIL_INSET)` - prepares
-     image thumbnail, based on the target dimensions, constraining proportions.
-     Thumbnail operation doesn't modify the source image and returns a
-     processed copy of the original. If thumbnail mode is
-     `ImageInterface::THUMBNAIL_INSET`, the image is scaled down to cointain
-     the full original image. This mode does not necessarily produce thumbnails
-     of exact target size, it is rather ensuring that the whole image is
-     resized adaptively to not exceed the specified thumbnail box.
+ - `->thumbnail($width, $height, $mode = self::THUMBNAIL_INSET)` - prepares an
+     image thumbnail, based on the target dimensions, while preserving
+     proportions. The thumbnail operation returns a new ImageInterface instance
+     that is a processed copy of the original (the source image is not modified).
+     If thumbnail mode is `ImageInterface::THUMBNAIL_INSET`, the original image
+     is scaled down so it is fully contained within the thumbnail dimensions.
+     The specified width and height will be considered maximum limits. Unless
+     the given dimensions are equal to the original image's aspect ratio, one
+     dimension in the resulting thumbnail will be smaller than the given limit.
      If `ImageInterface::THUMBNAIL_OUTBOUND` mode is chosen, then the thumbnail
-     is resized to the so that its smallest side equals to the appropriate
-     side's target length and the excess picture is cropped out.
+     is scaled so that its smallest side equals the length of the corresponding
+     side in the original image. Any excess outside of the scaled thumbnail's
+     area will be cropped, and the returned thumbnail will have the exact width
+     and height specified.
 
-#Image Transformations#
+##Image Transformations##
 
 Imagine also provides so-called image transformations.
 
-Image transformation is a class, that fully conforms to ImageInterface and can
-be used interchangeably with it, the main difference is that transformations
-are stacked and performed on a real Image instance later, using ->apply() method
+Image transformation is implemented via the Transformation class, which mostly
+conforms to ImageInterface and can be used interchangeably with it. The main
+difference is that transformations may be stacked and performed on a real
+ImageInterface instance later using the `apply()` method.
 
-Example, naive thumbnail implementation:
+Example of a naive thumbnail implementation:
 
     <?php
     $transformation = new Imagine\Filter\Transformation();
@@ -195,9 +202,9 @@ Example, naive thumbnail implementation:
     
     $transformation->apply($imagine->open('/path/to/image.jpg'));
 
-The result of transformation apply is the modified image instance itself, so if
-we wanted to create a mass processing thumbnail script, we would do something
-like the following:
+The result of `apply()` is the modified image instance itself, so if we wanted
+to create a mass-processing thumbnail script, we would do something like the
+following:
 
     <?php
     $transformation = new Imagine\Filter\Transformation();
@@ -209,17 +216,17 @@ like the following:
             ->save('/path/to/resized/'.md5($path).'.jpg');
     }
 
-#Architechture#
+##Architecture##
 
-The architechture is very flexible, as the filters don't need any processing
-logic other than calculating the variables based on some settings and invoke
-corresponding method or a sequence of methods on the ImageInterface
+The architecture is very flexible, as the filters don't need any processing
+logic other than calculating the variables based on some settings and invoking
+the corresponding method, or sequence of methods, on the ImageInterface
 implementation.
 
-The Tranformation object is an example of a composite filter, that represents
-a stack or queue of filters, that get applied to an Image upon application of
-the Tranformation itself.
+The Transformation object is an example of a composite filter, representing a
+stack or queue of filters, that get applied to an Image upon application of
+the Transformation itself.
 
 #TODO#
 
- - update the ImagineBundle to use the new library
+ - Update the ImagineBundle to use the new library

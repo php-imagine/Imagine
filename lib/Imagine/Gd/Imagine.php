@@ -11,11 +11,9 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Exception\RuntimeException;
-
-use Imagine\Exception\InvalidArgumentException;
-
 use Imagine\Color;
+use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\RuntimeException;
 use Imagine\ImagineInterface;
 
 class Imagine implements ImagineInterface
@@ -43,6 +41,13 @@ class Imagine implements ImagineInterface
         IMAGETYPE_XBM      => 'xbm'
     );
 
+    public function __construct()
+    {
+        if (!function_exists('gd_info')) {
+            throw new RuntimeException('Gd not installed');
+        }
+    }
+
     /**
      * (non-PHPdoc)
      * @see Imagine.ImagineInterface::create()
@@ -57,8 +62,11 @@ class Imagine implements ImagineInterface
 
         $color = $color ? $color : new Color('fff');
 
-        imagealphablending($resource, false);
-        imagesavealpha($resource, true);
+        if (false === imagealphablending($resource, false) ||
+            false === imagesavealpha($resource, true)) {
+            throw new RuntimeException('Could not set alphablending and '.
+                'savealpha values');
+        }
 
         $color = imagecolorallocatealpha($resource, $color->getRed(),
             $color->getGreen(), $color->getBlue(),
@@ -68,7 +76,10 @@ class Imagine implements ImagineInterface
             throw new RuntimeException('Unable to allocate color');
         }
 
-        imagefilledrectangle($resource, 0, 0, $width, $height, $color);
+        if (false === imagefilledrectangle($resource, 0, 0, $width, $height,
+            $color)) {
+            throw new RuntimeException('Could not set background color fill');
+        }
 
         return new Image($resource, $width, $height, $this);
     }
@@ -107,8 +118,11 @@ class Imagine implements ImagineInterface
                 $path));
         }
 
-        imagealphablending($resource, false);
-        imagesavealpha($resource, true);
+        if (false === imagealphablending($resource, false) ||
+            false === imagesavealpha($resource, true)) {
+            throw new RuntimeException('Could not set alphablending and '.
+                'savealpha values');
+        }
 
         return new Image($resource, $width, $height, $this);
     }
