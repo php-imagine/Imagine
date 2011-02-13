@@ -20,31 +20,31 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->arc(new Point(200, 200), 200, 150, 0, 180, new Color('fff'))
+            ->chord(new Point(200, 200), 200, 150, 0, 180, new Color('fff'), false)
             ->ellipse(new Point(125, 100), 50, 50, new Color('fff'))
             ->ellipse(new Point(275, 100), 50, 50, new Color('fff'));
 
-        $canvas->save('tests/Imagine/Fixtures/smiley.jpg', array('quality' => 100));
+        $canvas->save('tests/Imagine/Fixtures/smiley.png', array('quality' => 100));
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/smiley.jpg'));
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/smiley.png'));
 
-        unlink('tests/Imagine/Fixtures/smiley.jpg');
+        unlink('tests/Imagine/Fixtures/smiley.png');
     }
 
     public function testDrawAPieSlice()
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(400, 300, new Color('000'));
+        $canvas = $imagine->create(400, 300, new Color('000000'));
 
         $canvas->draw()
-            ->pieSlice(new Point(200, 150), 100, 200, 45, 135, new Color('fff'));
+            ->pieSlice(new Point(200, 150), 100, 200, 45, 135, new Color('fff'), true);
 
-        $canvas->save('tests/Imagine/Fixtures/pie.jpg');
+        $canvas->save('tests/Imagine/Fixtures/pie.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/pie.jpg'));
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/pie.png'));
 
-        unlink('tests/Imagine/Fixtures/pie.jpg');
+        unlink('tests/Imagine/Fixtures/pie.png');
     }
 
 
@@ -57,11 +57,11 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas->draw()
             ->chord(new Point(200, 150), 100, 200, 45, 135, new Color('fff'), false);
 
-        $canvas->save('tests/Imagine/Fixtures/chord.jpg');
+        $canvas->save('tests/Imagine/Fixtures/chord.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/chord.jpg'));
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/chord.png'));
 
-        unlink('tests/Imagine/Fixtures/chord.jpg');
+        unlink('tests/Imagine/Fixtures/chord.png');
     }
 
     public function testDrawALine()
@@ -74,13 +74,13 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
             ->line(new Point(50, 50), new Point(350, 250), new Color('fff'))
             ->line(new Point(50, 250), new Point(350, 50), new Color('fff'));
 
-        $canvas->save('tests/Imagine/Fixtures/lines.jpg', array(
+        $canvas->save('tests/Imagine/Fixtures/lines.png', array(
             'quality' => 100
         ));
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/lines.jpg'));
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/lines.png'));
 
-        unlink('tests/Imagine/Fixtures/lines.jpg');
+        unlink('tests/Imagine/Fixtures/lines.png');
     }
 
     public function testDrawAPolygon()
@@ -97,13 +97,13 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
                 new Point(50, 280),
             ), new Color('fff'), true);
 
-        $canvas->save('tests/Imagine/Fixtures/polygon.jpg', array(
+        $canvas->save('tests/Imagine/Fixtures/polygon.png', array(
             'quality' => 100
         ));
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/polygon.jpg'));
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/polygon.png'));
 
-        unlink('tests/Imagine/Fixtures/polygon.jpg');
+        unlink('tests/Imagine/Fixtures/polygon.png');
     }
 
     public function testDrawADot()
@@ -118,13 +118,13 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
             ->dot(new Point(200, 152), new Color('fff'))
             ->dot(new Point(200, 153), new Color('fff'));
 
-        $canvas->save('tests/Imagine/Fixtures/dot.jpg', array(
+        $canvas->save('tests/Imagine/Fixtures/dot.png', array(
             'quality' => 100
         ));
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/dot.jpg'));
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/dot.png'));
 
-        unlink('tests/Imagine/Fixtures/dot.jpg');
+        unlink('tests/Imagine/Fixtures/dot.png');
     }
 
     abstract protected function getImagine();

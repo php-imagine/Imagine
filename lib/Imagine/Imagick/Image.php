@@ -264,6 +264,7 @@ final class Image implements ImageInterface
     public function save($path, array $options = array())
     {
         try {
+            $this->applyImageOptions($this->imagick, $options);
             $this->imagick->writeImage($path);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
@@ -281,6 +282,7 @@ final class Image implements ImageInterface
     public function show($format, array $options = array())
     {
         try {
+            $this->applyImageOptions($this->imagick, $options);
             $this->imagick->setImageFormat($format);
         } catch (\ImagickException $e) {
             throw new InvalidArgumentException(
@@ -342,6 +344,21 @@ final class Image implements ImageInterface
     }
 
     /**
+     * Internal
+     *
+     * Applies options before save or output
+     *
+     * @param \Imagick $image
+     * @param array $options
+     */
+    private function applyImageOptions(\Imagick $image, array $options)
+    {
+        if (isset($options['quality'])) {
+            $image->setImageCompressionQuality($options['quality']);
+        }
+    }
+
+    /**
      * Gets specifically formatted color string from Color instance
      *
      * @param Color $color
@@ -350,8 +367,12 @@ final class Image implements ImageInterface
      */
     private function getColor(Color $color)
     {
-        return new \ImagickPixel(sprintf('rgba(%d,%d,%d,%d)',
-            $color->getRed(), $color->getGreen(), $color->getBlue(),
-            round($color->getAlpha() / 100, 1)));
+        $pixel = new \ImagickPixel((string) $color);
+        if ($color->getAlpha() > 0) {
+            $opacity = number_format(abs(round($color->getAlpha() / 100, 1)), 1);
+            $pixel->setColorValue(\Imagick::COLOR_OPACITY, $opacity);
+        }
+
+        return $pixel;
     }
 }

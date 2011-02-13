@@ -52,11 +52,14 @@ final class Imagine implements ImagineInterface
         }
 
         $color = null !== $color ? $color : new Color('fff');
+        $pixel = new \ImagickPixel((string) $color);
+        if ($color->getAlpha() > 0) {
+            $opacity = number_format(abs(round($color->getAlpha() / 100, 1)), 1);
+            $pixel->setColorValue(\Imagick::COLOR_OPACITY, $opacity);
+        }
 
         $imagick = new \Imagick();
-        $imagick->newImage($width, $height, (string) $color);
-        $opacity = number_format(abs(round(1 - $color->getAlpha() / 100, 1)), 1);
-        $imagick->setImageOpacity($opacity);
+        $imagick->newImage($width, $height, $pixel);
 
         return new Image($imagick, $this);
     }

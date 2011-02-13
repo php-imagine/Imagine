@@ -35,13 +35,21 @@ final class Drawer implements DrawerInterface
         $x = $center->getX();
         $y = $center->getY();
 
-        $arc = new \ImagickDraw();
-        $arc->setStrokeColor($this->getColor($color));
-        $arc->setStrokeWidth(1);
-        $arc->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+        try {
+            $arc = new \ImagickDraw();
+            $arc->setStrokeColor($this->getColor($color));
+            $arc->setStrokeWidth(1);
+            $arc->setFillColor('transparent');
+            $arc->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
-        if (false === $this->imagick->drawImage($arc)) {
-            throw new RuntimeException('Draw arc operation failed');
+            $this->imagick->drawImage($arc);
+
+            $arc->clear();
+            $arc->destroy();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Draw arc operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -56,24 +64,34 @@ final class Drawer implements DrawerInterface
         $x = $center->getX();
         $y = $center->getY();
 
-        $chord = new \ImagickDraw();
-        $chord->setStrokeColor($this->getColor($color));
-        $chord->setStrokeWidth(1);
+        try {
+            $chord = new \ImagickDraw();
+            $chord->setStrokeColor($this->getColor($color));
+            $chord->setStrokeWidth(1);
 
-        $x1 = $width * cos($start);
-        $y1 = $height * cos($start);
-        $x2 = $width * cos($end);
-        $y2 = $height * cos($end);
+            if ($fill) {
+                $chord->setFillColor($this->getColor($color));
+            } else {
+                $x1 = round($x + $width / 2 * cos($start / 180 * M_PI));
+                $y1 = round($y + $height / 2 * sin($start / 180 * M_PI));
+                $x2 = round($x + $width / 2 * cos($end / 180 * M_PI));
+                $y2 = round($y + $height / 2 * sin($end / 180 * M_PI));
 
-        $chord->line($x1, $y1, $x2, $y2);
+                $this->line(new Point($x1, $y1), new Point($x2, $y2), $color);
 
-        if ($fill) {
-            $chord->setFillColor($this->getColor($color));
-        }
-        $chord->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+                $chord->setFillColor('transparent');
+            }
 
-        if (false === $this->imagick->drawImage($chord)) {
-            throw new RuntimeException('Draw chord operation failed');
+            $chord->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+
+            $this->imagick->drawImage($chord);
+
+            $chord->clear();
+            $chord->destroy();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Draw chord operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -85,21 +103,29 @@ final class Drawer implements DrawerInterface
      */
     public function ellipse(Point $center, $width, $height, Color $color, $fill = false)
     {
-        $x = $center->getX();
-        $y = $center->getY();
+        try {
+            $ellipse = new \ImagickDraw();
+            $ellipse->setStrokeColor($this->getColor($color));
+            $ellipse->setStrokeWidth(1);
 
-        $ellipse = new \ImagickDraw();
-        $ellipse->setStrokeColor($this->getColor($color));
-        $ellipse->setStrokeWidth(1);
+            if ($fill) {
+                $ellipse->setFillColor($this->getColor($color));
+            } else {
+                $ellipse->setFillColor('transparent');
+            }
 
-        if ($fill) {
-            $ellipse->setFillColor($this->getColor($color));
-        }
+            $ellipse->ellipse($center->getX(), $center->getY(), $width, $height, 0, 360);
 
-        $ellipse->ellipse($x, $y, $width, $height, 0, 360);
+            if (false === $this->imagick->drawImage($ellipse)) {
+                throw new RuntimeException('Ellipse operation failed');
+            }
 
-        if (false === $this->imagick->drawImage($ellipse)) {
-            throw new RuntimeException('Ellipse operation failed');
+            $ellipse->clear();
+            $ellipse->destroy();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Draw ellipse operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -111,18 +137,20 @@ final class Drawer implements DrawerInterface
      */
     public function line(Point $start, Point $end, Color $color)
     {
-        $x1 = $start->getX();
-        $y1 = $start->getY();
-        $x2 = $end->getX();
-        $y2 = $end->getY();
+        try {
+            $line = new \ImagickDraw();
+            $line->setStrokeColor($this->getColor($color));
+            $line->setStrokeWidth(1);
+            $line->line($start->getX(), $start->getY(), $end->getX(), $end->getY());
 
-        $line = new \ImagickDraw();
-        $line->setStrokeColor($this->getColor($color));
-        $line->setStrokeWidth(1);
-        $line->line($x1, $y1, $x2, $y2);
+            $this->imagick->drawImage($line);
 
-        if (false === $this->imagick->drawImage($line)) {
-            throw new RuntimeException('Draw line operation failed');
+            $line->clear();
+            $line->destroy();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Draw line operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -134,35 +162,25 @@ final class Drawer implements DrawerInterface
      */
     public function pieSlice(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
-        $x = $center->getX();
-        $y = $center->getY();
-
-        $slice = new \ImagickDraw();
-        $slice->setStrokeColor($this->getColor($color));
-        $slice->setStrokeWidth(1);
-
-        $x1 = $width * cos($start);
-        $y1 = $height * cos($start);
-        $x2 = $width * cos($end);
-        $y2 = $height * cos($end);
+        $x1 = round($center->getX() + $width / 2 * cos($start / 180 * M_PI));
+        $y1 = round($center->getY() + $height / 2 * sin($start / 180 * M_PI));
+        $x2 = round($center->getX() + $width / 2 * cos($end / 180 * M_PI));
+        $y2 = round($center->getY() + $height / 2 * sin($end / 180 * M_PI));
 
         if ($fill) {
-            $slice->setFillColor($this->getColor($color));
-            $slice->polygon(array(
-                array(new Point($x, $y)),
-                array(new Point($x1, $y1)),
-                array(new Point($x2, $y2)),
-            ));
+            $this->chord($center, $width, $height, $start, $end, $color, true);
+            $this->polygon(array(
+                $center,
+                new Point($x1, $y1),
+                new Point($x2, $y2),
+            ), $color, true);
         } else {
-            $slice->line(new Point($x, $y), new Point($x1, $y1));
-            $slice->line(new Point($x, $y), new Point($x2, $y2));
+            $this->arc($center, $width, $height, $start, $end, $color);
+            $this->line($center, new Point($x1, $y1), $color);
+            $this->line($center, new Point($x2, $y2), $color);
         }
 
-        $slice->arc(new Point($x - $width / 2, $y - $height / 2), $x + $width / 2, $y + $height / 2, $start, $end);
-
-        if (false === $this->imagick->drawImage($slice)) {
-            throw new RuntimeException('Draw pie slice operation failed');
-        }
+        $this->ellipse(new Point(125, 100), 50, 50, new Color('fff'));
 
         return $this;
     }
@@ -176,13 +194,20 @@ final class Drawer implements DrawerInterface
         $x = $position->getX();
         $y = $position->getY();
 
-        $point = new \ImagickDraw();
+        try {
+            $point = new \ImagickDraw();
 
-        $point->setFillColor($this->getColor($color));
-        $point->point($x, $y);
+            $point->setFillColor($this->getColor($color));
+            $point->point($x, $y);
 
-        if (false === $this->imagick->drawimage($point)) {
-            throw new RuntimeException('Draw point operation failed');
+            $this->imagick->drawimage($point);
+
+            $point->clear();
+            $point->destroy();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Draw point operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -204,19 +229,28 @@ final class Drawer implements DrawerInterface
             return array('x' => $p->getX(), 'y' => $p->getY());
         }, $coordinates);
 
-        $polygon = new \ImagickDraw();
+        try {
+            $polygon = new \ImagickDraw();
 
-        $polygon->setStrokeColor($this->getColor($color));
-        $polygon->setStrokeWidth(1);
+            $polygon->setStrokeColor($this->getColor($color));
+            $polygon->setStrokeWidth(1);
 
-        if ($fill) {
-            $polygon->setFillColor($this->getColor($color));
-        }
+            if ($fill) {
+                $polygon->setFillColor($this->getColor($color));
+            } else {
+                $polygon->setFillColor('transparent');
+            }
 
-        $polygon->polygon($coordinates);
+            $polygon->polygon($points);
 
-        if (false === $this->imagick->drawImage($polygon)) {
-            throw new RuntimeException('Draw polygon operation failed');
+            $this->imagick->drawImage($polygon);
+
+            $polygon->clear();
+            $polygon->destroy();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Draw polygon operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -231,8 +265,12 @@ final class Drawer implements DrawerInterface
      */
     private function getColor(Color $color)
     {
-        return new \ImagickPixel(sprintf('rgba(%d,%d,%d,%d)',
-            $color->getRed(), $color->getGreen(), $color->getBlue(),
-            round($color->getAlpha() / 100, 1)));
+        $pixel = new \ImagickPixel((string) $color);
+        if ($color->getAlpha() > 0) {
+            $opacity = number_format(abs(round($color->getAlpha() / 100, 1)), 1);
+            $pixel->setColorValue(\Imagick::COLOR_OPACITY, $opacity);
+        }
+
+    	return $pixel;
     }
 }

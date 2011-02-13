@@ -86,5 +86,20 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/flop.png');
     }
 
+    public function testCreateAndSaveEmptyImage()
+    {
+        $factory = $this->getImagine();
+
+        $factory->create(400, 300, new Color('000', 80))
+            ->save('tests/Imagine/Fixtures/blank.png', array('quality' => 100));
+
+        $image = $factory->open('tests/Imagine/Fixtures/blank.png');
+
+        $this->assertEquals(400, $image->getWidth());
+        $this->assertEquals(300, $image->getHeight());
+
+        unlink('tests/Imagine/Fixtures/blank.png');
+    }
+
     abstract protected function getImagine();
 }
