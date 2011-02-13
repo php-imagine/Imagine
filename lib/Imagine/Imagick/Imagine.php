@@ -53,11 +53,9 @@ class Imagine implements ImagineInterface
         $color = null !== $color ? $color : new Color('fff');
 
         $imagick = new \Imagick();
-        $imagick->newImage($width, $height, new \ImagickPixel(
-            sprintf('rgba(%d,%d,%d,%d)',
-            $color->getRed(), $color->getGreen(), $color->getBlue(),
-            abs(1 - round($color->getAlpha() / 100, 1))
-        )));
+        $imagick->newImage($width, $height, (string) $color);
+        $opacity = number_format(abs(round(1 - $color->getAlpha() / 100, 1)), 1);
+        $imagick->setImageOpacity($opacity);
 
         return new Image($imagick, $this);
     }
