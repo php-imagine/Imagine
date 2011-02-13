@@ -60,7 +60,14 @@ final class Image implements ImageInterface
      */
     public function copy()
     {
-        return new self($this->imagick->clone(), $this->imagine);
+        try {
+            $clone = $this->imagick->clone();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Copy operation failed', $e->getCode(), $e
+            );
+        }
+        return new self($clone, $this->imagine);
     }
 
     /**
@@ -81,8 +88,12 @@ final class Image implements ImageInterface
                 'current image borders');
         }
 
-        if (false === $this->imagick->cropImage($width, $height, $x, $y)) {
-            throw new RuntimeException('Crop operation failed');
+        try {
+            $this->imagick->cropImage($width, $height, $x, $y);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Crop operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -94,8 +105,13 @@ final class Image implements ImageInterface
      */
     public function flipHorizontally()
     {
-        if (false === $this->imagick->flopImage()) {
-            throw new RuntimeException('Horizontal Flip operation failed');
+        try {
+            $this->imagick->flopImage();
+        }
+        catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Horizontal Flip operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -107,8 +123,13 @@ final class Image implements ImageInterface
      */
     public function flipVertically()
     {
-        if (false === $this->imagick->flipImage()) {
-            throw new RuntimeException('Vertical flip operation failed');
+        try {
+            $this->imagick->flipImage();
+        }
+        catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Vertical flip operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -176,11 +197,23 @@ final class Image implements ImageInterface
             ));
         }
 
-        if (false === $this->imagick->compositeImage($image->imagick, \Imagick::COMPOSITE_DEFAULT, $x, $y)) {
-            throw new RuntimeException('Paste operation failed');
+        try {
+            $this->imagick->compositeImage(
+                $image->imagick, \Imagick::COMPOSITE_DEFAULT, $x, $y
+            );
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Paste operation failed', $e->getCode(), $e
+            );
         }
 
-        $this->imagick->flattenImages();
+        try {
+            $this->imagick->flattenImages();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Paste operation failed', $e->getCode(), $e
+            );
+        }
 
         return $this;
     }
@@ -196,8 +229,12 @@ final class Image implements ImageInterface
                 'resize must be positive integers');
         }
 
-        if (false === $this->imagick->adaptiveResizeImage($width, $height)) {
-            throw new RuntimeException('Resize operation failed');
+        try {
+            $this->imagick->adaptiveResizeImage($width, $height);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Resize operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -209,9 +246,12 @@ final class Image implements ImageInterface
      */
     public function rotate($angle, Color $background = null)
     {
-        if (false === $this->imagick->rotateimage(
-            $this->getColor($background), $angle)) {
-            throw new RuntimeException('Rotate operation failed');
+        try {
+            $this->imagick->rotateimage($this->getColor($background), $angle);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Rotate operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -223,8 +263,12 @@ final class Image implements ImageInterface
      */
     public function save($path, array $options = array())
     {
-        if (false === $this->imagick->writeImage($path)) {
-            throw new RuntimeException('Save operation failed');
+        try {
+            $this->imagick->writeImage($path);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Save operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -236,8 +280,12 @@ final class Image implements ImageInterface
      */
     public function show($format, array $options = array())
     {
-        if (false === $this->imagick->setImageFormat($format)) {
-            throw new InvalidArgumentException('Usupported format specified');
+        try {
+            $this->imagick->setImageFormat($format);
+        } catch (\ImagickException $e) {
+            throw new InvalidArgumentException(
+                'Show operation failed', $e->getCode(), $e
+            );
         }
 
         echo $this->imagick;
@@ -264,12 +312,20 @@ final class Image implements ImageInterface
         $thumbnail = $this->copy();
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            if (false === $thumbnail->imagick->thumbnailImage($width, $height, true)) {
-                throw new RuntimeException('Thumbnail operation failed');
+            try {
+                $thumbnail->imagick->thumbnailImage($width, $height, true);
+            } catch (\ImagickException $e) {
+                throw new RuntimeException(
+                    'Thumbnail operation failed', $e->getCode(), $e
+                );
             }
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            if (false === $thumbnail->imagick->cropThumbnailImage($width, $height)) {
-                throw new RuntimeException('Thumbnail operation failed');
+            try {
+                $thumbnail->imagick->cropThumbnailImage($width, $height);
+            } catch (\ImagickException $e) {
+                throw new RuntimeException(
+                    'Thumbnail operation failed', $e->getCode(), $e
+                );
             }
         }
 
