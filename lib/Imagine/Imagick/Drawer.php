@@ -66,11 +66,13 @@ final class Drawer implements DrawerInterface
 
         try {
             $chord = new \ImagickDraw();
-            $chord->setStrokeColor($this->getColor($color));
+            $pixel = $this->getColor($color);
+
+            $chord->setStrokeColor($pixel);
             $chord->setStrokeWidth(1);
 
             if ($fill) {
-                $chord->setFillColor($this->getColor($color));
+                $chord->setFillColor($pixel);
             } else {
                 $x1 = round($x + $width / 2 * cos(deg2rad($start)));
                 $y1 = round($y + $height / 2 * sin(deg2rad($start)));
@@ -105,11 +107,13 @@ final class Drawer implements DrawerInterface
     {
         try {
             $ellipse = new \ImagickDraw();
-            $ellipse->setStrokeColor($this->getColor($color));
+            $pixel   = $this->getColor($color);
+
+            $ellipse->setStrokeColor($pixel);
             $ellipse->setStrokeWidth(1);
 
             if ($fill) {
-                $ellipse->setFillColor($this->getColor($color));
+                $ellipse->setFillColor($pixel);
             } else {
                 $ellipse->setFillColor('transparent');
             }
@@ -231,12 +235,13 @@ final class Drawer implements DrawerInterface
 
         try {
             $polygon = new \ImagickDraw();
+            $pixel   = $this->getColor($color);
 
-            $polygon->setStrokeColor($this->getColor($color));
+            $polygon->setStrokeColor($pixel);
             $polygon->setStrokeWidth(1);
 
             if ($fill) {
-                $polygon->setFillColor($this->getColor($color));
+                $polygon->setFillColor($pixel);
             } else {
                 $polygon->setFillColor('transparent');
             }

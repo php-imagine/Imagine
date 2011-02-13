@@ -94,14 +94,16 @@ final class Drawer implements DrawerInterface
                 'be positive numbers');
         }
 
+        $color = $this->getColor($color);
+
         if ($fill) {
             if (false === imagefilledellipse($this->resource, $x, $y, $width,
-                $height, $this->getColor($color))) {
+                $height, $color)) {
                 throw new RuntimeException('Draw ellipse operation failed');
             }
         } else {
             if (false === imageellipse($this->resource, $x, $y, $width,
-                $height, $this->getColor($color))) {
+                $height, $color)) {
                 throw new RuntimeException('Draw ellipse operation failed');
             }
         }
@@ -211,14 +213,16 @@ final class Drawer implements DrawerInterface
             $points[] = $y;
         }
 
+        $color = $this->getColor($color);
+
         if ($fill) {
             if (false === imagefilledpolygon($this->resource, $points,
-                count($coordinates), $this->getColor($color))) {
+                count($coordinates), $color)) {
                 throw new RuntimeException('Draw polygon operation failed');
             }
         } else {
             if (false === imagepolygon($this->resource, $points,
-                count($coordinates), $this->getColor($color))) {
+                count($coordinates), $color)) {
                 throw new RuntimeException('Draw polygon operation failed');
             }
         }
