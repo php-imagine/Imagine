@@ -119,7 +119,9 @@ class Image implements ImageInterface
         try {
             $height = $this->imagick->getImageHeight();
         } catch (\ImagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Could not get height', $e->getCode(), $e
+            );
         }
 
         return $height;
@@ -134,7 +136,9 @@ class Image implements ImageInterface
         try {
             $width = $this->imagick->getImageWidth();
         } catch (\ImagickException $e) {
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException(
+                'Could not get width', $e->getCode(), $e
+            );
         }
 
         return $width;
