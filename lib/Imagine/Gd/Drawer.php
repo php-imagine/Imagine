@@ -164,9 +164,9 @@ final class Drawer implements DrawerInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::point()
+     * @see Imagine\Draw.DrawerInterface::dot()
      */
-    public function point(Point $position, Color $color)
+    public function dot(Point $position, Color $color)
     {
         $x = $position->getX();
         $y = $position->getY();
@@ -217,7 +217,7 @@ final class Drawer implements DrawerInterface
                 throw new RuntimeException('Draw polygon operation failed');
             }
         } else {
-            if (false === imagepolygon($this->resource, $coordinates,
+            if (false === imagepolygon($this->resource, $points,
                 count($coordinates), $this->getColor($color))) {
                 throw new RuntimeException('Draw polygon operation failed');
             }

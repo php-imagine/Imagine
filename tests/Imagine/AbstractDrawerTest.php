@@ -83,5 +83,49 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/lines.jpg');
     }
 
+    public function testDrawAPolygon()
+    {
+        $imagine = $this->getImagine();
+
+        $canvas = $imagine->create(400, 300, new Color('000'));
+
+        $canvas->draw()
+            ->polygon(array(
+                new Point(50, 20),
+                new Point(350, 20),
+                new Point(350, 280),
+                new Point(50, 280),
+            ), new Color('fff'), true);
+
+        $canvas->save('tests/Imagine/Fixtures/polygon.jpg', array(
+            'quality' => 100
+        ));
+
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/polygon.jpg'));
+
+        unlink('tests/Imagine/Fixtures/polygon.jpg');
+    }
+
+    public function testDrawADot()
+    {
+        $imagine = $this->getImagine();
+
+        $canvas = $imagine->create(400, 300, new Color('000'));
+
+        $canvas->draw()
+            ->dot(new Point(200, 150), new Color('fff'))
+            ->dot(new Point(200, 151), new Color('fff'))
+            ->dot(new Point(200, 152), new Color('fff'))
+            ->dot(new Point(200, 153), new Color('fff'));
+
+        $canvas->save('tests/Imagine/Fixtures/dot.jpg', array(
+            'quality' => 100
+        ));
+
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/dot.jpg'));
+
+        unlink('tests/Imagine/Fixtures/dot.jpg');
+    }
+
     abstract protected function getImagine();
 }

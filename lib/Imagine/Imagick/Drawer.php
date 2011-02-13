@@ -169,9 +169,9 @@ final class Drawer implements DrawerInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::point()
+     * @see Imagine\Draw.DrawerInterface::dot()
      */
-    public function point(Point $position, Color $color)
+    public function dot(Point $position, Color $color)
     {
         $x = $position->getX();
         $y = $position->getY();

@@ -96,7 +96,7 @@ interface DrawerInterface
      *
      * @return DrawerInterface
      */
-    function point(Point $position, Color $color);
+    function dot(Point $position, Color $color);
 
     /**
      * Draws a polygon using array of x, y coordinates. Must contain at least
