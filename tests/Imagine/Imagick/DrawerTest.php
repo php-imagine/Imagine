@@ -13,7 +13,7 @@ class DrawerTest extends AbstractDrawerTest
         }
     }
 
-	protected function getImagine()
+    protected function getImagine()
     {
         return new Imagine();
     }
