@@ -90,7 +90,7 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
     {
         $factory = $this->getImagine();
 
-        $factory->create(400, 300, new Color('000', 80))
+        $factory->create(400, 300, new Color('000'))
             ->save('tests/Imagine/Fixtures/blank.png', array('quality' => 100));
 
         $image = $factory->open('tests/Imagine/Fixtures/blank.png');
