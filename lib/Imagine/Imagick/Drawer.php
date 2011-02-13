@@ -11,9 +11,8 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Point;
-
 use Imagine\Color;
+use Imagine\Point;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
