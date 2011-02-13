@@ -72,10 +72,10 @@ final class Drawer implements DrawerInterface
             if ($fill) {
                 $chord->setFillColor($this->getColor($color));
             } else {
-                $x1 = round($x + $width / 2 * cos($start / 180 * M_PI));
-                $y1 = round($y + $height / 2 * sin($start / 180 * M_PI));
-                $x2 = round($x + $width / 2 * cos($end / 180 * M_PI));
-                $y2 = round($y + $height / 2 * sin($end / 180 * M_PI));
+                $x1 = round($x + $width / 2 * cos(deg2rad($start)));
+                $y1 = round($y + $height / 2 * sin(deg2rad($start)));
+                $x2 = round($x + $width / 2 * cos(deg2rad($end)));
+                $y2 = round($y + $height / 2 * sin(deg2rad($end)));
 
                 $this->line(new Point($x1, $y1), new Point($x2, $y2), $color);
 
@@ -162,10 +162,10 @@ final class Drawer implements DrawerInterface
      */
     public function pieSlice(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
-        $x1 = round($center->getX() + $width / 2 * cos($start / 180 * M_PI));
-        $y1 = round($center->getY() + $height / 2 * sin($start / 180 * M_PI));
-        $x2 = round($center->getX() + $width / 2 * cos($end / 180 * M_PI));
-        $y2 = round($center->getY() + $height / 2 * sin($end / 180 * M_PI));
+        $x1 = round($center->getX() + $width / 2 * cos(deg2rad($start)));
+        $y1 = round($center->getY() + $height / 2 * sin(deg2rad($start)));
+        $x2 = round($center->getX() + $width / 2 * cos(deg2rad($end)));
+        $y2 = round($center->getY() + $height / 2 * sin(deg2rad($end)));
 
         if ($fill) {
             $this->chord($center, $width, $height, $start, $end, $color, true);
