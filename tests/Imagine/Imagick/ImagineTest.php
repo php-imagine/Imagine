@@ -11,30 +11,19 @@
 
 namespace Imagine\Imagick;
 
-class ImagineTest extends TestCase
-{
-    private $factory;
+use Imagine\AbstractImagineTest;
 
+class ImagineTest extends AbstractImagineTest
+{
     protected function setUp()
     {
-        parent::setUp();
-        $this->factory = new Imagine();
+        if (!class_exists('Imagick')) {
+            $this->markTestSkipped('Imagick is not installed');
+        }
     }
 
-    public function testShouldCreateEmptyImage() {
-        $image = $this->factory->create(50, 50);
-
-        $this->assertInstanceOf('Imagine\ImageInterface', $image);
-        $this->assertEquals(50, $image->getWidth());
-        $this->assertEquals(50, $image->getHeight());
-    }
-
-    public function testShouldOpenAnImage()
+    protected function getImagine()
     {
-        $image = $this->factory->open('tests/Imagine/Fixtures/google.png');
-
-        $this->assertInstanceOf('Imagine\ImageInterface', $image);
-        $this->assertEquals(364, $image->getWidth());
-        $this->assertEquals(126, $image->getHeight());
+        return new Imagine();
     }
 }
