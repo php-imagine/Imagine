@@ -12,13 +12,14 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
+use Imagine\Point;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 use Imagine\ImageInterface;
 
-class Image implements ImageInterface
+final class Image implements ImageInterface
 {
     /**
      * @var integer
@@ -102,8 +103,11 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    final public function crop($x, $y, $width, $height)
+    final public function crop(Point $start, $width, $height)
     {
+        $x = $start->getX();
+        $y = $start->getY();
+
         if ($x < 0 || $y < 0 || $width < 1 || $height < 1 ||
             $this->width - ($x + $width) < 0 ||
             $this->height - ($y + $height) < 0) {
@@ -136,8 +140,11 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
-    final public function paste(ImageInterface $image, $x, $y)
+    final public function paste(ImageInterface $image, Point $start)
     {
+        $x = $start->getX();
+        $y = $start->getY();
+
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Gd\Image can only '.
                 'paste() Gd\Image instances, %s given', get_class($image)));
@@ -322,10 +329,19 @@ class Image implements ImageInterface
         $y = abs(round(($height - $thumbnail->height) / 2));
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $thumbnail->crop($x, $y, $width, $height);
+            $thumbnail->crop(new Point($x, $y), $width, $height);
         }
 
         return $thumbnail;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::draw()
+     */
+    public function draw()
+    {
+        return new Drawer($this->resource);
     }
 
     /**
@@ -359,6 +375,10 @@ class Image implements ImageInterface
         }
 
         if (($format === 'jpeg' || $format === 'png') && isset($options['quality'])) {
+            // png compression quality is 0-9, so here we get the value from percent
+            if ($format === 'png') {
+                $options['quality'] = round($options['quality'] * 9 / 100);
+            }
             $args[] = $options['quality'];
         }
 
@@ -380,7 +400,17 @@ class Image implements ImageInterface
         }
     }
 
-    protected function getColor(Color $color)
+    /**
+     * Internal
+     *
+     * Generates a GD color from Color instance
+     *
+     * @param  Color $color
+     * @throws RuntimeException
+     *
+     * @return resource
+     */
+    private function getColor(Color $color)
     {
         $color = imagecolorallocatealpha($this->resource, $color->getRed(),
             $color->getGreen(), $color->getBlue(),
@@ -404,7 +434,7 @@ class Image implements ImageInterface
      *
      * @return Boolean
      */
-    protected function supported(&$format = null)
+    private function supported(&$format = null)
     {
         $formats = array('gif', 'jpeg', 'png', 'wbmp', 'xbm');
 

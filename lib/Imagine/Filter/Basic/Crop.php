@@ -11,26 +11,25 @@
 
 namespace Imagine\Filter\Basic;
 
+use Imagine\Point;
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
 
 class Crop implements FilterInterface
 {
-    private $x, $y, $width, $height;
+    private $start, $width, $height;
 
     /**
      * Constructs a Crop filter with given x, y, coordinates and crop width and
      * height values
      *
-     * @param integer $x
-     * @param integer $y
+     * @param Point   $start
      * @param integer $width
      * @param integer $height
      */
-    public function __construct($x, $y, $width, $height)
+    public function __construct(Point $start, $width, $height)
     {
-        $this->x      = $x;
-        $this->y      = $y;
+        $this->start  = $start;
         $this->width  = $width;
         $this->height = $height;
     }
@@ -41,6 +40,6 @@ class Crop implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->crop($this->x, $this->y, $this->width, $this->height);
+        return $image->crop($this->start, $this->width, $this->height);
     }
 }

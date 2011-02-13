@@ -53,11 +53,19 @@ class Imagine implements ImagineInterface
         $color = null !== $color ? $color : new Color('fff');
 
         $gmagick = new \Gmagick();
-        $pixel = new \GmagickPixel(sprintf('rgba(%d,%d,%d,%d)',
-            $color->getRed(), $color->getGreen(), $color->getBlue(),
-            abs(1 - round($color->getAlpha() / 100, 1))
-        ));
-        $gmagick->newImage($width, $height, $pixel->getcolor(false));
+        $pixel = new \GmagickPixel((string) $color);
+
+        if ($color->getAlpha() > 0) {
+            // TODO: implement support for transparent background
+            throw new RuntimeException('alpha transparency not implemented');
+            $opacity = number_format(abs(round($color->getAlpha() / 100, 1)), 1);
+            $pixel->setcolorvalue(\Gmagick::COLOR_OPACITY, $opacity);
+        }
+
+        $gmagick->newimage($width, $height, $pixel->getcolor(false));
+        $gmagick->setimagecolorspace(\Gmagick::COLORSPACE_TRANSPARENT);
+        // this is needed to propagate transparency
+        $gmagick->setimagebackgroundcolor($pixel);
 
         return new Image($gmagick, $this);
     }

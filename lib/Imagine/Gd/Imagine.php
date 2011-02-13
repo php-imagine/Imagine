@@ -14,9 +14,10 @@ namespace Imagine\Gd;
 use Imagine\Color;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\ImageInterface;
 use Imagine\ImagineInterface;
 
-class Imagine implements ImagineInterface
+final class Imagine implements ImagineInterface
 {
     private $types = array(
         IMAGETYPE_BMP      => 'bmp',

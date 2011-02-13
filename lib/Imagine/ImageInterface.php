@@ -14,6 +14,8 @@ namespace Imagine;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Draw\DrawerInterface;
+use Imagine\Gd\Image;
 
 interface ImageInterface
 {
@@ -46,8 +48,7 @@ interface ImageInterface
      * Crops a specified box out of the source image (modifies the source image)
      * Returns cropped self
      *
-     * @param integer $x
-     * @param integer $y
+     * @param Point   $start
      * @param integer $width
      * @param integer $height
      *
@@ -56,7 +57,7 @@ interface ImageInterface
      *
      * @return ImageInterface
      */
-    function crop($x, $y, $width, $height);
+    function crop(Point $start, $width, $height);
 
     /**
      * Resizes current image and returns self
@@ -90,8 +91,7 @@ interface ImageInterface
      * Returns source image
      *
      * @param ImageInterface $image
-     * @param integer        $x
-     * @param integer        $y
+     * @param Point          $start
      *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
@@ -99,7 +99,7 @@ interface ImageInterface
      *
      * @return ImageInterface
      */
-    function paste(ImageInterface $image, $x, $y);
+    function paste(ImageInterface $image, Point $start);
 
     /**
      * Saves the image at a specified path, the target file extension is used
@@ -155,4 +155,11 @@ interface ImageInterface
      * @return ImageInterface
      */
     function thumbnail($width, $height, $mode = self::THUMBNAIL_INSET);
+
+    /**
+     * Instantiates and returns a DrawerInterface instance for image drawing
+     *
+     * @return DrawerInterface
+     */
+    function draw();
 }
