@@ -20,9 +20,9 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->arc(200, 200, 200, 150, 0, 180, new Color('fff'))
-            ->ellipse(125, 100, 50, 50, new Color('fff'))
-            ->ellipse(275, 100, 50, 50, new Color('fff'));
+            ->arc(new Point(200, 200), 200, 150, 0, 180, new Color('fff'))
+            ->ellipse(new Point(125, 100), 50, 50, new Color('fff'))
+            ->ellipse(new Point(275, 100), 50, 50, new Color('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/smiley.jpg', array('quality' => 100));
 
@@ -38,7 +38,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->pieSlice(200, 150, 100, 200, 45, 135, new Color('fff'));
+            ->pieSlice(new Point(200, 150), 100, 200, 45, 135, new Color('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/pie.jpg');
 
@@ -55,7 +55,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->chord(200, 150, 100, 200, 45, 135, new Color('fff'), false);
+            ->chord(new Point(200, 150), 100, 200, 45, 135, new Color('fff'), false);
 
         $canvas->save('tests/Imagine/Fixtures/chord.jpg');
 
@@ -71,8 +71,8 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->line(50, 50, 350, 250, new Color('fff'))
-            ->line(50, 250, 350, 50, new Color('fff'));
+            ->line(new Point(50, 50), new Point(350, 250), new Color('fff'))
+            ->line(new Point(50, 250), new Point(350, 50), new Color('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/lines.jpg', array(
             'quality' => 100

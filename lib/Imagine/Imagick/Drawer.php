@@ -11,6 +11,8 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Point;
+
 use Imagine\Color;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
@@ -29,10 +31,13 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::arc()
      */
-    public function arc($x, $y, $width, $height, $start, $end, Color $outline)
+    public function arc(Point $center, $width, $height, $start, $end, Color $color)
     {
+        $x = $center->getX();
+        $y = $center->getY();
+
         $arc = new \ImagickDraw();
-        $arc->setStrokeColor($this->getColor($outline));
+        $arc->setStrokeColor($this->getColor($color));
         $arc->setStrokeWidth(1);
         $arc->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
@@ -47,10 +52,13 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::chord()
      */
-    public function chord($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
+    public function chord(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
+        $x = $center->getX();
+        $y = $center->getY();
+
         $chord = new \ImagickDraw();
-        $chord->setStrokeColor($this->getColor($outline));
+        $chord->setStrokeColor($this->getColor($color));
         $chord->setStrokeWidth(1);
 
         $x1 = $width * cos($start);
@@ -61,7 +69,7 @@ final class Drawer implements DrawerInterface
         $chord->line($x1, $y1, $x2, $y2);
 
         if ($fill) {
-            $chord->setFillColor($this->getColor($outline));
+            $chord->setFillColor($this->getColor($color));
         }
         $chord->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
@@ -76,14 +84,17 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::ellipse()
      */
-    public function ellipse($x, $y, $width, $height, Color $outline, $fill = false)
+    public function ellipse(Point $center, $width, $height, Color $color, $fill = false)
     {
+        $x = $center->getX();
+        $y = $center->getY();
+
         $ellipse = new \ImagickDraw();
-        $ellipse->setStrokeColor($this->getColor($outline));
+        $ellipse->setStrokeColor($this->getColor($color));
         $ellipse->setStrokeWidth(1);
 
         if ($fill) {
-            $ellipse->setFillColor($this->getColor($outline));
+            $ellipse->setFillColor($this->getColor($color));
         }
 
         $ellipse->ellipse($x, $y, $width, $height, 0, 360);
@@ -99,10 +110,15 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::line()
      */
-    public function line($x1, $y1, $x2, $y2, Color $outline)
+    public function line(Point $start, Point $end, Color $color)
     {
+        $x1 = $start->getX();
+        $y1 = $start->getY();
+        $x2 = $end->getX();
+        $y2 = $end->getY();
+
         $line = new \ImagickDraw();
-        $line->setStrokeColor($this->getColor($outline));
+        $line->setStrokeColor($this->getColor($color));
         $line->setStrokeWidth(1);
         $line->line($x1, $y1, $x2, $y2);
 
@@ -117,10 +133,13 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::pieSlice()
      */
-    public function pieSlice($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
+    public function pieSlice(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
+        $x = $center->getX();
+        $y = $center->getY();
+
         $slice = new \ImagickDraw();
-        $slice->setStrokeColor($this->getColor($outline));
+        $slice->setStrokeColor($this->getColor($color));
         $slice->setStrokeWidth(1);
 
         $x1 = $width * cos($start);
@@ -129,18 +148,18 @@ final class Drawer implements DrawerInterface
         $y2 = $height * cos($end);
 
         if ($fill) {
-            $slice->setFillColor($this->getColor($outline));
+            $slice->setFillColor($this->getColor($color));
             $slice->polygon(array(
-                array($x, $y),
-                array($x1, $y1),
-                array($x2, $y2),
+                array(new Point($x, $y)),
+                array(new Point($x1, $y1)),
+                array(new Point($x2, $y2)),
             ));
         } else {
-            $slice->line($x, $y, $x1, $y1);
-            $slice->line($x, $y, $x2, $y2);
+            $slice->line(new Point($x, $y), new Point($x1, $y1));
+            $slice->line(new Point($x, $y), new Point($x2, $y2));
         }
 
-        $slice->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+        $slice->arc(new Point($x - $width / 2, $y - $height / 2), $x + $width / 2, $y + $height / 2, $start, $end);
 
         if (false === $this->imagick->drawImage($slice)) {
             throw new RuntimeException('Draw pie slice operation failed');
@@ -153,8 +172,11 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::point()
      */
-    public function point($x, $y, Color $color)
+    public function point(Point $position, Color $color)
     {
+        $x = $position->getX();
+        $y = $position->getY();
+
         $point = new \ImagickDraw();
 
         $point->setFillColor($this->getColor($color));
@@ -171,15 +193,25 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::polygon()
      */
-    public function polygon(array $coordinates, Color $outline, $fill = false)
+    public function polygon(array $coordinates, Color $color, $fill = false)
     {
+        if (count($coordinates) < 3) {
+            throw new InvalidArgumentException(sprintf('Polygon must consist '.
+                'of at least 3 coordinates, %d given', count($coordinates)));
+        }
+
+        $points = array_map(function(Point $p)
+        {
+            return array('x' => $p->getX(), 'y' => $p->getY());
+        }, $coordinates);
+
         $polygon = new \ImagickDraw();
 
-        $polygon->setStrokeColor($this->getColor($outline));
+        $polygon->setStrokeColor($this->getColor($color));
         $polygon->setStrokeWidth(1);
 
         if ($fill) {
-            $polygon->setFillColor($this->getColor($outline));
+            $polygon->setFillColor($this->getColor($color));
         }
 
         $polygon->polygon($coordinates);

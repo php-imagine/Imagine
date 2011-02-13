@@ -12,6 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
+use Imagine\Point;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
@@ -30,15 +31,18 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::arc()
      */
-    public function arc($x, $y, $width, $height, $start, $end, Color $outline)
+    public function arc(Point $center, $width, $height, $start, $end, Color $color)
     {
+        $x = $center->getX();
+        $y = $center->getY();
+
         if ($width < 1 || $height < 1) {
             throw new OutOfBoundsException('Dimensions of the arc must be '.
                 'positive numbers');
         }
 
         if (false === imagearc($this->resource, $x, $y, $width, $height,
-            $start, $end, $this->getColor($outline))) {
+            $start, $end, $this->getColor($color))) {
             throw new RuntimeException('Draw arc operation failed');
         }
 
@@ -51,8 +55,11 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::chord()
      */
-    public function chord($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
+    public function chord(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
+        $x = $center->getX();
+        $y = $center->getY();
+
         if ($width < 1 || $height < 1) {
             throw new OutOfBoundsException('Dimensions of the chord must be '.
                 'positive numbers');
@@ -65,7 +72,7 @@ final class Drawer implements DrawerInterface
         }
 
         if (false === imagefilledarc($this->resource, $x, $y,
-            $width, $height, $start, $end, $this->getColor($outline),
+            $width, $height, $start, $end, $this->getColor($color),
             $style)) {
             throw new RuntimeException('Draw chord operation failed');
         }
@@ -77,8 +84,11 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::ellipse()
      */
-    public function ellipse($x, $y, $width, $height, Color $outline, $fill = false)
+    public function ellipse(Point $center, $width, $height, Color $color, $fill = false)
     {
+        $x = $center->getX();
+        $y = $center->getY();
+
         if ($width < 1 || $height < 1) {
             throw new OutOfBoundsException('Dimensions of the ellipse must '.
                 'be positive numbers');
@@ -86,12 +96,12 @@ final class Drawer implements DrawerInterface
 
         if ($fill) {
             if (false === imagefilledellipse($this->resource, $x, $y, $width,
-                $height, $this->getColor($outline))) {
+                $height, $this->getColor($color))) {
                 throw new RuntimeException('Draw ellipse operation failed');
             }
         } else {
             if (false === imageellipse($this->resource, $x, $y, $width,
-                $height, $this->getColor($outline))) {
+                $height, $this->getColor($color))) {
                 throw new RuntimeException('Draw ellipse operation failed');
             }
         }
@@ -103,15 +113,20 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::line()
      */
-    public function line($x1, $y1, $x2, $y2, Color $outline)
+    public function line(Point $start, Point $end, Color $color)
     {
+        $x1 = $start->getX();
+        $y1 = $start->getY();
+        $x2 = $end->getX();
+        $y2 = $end->getY();
+
         if ($x1 < 0 || $y1 < 0 || $x2 < 0 || $y2 < 0) {
             throw new OutOfBoundsException('Coordinates of the start and the '.
                 'end of the line must be positive numbers');
         }
 
         if (false === imageline($this->resource, $x1, $y1, $x2, $y2,
-            $this->getColor($outline))) {
+            $this->getColor($color))) {
             throw new RuntimeException('Draw line operation failed');
         }
 
@@ -122,8 +137,11 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::pieSlice()
      */
-    public function pieSlice($x, $y, $width, $height, $start, $end, Color $outline, $fill = false)
+    public function pieSlice(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
+        $x = $center->getX();
+        $y = $center->getY();
+
         if ($width < 1 || $height < 1) {
             throw new OutOfBoundsException('Dimensions of the pie slice must '.
                 'be positive numbers');
@@ -136,7 +154,7 @@ final class Drawer implements DrawerInterface
         }
 
         if (false === imagefilledarc($this->resource, $x, $y,
-            $width, $height, $start, $end, $this->getColor($outline),
+            $width, $height, $start, $end, $this->getColor($color),
             $style)) {
             throw new RuntimeException('Draw chord operation failed');
         }
@@ -148,8 +166,11 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::point()
      */
-    public function point($x, $y, Color $color)
+    public function point(Point $position, Color $color)
     {
+        $x = $position->getX();
+        $y = $position->getY();
+
         if ($x < 0 || $y < 0) {
             throw new OutOfBoundsException('Coordinates or the target pixel '.
                 'must start at minimum 0, 0 position from top left corner');
@@ -167,7 +188,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::polygon()
      */
-    public function polygon(array $coordinates, Color $outline, $fill = false)
+    public function polygon(array $coordinates, Color $color, $fill = false)
     {
         if (count($coordinates) < 3) {
             throw new InvalidArgumentException(sprintf('A polygon must '.
@@ -178,12 +199,13 @@ final class Drawer implements DrawerInterface
         $points = array();
 
         foreach ($coordinates as $coordinate) {
-            if (!is_array($coordinate) || !count($coordinate) === 2) {
+            if (!$coordinate instanceof Point) {
                 throw new InvalidArgumentException(sprintf('Each entry in coordinates '.
                     'array must be an array of only two values - x, y, %s given', var_export($coordinate)));
             }
 
-            list ($x, $y) = $coordinate;
+            $x = $coordinate->getX();
+            $y = $coordinate->getY();
 
             $points[] = $x;
             $points[] = $y;
@@ -191,12 +213,12 @@ final class Drawer implements DrawerInterface
 
         if ($fill) {
             if (false === imagefilledpolygon($this->resource, $points,
-                count($coordinates), $this->getColor($outline))) {
+                count($coordinates), $this->getColor($color))) {
                 throw new RuntimeException('Draw polygon operation failed');
             }
         } else {
             if (false === imagepolygon($this->resource, $coordinates,
-                count($coordinates), $this->getColor($outline))) {
+                count($coordinates), $this->getColor($color))) {
                 throw new RuntimeException('Draw polygon operation failed');
             }
         }
