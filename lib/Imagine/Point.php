@@ -28,11 +28,21 @@ final class Point
         $this->y = $y;
     }
 
+    /**
+     * Gets points x coordinate
+     *
+     * @return integer
+     */
     public function getX()
     {
         return $this->x;
     }
 
+    /**
+     * Gets points y coordinate
+     *
+     * @return integer
+     */
     public function getY()
     {
         return $this->y;
