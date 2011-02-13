@@ -60,7 +60,9 @@ class Imagine implements ImagineInterface
             $pixel->setColorValue(\Gmagick::COLOR_OPACITY, $opacity);
         }
 
-        $gmagick->newImage($width, $height, $pixel->getcolor(false));
+        $gmagick->newimage($width, $height, $pixel->getcolor(false));
+        // this is needed to propagate transparency
+        $gmagick->setimagebackgroundcolor($pixel);
 
         return new Image($gmagick, $this);
     }
