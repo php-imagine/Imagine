@@ -12,6 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Color;
+use Imagine\Point;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -66,8 +67,11 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    public function crop($x, $y, $width, $height)
+    public function crop(Point $start, $width, $height)
     {
+        $x = $start->getX();
+        $y = $start->getY();
+
         if ($x < 0 || $y < 0 || $width < 1 || $height < 1 ||
             $this->getWidth() - ($x + $width) < 0 ||
             $this->getHeight() - ($y + $height) < 0) {
@@ -148,8 +152,11 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
-    public function paste(ImageInterface $image, $x, $y)
+    public function paste(ImageInterface $image, Point $start)
     {
+        $x = $start->getX();
+        $y = $start->getY();
+
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Imagick\Image can '.
                 'only paste() Imagick\Image instances, %s given',

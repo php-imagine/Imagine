@@ -12,6 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
+use Imagine\Point;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -102,8 +103,11 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    final public function crop($x, $y, $width, $height)
+    final public function crop(Point $start, $width, $height)
     {
+        $x = $start->getX();
+        $y = $start->getY();
+
         if ($x < 0 || $y < 0 || $width < 1 || $height < 1 ||
             $this->width - ($x + $width) < 0 ||
             $this->height - ($y + $height) < 0) {
@@ -136,8 +140,11 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
-    final public function paste(ImageInterface $image, $x, $y)
+    final public function paste(ImageInterface $image, Point $start)
     {
+        $x = $start->getX();
+        $y = $start->getY();
+
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Gd\Image can only '.
                 'paste() Gd\Image instances, %s given', get_class($image)));
@@ -322,7 +329,7 @@ final class Image implements ImageInterface
         $y = abs(round(($height - $thumbnail->height) / 2));
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $thumbnail->crop($x, $y, $width, $height);
+            $thumbnail->crop(new Point($x, $y), $width, $height);
         }
 
         return $thumbnail;

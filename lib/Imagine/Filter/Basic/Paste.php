@@ -11,27 +11,27 @@
 
 namespace Imagine\Filter\Basic;
 
+use Imagine\Point;
+
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
 
 class Paste implements FilterInterface
 {
     private $image;
-    private $x, $y;
+    private $start;
 
     /**
      * Constructs a Paste filter with given ImageInterface to paste and x, y
      * coordinates of target position
      *
      * @param ImageInterface $image
-     * @param integer        $x
-     * @param integer        $y
+     * @param Point          $start
      */
-    public function __construct(ImageInterface $image, $x, $y)
+    public function __construct(ImageInterface $image, Point $start)
     {
         $this->image = $image;
-        $this->x     = $x;
-        $this->y     = $y;
+        $this->start = $start;
     }
 
     /**
@@ -40,6 +40,6 @@ class Paste implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->paste($this->image, $this->x, $this->y);
+        return $image->paste($this->image, $this->start);
     }
 }
