@@ -20,8 +20,8 @@ To open an existing image, all you need is to instantiate an image factory and i
 
 The ``Imagine::open()`` method may throw one of the following exceptions:
 
-* ``Imagine\\Exception\\InvalidArgumentException``
-* ``Imagine\\Exception\\RuntimeException``
+* ``Imagine\Exception\InvalidArgumentException``
+* ``Imagine\Exception\RuntimeException``
 
 Now that you've opened an image, you can perform manipulations on it:
 
