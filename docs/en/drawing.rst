@@ -1,11 +1,11 @@
 Drawing API
 ===========
 
+Imagine also provides a fully-featured drawing API, inspired by Python's PIL.
+To use the api, you need to get a drawer instance from you current image instance, using ``ImageInterface::draw()`` method.
+
 Example
 -------
-
-Imagine also provides a fully-featured drawing API, inspired by Python's PIL.
-To use the api, you need to get a drawer instance from you current image instance.
 
 ::
 
