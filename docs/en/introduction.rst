@@ -199,7 +199,7 @@ The ``Filter\Tranformation`` class itself is simply a very specific implementati
 Filters
 -------
 
-As we already know, ``Filter\Transformation`` is just a very special case of ``FilterInterface``.
+As we already know, ``Filter\Transformation`` is just a very special case of ``Filter\FilterInterface``.
 
 Filter is a set of operations, calculations, etc., that can be applied to an ``ImageInterface`` instance using ``Filter\FilterInterface::apply()`` method.
 
