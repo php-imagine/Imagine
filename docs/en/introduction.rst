@@ -1,19 +1,6 @@
 Introduction
 ============
 
-Requirements
-------------
-
-The Imagine library has the following requirements:
-
-* PHP 5.3+
-
-Depending on the chosen Image implementation, you may need one of the following:
-
-* GD2
-* Imagick
-* Gmagick
-
 Basic usage
 -----------
 

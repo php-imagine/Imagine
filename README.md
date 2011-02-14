@@ -13,6 +13,7 @@ Depending on the chosen Image implementation, you may need one of the following:
 
  - GD2
  - Imagick
+ - Gmagick
 
 ## Documentation ##
 
