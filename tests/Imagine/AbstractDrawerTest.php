@@ -35,7 +35,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(400, 300, new Color('000000'));
+        $canvas = $imagine->create(400, 300, new Color('ff0000'));
 
         $canvas->draw()
             ->pieSlice(new Point(200, 150), 100, 200, 45, 135, new Color('fff'), true);
@@ -55,7 +55,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->chord(new Point(200, 150), 100, 200, 45, 135, new Color('fff'), false);
+            ->chord(new Point(200, 150), 100, 200, 45, 135, new Color('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/chord.png');
 

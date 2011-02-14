@@ -184,8 +184,6 @@ final class Drawer implements DrawerInterface
             $this->line($center, new Point($x2, $y2), $color);
         }
 
-        $this->ellipse(new Point(125, 100), 50, 50, new Color('fff'));
-
         return $this;
     }
 
