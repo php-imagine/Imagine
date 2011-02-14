@@ -14,7 +14,7 @@ namespace Imagine\Filter;
 use Imagine\Filter\Basic\Thumbnail;
 
 use Imagine\Color;
-
+use Imagine\Point;
 use Imagine\ImageInterface;
 use Imagine\ImageFactoryInterface;
 use Imagine\Filter\Basic\Copy;
@@ -69,9 +69,9 @@ final class Transformation implements FilterInterface
      *
      * @return Transformation
      */
-    public function crop($x, $y, $width, $height)
+    public function crop(Point $start, $width, $height)
     {
-        return $this->add(new Crop($x, $y, $width, $height));
+        return $this->add(new Crop($start, $width, $height));
     }
 
     /**
@@ -100,14 +100,13 @@ final class Transformation implements FilterInterface
      * Stacks a paste transformation into the current transformations queue
      *
      * @param ImageInterface $image
-     * @param integer        $x
-     * @param integer        $y
+     * @param Point          $start
      *
      * @return Transformation
      */
-    public function paste(ImageInterface $image, $x, $y)
+    public function paste(ImageInterface $image, Point $start)
     {
-        return $this->add(new Paste($image, $x, $y));
+        return $this->add(new Paste($image, $start));
     }
 
     /**

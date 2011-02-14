@@ -75,6 +75,7 @@ Color is a class in Imagine, which takes two arguments in its constructor: the R
     $white = new Imagine\Color('ffffff', 100);
     $white = new Imagine\Color('#fff', 100);
     $white = new Imagine\Color('#ffffff', 100);
+    $white = new Imagine\Color(array(255, 255, 255), 100);
 
 After you have instantiated a color, you can easily get its Red, Green, Blue and Alpha (transparency) values:
 
@@ -88,16 +89,35 @@ After you have instantiated a color, you can easily get its Red, Green, Blue and
         'A' => $white->getAlpha()
     ));
 
+Point Class
++++++++++++
+
+Every coordinate location (x, y) in Imagine is represented by a ``Point`` instance.
+
+``Point`` is a simple and light-weight value object, that takes values for x and y coordinate it represents as its constructor arguments. After the ``Point`` is constructed, ``Point::getX()`` and ``Point::getY()`` can be used to get the appropriate values back.
+
+::
+
+    <?php
+    $point = new Point(0, 0);
+    
+    var_dump(array(
+        'x' => $point->getX(),
+        'y' => $point->getY(),
+    ));
+
 Advanced Example - An Image Collage
 -----------------------------------
 
-Assume we were given the not-so-easy task of creating a four-by-four collage of 16 student portraits for a school yearbook.  Each photo is 30x40px and we need four rows and columns in our collage, so the final product will be 120x160px.
+Assume we were given the not-so-easy task of creating a four-by-four collage of 16 student portraits for a school yearbook.  Each photo is 30x40 px and we need four rows and columns in our collage, so the final product will be 120x160 px.
 
 Here is how we would approach this problem with Imagine.
 
 ::
 
     <?php
+    use Imagine\Point;
+    
     // make an empty image (canvas) 120x160px
     $collage = $imagine->create(120, 160);
     
@@ -110,7 +130,7 @@ Here is how we would approach this problem with Imagine.
         $photo = $imagine->open($path);
         
         // paste photo at current position
-        $collage->paste($photo, $x, $y);
+        $collage->paste($photo, new Point($x, $y));
         
         // move position by 30px to the right
         $x += 30;
@@ -134,30 +154,32 @@ Available Methods
 
 * ``->copy()`` - duplicates current image and returns a new ImageInterface instance
 
-* ``->crop($x, $y, $width, $height`)` - crops the image, starting with the $x, $y coordinates and extending to the specified width and height
+* ``->crop(Point $start, $width, $height`)` - crops the image, starting at the ``$start`` coordinates and extending to the specified ``$width`` and ``$height``
 
 * ``->flipHorizontally()`` - creates a horizontal mirror reflection of image
 
 * ``->flipVertically()`` - creates a vertical mirror reflection of image
 
-* ``->paste(ImageInterface $image, $x, $y)`` - pastes another image into the source image at the $x, $y coordinates
+* ``->paste(ImageInterface $image, Point $start)`` - pastes another ``$image`` into the source image at the ``$start`` position
 
-* ``->resize($width, $height)`` - resizes image to given height and width exactly
+* ``->resize($width, $height)`` - resizes image to given ``$height`` and ``$width`` exactly
 
-* ``->rotate($angle, Color $background = null)`` - rotates the image clockwise by the given angle, or counter-clockwise if the angle is negative. If a background color is given, it will be used to fill empty parts of the image (white will be used by default).
+* ``->rotate($angle, Color $background = null)`` - rotates the image clockwise by the given ``$angle``, or counter-clockwise if the angle is negative. If a background ``$color`` is given, it will be used to fill empty parts of the image (white will be used by default).
 
-* ``->save($path, array $options = array())`` - saves current image to the specified path. The target file extension will be used to infer the output format. For 'jpeg/jpg' and 'png' images, a 'quality' option of 0-100 and 0-9 are accepted, respectively. 'png' images also accept a 'filter' option (consult the GD manual for more information). For 'wbmp' or 'xbm' images, a 'foreground' option may be specified.
+* ``->save($path, array $options = array())`` - saves current image to the specified ``$path``. The target file extension will be used to infer the output format. For 'jpeg/jpg' and 'png' images, a 'quality' option of 0-100 is accepted. 'png' images also accept a 'filter' option (consult the GD manual for more information). For 'wbmp' or 'xbm' images, a 'foreground' option may be specified.
 
 * ``->show($format, array $options = array())`` - outputs image content in the given format, allowing the same options as the `save()` method
 
-* ``->thumbnail($width, $height, $mode = self::THUMBNAIL_INSET)`` - prepares an image thumbnail, based on the target dimensions, while preserving proportions. The thumbnail operation returns a new ImageInterface instance that is a processed copy of the original (the source image is not modified). If thumbnail mode is `ImageInterface::THUMBNAIL_INSET`, the original image is scaled down so it is fully contained within the thumbnail dimensions. The specified width and height will be considered maximum limits. Unless the given dimensions are equal to the original image's aspect ratio, one dimension in the resulting thumbnail will be smaller than the given limit. If `ImageInterface::THUMBNAIL_OUTBOUND` mode is chosen, then the thumbnail is scaled so that its smallest side equals the length of the corresponding side in the original image. Any excess outside of the scaled thumbnail's area will be cropped, and the returned thumbnail will have the exact width and height specified.
+* ``->thumbnail($width, $height, $mode = self::THUMBNAIL_INSET)`` - prepares an image thumbnail, based on the target dimensions, while preserving proportions. The thumbnail operation returns a new ``ImageInterface`` instance that is a processed copy of the original (the source image is not modified). If thumbnail mode is ``ImageInterface::THUMBNAIL_INSET``, the original image is scaled down so it is fully contained within the thumbnail dimensions. The specified ``$width`` and ``$height`` will be considered maximum limits. Unless the given dimensions are equal to the original image's aspect ratio, one dimension in the resulting thumbnail will be smaller than the given limit. If ``ImageInterface::THUMBNAIL_OUTBOUND`` mode is chosen, then the thumbnail is scaled so that its smallest side equals the length of the corresponding side in the original image. Any excess outside of the scaled thumbnail's area will be cropped, and the returned thumbnail will have the exact ``$width`` and ``$height`` specified.
 
-Image Transformations
----------------------
+Image Transformations, aka Lazy Processing
+------------------------------------------
 
-Imagine also provides so-called image transformations.
+Sometimes we're not confortable with opening an image inline, and would like to apply some pre-defined operations in the lazy manner. 
 
-Image transformation is implemented via the `Transformation` class, which mostly conforms to `ImageInterface` and can be used interchangeably with it. The main difference is that transformations may be stacked and performed on a real `ImageInterface` instance later using the `Transformation::apply()` method.
+For that, Imagine provides so-called image transformations.
+
+Image transformation is implemented via the ``Filter\Transformation`` class, which mostly conforms to ``ImageInterface`` and can be used interchangeably with it. The main difference is that transformations may be stacked and performed on a real ``ImageInterface`` instance later using the ``Transformation::apply()`` method.
 
 Example of a naive thumbnail implementation:
 
@@ -171,7 +193,7 @@ Example of a naive thumbnail implementation:
     
     $transformation->apply($imagine->open('/path/to/image.jpg'));
 
-The result of `apply()` is the modified image instance itself, so if we wanted to create a mass-processing thumbnail script, we would do something like the following:
+The result of ``apply()`` is the modified image instance itself, so if we wanted to create a mass-processing thumbnail script, we would do something like the following:
 
 ::
 
@@ -185,9 +207,20 @@ The result of `apply()` is the modified image instance itself, so if we wanted t
             ->save('/path/to/resized/'.md5($path).'.jpg');
     }
 
+The ``Filter\Tranformation`` class itself is simply a very specific implementation of ``FilterInterface``, which is a more generic interface, that let's you pre-define certain operations and variable calculations and apply them to an ``ImageInterface`` instance later.
+
+Filters
+-------
+
+As we already know, ``Filter\Transformation`` is just a very special case of ``FilterInterface``.
+
+Filter is a set of operations, calculations, etc., that can be applied to an ``ImageInterface`` instance using ``Filter\FilterInterface::apply()`` method.
+
+Right now only basic filters are available - they simply forward the call to ``ImageInterface`` implementation itself, more filters coming soon...
+
 Architecture
 ------------
 
-The architecture is very flexible, as the filters don't need any processing logic other than calculating the variables based on some settings and invoking the corresponding method, or sequence of methods, on the `ImageInterface` implementation.
+The architecture is very flexible, as the filters don't need any processing logic other than calculating the variables based on some settings and invoking the corresponding method, or sequence of methods, on the ``ImageInterface`` implementation.
 
-The `Transformation` object is an example of a composite filter, representing a stack or queue of filters, that get applied to an Image upon application of the `Transformation` itself.
+The ``Transformation`` object is an example of a composite filter, representing a stack or queue of filters, that get applied to an Image upon application of the ``Transformation`` itself.
