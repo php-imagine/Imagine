@@ -140,6 +140,6 @@ final class Color
      */
     public function __toString()
     {
-        return '#'.implode('', array_map('dechex', array($this->r, $this->g, $this->b)));
+        return vsprintf('#%x%x%x', array($this->r, $this->g, $this->b));
     }
 }
