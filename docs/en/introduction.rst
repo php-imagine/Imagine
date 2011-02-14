@@ -7,7 +7,7 @@ Basic usage
 Open Existing Images
 ++++++++++++++++++++
 
-To open an existing image, all you need is to instantiate an image factory and invoke `Imagine::open()` with `$path` to image as the  argument
+To open an existing image, all you need is to instantiate an image factory and invoke ``Imagine::open()`` with ``$path`` to image as the  argument
 
 ::
 
@@ -18,10 +18,10 @@ To open an existing image, all you need is to instantiate an image factory and i
     
     $image = $imagine->open('/path/to/image.jpg');
 
-The `Imagine::open()` method may throw one of the following exceptions:
+The ``Imagine::open()`` method may throw one of the following exceptions:
 
-* `Imagine\\Exception\\InvalidArgumentException`
-* `Imagine\\Exception\\RuntimeException`
+* ``Imagine\\Exception\\InvalidArgumentException``
+* ``Imagine\\Exception\\RuntimeException``
 
 Now that you've opened an image, you can perform manipulations on it:
 
