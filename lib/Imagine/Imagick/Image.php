@@ -246,8 +246,15 @@ final class Image implements ImageInterface
      */
     public function rotate($angle, Color $background = null)
     {
+        $color = $background ? $background : new Color('fff');
+
         try {
-            $this->imagick->rotateimage($this->getColor($background), $angle);
+            $pixel = $this->getColor($color);
+
+            $this->imagick->rotateimage($pixel, $angle);
+
+            $pixel->clear();
+            $pixel->destroy();
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Rotate operation failed', $e->getCode(), $e
