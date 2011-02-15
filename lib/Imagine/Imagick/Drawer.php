@@ -36,13 +36,18 @@ final class Drawer implements DrawerInterface
         $y = $center->getY();
 
         try {
-            $arc = new \ImagickDraw();
-            $arc->setStrokeColor($this->getColor($color));
+            $pixel = $this->getColor($color);
+            $arc   = new \ImagickDraw();
+
+            $arc->setStrokeColor($pixel);
             $arc->setStrokeWidth(1);
             $arc->setFillColor('transparent');
             $arc->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
             $this->imagick->drawImage($arc);
+
+            $pixel->clear();
+            $pixel->destroy();
 
             $arc->clear();
             $arc->destroy();
@@ -65,8 +70,8 @@ final class Drawer implements DrawerInterface
         $y = $center->getY();
 
         try {
-            $chord = new \ImagickDraw();
             $pixel = $this->getColor($color);
+            $chord = new \ImagickDraw();
 
             $chord->setStrokeColor($pixel);
             $chord->setStrokeWidth(1);
@@ -88,6 +93,9 @@ final class Drawer implements DrawerInterface
 
             $this->imagick->drawImage($chord);
 
+            $pixel->clear();
+            $pixel->destroy();
+
             $chord->clear();
             $chord->destroy();
         } catch (\ImagickException $e) {
@@ -106,8 +114,8 @@ final class Drawer implements DrawerInterface
     public function ellipse(Point $center, $width, $height, Color $color, $fill = false)
     {
         try {
-            $ellipse = new \ImagickDraw();
             $pixel   = $this->getColor($color);
+            $ellipse = new \ImagickDraw();
 
             $ellipse->setStrokeColor($pixel);
             $ellipse->setStrokeWidth(1);
@@ -123,6 +131,9 @@ final class Drawer implements DrawerInterface
             if (false === $this->imagick->drawImage($ellipse)) {
                 throw new RuntimeException('Ellipse operation failed');
             }
+
+            $pixel->clear();
+            $pixel->destroy();
 
             $ellipse->clear();
             $ellipse->destroy();
@@ -142,12 +153,17 @@ final class Drawer implements DrawerInterface
     public function line(Point $start, Point $end, Color $color)
     {
         try {
-            $line = new \ImagickDraw();
-            $line->setStrokeColor($this->getColor($color));
+            $pixel = $this->getColor($color);
+            $line  = new \ImagickDraw();
+
+            $line->setStrokeColor($pixel);
             $line->setStrokeWidth(1);
             $line->line($start->getX(), $start->getY(), $end->getX(), $end->getY());
 
             $this->imagick->drawImage($line);
+
+            $pixel->clear();
+            $pixel->destroy();
 
             $line->clear();
             $line->destroy();
@@ -197,12 +213,16 @@ final class Drawer implements DrawerInterface
         $y = $position->getY();
 
         try {
+            $pixel = $this->getColor($color);
             $point = new \ImagickDraw();
 
-            $point->setFillColor($this->getColor($color));
+            $point->setFillColor($pixel);
             $point->point($x, $y);
 
             $this->imagick->drawimage($point);
+
+            $pixel->clear();
+            $pixel->destroy();
 
             $point->clear();
             $point->destroy();
@@ -232,8 +252,8 @@ final class Drawer implements DrawerInterface
         }, $coordinates);
 
         try {
-            $polygon = new \ImagickDraw();
             $pixel   = $this->getColor($color);
+            $polygon = new \ImagickDraw();
 
             $polygon->setStrokeColor($pixel);
             $polygon->setStrokeWidth(1);
@@ -247,6 +267,9 @@ final class Drawer implements DrawerInterface
             $polygon->polygon($points);
 
             $this->imagick->drawImage($polygon);
+
+            $pixel->clear();
+            $pixel->destroy();
 
             $polygon->clear();
             $polygon->destroy();
