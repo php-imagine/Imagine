@@ -375,10 +375,11 @@ final class Image implements ImageInterface
     private function getColor(Color $color)
     {
         $pixel = new \ImagickPixel((string) $color);
-        if ($color->getAlpha() > 0) {
-            $opacity = number_format(abs(round($color->getAlpha() / 100, 1)), 1);
-            $pixel->setColorValue(\Imagick::COLOR_OPACITY, $opacity);
-        }
+
+        $pixel->setColorValue(
+            \Imagick::COLOR_OPACITY,
+            number_format(abs(round($color->getAlpha() / 100, 1)), 1)
+        );
 
         return $pixel;
     }
