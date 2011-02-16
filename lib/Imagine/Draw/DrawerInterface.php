@@ -11,8 +11,8 @@
 
 namespace Imagine\Draw;
 
+use Imagine\Cartesian\Coordinate;
 use Imagine\Color;
-use Imagine\Coordinate;
 use Imagine\Filter\FilterInterface;
 
 interface DrawerInterface

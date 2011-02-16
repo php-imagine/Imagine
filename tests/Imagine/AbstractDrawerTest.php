@@ -11,6 +11,8 @@
 
 namespace Imagine;
 
+use Imagine\Cartesian\Coordinate;
+
 abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
 {
     public function testDrawASmileyFace()

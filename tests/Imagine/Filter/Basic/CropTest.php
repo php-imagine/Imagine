@@ -11,7 +11,7 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Coordinate;
+use Imagine\Cartesian\Coordinate;
 
 class CropTest extends BasicFilterTestCase
 {

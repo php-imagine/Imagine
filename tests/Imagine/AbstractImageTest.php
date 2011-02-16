@@ -11,6 +11,8 @@
 
 namespace Imagine;
 
+use Imagine\Cartesian\Coordinate;
+
 abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 {
     public function testRotate()

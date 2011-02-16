@@ -12,7 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
-use Imagine\Coordinate;
+use Imagine\Cartesian\Coordinate;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;

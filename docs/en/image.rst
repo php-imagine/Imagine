@@ -10,13 +10,13 @@ Available Methods
 
 * ``->copy()`` - duplicates current image and returns a new ImageInterface instance
 
-* ``->crop(Point $start, $width, $height`)` - crops the image, starting at the ``$start`` coordinates and extending to the specified ``$width`` and ``$height``
+* ``->crop(Coordinate $start, $width, $height`)` - crops the image, starting at the ``$start`` coordinates and extending to the specified ``$width`` and ``$height``
 
 * ``->flipHorizontally()`` - creates a horizontal mirror reflection of image
 
 * ``->flipVertically()`` - creates a vertical mirror reflection of image
 
-* ``->paste(ImageInterface $image, Point $start)`` - pastes another ``$image`` into the source image at the ``$start`` position
+* ``->paste(ImageInterface $image, Coordinate $start)`` - pastes another ``$image`` into the source image at the ``$start`` position
 
 * ``->resize($width, $height)`` - resizes image to given ``$height`` and ``$width`` exactly
 

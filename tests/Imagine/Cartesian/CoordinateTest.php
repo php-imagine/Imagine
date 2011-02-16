@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Cartesian;
 
 class CoordinateTest extends \PHPUnit_Framework_TestCase
 {

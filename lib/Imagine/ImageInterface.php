@@ -11,11 +11,12 @@
 
 namespace Imagine;
 
+use Imagine\Cartesian\Coordinate;
+use Imagine\Draw\DrawerInterface;
+use Imagine\Gd\Image;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Draw\DrawerInterface;
-use Imagine\Gd\Image;
 
 interface ImageInterface
 {

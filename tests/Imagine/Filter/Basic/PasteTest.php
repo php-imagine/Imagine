@@ -2,7 +2,7 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Coordinate;
+use Imagine\Cartesian\Coordinate;
 
 class PasteTest extends BasicFilterTestCase
 {
