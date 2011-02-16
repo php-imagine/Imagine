@@ -11,7 +11,7 @@
 
 namespace Imagine\Cartesian;
 
-final class Coordinate
+final class Coordinate implements CoordinateInterface
 {
     private $x;
     private $y;
@@ -29,9 +29,8 @@ final class Coordinate
     }
 
     /**
-     * Gets points x coordinate
-     *
-     * @return integer
+     * (non-PHPdoc)
+     * @see Imagine\Cartesian.CoordinateInterface::getX()
      */
     public function getX()
     {
@@ -39,9 +38,8 @@ final class Coordinate
     }
 
     /**
-     * Gets points y coordinate
-     *
-     * @return integer
+     * (non-PHPdoc)
+     * @see Imagine\Cartesian.CoordinateInterface::getY()
      */
     public function getY()
     {
