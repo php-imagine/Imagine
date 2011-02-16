@@ -37,6 +37,8 @@ class CoordinateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Data provider for testShouldAssignXYCoordinates
+     *
+     * @return array
      */
     public function getCoordinates()
     {
@@ -46,6 +48,34 @@ class CoordinateTest extends \PHPUnit_Framework_TestCase
             array(10, 23, new Size(10, 10), false),
             array(42, 30, new Size(50, 50), true),
             array(81, 16, new Size(50, 10), false),
+        );
+    }
+
+    /**
+     * @covers Imagine\Cartesian\Coordinate::__construct
+     *
+     * @expectedException Imagine\Exception\InvalidArgumentException
+     *
+     * @dataProvider getInvalidCoordinates
+     *
+     * @param integer $x
+     * @param integer $y
+     */
+    public function testShouldThrowExceptionOnInvalidCoordinates($x, $y)
+    {
+        new Coordinate($x, $y);
+    }
+
+    /**
+     * Data provider for testShouldThrowExceptionOnInvalidCoordinates
+     *
+     * @return array
+     */
+    public function getInvalidCoordinates()
+    {
+        return array(
+            array(-1, 0),
+            array(0, -1)
         );
     }
 }

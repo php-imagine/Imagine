@@ -11,6 +11,8 @@
 
 namespace Imagine\Cartesian;
 
+use Imagine\Exception\InvalidArgumentException;
+
 final class Coordinate implements CoordinateInterface
 {
     /**
@@ -31,6 +33,12 @@ final class Coordinate implements CoordinateInterface
      */
     public function __construct($x, $y)
     {
+        if ($x < 0 || $y < 0) {
+            throw new InvalidArgumentException(
+                'A coordinate cannot be positioned ouside of a bounding box'
+            );
+        }
+
         $this->x = $x;
         $this->y = $y;
     }
