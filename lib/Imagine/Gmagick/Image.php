@@ -321,8 +321,7 @@ class Image implements ImageInterface
      */
     public function draw()
     {
-    	// TODO: add drawing support to GMagick
-        throw new RuntimeException('not implemented');
+        return new Drawer($this->gmagick);
     }
 
     /**
