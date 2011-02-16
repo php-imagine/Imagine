@@ -61,8 +61,8 @@ interface ImageInterface
      * Optional $background can be used to specify the fill color of the empty
      * area of rotated image.
      *
-     * @param integer         $angle
-     * @param Imagine\Color   $background
+     * @param integer       $angle
+     * @param Imagine\Color $background
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -77,8 +77,8 @@ interface ImageInterface
      *
      * Returns source image
      *
-     * @param ImageInterface $image
-     * @param Imagine\Cartesian\CoordinateInterface     $start
+     * @param Imagine\ImageInterface                $image
+     * @param Imagine\Cartesian\CoordinateInterface $start
      *
      * @throws Imagine\Exception\InvalidArgumentException
      * @throws Imagine\Exception\OutOfBoundsException
@@ -106,7 +106,7 @@ interface ImageInterface
      * Outputs the image content
      * The $quality parameter is only relevant for JPEG/JPG images
      *
-     * @param string $format
+     * @param string  $format
      * @param integer $quality
      *
      * @throws Imagine\Exception\RuntimeException
@@ -120,7 +120,7 @@ interface ImageInterface
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function flipHorizontally();
 
@@ -129,7 +129,7 @@ interface ImageInterface
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function flipVertically();
 
@@ -142,7 +142,7 @@ interface ImageInterface
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function thumbnail(SizeInterface $size, $mode = self::THUMBNAIL_INSET);
 

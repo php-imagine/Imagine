@@ -22,8 +22,8 @@ interface DrawerInterface
      * Draws an arc on a starting at a given x, y coordinates under a given
      * start and end angles
      *
-     * @param CoordinateInterface $center
-     * @param SizeInterface       $size
+     * @param Imagine\Cartesian\CoordinateInterface $center
+     * @param Imagine\Cartesian\SizeInterface       $size
      * @param integer             $start
      * @param integer             $end
      * @param Color               $color
@@ -35,8 +35,8 @@ interface DrawerInterface
     /**
      * Same as arc, but also connects end points with a straight line
      *
-     * @param CoordinateInterface $center
-     * @param integer             $width
+     * @param Imagine\Cartesian\CoordinateInterface $center
+     * @param Imagine\Cartesian\SizeInterface       $size
      * @param integer             $height
      * @param integer             $start
      * @param Color               $color
@@ -45,27 +45,26 @@ interface DrawerInterface
      *
      * @return DrawerInterface
      */
-    function chord(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false);
+    function chord(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false);
 
     /**
      * Draws and ellipse with center at the given x, y coordinates, and given
      * width and height
      *
-     * @param CoordinateInterface $center
-     * @param integer             $width
-     * @param integer             $height
+     * @param Imagine\Cartesian\CoordinateInterface $center
+     * @param Imagine\Cartesian\SizeInterface       $size
      * @param Color               $color
      * @param Boolean             $fill
      *
      * @return DrawerInterface
      */
-    function ellipse(CoordinateInterface $center, $width, $height, Color $color, $fill = false);
+    function ellipse(CoordinateInterface $center, SizeInterface $size, Color $color, $fill = false);
 
     /**
      * Draws a line from x1, y1 to x2, y2 coordinates
      *
-     * @param CoordinateInterface $start
-     * @param CoordinateInterface $end
+     * @param Imagine\Cartesian\CoordinateInterface $start
+     * @param Imagine\Cartesian\CoordinateInterface $end
      * @param Color               $outline
      *
      * @return DrawerInterface
@@ -75,9 +74,8 @@ interface DrawerInterface
     /**
      * Same as arc, but connects end points and the center
      *
-     * @param CoordinateInterface $center
-     * @param integer             $width
-     * @param integer             $height
+     * @param Imagine\Cartesian\CoordinateInterface $center
+     * @param Imagine\Cartesian\SizeInterface       $size
      * @param integer             $start
      * @param integer             $end
      * @param Color               $color
@@ -85,13 +83,13 @@ interface DrawerInterface
      *
      * @return DrawerInterface
      */
-    function pieSlice(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false);
+    function pieSlice(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false);
 
     /**
      * Places a one pixel point at specific coordinates and fills it with
      * specified color
      *
-     * @param CoordinateInterface $position
+     * @param Imagine\Cartesian\CoordinateInterface $position
      * @param Color               $color
      *
      * @return DrawerInterface

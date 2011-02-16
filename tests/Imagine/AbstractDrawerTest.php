@@ -11,9 +11,8 @@
 
 namespace Imagine;
 
-use Imagine\Cartesian\Coordinate\Center;
-
 use Imagine\Cartesian\Coordinate;
+use Imagine\Cartesian\Coordinate\Center;
 use Imagine\Cartesian\Size;
 
 abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
@@ -25,9 +24,9 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(new Size(400, 300), new Color('000'));
 
         $canvas->draw()
-            ->chord(new Coordinate(200, 200), 200, 150, 0, 180, new Color('fff'), false)
-            ->ellipse(new Coordinate(125, 100), 50, 50, new Color('fff'))
-            ->ellipse(new Coordinate(275, 100), 50, 50, new Color('fff'));
+            ->chord(new Coordinate(200, 200), new Size(200, 150), 0, 180, new Color('fff'), false)
+            ->ellipse(new Coordinate(125, 100), new Size(50, 50), new Color('fff'))
+            ->ellipse(new Coordinate(275, 100), new Size(50, 50), new Color('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/smiley.png', array('quality' => 100));
 
@@ -43,7 +42,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(new Size(400, 300), new Color('000'));
 
         $canvas->draw()
-            ->pieSlice(new Coordinate(200, 150), 100, 200, 45, 135, new Color('fff'), true);
+            ->pieSlice(new Coordinate(200, 150), new Size(100, 200), 45, 135, new Color('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/pie.png');
 
@@ -60,7 +59,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(new Size(400, 300), new Color('000'));
 
         $canvas->draw()
-            ->chord(new Coordinate(200, 150), 100, 200, 45, 135, new Color('fff'), true);
+            ->chord(new Coordinate(200, 150), new Size(100, 200), 45, 135, new Color('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/chord.png');
 

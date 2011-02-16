@@ -53,15 +53,12 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::chord()
      */
-    public function chord(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function chord(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false)
     {
-        $x = $center->getX();
-        $y = $center->getY();
-
-        if ($width < 1 || $height < 1) {
-            throw new OutOfBoundsException('Dimensions of the chord must be '.
-                'positive numbers');
-        }
+        $x      = $center->getX();
+        $y      = $center->getY();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
         if ($fill) {
             $style = IMG_ARC_CHORD;
@@ -82,15 +79,12 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::ellipse()
      */
-    public function ellipse(CoordinateInterface $center, $width, $height, Color $color, $fill = false)
+    public function ellipse(CoordinateInterface $center, SizeInterface $size, Color $color, $fill = false)
     {
-        $x = $center->getX();
-        $y = $center->getY();
-
-        if ($width < 1 || $height < 1) {
-            throw new OutOfBoundsException('Dimensions of the ellipse must '.
-                'be positive numbers');
-        }
+        $x      = $center->getX();
+        $y      = $center->getY();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
         $color = $this->getColor($color);
 
@@ -137,15 +131,12 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::pieSlice()
      */
-    public function pieSlice(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function pieSlice(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false)
     {
-        $x = $center->getX();
-        $y = $center->getY();
-
-        if ($width < 1 || $height < 1) {
-            throw new OutOfBoundsException('Dimensions of the pie slice must '.
-                'be positive numbers');
-        }
+        $x      = $center->getX();
+        $y      = $center->getY();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
         if ($fill) {
             $style = IMG_ARC_EDGED;

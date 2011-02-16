@@ -68,10 +68,12 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::chord()
      */
-    public function chord(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function chord(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false)
     {
-        $x = $center->getX();
-        $y = $center->getY();
+        $x      = $center->getX();
+        $y      = $center->getY();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
         try {
             $pixel = $this->getColor($color);
@@ -115,8 +117,11 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::ellipse()
      */
-    public function ellipse(CoordinateInterface $center, $width, $height, Color $color, $fill = false)
+    public function ellipse(CoordinateInterface $center, SizeInterface $size, Color $color, $fill = false)
     {
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+
         try {
             $pixel   = $this->getColor($color);
             $ellipse = new \ImagickDraw();
@@ -184,15 +189,18 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::pieSlice()
      */
-    public function pieSlice(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function pieSlice(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false)
     {
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+
         $x1 = round($center->getX() + $width / 2 * cos(deg2rad($start)));
         $y1 = round($center->getY() + $height / 2 * sin(deg2rad($start)));
         $x2 = round($center->getX() + $width / 2 * cos(deg2rad($end)));
         $y2 = round($center->getY() + $height / 2 * sin(deg2rad($end)));
 
         if ($fill) {
-            $this->chord($center, $width, $height, $start, $end, $color, true);
+            $this->chord($center, $size, $start, $end, $color, true);
             $this->polygon(array(
                 $center,
                 new Coordinate($x1, $y1),

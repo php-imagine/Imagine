@@ -20,12 +20,12 @@ interface ImagineInterface
     /**
      * Creates a new empty image with an optional background color
      *
-     * @param SizeInterface $size
-     * @param Color   $color
+     * @param Imagine\Cartesian\SizeInterface $size
+     * @param Imagine\Color                   $color
      *
-     * @throws InvalidArgumentException
+     * @throws Imagine\Exception\InvalidArgumentException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function create(SizeInterface $size, Color $color = null);
 
@@ -34,9 +34,9 @@ interface ImagineInterface
      *
      * @param string $path
      *
-     * @throws RuntimeException
+     * @throws Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function open($path);
 }
