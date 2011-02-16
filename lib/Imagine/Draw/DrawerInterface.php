@@ -12,6 +12,7 @@
 namespace Imagine\Draw;
 
 use Imagine\Cartesian\CoordinateInterface;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Color;
 use Imagine\Filter\FilterInterface;
 
@@ -22,15 +23,14 @@ interface DrawerInterface
      * start and end angles
      *
      * @param CoordinateInterface $center
-     * @param integer             $width
-     * @param integer             $height
+     * @param SizeInterface       $size
      * @param integer             $start
      * @param integer             $end
      * @param Color               $color
      *
      * @return DrawerInterface
      */
-    function arc(CoordinateInterface $center, $width, $height, $start, $end, Color $color);
+    function arc(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color);
 
     /**
      * Same as arc, but also connects end points with a straight line

@@ -14,6 +14,7 @@ namespace Imagine\Imagick;
 use Imagine\Color;
 use Imagine\Cartesian\Coordinate;
 use Imagine\Cartesian\CoordinateInterface;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -31,10 +32,12 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::arc()
      */
-    public function arc(CoordinateInterface $center, $width, $height, $start, $end, Color $color)
+    public function arc(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color)
     {
-        $x = $center->getX();
-        $y = $center->getY();
+        $x      = $center->getX();
+        $y      = $center->getY();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
         try {
             $pixel = $this->getColor($color);

@@ -13,6 +13,7 @@ namespace Imagine\Gd;
 
 use Imagine\Color;
 use Imagine\Cartesian\CoordinateInterface;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
@@ -31,7 +32,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::arc()
      */
-    public function arc(CoordinateInterface $center, $width, $height, $start, $end, Color $color)
+    public function arc(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -41,8 +42,8 @@ final class Drawer implements DrawerInterface
                 'positive numbers');
         }
 
-        if (false === imagearc($this->resource, $x, $y, $width, $height,
-            $start, $end, $this->getColor($color))) {
+        if (false === imagearc($this->resource, $x, $y, $size->getWidth(),
+            $size->getHeight(), $start, $end, $this->getColor($color))) {
             throw new RuntimeException('Draw arc operation failed');
         }
 
