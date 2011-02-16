@@ -13,6 +13,7 @@ namespace Imagine\Imagick;
 
 use Imagine\Color;
 use Imagine\Cartesian\CoordinateInterface;
+use Imagine\Cartesian\Size;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -348,6 +349,24 @@ final class Image implements ImageInterface
     public function draw()
     {
         return new Drawer($this->imagick);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::getSize()
+     */
+    public function getSize()
+    {
+        try {
+            $width  = $this->imagick->getImageWidth();
+            $height = $this->imagick->getImageHeight();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Could not get size', $e->getCode(), $e
+            );
+        }
+
+        return new Size($width, $height);
     }
 
     /**

@@ -12,6 +12,7 @@
 namespace Imagine;
 
 use Imagine\Cartesian\CoordinateInterface;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Gd\Image;
 use Imagine\Exception\InvalidArgumentException;
@@ -163,4 +164,11 @@ interface ImageInterface
      * @return DrawerInterface
      */
     function draw();
+
+    /**
+     * Returns current image size
+     *
+     * @return SizeInterface
+     */
+    function getSize();
 }

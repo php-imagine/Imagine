@@ -14,6 +14,7 @@ namespace Imagine\Gd;
 use Imagine\Color;
 use Imagine\Cartesian\Coordinate;
 use Imagine\Cartesian\CoordinateInterface;
+use Imagine\Cartesian\Size;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -343,6 +344,15 @@ final class Image implements ImageInterface
     public function draw()
     {
         return new Drawer($this->resource);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::getSize()
+     */
+    public function getSize()
+    {
+        return new Size(imagesx($this->resource), imagesy($this->resource));
     }
 
     /**

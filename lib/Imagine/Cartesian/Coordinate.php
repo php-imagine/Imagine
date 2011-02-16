@@ -13,7 +13,14 @@ namespace Imagine\Cartesian;
 
 final class Coordinate implements CoordinateInterface
 {
+    /**
+     * @var integer
+     */
     private $x;
+
+    /**
+     * @var integer
+     */
     private $y;
 
     /**
