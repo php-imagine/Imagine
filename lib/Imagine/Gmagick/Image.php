@@ -13,6 +13,8 @@ namespace Imagine\Gmagick;
 
 use Imagine\Color;
 use Imagine\Cartesian\CoordinateInterface;
+use Imagine\Cartesian\Size;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -32,7 +34,7 @@ class Image implements ImageInterface
     private $imagine;
 
     /**
-     * Constructs Image with Imagick and Imagine instances
+     * Constructs Image with Gmagick and Imagine instances
      *
      * @param Gmagick $gmagick
      * @param Imagine $imagine
@@ -44,7 +46,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * Destroys allocated imagick resources
+     * Destroys allocated gmagick resources
      */
     public function __destruct()
     {
@@ -67,19 +69,19 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    public function crop(CoordinateInterface $start, $width, $height)
+    public function crop(CoordinateInterface $start, SizeInterface $size)
     {
-        $x = $start->getX();
-        $y = $start->getY();
-
-        if ($x < 0 || $y < 0 || $width < 1 || $height < 1 ||
-            $this->getWidth() - ($x + $width) < 0 ||
-            $this->getHeight() - ($y + $height) < 0) {
+        if (!$start->in($size)) {
             throw new OutOfBoundsException('Crop coordinates must start at '.
                 'minimum 0, 0 position from top left corner, crop height and '.
                 'width must be positive integers and must not exceed the '.
                 'current image borders');
         }
+
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+        $x      = $start->getX();
+        $y      = $start->getY();
 
         try {
             $this->gmagick->cropimage($width, $height, $x, $y);
@@ -124,40 +126,6 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::getHeight()
-     */
-    public function getHeight()
-    {
-        try {
-            $height = $this->gmagick->getimageheight();
-        } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Could not get height', $e->getCode(), $e
-            );
-        }
-
-        return $height;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine.ImageInterface::getWidth()
-     */
-    public function getWidth()
-    {
-        try {
-            $width = $this->gmagick->getimagewidth();
-        } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Could not get width', $e->getCode(), $e
-            );
-        }
-
-        return $width;
-    }
-
-    /**
-     * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
     public function paste(ImageInterface $image, CoordinateInterface $start)
@@ -172,16 +140,11 @@ class Image implements ImageInterface
             ));
         }
 
-        $widthDiff = $this->getWidth() - ($x + $image->getWidth());
-        $heightDiff = $this->getHeight() - ($y + $image->getHeight());
-
-        if ($widthDiff < 0 || $heightDiff < 0) {
-            throw new OutOfBoundsException(sprintf('Cannot paste image '.
-                'of width %d and height %d at the x position of %d and y '.
-                'position of %d, as it exceeds the parent image\'s width by '.
-                '%d in width and %d in height', $image->getWidth(),
-                $image->getHeight(), $x, $y, abs($widthDiff), abs($heightDiff)
-            ));
+        if (!$this->getSize()->contains($image->getSize(), $start)) {
+            throw new OutOfBoundsException(
+                'Cannot paste image of the given size at the specified '.
+                'position, as it moves outside of the current image\'s box'
+            );
         }
 
         try {
@@ -212,15 +175,10 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::resize()
      */
-    public function resize($width, $height)
+    public function resize(SizeInterface $size)
     {
-        if ($width < 1 || $height < 1) {
-            throw new InvalidArgumentException('Width an height of the '.
-                'resize must be positive integers');
-        }
-
         try {
-            $this->gmagick->resizeimage($width, $height,
+            $this->gmagick->resizeimage($size->getWidth(), $size->getHeight(),
                 \Gmagick::FILTER_UNDEFINED, 1);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
@@ -289,23 +247,29 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::thumbnail()
      */
-    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(SizeInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        if ($width < 1 || $height < 1) {
-            throw new InvalidArgumentException('Width an height of the '.
-                'resize must be positive integers');
-        }
-
-        $inbound = ($mode == ImageInterface::THUMBNAIL_INSET) ? true : false;
-
+//        $inbound   = ($mode == ImageInterface::THUMBNAIL_INSET) ? true : false;
         $thumbnail = $this->copy();
+
         try {
-            $thumbnail->gmagick->thumbnailimage($width, $height, $inbound);
+            if ($mode === ImageInterface::THUMBNAIL_INSET) {
+                $thumbnail->gmagick->thumbnailimage(
+                    $size->getWidth(),
+                    $size->getHeight(),
+                    true
+                );
+            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+                $thumbnail->gmagick->cropthumbnailimage(
+                    $size->getWidth(),
+                    $size->getHeight()
+                );
+            }
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Thumbnail operation failed', $e->getCode(), $e
@@ -322,6 +286,18 @@ class Image implements ImageInterface
     public function draw()
     {
         return new Drawer($this->gmagick);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::getSize()
+     */
+    public function getSize()
+    {
+        return new Size(
+            $this->gmagick->getimagewidth(),
+            $this->gmagick->getimageheight()
+        );
     }
 
     /**

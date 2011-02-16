@@ -81,21 +81,14 @@ final class Drawer implements DrawerInterface
      */
     public function ellipse(CoordinateInterface $center, SizeInterface $size, Color $color, $fill = false)
     {
-        $x      = $center->getX();
-        $y      = $center->getY();
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-
         $color = $this->getColor($color);
 
         if ($fill) {
-            if (false === imagefilledellipse($this->resource, $x, $y, $width,
-                $height, $color)) {
+            if (false === imagefilledellipse($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $color)) {
                 throw new RuntimeException('Draw ellipse operation failed');
             }
         } else {
-            if (false === imageellipse($this->resource, $x, $y, $width,
-                $height, $color)) {
+            if (false === imageellipse($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $color)) {
                 throw new RuntimeException('Draw ellipse operation failed');
             }
         }

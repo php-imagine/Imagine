@@ -11,11 +11,10 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Cartesian\SizeInterface;
-
 use Imagine\Color;
 use Imagine\Cartesian\CoordinateInterface;
 use Imagine\Cartesian\Size;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -274,29 +273,23 @@ final class Image implements ImageInterface
 
         $thumbnail = $this->copy();
 
-        if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            try {
+        try {
+            if ($mode === ImageInterface::THUMBNAIL_INSET) {
                 $thumbnail->imagick->thumbnailImage(
                     $size->getWidth(),
                     $size->getHeight(),
                     true
                 );
-            } catch (\ImagickException $e) {
-                throw new RuntimeException(
-                    'Thumbnail operation failed', $e->getCode(), $e
-                );
-            }
-        } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            try {
+            } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
                 $thumbnail->imagick->cropThumbnailImage(
                     $size->getWidth(),
                     $size->getHeight()
                 );
-            } catch (\ImagickException $e) {
-                throw new RuntimeException(
-                    'Thumbnail operation failed', $e->getCode(), $e
-                );
             }
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Thumbnail operation failed', $e->getCode(), $e
+            );
         }
 
         return $thumbnail;

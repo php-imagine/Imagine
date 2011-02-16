@@ -26,13 +26,29 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas->draw()
             ->chord(new Coordinate(200, 200), new Size(200, 150), 0, 180, new Color('fff'), false)
             ->ellipse(new Coordinate(125, 100), new Size(50, 50), new Color('fff'))
-            ->ellipse(new Coordinate(275, 100), new Size(50, 50), new Color('fff'));
+            ->ellipse(new Coordinate(275, 100), new Size(50, 50), new Color('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/smiley.png', array('quality' => 100));
 
         $this->assertTrue(file_exists('tests/Imagine/Fixtures/smiley.png'));
 
         unlink('tests/Imagine/Fixtures/smiley.png');
+    }
+
+    public function testDrawAnEllipse()
+    {
+        $imagine = $this->getImagine();
+
+        $canvas = $imagine->create(new Size(400, 300), new Color('000'));
+
+        $canvas->draw()
+            ->ellipse(new Center($canvas->getSize()), new Size(300, 200), new Color('fff'), true);
+
+        $canvas->save('tests/Imagine/Fixtures/ellipse.png', array('quality' => 100));
+
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/ellipse.png'));
+
+        unlink('tests/Imagine/Fixtures/ellipse.png');
     }
 
     public function testDrawAPieSlice()

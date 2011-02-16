@@ -12,6 +12,7 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Color;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\ImagineInterface;
@@ -43,17 +44,13 @@ class Imagine implements ImagineInterface
      * (non-PHPdoc)
      * @see Imagine.ImagineInterface::create()
      */
-    public function create($width, $height, Color $color = null)
+    public function create(SizeInterface $size, Color $color = null)
     {
-        if ($width < 1 || $height < 1) {
-            throw new InvalidArgumentException('Width an height of the '.
-                'resize must be positive integers');
-        }
-
-        $color = null !== $color ? $color : new Color('fff');
-
+        $width   = $size->getWidth();
+        $height  = $size->getHeight();
+        $color   = null !== $color ? $color : new Color('fff');
         $gmagick = new \Gmagick();
-        $pixel = new \GmagickPixel((string) $color);
+        $pixel   = new \GmagickPixel((string) $color);
 
         if ($color->getAlpha() > 0) {
             // TODO: implement support for transparent background

@@ -135,7 +135,7 @@ final class Drawer implements DrawerInterface
                 $ellipse->setFillColor('transparent');
             }
 
-            $ellipse->ellipse($center->getX(), $center->getY(), $width, $height, 0, 360);
+            $ellipse->ellipse($center->getX(), $center->getY(), $width / 2, $height / 2, 0, 360);
 
             if (false === $this->imagick->drawImage($ellipse)) {
                 throw new RuntimeException('Ellipse operation failed');
