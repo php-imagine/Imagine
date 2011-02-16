@@ -11,17 +11,17 @@
 
 namespace Imagine;
 
-class PointTest extends \PHPUnit_Framework_TestCase
+class CoordinateTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * @dataProvider getCoordinates
 	 */
     public function testShouldAssignXYCoordinates($x, $y)
     {
-        $point = new Point($x, $y);
+        $Coordinate = new Coordinate($x, $y);
 
-        $this->assertEquals($x, $point->getX());
-        $this->assertEquals($y, $point->getY());
+        $this->assertEquals($x, $Coordinate->getX());
+        $this->assertEquals($y, $Coordinate->getY());
     }
 
     public function getCoordinates()

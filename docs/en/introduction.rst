@@ -79,17 +79,17 @@ After you have instantiated a color, you can easily get its Red, Green, Blue and
         'A' => $white->getAlpha()
     ));
 
-Point Class
+Coordinate Class
 +++++++++++
 
-Every coordinate location (x, y) in Imagine is represented by a ``Point`` instance.
+Every coordinate location (x, y) in Imagine is represented by a ``Coordinate`` instance.
 
-``Point`` is a simple and light-weight value object, that takes values for x and y coordinate it represents as its constructor arguments. After the ``Point`` is constructed, ``Point::getX()`` and ``Point::getY()`` can be used to get the appropriate values back.
+``Coordinate`` is a simple and light-weight value object, that takes values for x and y coordinate it represents as its constructor arguments. After the ``Coordinate`` is constructed, ``Coordinate::getX()`` and ``Coordinate::getY()`` can be used to get the appropriate values back.
 
 ::
 
     <?php
-    $point = new Point(0, 0);
+    $point = new Coordinate(0, 0);
     
     var_dump(array(
         'x' => $point->getX(),
@@ -106,7 +106,7 @@ Here is how we would approach this problem with Imagine.
 ::
 
     <?php
-    use Imagine\Point;
+    use Imagine\Coordinate;
     
     // make an empty image (canvas) 120x160px
     $collage = $imagine->create(120, 160);
@@ -120,7 +120,7 @@ Here is how we would approach this problem with Imagine.
         $photo = $imagine->open($path);
         
         // paste photo at current position
-        $collage->paste($photo, new Point($x, $y));
+        $collage->paste($photo, new Coordinate($x, $y));
         
         // move position by 30px to the right
         $x += 30;

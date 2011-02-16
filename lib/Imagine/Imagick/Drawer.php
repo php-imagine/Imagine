@@ -12,7 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Color;
-use Imagine\Point;
+use Imagine\Coordinate;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -30,7 +30,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::arc()
      */
-    public function arc(Point $center, $width, $height, $start, $end, Color $color)
+    public function arc(Coordinate $center, $width, $height, $start, $end, Color $color)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -64,7 +64,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::chord()
      */
-    public function chord(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function chord(Coordinate $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -84,7 +84,7 @@ final class Drawer implements DrawerInterface
                 $x2 = round($x + $width / 2 * cos(deg2rad($end)));
                 $y2 = round($y + $height / 2 * sin(deg2rad($end)));
 
-                $this->line(new Point($x1, $y1), new Point($x2, $y2), $color);
+                $this->line(new Coordinate($x1, $y1), new Coordinate($x2, $y2), $color);
 
                 $chord->setFillColor('transparent');
             }
@@ -111,7 +111,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::ellipse()
      */
-    public function ellipse(Point $center, $width, $height, Color $color, $fill = false)
+    public function ellipse(Coordinate $center, $width, $height, Color $color, $fill = false)
     {
         try {
             $pixel   = $this->getColor($color);
@@ -150,7 +150,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::line()
      */
-    public function line(Point $start, Point $end, Color $color)
+    public function line(Coordinate $start, Coordinate $end, Color $color)
     {
         try {
             $pixel = $this->getColor($color);
@@ -180,7 +180,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::pieSlice()
      */
-    public function pieSlice(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function pieSlice(Coordinate $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
         $x1 = round($center->getX() + $width / 2 * cos(deg2rad($start)));
         $y1 = round($center->getY() + $height / 2 * sin(deg2rad($start)));
@@ -191,13 +191,13 @@ final class Drawer implements DrawerInterface
             $this->chord($center, $width, $height, $start, $end, $color, true);
             $this->polygon(array(
                 $center,
-                new Point($x1, $y1),
-                new Point($x2, $y2),
+                new Coordinate($x1, $y1),
+                new Coordinate($x2, $y2),
             ), $color, true);
         } else {
             $this->arc($center, $width, $height, $start, $end, $color);
-            $this->line($center, new Point($x1, $y1), $color);
-            $this->line($center, new Point($x2, $y2), $color);
+            $this->line($center, new Coordinate($x1, $y1), $color);
+            $this->line($center, new Coordinate($x2, $y2), $color);
         }
 
         return $this;
@@ -207,7 +207,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::dot()
      */
-    public function dot(Point $position, Color $color)
+    public function dot(Coordinate $position, Color $color)
     {
         $x = $position->getX();
         $y = $position->getY();
@@ -246,7 +246,7 @@ final class Drawer implements DrawerInterface
                 'of at least 3 coordinates, %d given', count($coordinates)));
         }
 
-        $points = array_map(function(Point $p)
+        $points = array_map(function(Coordinate $p)
         {
             return array('x' => $p->getX(), 'y' => $p->getY());
         }, $coordinates);

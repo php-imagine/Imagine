@@ -12,7 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
-use Imagine\Point;
+use Imagine\Coordinate;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
@@ -31,7 +31,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::arc()
      */
-    public function arc(Point $center, $width, $height, $start, $end, Color $color)
+    public function arc(Coordinate $center, $width, $height, $start, $end, Color $color)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -55,7 +55,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::chord()
      */
-    public function chord(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function chord(Coordinate $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -84,7 +84,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::ellipse()
      */
-    public function ellipse(Point $center, $width, $height, Color $color, $fill = false)
+    public function ellipse(Coordinate $center, $width, $height, Color $color, $fill = false)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -115,7 +115,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::line()
      */
-    public function line(Point $start, Point $end, Color $color)
+    public function line(Coordinate $start, Coordinate $end, Color $color)
     {
         $x1 = $start->getX();
         $y1 = $start->getY();
@@ -139,7 +139,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::pieSlice()
      */
-    public function pieSlice(Point $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function pieSlice(Coordinate $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -168,7 +168,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::dot()
      */
-    public function dot(Point $position, Color $color)
+    public function dot(Coordinate $position, Color $color)
     {
         $x = $position->getX();
         $y = $position->getY();
@@ -201,7 +201,7 @@ final class Drawer implements DrawerInterface
         $points = array();
 
         foreach ($coordinates as $coordinate) {
-            if (!$coordinate instanceof Point) {
+            if (!$coordinate instanceof Coordinate) {
                 throw new InvalidArgumentException(sprintf('Each entry in coordinates '.
                     'array must be an array of only two values - x, y, %s given', var_export($coordinate)));
             }

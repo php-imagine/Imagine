@@ -2,13 +2,13 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Point;
+use Imagine\Coordinate;
 
 class PasteTest extends BasicFilterTestCase
 {
     public function testShouldFlipImage()
     {
-        $start   = new Point(0, 0);
+        $start   = new Coordinate(0, 0);
         $image   = $this->getImage();
         $toPaste = $this->getImage();
         $filter  = new Paste($toPaste, $start);

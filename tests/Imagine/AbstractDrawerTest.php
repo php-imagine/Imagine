@@ -20,9 +20,9 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->chord(new Point(200, 200), 200, 150, 0, 180, new Color('fff'), false)
-            ->ellipse(new Point(125, 100), 50, 50, new Color('fff'))
-            ->ellipse(new Point(275, 100), 50, 50, new Color('fff'));
+            ->chord(new Coordinate(200, 200), 200, 150, 0, 180, new Color('fff'), false)
+            ->ellipse(new Coordinate(125, 100), 50, 50, new Color('fff'))
+            ->ellipse(new Coordinate(275, 100), 50, 50, new Color('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/smiley.png', array('quality' => 100));
 
@@ -38,7 +38,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('ff0000'));
 
         $canvas->draw()
-            ->pieSlice(new Point(200, 150), 100, 200, 45, 135, new Color('fff'), true);
+            ->pieSlice(new Coordinate(200, 150), 100, 200, 45, 135, new Color('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/pie.png');
 
@@ -55,7 +55,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->chord(new Point(200, 150), 100, 200, 45, 135, new Color('fff'), true);
+            ->chord(new Coordinate(200, 150), 100, 200, 45, 135, new Color('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/chord.png');
 
@@ -71,8 +71,8 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->line(new Point(50, 50), new Point(350, 250), new Color('fff'))
-            ->line(new Point(50, 250), new Point(350, 50), new Color('fff'));
+            ->line(new Coordinate(50, 50), new Coordinate(350, 250), new Color('fff'))
+            ->line(new Coordinate(50, 250), new Coordinate(350, 50), new Color('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/lines.png', array(
             'quality' => 100
@@ -91,10 +91,10 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
 
         $canvas->draw()
             ->polygon(array(
-                new Point(50, 20),
-                new Point(350, 20),
-                new Point(350, 280),
-                new Point(50, 280),
+                new Coordinate(50, 20),
+                new Coordinate(350, 20),
+                new Coordinate(350, 280),
+                new Coordinate(50, 280),
             ), new Color('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/polygon.png', array(
@@ -113,10 +113,10 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         $canvas = $imagine->create(400, 300, new Color('000'));
 
         $canvas->draw()
-            ->dot(new Point(200, 150), new Color('fff'))
-            ->dot(new Point(200, 151), new Color('fff'))
-            ->dot(new Point(200, 152), new Color('fff'))
-            ->dot(new Point(200, 153), new Color('fff'));
+            ->dot(new Coordinate(200, 150), new Color('fff'))
+            ->dot(new Coordinate(200, 151), new Color('fff'))
+            ->dot(new Coordinate(200, 152), new Color('fff'))
+            ->dot(new Coordinate(200, 153), new Color('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/dot.png', array(
             'quality' => 100

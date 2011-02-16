@@ -11,7 +11,7 @@
 
 namespace Imagine;
 
-final class Point
+final class Coordinate
 {
     private $x;
     private $y;

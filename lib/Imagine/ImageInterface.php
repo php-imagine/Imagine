@@ -48,16 +48,16 @@ interface ImageInterface
      * Crops a specified box out of the source image (modifies the source image)
      * Returns cropped self
      *
-     * @param Point   $start
-     * @param integer $width
-     * @param integer $height
+     * @param Coordinate $start
+     * @param integer    $width
+     * @param integer    $height
      *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      *
      * @return ImageInterface
      */
-    function crop(Point $start, $width, $height);
+    function crop(Coordinate $start, $width, $height);
 
     /**
      * Resizes current image and returns self
@@ -91,7 +91,7 @@ interface ImageInterface
      * Returns source image
      *
      * @param ImageInterface $image
-     * @param Point          $start
+     * @param Coordinate     $start
      *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
@@ -99,7 +99,7 @@ interface ImageInterface
      *
      * @return ImageInterface
      */
-    function paste(ImageInterface $image, Point $start);
+    function paste(ImageInterface $image, Coordinate $start);
 
     /**
      * Saves the image at a specified path, the target file extension is used

@@ -12,7 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
-use Imagine\Point;
+use Imagine\Coordinate;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -103,7 +103,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    final public function crop(Point $start, $width, $height)
+    final public function crop(Coordinate $start, $width, $height)
     {
         $x = $start->getX();
         $y = $start->getY();
@@ -140,7 +140,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
-    final public function paste(ImageInterface $image, Point $start)
+    final public function paste(ImageInterface $image, Coordinate $start)
     {
         $x = $start->getX();
         $y = $start->getY();
@@ -329,7 +329,7 @@ final class Image implements ImageInterface
         $y = abs(round(($height - $thumbnail->height) / 2));
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $thumbnail->crop(new Point($x, $y), $width, $height);
+            $thumbnail->crop(new Coordinate($x, $y), $width, $height);
         }
 
         return $thumbnail;

@@ -23,7 +23,7 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
                 $image->copy()
                     ->resize($image->getWidth() / 2, $image->getHeight() / 2)
                     ->flipVertically(),
-                new Point($image->getWidth() / 2 - 1, $image->getHeight() / 2 - 1)
+                new Coordinate($image->getWidth() / 2 - 1, $image->getHeight() / 2 - 1)
             )
             ->save('tests/Imagine/Fixtures/clone.jpg', array('quality' => 100));
 
@@ -66,7 +66,7 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
-        $this->assertSame($image, $image->crop(new Point(0, 0), 126, 126)
+        $this->assertSame($image, $image->crop(new Coordinate(0, 0), 126, 126)
             ->resize(200, 200)
             ->flipHorizontally()
             ->save('tests/Imagine/Fixtures/flop.png'));

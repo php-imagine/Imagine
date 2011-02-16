@@ -11,14 +11,14 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Point;
+use Imagine\Coordinate;
 
 class CropTest extends BasicFilterTestCase
 {
     /**
      * @dataProvider getDataSet
      */
-    public function testShouldApplyCropAndReturnResult(Point $start, $width, $height)
+    public function testShouldApplyCropAndReturnResult(Coordinate $start, $width, $height)
     {
         $image = $this->getImage();
 
@@ -35,8 +35,8 @@ class CropTest extends BasicFilterTestCase
     public function getDataSet()
     {
         return array(
-            array(new Point(0, 0), 40, 50),
-            array(new Point(0, 15), 50, 32)
+            array(new Coordinate(0, 0), 40, 50),
+            array(new Coordinate(0, 15), 50, 32)
         );
     }
 }
