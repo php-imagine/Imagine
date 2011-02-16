@@ -11,7 +11,7 @@
 
 namespace Imagine\Draw;
 
-use Imagine\Cartesian\Coordinate;
+use Imagine\Cartesian\CoordinateInterface;
 use Imagine\Color;
 use Imagine\Filter\FilterInterface;
 
@@ -21,82 +21,82 @@ interface DrawerInterface
      * Draws an arc on a starting at a given x, y coordinates under a given
      * start and end angles
      *
-     * @param Coordinate $center
-     * @param integer    $width
-     * @param integer    $height
-     * @param integer    $start
-     * @param integer    $end
-     * @param Color      $color
+     * @param CoordinateInterface $center
+     * @param integer             $width
+     * @param integer             $height
+     * @param integer             $start
+     * @param integer             $end
+     * @param Color               $color
      *
      * @return DrawerInterface
      */
-    function arc(Coordinate $center, $width, $height, $start, $end, Color $color);
+    function arc(CoordinateInterface $center, $width, $height, $start, $end, Color $color);
 
     /**
      * Same as arc, but also connects end points with a straight line
      *
-     * @param Coordinate $center
-     * @param integer    $width
-     * @param integer    $height
-     * @param integer    $start
-     * @param integer    $end
-     * @param Color      $color
-     * @param Boolean    $fill
+     * @param CoordinateInterface $center
+     * @param integer             $width
+     * @param integer             $height
+     * @param integer             $start
+     * @param Color               $color
+     * @param integer             $end
+     * @param Boolean             $fill
      *
      * @return DrawerInterface
      */
-    function chord(Coordinate $center, $width, $height, $start, $end, Color $color, $fill = false);
+    function chord(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false);
 
     /**
      * Draws and ellipse with center at the given x, y coordinates, and given
      * width and height
      *
-     * @param Coordinate $center
-     * @param integer    $width
-     * @param integer    $height
-     * @param Color      $color
-     * @param Boolean    $fill
+     * @param CoordinateInterface $center
+     * @param integer             $width
+     * @param integer             $height
+     * @param Color               $color
+     * @param Boolean             $fill
      *
      * @return DrawerInterface
      */
-    function ellipse(Coordinate $center, $width, $height, Color $color, $fill = false);
+    function ellipse(CoordinateInterface $center, $width, $height, Color $color, $fill = false);
 
     /**
      * Draws a line from x1, y1 to x2, y2 coordinates
      *
-     * @param Coordinate $start
-     * @param Coordinate $end
-     * @param Color      $outline
+     * @param CoordinateInterface $start
+     * @param CoordinateInterface $end
+     * @param Color               $outline
      *
      * @return DrawerInterface
      */
-    function line(Coordinate $start, Coordinate $end, Color $outline);
+    function line(CoordinateInterface $start, CoordinateInterface $end, Color $outline);
 
     /**
      * Same as arc, but connects end points and the center
      *
-     * @param Coordinate $center
-     * @param integer    $width
-     * @param integer    $height
-     * @param integer    $start
-     * @param integer    $end
-     * @param Color      $color
-     * @param Boolean    $fill
+     * @param CoordinateInterface $center
+     * @param integer             $width
+     * @param integer             $height
+     * @param integer             $start
+     * @param integer             $end
+     * @param Color               $color
+     * @param Boolean             $fill
      *
      * @return DrawerInterface
      */
-    function pieSlice(Coordinate $center, $width, $height, $start, $end, Color $color, $fill = false);
+    function pieSlice(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false);
 
     /**
      * Places a one pixel point at specific coordinates and fills it with
      * specified color
      *
-     * @param Coordinate $position
-     * @param Color      $color
+     * @param CoordinateInterface $position
+     * @param Color               $color
      *
      * @return DrawerInterface
      */
-    function dot(Coordinate $position, Color $color);
+    function dot(CoordinateInterface $position, Color $color);
 
     /**
      * Draws a polygon using array of x, y coordinates. Must contain at least

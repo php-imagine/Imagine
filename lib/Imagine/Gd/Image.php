@@ -13,6 +13,7 @@ namespace Imagine\Gd;
 
 use Imagine\Color;
 use Imagine\Cartesian\Coordinate;
+use Imagine\Cartesian\CoordinateInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -103,7 +104,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    final public function crop(Coordinate $start, $width, $height)
+    final public function crop(CoordinateInterface $start, $width, $height)
     {
         $x = $start->getX();
         $y = $start->getY();
@@ -140,7 +141,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
-    final public function paste(ImageInterface $image, Coordinate $start)
+    final public function paste(ImageInterface $image, CoordinateInterface $start)
     {
         $x = $start->getX();
         $y = $start->getY();

@@ -12,7 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
-use Imagine\Cartesian\Coordinate;
+use Imagine\Cartesian\CoordinateInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
@@ -31,7 +31,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::arc()
      */
-    public function arc(Coordinate $center, $width, $height, $start, $end, Color $color)
+    public function arc(CoordinateInterface $center, $width, $height, $start, $end, Color $color)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -55,7 +55,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::chord()
      */
-    public function chord(Coordinate $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function chord(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -84,7 +84,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::ellipse()
      */
-    public function ellipse(Coordinate $center, $width, $height, Color $color, $fill = false)
+    public function ellipse(CoordinateInterface $center, $width, $height, Color $color, $fill = false)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -115,7 +115,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::line()
      */
-    public function line(Coordinate $start, Coordinate $end, Color $color)
+    public function line(CoordinateInterface $start, CoordinateInterface $end, Color $color)
     {
         $x1 = $start->getX();
         $y1 = $start->getY();
@@ -123,7 +123,7 @@ final class Drawer implements DrawerInterface
         $y2 = $end->getY();
 
         if ($x1 < 0 || $y1 < 0 || $x2 < 0 || $y2 < 0) {
-            throw new OutOfBoundsException('Coordinates of the start and the '.
+            throw new OutOfBoundsException('CoordinateInterfaces of the start and the '.
                 'end of the line must be positive numbers');
         }
 
@@ -139,7 +139,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::pieSlice()
      */
-    public function pieSlice(Coordinate $center, $width, $height, $start, $end, Color $color, $fill = false)
+    public function pieSlice(CoordinateInterface $center, $width, $height, $start, $end, Color $color, $fill = false)
     {
         $x = $center->getX();
         $y = $center->getY();
@@ -168,13 +168,13 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::dot()
      */
-    public function dot(Coordinate $position, Color $color)
+    public function dot(CoordinateInterface $position, Color $color)
     {
         $x = $position->getX();
         $y = $position->getY();
 
         if ($x < 0 || $y < 0) {
-            throw new OutOfBoundsException('Coordinates or the target pixel '.
+            throw new OutOfBoundsException('CoordinateInterfaces or the target pixel '.
                 'must start at minimum 0, 0 position from top left corner');
         }
 
@@ -201,7 +201,7 @@ final class Drawer implements DrawerInterface
         $points = array();
 
         foreach ($coordinates as $coordinate) {
-            if (!$coordinate instanceof Coordinate) {
+            if (!$coordinate instanceof CoordinateInterface) {
                 throw new InvalidArgumentException(sprintf('Each entry in coordinates '.
                     'array must be an array of only two values - x, y, %s given', var_export($coordinate)));
             }

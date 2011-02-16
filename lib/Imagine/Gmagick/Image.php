@@ -12,7 +12,7 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Color;
-use Imagine\Cartesian\Coordinate;
+use Imagine\Cartesian\CoordinateInterface;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -67,7 +67,7 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    public function crop(Coordinate $start, $width, $height)
+    public function crop(CoordinateInterface $start, $width, $height)
     {
         $x = $start->getX();
         $y = $start->getY();
@@ -160,7 +160,7 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
-    public function paste(ImageInterface $image, Coordinate $start)
+    public function paste(ImageInterface $image, CoordinateInterface $start)
     {
         $x = $start->getX();
         $y = $start->getY();

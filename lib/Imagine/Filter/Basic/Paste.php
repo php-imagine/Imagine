@@ -11,7 +11,7 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Cartesian\Coordinate;
+use Imagine\Cartesian\CoordinateInterface;
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
 
@@ -24,10 +24,10 @@ class Paste implements FilterInterface
      * Constructs a Paste filter with given ImageInterface to paste and x, y
      * coordinates of target position
      *
-     * @param ImageInterface $image
-     * @param Coordinate     $start
+     * @param ImageInterface          $image
+     * @param CoordinateInterface     $start
      */
-    public function __construct(ImageInterface $image, Coordinate $start)
+    public function __construct(ImageInterface $image, CoordinateInterface $start)
     {
         $this->image = $image;
         $this->start = $start;
