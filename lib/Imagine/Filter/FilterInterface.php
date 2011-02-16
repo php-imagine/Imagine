@@ -19,9 +19,9 @@ interface FilterInterface
      * Applies scheduled transformation to ImageInterface instance
      * Returns processed ImageInterface instance
      *
-     * @param ImageInterface $image
+     * @param Imagine\ImageInterface $image
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function apply(ImageInterface $image);
 }

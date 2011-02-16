@@ -30,7 +30,9 @@ interface CoordinateInterface
     /**
      * Checks if current coordinate is inside a given bo
      *
-     * @param SizeInterface $box
+     * @param Imagine\Cartesian\SizeInterface $box
+     *
+     * @return Boolean
      */
     function in(SizeInterface $box);
 }

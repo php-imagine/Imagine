@@ -32,7 +32,7 @@ interface SizeInterface
      *
      * @param integer $ratio
      *
-     * @return SizeInterface
+     * @return Imagine\Cartesian\SizeInterface
      */
     function scale($ratio);
 
@@ -40,8 +40,8 @@ interface SizeInterface
      * Checks whether curret box can fit given box at a given start position,
      * start position defaults to top left corner xy(0,0)
      *
-     * @param SizeInterface       $box
-     * @param CoordinateInterface $topLeft
+     * @param Imagine\Cartesian\SizeInterface       $box
+     * @param Imagine\Cartesian\CoordinateInterface $start
      *
      * @return Boolean
      */

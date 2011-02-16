@@ -24,11 +24,11 @@ interface DrawerInterface
      *
      * @param Imagine\Cartesian\CoordinateInterface $center
      * @param Imagine\Cartesian\SizeInterface       $size
-     * @param integer             $start
-     * @param integer             $end
-     * @param Color               $color
+     * @param integer                               $start
+     * @param integer                               $end
+     * @param Imagine\Color                         $color
      *
-     * @return DrawerInterface
+     * @return Imagine\Draw\DrawerInterface
      */
     function arc(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color);
 
@@ -37,13 +37,12 @@ interface DrawerInterface
      *
      * @param Imagine\Cartesian\CoordinateInterface $center
      * @param Imagine\Cartesian\SizeInterface       $size
-     * @param integer             $height
-     * @param integer             $start
-     * @param Color               $color
-     * @param integer             $end
-     * @param Boolean             $fill
+     * @param integer                               $start
+     * @param integer                               $end
+     * @param Imagine\Color                         $color
+     * @param Boolean                               $fill
      *
-     * @return DrawerInterface
+     * @return Imagine\Draw\DrawerInterface
      */
     function chord(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false);
 
@@ -53,10 +52,10 @@ interface DrawerInterface
      *
      * @param Imagine\Cartesian\CoordinateInterface $center
      * @param Imagine\Cartesian\SizeInterface       $size
-     * @param Color               $color
-     * @param Boolean             $fill
+     * @param Imagine\Color                         $color
+     * @param Boolean                               $fill
      *
-     * @return DrawerInterface
+     * @return Imagine\Draw\DrawerInterface
      */
     function ellipse(CoordinateInterface $center, SizeInterface $size, Color $color, $fill = false);
 
@@ -65,9 +64,9 @@ interface DrawerInterface
      *
      * @param Imagine\Cartesian\CoordinateInterface $start
      * @param Imagine\Cartesian\CoordinateInterface $end
-     * @param Color               $outline
+     * @param Imagine\Color                         $outline
      *
-     * @return DrawerInterface
+     * @return Imagine\Draw\DrawerInterface
      */
     function line(CoordinateInterface $start, CoordinateInterface $end, Color $outline);
 
@@ -76,12 +75,12 @@ interface DrawerInterface
      *
      * @param Imagine\Cartesian\CoordinateInterface $center
      * @param Imagine\Cartesian\SizeInterface       $size
-     * @param integer             $start
-     * @param integer             $end
-     * @param Color               $color
-     * @param Boolean             $fill
+     * @param integer                               $start
+     * @param integer                               $end
+     * @param Imagine\Color                         $color
+     * @param Boolean                               $fill
      *
-     * @return DrawerInterface
+     * @return Imagine\Draw\DrawerInterface
      */
     function pieSlice(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false);
 
@@ -90,9 +89,9 @@ interface DrawerInterface
      * specified color
      *
      * @param Imagine\Cartesian\CoordinateInterface $position
-     * @param Color               $color
+     * @param Imagine\Color                         $color
      *
-     * @return DrawerInterface
+     * @return Imagine\Draw\DrawerInterface
      */
     function dot(CoordinateInterface $position, Color $color);
 
@@ -100,11 +99,11 @@ interface DrawerInterface
      * Draws a polygon using array of x, y coordinates. Must contain at least
      * three coordinates
      *
-     * @param array   $coordinates
-     * @param Color   $color
-     * @param Boolean $fill
+     * @param array         $coordinates
+     * @param Imagine\Color $color
+     * @param Boolean       $fill
      *
-     * @return DrawerInterface
+     * @return Imagine\Draw\DrawerInterface
      */
     function polygon(array $coordinates, Color $color, $fill = false);
 
