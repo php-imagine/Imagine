@@ -27,9 +27,9 @@ interface ImageInterface
     /**
      * Copies current source image into a new ImageInterface instance
      *
-     * @throws RuntimeException
+     * @throws Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function copy();
 
@@ -37,22 +37,22 @@ interface ImageInterface
      * Crops a specified box out of the source image (modifies the source image)
      * Returns cropped self
      *
-     * @param CoordinateInterface $start
-     * @param SizeInterface       $size
+     * @param Imagine\Cartesian\CoordinateInterface $start
+     * @param Imagine\Cartesian\SizeInterface       $size
      *
-     * @throws InvalidArgumentException
-     * @throws OutOfBoundsException
+     * @throws Imagine\Exception\InvalidArgumentException
+     * @throws Imagine\Exception\OutOfBoundsException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function crop(CoordinateInterface $start, SizeInterface $size);
 
     /**
      * Resizes current image and returns self
      *
-     * @param SizeInterface $size
+     * @param Imagine\Cartesian\SizeInterface $size
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function resize(SizeInterface $size);
 
@@ -61,12 +61,12 @@ interface ImageInterface
      * Optional $background can be used to specify the fill color of the empty
      * area of rotated image.
      *
-     * @param integer $angle
-     * @param Color   $background
+     * @param integer         $angle
+     * @param Imagine\Color   $background
      *
-     * @throws RuntimeException
+     * @throws Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function rotate($angle, Color $background = null);
 
@@ -78,13 +78,13 @@ interface ImageInterface
      * Returns source image
      *
      * @param ImageInterface $image
-     * @param CoordinateInterface     $start
+     * @param Imagine\Cartesian\CoordinateInterface     $start
      *
-     * @throws InvalidArgumentException
-     * @throws OutOfBoundsException
-     * @throws RuntimeException
+     * @throws Imagine\Exception\InvalidArgumentException
+     * @throws Imagine\Exception\OutOfBoundsException
+     * @throws Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function paste(ImageInterface $image, CoordinateInterface $start);
 
@@ -96,9 +96,9 @@ interface ImageInterface
      * @param string  $path
      * @param integer $quality
      *
-     * @throws RuntimeException
+     * @throws Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
     function save($path, array $options = array());
 
@@ -109,14 +109,16 @@ interface ImageInterface
      * @param string $format
      * @param integer $quality
      *
-     * @throws RuntimeException
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return Imagine\ImageInterface
      */
     function show($format, array $options = array());
 
     /**
      * Flips current image using horizontal axis
      *
-     * @throws RuntimeException
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return ImageInterface
      */
@@ -125,7 +127,7 @@ interface ImageInterface
     /**
      * Flips current image using vertical axis
      *
-     * @throws RuntimeException
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return ImageInterface
      */
@@ -135,8 +137,10 @@ interface ImageInterface
      * Generates a thumbnail from a current image
      * Returns it as a new image, doesn't modify the current image
      *
-     * @param SizeInterface $size
-     * @param string        $mode
+     * @param Imagine\Cartesian\SizeInterface $size
+     * @param string                          $mode
+     *
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return ImageInterface
      */
@@ -145,14 +149,14 @@ interface ImageInterface
     /**
      * Instantiates and returns a DrawerInterface instance for image drawing
      *
-     * @return DrawerInterface
+     * @return Imagine\Draw\DrawerInterface
      */
     function draw();
 
     /**
      * Returns current image size
      *
-     * @return SizeInterface
+     * @return Imagine\Cartesian\SizeInterface
      */
     function getSize();
 }

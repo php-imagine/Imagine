@@ -34,13 +34,10 @@ final class Drawer implements DrawerInterface
      */
     public function arc(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color)
     {
-        $x = $center->getX();
-        $y = $center->getY();
-
-        if ($width < 1 || $height < 1) {
-            throw new OutOfBoundsException('Dimensions of the arc must be '.
-                'positive numbers');
-        }
+        $x      = $center->getX();
+        $y      = $center->getY();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
         if (false === imagearc($this->resource, $x, $y, $size->getWidth(),
             $size->getHeight(), $start, $end, $this->getColor($color))) {

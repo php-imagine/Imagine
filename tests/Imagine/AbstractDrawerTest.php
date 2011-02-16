@@ -11,6 +11,8 @@
 
 namespace Imagine;
 
+use Imagine\Cartesian\Coordinate\Center;
+
 use Imagine\Cartesian\Coordinate;
 use Imagine\Cartesian\Size;
 
@@ -130,5 +132,27 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/dot.png');
     }
 
+    public function testDrawAnArc()
+    {
+        $imagine = $this->getImagine();
+
+        $canvas = $imagine->create(new Size(400, 300), new Color('000'));
+        $size   = $canvas->getSize();
+
+        $canvas->draw()
+            ->arc(new Center($size), $size->scale(0.5), 0, 180, new Color('fff'));
+
+        $canvas->save('tests/Imagine/Fixtures/arc.png', array(
+            'quality' => 100
+        ));
+
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/arc.png'));
+
+        unlink('tests/Imagine/Fixtures/arc.png');
+    }
+
+    /**
+     * @return Imagine\ImagineInterface
+     */
     abstract protected function getImagine();
 }
