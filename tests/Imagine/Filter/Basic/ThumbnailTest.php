@@ -2,21 +2,24 @@
 
 namespace Imagine\Filter\Basic;
 
+use Imagine\Cartesian\Size;
 use Imagine\ImageInterface;
 
 class ThumbnailTest extends BasicFilterTestCase
 {
-    public function testShouldFlipImage()
+    /**
+     * @covers Imagine\Filter\Basic::apply
+     */
+    public function testShouldMakeAThumbnail()
     {
-        $width     = 50;
-        $height    = 50;
         $image     = $this->getImage();
         $thumbnail = $this->getImage();
-        $filter    = new Thumbnail($width, $height);
+        $size      = new Size(50, 50);
+        $filter    = new Thumbnail($size);
 
         $image->expects($this->once())
             ->method('thumbnail')
-            ->with($width, $height, ImageInterface::THUMBNAIL_INSET)
+            ->with($size, ImageInterface::THUMBNAIL_INSET)
             ->will($this->returnValue($thumbnail));
 
         $this->assertSame($thumbnail, $filter->apply($image));

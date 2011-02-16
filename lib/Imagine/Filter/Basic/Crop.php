@@ -12,26 +12,33 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\Cartesian\CoordinateInterface;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
 
 class Crop implements FilterInterface
 {
-    private $start, $width, $height;
+    /**
+     * @var CoordinateInterface
+     */
+    private $start;
+
+    /**
+     * @var SizeInterface
+     */
+    private $size;
 
     /**
      * Constructs a Crop filter with given x, y, coordinates and crop width and
      * height values
      *
      * @param CoordinateInterface $start
-     * @param integer             $width
-     * @param integer             $height
+     * @param SizeInterface       $size
      */
-    public function __construct(CoordinateInterface $start, $width, $height)
+    public function __construct(CoordinateInterface $start, SizeInterface $size)
     {
-        $this->start  = $start;
-        $this->width  = $width;
-        $this->height = $height;
+        $this->start = $start;
+        $this->size  = $size;
     }
 
     /**
@@ -40,6 +47,6 @@ class Crop implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->crop($this->start, $this->width, $this->height);
+        return $image->crop($this->start, $this->size);
     }
 }

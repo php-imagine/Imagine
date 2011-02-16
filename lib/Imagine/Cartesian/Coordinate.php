@@ -52,4 +52,13 @@ final class Coordinate implements CoordinateInterface
     {
         return $this->y;
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Cartesian.CoordinateInterface::in()
+     */
+    public function in(SizeInterface $box)
+    {
+        return $this->x < $box->getWidth() && $this->y < $box->getHeight();
+    }
 }

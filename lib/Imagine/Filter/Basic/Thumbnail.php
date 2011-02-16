@@ -12,28 +12,33 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\Color;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\ImageInterface;
 use Imagine\Filter\FilterInterface;
 
 class Thumbnail implements FilterInterface
 {
-    private $width;
-    private $height;
+    /**
+     * @var SizeInterface
+     */
+    private $size;
+
+    /**
+     * @var string
+     */
     private $mode;
 
     /**
      * Constructs the Thumbnail filter with given width, height, mode and
      * background color
      *
-     * @param integer $width
-     * @param integer $height
-     * @param string  $mode
+     * @param SizeInterface $size
+     * @param string        $mode
      */
-    public function __construct($width, $height, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function __construct(SizeInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
-        $this->width      = $width;
-        $this->height     = $height;
-        $this->mode       = $mode;
+        $this->size = $size;
+        $this->mode = $mode;
     }
 
     /**
@@ -42,6 +47,6 @@ class Thumbnail implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->thumbnail($this->width, $this->height, $this->mode);
+        return $image->thumbnail($this->size, $this->mode);
     }
 }

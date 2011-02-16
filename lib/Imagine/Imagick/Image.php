@@ -11,6 +11,8 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Cartesian\SizeInterface;
+
 use Imagine\Color;
 use Imagine\Cartesian\CoordinateInterface;
 use Imagine\Cartesian\Size;
@@ -75,14 +77,9 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    public function crop(CoordinateInterface $start, $width, $height)
+    public function crop(CoordinateInterface $start, SizeInterface $size)
     {
-        $x = $start->getX();
-        $y = $start->getY();
-
-        if ($x < 0 || $y < 0 || $width < 1 || $height < 1 ||
-            $this->getWidth() - ($x + $width) < 0 ||
-            $this->getHeight() - ($y + $height) < 0) {
+        if (!$start->in($size)) {
             throw new OutOfBoundsException('Crop coordinates must start at '.
                 'minimum 0, 0 position from top left corner, crop height and '.
                 'width must be positive integers and must not exceed the '.
@@ -90,7 +87,12 @@ final class Image implements ImageInterface
         }
 
         try {
-            $this->imagick->cropImage($width, $height, $x, $y);
+            $this->imagick->cropImage(
+                $size->getWidth(),
+                $size->getHeight(),
+                $start->getX(),
+                $start->getY()
+            );
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Crop operation failed', $e->getCode(), $e
@@ -307,23 +309,22 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::thumbnail()
      */
-    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(SizeInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        if ($width < 1 || $height < 1) {
-            throw new InvalidArgumentException('Width an height of the '.
-                'resize must be positive integers');
-        }
-
         $thumbnail = $this->copy();
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
             try {
-                $thumbnail->imagick->thumbnailImage($width, $height, true);
+                $thumbnail->imagick->thumbnailImage(
+                    $size->getWidth(),
+                    $size->getHeight(),
+                    true
+                );
             } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     'Thumbnail operation failed', $e->getCode(), $e
@@ -331,7 +332,10 @@ final class Image implements ImageInterface
             }
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             try {
-                $thumbnail->imagick->cropThumbnailImage($width, $height);
+                $thumbnail->imagick->cropThumbnailImage(
+                    $size->getWidth(),
+                    $size->getHeight()
+                );
             } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     'Thumbnail operation failed', $e->getCode(), $e

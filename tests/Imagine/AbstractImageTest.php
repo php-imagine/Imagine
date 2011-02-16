@@ -12,6 +12,7 @@
 namespace Imagine;
 
 use Imagine\Cartesian\Coordinate;
+use Imagine\Cartesian\Size;
 
 abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,10 +46,10 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
-        $image->thumbnail(50, 50, ImageInterface::THUMBNAIL_INSET, new Color('fff'))
+        $image->thumbnail(new Size(50, 50), ImageInterface::THUMBNAIL_INSET, new Color('fff'))
             ->save('tests/Imagine/Fixtures/inset.png', array('quality' => 9));
 
-        $image->thumbnail(50, 50, ImageInterface::THUMBNAIL_OUTBOUND)
+        $image->thumbnail(new Size(50, 50), ImageInterface::THUMBNAIL_OUTBOUND)
             ->save('tests/Imagine/Fixtures/outbound.png', array('quality' => 9));
 
         $thumbnail = $factory->open('tests/Imagine/Fixtures/inset.png');
@@ -68,7 +69,7 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
-        $this->assertSame($image, $image->crop(new Coordinate(0, 0), 126, 126)
+        $this->assertSame($image, $image->crop(new Coordinate(0, 0), new Size(126, 126))
             ->resize(200, 200)
             ->flipHorizontally()
             ->save('tests/Imagine/Fixtures/flop.png'));

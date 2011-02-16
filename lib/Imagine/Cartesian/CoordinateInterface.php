@@ -26,4 +26,11 @@ interface CoordinateInterface
      * @return integer
      */
     function getY();
+
+    /**
+     * Checks if current coordinate is inside a given bo
+     *
+     * @param SizeInterface $box
+     */
+    function in(SizeInterface $box);
 }

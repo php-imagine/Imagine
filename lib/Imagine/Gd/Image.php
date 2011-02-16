@@ -15,6 +15,7 @@ use Imagine\Color;
 use Imagine\Cartesian\Coordinate;
 use Imagine\Cartesian\CoordinateInterface;
 use Imagine\Cartesian\Size;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -105,27 +106,25 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    final public function crop(CoordinateInterface $start, $width, $height)
+    final public function crop(CoordinateInterface $start, SizeInterface $size)
     {
-        $x = $start->getX();
-        $y = $start->getY();
-
-        if ($x < 0 || $y < 0 || $width < 1 || $height < 1 ||
-            $this->width - ($x + $width) < 0 ||
-            $this->height - ($y + $height) < 0) {
+        if (!$start->in($size)) {
             throw new OutOfBoundsException('Crop coordinates must start at '.
                 'minimum 0, 0 position from top left corner, crop height and '.
                 'width must be positive integers and must not exceed the '.
                 'current image borders');
         }
 
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+
         $dest = imagecreatetruecolor($width, $height);
 
         imagealphablending($dest, false);
         imagesavealpha($dest, true);
 
-        if (false === imagecopymerge($dest, $this->resource, 0, 0, $x, $y,
-            $width, $height, 100)) {
+        if (false === imagecopymerge($dest, $this->resource, 0, 0,
+            $start->getX(), $start->getY(), $width, $height, 100)) {
             throw new RuntimeException('Image crop operation failed');
         }
 
@@ -302,17 +301,20 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::thumbnail()
      */
-    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(SizeInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        if ($width < 1 || $height < 1) {
-            throw new InvalidArgumentException('Width an height of the '.
-                'resize must be positive integers');
-        }
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+
+        $ratios = array(
+            $width / $this->width,
+            $height / $this->height
+        );
 
         $thumbnail = $this->copy();
 
@@ -331,7 +333,7 @@ final class Image implements ImageInterface
         $y = abs(round(($height - $thumbnail->height) / 2));
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $thumbnail->crop(new Coordinate($x, $y), $width, $height);
+            $thumbnail->crop(new Coordinate($x, $y), $size);
         }
 
         return $thumbnail;

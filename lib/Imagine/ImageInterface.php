@@ -51,15 +51,14 @@ interface ImageInterface
      * Returns cropped self
      *
      * @param CoordinateInterface $start
-     * @param integer    $width
-     * @param integer    $height
+     * @param SizeInterface       $size
      *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      *
      * @return ImageInterface
      */
-    function crop(CoordinateInterface $start, $width, $height);
+    function crop(CoordinateInterface $start, SizeInterface $size);
 
     /**
      * Resizes current image and returns self
@@ -150,13 +149,12 @@ interface ImageInterface
      * Generates a thumbnail from a current image
      * Returns it as a new image, doesn't modify the current image
      *
-     * @param integer $width
-     * @param integer $height
-     * @param string  $mode
+     * @param SizeInterface $size
+     * @param string        $mode
      *
      * @return ImageInterface
      */
-    function thumbnail($width, $height, $mode = self::THUMBNAIL_INSET);
+    function thumbnail(SizeInterface $size, $mode = self::THUMBNAIL_INSET);
 
     /**
      * Instantiates and returns a DrawerInterface instance for image drawing
