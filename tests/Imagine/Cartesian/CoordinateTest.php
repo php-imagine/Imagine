@@ -18,10 +18,10 @@ class CoordinateTest extends \PHPUnit_Framework_TestCase
 	 */
     public function testShouldAssignXYCoordinates($x, $y)
     {
-        $Coordinate = new Coordinate($x, $y);
+        $coordinate = new Coordinate($x, $y);
 
-        $this->assertEquals($x, $Coordinate->getX());
-        $this->assertEquals($y, $Coordinate->getY());
+        $this->assertEquals($x, $coordinate->getX());
+        $this->assertEquals($y, $coordinate->getY());
     }
 
     public function getCoordinates()
