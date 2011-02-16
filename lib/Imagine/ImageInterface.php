@@ -23,19 +23,6 @@ interface ImageInterface
 {
     const THUMBNAIL_INSET    = 'inset';
     const THUMBNAIL_OUTBOUND = 'outbound';
-    /**
-     * Gets current image height
-     *
-     * @return integer
-     */
-    function getHeight();
-
-    /**
-     * Gets current image width
-     *
-     * @return integer
-     */
-    function getWidth();
 
     /**
      * Copies current source image into a new ImageInterface instance

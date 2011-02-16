@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Cartesian\Coordinate\Center;
+
 use Imagine\Color;
 use Imagine\Cartesian\Coordinate;
 use Imagine\Cartesian\CoordinateInterface;
@@ -24,16 +26,6 @@ use Imagine\ImageInterface;
 
 final class Image implements ImageInterface
 {
-    /**
-     * @var integer
-     */
-    private $width;
-
-    /**
-     * @var integer
-     */
-    private $height;
-
     /**
      * @var resource
      */
@@ -52,11 +44,9 @@ final class Image implements ImageInterface
      * @param integer  $width
      * @param integer  $height
      */
-    public function __construct($resource, $width, $height, Imagine $imagine)
+    public function __construct($resource, Imagine $imagine)
     {
         $this->resource = $resource;
-        $this->width    = $width;
-        $this->height   = $height;
         $this->imagine  = $imagine;
     }
 
@@ -70,32 +60,15 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageMetadataInterface::getHeight()
-     */
-    final public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine.ImageMetadataInterface::getWidth()
-     */
-    final public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * (non-PHPdoc)
      * @see Imagine.ImageInterface::copy()
      */
     final public function copy()
     {
-        $copy = $this->imagine->create($this->width, $this->height);
+        $size = $this->getSize();
+        $copy = $this->imagine->create($size);
 
         if (false === imagecopymerge($copy->resource, $this->resource, 0, 0, 0,
-            0, $this->width, $this->height, 100)) {
+            0, $size->getWidth(), $size->getHeight(), 100)) {
             throw new RuntimeException('Image copy operation failed');
         }
 
@@ -143,28 +116,21 @@ final class Image implements ImageInterface
      */
     final public function paste(ImageInterface $image, CoordinateInterface $start)
     {
-        $x = $start->getX();
-        $y = $start->getY();
-
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Gd\Image can only '.
                 'paste() Gd\Image instances, %s given', get_class($image)));
         }
 
-        $widthDiff = $this->width - ($x + $image->getWidth());
-        $heightDiff = $this->height - ($y + $image->getHeight());
-
-        if ($widthDiff < 0 || $heightDiff < 0) {
-            throw new OutOfBoundsException(sprintf('Cannot paste image '.
-                'of width %d and height %d at the x position of %d and y '.
-                'position of %d, as it exceeds the parent image\'s width by '.
-                '%d in width and %d in height', $image->getWidth(),
-                $image->getHeight(), $x, $y, abs($widthDiff), abs($heightDiff)
-            ));
+        $size = $image->getSize();
+        if (!$this->getSize()->contains($size, $start)) {
+            throw new OutOfBoundsException(
+                'Cannot paste image of the given size at the specified '.
+                'position, as it moves outside of the current image\'s box'
+            );
         }
 
-        if (false === imagecopymerge($this->resource, $image->resource, $x, $y,
-            0, 0, $image->getWidth(), $image->getHeight(), 100)) {
+        if (false === imagecopymerge($this->resource, $image->resource, $start->getX(), $start->getY(),
+            0, 0, $size->getWidth(), $size->getHeight(), 100)) {
             throw new RuntimeException('Image paste operation failed');
         }
 
@@ -186,14 +152,13 @@ final class Image implements ImageInterface
         imagesavealpha($dest, true);
 
         if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
-            $width, $height, $this->width, $this->height)) {
+            $width, $height, imagesx($this->resource), imagesy($this->resource)
+        )) {
             throw new RuntimeException('Image resize operation failed');
         }
 
         imagedestroy($this->resource);
 
-        $this->width    = $width;
-        $this->height   = $height;
         $this->resource = $dest;
 
         return $this;
@@ -251,14 +216,16 @@ final class Image implements ImageInterface
      */
     final public function flipHorizontally()
     {
-        $dest = imagecreatetruecolor($this->width, $this->height);
+        $width  = imagesx($this->resource);
+        $height = imagesy($this->resource);
+        $dest = imagecreatetruecolor($width, $height);
 
         imagealphablending($dest, false);
         imagesavealpha($dest, true);
 
-        for ($i = 0; $i < $this->width; $i++) {
+        for ($i = 0; $i < $width; $i++) {
             if (false === imagecopymerge($dest, $this->resource, $i, 0,
-                ($this->width - 1) - $i, 0, 1, $this->height, 100)) {
+                ($width - 1) - $i, 0, 1, $height, 100)) {
                 throw new RuntimeException('Horizontal flip operation failed');
             }
         }
@@ -276,14 +243,16 @@ final class Image implements ImageInterface
      */
     final public function flipVertically()
     {
-        $dest = imagecreatetruecolor($this->width, $this->height);
+        $width  = imagesx($this->resource);
+        $height = imagesy($this->resource);
+        $dest   = imagecreatetruecolor($width, $height);
 
         imagealphablending($dest, false);
         imagesavealpha($dest, true);
 
-        for ($i = 0; $i < $this->height; $i++) {
+        for ($i = 0; $i < $height; $i++) {
             if (false === imagecopymerge($dest, $this->resource, 0, $i,
-                0, ($this->height - 1) - $i, $this->width, 1, 100)) {
+                0, ($height - 1) - $i, $width, 1, 100)) {
                 throw new RuntimeException('Vartical flip operation failed');
             }
         }
@@ -310,8 +279,8 @@ final class Image implements ImageInterface
         $height = $size->getHeight();
 
         $ratios = array(
-            $width / $this->width,
-            $height / $this->height
+            $width / imagesx($this->resource),
+            $height / imagesy($this->resource)
         );
 
         $thumbnail = $this->copy();
@@ -323,12 +292,13 @@ final class Image implements ImageInterface
         }
 
         $thumbnail->resize($this->getSize()->scale($ratio));
-
-        $x = abs(round(($width - $thumbnail->width) / 2));
-        $y = abs(round(($height - $thumbnail->height) / 2));
+        $thumbnailSize = $thumbnail->getSize();
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $thumbnail->crop(new Coordinate($x, $y), $size);
+            $thumbnail->crop(new Coordinate(
+                round(($thumbnailSize->getWidth() - $width) / 2),
+                round(($thumbnailSize->getHeight() - $height) / 2)
+            ), $size);
         }
 
         return $thumbnail;

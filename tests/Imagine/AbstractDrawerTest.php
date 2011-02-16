@@ -12,6 +12,7 @@
 namespace Imagine;
 
 use Imagine\Cartesian\Coordinate;
+use Imagine\Cartesian\Size;
 
 abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,7 +20,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(400, 300, new Color('000'));
+        $canvas = $imagine->create(new Size(400, 300), new Color('000'));
 
         $canvas->draw()
             ->chord(new Coordinate(200, 200), 200, 150, 0, 180, new Color('fff'), false)
@@ -37,7 +38,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(400, 300, new Color('ff0000'));
+        $canvas = $imagine->create(new Size(400, 300), new Color('000'));
 
         $canvas->draw()
             ->pieSlice(new Coordinate(200, 150), 100, 200, 45, 135, new Color('fff'), true);
@@ -54,7 +55,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(400, 300, new Color('000'));
+        $canvas = $imagine->create(new Size(400, 300), new Color('000'));
 
         $canvas->draw()
             ->chord(new Coordinate(200, 150), 100, 200, 45, 135, new Color('fff'), true);
@@ -70,7 +71,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(400, 300, new Color('000'));
+        $canvas = $imagine->create(new Size(400, 300), new Color('000'));
 
         $canvas->draw()
             ->line(new Coordinate(50, 50), new Coordinate(350, 250), new Color('fff'))
@@ -89,7 +90,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(400, 300, new Color('000'));
+        $canvas = $imagine->create(new Size(400, 300), new Color('000'));
 
         $canvas->draw()
             ->polygon(array(
@@ -112,7 +113,7 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(400, 300, new Color('000'));
+        $canvas = $imagine->create(new Size(400, 300), new Color('000'));
 
         $canvas->draw()
             ->dot(new Coordinate(200, 150), new Color('fff'))

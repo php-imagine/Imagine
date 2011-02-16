@@ -35,4 +35,15 @@ interface SizeInterface
      * @return SizeInterface
      */
     function scale($ratio);
+
+    /**
+     * Checks whether curret box can fit given box at a given start position,
+     * start position defaults to top left corner xy(0,0)
+     *
+     * @param SizeInterface       $box
+     * @param CoordinateInterface $topLeft
+     *
+     * @return Boolean
+     */
+    function contains(SizeInterface $box, CoordinateInterface $start = null);
 }

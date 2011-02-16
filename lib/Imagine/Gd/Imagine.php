@@ -12,6 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\ImageInterface;
@@ -53,8 +54,11 @@ final class Imagine implements ImagineInterface
      * (non-PHPdoc)
      * @see Imagine.ImagineInterface::create()
      */
-    public function create($width, $height, Color $color = null)
+    public function create(SizeInterface $size, Color $color = null)
     {
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+
         $resource = imagecreatetruecolor($width, $height);
 
         if (false === $resource) {
@@ -82,7 +86,7 @@ final class Imagine implements ImagineInterface
             throw new RuntimeException('Could not set background color fill');
         }
 
-        return new Image($resource, $width, $height, $this);
+        return new Image($resource, $this);
     }
 
     /**
@@ -125,6 +129,6 @@ final class Imagine implements ImagineInterface
                 'savealpha values');
         }
 
-        return new Image($resource, $width, $height, $this);
+        return new Image($resource, $this);
     }
 }

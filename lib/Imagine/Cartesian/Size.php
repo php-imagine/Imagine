@@ -72,4 +72,17 @@ final class Size implements SizeInterface
     {
         return new Size($ratio * $this->width, $ratio * $this->height);
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Cartesian.SizeInterface::contains()
+     */
+    public function contains(SizeInterface $box, CoordinateInterface $start = null)
+    {
+        $start = $start ? $start : new Coordinate(0, 0);
+
+        return $start->in($this) &&
+            $this->width >= $box->getWidth() + $start->getX() &&
+            $this->height >= $box->getHeight() + $start->getY();
+    }
 }

@@ -12,6 +12,7 @@
 namespace Imagine;
 
 use Imagine\Cartesian\Coordinate;
+use Imagine\Cartesian\Coordinate\Center;
 use Imagine\Cartesian\Size;
 
 abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
@@ -29,21 +30,23 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         $factory = $this->getImagine();
 
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $size  = $image->getSize();
 
         $image->paste(
                 $image->copy()
-                    ->resize(new Size($image->getWidth() / 2, $image->getHeight() / 2))
+                    ->resize($size->scale(0.5))
                     ->flipVertically(),
-                new Coordinate($image->getWidth() / 2 - 1, $image->getHeight() / 2 - 1)
+                new Center($size)
             )
             ->save('tests/Imagine/Fixtures/clone.jpg', array('quality' => 100));
 
         unset($image);
 
         $image = $factory->open('tests/Imagine/Fixtures/clone.jpg');
+        $size  = $image->getSize();
 
-        $this->assertEquals(364, $image->getWidth());
-        $this->assertEquals(126, $image->getHeight());
+        $this->assertEquals(364, $size->getWidth());
+        $this->assertEquals(126, $size->getHeight());
 
         unlink('tests/Imagine/Fixtures/clone.jpg');
     }
@@ -66,13 +69,17 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
             ->save('tests/Imagine/Fixtures/outbound.png', array('quality' => 9));
 
         $thumbnail = $factory->open('tests/Imagine/Fixtures/inset.png');
-        $this->assertEquals(50, $thumbnail->getWidth());
-        $this->assertEquals(17, $thumbnail->getHeight());
+        $size      = $thumbnail->getSize();
+
+        $this->assertEquals(50, $size->getWidth());
+        $this->assertEquals(17, $size->getHeight());
         unlink('tests/Imagine/Fixtures/inset.png');
 
         $thumbnail = $factory->open('tests/Imagine/Fixtures/outbound.png');
-        $this->assertEquals(50, $thumbnail->getWidth());
-        $this->assertEquals(50, $thumbnail->getHeight());
+        $size      = $thumbnail->getSize();
+
+        $this->assertEquals(50, $size->getWidth());
+        $this->assertEquals(50, $size->getHeight());
         unlink('tests/Imagine/Fixtures/outbound.png');
     }
 
@@ -93,15 +100,18 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
             ->flipHorizontally()
             ->save('tests/Imagine/Fixtures/flop.png'));
 
-        $this->assertEquals(200, $image->getWidth());
-        $this->assertEquals(200, $image->getHeight());
+        $size = $image->getSize();
+
+        $this->assertEquals(200, $size->getWidth());
+        $this->assertEquals(200, $size->getHeight());
 
         unset($image);
 
         $image = $factory->open('tests/Imagine/Fixtures/flop.png');
+        $size  = $image->getSize();
 
-        $this->assertEquals(200, $image->getWidth());
-        $this->assertEquals(200, $image->getHeight());
+        $this->assertEquals(200, $size->getWidth());
+        $this->assertEquals(200, $size->getHeight());
 
         unset($image);
 
@@ -116,13 +126,14 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
     {
         $factory = $this->getImagine();
 
-        $factory->create(400, 300, new Color('000'))
+        $factory->create(new Size(400, 300), new Color('000'))
             ->save('tests/Imagine/Fixtures/blank.png', array('quality' => 100));
 
         $image = $factory->open('tests/Imagine/Fixtures/blank.png');
+        $size  = $image->getSize();
 
-        $this->assertEquals(400, $image->getWidth());
-        $this->assertEquals(300, $image->getHeight());
+        $this->assertEquals(400, $size->getWidth());
+        $this->assertEquals(300, $size->getHeight());
 
         unlink('tests/Imagine/Fixtures/blank.png');
     }

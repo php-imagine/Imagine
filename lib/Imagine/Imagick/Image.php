@@ -140,40 +140,6 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::getHeight()
-     */
-    public function getHeight()
-    {
-        try {
-            $height = $this->imagick->getImageHeight();
-        } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Could not get height', $e->getCode(), $e
-            );
-        }
-
-        return $height;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine.ImageInterface::getWidth()
-     */
-    public function getWidth()
-    {
-        try {
-            $width = $this->imagick->getImageWidth();
-        } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Could not get width', $e->getCode(), $e
-            );
-        }
-
-        return $width;
-    }
-
-    /**
-     * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
     public function paste(ImageInterface $image, CoordinateInterface $start)
@@ -188,16 +154,11 @@ final class Image implements ImageInterface
             ));
         }
 
-        $widthDiff = $this->getWidth() - ($x + $image->getWidth());
-        $heightDiff = $this->getHeight() - ($y + $image->getHeight());
-
-        if ($widthDiff < 0 || $heightDiff < 0) {
-            throw new OutOfBoundsException(sprintf('Cannot paste image '.
-                'of width %d and height %d at the x position of %d and y '.
-                'position of %d, as it exceeds the parent image\'s width by '.
-                '%d in width and %d in height', $image->getWidth(),
-                $image->getHeight(), $x, $y, abs($widthDiff), abs($heightDiff)
-            ));
+        if (!$this->getSize()->contains($image->getSize(), $start)) {
+            throw new OutOfBoundsException(
+                'Cannot paste image of the given size at the specified '.
+                'position, as it moves outside of the current image\'s box'
+            );
         }
 
         try {

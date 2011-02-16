@@ -11,6 +11,7 @@
 
 namespace Imagine;
 
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\InvalidArgumentException;
 
@@ -19,15 +20,14 @@ interface ImagineInterface
     /**
      * Creates a new empty image with an optional background color
      *
-     * @param integer $width
-     * @param integer $height
+     * @param SizeInterface $size
      * @param Color   $color
      *
      * @throws InvalidArgumentException
      *
      * @return ImageInterface
      */
-    function create($width, $height, Color $color = null);
+    function create(SizeInterface $size, Color $color = null);
 
     /**
      * Opens an existing image from $path

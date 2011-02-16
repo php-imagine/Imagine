@@ -11,26 +11,36 @@
 
 namespace Imagine;
 
+use Imagine\Cartesian\Size;
+
 abstract class AbstractImagineTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers Imagine\ImagineInterface::create()
+     */
     public function testShouldCreateEmptyImage()
     {
         $factory = $this->getImagine();
-        $image = $factory->create(50, 50);
+        $image   = $factory->create(new Size(50, 50));
+        $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\ImageInterface', $image);
-        $this->assertEquals(50, $image->getWidth());
-        $this->assertEquals(50, $image->getHeight());
+        $this->assertEquals(50, $size->getWidth());
+        $this->assertEquals(50, $size->getHeight());
     }
 
+    /**
+     * @covers Imagine\ImagineInterface::open()
+     */
     public function testShouldOpenAnImage()
     {
         $factory = $this->getImagine();
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
+        $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\ImageInterface', $image);
-        $this->assertEquals(364, $image->getWidth());
-        $this->assertEquals(126, $image->getHeight());
+        $this->assertEquals(364, $size->getWidth());
+        $this->assertEquals(126, $size->getHeight());
     }
 
     abstract protected function getImagine();

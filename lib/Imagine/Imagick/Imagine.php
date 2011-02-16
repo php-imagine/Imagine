@@ -12,6 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Color;
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\ImageInterface;
@@ -44,12 +45,10 @@ final class Imagine implements ImagineInterface
      * (non-PHPdoc)
      * @see Imagine.ImagineInterface::create()
      */
-    public function create($width, $height, Color $color = null)
+    public function create(SizeInterface $size, Color $color = null)
     {
-        if ($width < 1 || $height < 1) {
-            throw new InvalidArgumentException('Width an height of the '.
-                'resize must be positive integers');
-        }
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
         $color = null !== $color ? $color : new Color('fff');
 
