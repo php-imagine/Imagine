@@ -140,6 +140,6 @@ final class Color
      */
     public function __toString()
     {
-        return vsprintf('#%x%x%x', array($this->r, $this->g, $this->b));
+        return sprintf('#%x%x%x', $this->r, $this->g, $this->b);
     }
 }
