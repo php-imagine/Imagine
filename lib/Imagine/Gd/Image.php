@@ -175,12 +175,10 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::resize()
      */
-    final public function resize($width, $height)
+    final public function resize(SizeInterface $size)
     {
-        if ($width < 1 || $height < 1) {
-            throw new InvalidArgumentException('Width an height of the '.
-                'resize must be positive integers');
-        }
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
         $dest = imagecreatetruecolor($width, $height);
 
@@ -319,15 +317,12 @@ final class Image implements ImageInterface
         $thumbnail = $this->copy();
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            $ratio = min($width / $thumbnail->width, $height / $thumbnail->height);
+            $ratio = min($ratios);
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $ratio = max($width / $thumbnail->width, $height / $thumbnail->height);
+            $ratio = max($ratios);
         }
 
-        $thumbnail->resize(
-            round($thumbnail->width * $ratio),
-            round($thumbnail->height * $ratio)
-        );
+        $thumbnail->resize($this->getSize()->scale($ratio));
 
         $x = abs(round(($width - $thumbnail->width) / 2));
         $y = abs(round(($height - $thumbnail->height) / 2));

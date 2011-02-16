@@ -63,12 +63,11 @@ interface ImageInterface
     /**
      * Resizes current image and returns self
      *
-     * @param integer $width
-     * @param integer $height
+     * @param SizeInterface $size
      *
      * @return ImageInterface
      */
-    function resize($width, $height);
+    function resize(SizeInterface $size);
 
     /**
      * Rotates an image at the given angle.

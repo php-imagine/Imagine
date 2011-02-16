@@ -63,4 +63,13 @@ final class Size implements SizeInterface
     {
         return $this->height;
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Cartesian.SizeInterface::scale()
+     */
+    public function scale($ratio)
+    {
+        return new Size($ratio * $this->width, $ratio * $this->height);
+    }
 }

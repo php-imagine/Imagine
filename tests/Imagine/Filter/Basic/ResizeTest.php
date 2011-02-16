@@ -11,32 +11,44 @@
 
 namespace Imagine\Filter\Basic;
 
+use Imagine\Cartesian\Size;
+use Imagine\Cartesian\SizeInterface;
+
 class ResizeTest extends BasicFilterTestCase
 {
     /**
+     * @covers Imagine\Filter\Basic\Resize::apply
+     *
      * @dataProvider getDataSet
+     *
+     * @param SizeInterface $size
      */
-    public function testShouldResizeImageAndReturnResult($width, $height)
+    public function testShouldResizeImageAndReturnResult(SizeInterface $size)
     {
         $image = $this->getImage();
 
         $image->expects($this->once())
             ->method('resize')
-            ->with($width, $height)
+            ->with($size)
             ->will($this->returnValue($image));
 
-        $command = new Resize($width, $height);
+        $command = new Resize($size);
 
         $this->assertSame($image, $command->apply($image));
     }
 
+    /**
+     * Data provider for testShouldResizeImageAndReturnResult
+     *
+     * @return array
+     */
     public function getDataSet()
     {
         return array(
-            array(50, 15),
-            array(300, 25),
-            array(123, 23),
-            array(45, 23)
+            array(new Size(50, 15)),
+            array(new Size(300, 25)),
+            array(new Size(123, 23)),
+            array(new Size(45, 23))
         );
     }
 }

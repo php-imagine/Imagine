@@ -11,24 +11,25 @@
 
 namespace Imagine\Filter\Basic;
 
+use Imagine\Cartesian\SizeInterface;
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
 
 class Resize implements FilterInterface
 {
-    private $width;
-    private $height;
+    /**
+     * @var SizeInterface
+     */
+    private $size;
 
     /**
      * Constructs Resize filter with given width and height
      *
-     * @param integer $width
-     * @param integer $height
+     * @param SizeInterface $size
      */
-    public function __construct($width, $height)
+    public function __construct(SizeInterface $size)
     {
-        $this->width  = $width;
-        $this->height = $height;
+        $this->size = $size;
     }
 
     /**
@@ -37,6 +38,6 @@ class Resize implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->resize($this->width, $this->height);
+        return $image->resize($this->size);
     }
 }

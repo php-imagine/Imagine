@@ -26,4 +26,13 @@ interface SizeInterface
      * @return integer
      */
     function getWidth();
+
+    /**
+     * Creates new SizeInterface instance with ratios applied to both sides
+     *
+     * @param integer $ratio
+     *
+     * @return SizeInterface
+     */
+    function scale($ratio);
 }

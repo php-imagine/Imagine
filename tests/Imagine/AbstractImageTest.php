@@ -16,6 +16,14 @@ use Imagine\Cartesian\Size;
 
 abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers Imagine\ImagineInterface::open
+     * @covers Imagine\ImageInterface::paste
+     * @covers Imagine\ImageInterface::copy
+     * @covers Imagine\ImageInterface::resize
+     * @covers Imagine\ImageInterface::flipVertically
+     * @covers Imagine\ImageInterface::save
+     */
     public function testRotate()
     {
         $factory = $this->getImagine();
@@ -24,7 +32,7 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 
         $image->paste(
                 $image->copy()
-                    ->resize($image->getWidth() / 2, $image->getHeight() / 2)
+                    ->resize(new Size($image->getWidth() / 2, $image->getHeight() / 2))
                     ->flipVertically(),
                 new Coordinate($image->getWidth() / 2 - 1, $image->getHeight() / 2 - 1)
             )
@@ -40,6 +48,11 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/clone.jpg');
     }
 
+    /**
+     * @covers Imagine\ImagineInterface::open
+     * @covers Imagine\ImageInterface::thumbnail
+     * @covers Imagine\ImageInterface::save
+     */
     public function testThumbnailGeneration()
     {
         $factory = $this->getImagine();
@@ -63,6 +76,12 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/outbound.png');
     }
 
+    /**
+     * @covers Imagine\ImagineInterface::open
+     * @covers Imagine\ImageInterface::resize
+     * @covers Imagine\ImageInterface::flipHorizontally
+     * @covers Imagine\ImageInterface::save
+     */
     public function testCropResizeFlip()
     {
         $factory = $this->getImagine();
@@ -70,7 +89,7 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
         $this->assertSame($image, $image->crop(new Coordinate(0, 0), new Size(126, 126))
-            ->resize(200, 200)
+            ->resize(new Size(200, 200))
             ->flipHorizontally()
             ->save('tests/Imagine/Fixtures/flop.png'));
 
@@ -89,6 +108,10 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/flop.png');
     }
 
+    /**
+     * @covers Imagine\ImagineInterface::create
+     * @covers Imagine\ImageInterface::save
+     */
     public function testCreateAndSaveEmptyImage()
     {
         $factory = $this->getImagine();

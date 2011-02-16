@@ -225,15 +225,10 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::resize()
      */
-    public function resize($width, $height)
+    public function resize(SizeInterface $size)
     {
-        if ($width < 1 || $height < 1) {
-            throw new InvalidArgumentException('Width an height of the '.
-                'resize must be positive integers');
-        }
-
         try {
-            $this->imagick->adaptiveResizeImage($width, $height);
+            $this->imagick->adaptiveResizeImage($size->getWidth(), $size->getHeight());
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Resize operation failed', $e->getCode(), $e
