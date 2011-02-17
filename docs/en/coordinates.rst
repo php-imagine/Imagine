@@ -58,7 +58,7 @@ Every box or image or shape has a size, size has the following methods:
 A couple of words in defense
 ----------------------------
 
-Having read about this, you might be wondering "Why didn't he keep width and height as simple integer parameters in every method that needed those?" or "Why is x and y coordinates and object called Point?". These are valid questions and concerns, so let me try to explain why:
+Having read about this, you might be wondering "Why didn't he keep width and height as simple integer parameters in every method that needed those?" or "Why is x and y coordinates are an object called Point?". These are valid questions and concerns, so let me try to explain why:
 
 * Type-hints and validation - instead of checking for the validity of width and height (e.g. positive integers, greater than zero) or x, y (e.g. non-negative integers), I decided to move that check into constructor of ``Box`` and ``Point`` accordingly. That means, that if something passes the type-hint - a valid implementations of ``BoxInterface`` or ``PointInterface``, it is already valid.
 * Utility methods - a lot of functionality, like "determine if a point is inside a given box" or "can this box fit the one we're trying to paste into it" is also to be shared in many places. The fact that these primitives are objects, let's me extract all of that duplication.
