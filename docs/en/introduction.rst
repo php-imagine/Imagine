@@ -7,7 +7,7 @@ Basic usage
 Open Existing Images
 ++++++++++++++++++++
 
-To open an existing image, all you need is to instantiate an image factory and invoke ``Imagine::open()`` with ``$path`` to image as the  argument
+To open an existing image, all you need is to instantiate an image factory and invoke ``ImagineInterface::open()`` with ``$path`` to image as the  argument
 
 ::
 
@@ -18,23 +18,30 @@ To open an existing image, all you need is to instantiate an image factory and i
     
     $image = $imagine->open('/path/to/image.jpg');
 
-The ``Imagine::open()`` method may throw one of the following exceptions:
+The ``ImagineInterface::open()`` method may throw one of the following exceptions:
 
 * ``Imagine\Exception\InvalidArgumentException``
 * ``Imagine\Exception\RuntimeException``
+
+.. TIP::
+    Read more about exceptions_
 
 Now that you've opened an image, you can perform manipulations on it:
 
 ::
 
     <?php
-    $image->resize(15, 25)
+    use Imagine\Coordinate\Size;
+    use Imagine\Coordinate\Coordinate;
+    
+    $image->resize(new Size(15, 25))
         ->rotate(45)
-        ->crop(0, 0, 45, 45)
+        ->crop(new Coordinate(0, 0), new Size(45, 45))
         ->save('/path/to/new/image.jpg');
 
 .. TIP::
     Read more about Image_
+    Read more about coordinates_
 
 Create New Images
 +++++++++++++++++
@@ -44,14 +51,14 @@ Imagine also lets you create new, empty images. The following example creates an
 ::
 
     <?php
-    $image = $imagine->create(400, 300);
+    $image = $imagine->create(new Imagine\Coordinate\Size(400, 300));
 
 You can optionally specify the fill color for the new image, which defaults to opaque white. The following example creates a new image with a fully-transparent black background:
 
 ::
 
     <?php
-    $image = $imagine->create(400, 300, new Imagine\Color('000', 100));
+    $image = $imagine->create(new Imagine\Coordinate\Size(400, 300), new Imagine\Color('000', 100));
 
 Color Class
 +++++++++++
@@ -79,23 +86,6 @@ After you have instantiated a color, you can easily get its Red, Green, Blue and
         'A' => $white->getAlpha()
     ));
 
-Coordinate Class
-+++++++++++
-
-Every coordinate location (x, y) in Imagine is represented by a ``Coordinate`` instance.
-
-``Coordinate`` is a simple and light-weight value object, that takes values for x and y coordinate it represents as its constructor arguments. After the ``Coordinate`` is constructed, ``Coordinate::getX()`` and ``Coordinate::getY()`` can be used to get the appropriate values back.
-
-::
-
-    <?php
-    $point = new Coordinate(0, 0);
-    
-    var_dump(array(
-        'x' => $point->getX(),
-        'y' => $point->getY(),
-    ));
-
 Advanced Example - An Image Collage
 -----------------------------------
 
@@ -109,7 +99,7 @@ Here is how we would approach this problem with Imagine.
     use Imagine\Coordinate;
     
     // make an empty image (canvas) 120x160px
-    $collage = $imagine->create(120, 160);
+    $collage = $imagine->create(new Imagine\Coordinate\Size(120, 160));
     
     // starting coordinates (in pixels) for inserting the first image
     $x = 0;
@@ -120,7 +110,7 @@ Here is how we would approach this problem with Imagine.
         $photo = $imagine->open($path);
         
         // paste photo at current position
-        $collage->paste($photo, new Coordinate($x, $y));
+        $collage->paste($photo, new Imagine\Coordinate\Coordinate($x, $y));
         
         // move position by 30px to the right
         $x += 30;
@@ -139,52 +129,6 @@ Here is how we would approach this problem with Imagine.
     
     $collage->save('/path/to/collage.jpg');
 
-Image Transformations, aka Lazy Processing
-------------------------------------------
-
-Sometimes we're not confortable with opening an image inline, and would like to apply some pre-defined operations in the lazy manner. 
-
-For that, Imagine provides so-called image transformations.
-
-Image transformation is implemented via the ``Filter\Transformation`` class, which mostly conforms to ``ImageInterface`` and can be used interchangeably with it. The main difference is that transformations may be stacked and performed on a real ``ImageInterface`` instance later using the ``Transformation::apply()`` method.
-
-Example of a naive thumbnail implementation:
-
-::
-
-    <?php
-    $transformation = new Imagine\Filter\Transformation();
-    
-    $transformation->thumbnail(30, 30)
-        ->save('/path/to/resized/thumbnail.jpg');
-    
-    $transformation->apply($imagine->open('/path/to/image.jpg'));
-
-The result of ``apply()`` is the modified image instance itself, so if we wanted to create a mass-processing thumbnail script, we would do something like the following:
-
-::
-
-    <?php
-    $transformation = new Imagine\Filter\Transformation();
-    
-    $transformation->thumbnail(30, 30);
-    
-    foreach (glob(/path/to/lots/of/images/*.jpg) as $path) {
-        $transformation->apply($imagine->open($path))
-            ->save('/path/to/resized/'.md5($path).'.jpg');
-    }
-
-The ``Filter\Tranformation`` class itself is simply a very specific implementation of ``FilterInterface``, which is a more generic interface, that let's you pre-define certain operations and variable calculations and apply them to an ``ImageInterface`` instance later.
-
-Filters
--------
-
-As we already know, ``Filter\Transformation`` is just a very special case of ``Filter\FilterInterface``.
-
-Filter is a set of operations, calculations, etc., that can be applied to an ``ImageInterface`` instance using ``Filter\FilterInterface::apply()`` method.
-
-Right now only basic filters are available - they simply forward the call to ``ImageInterface`` implementation itself, more filters coming soon...
-
 Architecture
 ------------
 
@@ -193,3 +137,5 @@ The architecture is very flexible, as the filters don't need any processing logi
 The ``Transformation`` object is an example of a composite filter, representing a stack or queue of filters, that get applied to an Image upon application of the ``Transformation`` itself.
 
 .. _Image: /avalanche123/Imagine/blob/master/docs/en/image.rst
+.. _coordinates: /avalanche123/Imagine/blob/master/docs/en/coordinates.rst
+.. _exceptions: /avalanche123/Imagine/blob/master/docs/en/exceptions.rst
