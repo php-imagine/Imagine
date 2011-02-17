@@ -17,9 +17,6 @@ use Imagine\Filter\FilterTestCase;
 
 class ThumbnailTest extends FilterTestCase
 {
-    /**
-     * @covers Imagine\Filter\Basic::apply
-     */
     public function testShouldMakeAThumbnail()
     {
         $image     = $this->getImage();
