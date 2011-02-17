@@ -11,23 +11,23 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
 
 class Resize implements FilterInterface
 {
     /**
-     * @var SizeInterface
+     * @var BoxInterface
      */
     private $size;
 
     /**
      * Constructs Resize filter with given width and height
      *
-     * @param SizeInterface $size
+     * @param BoxInterface $size
      */
-    public function __construct(SizeInterface $size)
+    public function __construct(BoxInterface $size)
     {
         $this->size = $size;
     }

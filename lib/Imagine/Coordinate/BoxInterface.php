@@ -11,7 +11,7 @@
 
 namespace Imagine\Coordinate;
 
-interface SizeInterface
+interface BoxInterface
 {
     /**
      * Gets current image height
@@ -28,11 +28,11 @@ interface SizeInterface
     function getWidth();
 
     /**
-     * Creates new SizeInterface instance with ratios applied to both sides
+     * Creates new BoxInterface instance with ratios applied to both sides
      *
      * @param integer $ratio
      *
-     * @return Imagine\Coordinate\SizeInterface
+     * @return Imagine\Coordinate\BoxInterface
      */
     function scale($ratio);
 
@@ -40,10 +40,10 @@ interface SizeInterface
      * Checks whether curret box can fit given box at a given start position,
      * start position defaults to top left corner xy(0,0)
      *
-     * @param Imagine\Coordinate\SizeInterface       $box
-     * @param Imagine\Coordinate\CoordinateInterface $start
+     * @param Imagine\Coordinate\BoxInterface       $box
+     * @param Imagine\Coordinate\PointInterface $start
      *
      * @return Boolean
      */
-    function contains(SizeInterface $box, CoordinateInterface $start = null);
+    function contains(BoxInterface $box, PointInterface $start = null);
 }

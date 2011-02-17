@@ -11,8 +11,8 @@
 
 namespace Imagine;
 
-use Imagine\Coordinate\CoordinateInterface;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\PointInterface;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Gd\Image;
 use Imagine\Exception\InvalidArgumentException;
@@ -37,24 +37,24 @@ interface ImageInterface
      * Crops a specified box out of the source image (modifies the source image)
      * Returns cropped self
      *
-     * @param Imagine\Coordinate\CoordinateInterface $start
-     * @param Imagine\Coordinate\SizeInterface       $size
+     * @param Imagine\Coordinate\PointInterface $start
+     * @param Imagine\Coordinate\BoxInterface       $size
      *
      * @throws Imagine\Exception\InvalidArgumentException
      * @throws Imagine\Exception\OutOfBoundsException
      *
      * @return Imagine\ImageInterface
      */
-    function crop(CoordinateInterface $start, SizeInterface $size);
+    function crop(PointInterface $start, BoxInterface $size);
 
     /**
      * Resizes current image and returns self
      *
-     * @param Imagine\Coordinate\SizeInterface $size
+     * @param Imagine\Coordinate\BoxInterface $size
      *
      * @return Imagine\ImageInterface
      */
-    function resize(SizeInterface $size);
+    function resize(BoxInterface $size);
 
     /**
      * Rotates an image at the given angle.
@@ -78,7 +78,7 @@ interface ImageInterface
      * Returns source image
      *
      * @param Imagine\ImageInterface                 $image
-     * @param Imagine\Coordinate\CoordinateInterface $start
+     * @param Imagine\Coordinate\PointInterface $start
      *
      * @throws Imagine\Exception\InvalidArgumentException
      * @throws Imagine\Exception\OutOfBoundsException
@@ -86,7 +86,7 @@ interface ImageInterface
      *
      * @return Imagine\ImageInterface
      */
-    function paste(ImageInterface $image, CoordinateInterface $start);
+    function paste(ImageInterface $image, PointInterface $start);
 
     /**
      * Saves the image at a specified path, the target file extension is used
@@ -137,14 +137,14 @@ interface ImageInterface
      * Generates a thumbnail from a current image
      * Returns it as a new image, doesn't modify the current image
      *
-     * @param Imagine\Coordinate\SizeInterface $size
+     * @param Imagine\Coordinate\BoxInterface $size
      * @param string                           $mode
      *
      * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\ImageInterface
      */
-    function thumbnail(SizeInterface $size, $mode = self::THUMBNAIL_INSET);
+    function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET);
 
     /**
      * Instantiates and returns a DrawerInterface instance for image drawing
@@ -156,7 +156,7 @@ interface ImageInterface
     /**
      * Returns current image size
      *
-     * @return Imagine\Coordinate\SizeInterface
+     * @return Imagine\Coordinate\BoxInterface
      */
     function getSize();
 }

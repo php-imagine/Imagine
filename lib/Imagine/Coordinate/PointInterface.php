@@ -11,7 +11,7 @@
 
 namespace Imagine\Coordinate;
 
-interface CoordinateInterface
+interface PointInterface
 {
     /**
      * Gets points x coordinate
@@ -30,9 +30,9 @@ interface CoordinateInterface
     /**
      * Checks if current coordinate is inside a given bo
      *
-     * @param Imagine\Coordinate\SizeInterface $box
+     * @param Imagine\Coordinate\BoxInterface $box
      *
      * @return Boolean
      */
-    function in(SizeInterface $box);
+    function in(BoxInterface $box);
 }

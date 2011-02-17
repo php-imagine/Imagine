@@ -11,9 +11,9 @@
 
 namespace Imagine;
 
-use Imagine\Coordinate\Coordinate;
-use Imagine\Coordinate\Coordinate\Center;
-use Imagine\Coordinate\Size;
+use Imagine\Coordinate\Point;
+use Imagine\Coordinate\Point\Center;
+use Imagine\Coordinate\Box;
 
 abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 {
@@ -62,10 +62,10 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
-        $image->thumbnail(new Size(50, 50), ImageInterface::THUMBNAIL_INSET, new Color('fff'))
+        $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_INSET, new Color('fff'))
             ->save('tests/Imagine/Fixtures/inset.png', array('quality' => 9));
 
-        $image->thumbnail(new Size(50, 50), ImageInterface::THUMBNAIL_OUTBOUND)
+        $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND)
             ->save('tests/Imagine/Fixtures/outbound.png', array('quality' => 9));
 
         $thumbnail = $factory->open('tests/Imagine/Fixtures/inset.png');
@@ -95,8 +95,8 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
-        $this->assertSame($image, $image->crop(new Coordinate(0, 0), new Size(126, 126))
-            ->resize(new Size(200, 200))
+        $this->assertSame($image, $image->crop(new Point(0, 0), new Box(126, 126))
+            ->resize(new Box(200, 200))
             ->flipHorizontally()
             ->save('tests/Imagine/Fixtures/flop.png'));
 
@@ -126,7 +126,7 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
     {
         $factory = $this->getImagine();
 
-        $factory->create(new Size(400, 300), new Color('000'))
+        $factory->create(new Box(400, 300), new Color('000'))
             ->save('tests/Imagine/Fixtures/blank.png', array('quality' => 100));
 
         $image = $factory->open('tests/Imagine/Fixtures/blank.png');

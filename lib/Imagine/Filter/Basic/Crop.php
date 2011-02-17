@@ -11,20 +11,20 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Coordinate\CoordinateInterface;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\PointInterface;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
 
 class Crop implements FilterInterface
 {
     /**
-     * @var CoordinateInterface
+     * @var PointInterface
      */
     private $start;
 
     /**
-     * @var SizeInterface
+     * @var BoxInterface
      */
     private $size;
 
@@ -32,10 +32,10 @@ class Crop implements FilterInterface
      * Constructs a Crop filter with given x, y, coordinates and crop width and
      * height values
      *
-     * @param CoordinateInterface $start
-     * @param SizeInterface       $size
+     * @param PointInterface $start
+     * @param BoxInterface       $size
      */
-    public function __construct(CoordinateInterface $start, SizeInterface $size)
+    public function __construct(PointInterface $start, BoxInterface $size)
     {
         $this->start = $start;
         $this->size  = $size;

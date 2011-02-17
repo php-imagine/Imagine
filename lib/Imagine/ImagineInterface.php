@@ -11,7 +11,7 @@
 
 namespace Imagine;
 
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\InvalidArgumentException;
 
@@ -20,14 +20,14 @@ interface ImagineInterface
     /**
      * Creates a new empty image with an optional background color
      *
-     * @param Imagine\Coordinate\SizeInterface $size
+     * @param Imagine\Coordinate\BoxInterface $size
      * @param Imagine\Color                    $color
      *
      * @throws Imagine\Exception\InvalidArgumentException
      *
      * @return Imagine\ImageInterface
      */
-    function create(SizeInterface $size, Color $color = null);
+    function create(BoxInterface $size, Color $color = null);
 
     /**
      * Opens an existing image from $path

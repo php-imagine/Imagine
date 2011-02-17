@@ -11,10 +11,10 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Coordinate\Coordinate;
-use Imagine\Coordinate\CoordinateInterface;
-use Imagine\Coordinate\Size;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\Point;
+use Imagine\Coordinate\PointInterface;
+use Imagine\Coordinate\Box;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Filter\FilterTestCase;
 
 class CropTest extends FilterTestCase
@@ -24,10 +24,10 @@ class CropTest extends FilterTestCase
      *
      * @dataProvider getDataSet
      *
-     * @param CoordinateInterface $start
-     * @param SizeInterface       $size
+     * @param PointInterface $start
+     * @param BoxInterface       $size
      */
-    public function testShouldApplyCropAndReturnResult(CoordinateInterface $start, SizeInterface $size)
+    public function testShouldApplyCropAndReturnResult(PointInterface $start, BoxInterface $size)
     {
         $image = $this->getImage();
 
@@ -49,8 +49,8 @@ class CropTest extends FilterTestCase
     public function getDataSet()
     {
         return array(
-            array(new Coordinate(0, 0), new Size(40, 50)),
-            array(new Coordinate(0, 15), new Size(50, 32))
+            array(new Point(0, 0), new Box(40, 50)),
+            array(new Point(0, 15), new Box(50, 32))
         );
     }
 }

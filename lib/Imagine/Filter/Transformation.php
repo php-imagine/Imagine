@@ -11,9 +11,9 @@
 
 namespace Imagine\Filter;
 
-use Imagine\Coordinate\CoordinateInterface;
+use Imagine\Coordinate\PointInterface;
 
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\BoxInterface;
 
 use Imagine\Filter\Basic\Thumbnail;
 
@@ -78,12 +78,12 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a crop transformation into the current transformations queue
      *
-     * @param Imagine\Coordinate\CoordinateInterface $start
-     * @param Imagine\Coordinate\SizeInterface       $size
+     * @param Imagine\Coordinate\PointInterface $start
+     * @param Imagine\Coordinate\BoxInterface       $size
      *
      * @return Imagine\Filter\Transformation
      */
-    public function crop(CoordinateInterface $start, SizeInterface $size)
+    public function crop(PointInterface $start, BoxInterface $size)
     {
         return $this->add(new Crop($start, $size));
     }
@@ -114,7 +114,7 @@ final class Transformation implements FilterInterface
      * Stacks a paste transformation into the current transformations queue
      *
      * @param Imagine\ImageInterface                $image
-     * @param Imagine\Coordinate\CoordinateInterface $start
+     * @param Imagine\Coordinate\PointInterface $start
      *
      * @return Imagine\Filter\Transformation
      */
@@ -126,11 +126,11 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a resize transformation into the current transformations queue
      *
-     * @param Imagine\Coordinate\SizeInterface
+     * @param Imagine\Coordinate\BoxInterface
      *
      * @return Imagine\Filter\Transformation
      */
-    public function resize(SizeInterface $size)
+    public function resize(BoxInterface $size)
     {
         return $this->add(new Resize($size));
     }
@@ -177,12 +177,12 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a thumbnail transformation into the current transformation queue
      *
-     * @param Imagine\Coordinate\SizeInterface $size
+     * @param Imagine\Coordinate\BoxInterface $size
      * @param string                          $mode
      *
      * @return Imagine\Filter\Transformation
      */
-    public function thumbnail(SizeInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
         return $this->add(new Thumbnail($size, $mode));
     }

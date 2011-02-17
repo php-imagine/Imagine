@@ -10,13 +10,13 @@ Available Methods
 
 * ``->copy()`` - duplicates current image and returns a new ImageInterface instance
 
-* ``->crop(CoordinateInterface $start, $width, $height`)` - crops the image, starting at the ``$start`` coordinates and extending to the specified ``$width`` and ``$height``
+* ``->crop(PointInterface $start, $width, $height`)` - crops the image, starting at the ``$start`` coordinates and extending to the specified ``$width`` and ``$height``
 
 * ``->flipHorizontally()`` - creates a horizontal mirror reflection of image
 
 * ``->flipVertically()`` - creates a vertical mirror reflection of image
 
-* ``->paste(ImageInterface $image, CoordinateInterface $start)`` - pastes another ``$image`` into the source image at the ``$start`` position
+* ``->paste(ImageInterface $image, PointInterface $start)`` - pastes another ``$image`` into the source image at the ``$start`` position
 
 * ``->resize($width, $height)`` - resizes image to given ``$height`` and ``$width`` exactly
 
@@ -28,4 +28,4 @@ Available Methods
 
 * ``->thumbnail($width, $height, $mode = self::THUMBNAIL_INSET)`` - prepares an image thumbnail, based on the target dimensions, while preserving proportions. The thumbnail operation returns a new ``ImageInterface`` instance that is a processed copy of the original (the source image is not modified). If thumbnail mode is ``ImageInterface::THUMBNAIL_INSET``, the original image is scaled down so it is fully contained within the thumbnail dimensions. The specified ``$width`` and ``$height`` will be considered maximum limits. Unless the given dimensions are equal to the original image's aspect ratio, one dimension in the resulting thumbnail will be smaller than the given limit. If ``ImageInterface::THUMBNAIL_OUTBOUND`` mode is chosen, then the thumbnail is scaled so that its smallest side equals the length of the corresponding side in the original image. Any excess outside of the scaled thumbnail's area will be cropped, and the returned thumbnail will have the exact ``$width`` and ``$height`` specified.
 
-* ``->getSize()`` - returns ``Imagine\Coordinate\SizeInterface`` instance, that represents current image's size
+* ``->getSize()`` - returns ``Imagine\Coordinate\BoxInterface`` instance, that represents current image's size

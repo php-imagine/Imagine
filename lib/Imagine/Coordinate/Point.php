@@ -13,7 +13,7 @@ namespace Imagine\Coordinate;
 
 use Imagine\Exception\InvalidArgumentException;
 
-final class Coordinate implements CoordinateInterface
+final class Point implements PointInterface
 {
     /**
      * @var integer
@@ -45,7 +45,7 @@ final class Coordinate implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.CoordinateInterface::getX()
+     * @see Imagine\Coordinate.PointInterface::getX()
      */
     public function getX()
     {
@@ -54,7 +54,7 @@ final class Coordinate implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.CoordinateInterface::getY()
+     * @see Imagine\Coordinate.PointInterface::getY()
      */
     public function getY()
     {
@@ -63,9 +63,9 @@ final class Coordinate implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.CoordinateInterface::in()
+     * @see Imagine\Coordinate.PointInterface::in()
      */
-    public function in(SizeInterface $box)
+    public function in(BoxInterface $box)
     {
         return $this->x < $box->getWidth() && $this->y < $box->getHeight();
     }

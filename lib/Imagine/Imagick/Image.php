@@ -12,9 +12,9 @@
 namespace Imagine\Imagick;
 
 use Imagine\Color;
-use Imagine\Coordinate\CoordinateInterface;
-use Imagine\Coordinate\Size;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\PointInterface;
+use Imagine\Coordinate\Box;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -76,7 +76,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    public function crop(CoordinateInterface $start, SizeInterface $size)
+    public function crop(PointInterface $start, BoxInterface $size)
     {
         if (!$start->in($size)) {
             throw new OutOfBoundsException('Crop coordinates must start at '.
@@ -141,7 +141,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
-    public function paste(ImageInterface $image, CoordinateInterface $start)
+    public function paste(ImageInterface $image, PointInterface $start)
     {
         $x = $start->getX();
         $y = $start->getY();
@@ -185,7 +185,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::resize()
      */
-    public function resize(SizeInterface $size)
+    public function resize(BoxInterface $size)
     {
         try {
             $this->imagick->adaptiveResizeImage($size->getWidth(), $size->getHeight());
@@ -264,7 +264,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::thumbnail()
      */
-    public function thumbnail(SizeInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
@@ -319,7 +319,7 @@ final class Image implements ImageInterface
             );
         }
 
-        return new Size($width, $height);
+        return new Box($width, $height);
     }
 
     /**

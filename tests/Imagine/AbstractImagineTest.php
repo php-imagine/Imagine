@@ -11,7 +11,7 @@
 
 namespace Imagine;
 
-use Imagine\Coordinate\Size;
+use Imagine\Coordinate\Box;
 
 abstract class AbstractImagineTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ abstract class AbstractImagineTest extends \PHPUnit_Framework_TestCase
     public function testShouldCreateEmptyImage()
     {
         $factory = $this->getImagine();
-        $image   = $factory->create(new Size(50, 50));
+        $image   = $factory->create(new Box(50, 50));
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\ImageInterface', $image);

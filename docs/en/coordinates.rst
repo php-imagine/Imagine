@@ -12,31 +12,31 @@ Classes
 
 The whole coordinate system is represented in a handful of classes, but most importantly - its interfaces:
 
-* ``Imagine\Coordinate\CoordinateInterface`` - represents a single point in a bounding box
-* ``Imagine\Coordinate\SizeInterface`` - represents dimensions (width, height)
+* ``Imagine\Coordinate\PointInterface`` - represents a single point in a bounding box
+* ``Imagine\Coordinate\BoxInterface`` - represents dimensions (width, height)
 
-CoordinateInterface
+PointInterface
 -------------------
 
 Every coordinate contains the following methods:
 
 * ``->getX()`` - returns horizontal position of the coordinate
 * ``->getY()`` - returns vertical position of a coordinate
-* ``->in(SizeInterface $box)`` - returns ``true`` if current coordinate appears to be inside of a given bounding ``$box``
+* ``->in(BoxInterface $box)`` - returns ``true`` if current coordinate appears to be inside of a given bounding ``$box``
 
 Center coordinate
 +++++++++++++++++
 
 It is very well known use case when a coordinate is supposed to represent a center of something.
 
-As part of showing off OO approach to image processing, I added a simple implementation of the core ``Imagine\Coordinate\CoordinateInterface``, which can be found at ``Imagine\Coordinate\Coordinate\Center``. The way it works is simple, it expects and instance of ``Imagine\Coordinate\SizeInterface`` in its constructor and calculates the center position based on that.
+As part of showing off OO approach to image processing, I added a simple implementation of the core ``Imagine\Coordinate\PointInterface``, which can be found at ``Imagine\Coordinate\Point\Center``. The way it works is simple, it expects and instance of ``Imagine\Coordinate\BoxInterface`` in its constructor and calculates the center position based on that.
 
 ::
 
     <?php
-    $size = new Imagine\Coordinate\Size(50, 50);
+    $size = new Imagine\Coordinate\Box(50, 50);
     
-    $center = Imagine\Coordinate\Coordinate\Center($size);
+    $center = Imagine\Coordinate\Point\Center($size);
     
     var_dump(array(
         'x' => $center->getX(),
@@ -45,12 +45,12 @@ As part of showing off OO approach to image processing, I added a simple impleme
     
     // would output position of (x,y) 50,50
 
-SizeInterface
+BoxInterface
 -------------
 
 Every box or image or shape has a size, size has the following methods:
 
 * ``->getWidth()`` - returns integer width
 * ``->getHeight()`` - returns integer height
-* ``->scale($ratio)`` - returns a new ``SizeInterface`` instance with each side multiplied by ``$ratio``
-* ``->contains(SizeInterface $box, CoordinateInterface $start = null)`` - checks that the given ``$box`` is contained inside the current ``SizeInterface`` at ``$start`` position. If no ``$start`` position is given, its assumed to be (0,0)
+* ``->scale($ratio)`` - returns a new ``BoxInterface`` instance with each side multiplied by ``$ratio``
+* ``->contains(BoxInterface $box, PointInterface $start = null)`` - checks that the given ``$box`` is contained inside the current ``BoxInterface`` at ``$start`` position. If no ``$start`` position is given, its assumed to be (0,0)

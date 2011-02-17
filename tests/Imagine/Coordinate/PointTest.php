@@ -11,23 +11,23 @@
 
 namespace Imagine\Coordinate;
 
-class CoordinateTest extends \PHPUnit_Framework_TestCase
+class PointTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @covers Imagine\Coordinate\Coordinate::getX
-	 * @covers Imagine\Coordinate\Coordinate::getY
-	 * @covers Imagine\Coordinate\Coordinate::in
+	 * @covers Imagine\Coordinate\Point::getX
+	 * @covers Imagine\Coordinate\Point::getY
+	 * @covers Imagine\Coordinate\Point::in
 	 *
 	 * @dataProvider getCoordinates
 	 *
 	 * @param integer       $x
 	 * @param integer       $y
-	 * @param SizeInterface $box
+	 * @param BoxInterface $box
 	 * @param Boolean       $expected
 	 */
-    public function testShouldAssignXYCoordinates($x, $y, SizeInterface $box, $expected)
+    public function testShouldAssignXYCoordinates($x, $y, BoxInterface $box, $expected)
     {
-        $coordinate = new Coordinate($x, $y);
+        $coordinate = new Point($x, $y);
 
         $this->assertEquals($x, $coordinate->getX());
         $this->assertEquals($y, $coordinate->getY());
@@ -43,16 +43,16 @@ class CoordinateTest extends \PHPUnit_Framework_TestCase
     public function getCoordinates()
     {
         return array(
-            array(0, 0, new Size(5, 5), true),
-            array(5, 15, new Size(5, 5), false),
-            array(10, 23, new Size(10, 10), false),
-            array(42, 30, new Size(50, 50), true),
-            array(81, 16, new Size(50, 10), false),
+            array(0, 0, new Box(5, 5), true),
+            array(5, 15, new Box(5, 5), false),
+            array(10, 23, new Box(10, 10), false),
+            array(42, 30, new Box(50, 50), true),
+            array(81, 16, new Box(50, 10), false),
         );
     }
 
     /**
-     * @covers Imagine\Coordinate\Coordinate::__construct
+     * @covers Imagine\Coordinate\Point::__construct
      *
      * @expectedException Imagine\Exception\InvalidArgumentException
      *
@@ -63,7 +63,7 @@ class CoordinateTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldThrowExceptionOnInvalidCoordinates($x, $y)
     {
-        new Coordinate($x, $y);
+        new Point($x, $y);
     }
 
     /**

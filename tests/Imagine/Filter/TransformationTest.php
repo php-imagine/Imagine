@@ -12,7 +12,7 @@ namespace Imagine\Filter;
  */
 
 use Imagine\Color;
-use Imagine\Coordinate\Size;
+use Imagine\Coordinate\Box;
 use Imagine\ImageInterface;
 
 class TransformationTest extends FilterTestCase
@@ -20,7 +20,7 @@ class TransformationTest extends FilterTestCase
     public function testSimpleStack()
     {
         $image = $this->getImage();
-        $size  = new Size(50, 50);
+        $size  = new Box(50, 50);
         $path  = sys_get_temp_dir();
 
         $image->expects($this->once())
@@ -46,8 +46,8 @@ class TransformationTest extends FilterTestCase
         $clone      = $this->getImage();
         $thumbnail  = $this->getImage();
         $path       = sys_get_temp_dir();
-        $size       = new Size(50, 50);
-        $resize     = new Size(200, 200);
+        $size       = new Box(50, 50);
+        $resize     = new Box(200, 200);
         $angle      = 90;
         $background = new Color('fff');
 

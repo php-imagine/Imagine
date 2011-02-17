@@ -11,7 +11,7 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Coordinate\Size;
+use Imagine\Coordinate\Box;
 use Imagine\ImageInterface;
 use Imagine\Filter\FilterTestCase;
 
@@ -24,7 +24,7 @@ class ThumbnailTest extends FilterTestCase
     {
         $image     = $this->getImage();
         $thumbnail = $this->getImage();
-        $size      = new Size(50, 50);
+        $size      = new Box(50, 50);
         $filter    = new Thumbnail($size);
 
         $image->expects($this->once())

@@ -9,25 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Coordinate\Coordinate;
+namespace Imagine\Coordinate\Point;
 
-use Imagine\Coordinate\Coordinate;
-use Imagine\Coordinate\CoordinateInterface;
-use Imagine\Coordinate\Size;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\Point;
+use Imagine\Coordinate\PointInterface;
+use Imagine\Coordinate\Box;
+use Imagine\Coordinate\BoxInterface;
 
 class CenterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Imagine\Coordinate\Coordinate::getX
-     * @covers Imagine\Coordinate\Coordinate::getY
+     * @covers Imagine\Coordinate\Point::getX
+     * @covers Imagine\Coordinate\Point::getY
      *
      * @dataProvider getSizesAndCoordinates
      *
-     * @param SizeInterface       $box
-     * @param CoordinateInterface $expected
+     * @param BoxInterface       $box
+     * @param PointInterface $expected
      */
-    public function testShouldGetCenterCoordinates(SizeInterface $box, CoordinateInterface $expected)
+    public function testShouldGetCenterCoordinates(BoxInterface $box, PointInterface $expected)
     {
         $point = new Center($box);
 
@@ -43,9 +43,9 @@ class CenterTest extends \PHPUnit_Framework_TestCase
     public function getSizesAndCoordinates()
     {
         return array(
-            array(new Size(10, 15), new Coordinate(5, 8)),
-            array(new Size(40, 23), new Coordinate(20, 12)),
-            array(new Size(14, 8), new Coordinate(7, 4)),
+            array(new Box(10, 15), new Point(5, 8)),
+            array(new Box(40, 23), new Point(20, 12)),
+            array(new Box(14, 8), new Point(7, 4)),
         );
     }
 }

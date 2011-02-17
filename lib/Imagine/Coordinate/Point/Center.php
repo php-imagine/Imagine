@@ -9,31 +9,31 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Coordinate\Coordinate;
+namespace Imagine\Coordinate\Point;
 
-use Imagine\Coordinate\CoordinateInterface;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\PointInterface;
+use Imagine\Coordinate\BoxInterface;
 
-final class Center implements CoordinateInterface
+final class Center implements PointInterface
 {
     /**
-     * @var SizeInterface
+     * @var BoxInterface
      */
     private $box;
 
     /**
      * Constructs coordinate with size instantce, it needs to be relative to
      *
-     * @param SizeInterface $size
+     * @param BoxInterface $size
      */
-    public function __construct(SizeInterface $box)
+    public function __construct(BoxInterface $box)
     {
         $this->box = $box;
     }
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.CoordinateInterface::getX()
+     * @see Imagine\Coordinate.PointInterface::getX()
      */
     public function getX()
     {
@@ -42,7 +42,7 @@ final class Center implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.CoordinateInterface::getY()
+     * @see Imagine\Coordinate.PointInterface::getY()
      */
     public function getY()
     {
@@ -51,9 +51,9 @@ final class Center implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.CoordinateInterface::in()
+     * @see Imagine\Coordinate.PointInterface::in()
      */
-    public function in(SizeInterface $box)
+    public function in(BoxInterface $box)
     {
         return $this->getX() < $box->getWidth() && $this->getY() < $box->getHeight();
     }

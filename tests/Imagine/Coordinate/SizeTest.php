@@ -14,8 +14,8 @@ namespace Imagine\Coordinate;
 class SizeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Imagine\Coordinate\Size::getWidth
-     * @covers Imagine\Coordinate\Size::getHeight
+     * @covers Imagine\Coordinate\Box::getWidth
+     * @covers Imagine\Coordinate\Box::getHeight
      *
      * @dataProvider getSizes
      *
@@ -24,7 +24,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldAssignWidthAndHeight($width, $height)
     {
-        $size = new Size($width, $height);
+        $size = new Box($width, $height);
 
         $this->assertEquals($width, $size->getWidth());
         $this->assertEquals($height, $size->getHeight());
@@ -45,7 +45,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Coordinate\Size::__construct
+     * @covers Imagine\Coordinate\Box::__construct
      *
      * @expectedException Imagine\Exception\InvalidArgumentException
      *
@@ -56,7 +56,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldThrowExceptionOnInvalieSize($width, $height)
     {
-        new Size($width, $height);
+        new Box($width, $height);
     }
 
     /**
@@ -75,19 +75,19 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Coordinate\Size::contains
+     * @covers Imagine\Coordinate\Box::contains
      *
      * @dataProvider getSizeBoxStartAndExpected
      *
-     * @param SizeInterface       $size
-     * @param SizeInterface       $box
-     * @param CoordinateInterface $start
+     * @param BoxInterface       $size
+     * @param BoxInterface       $box
+     * @param PointInterface $start
      * @param Boolean             $expected
      */
     public function testShouldDetermineIfASizeContainsABoxAtAStartPosition(
-        SizeInterface       $size,
-        SizeInterface       $box,
-        CoordinateInterface $start,
+        BoxInterface       $size,
+        BoxInterface       $box,
+        PointInterface $start,
         $expected
     ) {
         $this->assertEquals($expected, $size->contains($box, $start));
@@ -101,11 +101,11 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     public function getSizeBoxStartAndExpected()
     {
         return array(
-            array(new Size(50, 50), new Size(30, 30), new Coordinate(0, 0), true),
-            array(new Size(50, 50), new Size(30, 30), new Coordinate(20, 20), true),
-            array(new Size(50, 50), new Size(30, 30), new Coordinate(21, 21), false),
-            array(new Size(50, 50), new Size(30, 30), new Coordinate(21, 20), false),
-            array(new Size(50, 50), new Size(30, 30), new Coordinate(20, 22), false),
+            array(new Box(50, 50), new Box(30, 30), new Point(0, 0), true),
+            array(new Box(50, 50), new Box(30, 30), new Point(20, 20), true),
+            array(new Box(50, 50), new Box(30, 30), new Point(21, 21), false),
+            array(new Box(50, 50), new Box(30, 30), new Point(21, 20), false),
+            array(new Box(50, 50), new Box(30, 30), new Point(20, 22), false),
         );
     }
 }

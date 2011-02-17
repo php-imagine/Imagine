@@ -12,7 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Color;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\ImageInterface;
@@ -52,7 +52,7 @@ final class Imagine implements ImagineInterface
      * (non-PHPdoc)
      * @see Imagine.ImagineInterface::create()
      */
-    public function create(SizeInterface $size, Color $color = null)
+    public function create(BoxInterface $size, Color $color = null)
     {
         $width  = $size->getWidth();
         $height = $size->getHeight();

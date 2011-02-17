@@ -12,9 +12,9 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Color;
-use Imagine\Coordinate\Coordinate;
-use Imagine\Coordinate\CoordinateInterface;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\Point;
+use Imagine\Coordinate\PointInterface;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -32,7 +32,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::arc()
      */
-    public function arc(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color)
+    public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color)
     {
         $x      = $center->getX();
         $y      = $center->getY();
@@ -73,7 +73,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::chord()
      */
-    public function chord(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false)
+    public function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false)
     {
         $x      = $center->getX();
         $y      = $center->getY();
@@ -95,7 +95,7 @@ final class Drawer implements DrawerInterface
                 $x2 = round($x + $width / 2 * cos(deg2rad($end)));
                 $y2 = round($y + $height / 2 * sin(deg2rad($end)));
 
-                $this->line(new Coordinate($x1, $y1), new Coordinate($x2, $y2), $color);
+                $this->line(new Point($x1, $y1), new Point($x2, $y2), $color);
 
                 $chord->setfillcolor('transparent');
             }
@@ -120,7 +120,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::ellipse()
      */
-    public function ellipse(CoordinateInterface $center, SizeInterface $size, Color $color, $fill = false)
+    public function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false)
     {
         $width  = $size->getWidth();
         $height = $size->getHeight();
@@ -164,7 +164,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::line()
      */
-    public function line(CoordinateInterface $start, CoordinateInterface $end, Color $color)
+    public function line(PointInterface $start, PointInterface $end, Color $color)
     {
         try {
             $pixel = $this->getColor($color);
@@ -197,7 +197,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::pieSlice()
      */
-    public function pieSlice(CoordinateInterface $center, SizeInterface $size, $start, $end, Color $color, $fill = false)
+    public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false)
     {
         $width  = $size->getWidth();
         $height = $size->getHeight();
@@ -212,16 +212,16 @@ final class Drawer implements DrawerInterface
             $this->polygon(
                 array(
                     $center,
-                    new Coordinate($x1, $y1),
-                    new Coordinate($x2, $y2),
+                    new Point($x1, $y1),
+                    new Point($x2, $y2),
                 ),
                 $color,
                 true
             );
         } else {
             $this->arc($center, $size, $start, $end, $color);
-            $this->line($center, new Coordinate($x1, $y1), $color);
-            $this->line($center, new Coordinate($x2, $y2), $color);
+            $this->line($center, new Point($x1, $y1), $color);
+            $this->line($center, new Point($x2, $y2), $color);
         }
 
         return $this;
@@ -231,7 +231,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw.DrawerInterface::dot()
      */
-    public function dot(CoordinateInterface $position, Color $color)
+    public function dot(PointInterface $position, Color $color)
     {
         $x = $position->getX();
         $y = $position->getY();
@@ -270,7 +270,7 @@ final class Drawer implements DrawerInterface
             ));
         }
 
-        $points = array_map(function(CoordinateInterface $p)
+        $points = array_map(function(PointInterface $p)
         {
             return array('x' => $p->getX(), 'y' => $p->getY());
         }, $coordinates);

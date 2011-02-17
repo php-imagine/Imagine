@@ -13,7 +13,7 @@ namespace Imagine\Coordinate;
 
 use Imagine\Exception\InvalidArgumentException;
 
-final class Size implements SizeInterface
+final class Box implements BoxInterface
 {
     /**
      * @var integer
@@ -48,7 +48,7 @@ final class Size implements SizeInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.SizeInterface::getWidth()
+     * @see Imagine\Coordinate.BoxInterface::getWidth()
      */
     public function getWidth()
     {
@@ -57,7 +57,7 @@ final class Size implements SizeInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.SizeInterface::getHeight()
+     * @see Imagine\Coordinate.BoxInterface::getHeight()
      */
     public function getHeight()
     {
@@ -66,20 +66,20 @@ final class Size implements SizeInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.SizeInterface::scale()
+     * @see Imagine\Coordinate.BoxInterface::scale()
      */
     public function scale($ratio)
     {
-        return new Size($ratio * $this->width, $ratio * $this->height);
+        return new Box($ratio * $this->width, $ratio * $this->height);
     }
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.SizeInterface::contains()
+     * @see Imagine\Coordinate.BoxInterface::contains()
      */
-    public function contains(SizeInterface $box, CoordinateInterface $start = null)
+    public function contains(BoxInterface $box, PointInterface $start = null)
     {
-        $start = $start ? $start : new Coordinate(0, 0);
+        $start = $start ? $start : new Point(0, 0);
 
         return $start->in($this) &&
             $this->width >= $box->getWidth() + $start->getX() &&

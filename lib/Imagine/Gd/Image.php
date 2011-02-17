@@ -11,13 +11,13 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Coordinate\Coordinate\Center;
+use Imagine\Coordinate\Point\Center;
 
 use Imagine\Color;
-use Imagine\Coordinate\Coordinate;
-use Imagine\Coordinate\CoordinateInterface;
-use Imagine\Coordinate\Size;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\Point;
+use Imagine\Coordinate\PointInterface;
+use Imagine\Coordinate\Box;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -79,7 +79,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::crop()
      */
-    final public function crop(CoordinateInterface $start, SizeInterface $size)
+    final public function crop(PointInterface $start, BoxInterface $size)
     {
         if (!$start->in($size)) {
             throw new OutOfBoundsException('Crop coordinates must start at '.
@@ -114,7 +114,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::paste()
      */
-    final public function paste(ImageInterface $image, CoordinateInterface $start)
+    final public function paste(ImageInterface $image, PointInterface $start)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Gd\Image can only '.
@@ -141,7 +141,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::resize()
      */
-    final public function resize(SizeInterface $size)
+    final public function resize(BoxInterface $size)
     {
         $width  = $size->getWidth();
         $height = $size->getHeight();
@@ -268,7 +268,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::thumbnail()
      */
-    public function thumbnail(SizeInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
@@ -295,7 +295,7 @@ final class Image implements ImageInterface
         $thumbnailSize = $thumbnail->getSize();
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $thumbnail->crop(new Coordinate(
+            $thumbnail->crop(new Point(
                 round(($thumbnailSize->getWidth() - $width) / 2),
                 round(($thumbnailSize->getHeight() - $height) / 2)
             ), $size);
@@ -319,7 +319,7 @@ final class Image implements ImageInterface
      */
     public function getSize()
     {
-        return new Size(imagesx($this->resource), imagesy($this->resource));
+        return new Box(imagesx($this->resource), imagesy($this->resource));
     }
 
     /**

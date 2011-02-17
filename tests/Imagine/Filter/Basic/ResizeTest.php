@@ -11,8 +11,8 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Coordinate\Size;
-use Imagine\Coordinate\SizeInterface;
+use Imagine\Coordinate\Box;
+use Imagine\Coordinate\BoxInterface;
 use Imagine\Filter\FilterTestCase;
 
 class ResizeTest extends FilterTestCase
@@ -22,9 +22,9 @@ class ResizeTest extends FilterTestCase
      *
      * @dataProvider getDataSet
      *
-     * @param SizeInterface $size
+     * @param BoxInterface $size
      */
-    public function testShouldResizeImageAndReturnResult(SizeInterface $size)
+    public function testShouldResizeImageAndReturnResult(BoxInterface $size)
     {
         $image = $this->getImage();
 
@@ -46,10 +46,10 @@ class ResizeTest extends FilterTestCase
     public function getDataSet()
     {
         return array(
-            array(new Size(50, 15)),
-            array(new Size(300, 25)),
-            array(new Size(123, 23)),
-            array(new Size(45, 23))
+            array(new Box(50, 15)),
+            array(new Box(300, 25)),
+            array(new Box(123, 23)),
+            array(new Box(45, 23))
         );
     }
 }
