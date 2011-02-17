@@ -17,22 +17,21 @@ Depending on the chosen Image implementation, you may need one of the following:
 
 ##Basic Principles##
 
-The main premise of Imagine is to provide all the necessary low-level methods to bring all native PHP image processing libraries to the same intuitive OO API.
+The main purpose of Imagine is to provide all the necessary functionality to bring all native low level image processing libraries in PHP to the same simple and intuitive OO API.
 
-For that, several things are necessary:
+Several things are necessary to accomplish that:
 
 * Image manipulation tools, such as resize, crop, etc.
-* Drawing api - to create basic shapes and advanced charts, write text on the image
-* Masking functionality - ability to apply black&white and grayscale images as masks, leadin to semi-transparency (in case of grayscale) of the parent image or absolute transparency regions (in cas of black&white)
+* Drawing API - to create basic shapes and advanced charts, write text on the image
+* Masking functionality - ability to apply black&white or grayscale images as masks, leading to semi-transparency or absolute transparency of the image the mask is being applied to
 
-The above tools should be the basic foundation for a more powerful set of tools or how we call them in Imagine - ``Filters``.
+The above tools should be the basic foundation for a more powerful set of tools that are called ``Filters`` in Imagine.
 
 Some of the ideas for upcoming filters:
 
-* Charting and graphing filters (pie and bar charts, linear graphs with annotations)
-* Reflection - as simple as flipping an image vertically and applying grayscale gradient image as a mask, and pasting both onto a canvas of twice the height of the original image
-* Rounded corners - can be easily done by using drawing api to create a black rectangle with elliptical corners, and applying it as a mask to the desired image
-* ideas welcome...
+* Charting and graphing filters - pie and bar charts, linear graphs with annotations
+* Reflection - apple style
+* Rounded corners - web 2.0
 
 ## Documentation ##
 
