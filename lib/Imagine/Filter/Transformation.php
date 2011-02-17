@@ -11,6 +11,10 @@
 
 namespace Imagine\Filter;
 
+use Imagine\Cartesian\CoordinateInterface;
+
+use Imagine\Cartesian\SizeInterface;
+
 use Imagine\Filter\Basic\Thumbnail;
 
 use Imagine\Color;
@@ -29,18 +33,21 @@ use Imagine\Filter\Basic\Show;
 
 final class Transformation implements FilterInterface
 {
+    /**
+     * @var array
+     */
     private $filters = array();
 
     /**
      * Applies a given FilterInterface onto given ImageInterface and returns
      * modified ImageInterface
      *
-     * @param FilterInterface $filter
-     * @param ImageInterface  $image
+     * @param Imagine\Filter\FilterInterface $filter
+     * @param Imagine\ImageInterface         $image
      *
-     * @return ImageInterface
+     * @return Imagine\ImageInterface
      */
-    public function applyFilter(FilterInterface $filter, ImageInterface $image)
+    public function applyFilter(ImageInterface $image, FilterInterface $filter)
     {
         return $filter->apply($image);
     }
@@ -57,7 +64,7 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a copy transformation into the current transformations queue
      *
-     * @return Transformation
+     * @return Imagine\Filter\Transformation
      */
     public function copy()
     {
@@ -67,18 +74,21 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a crop transformation into the current transformations queue
      *
-     * @return Transformation
+     * @param Imagine\Cartesian\CoordinateInterface $start
+     * @param Imagine\Cartesian\SizeInterface       $size
+     *
+     * @return Imagine\Filter\Transformation
      */
-    public function crop(Point $start, $width, $height)
+    public function crop(CoordinateInterface $start, SizeInterface $size)
     {
-        return $this->add(new Crop($start, $width, $height));
+        return $this->add(new Crop($start, $size));
     }
 
     /**
      * Stacks a horizontal flip transformation into the current transformations
      * queue
      *
-     * @return Transformation
+     * @return Imagine\Filter\Transformation
      */
     public function flipHorizontally()
     {
@@ -89,7 +99,7 @@ final class Transformation implements FilterInterface
      * Stacks a vertical flip transformation into the current transformations
      * queue
      *
-     * @return Transformation
+     * @return Imagine\Filter\Transformation
      */
     public function flipVertically()
     {
@@ -99,10 +109,10 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a paste transformation into the current transformations queue
      *
-     * @param ImageInterface $image
-     * @param Point          $start
+     * @param Imagine\ImageInterface                $image
+     * @param Imagine\Cartesian\CoordinateInterface $start
      *
-     * @return Transformation
+     * @return Imagine\Filter\Transformation
      */
     public function paste(ImageInterface $image, Point $start)
     {
@@ -112,23 +122,22 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a resize transformation into the current transformations queue
      *
-     * @param integer width
-     * @param integer height
+     * @param Imagine\Cartesian\SizeInterface
      *
-     * @return Transformation
+     * @return Imagine\Filter\Transformation
      */
-    public function resize($width, $height)
+    public function resize(SizeInterface $size)
     {
-        return $this->add(new Resize($width, $height));
+        return $this->add(new Resize($size));
     }
 
     /**
      * Stacks a rotane transformation into the current transformations queue
      *
-     * @param integer $angle
-     * @param Color   $background
+     * @param integer         $angle
+     * @param Imagine\Color   $background
      *
-     * @return Transformation
+     * @return Imagine\Filter\Transformation
      */
     public function rotate($angle, Color $background = null)
     {
@@ -141,7 +150,7 @@ final class Transformation implements FilterInterface
      * @param string $path
      * @param array  $options
      *
-     * @return Transformation
+     * @return Imagine\Filter\Transformation
      */
     public function save($path, array $options = array())
     {
@@ -154,7 +163,7 @@ final class Transformation implements FilterInterface
      * @param string $path
      * @param array  $options
      *
-     * @return Transformation
+     * @return Imagine\Filter\Transformation
      */
     public function show($format, array $options = array())
     {
@@ -164,22 +173,23 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a thumbnail transformation into the current transformation queue
      *
-     * @param integer $width
-     * @param integer $height
-     * @param string  $mode
-     * @param Color   $background
+     * @param Imagine\Cartesian\SizeInterface $size
+     * @param string                          $mode
+     *
+     * @return Imagine\Filter\Transformation
      */
-    public function thumbnail($width, $height, $mode = ImageInterface::THUMBNAIL_INSET, Color $background = null)
+    public function thumbnail(SizeInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
-        return $this->add(new Thumbnail($width, $height, $mode, $background));
+        return $this->add(new Thumbnail($size, $mode));
     }
 
     /**
      * Registers a given FilterInterface in an internal array of filters for
      * later application to an instance of ImageInterface
      *
-     * @param FilterInterface $filter
-     * @return Transformation
+     * @param Imagine\Filter\FilterInterface $filter
+     *
+     * @return Imagine\Filter\Transformation
      */
     public function add(FilterInterface $filter)
     {

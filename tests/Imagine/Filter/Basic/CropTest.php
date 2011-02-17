@@ -15,8 +15,9 @@ use Imagine\Cartesian\Coordinate;
 use Imagine\Cartesian\CoordinateInterface;
 use Imagine\Cartesian\Size;
 use Imagine\Cartesian\SizeInterface;
+use Imagine\Filter\FilterTestCase;
 
-class CropTest extends BasicFilterTestCase
+class CropTest extends FilterTestCase
 {
     /**
      * @covers Imagine\Filter\Basic\Crop::apply

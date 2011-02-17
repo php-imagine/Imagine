@@ -11,7 +11,9 @@
 
 namespace Imagine\Filter\Basic;
 
-class ShowTest extends BasicFilterTestCase
+use Imagine\Filter\FilterTestCase;
+
+class ShowTest extends FilterTestCase
 {
     public function testShouldShowImageAndReturnResult()
     {

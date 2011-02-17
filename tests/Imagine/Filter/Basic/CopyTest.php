@@ -11,7 +11,9 @@
 
 namespace Imagine\Filter\Basic;
 
-class CopyTest extends BasicFilterTestCase
+use Imagine\Filter\FilterTestCase;
+
+class CopyTest extends FilterTestCase
 {
     public function testShouldCopyAndReturnResultingImage()
     {

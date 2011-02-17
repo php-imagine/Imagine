@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Filter\Basic;
+namespace Imagine\Filter;
 
-class BasicFilterTestCase extends \PHPUnit_Framework_TestCase
+abstract class FilterTestCase extends \PHPUnit_Framework_TestCase
 {
     protected function getImage()
     {

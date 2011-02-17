@@ -11,7 +11,9 @@
 
 namespace Imagine\Filter\Basic;
 
-class SaveTest extends BasicFilterTestCase
+use Imagine\Filter\FilterTestCase;
+
+class SaveTest extends FilterTestCase
 {
     public function testShouldSaveImageAndReturnResult()
     {

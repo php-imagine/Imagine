@@ -13,8 +13,9 @@ namespace Imagine\Filter\Basic;
 
 use Imagine\Cartesian\Size;
 use Imagine\Cartesian\SizeInterface;
+use Imagine\Filter\FilterTestCase;
 
-class ResizeTest extends BasicFilterTestCase
+class ResizeTest extends FilterTestCase
 {
     /**
      * @covers Imagine\Filter\Basic\Resize::apply
