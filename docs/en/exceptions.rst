@@ -27,7 +27,7 @@ This is too generic however and might not work for everyone.
 Exception classes
 =================
 
-In Imagine, each exception class is extending one of the SPL exception classes, so even if you simply handle SPL exception, Imagine should fit right in. For example ``Imagine\Exception\InvalidArgumentException`` class extends ``InvalidArgumentException``, letting you catch it as an SPL exception or buy catching its instance specifically
+In Imagine, each exception class is extending one of the SPL exception classes, so even if you simply handle SPL exception, Imagine should fit right in. For example ``Imagine\Exception\InvalidArgumentException`` class extends ``InvalidArgumentException``, letting you catch it as an SPL exception or by catching its instance specifically
 
 .. NOTE::
     This technique came from Zend Framework 2
