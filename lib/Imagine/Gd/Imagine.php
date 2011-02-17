@@ -12,7 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
-use Imagine\Coordinate\BoxInterface;
+use Imagine\BoxInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\ImageInterface;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Coordinate;
+namespace Imagine;
 
 use Imagine\Exception\InvalidArgumentException;
 
@@ -45,7 +45,7 @@ final class Point implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.PointInterface::getX()
+     * @see Imagine.PointInterface::getX()
      */
     public function getX()
     {
@@ -54,7 +54,7 @@ final class Point implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.PointInterface::getY()
+     * @see Imagine.PointInterface::getY()
      */
     public function getY()
     {
@@ -63,7 +63,7 @@ final class Point implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.PointInterface::in()
+     * @see Imagine.PointInterface::in()
      */
     public function in(BoxInterface $box)
     {

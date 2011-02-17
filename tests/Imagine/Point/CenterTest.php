@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Coordinate\Point;
+namespace Imagine\Point;
 
-use Imagine\Coordinate\Point;
-use Imagine\Coordinate\PointInterface;
-use Imagine\Coordinate\Box;
-use Imagine\Coordinate\BoxInterface;
+use Imagine\Point;
+use Imagine\PointInterface;
+use Imagine\Box;
+use Imagine\BoxInterface;
 
 class CenterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Imagine\Coordinate\Point::getX
-     * @covers Imagine\Coordinate\Point::getY
+     * @covers Imagine\Point::getX
+     * @covers Imagine\Point::getY
      *
      * @dataProvider getSizesAndCoordinates
      *

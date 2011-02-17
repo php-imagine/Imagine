@@ -12,8 +12,8 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
-use Imagine\Coordinate\PointInterface;
-use Imagine\Coordinate\BoxInterface;
+use Imagine\PointInterface;
+use Imagine\BoxInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;

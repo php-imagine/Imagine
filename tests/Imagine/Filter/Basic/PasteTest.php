@@ -11,7 +11,7 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Coordinate\Point;
+use Imagine\Point;
 use Imagine\Filter\FilterTestCase;
 
 class PasteTest extends FilterTestCase

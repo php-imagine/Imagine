@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Coordinate;
+namespace Imagine;
 
 use Imagine\Exception\InvalidArgumentException;
 
@@ -48,7 +48,7 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.BoxInterface::getWidth()
+     * @see Imagine.BoxInterface::getWidth()
      */
     public function getWidth()
     {
@@ -57,7 +57,7 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.BoxInterface::getHeight()
+     * @see Imagine.BoxInterface::getHeight()
      */
     public function getHeight()
     {
@@ -66,7 +66,7 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.BoxInterface::scale()
+     * @see Imagine.BoxInterface::scale()
      */
     public function scale($ratio)
     {
@@ -75,7 +75,7 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.BoxInterface::contains()
+     * @see Imagine.BoxInterface::contains()
      */
     public function contains(BoxInterface $box, PointInterface $start = null)
     {

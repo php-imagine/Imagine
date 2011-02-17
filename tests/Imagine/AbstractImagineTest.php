@@ -11,7 +11,7 @@
 
 namespace Imagine;
 
-use Imagine\Coordinate\Box;
+use Imagine\Box;
 
 abstract class AbstractImagineTest extends \PHPUnit_Framework_TestCase
 {

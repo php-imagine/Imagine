@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Coordinate\Point;
+namespace Imagine\Point;
 
-use Imagine\Coordinate\PointInterface;
-use Imagine\Coordinate\BoxInterface;
+use Imagine\PointInterface;
+use Imagine\BoxInterface;
 
 final class Center implements PointInterface
 {
@@ -33,7 +33,7 @@ final class Center implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.PointInterface::getX()
+     * @see Imagine.PointInterface::getX()
      */
     public function getX()
     {
@@ -42,7 +42,7 @@ final class Center implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.PointInterface::getY()
+     * @see Imagine.PointInterface::getY()
      */
     public function getY()
     {
@@ -51,7 +51,7 @@ final class Center implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Coordinate.PointInterface::in()
+     * @see Imagine.PointInterface::in()
      */
     public function in(BoxInterface $box)
     {

@@ -11,7 +11,7 @@
 
 namespace Imagine;
 
-use Imagine\Coordinate\BoxInterface;
+use Imagine\BoxInterface;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\InvalidArgumentException;
 
@@ -20,7 +20,7 @@ interface ImagineInterface
     /**
      * Creates a new empty image with an optional background color
      *
-     * @param Imagine\Coordinate\BoxInterface $size
+     * @param Imagine\BoxInterface $size
      * @param Imagine\Color                    $color
      *
      * @throws Imagine\Exception\InvalidArgumentException

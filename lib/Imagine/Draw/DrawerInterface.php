@@ -11,8 +11,8 @@
 
 namespace Imagine\Draw;
 
-use Imagine\Coordinate\PointInterface;
-use Imagine\Coordinate\BoxInterface;
+use Imagine\PointInterface;
+use Imagine\BoxInterface;
 use Imagine\Color;
 use Imagine\Filter\FilterInterface;
 
@@ -22,8 +22,8 @@ interface DrawerInterface
      * Draws an arc on a starting at a given x, y coordinates under a given
      * start and end angles
      *
-     * @param Imagine\Coordinate\PointInterface $center
-     * @param Imagine\Coordinate\BoxInterface       $size
+     * @param Imagine\PointInterface $center
+     * @param Imagine\BoxInterface       $size
      * @param integer                               $start
      * @param integer                               $end
      * @param Imagine\Color                         $color
@@ -35,8 +35,8 @@ interface DrawerInterface
     /**
      * Same as arc, but also connects end points with a straight line
      *
-     * @param Imagine\Coordinate\PointInterface $center
-     * @param Imagine\Coordinate\BoxInterface       $size
+     * @param Imagine\PointInterface $center
+     * @param Imagine\BoxInterface       $size
      * @param integer                               $start
      * @param integer                               $end
      * @param Imagine\Color                         $color
@@ -50,8 +50,8 @@ interface DrawerInterface
      * Draws and ellipse with center at the given x, y coordinates, and given
      * width and height
      *
-     * @param Imagine\Coordinate\PointInterface $center
-     * @param Imagine\Coordinate\BoxInterface       $size
+     * @param Imagine\PointInterface $center
+     * @param Imagine\BoxInterface       $size
      * @param Imagine\Color                         $color
      * @param Boolean                               $fill
      *
@@ -62,8 +62,8 @@ interface DrawerInterface
     /**
      * Draws a line from x1, y1 to x2, y2 coordinates
      *
-     * @param Imagine\Coordinate\PointInterface $start
-     * @param Imagine\Coordinate\PointInterface $end
+     * @param Imagine\PointInterface $start
+     * @param Imagine\PointInterface $end
      * @param Imagine\Color                         $outline
      *
      * @return Imagine\Draw\DrawerInterface
@@ -73,8 +73,8 @@ interface DrawerInterface
     /**
      * Same as arc, but connects end points and the center
      *
-     * @param Imagine\Coordinate\PointInterface $center
-     * @param Imagine\Coordinate\BoxInterface       $size
+     * @param Imagine\PointInterface $center
+     * @param Imagine\BoxInterface       $size
      * @param integer                               $start
      * @param integer                               $end
      * @param Imagine\Color                         $color
@@ -88,7 +88,7 @@ interface DrawerInterface
      * Places a one pixel point at specific coordinates and fills it with
      * specified color
      *
-     * @param Imagine\Coordinate\PointInterface $position
+     * @param Imagine\PointInterface $position
      * @param Imagine\Color                         $color
      *
      * @return Imagine\Draw\DrawerInterface

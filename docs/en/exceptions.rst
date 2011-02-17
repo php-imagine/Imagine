@@ -16,7 +16,7 @@ Every exception class in Imagine implements ``Imagine\Exception\Exception`` inte
         $imagine = new Imagine\Gd\Imagine();
         
         $imagine->open('/path/to/image.jpg')
-            ->thumbnail(new Imagine\Coordinate\Box(50, 50))
+            ->thumbnail(new Imagine\Box(50, 50))
             ->save('/path/to/image/thumbnail.png');
     } catch (Imagine\Exception\Exception $e) {
         // handle the exception

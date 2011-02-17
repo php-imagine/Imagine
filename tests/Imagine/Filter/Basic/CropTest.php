@@ -11,10 +11,10 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Coordinate\Point;
-use Imagine\Coordinate\PointInterface;
-use Imagine\Coordinate\Box;
-use Imagine\Coordinate\BoxInterface;
+use Imagine\Point;
+use Imagine\PointInterface;
+use Imagine\Box;
+use Imagine\BoxInterface;
 use Imagine\Filter\FilterTestCase;
 
 class CropTest extends FilterTestCase

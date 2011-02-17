@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Coordinate;
+namespace Imagine;
 
 class PointTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @covers Imagine\Coordinate\Point::getX
-	 * @covers Imagine\Coordinate\Point::getY
-	 * @covers Imagine\Coordinate\Point::in
+	 * @covers Imagine\Point::getX
+	 * @covers Imagine\Point::getY
+	 * @covers Imagine\Point::in
 	 *
 	 * @dataProvider getCoordinates
 	 *
@@ -52,7 +52,7 @@ class PointTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Coordinate\Point::__construct
+     * @covers Imagine\Point::__construct
      *
      * @expectedException Imagine\Exception\InvalidArgumentException
      *

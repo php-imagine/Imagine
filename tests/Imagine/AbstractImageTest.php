@@ -11,9 +11,9 @@
 
 namespace Imagine;
 
-use Imagine\Coordinate\Point;
-use Imagine\Coordinate\Point\Center;
-use Imagine\Coordinate\Box;
+use Imagine\Point;
+use Imagine\Point\Center;
+use Imagine\Box;
 
 abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 {

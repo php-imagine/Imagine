@@ -31,8 +31,8 @@ Now that you've opened an image, you can perform manipulations on it:
 ::
 
     <?php
-    use Imagine\Coordinate\Box;
-    use Imagine\Coordinate\Point;
+    use Imagine\Box;
+    use Imagine\Point;
     
     $image->resize(new Box(15, 25))
         ->rotate(45)
@@ -51,14 +51,14 @@ Imagine also lets you create new, empty images. The following example creates an
 ::
 
     <?php
-    $image = $imagine->create(new Imagine\Coordinate\Box(400, 300));
+    $image = $imagine->create(new Imagine\Box(400, 300));
 
 You can optionally specify the fill color for the new image, which defaults to opaque white. The following example creates a new image with a fully-transparent black background:
 
 ::
 
     <?php
-    $image = $imagine->create(new Imagine\Coordinate\Box(400, 300), new Imagine\Color('000', 100));
+    $image = $imagine->create(new Imagine\Box(400, 300), new Imagine\Color('000', 100));
 
 Color Class
 +++++++++++
@@ -96,10 +96,10 @@ Here is how we would approach this problem with Imagine.
 ::
 
     <?php
-    use Imagine\Coordinate;
+    use Imagine;
     
     // make an empty image (canvas) 120x160px
-    $collage = $imagine->create(new Imagine\Coordinate\Box(120, 160));
+    $collage = $imagine->create(new Imagine\Box(120, 160));
     
     // starting coordinates (in pixels) for inserting the first image
     $x = 0;
@@ -110,7 +110,7 @@ Here is how we would approach this problem with Imagine.
         $photo = $imagine->open($path);
         
         // paste photo at current position
-        $collage->paste($photo, new Imagine\Coordinate\Point($x, $y));
+        $collage->paste($photo, new Imagine\Point($x, $y));
         
         // move position by 30px to the right
         $x += 30;

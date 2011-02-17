@@ -11,9 +11,9 @@
 
 namespace Imagine\Filter;
 
-use Imagine\Coordinate\PointInterface;
+use Imagine\PointInterface;
 
-use Imagine\Coordinate\BoxInterface;
+use Imagine\BoxInterface;
 
 use Imagine\Filter\Basic\Thumbnail;
 
@@ -78,8 +78,8 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a crop transformation into the current transformations queue
      *
-     * @param Imagine\Coordinate\PointInterface $start
-     * @param Imagine\Coordinate\BoxInterface       $size
+     * @param Imagine\PointInterface $start
+     * @param Imagine\BoxInterface       $size
      *
      * @return Imagine\Filter\Transformation
      */
@@ -114,7 +114,7 @@ final class Transformation implements FilterInterface
      * Stacks a paste transformation into the current transformations queue
      *
      * @param Imagine\ImageInterface                $image
-     * @param Imagine\Coordinate\PointInterface $start
+     * @param Imagine\PointInterface $start
      *
      * @return Imagine\Filter\Transformation
      */
@@ -126,7 +126,7 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a resize transformation into the current transformations queue
      *
-     * @param Imagine\Coordinate\BoxInterface
+     * @param Imagine\BoxInterface
      *
      * @return Imagine\Filter\Transformation
      */
@@ -177,7 +177,7 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a thumbnail transformation into the current transformation queue
      *
-     * @param Imagine\Coordinate\BoxInterface $size
+     * @param Imagine\BoxInterface $size
      * @param string                          $mode
      *
      * @return Imagine\Filter\Transformation

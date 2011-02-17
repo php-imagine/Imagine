@@ -12,7 +12,7 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\Color;
-use Imagine\Coordinate\BoxInterface;
+use Imagine\BoxInterface;
 use Imagine\ImageInterface;
 use Imagine\Filter\FilterInterface;
 

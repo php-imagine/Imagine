@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Coordinate;
+namespace Imagine;
 
 class SizeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Imagine\Coordinate\Box::getWidth
-     * @covers Imagine\Coordinate\Box::getHeight
+     * @covers Imagine\Box::getWidth
+     * @covers Imagine\Box::getHeight
      *
      * @dataProvider getSizes
      *
@@ -45,7 +45,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Coordinate\Box::__construct
+     * @covers Imagine\Box::__construct
      *
      * @expectedException Imagine\Exception\InvalidArgumentException
      *
@@ -75,7 +75,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Coordinate\Box::contains
+     * @covers Imagine\Box::contains
      *
      * @dataProvider getSizeBoxStartAndExpected
      *

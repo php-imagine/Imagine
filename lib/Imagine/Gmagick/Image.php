@@ -12,9 +12,9 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Color;
-use Imagine\Coordinate\PointInterface;
-use Imagine\Coordinate\Box;
-use Imagine\Coordinate\BoxInterface;
+use Imagine\PointInterface;
+use Imagine\Box;
+use Imagine\BoxInterface;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
