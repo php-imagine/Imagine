@@ -33,8 +33,9 @@ class Imagine implements ImagineInterface
     public function open($path)
     {
         if (!is_file($path)) {
-            throw new InvalidArgumentException(sprintf('File %s doesn\'t '.
-                'exist', $path));
+            throw new InvalidArgumentException(sprintf(
+                'File %s doesn\'t exist', $path
+            ));
         }
 
         return new Image(new \Gmagick($path), $this);
@@ -55,8 +56,6 @@ class Imagine implements ImagineInterface
         if ($color->getAlpha() > 0) {
             // TODO: implement support for transparent background
             throw new RuntimeException('alpha transparency not implemented');
-            $opacity = number_format(abs(round($color->getAlpha() / 100, 1)), 1);
-            $pixel->setcolorvalue(\Gmagick::COLOR_OPACITY, $opacity);
         }
 
         $gmagick->newimage($width, $height, $pixel->getcolor(false));

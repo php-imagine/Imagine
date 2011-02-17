@@ -103,24 +103,27 @@ final class Color
     private function setColor($color)
     {
         if (!is_string($color) && !is_array($color)) {
-            throw new InvalidArgumentException(sprintf('Color must be '.
-                'specified as a hexadecimal string or array, %s given',
-                gettype($color)));
+            throw new InvalidArgumentException(sprintf(
+                'Color must be specified as a hexadecimal string or array, '.
+                '%s given', gettype($color)
+            ));
         }
         if (is_array($color) && count($color) !== 3) {
-            throw new InvalidArgumentException('Color argument if array, must '.
-                'look like array(R, G, B), where R, G, B are the integer '.
-                'values between 0 and 255 for red, green and blue color '.
-                'indexes accordingly');
+            throw new InvalidArgumentException(
+                'Color argument if array, must look like array(R, G, B), '.
+                'where R, G, B are the integer values between 0 and 255 for '.
+                'red, green and blue color indexes accordingly'
+            );
         }
 
         if (is_string($color)) {
             $color = ltrim($color, '#');
 
             if (strlen($color) !== 3 && strlen($color) !== 6) {
-                throw new InvalidArgumentException(sprintf('Color must be a '.
-                    'hex value in regular (6 characters) or short (3 '.
-                    'charatcters) notation, "%s" given', $color));
+                throw new InvalidArgumentException(sprintf(
+                    'Color must be a hex value in regular (6 characters) or '.
+                    'short (3 charatcters) notation, "%s" given', $color
+                ));
             }
 
             if (strlen($color) === 3) {

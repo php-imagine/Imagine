@@ -34,11 +34,18 @@ final class Imagine implements ImagineInterface
     public function open($path)
     {
         if (!is_file($path)) {
-            throw new InvalidArgumentException(sprintf('File %s doesn\'t '.
-                'exist', $path));
+            throw new InvalidArgumentException(sprintf(
+                'File %s doesn\'t exist', $path
+            ));
         }
 
-        return new Image(new \Imagick($path), $this);
+        try {
+            return new Image(new \Imagick($path), $this);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                sprintf('Could not open path "%s"', $path), $e->getCode(), $e
+            );
+        }
     }
 
     /**
@@ -52,18 +59,24 @@ final class Imagine implements ImagineInterface
 
         $color = null !== $color ? $color : new Color('fff');
 
-        $pixel = new \ImagickPixel((string) $color);
-        $pixel->setColorValue(
-            \Imagick::COLOR_OPACITY,
-            number_format(abs(round($color->getAlpha() / 100, 1)), 1)
-        );
+        try {
+            $pixel = new \ImagickPixel((string) $color);
+            $pixel->setColorValue(
+                \Imagick::COLOR_OPACITY,
+                number_format(abs(round($color->getAlpha() / 100, 1)), 1)
+            );
 
-        $imagick = new \Imagick();
-        $imagick->newImage($width, $height, $pixel);
+            $imagick = new \Imagick();
+            $imagick->newImage($width, $height, $pixel);
 
-        $pixel->clear();
-        $pixel->destroy();
+            $pixel->clear();
+            $pixel->destroy();
 
-        return new Image($imagick, $this);
+            return new Image($imagick, $this);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Could not create empty image', $e->getCode(), $e
+            );
+        }
     }
 }

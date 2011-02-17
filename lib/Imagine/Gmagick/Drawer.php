@@ -46,7 +46,14 @@ final class Drawer implements DrawerInterface
             $arc->setstrokecolor($pixel);
             $arc->setstrokewidth(1);
             $arc->setfillcolor('transparent');
-            $arc->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+            $arc->arc(
+                $x - $width / 2,
+                $y - $height / 2,
+                $x + $width / 2,
+                $y + $height / 2,
+                $start,
+                $end
+            );
 
             $this->gmagick->drawImage($arc);
 
@@ -131,7 +138,13 @@ final class Drawer implements DrawerInterface
                 $ellipse->setfillcolor('transparent');
             }
 
-            $ellipse->ellipse($center->getX(), $center->getY(), $width / 2, $height / 2, 0, 360);
+            $ellipse->ellipse(
+                $center->getX(),
+                $center->getY(),
+                $width / 2,
+                $height / 2,
+                0, 360
+            );
 
             $this->gmagick->drawImage($ellipse);
 
@@ -159,7 +172,12 @@ final class Drawer implements DrawerInterface
 
             $line->setstrokecolor($pixel);
             $line->setstrokewidth(1);
-            $line->line($start->getX(), $start->getY(), $end->getX(), $end->getY());
+            $line->line(
+                $start->getX(),
+                $start->getY(),
+                $end->getX(),
+                $end->getY()
+            );
 
             $this->gmagick->drawImage($line);
 
@@ -191,11 +209,15 @@ final class Drawer implements DrawerInterface
 
         if ($fill) {
             $this->chord($center, $size, $start, $end, $color, true);
-            $this->polygon(array(
-                $center,
-                new Coordinate($x1, $y1),
-                new Coordinate($x2, $y2),
-            ), $color, true);
+            $this->polygon(
+                array(
+                    $center,
+                    new Coordinate($x1, $y1),
+                    new Coordinate($x2, $y2),
+                ),
+                $color,
+                true
+            );
         } else {
             $this->arc($center, $size, $start, $end, $color);
             $this->line($center, new Coordinate($x1, $y1), $color);
@@ -242,8 +264,10 @@ final class Drawer implements DrawerInterface
     public function polygon(array $coordinates, Color $color, $fill = false)
     {
         if (count($coordinates) < 3) {
-            throw new InvalidArgumentException(sprintf('Polygon must consist '.
-                'of at least 3 coordinates, %d given', count($coordinates)));
+            throw new InvalidArgumentException(sprintf(
+                'Polygon must consist of at least 3 coordinates, %d given',
+                count($coordinates)
+            ));
         }
 
         $points = array_map(function(CoordinateInterface $p)
@@ -291,10 +315,10 @@ final class Drawer implements DrawerInterface
     {
         $pixel = new \GmagickPixel((string) $color);
 
-        if ($color->getAlpha() > 0) {
-            $opacity = number_format(abs(round($color->getAlpha() / 100, 1)), 1);
-            $pixel->setColorValue(\Gmagick::COLOR_OPACITY, $opacity);
-        }
+        $pixel->setColorValue(
+            \Gmagick::COLOR_OPACITY,
+            number_format(abs(round($color->getAlpha() / 100, 1)), 1)
+        );
 
         return $pixel;
     }

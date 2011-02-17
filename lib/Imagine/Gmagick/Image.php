@@ -72,10 +72,11 @@ class Image implements ImageInterface
     public function crop(CoordinateInterface $start, SizeInterface $size)
     {
         if (!$start->in($size)) {
-            throw new OutOfBoundsException('Crop coordinates must start at '.
-                'minimum 0, 0 position from top left corner, crop height and '.
-                'width must be positive integers and must not exceed the '.
-                'current image borders');
+            throw new OutOfBoundsException(
+                'Crop coordinates must start at minimum 0, 0 position from '.
+                'top left corner, crop height and width must be positive '.
+                'integers and must not exceed the current image borders'
+            );
         }
 
         $width  = $size->getWidth();
@@ -86,7 +87,9 @@ class Image implements ImageInterface
         try {
             $this->gmagick->cropimage($width, $height, $x, $y);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Crop operation failed', $e->getCode(), $e);
+            throw new RuntimeException(
+                'Crop operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -101,8 +104,9 @@ class Image implements ImageInterface
         try {
             $this->gmagick->flopimage();
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Horizontal flip operation failed',
-                $e->getCode(), $e);
+            throw new RuntimeException(
+                'Horizontal flip operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -117,8 +121,9 @@ class Image implements ImageInterface
         try {
             $this->gmagick->flipimage();
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Vertical flip operation failed',
-                $e->getCode(), $e);
+            throw new RuntimeException(
+                'Vertical flip operation failed', $e->getCode(), $e
+            );
         }
 
         return $this;
@@ -134,9 +139,9 @@ class Image implements ImageInterface
         $y = $start->getY();
 
         if (!$image instanceof self) {
-            throw new InvalidArgumentException(sprintf('Gmagick\Image can '.
-                'only paste() Gmagick\Image instances, %s given',
-                get_class($image)
+            throw new InvalidArgumentException(sprintf(
+                'Gmagick\Image can only paste() Gmagick\Image instances, '.
+                '%s given', get_class($image)
             ));
         }
 
@@ -148,7 +153,11 @@ class Image implements ImageInterface
         }
 
         try {
-            $this->gmagick->compositeimage($image->gmagick, \Gmagick::COMPOSITE_DEFAULT, $x, $y);
+            $this->gmagick->compositeimage(
+                $image->gmagick,
+                \Gmagick::COMPOSITE_DEFAULT,
+                $x, $y
+            );
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Paste operation failed', $e->getCode(), $e
@@ -178,8 +187,12 @@ class Image implements ImageInterface
     public function resize(SizeInterface $size)
     {
         try {
-            $this->gmagick->resizeimage($size->getWidth(), $size->getHeight(),
-                \Gmagick::FILTER_UNDEFINED, 1);
+            $this->gmagick->resizeimage(
+                $size->getWidth(),
+                $size->getHeight(),
+                \Gmagick::FILTER_UNDEFINED,
+                1
+            );
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Resize operation failed', $e->getCode(), $e
@@ -197,7 +210,9 @@ class Image implements ImageInterface
     {
         try {
             $this->gmagick->rotateimage(
-                $this->getColor($background), $angle);
+                $this->getColor($background),
+                $angle
+            );
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Rotate operation failed', $e->getCode(), $e
@@ -254,7 +269,6 @@ class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-//        $inbound   = ($mode == ImageInterface::THUMBNAIL_INSET) ? true : false;
         $thumbnail = $this->copy();
 
         try {
@@ -311,10 +325,10 @@ class Image implements ImageInterface
     {
         $pixel = new \GmagickPixel((string) $color);
 
-        if ($color->getAlpha() > 0) {
-            $opacity = number_format(abs(round($color->getAlpha() / 100, 1)), 1);
-            $pixel->setColorValue(\Gmagick::COLOR_OPACITY, $opacity);
-        }
+        $pixel->setColorValue(
+            \Gmagick::COLOR_OPACITY,
+            number_format(abs(round($color->getAlpha() / 100, 1)), 1)
+        );
 
         return $pixel;
     }

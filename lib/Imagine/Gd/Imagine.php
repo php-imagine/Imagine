@@ -69,20 +69,23 @@ final class Imagine implements ImagineInterface
 
         if (false === imagealphablending($resource, false) ||
             false === imagesavealpha($resource, true)) {
-            throw new RuntimeException('Could not set alphablending and '.
-                'savealpha values');
+            throw new RuntimeException(
+                'Could not set alphablending and savealpha values'
+            );
         }
 
-        $color = imagecolorallocatealpha($resource, $color->getRed(),
-            $color->getGreen(), $color->getBlue(),
-            round(127 * $color->getAlpha() / 100));
+        $color = imagecolorallocatealpha(
+            $resource, $color->getRed(), $color->getGreen(), $color->getBlue(),
+            round(127 * $color->getAlpha() / 100)
+        );
 
         if (false === $color) {
             throw new RuntimeException('Unable to allocate color');
         }
 
-        if (false === imagefilledrectangle($resource, 0, 0, $width, $height,
-            $color)) {
+        if (false === imagefilledrectangle(
+            $resource, 0, 0, $width, $height, $color
+        )) {
             throw new RuntimeException('Could not set background color fill');
         }
 
@@ -96,8 +99,9 @@ final class Imagine implements ImagineInterface
     public function open($path)
     {
         if (!is_file($path)) {
-            throw new InvalidArgumentException(sprintf('File %s doesn\'t '.
-                'exist', $path));
+            throw new InvalidArgumentException(sprintf(
+                'File %s doesn\'t exist', $path
+            ));
         }
 
         $info = getimagesize($path);
@@ -111,22 +115,25 @@ final class Imagine implements ImagineInterface
         $format = $this->types[$type];
 
         if (!function_exists('imagecreatefrom'.$format)) {
-            throw new InvalidArgumentException('Invalid image format '.
-                'specified, only "gif", "jpeg", "png", "wbmp", "xbm" images '.
-                'are supported');
+            throw new InvalidArgumentException(
+                'Invalid image format specified, only "gif", "jpeg", "png", '.
+                '"wbmp", "xbm" images are supported'
+            );
         }
 
         $resource = call_user_func('imagecreatefrom'.$format, $path);
 
         if (false === $resource) {
-            throw new RuntimeException(sprintf('File "%s" could not be opened',
-                $path));
+            throw new RuntimeException(sprintf(
+                'File "%s" could not be opened', $path
+            ));
         }
 
         if (false === imagealphablending($resource, false) ||
             false === imagesavealpha($resource, true)) {
-            throw new RuntimeException('Could not set alphablending and '.
-                'savealpha values');
+            throw new RuntimeException(
+                'Could not set alphablending and savealpha values'
+            );
         }
 
         return new Image($resource, $this);

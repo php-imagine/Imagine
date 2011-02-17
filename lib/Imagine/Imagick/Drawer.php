@@ -135,7 +135,13 @@ final class Drawer implements DrawerInterface
                 $ellipse->setFillColor('transparent');
             }
 
-            $ellipse->ellipse($center->getX(), $center->getY(), $width / 2, $height / 2, 0, 360);
+            $ellipse->ellipse(
+                $center->getX(),
+                $center->getY(),
+                $width / 2,
+                $height / 2,
+                0, 360
+            );
 
             if (false === $this->imagick->drawImage($ellipse)) {
                 throw new RuntimeException('Ellipse operation failed');
@@ -167,7 +173,12 @@ final class Drawer implements DrawerInterface
 
             $line->setStrokeColor($pixel);
             $line->setStrokeWidth(1);
-            $line->line($start->getX(), $start->getY(), $end->getX(), $end->getY());
+            $line->line(
+                $start->getX(),
+                $start->getY(),
+                $end->getX(),
+                $end->getY()
+            );
 
             $this->imagick->drawImage($line);
 
@@ -201,11 +212,15 @@ final class Drawer implements DrawerInterface
 
         if ($fill) {
             $this->chord($center, $size, $start, $end, $color, true);
-            $this->polygon(array(
-                $center,
-                new Coordinate($x1, $y1),
-                new Coordinate($x2, $y2),
-            ), $color, true);
+            $this->polygon(
+                array(
+                    $center,
+                    new Coordinate($x1, $y1),
+                    new Coordinate($x2, $y2),
+                ),
+                $color,
+                true
+            );
         } else {
             $this->arc($center, $width, $height, $start, $end, $color);
             $this->line($center, new Coordinate($x1, $y1), $color);
@@ -254,14 +269,19 @@ final class Drawer implements DrawerInterface
     public function polygon(array $coordinates, Color $color, $fill = false)
     {
         if (count($coordinates) < 3) {
-            throw new InvalidArgumentException(sprintf('Polygon must consist '.
-                'of at least 3 coordinates, %d given', count($coordinates)));
+            throw new InvalidArgumentException(sprintf(
+                'Polygon must consist of at least 3 coordinates, %d given',
+                count($coordinates)
+            ));
         }
 
-        $points = array_map(function(CoordinateInterface $p)
-        {
-            return array('x' => $p->getX(), 'y' => $p->getY());
-        }, $coordinates);
+        $points = array_map(
+            function(CoordinateInterface $p)
+            {
+                return array('x' => $p->getX(), 'y' => $p->getY());
+            },
+            $coordinates
+        );
 
         try {
             $pixel   = $this->getColor($color);
