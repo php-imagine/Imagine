@@ -58,7 +58,11 @@ final class Transformation implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return array_reduce($this->filters, array($this, 'applyFilter'), $image);
+        return array_reduce(
+            $this->filters,
+            array($this, 'applyFilter'),
+            $image
+        );
     }
 
     /**

@@ -85,7 +85,9 @@ final class Color
     private function setAlpha($alpha)
     {
         if (!is_int($alpha) || $alpha < 0 || $alpha > 100) {
-            throw new InvalidArgumentException('Alpha must be an integer between 0 and 100');
+            throw new InvalidArgumentException(
+                'Alpha must be an integer between 0 and 100'
+            );
         }
 
         $this->alpha = $alpha;
@@ -127,7 +129,9 @@ final class Color
             }
 
             if (strlen($color) === 3) {
-                $color = $color[0].$color[0].$color[1].$color[1].$color[2].$color[2];
+                $color = $color[0].$color[0].
+                         $color[1].$color[1].
+                         $color[2].$color[2];
             }
 
             $color = array_map('hexdec', str_split($color, 2));

@@ -77,7 +77,7 @@ interface ImageInterface
      *
      * Returns source image
      *
-     * @param Imagine\ImageInterface                $image
+     * @param Imagine\ImageInterface                 $image
      * @param Imagine\Coordinate\CoordinateInterface $start
      *
      * @throws Imagine\Exception\InvalidArgumentException
@@ -138,7 +138,7 @@ interface ImageInterface
      * Returns it as a new image, doesn't modify the current image
      *
      * @param Imagine\Coordinate\SizeInterface $size
-     * @param string                          $mode
+     * @param string                           $mode
      *
      * @throws Imagine\Exception\RuntimeException
      *
