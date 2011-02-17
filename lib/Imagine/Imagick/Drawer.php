@@ -85,17 +85,29 @@ final class Drawer implements DrawerInterface
             if ($fill) {
                 $chord->setFillColor($pixel);
             } else {
-                $x1 = round($x + $width / 2 * cos(deg2rad($start)));
-                $y1 = round($y + $height / 2 * sin(deg2rad($start)));
-                $x2 = round($x + $width / 2 * cos(deg2rad($end)));
-                $y2 = round($y + $height / 2 * sin(deg2rad($end)));
-
-                $this->line(new Point($x1, $y1), new Point($x2, $y2), $color);
+                $this->line(
+                    new Point(
+                        round($x + $width / 2 * cos(deg2rad($start))),
+                        round($y + $height / 2 * sin(deg2rad($start)))
+                    ),
+                    new Point(
+                        round($x + $width / 2 * cos(deg2rad($end))),
+                        round($y + $height / 2 * sin(deg2rad($end)))
+                    ),
+                    $color
+                );
 
                 $chord->setFillColor('transparent');
             }
 
-            $chord->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+            $chord->arc(
+                $x - $width / 2,
+                $y - $height / 2,
+                $x + $width / 2,
+                $y + $height / 2,
+                $start,
+                $end
+            );
 
             $this->imagick->drawImage($chord);
 
