@@ -82,10 +82,11 @@ final class Image implements ImageInterface
     final public function crop(PointInterface $start, BoxInterface $size)
     {
         if (!$start->in($size)) {
-            throw new OutOfBoundsException('Crop coordinates must start at '.
-                'minimum 0, 0 position from top left corner, crop height and '.
-                'width must be positive integers and must not exceed the '.
-                'current image borders');
+            throw new OutOfBoundsException(
+                'Crop coordinates must start at minimum 0, 0 position from '.
+                'top  left corner, crop height and width must be positive '.
+                'integers and must not exceed the current image borders'
+            );
         }
 
         $width  = $size->getWidth();
@@ -117,8 +118,10 @@ final class Image implements ImageInterface
     final public function paste(ImageInterface $image, PointInterface $start)
     {
         if (!$image instanceof self) {
-            throw new InvalidArgumentException(sprintf('Gd\Image can only '.
-                'paste() Gd\Image instances, %s given', get_class($image)));
+            throw new InvalidArgumentException(sprintf(
+                'Gd\Image can only paste() Gd\Image instances, %s given',
+                get_class($image)
+            ));
         }
 
         $size = $image->getSize();
@@ -253,7 +256,7 @@ final class Image implements ImageInterface
         for ($i = 0; $i < $height; $i++) {
             if (false === imagecopymerge($dest, $this->resource, 0, $i,
                 0, ($height - 1) - $i, $width, 1, 100)) {
-                throw new RuntimeException('Vartical flip operation failed');
+                throw new RuntimeException('Vertical flip operation failed');
             }
         }
 

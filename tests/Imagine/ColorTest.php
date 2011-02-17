@@ -13,6 +13,13 @@ namespace Imagine;
 
 class ColorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @cover Imagine\Color::__construct
+     * @cover Imagine\Color::getRed
+     * @cover Imagine\Color::getGreen
+     * @cover Imagine\Color::getAlpha
+     * @cover Imagine\Color::__toString
+     */
     public function testShouldSetColorToWhite()
     {
         $color = new Color('fff');
@@ -79,6 +86,14 @@ class ColorTest extends \PHPUnit_Framework_TestCase
     public function testShouldThrowExceptionOnColorWithLessThanThreeCharacters()
     {
         new Color('ff');
+    }
+
+    /**
+     * @expectedException Imagine\Exception\InvalidArgumentException
+     */
+    public function testShouldThrowExceptionOnColorInvalidArgument()
+    {
+        new Color(new \stdClass);
     }
 
     public function testShortColorNotationAndLongNotationProducesTheSameColor()
