@@ -15,9 +15,6 @@ use Imagine\Box;
 
 abstract class AbstractImagineTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @covers Imagine\ImagineInterface::create()
-     */
     public function testShouldCreateEmptyImage()
     {
         $factory = $this->getImagine();
@@ -29,9 +26,6 @@ abstract class AbstractImagineTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(50, $size->getHeight());
     }
 
-    /**
-     * @covers Imagine\ImagineInterface::open()
-     */
     public function testShouldOpenAnImage()
     {
         $factory = $this->getImagine();

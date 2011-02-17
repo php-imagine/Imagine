@@ -17,14 +17,6 @@ use Imagine\Box;
 
 abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @covers Imagine\ImagineInterface::open
-     * @covers Imagine\ImageInterface::paste
-     * @covers Imagine\ImageInterface::copy
-     * @covers Imagine\ImageInterface::resize
-     * @covers Imagine\ImageInterface::flipVertically
-     * @covers Imagine\ImageInterface::save
-     */
     public function testRotate()
     {
         $factory = $this->getImagine();
@@ -51,11 +43,6 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/clone.jpg');
     }
 
-    /**
-     * @covers Imagine\ImagineInterface::open
-     * @covers Imagine\ImageInterface::thumbnail
-     * @covers Imagine\ImageInterface::save
-     */
     public function testThumbnailGeneration()
     {
         $factory = $this->getImagine();
@@ -83,12 +70,6 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/outbound.png');
     }
 
-    /**
-     * @covers Imagine\ImagineInterface::open
-     * @covers Imagine\ImageInterface::resize
-     * @covers Imagine\ImageInterface::flipHorizontally
-     * @covers Imagine\ImageInterface::save
-     */
     public function testCropResizeFlip()
     {
         $factory = $this->getImagine();
@@ -118,10 +99,6 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/flop.png');
     }
 
-    /**
-     * @covers Imagine\ImagineInterface::create
-     * @covers Imagine\ImageInterface::save
-     */
     public function testCreateAndSaveEmptyImage()
     {
         $factory = $this->getImagine();
