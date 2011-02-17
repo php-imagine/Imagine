@@ -35,4 +35,11 @@ interface PointInterface
      * @return Boolean
      */
     function in(BoxInterface $box);
+
+    /**
+     * Gets a string representation for the current point
+     *
+     * @return string
+     */
+    function __toString();
 }

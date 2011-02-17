@@ -11,7 +11,7 @@
 
 namespace Imagine;
 
-class SizeTest extends \PHPUnit_Framework_TestCase
+class BoxTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers Imagine\Box::getWidth

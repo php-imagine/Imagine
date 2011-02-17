@@ -19,13 +19,13 @@ use Imagine\BoxInterface;
 class CenterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Imagine\Point::getX
-     * @covers Imagine\Point::getY
+     * @covers Imagine\Point\Center::getX
+     * @covers Imagine\Point\Center::getY
      *
      * @dataProvider getSizesAndCoordinates
      *
-     * @param BoxInterface       $box
-     * @param PointInterface $expected
+     * @param Imagine\BoxInterface   $box
+     * @param Imagine\PointInterface $expected
      */
     public function testShouldGetCenterCoordinates(BoxInterface $box, PointInterface $expected)
     {
@@ -47,5 +47,13 @@ class CenterTest extends \PHPUnit_Framework_TestCase
             array(new Box(40, 23), new Point(20, 12)),
             array(new Box(14, 8), new Point(7, 4)),
         );
+    }
+
+    /**
+     * @covers Imagine\Point\Center::__toString
+     */
+    public function testToString()
+    {
+        $this->assertEquals('(50, 50)', (string) new Center(new Box(100, 100)));
     }
 }

@@ -78,4 +78,12 @@ class PointTest extends \PHPUnit_Framework_TestCase
             array(0, -1)
         );
     }
+
+    /**
+     * @covers Imagine\Point::__toString
+     */
+    public function testToString()
+    {
+        $this->assertEquals('(50, 50)', (string) new Point(50, 50));
+    }
 }

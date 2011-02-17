@@ -57,4 +57,13 @@ final class Center implements PointInterface
     {
         return $this->getX() < $box->getWidth() && $this->getY() < $box->getHeight();
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.PointInterface::__toString()
+     */
+    public function __toString()
+    {
+        return sprintf('(%d, %d)', $this->getX(), $this->getY());
+    }
 }

@@ -46,4 +46,11 @@ interface BoxInterface
      * @return Boolean
      */
     function contains(BoxInterface $box, PointInterface $start = null);
+
+    /**
+     * Returns a string representation of the current box
+     *
+     * @return string
+     */
+    function __toString();
 }

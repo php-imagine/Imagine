@@ -69,4 +69,13 @@ final class Point implements PointInterface
     {
         return $this->x < $box->getWidth() && $this->y < $box->getHeight();
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.PointInterface::__toString()
+     */
+    public function __toString()
+    {
+        return sprintf('(%d, %d)', $this->x, $this->y);
+    }
 }

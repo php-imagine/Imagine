@@ -85,4 +85,13 @@ final class Box implements BoxInterface
             $this->width >= $box->getWidth() + $start->getX() &&
             $this->height >= $box->getHeight() + $start->getY();
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.BoxInterface::__toString()
+     */
+    public function __toString()
+    {
+        return sprintf('%dx%d px', $this->width, $this->height);
+    }
 }
