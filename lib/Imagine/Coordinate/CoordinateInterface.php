@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Cartesian;
+namespace Imagine\Coordinate;
 
 interface CoordinateInterface
 {
@@ -30,7 +30,7 @@ interface CoordinateInterface
     /**
      * Checks if current coordinate is inside a given bo
      *
-     * @param Imagine\Cartesian\SizeInterface $box
+     * @param Imagine\Coordinate\SizeInterface $box
      *
      * @return Boolean
      */

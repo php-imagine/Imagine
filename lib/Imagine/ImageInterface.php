@@ -11,8 +11,8 @@
 
 namespace Imagine;
 
-use Imagine\Cartesian\CoordinateInterface;
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\CoordinateInterface;
+use Imagine\Coordinate\SizeInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Gd\Image;
 use Imagine\Exception\InvalidArgumentException;
@@ -37,8 +37,8 @@ interface ImageInterface
      * Crops a specified box out of the source image (modifies the source image)
      * Returns cropped self
      *
-     * @param Imagine\Cartesian\CoordinateInterface $start
-     * @param Imagine\Cartesian\SizeInterface       $size
+     * @param Imagine\Coordinate\CoordinateInterface $start
+     * @param Imagine\Coordinate\SizeInterface       $size
      *
      * @throws Imagine\Exception\InvalidArgumentException
      * @throws Imagine\Exception\OutOfBoundsException
@@ -50,7 +50,7 @@ interface ImageInterface
     /**
      * Resizes current image and returns self
      *
-     * @param Imagine\Cartesian\SizeInterface $size
+     * @param Imagine\Coordinate\SizeInterface $size
      *
      * @return Imagine\ImageInterface
      */
@@ -78,7 +78,7 @@ interface ImageInterface
      * Returns source image
      *
      * @param Imagine\ImageInterface                $image
-     * @param Imagine\Cartesian\CoordinateInterface $start
+     * @param Imagine\Coordinate\CoordinateInterface $start
      *
      * @throws Imagine\Exception\InvalidArgumentException
      * @throws Imagine\Exception\OutOfBoundsException
@@ -137,7 +137,7 @@ interface ImageInterface
      * Generates a thumbnail from a current image
      * Returns it as a new image, doesn't modify the current image
      *
-     * @param Imagine\Cartesian\SizeInterface $size
+     * @param Imagine\Coordinate\SizeInterface $size
      * @param string                          $mode
      *
      * @throws Imagine\Exception\RuntimeException
@@ -156,7 +156,7 @@ interface ImageInterface
     /**
      * Returns current image size
      *
-     * @return Imagine\Cartesian\SizeInterface
+     * @return Imagine\Coordinate\SizeInterface
      */
     function getSize();
 }

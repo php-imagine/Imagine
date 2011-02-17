@@ -11,7 +11,7 @@
 
 namespace Imagine;
 
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\SizeInterface;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\InvalidArgumentException;
 
@@ -20,7 +20,7 @@ interface ImagineInterface
     /**
      * Creates a new empty image with an optional background color
      *
-     * @param Imagine\Cartesian\SizeInterface $size
+     * @param Imagine\Coordinate\SizeInterface $size
      * @param Imagine\Color                   $color
      *
      * @throws Imagine\Exception\InvalidArgumentException

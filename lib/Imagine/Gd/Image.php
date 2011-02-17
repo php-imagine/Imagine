@@ -11,13 +11,13 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Cartesian\Coordinate\Center;
+use Imagine\Coordinate\Coordinate\Center;
 
 use Imagine\Color;
-use Imagine\Cartesian\Coordinate;
-use Imagine\Cartesian\CoordinateInterface;
-use Imagine\Cartesian\Size;
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\Coordinate;
+use Imagine\Coordinate\CoordinateInterface;
+use Imagine\Coordinate\Size;
+use Imagine\Coordinate\SizeInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;

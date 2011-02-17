@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Cartesian;
+namespace Imagine\Coordinate;
 
 use Imagine\Exception\InvalidArgumentException;
 
@@ -45,7 +45,7 @@ final class Coordinate implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.CoordinateInterface::getX()
+     * @see Imagine\Coordinate.CoordinateInterface::getX()
      */
     public function getX()
     {
@@ -54,7 +54,7 @@ final class Coordinate implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.CoordinateInterface::getY()
+     * @see Imagine\Coordinate.CoordinateInterface::getY()
      */
     public function getY()
     {
@@ -63,7 +63,7 @@ final class Coordinate implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.CoordinateInterface::in()
+     * @see Imagine\Coordinate.CoordinateInterface::in()
      */
     public function in(SizeInterface $box)
     {

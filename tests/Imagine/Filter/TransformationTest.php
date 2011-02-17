@@ -12,7 +12,7 @@ namespace Imagine\Filter;
  */
 
 use Imagine\Color;
-use Imagine\Cartesian\Size;
+use Imagine\Coordinate\Size;
 use Imagine\ImageInterface;
 
 class TransformationTest extends FilterTestCase

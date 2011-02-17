@@ -11,8 +11,8 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Cartesian\CoordinateInterface;
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\CoordinateInterface;
+use Imagine\Coordinate\SizeInterface;
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
 

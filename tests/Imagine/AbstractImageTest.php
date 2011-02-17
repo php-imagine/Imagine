@@ -11,9 +11,9 @@
 
 namespace Imagine;
 
-use Imagine\Cartesian\Coordinate;
-use Imagine\Cartesian\Coordinate\Center;
-use Imagine\Cartesian\Size;
+use Imagine\Coordinate\Coordinate;
+use Imagine\Coordinate\Coordinate\Center;
+use Imagine\Coordinate\Size;
 
 abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 {

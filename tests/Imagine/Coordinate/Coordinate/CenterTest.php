@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Cartesian\Coordinate;
+namespace Imagine\Coordinate\Coordinate;
 
-use Imagine\Cartesian\Coordinate;
-use Imagine\Cartesian\CoordinateInterface;
-use Imagine\Cartesian\Size;
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\Coordinate;
+use Imagine\Coordinate\CoordinateInterface;
+use Imagine\Coordinate\Size;
+use Imagine\Coordinate\SizeInterface;
 
 class CenterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Imagine\Cartesian\Coordinate::getX
-     * @covers Imagine\Cartesian\Coordinate::getY
+     * @covers Imagine\Coordinate\Coordinate::getX
+     * @covers Imagine\Coordinate\Coordinate::getY
      *
      * @dataProvider getSizesAndCoordinates
      *

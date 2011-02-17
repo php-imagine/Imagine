@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Cartesian;
+namespace Imagine\Coordinate;
 
 class SizeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Imagine\Cartesian\Size::getWidth
-     * @covers Imagine\Cartesian\Size::getHeight
+     * @covers Imagine\Coordinate\Size::getWidth
+     * @covers Imagine\Coordinate\Size::getHeight
      *
      * @dataProvider getSizes
      *
@@ -45,7 +45,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Cartesian\Size::__construct
+     * @covers Imagine\Coordinate\Size::__construct
      *
      * @expectedException Imagine\Exception\InvalidArgumentException
      *
@@ -75,7 +75,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Cartesian\Size::contains
+     * @covers Imagine\Coordinate\Size::contains
      *
      * @dataProvider getSizeBoxStartAndExpected
      *

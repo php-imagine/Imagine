@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Cartesian;
+namespace Imagine\Coordinate;
 
 use Imagine\Exception\InvalidArgumentException;
 
@@ -48,7 +48,7 @@ final class Size implements SizeInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.SizeInterface::getWidth()
+     * @see Imagine\Coordinate.SizeInterface::getWidth()
      */
     public function getWidth()
     {
@@ -57,7 +57,7 @@ final class Size implements SizeInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.SizeInterface::getHeight()
+     * @see Imagine\Coordinate.SizeInterface::getHeight()
      */
     public function getHeight()
     {
@@ -66,7 +66,7 @@ final class Size implements SizeInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.SizeInterface::scale()
+     * @see Imagine\Coordinate.SizeInterface::scale()
      */
     public function scale($ratio)
     {
@@ -75,7 +75,7 @@ final class Size implements SizeInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.SizeInterface::contains()
+     * @see Imagine\Coordinate.SizeInterface::contains()
      */
     public function contains(SizeInterface $box, CoordinateInterface $start = null)
     {

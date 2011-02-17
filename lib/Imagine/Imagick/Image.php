@@ -12,9 +12,9 @@
 namespace Imagine\Imagick;
 
 use Imagine\Color;
-use Imagine\Cartesian\CoordinateInterface;
-use Imagine\Cartesian\Size;
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\CoordinateInterface;
+use Imagine\Coordinate\Size;
+use Imagine\Coordinate\SizeInterface;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Cartesian;
+namespace Imagine\Coordinate;
 
 interface SizeInterface
 {
@@ -32,7 +32,7 @@ interface SizeInterface
      *
      * @param integer $ratio
      *
-     * @return Imagine\Cartesian\SizeInterface
+     * @return Imagine\Coordinate\SizeInterface
      */
     function scale($ratio);
 
@@ -40,8 +40,8 @@ interface SizeInterface
      * Checks whether curret box can fit given box at a given start position,
      * start position defaults to top left corner xy(0,0)
      *
-     * @param Imagine\Cartesian\SizeInterface       $box
-     * @param Imagine\Cartesian\CoordinateInterface $start
+     * @param Imagine\Coordinate\SizeInterface       $box
+     * @param Imagine\Coordinate\CoordinateInterface $start
      *
      * @return Boolean
      */

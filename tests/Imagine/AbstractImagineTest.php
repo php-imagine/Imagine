@@ -11,7 +11,7 @@
 
 namespace Imagine;
 
-use Imagine\Cartesian\Size;
+use Imagine\Coordinate\Size;
 
 abstract class AbstractImagineTest extends \PHPUnit_Framework_TestCase
 {

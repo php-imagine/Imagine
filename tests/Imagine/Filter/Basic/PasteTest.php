@@ -11,7 +11,7 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Cartesian\Coordinate;
+use Imagine\Coordinate\Coordinate;
 use Imagine\Filter\FilterTestCase;
 
 class PasteTest extends FilterTestCase

@@ -11,9 +11,9 @@
 
 namespace Imagine\Filter;
 
-use Imagine\Cartesian\CoordinateInterface;
+use Imagine\Coordinate\CoordinateInterface;
 
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\SizeInterface;
 
 use Imagine\Filter\Basic\Thumbnail;
 
@@ -74,8 +74,8 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a crop transformation into the current transformations queue
      *
-     * @param Imagine\Cartesian\CoordinateInterface $start
-     * @param Imagine\Cartesian\SizeInterface       $size
+     * @param Imagine\Coordinate\CoordinateInterface $start
+     * @param Imagine\Coordinate\SizeInterface       $size
      *
      * @return Imagine\Filter\Transformation
      */
@@ -110,7 +110,7 @@ final class Transformation implements FilterInterface
      * Stacks a paste transformation into the current transformations queue
      *
      * @param Imagine\ImageInterface                $image
-     * @param Imagine\Cartesian\CoordinateInterface $start
+     * @param Imagine\Coordinate\CoordinateInterface $start
      *
      * @return Imagine\Filter\Transformation
      */
@@ -122,7 +122,7 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a resize transformation into the current transformations queue
      *
-     * @param Imagine\Cartesian\SizeInterface
+     * @param Imagine\Coordinate\SizeInterface
      *
      * @return Imagine\Filter\Transformation
      */
@@ -173,7 +173,7 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a thumbnail transformation into the current transformation queue
      *
-     * @param Imagine\Cartesian\SizeInterface $size
+     * @param Imagine\Coordinate\SizeInterface $size
      * @param string                          $mode
      *
      * @return Imagine\Filter\Transformation

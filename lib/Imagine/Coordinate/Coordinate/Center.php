@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Cartesian\Coordinate;
+namespace Imagine\Coordinate\Coordinate;
 
-use Imagine\Cartesian\CoordinateInterface;
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\CoordinateInterface;
+use Imagine\Coordinate\SizeInterface;
 
 final class Center implements CoordinateInterface
 {
@@ -33,7 +33,7 @@ final class Center implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.CoordinateInterface::getX()
+     * @see Imagine\Coordinate.CoordinateInterface::getX()
      */
     public function getX()
     {
@@ -42,7 +42,7 @@ final class Center implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.CoordinateInterface::getY()
+     * @see Imagine\Coordinate.CoordinateInterface::getY()
      */
     public function getY()
     {
@@ -51,7 +51,7 @@ final class Center implements CoordinateInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Cartesian.CoordinateInterface::in()
+     * @see Imagine\Coordinate.CoordinateInterface::in()
      */
     public function in(SizeInterface $box)
     {

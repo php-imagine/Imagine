@@ -12,8 +12,8 @@
 namespace Imagine\Gd;
 
 use Imagine\Color;
-use Imagine\Cartesian\CoordinateInterface;
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\CoordinateInterface;
+use Imagine\Coordinate\SizeInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;

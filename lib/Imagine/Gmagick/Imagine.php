@@ -12,7 +12,7 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Color;
-use Imagine\Cartesian\SizeInterface;
+use Imagine\Coordinate\SizeInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\ImagineInterface;

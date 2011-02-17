@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Cartesian;
+namespace Imagine\Coordinate;
 
 class CoordinateTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @covers Imagine\Cartesian\Coordinate::getX
-	 * @covers Imagine\Cartesian\Coordinate::getY
-	 * @covers Imagine\Cartesian\Coordinate::in
+	 * @covers Imagine\Coordinate\Coordinate::getX
+	 * @covers Imagine\Coordinate\Coordinate::getY
+	 * @covers Imagine\Coordinate\Coordinate::in
 	 *
 	 * @dataProvider getCoordinates
 	 *
@@ -52,7 +52,7 @@ class CoordinateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Cartesian\Coordinate::__construct
+     * @covers Imagine\Coordinate\Coordinate::__construct
      *
      * @expectedException Imagine\Exception\InvalidArgumentException
      *
