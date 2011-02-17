@@ -341,9 +341,10 @@ final class Image implements ImageInterface
     {
 
         if (!$this->supported($format)) {
-            throw new InvalidArgumentException(sprintf('Saving image in "%s" '.
-                'format is not supported, please use one of the following '.
-                'extension: "%s"', $format, implode('", "', $this->supported())
+            throw new InvalidArgumentException(sprintf(
+                'Saving image in "%s" format is not supported, please use one '.
+                'of the following extension: "%s"', $format,
+                implode('", "', $this->supported())
             ));
         }
 
@@ -355,7 +356,8 @@ final class Image implements ImageInterface
             $args[] = $filename;
         }
 
-        if (($format === 'jpeg' || $format === 'png') && isset($options['quality'])) {
+        if (($format === 'jpeg' || $format === 'png') &&
+            isset($options['quality'])) {
             // png compression quality is 0-9, so here we get the value from percent
             if ($format === 'png') {
                 $options['quality'] = round($options['quality'] * 9 / 100);
@@ -372,7 +374,8 @@ final class Image implements ImageInterface
             }
         }
 
-        if (($format === 'wbmp' || $format === 'xbm') && isset($options['foreground'])) {
+        if (($format === 'wbmp' || $format === 'xbm') &&
+            isset($options['foreground'])) {
             $args[] = $options['foreground'];
         }
 
@@ -393,14 +396,16 @@ final class Image implements ImageInterface
      */
     private function getColor(Color $color)
     {
-        $color = imagecolorallocatealpha($this->resource, $color->getRed(),
-            $color->getGreen(), $color->getBlue(),
-            round(127 * $color->getAlpha() / 100));
+        $color = imagecolorallocatealpha(
+            $this->resource, $color->getRed(), $color->getGreen(),
+            $color->getBlue(), round(127 * $color->getAlpha() / 100)
+        );
         if (false === $color) {
-            throw new RuntimeException(sprintf('Unable to allocate color '.
-                '"RGB(%s, %s, %s)" with transparency of %d percent',
-                $color->getRed(), $color->getGreen(), $color->getBlue(),
-                $color->getAlpha()));
+            throw new RuntimeException(sprintf(
+                'Unable to allocate color "RGB(%s, %s, %s)" with transparency '.
+                'of %d percent', $color->getRed(), $color->getGreen(),
+                $color->getBlue(), $color->getAlpha()
+            ));
         }
 
         return $color;
@@ -417,8 +422,8 @@ final class Image implements ImageInterface
      */
     private function supported(&$format = null)
     {
+        $format  = strtolower($format);
         $formats = array('gif', 'jpeg', 'png', 'wbmp', 'xbm');
-        $format = strtolower($format);
         
         if (null === $format) {
             return $formats;
