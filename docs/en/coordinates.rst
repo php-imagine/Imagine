@@ -43,7 +43,7 @@ As part of showing off OO approach to image processing, I added a simple impleme
         'y' => $center->getY(),
     ));
     
-    // would output position of (x,y) 50,50
+    // would output position of (x,y) 25,25
 
 BoxInterface
 -------------
