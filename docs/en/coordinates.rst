@@ -36,7 +36,7 @@ As part of showing off OO approach to image processing, I added a simple impleme
     <?php
     $size = new Imagine\Box(50, 50);
     
-    $center = Imagine\Point\Center($size);
+    $center = new Imagine\Point\Center($size);
     
     var_dump(array(
         'x' => $center->getX(),
