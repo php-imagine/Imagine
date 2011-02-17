@@ -1,7 +1,7 @@
 Coordinate Coordinates System
 ============================
 
-The coordinate system use by Imagine is very similar to Cartesian Coordinate System one, with some exceptions:
+The coordinate system use by Imagine is very similar to Cartesian Coordinate System, with some exceptions:
 
 * Coordinate system starts at x,y (0,0), which is the top level corner and extends to right and bottom accordingly
 * There are no negative coordinates, a point must always be bound to the box its located at, hence 0,0 and greater
