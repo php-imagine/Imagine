@@ -21,8 +21,16 @@ use Imagine\Exception\RuntimeException;
 
 final class Drawer implements DrawerInterface
 {
+    /**
+     * @var resource
+     */
     private $resource;
 
+    /**
+     * Constructs Drawer with a given gd image resource
+     *
+     * @param resource $resource
+     */
     public function __construct($resource)
     {
         $this->resource = $resource;
@@ -227,6 +235,7 @@ final class Drawer implements DrawerInterface
 
         return $this;
     }
+
     /**
      * Internal
      *
