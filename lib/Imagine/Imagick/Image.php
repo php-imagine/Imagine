@@ -11,15 +11,15 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Color;
-use Imagine\PointInterface;
 use Imagine\Box;
 use Imagine\BoxInterface;
+use Imagine\Color;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\ImageInterface;
 use Imagine\Imagick\Imagine;
+use Imagine\PointInterface;
 
 final class Image implements ImageInterface
 {
@@ -37,12 +37,10 @@ final class Image implements ImageInterface
      * Constructs Image with Imagick and Imagine instances
      *
      * @param Imagick $imagick
-     * @param Imagine $imagine
      */
-    public function __construct(\Imagick $imagick, Imagine $imagine)
+    public function __construct(\Imagick $imagick)
     {
         $this->imagick = $imagick;
-        $this->imagine = $imagine;
     }
 
     /**
@@ -69,7 +67,7 @@ final class Image implements ImageInterface
                 'Copy operation failed', $e->getCode(), $e
             );
         }
-        return new self($clone, $this->imagine);
+        return new self($clone);
     }
 
     /**
