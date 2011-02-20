@@ -40,7 +40,7 @@ final class Imagine implements ImagineInterface
         }
 
         try {
-            return new Image(new \Imagick($path), $this);
+            return new Image(new \Imagick($path));
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 sprintf('Could not open path "%s"', $path), $e->getCode(), $e
@@ -72,11 +72,20 @@ final class Imagine implements ImagineInterface
             $pixel->clear();
             $pixel->destroy();
 
-            return new Image($imagick, $this);
+            return new Image($imagick);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Could not create empty image', $e->getCode(), $e
             );
         }
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImagineInterface::font()
+     */
+    public function font($path, $size, Color $color)
+    {
+
     }
 }
