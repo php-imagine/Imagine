@@ -15,7 +15,24 @@ use Imagine\Exception\InvalidArgumentException;
 
 final class Color
 {
-    private $r, $g, $b;
+    /**
+     * @var integer
+     */
+    private $r;
+
+    /**
+     * @var integer
+     */
+    private $g;
+
+    /**
+     * @var integer
+     */
+    private $b;
+
+    /**
+     * @var integer
+     */
     private $alpha;
 
     /**
