@@ -11,18 +11,17 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Point\Center;
-
-use Imagine\Color;
-use Imagine\Point;
-use Imagine\PointInterface;
 use Imagine\Box;
 use Imagine\BoxInterface;
+use Imagine\Color;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 use Imagine\ImageInterface;
+use Imagine\Point;
+use Imagine\Point\Center;
+use Imagine\PointInterface;
 
 final class Image implements ImageInterface
 {
@@ -32,22 +31,14 @@ final class Image implements ImageInterface
     private $resource;
 
     /**
-     * @var Imagine
-     */
-    private $imagine;
-
-    /**
      * Constructs a new Image instance using the result of
      * imagecreatetruecolor()
      *
      * @param resource $resource
-     * @param integer  $width
-     * @param integer  $height
      */
-    public function __construct($resource, Imagine $imagine)
+    public function __construct($resource)
     {
         $this->resource = $resource;
-        $this->imagine  = $imagine;
     }
 
     /**
@@ -65,14 +56,23 @@ final class Image implements ImageInterface
     final public function copy()
     {
         $size = $this->getSize();
-        $copy = $this->imagine->create($size);
+        $copy = imagecreatetruecolor($size->getWidth(), $size->getHeight());
 
-        if (false === imagecopymerge($copy->resource, $this->resource, 0, 0, 0,
+        if (false === $copy) {
+            throw new RuntimeException('Image copy operation failed');
+        }
+
+        if (false === imagealphablending($copy, false) ||
+            false === imagesavealpha($copy, true)) {
+            throw new RuntimeException('Image copy operation failed');
+        }
+
+        if (false === imagecopymerge($copy, $this->resource, 0, 0, 0,
             0, $size->getWidth(), $size->getHeight(), 100)) {
             throw new RuntimeException('Image copy operation failed');
         }
 
-        return $copy;
+        return new Image($copy);
     }
 
     /**
@@ -424,7 +424,7 @@ final class Image implements ImageInterface
     {
         $format  = strtolower($format);
         $formats = array('gif', 'jpeg', 'png', 'wbmp', 'xbm');
-        
+
         if (null === $format) {
             return $formats;
         }
