@@ -106,6 +106,4 @@ interface DrawerInterface
      * @return Imagine\Draw\DrawerInterface
      */
     function polygon(array $coordinates, Color $color, $fill = false);
-
-//    function text($x, $y, Font $font, Color $color);
 }
