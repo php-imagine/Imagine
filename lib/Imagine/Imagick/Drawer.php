@@ -341,8 +341,6 @@ final class Drawer implements DrawerInterface
             $text->setFont($font->getFile());
             $text->setFontSize($font->getSize());
             $text->setFillColor($pixel);
-            $text->setStrokeColor($pixel);
-            $text->setStrokeWidth(1);
             $text->setTextAntialias(true);
 
             $info = $this->imagick->queryFontMetrics($text, $string);

@@ -11,13 +11,14 @@
 
 namespace Imagine\Gmagick;
 
-use Imagine\Color;
-use Imagine\Point;
-use Imagine\PointInterface;
 use Imagine\BoxInterface;
+use Imagine\Color;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Font;
+use Imagine\Point;
+use Imagine\PointInterface;
 
 final class Drawer implements DrawerInterface
 {
@@ -302,6 +303,44 @@ final class Drawer implements DrawerInterface
         }
 
         return $this;
+    }
+
+    public function text($string, Font $font, PointInterface $position, $angle = 0)
+    {
+        try {
+            $pixel = $this->getColor($font->getColor());
+            $text  = new \GmagickDraw();
+
+            $text->setfont($font->getFile());
+            $text->setfontsize($font->getSize());
+            $text->setfillcolor($pixel);
+
+            $info = $this->gmagick->queryfontmetrics($text, $string);
+            $rad  = deg2rad($angle);
+            $cos  = cos($rad);
+            $sin  = sin($rad);
+
+            $x1 = round(0 * $cos - 0 * $sin);
+            $x2 = round($info['textWidth'] * $cos - $info['textHeight'] * $sin);
+            $y1 = round(0 * $sin + 0 * $cos);
+            $y2 = round($info['textWidth'] * $sin + $info['textHeight'] * $cos);
+
+            $xdiff = 0 - min($x1, $x2);
+            $ydiff = 0 - min($y1, $y2);
+
+            $this->gmagick->annotateImage(
+                $text, $position->getX() + $x1 + $xdiff,
+                $position->getY() + $y2 + $ydiff, $angle, $string
+            );
+
+            $pixel = null;
+
+            $text = null;
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Draw text operation failed', $e->getCode(), $e
+            );
+        }
     }
 
     /**
