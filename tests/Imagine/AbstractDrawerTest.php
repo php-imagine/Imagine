@@ -166,6 +166,73 @@ abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/arc.png');
     }
 
+    public function testDrawText()
+    {
+        $path   = 'tests/Imagine/Fixtures/font/Arial.ttf';
+        $black  = new Color('000');
+        $file36 = 'tests/Imagine/Fixtures/bulat36.png';
+        $file24 = 'tests/Imagine/Fixtures/bulat24.png';
+        $file18 = 'tests/Imagine/Fixtures/bulat18.png';
+        $file12 = 'tests/Imagine/Fixtures/bulat12.png';
+
+        $imagine = $this->getImagine();
+        $canvas  = $imagine->create(new Box(400, 300), new Color('fff'));
+        $font    = new Font($path, 36, $black);
+
+        $canvas->draw()
+            ->text('Bulat', $font, new Point(0, 0), 135);
+
+        $canvas->save($file36);
+
+        unset($canvas);
+
+        $this->assertTrue(file_exists($file36));
+
+        unlink($file36);
+
+        $canvas = $imagine->create(new Box(400, 300), new Color('fff'));
+        $font   = new Font($path, 24, $black);
+
+        $canvas->draw()
+            ->text('Bulat', $font, new Point(24, 24));
+
+        $canvas->save($file24);
+
+        unset($canvas);
+
+        $this->assertTrue(file_exists($file24));
+
+        unlink($file24);
+
+        $canvas = $imagine->create(new Box(400, 300), new Color('fff'));
+        $font   = new Font($path, 18, $black);
+
+        $canvas->draw()
+            ->text('Bulat', $font, new Point(18, 18));
+
+        $canvas->save($file18);
+
+        unset($canvas);
+
+        $this->assertTrue(file_exists($file18));
+
+        unlink($file18);
+
+        $canvas = $imagine->create(new Box(400, 300), new Color('fff'));
+        $font   = new Font($path, 12, $black);
+
+        $canvas->draw()
+            ->text('Bulat', $font, new Point(12, 12));
+
+        $canvas->save($file12);
+
+        unset($canvas);
+
+        $this->assertTrue(file_exists($file12));
+
+        unlink($file12);
+    }
+
     /**
      * @return Imagine\ImagineInterface
      */

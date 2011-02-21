@@ -11,6 +11,8 @@
 
 namespace Imagine\Draw;
 
+use Imagine\Font;
+
 use Imagine\PointInterface;
 use Imagine\BoxInterface;
 use Imagine\Color;
@@ -106,4 +108,19 @@ interface DrawerInterface
      * @return Imagine\Draw\DrawerInterface
      */
     function polygon(array $coordinates, Color $color, $fill = false);
+
+    /**
+     * Annotates image with specified text at a given position starting on the
+     * top left of the final text box
+     *
+     * The rotation is done CW
+     *
+     * @param string        $string
+     * @param Imagine\Font  $font
+     * @param Imagine\Color $position
+     * @param integer       $angle
+     *
+     * @return Imagine\Draw\DrawerInterface
+     */
+    function text($string, Font $font, PointInterface $position, $angle = 0);
 }
