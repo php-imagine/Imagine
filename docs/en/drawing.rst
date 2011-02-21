@@ -31,12 +31,12 @@ The drawer interface defines the following methods:
 * ``->pieSlice(PointInterface $center, $width, $height, $start, $end, Color $color, $fill = false)`` - same as arc, but also connects the `$start` and `$end` to the ellipse center
 * ``->dot(PointInterface $position, Color $color)`` - places a 1px dot at `$position`, filled with specified `$color`
 * ``->polygon(array $coordinates, Color $color, $fill = false)`` - draws or outlines a polygon of a specified `$color`. The `$coordinates` array must be a collection of at least three PointInterface instances, that tell Drawer the path of the polygon its drawing
-* ``->text($$string, Font $font, PointInterface $position, $angle = 0)`` - places a string of specified `$font` at a specified `$position` from top left of the image, applying the clock-wise `$angle` rotation
+* ``->text($string, Font $font, PointInterface $position, $angle = 0)`` - places a string of specified `$font` at a specified `$position` from top left of the image, applying clock-wise `$angle` rotation
 
 Font class
 ----------
 
-As you've noticed from `DrawerInterface::text()`, there is also `Font` class. This class is a simple value object, representing the font. To construct a font, you have to pass the `$file` (string path to font file), `$size` (in points) and `$color` (`Imagine\Color` instance). After you have a font instance, you can use one of its three methods to inspect any of the values it's been constructed with:
+As you've noticed from `DrawerInterface::text()`, there is also `Font` class. This class is a simple value object, representing the font. To construct a font, you have to pass the `$file` string (path to font file), `$size` value (integer value, representing size points) and `$color` (`Imagine\Color` instance). After you have a font instance, you can use one of its three methods to inspect any of the values it's been constructed with:
 
 * ``->getFile()`` - returns fontfile path
 * ``->getSize()`` - returns integer size in points (e.g. 10pt = 10)
