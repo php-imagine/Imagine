@@ -11,6 +11,8 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Font;
+
 use Imagine\Color;
 use Imagine\Point;
 use Imagine\PointInterface;
@@ -324,6 +326,53 @@ final class Drawer implements DrawerInterface
         }
 
         return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Draw.DrawerInterface::text()
+     */
+    public function text($string, Font $font, PointInterface $position, $angle = 0)
+    {
+        try {
+            $pixel = $this->getColor($font->getColor());
+            $text  = new \ImagickDraw();
+
+            $text->setFont($font->getFile());
+            $text->setFontSize($font->getSize());
+            $text->setFillColor($pixel);
+            $text->setStrokeColor($pixel);
+            $text->setStrokeWidth(1);
+            $text->setTextAntialias(true);
+
+            $info = $this->imagick->queryFontMetrics($text, $string);
+            $rad  = deg2rad($angle);
+            $cos  = cos($rad);
+            $sin  = sin($rad);
+
+            $x1 = round(0 * $cos - 0 * $sin);
+            $x2 = round($info['textWidth'] * $cos - $info['textHeight'] * $sin);
+            $y1 = round(0 * $sin + 0 * $cos);
+            $y2 = round($info['textWidth'] * $sin + $info['textHeight'] * $cos);
+
+            $xdiff = 0 - min($x1, $x2);
+            $ydiff = 0 - min($y1, $y2);
+
+            $this->imagick->annotateImage(
+                $text, $position->getX() + $x1 + $xdiff,
+                $position->getY() + $y2 + $ydiff, $angle, $string
+            );
+
+            $pixel->clear();
+            $pixel->destroy();
+
+            $text->clear();
+            $text->destroy();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Draw text operation failed', $e->getCode(), $e
+            );
+        }
     }
 
     /**

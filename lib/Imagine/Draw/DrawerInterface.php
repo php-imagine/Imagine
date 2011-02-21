@@ -115,10 +115,10 @@ interface DrawerInterface
      *
      * The rotation is done CW
      *
-     * @param string        $string
-     * @param Imagine\Font  $font
-     * @param Imagine\Color $position
-     * @param integer       $angle
+     * @param string                 $string
+     * @param Imagine\Font           $font
+     * @param Imagine\PointInterface $position
+     * @param integer                $angle
      *
      * @return Imagine\Draw\DrawerInterface
      */
