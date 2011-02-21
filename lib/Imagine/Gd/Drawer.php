@@ -42,14 +42,10 @@ final class Drawer implements DrawerInterface
      */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color)
     {
-        $x      = $center->getX();
-        $y      = $center->getY();
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-
         if (false === imagearc(
-            $this->resource, $x, $y, $size->getWidth(), $size->getHeight(),
-            $start, $end, $this->getColor($color)
+            $this->resource, $center->getX(), $center->getY(),
+            $size->getWidth(), $size->getHeight(), $start, $end,
+            $this->getColor($color)
         )) {
             throw new RuntimeException('Draw arc operation failed');
         }
@@ -65,11 +61,6 @@ final class Drawer implements DrawerInterface
      */
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false)
     {
-        $x      = $center->getX();
-        $y      = $center->getY();
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-
         if ($fill) {
             $style = IMG_ARC_CHORD;
         } else {
@@ -77,7 +68,8 @@ final class Drawer implements DrawerInterface
         }
 
         if (false === imagefilledarc(
-            $this->resource, $x, $y, $width, $height, $start, $end,
+            $this->resource, $center->getX(), $center->getY(),
+            $size->getWidth(), $size->getHeight(), $start, $end,
             $this->getColor($color), $style
         )) {
             throw new RuntimeException('Draw chord operation failed');
@@ -92,24 +84,17 @@ final class Drawer implements DrawerInterface
      */
     public function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false)
     {
-        $color  = $this->getColor($color);
-        $x      = $center->getX();
-        $y      = $center->getY();
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-
         if ($fill) {
-            if (false === imagefilledellipse(
-                $this->resource, $x, $y, $width, $height, $color
-            )) {
-                throw new RuntimeException('Draw ellipse operation failed');
-            }
+            $callback = 'imagefilledellipse';
         } else {
-            if (false === imageellipse(
-                $this->resource, $x, $y, $width, $height, $color
-            )) {
-                throw new RuntimeException('Draw ellipse operation failed');
-            }
+            $callback = 'imageellipse';
+        }
+
+        if (false === $callback(
+            $this->resource, $center->getX(), $center->getY(),
+            $size->getWidth(), $size->getHeight(), $this->getColor($color))
+        ) {
+            throw new RuntimeException('Draw ellipse operation failed');
         }
 
         return $this;
@@ -121,13 +106,9 @@ final class Drawer implements DrawerInterface
      */
     public function line(PointInterface $start, PointInterface $end, Color $color)
     {
-        $x1 = $start->getX();
-        $y1 = $start->getY();
-        $x2 = $end->getX();
-        $y2 = $end->getY();
-
         if (false === imageline(
-            $this->resource, $x1, $y1, $x2, $y2, $this->getColor($color)
+            $this->resource, $start->getX(), $start->getY(),
+            $end->getX(), $end->getY(), $this->getColor($color)
         )) {
             throw new RuntimeException('Draw line operation failed');
         }
@@ -141,11 +122,6 @@ final class Drawer implements DrawerInterface
      */
     public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false)
     {
-        $x      = $center->getX();
-        $y      = $center->getY();
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-
         if ($fill) {
             $style = IMG_ARC_EDGED;
         } else {
@@ -153,7 +129,8 @@ final class Drawer implements DrawerInterface
         }
 
         if (false === imagefilledarc(
-            $this->resource, $x, $y, $width, $height, $start, $end,
+            $this->resource, $center->getX(), $center->getY(),
+            $size->getWidth(), $size->getHeight(), $start, $end,
             $this->getColor($color), $style
         )) {
             throw new RuntimeException('Draw chord operation failed');
@@ -168,18 +145,9 @@ final class Drawer implements DrawerInterface
      */
     public function dot(PointInterface $position, Color $color)
     {
-        $x = $position->getX();
-        $y = $position->getY();
-
-        if ($x < 0 || $y < 0) {
-            throw new OutOfBoundsException(
-                'PointInterfaces or the target pixel must start at '.
-                'minimum 0, 0 position from top left corner'
-            );
-        }
-
         if (false === imagesetpixel(
-            $this->resource, $x, $y, $this->getColor($color)
+            $this->resource, $position->getX(), $position->getY(),
+            $this->getColor($color)
         )) {
             throw new RuntimeException('Draw point operation failed');
         }
@@ -205,32 +173,26 @@ final class Drawer implements DrawerInterface
         foreach ($coordinates as $coordinate) {
             if (!$coordinate instanceof PointInterface) {
                 throw new InvalidArgumentException(sprintf(
-                    'Each entry in coordinates array must be an array of '.
-                    'only two values - x, y, %s given', var_export($coordinate)
+                    'Each entry in coordinates array must be instance of '.
+                    'Imagine\PointInterface, %s given', var_export($coordinate)
                 ));
             }
 
-            $x = $coordinate->getX();
-            $y = $coordinate->getY();
-
-            $points[] = $x;
-            $points[] = $y;
+            $points[] = $coordinate->getX();
+            $points[] = $coordinate->getY();
         }
 
-        $color = $this->getColor($color);
-
         if ($fill) {
-            if (false === imagefilledpolygon(
-                $this->resource, $points, count($coordinates), $color
-            )) {
-                throw new RuntimeException('Draw polygon operation failed');
-            }
+            $callback = 'imagefilledpolygon';
         } else {
-            if (false === imagepolygon(
-                $this->resource, $points, count($coordinates), $color
-            )) {
-                throw new RuntimeException('Draw polygon operation failed');
-            }
+            $callback = 'imagepolygon';
+        }
+
+        if (false === $callback(
+            $this->resource, $points, count($coordinates),
+            $this->getColor($color)
+        )) {
+            throw new RuntimeException('Draw polygon operation failed');
         }
 
         return $this;
