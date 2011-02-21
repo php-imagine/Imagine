@@ -39,15 +39,4 @@ interface ImagineInterface
      * @return Imagine\ImageInterface
      */
     function open($path);
-
-    /**
-     * Opens a font for usage with the drawing api
-     *
-     * @param string        $path
-     * @param integer       $size
-     * @param Imagine\Color $color
-     *
-     * @return Imagine\Font\FontInterface
-     */
-    function font($path, $size, Color $color);
 }
