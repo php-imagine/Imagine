@@ -10,7 +10,7 @@ Example
 ::
 
     <?php
-    $image = $imagine->create(400, 300, new Color('#000'));
+    $image = $imagine->create(new Box(400, 300), new Color('#000'));
     
     $image->draw()
         ->ellipse(new Point(200, 150), 300, 225, new Color('fff'));
