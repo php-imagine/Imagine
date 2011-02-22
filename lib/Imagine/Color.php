@@ -164,6 +164,6 @@ final class Color
      */
     public function __toString()
     {
-        return sprintf('#%x%x%x', $this->r, $this->g, $this->b);
+        return sprintf('#%02x%02x%02x', $this->r, $this->g, $this->b);
     }
 }
