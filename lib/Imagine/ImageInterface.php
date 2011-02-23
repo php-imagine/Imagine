@@ -105,7 +105,7 @@ interface ImageInterface
     function save($path, array $options = array());
 
     /**
-     * Returns the image content as a binary string
+     * Outputs the image content
      *
      * @param string $format
      * @param array  $options
@@ -114,7 +114,31 @@ interface ImageInterface
      *
      * @return Imagine\ImageInterface
      */
+    function show($format, array $options = array());
+
+    /**
+     * Returns the image content as a binary string
+     *
+     * @param string $format
+     * @param array  $options
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return string binary
+     */
     function get($format, array $options = array());
+
+    /**
+     * Returns the image content as a PNG binary string
+     *
+     * @param string $format
+     * @param array  $options
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return string binary
+     */
+    function __toString();
 
     /**
      * Flips current image using horizontal axis

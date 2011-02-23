@@ -236,6 +236,17 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\ImageInterface::show()
      */
+    public function show($format, array $options = array())
+    {
+        echo $this->get($format, $options);
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::get()
+     */
     public function get($format, array $options = array())
     {
         try {
@@ -247,6 +258,15 @@ class Image implements ImageInterface
         }
 
         return (string) $this->gmagick;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::__toString()
+     */
+    public function __toString()
+    {
+        return $this->get('png');
     }
 
     /**

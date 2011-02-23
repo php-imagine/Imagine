@@ -206,11 +206,31 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\ImageInterface::show()
      */
-    final public function get($format, array $options = array())
+    public function show($format, array $options = array())
+    {
+        $this->saveOrOutput($format, $options);
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::get()
+     */
+    public function get($format, array $options = array())
     {
         ob_start();
         $this->saveOrOutput($format, $options);
         return ob_get_clean();
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::__toString()
+     */
+    public function __toString()
+    {
+        return $this->get('png');
     }
 
     /**
