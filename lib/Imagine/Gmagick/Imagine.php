@@ -65,4 +65,15 @@ class Imagine implements ImagineInterface
 
         return new Image($gmagick, $this);
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImagineInterface::load()
+     */
+    public function load($string)
+    {
+        $gmagick = new \Gmagick();
+        $gmagick->readimageblob($string);
+        return new Image($gmagick, $this);
+    }
 }

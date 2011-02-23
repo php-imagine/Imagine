@@ -39,4 +39,15 @@ interface ImagineInterface
      * @return Imagine\ImageInterface
      */
     function open($path);
+
+    /**
+     * Loads an image from a binary $string
+     *
+     * @param string $string
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return Imagine\ImageInterface
+     */
+    function load($string);
 }
