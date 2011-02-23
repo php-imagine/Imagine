@@ -37,5 +37,16 @@ abstract class AbstractImagineTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(126, $size->getHeight());
     }
 
+    public function testShouldCreateImageFromString()
+    {
+        $factory = $this->getImagine();
+        $image   = $factory->load(file_get_contents('tests/Imagine/Fixtures/google.png'));
+        $size    = $image->getSize();
+
+        $this->assertInstanceOf('Imagine\ImageInterface', $image);
+        $this->assertEquals(364, $size->getWidth());
+        $this->assertEquals(126, $size->getHeight());
+    }
+
     abstract protected function getImagine();
 }
