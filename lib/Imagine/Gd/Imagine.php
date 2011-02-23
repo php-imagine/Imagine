@@ -138,4 +138,29 @@ final class Imagine implements ImagineInterface
 
         return new Image($resource);
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImagineInterface::load()
+     */
+    public function load($string)
+    {
+        $resource = imagecreatefromstring($string);
+
+        if (!is_resource($resource)) {
+            throw new InvalidArgumentException('An image could not be created from the given input');
+        }
+
+        $width = imagesx($resource);
+        $height = imagesy($resource);
+
+        if (false === imagealphablending($resource, false) ||
+            false === imagesavealpha($resource, true)) {
+            throw new RuntimeException(
+                'Could not set alphablending and savealpha values'
+            );
+        }
+
+        return new Image($resource);
+    }
 }
