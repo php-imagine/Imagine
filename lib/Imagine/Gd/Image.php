@@ -206,11 +206,11 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\ImageInterface::show()
      */
-    final public function show($format, array $options = array())
+    final public function get($format, array $options = array())
     {
+        ob_start();
         $this->saveOrOutput($format, $options);
-
-        return $this;
+        return ob_get_clean();
     }
 
     /**

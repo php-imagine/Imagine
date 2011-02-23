@@ -242,7 +242,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\ImageInterface::show()
      */
-    public function show($format, array $options = array())
+    public function get($format, array $options = array())
     {
         try {
             $this->applyImageOptions($this->imagick, $options);
@@ -253,9 +253,7 @@ final class Image implements ImageInterface
             );
         }
 
-        echo $this->imagick;
-
-        return $this;
+        return (string) $this->imagick;
     }
 
     /**

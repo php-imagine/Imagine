@@ -37,6 +37,7 @@ class Show implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->show($this->format, $this->options);
+        echo $image->get($this->format, $this->options);
+        return $image;
     }
 }

@@ -236,7 +236,7 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\ImageInterface::show()
      */
-    public function show($format, array $options = array())
+    public function get($format, array $options = array())
     {
         try {
             $this->gmagick->setimageformat($format);
@@ -246,9 +246,7 @@ class Image implements ImageInterface
             );
         }
 
-        echo $this->gmagick;
-
-        return $this;
+        return (string) $this->gmagick;
     }
 
     /**

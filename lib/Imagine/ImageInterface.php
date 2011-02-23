@@ -105,7 +105,7 @@ interface ImageInterface
     function save($path, array $options = array());
 
     /**
-     * Outputs the image content
+     * Returns the image content as a binary string
      *
      * @param string $format
      * @param array  $options
@@ -114,7 +114,7 @@ interface ImageInterface
      *
      * @return Imagine\ImageInterface
      */
-    function show($format, array $options = array());
+    function get($format, array $options = array());
 
     /**
      * Flips current image using horizontal axis
