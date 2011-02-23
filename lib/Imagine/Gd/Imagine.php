@@ -136,6 +136,6 @@ final class Imagine implements ImagineInterface
             );
         }
 
-        return new Image($resource, $this);
+        return new Image($resource);
     }
 }
