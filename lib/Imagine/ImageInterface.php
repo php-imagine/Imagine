@@ -38,10 +38,10 @@ interface ImageInterface
      * Returns cropped self
      *
      * @param Imagine\PointInterface $start
-     * @param Imagine\BoxInterface       $size
+     * @param Imagine\BoxInterface   $size
      *
-     * @throws Imagine\Exception\InvalidArgumentException
      * @throws Imagine\Exception\OutOfBoundsException
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\ImageInterface
      */
@@ -51,6 +51,8 @@ interface ImageInterface
      * Resizes current image and returns self
      *
      * @param Imagine\BoxInterface $size
+     *
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\ImageInterface
      */
@@ -77,7 +79,7 @@ interface ImageInterface
      *
      * Returns source image
      *
-     * @param Imagine\ImageInterface                 $image
+     * @param Imagine\ImageInterface $image
      * @param Imagine\PointInterface $start
      *
      * @throws Imagine\Exception\InvalidArgumentException
@@ -138,7 +140,7 @@ interface ImageInterface
      * Returns it as a new image, doesn't modify the current image
      *
      * @param Imagine\BoxInterface $size
-     * @param string                           $mode
+     * @param string               $mode
      *
      * @throws Imagine\Exception\RuntimeException
      *
