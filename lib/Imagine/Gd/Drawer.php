@@ -40,7 +40,7 @@ final class Drawer implements DrawerInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::arc()
+     * @see Imagine\Draw\DrawerInterface::arc()
      */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color)
     {
@@ -59,7 +59,7 @@ final class Drawer implements DrawerInterface
      * This function doesn't work properly because of a bug in GD
      *
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::chord()
+     * @see Imagine\Draw\DrawerInterface::chord()
      */
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false)
     {
@@ -82,7 +82,7 @@ final class Drawer implements DrawerInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::ellipse()
+     * @see Imagine\Draw\DrawerInterface::ellipse()
      */
     public function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false)
     {
@@ -104,7 +104,7 @@ final class Drawer implements DrawerInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::line()
+     * @see Imagine\Draw\DrawerInterface::line()
      */
     public function line(PointInterface $start, PointInterface $end, Color $color)
     {
@@ -120,7 +120,7 @@ final class Drawer implements DrawerInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::pieSlice()
+     * @see Imagine\Draw\DrawerInterface::pieSlice()
      */
     public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false)
     {
@@ -143,7 +143,7 @@ final class Drawer implements DrawerInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::dot()
+     * @see Imagine\Draw\DrawerInterface::dot()
      */
     public function dot(PointInterface $position, Color $color)
     {
@@ -159,7 +159,7 @@ final class Drawer implements DrawerInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::polygon()
+     * @see Imagine\Draw\DrawerInterface::polygon()
      */
     public function polygon(array $coordinates, Color $color, $fill = false)
     {
@@ -202,7 +202,7 @@ final class Drawer implements DrawerInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Draw.DrawerInterface::text()
+     * @see Imagine\Draw\DrawerInterface::text()
      */
     public function text($string, Font $font, PointInterface $position, $angle = 0)
     {

@@ -58,7 +58,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::copy()
+     * @see Imagine\ImageInterface::copy()
      */
     public function copy()
     {
@@ -67,7 +67,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::crop()
+     * @see Imagine\ImageInterface::crop()
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -97,7 +97,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::flipHorizontally()
+     * @see Imagine\ImageInterface::flipHorizontally()
      */
     public function flipHorizontally()
     {
@@ -114,7 +114,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::flipVertically()
+     * @see Imagine\ImageInterface::flipVertically()
      */
     public function flipVertically()
     {
@@ -131,7 +131,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::paste()
+     * @see Imagine\ImageInterface::paste()
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -182,7 +182,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::resize()
+     * @see Imagine\ImageInterface::resize()
      */
     public function resize(BoxInterface $size)
     {
@@ -204,7 +204,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::rotate()
+     * @see Imagine\ImageInterface::rotate()
      */
     public function rotate($angle, Color $background = null)
     {
@@ -224,7 +224,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::save()
+     * @see Imagine\ImageInterface::save()
      */
     public function save($path, array $options = array())
     {
@@ -241,7 +241,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::show()
+     * @see Imagine\ImageInterface::show()
      */
     public function show($format, array $options = array())
     {
@@ -260,7 +260,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::thumbnail()
+     * @see Imagine\ImageInterface::thumbnail()
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -295,7 +295,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::draw()
+     * @see Imagine\ImageInterface::draw()
      */
     public function draw()
     {
@@ -304,7 +304,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::getSize()
+     * @see Imagine\ImageInterface::getSize()
      */
     public function getSize()
     {

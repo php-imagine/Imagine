@@ -48,7 +48,7 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.BoxInterface::getWidth()
+     * @see Imagine\BoxInterface::getWidth()
      */
     public function getWidth()
     {
@@ -57,7 +57,7 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.BoxInterface::getHeight()
+     * @see Imagine\BoxInterface::getHeight()
      */
     public function getHeight()
     {
@@ -66,7 +66,7 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.BoxInterface::scale()
+     * @see Imagine\BoxInterface::scale()
      */
     public function scale($ratio)
     {
@@ -75,7 +75,7 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.BoxInterface::contains()
+     * @see Imagine\BoxInterface::contains()
      */
     public function contains(BoxInterface $box, PointInterface $start = null)
     {
@@ -88,7 +88,7 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.BoxInterface::__toString()
+     * @see Imagine\BoxInterface::__toString()
      */
     public function __toString()
     {

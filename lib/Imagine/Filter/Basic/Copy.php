@@ -18,7 +18,7 @@ class Copy implements FilterInterface
 {
     /**
      * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::apply()
+     * @see Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

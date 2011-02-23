@@ -52,7 +52,7 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImagineInterface::create()
+     * @see Imagine\ImagineInterface::create()
      */
     public function create(BoxInterface $size, Color $color = null)
     {
@@ -94,7 +94,7 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImagineInterface::open()
+     * @see Imagine\ImagineInterface::open()
      */
     public function open($path)
     {

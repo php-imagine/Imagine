@@ -33,7 +33,7 @@ final class Center implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.PointInterface::getX()
+     * @see Imagine\PointInterface::getX()
      */
     public function getX()
     {
@@ -42,7 +42,7 @@ final class Center implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.PointInterface::getY()
+     * @see Imagine\PointInterface::getY()
      */
     public function getY()
     {
@@ -51,7 +51,7 @@ final class Center implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.PointInterface::in()
+     * @see Imagine\PointInterface::in()
      */
     public function in(BoxInterface $box)
     {
@@ -60,7 +60,7 @@ final class Center implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.PointInterface::__toString()
+     * @see Imagine\PointInterface::__toString()
      */
     public function __toString()
     {

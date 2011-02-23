@@ -11,14 +11,8 @@
 
 namespace Imagine\Filter;
 
-use Imagine\PointInterface;
-
 use Imagine\BoxInterface;
-
-use Imagine\Filter\Basic\Thumbnail;
-
 use Imagine\Color;
-use Imagine\Point;
 use Imagine\ImageInterface;
 use Imagine\ImageFactoryInterface;
 use Imagine\Filter\Basic\Copy;
@@ -30,6 +24,9 @@ use Imagine\Filter\Basic\Resize;
 use Imagine\Filter\Basic\Rotate;
 use Imagine\Filter\Basic\Save;
 use Imagine\Filter\Basic\Show;
+use Imagine\Filter\Basic\Thumbnail;
+use Imagine\Point;
+use Imagine\PointInterface;
 
 final class Transformation implements FilterInterface
 {
@@ -54,7 +51,7 @@ final class Transformation implements FilterInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Filter.FilterInterface::apply()
+     * @see Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

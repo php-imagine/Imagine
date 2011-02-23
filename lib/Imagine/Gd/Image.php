@@ -51,7 +51,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::copy()
+     * @see Imagine\ImageInterface::copy()
      */
     final public function copy()
     {
@@ -77,7 +77,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::crop()
+     * @see Imagine\ImageInterface::crop()
      */
     final public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -113,7 +113,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::paste()
+     * @see Imagine\ImageInterface::paste()
      */
     final public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -142,7 +142,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::resize()
+     * @see Imagine\ImageInterface::resize()
      */
     final public function resize(BoxInterface $size)
     {
@@ -169,7 +169,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::rotate()
+     * @see Imagine\ImageInterface::rotate()
      */
     final public function rotate($angle, Color $background = null)
     {
@@ -193,7 +193,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::save()
+     * @see Imagine\ImageInterface::save()
      */
     final public function save($path, array $options = array())
     {
@@ -204,7 +204,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::show()
+     * @see Imagine\ImageInterface::show()
      */
     final public function show($format, array $options = array())
     {
@@ -215,7 +215,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::flipHorizontally()
+     * @see Imagine\ImageInterface::flipHorizontally()
      */
     final public function flipHorizontally()
     {
@@ -242,7 +242,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::flipVertically()
+     * @see Imagine\ImageInterface::flipVertically()
      */
     final public function flipVertically()
     {
@@ -269,7 +269,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::thumbnail()
+     * @see Imagine\ImageInterface::thumbnail()
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -309,7 +309,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::draw()
+     * @see Imagine\ImageInterface::draw()
      */
     public function draw()
     {
@@ -318,7 +318,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::getSize()
+     * @see Imagine\ImageInterface::getSize()
      */
     public function getSize()
     {
