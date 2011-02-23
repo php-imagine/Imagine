@@ -11,6 +11,8 @@ namespace Imagine\Filter;
  * file that was distributed with this source code.
  */
 
+use Imagine\Point;
+
 use Imagine\Color;
 use Imagine\Box;
 use Imagine\ImageInterface;
@@ -84,5 +86,46 @@ class TransformationTest extends FilterTestCase
             ->save($path);
 
         $this->assertSame($thumbnail, $transformation->apply($image));
+    }
+
+    public function testCropFlipPasteShow()
+    {
+        $img1  = $this->getImage();
+        $img2  = $this->getImage();
+        $start = new Point(0, 0);
+        $size  = new Box(50, 50);
+
+        $img1->expects($this->once())
+            ->method('paste')
+            ->with($img2, $start)
+            ->will($this->returnValue($img1));
+
+        $img1->expects($this->once())
+            ->method('show')
+            ->with('png')
+            ->will($this->returnValue($img1));
+
+        $img2->expects($this->once())
+            ->method('flipHorizontally')
+            ->will($this->returnValue($img2));
+
+        $img2->expects($this->once())
+            ->method('flipVertically')
+            ->will($this->returnValue($img2));
+
+        $img2->expects($this->once())
+            ->method('crop')
+            ->with($start, $size)
+            ->will($this->returnValue($img2));
+
+        $transformation2 = new Transformation();
+        $transformation2->flipHorizontally()
+            ->flipVertically()
+            ->crop($start, $size);
+
+        $transformation1 = new Transformation();
+        $transformation1->paste($transformation2->apply($img2), $start)
+            ->show('png')
+            ->apply($img1);
     }
 }
