@@ -92,11 +92,11 @@ interface ImageInterface
 
     /**
      * Saves the image at a specified path, the target file extension is used
-     * to determine file format, only jpg, jpeg, gif, png, wbmp and xbm
-     * The $quality parameter is only relevant for JPEG/JPG images
+     * to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are
+     * supported
      *
-     * @param string  $path
-     * @param integer $quality
+     * @param string $path
+     * @param array  $options
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -106,10 +106,9 @@ interface ImageInterface
 
     /**
      * Outputs the image content
-     * The $quality parameter is only relevant for JPEG/JPG images
      *
-     * @param string  $format
-     * @param integer $quality
+     * @param string $format
+     * @param array  $options
      *
      * @throws Imagine\Exception\RuntimeException
      *
