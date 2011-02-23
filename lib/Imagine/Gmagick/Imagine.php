@@ -38,7 +38,7 @@ class Imagine implements ImagineInterface
             ));
         }
 
-        return new Image(new \Gmagick($path), $this);
+        return new Image(new \Gmagick($path));
     }
 
     /**
@@ -63,6 +63,17 @@ class Imagine implements ImagineInterface
         // this is needed to propagate transparency
         $gmagick->setimagebackgroundcolor($pixel);
 
-        return new Image($gmagick, $this);
+        return new Image($gmagick);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImagineInterface::load()
+     */
+    public function load($string)
+    {
+        $gmagick = new \Gmagick();
+        $gmagick->readimageblob($string);
+        return new Image($gmagick);
     }
 }

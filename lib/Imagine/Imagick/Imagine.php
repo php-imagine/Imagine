@@ -79,4 +79,21 @@ final class Imagine implements ImagineInterface
             );
         }
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImagineInterface::load()
+     */
+    public function load($string)
+    {
+        try {
+            $imagick = new \Imagick();
+            $imagick->readImageBlob($string);
+            return new Image($imagick);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                sprintf('Could not open path "%s"', $path), $e->getCode(), $e
+            );
+        }
+    }
 }

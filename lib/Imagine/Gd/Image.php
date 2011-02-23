@@ -350,11 +350,7 @@ final class Image implements ImageInterface
 
         $save = 'image'.$format;
 
-        $args = array($this->resource);
-
-        if (null !== $filename) {
-            $args[] = $filename;
-        }
+        $args = array($this->resource, $filename);
 
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
@@ -422,12 +418,13 @@ final class Image implements ImageInterface
      */
     private function supported(&$format = null)
     {
-        $format  = strtolower($format);
         $formats = array('gif', 'jpeg', 'png', 'wbmp', 'xbm');
 
         if (null === $format) {
             return $formats;
         }
+
+        $format  = strtolower($format);
 
         if ('jpg' === $format) {
             $format = 'jpeg';

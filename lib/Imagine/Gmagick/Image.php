@@ -29,20 +29,13 @@ class Image implements ImageInterface
     private $gmagick;
 
     /**
-     * @var Imagine
-     */
-    private $imagine;
-
-    /**
      * Constructs Image with Gmagick and Imagine instances
      *
      * @param Gmagick $gmagick
-     * @param Imagine $imagine
      */
-    public function __construct(\Gmagick $gmagick, Imagine $imagine)
+    public function __construct(\Gmagick $gmagick)
     {
         $this->gmagick = $gmagick;
-        $this->imagine = $imagine;
     }
 
     /**
@@ -62,7 +55,7 @@ class Image implements ImageInterface
      */
     public function copy()
     {
-        return new self(clone $this->gmagick, $this->imagine);
+        return new self(clone $this->gmagick);
     }
 
     /**
