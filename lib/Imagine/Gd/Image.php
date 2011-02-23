@@ -418,12 +418,13 @@ final class Image implements ImageInterface
      */
     private function supported(&$format = null)
     {
-        $format  = strtolower($format);
         $formats = array('gif', 'jpeg', 'png', 'wbmp', 'xbm');
 
         if (null === $format) {
             return $formats;
         }
+
+        $format  = strtolower($format);
 
         if ('jpg' === $format) {
             $format = 'jpeg';
