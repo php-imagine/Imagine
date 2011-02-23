@@ -123,7 +123,7 @@ final class Imagine implements ImagineInterface
 
         $resource = call_user_func('imagecreatefrom'.$format, $path);
 
-        if (false === $resource) {
+        if (!is_resource($resource)) {
             throw new RuntimeException(sprintf(
                 'File "%s" could not be opened', $path
             ));
