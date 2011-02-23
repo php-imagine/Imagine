@@ -25,10 +25,12 @@ interface DrawerInterface
      * start and end angles
      *
      * @param Imagine\PointInterface $center
-     * @param Imagine\BoxInterface       $size
-     * @param integer                               $start
-     * @param integer                               $end
-     * @param Imagine\Color                         $color
+     * @param Imagine\BoxInterface   $size
+     * @param integer                $start
+     * @param integer                $end
+     * @param Imagine\Color          $color
+     *
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
@@ -38,11 +40,13 @@ interface DrawerInterface
      * Same as arc, but also connects end points with a straight line
      *
      * @param Imagine\PointInterface $center
-     * @param Imagine\BoxInterface       $size
-     * @param integer                               $start
-     * @param integer                               $end
-     * @param Imagine\Color                         $color
-     * @param Boolean                               $fill
+     * @param Imagine\BoxInterface   $size
+     * @param integer                $start
+     * @param integer                $end
+     * @param Imagine\Color          $color
+     * @param Boolean                $fill
+     *
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
@@ -53,20 +57,22 @@ interface DrawerInterface
      * width and height
      *
      * @param Imagine\PointInterface $center
-     * @param Imagine\BoxInterface       $size
-     * @param Imagine\Color                         $color
-     * @param Boolean                               $fill
+     * @param Imagine\BoxInterface   $size
+     * @param Imagine\Color          $color
+     * @param Boolean                $fill
+     *
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
     function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false);
 
     /**
-     * Draws a line from x1, y1 to x2, y2 coordinates
+     * Draws a line from start(x, y) to end(x, y) coordinates
      *
      * @param Imagine\PointInterface $start
      * @param Imagine\PointInterface $end
-     * @param Imagine\Color                         $outline
+     * @param Imagine\Color          $outline
      *
      * @return Imagine\Draw\DrawerInterface
      */
@@ -76,11 +82,13 @@ interface DrawerInterface
      * Same as arc, but connects end points and the center
      *
      * @param Imagine\PointInterface $center
-     * @param Imagine\BoxInterface       $size
-     * @param integer                               $start
-     * @param integer                               $end
-     * @param Imagine\Color                         $color
-     * @param Boolean                               $fill
+     * @param Imagine\BoxInterface   $size
+     * @param integer                $start
+     * @param integer                $end
+     * @param Imagine\Color          $color
+     * @param Boolean                $fill
+     *
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
@@ -91,7 +99,9 @@ interface DrawerInterface
      * specified color
      *
      * @param Imagine\PointInterface $position
-     * @param Imagine\Color                         $color
+     * @param Imagine\Color          $color
+     *
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
@@ -104,6 +114,8 @@ interface DrawerInterface
      * @param array         $coordinates
      * @param Imagine\Color $color
      * @param Boolean       $fill
+     *
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
@@ -119,6 +131,8 @@ interface DrawerInterface
      * @param Imagine\Font           $font
      * @param Imagine\PointInterface $position
      * @param integer                $angle
+     *
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */

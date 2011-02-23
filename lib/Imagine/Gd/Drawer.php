@@ -11,15 +11,14 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Font;
-
-use Imagine\Color;
-use Imagine\PointInterface;
 use Imagine\BoxInterface;
+use Imagine\Color;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Font;
+use Imagine\PointInterface;
 
 final class Drawer implements DrawerInterface
 {

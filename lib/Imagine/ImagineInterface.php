@@ -21,9 +21,10 @@ interface ImagineInterface
      * Creates a new empty image with an optional background color
      *
      * @param Imagine\BoxInterface $size
-     * @param Imagine\Color                    $color
+     * @param Imagine\Color        $color
      *
      * @throws Imagine\Exception\InvalidArgumentException
+     * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\ImageInterface
      */
