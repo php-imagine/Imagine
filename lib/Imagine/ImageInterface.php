@@ -11,13 +11,13 @@
 
 namespace Imagine;
 
-use Imagine\PointInterface;
 use Imagine\BoxInterface;
 use Imagine\Draw\DrawerInterface;
-use Imagine\Gd\Image;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Mask\MaskInterface;
+use Imagine\PointInterface;
 
 interface ImageInterface
 {
@@ -184,4 +184,13 @@ interface ImageInterface
      * @return Imagine\BoxInterface
      */
     function getSize();
+
+    /**
+     * Applies a given mask to current image's alpha channel
+     *
+     * @param Imagine\Mask\MaskInterface $mask
+     *
+     * @return Imagine\ImageInterface
+     */
+    function applyMask(MaskInterface $mask);
 }
