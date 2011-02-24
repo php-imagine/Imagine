@@ -29,11 +29,6 @@ final class Image implements ImageInterface
     private $imagick;
 
     /**
-     * @var Imagine
-     */
-    private $imagine;
-
-    /**
      * Constructs Image with Imagick and Imagine instances
      *
      * @param Imagick $imagick
