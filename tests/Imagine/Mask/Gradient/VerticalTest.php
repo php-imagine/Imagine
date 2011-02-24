@@ -13,7 +13,7 @@ namespace Imagine\Mask\Gradient;
 
 use Imagine\Point;
 
-class VarticalTest extends LinearTest
+class VerticalTest extends LinearTest
 {
     /**
      * (non-PHPdoc)
