@@ -11,6 +11,10 @@
 
 namespace Imagine;
 
+use Imagine\Mask\Gradient\Horizontal;
+
+use Imagine\Mask\Gradient\Vertical;
+
 use Imagine\Point;
 use Imagine\Point\Center;
 use Imagine\Box;
@@ -113,6 +117,41 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(300, $size->getHeight());
 
         unlink('tests/Imagine/Fixtures/blank.png');
+    }
+
+    public function testCreateTransparentGradient()
+    {
+        $factory = $this->getImagine();
+
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image->copy()
+            ->applyMask(new Horizontal($image->getSize()->getWidth()))
+            ->save('tests/Imagine/Fixtures/transparent.png');
+
+        $image = $factory->open('tests/Imagine/Fixtures/transparent.png');
+        $size  = $image->getSize();
+
+        $this->assertEquals(364, $size->getWidth());
+        $this->assertEquals(126, $size->getHeight());
+
+        unlink('tests/Imagine/Fixtures/transparent.png');
+
+        $size = new Box(100, 50);
+        $image = $factory->create($size, new Color('f00'));
+        $image->paste(
+            $factory->create($size, new Color('ff0'))
+                ->applyMask(new Horizontal(100)),
+            new Point(0, 0)
+            )
+        ->save('tests/Imagine/Fixtures/color.png');
+
+        $image = $factory->open('tests/Imagine/Fixtures/color.png');
+        $size  = $image->getSize();
+
+        $this->assertEquals(100, $size->getWidth());
+        $this->assertEquals(50, $size->getHeight());
+
+        unlink('tests/Imagine/Fixtures/color.png');
     }
 
     abstract protected function getImagine();
