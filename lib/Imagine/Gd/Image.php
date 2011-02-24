@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Mask\MaskInterface;
+
 use Imagine\Box;
 use Imagine\BoxInterface;
 use Imagine\Color;
@@ -132,10 +134,16 @@ final class Image implements ImageInterface
             );
         }
 
-        if (false === imagecopymerge($this->resource, $image->resource, $start->getX(), $start->getY(),
-            0, 0, $size->getWidth(), $size->getHeight(), 100)) {
+        imagealphablending($this->resource, true);
+        imagealphablending($image->resource, true);
+
+        if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(),
+            0, 0, $size->getWidth(), $size->getHeight())) {
             throw new RuntimeException('Image paste operation failed');
         }
+
+        imagealphablending($this->resource, false);
+        imagealphablending($image->resource, false);
 
         return $this;
     }
@@ -343,6 +351,33 @@ final class Image implements ImageInterface
     public function getSize()
     {
         return new Box(imagesx($this->resource), imagesy($this->resource));
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::applyMask()
+     */
+    public function applyMask(MaskInterface $mask)
+    {
+        $width  = imagesx($this->resource);
+        $height = imagesy($this->resource);
+
+        for ($x = 0; $x < $width; $x++) {
+            for ($y = 0; $y < $height; $y++) {
+                $color = imagecolorat($this->resource, $x, $y);
+                $info  = imagecolorsforindex($this->resource, $color);
+                $color = imagecolorallocatealpha(
+                    $this->resource,
+                    $info['red'],
+                    $info['green'],
+                    $info['blue'],
+                    round((127 - $info['alpha']) * ($mask->getShade(new Point($x, $y)) / 255))
+                );
+                imagesetpixel($this->resource, $x, $y, $color);
+            }
+        }
+
+        return $this;
     }
 
     /**
