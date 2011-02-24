@@ -29,3 +29,7 @@ Available Methods
 * ``->thumbnail($width, $height, $mode = self::THUMBNAIL_INSET)`` - prepares an image thumbnail, based on the target dimensions, while preserving proportions. The thumbnail operation returns a new ``ImageInterface`` instance that is a processed copy of the original (the source image is not modified). If thumbnail mode is ``ImageInterface::THUMBNAIL_INSET``, the original image is scaled down so it is fully contained within the thumbnail dimensions. The specified ``$width`` and ``$height`` will be considered maximum limits. Unless the given dimensions are equal to the original image's aspect ratio, one dimension in the resulting thumbnail will be smaller than the given limit. If ``ImageInterface::THUMBNAIL_OUTBOUND`` mode is chosen, then the thumbnail is scaled so that its smallest side equals the length of the corresponding side in the original image. Any excess outside of the scaled thumbnail's area will be cropped, and the returned thumbnail will have the exact ``$width`` and ``$height`` specified.
 
 * ``->getSize()`` - returns ``Imagine\BoxInterface`` instance, that represents current image's size
+
+* ``->get($format, array $options = array())`` - gets image binary as string
+
+* ``->__toString()`` - returns image string in ``png`` format
