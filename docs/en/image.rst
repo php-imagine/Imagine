@@ -33,3 +33,9 @@ Available Methods
 * ``->get($format, array $options = array())`` - gets image binary as string
 
 * ``->__toString()`` - returns image string in ``png`` format
+
+* ``->applyMask(ImageInterface $mask)`` - applies a grayscale image as a transparency mask to current image
+
+* ``->mask()`` - returns a masked copy of current image - masks are grayscale and don't have any transparency
+
+* ``fill(FillInterface $fill)`` - applies a fill to every pixel in the image, this is rather expensive in performace, as it iterates through every pixel on the image, but gives control to fine-tune the image fill
