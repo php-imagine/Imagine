@@ -17,9 +17,11 @@ use Imagine\Color;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Fill\FillInterface;
 use Imagine\ImageInterface;
 use Imagine\Imagick\Imagine;
 use Imagine\Mask\MaskInterface;
+use Imagine\Point;
 use Imagine\PointInterface;
 
 final class Image implements ImageInterface
@@ -155,6 +157,7 @@ final class Image implements ImageInterface
         }
 
         try {
+
             $this->imagick->compositeImage(
                 $image->imagick, \Imagick::COMPOSITE_DEFAULT, $x, $y
             );
@@ -336,10 +339,96 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::applyMask()
+     * @see Imagine\ImageInterface::applyMask()
      */
     public function applyMask(ImageInterface $mask)
     {
+        if (!$mask instanceof self) {
+            throw new InvalidArgumentException(
+                'Can only apply instances of Imagine\Imagick\Image as masks'
+            );
+        }
+
+        $size = $this->getSize();
+        $maskSize = $mask->getSize();
+
+        if ($size != $maskSize) {
+            throw new InvalidArgumentException(sprintf(
+                'The given mask doesn\'t match current image\'s sise, Current '.
+                'mask\'s dimensions are %s, while image\'s dimensions are %s',
+                $maskSize, $size
+            ));
+        }
+
+        $mask = $mask->mask();
+
+        $mask->imagick->negateImage(true);
+
+        try {
+            $this->imagick->compositeImage(
+                $mask->imagick,
+                \Imagick::COMPOSITE_COPYOPACITY,
+                0, 0
+            );
+
+            $mask->imagick->clear();
+            $mask->imagick->destroy();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Apply mask operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::mask()
+     */
+    public function mask()
+    {
+        $mask = $this->copy();
+
+        try {
+            $mask->imagick->modulateImage(100, 0, 100);
+            $mask->imagick->setImageMatte(false);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Mask operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $mask;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::fill()
+     */
+    public function fill(FillInterface $fill)
+    {
+        try {
+            $iterator = $this->imagick->getPixelIterator();
+
+            foreach ($iterator as $y => $pixels) {
+                foreach ($pixels as $x => $pixel) {
+                    $color = $fill->getColor(new Point($x, $y));
+
+                    $pixel->setColor((string) $color);
+                    $pixel->setColorValue(
+                        \Imagick::COLOR_OPACITY,
+                        number_format(abs(round($color->getAlpha() / 100, 1)), 1)
+                    );
+                }
+
+                $iterator->syncIterator();
+            }
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Fill operation failed', $e->getCode(), $e
+            );
+        }
 
         return $this;
     }
