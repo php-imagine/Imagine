@@ -150,5 +150,23 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/color.png');
     }
 
+    public function testMask()
+    {
+        $factory = $this->getImagine();
+
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+
+        $image->applyMask($image->mask())
+            ->save('tests/Imagine/Fixtures/mask.png');
+
+        $size = $factory->open('tests/Imagine/Fixtures/mask.png')
+            ->getSize();
+
+        $this->assertEquals(364, $size->getWidth());
+        $this->assertEquals(126, $size->getHeight());
+
+        unlink('tests/Imagine/Fixtures/mask.png');
+    }
+
     abstract protected function getImagine();
 }
