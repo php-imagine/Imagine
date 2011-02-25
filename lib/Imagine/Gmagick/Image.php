@@ -11,6 +11,10 @@
 
 namespace Imagine\Gmagick;
 
+use Imagine\Point;
+
+use Imagine\Fill\FillInterface;
+
 use Imagine\Color;
 use Imagine\PointInterface;
 use Imagine\Box;
@@ -202,10 +206,11 @@ class Image implements ImageInterface
     public function rotate($angle, Color $background = null)
     {
         try {
-            $this->gmagick->rotateimage(
-                $this->getColor($background),
-                $angle
-            );
+            $pixel = $this->getColor($background);
+
+            $this->gmagick->rotateimage($pixel, $angle);
+
+            $pixel = null;
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Rotate operation failed', $e->getCode(), $e
@@ -319,10 +324,107 @@ class Image implements ImageInterface
      */
     public function getSize()
     {
-        return new Box(
-            $this->gmagick->getimagewidth(),
-            $this->gmagick->getimageheight()
-        );
+        try {
+            $width  = $this->gmagick->getimagewidth();
+            $height = $this->gmagick->getimageheight();
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Get size operation failed', $e->getCode(), $e
+            );
+        }
+        return new Box($width, $height);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::applyMask()
+     */
+    public function applyMask(ImageInterface $mask)
+    {
+        if (!$mask instanceof self) {
+            throw new InvalidArgumentException(
+                'Can only apply instances of Imagine\Gmagick\Image as masks'
+            );
+        }
+
+        $size = $this->getSize();
+        $maskSize = $mask->getSize();
+
+        if ($size != $maskSize) {
+            throw new InvalidArgumentException(sprintf(
+                'The given mask doesn\'t match current image\'s sise, current '.
+                'mask\'s dimensions are %s, while image\'s dimensions are %s',
+                $maskSize, $size
+            ));
+        }
+
+        try {
+            $mask = $mask->copy();
+
+            $this->gmagick->compositeimage(
+                $mask->gmagick,
+                \Gmagick::COMPOSITE_DEFAULT,
+                0, 0
+            );
+        } catch (\Exception $e) {
+            throw new RuntimeException(
+                'Apply mask operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::mask()
+     */
+    public function mask()
+    {
+        $mask = $this->copy();
+
+        try {
+            $mask->gmagick->modulateimage(100, 0, 100);
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Mask operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $mask;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::fill()
+     */
+    public function fill(FillInterface $fill)
+    {
+        try {
+            $draw = new \GmagickDraw();
+            $size = $this->getSize();
+
+            for ($x = 0; $x <= $size->getWidth(); $x++) {
+                for ($y = 0; $y <= $size->getHeight(); $y++) {
+                    $pixel = $this->getColor($fill->getColor(new Point($x, $y)));
+
+                    $draw->setfillcolor($pixel);
+                    $draw->point($x, $y);
+
+                    $pixel = null;
+                }
+            }
+
+            $this->gmagick->drawimage($draw);
+
+            $draw = null;
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Fill operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $this;
     }
 
     /**
