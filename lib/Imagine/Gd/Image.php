@@ -357,7 +357,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::applyMask()
+     * @see Imagine\ImageInterface::applyMask()
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -382,13 +382,19 @@ final class Image implements ImageInterface
                 $info      = imagecolorsforindex($this->resource, $color);
                 $maskColor = $color = imagecolorat($mask->resource, $x, $y);
                 $maskInfo  = imagecolorsforindex($mask->resource, $maskColor);
-                imagesetpixel($this->resource, $x, $y, imagecolorallocatealpha(
+                if (false === imagesetpixel(
                     $this->resource,
-                    $info['red'],
-                    $info['green'],
-                    $info['blue'],
-                    round((127 - $info['alpha']) * $maskInfo['red'] / 255)
-                ));
+                    $x, $y,
+                    imagecolorallocatealpha(
+                        $this->resource,
+                        $info['red'],
+                        $info['green'],
+                        $info['blue'],
+                        round((127 - $info['alpha']) * $maskInfo['red'] / 255)
+                    )
+                )) {
+                    throw new RuntimeException('Apply mask operation failed');
+                }
             }
         }
 
@@ -397,7 +403,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::fill()
+     * @see Imagine\ImageInterface::fill()
      */
     public function fill(FillInterface $fill)
     {
@@ -405,9 +411,13 @@ final class Image implements ImageInterface
 
         for ($x = 0; $x < $size->getWidth(); $x++) {
             for ($y = 0; $y < $size->getHeight(); $y++) {
-                imagesetpixel($this->resource, $x, $y, $this->getColor(
-                    $fill->getColor(new Point($x, $y))
-                ));
+                if (false === imagesetpixel(
+                    $this->resource,
+                    $x, $y,
+                    $this->getColor($fill->getColor(new Point($x, $y))))
+                ) {
+                    throw new RuntimeException('Fill operation failed');
+                }
             }
         }
 
@@ -416,13 +426,15 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine.ImageInterface::mask()
+     * @see Imagine\ImageInterface::mask()
      */
     public function mask()
     {
         $mask = $this->copy();
 
-        imagefilter($mask->resource, IMG_FILTER_GRAYSCALE);
+        if (false === imagefilter($mask->resource, IMG_FILTER_GRAYSCALE)) {
+            throw new RuntimeException('Mask operation failed');
+        }
 
         return $mask;
     }
