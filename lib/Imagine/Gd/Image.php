@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Fill\FillInterface;
+
 use Imagine\Mask\MaskInterface;
 
 use Imagine\Box;
@@ -357,27 +359,72 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine.ImageInterface::applyMask()
      */
-    public function applyMask(MaskInterface $mask)
+    public function applyMask(ImageInterface $mask)
     {
-        $width  = imagesx($this->resource);
-        $height = imagesy($this->resource);
+        if (!$mask instanceof self) {
+            throw new InvalidArgumentException('Cannot mask non-gd images');
+        }
 
-        for ($x = 0; $x < $width; $x++) {
-            for ($y = 0; $y < $height; $y++) {
-                $color = imagecolorat($this->resource, $x, $y);
-                $info  = imagecolorsforindex($this->resource, $color);
-                $color = imagecolorallocatealpha(
+        $size = $this->getSize();
+        $maskSize = $mask->getSize();
+
+        if ($size != $maskSize) {
+            throw new InvalidArgumentException(sprintf(
+                'The given mask doesn\'t match current image\'s sise, Current '.
+                'mask\'s dimensions are %s, while image\'s dimensions are %s',
+                $maskSize, $size
+            ));
+        }
+
+        for ($x = 0; $x < $size->getWidth(); $x++) {
+            for ($y = 0; $y < $size->getHeight(); $y++) {
+                $color     = imagecolorat($this->resource, $x, $y);
+                $info      = imagecolorsforindex($this->resource, $color);
+                $maskColor = $color = imagecolorat($mask->resource, $x, $y);
+                $maskInfo  = imagecolorsforindex($mask->resource, $maskColor);
+                imagesetpixel($this->resource, $x, $y, imagecolorallocatealpha(
                     $this->resource,
                     $info['red'],
                     $info['green'],
                     $info['blue'],
-                    round((127 - $info['alpha']) * ($mask->getShade(new Point($x, $y)) / 255))
-                );
-                imagesetpixel($this->resource, $x, $y, $color);
+                    round((127 - $info['alpha']) * $maskInfo['red'] / 255)
+                ));
             }
         }
 
         return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::fill()
+     */
+    public function fill(FillInterface $fill)
+    {
+        $size = $this->getSize();
+
+        for ($x = 0; $x < $size->getWidth(); $x++) {
+            for ($y = 0; $y < $size->getHeight(); $y++) {
+                imagesetpixel($this->resource, $x, $y, $this->getColor(
+                    $fill->getColor(new Point($x, $y))
+                ));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::mask()
+     */
+    public function mask()
+    {
+        $mask = $this->copy();
+
+        imagefilter($mask->resource, IMG_FILTER_GRAYSCALE);
+
+        return $mask;
     }
 
     /**
@@ -447,7 +494,7 @@ final class Image implements ImageInterface
      */
     private function getColor(Color $color)
     {
-        $color = imagecolorallocatealpha(
+        $c = imagecolorallocatealpha(
             $this->resource, $color->getRed(), $color->getGreen(),
             $color->getBlue(), round(127 * $color->getAlpha() / 100)
         );
@@ -459,7 +506,7 @@ final class Image implements ImageInterface
             ));
         }
 
-        return $color;
+        return $c;
     }
 
     /**

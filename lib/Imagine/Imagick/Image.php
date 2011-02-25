@@ -19,6 +19,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\ImageInterface;
 use Imagine\Imagick\Imagine;
+use Imagine\Mask\MaskInterface;
 use Imagine\PointInterface;
 
 final class Image implements ImageInterface
@@ -331,6 +332,16 @@ final class Image implements ImageInterface
         }
 
         return new Box($width, $height);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine.ImageInterface::applyMask()
+     */
+    public function applyMask(ImageInterface $mask)
+    {
+
+        return $this;
     }
 
     /**

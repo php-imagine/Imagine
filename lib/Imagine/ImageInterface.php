@@ -11,12 +11,13 @@
 
 namespace Imagine;
 
+use Imagine\Fill\FillInterface;
+
 use Imagine\BoxInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Mask\MaskInterface;
 use Imagine\PointInterface;
 
 interface ImageInterface
@@ -188,9 +189,28 @@ interface ImageInterface
     /**
      * Applies a given mask to current image's alpha channel
      *
-     * @param Imagine\Mask\MaskInterface $mask
+     * @param Imagine\ImageInterface $mask
      *
      * @return Imagine\ImageInterface
      */
-    function applyMask(MaskInterface $mask);
+    function applyMask(ImageInterface $mask);
+
+    /**
+     * Transforms creates a grayscale mask from current image, returns a new
+     * image, while keeping the existing image unmodified
+     *
+     * @return Imagine\ImageInterface
+     */
+    function mask();
+
+    /**
+     * Fills image with provided filling, by replacing each pixel's color in
+     * the current image with corresponding color from FillInterface, and
+     * returns modified image
+     *
+     * @param Imagine\Fill\FillInterface $fill
+     *
+     * @return Imagine\ImageInterface
+     */
+    function fill(FillInterface $fill);
 }

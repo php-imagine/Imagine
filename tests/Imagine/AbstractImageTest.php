@@ -11,9 +11,9 @@
 
 namespace Imagine;
 
-use Imagine\Mask\Gradient\Horizontal;
+use Imagine\Fill\Gradient\Horizontal;
 
-use Imagine\Mask\Gradient\Vertical;
+use Imagine\Fill\Gradient\Vertical;
 
 use Imagine\Point;
 use Imagine\Point\Center;
@@ -123,24 +123,20 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
     {
         $factory = $this->getImagine();
 
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
-        $image->copy()
-            ->applyMask(new Horizontal($image->getSize()->getWidth()))
-            ->save('tests/Imagine/Fixtures/transparent.png');
-
-        $image = $factory->open('tests/Imagine/Fixtures/transparent.png');
-        $size  = $image->getSize();
-
-        $this->assertEquals(364, $size->getWidth());
-        $this->assertEquals(126, $size->getHeight());
-
-        unlink('tests/Imagine/Fixtures/transparent.png');
-
         $size = new Box(100, 50);
         $image = $factory->create($size, new Color('f00'));
         $image->paste(
             $factory->create($size, new Color('ff0'))
-                ->applyMask(new Horizontal(100)),
+                ->applyMask(
+                    $factory->create($size)
+                        ->fill(
+                            new Horizontal(
+                                $image->getSize()->getWidth(),
+                                new Color('fff'),
+                                new Color('000')
+                            )
+                        )
+                ),
             new Point(0, 0)
             )
         ->save('tests/Imagine/Fixtures/color.png');
