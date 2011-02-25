@@ -40,7 +40,11 @@ final class Imagine implements ImagineInterface
         }
 
         try {
-            return new Image(new \Imagick($path));
+            $imagick = new \Imagick($path);
+
+            $imagick->setImageMatte(true);
+
+            return new Image($imagick);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 sprintf('Could not open path "%s"', $path), $e->getCode(), $e
@@ -68,6 +72,7 @@ final class Imagine implements ImagineInterface
 
             $imagick = new \Imagick();
             $imagick->newImage($width, $height, $pixel);
+            $imagick->setImageMatte(true);
 
             $pixel->clear();
             $pixel->destroy();
@@ -88,11 +93,14 @@ final class Imagine implements ImagineInterface
     {
         try {
             $imagick = new \Imagick();
+
             $imagick->readImageBlob($string);
+            $imagick->setImageMatte(true);
+
             return new Image($imagick);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
-                sprintf('Could not open path "%s"', $path), $e->getCode(), $e
+                'Could not load image from string', $e->getCode(), $e
             );
         }
     }
