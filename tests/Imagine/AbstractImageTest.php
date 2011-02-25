@@ -122,9 +122,9 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
     public function testCreateTransparentGradient()
     {
         $factory = $this->getImagine();
+        $size    = new Box(100, 50);
+        $image   = $factory->create($size, new Color('f00'));
 
-        $size = new Box(100, 50);
-        $image = $factory->create($size, new Color('f00'));
         $image->paste(
             $factory->create($size, new Color('ff0'))
                 ->applyMask(
@@ -138,7 +138,7 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
                         )
                 ),
             new Point(0, 0)
-            )
+        )
         ->save('tests/Imagine/Fixtures/color.png');
 
         $image = $factory->open('tests/Imagine/Fixtures/color.png');
