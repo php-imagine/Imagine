@@ -68,9 +68,10 @@ final class Imagine implements ImagineInterface
         $color = $color ? $color : new Color('fff');
 
         if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
+            false === imagesavealpha($resource, true) ||
+            false === imageantialias($resource, true)) {
             throw new RuntimeException(
-                'Could not set alphablending and savealpha values'
+                'Could not set alphablending, savealpha and antialias values'
             );
         }
 
@@ -130,11 +131,14 @@ final class Imagine implements ImagineInterface
         }
 
         if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
+            false === imagesavealpha($resource, true) ||
+            false === imageantialias($resource, true)) {
             throw new RuntimeException(
-                'Could not set alphablending and savealpha values'
+                'Could not set alphablending, savealpha and antialias values'
             );
         }
+
+        imageantialias($resource, true);
 
         return new Image($resource);
     }
@@ -151,15 +155,15 @@ final class Imagine implements ImagineInterface
             throw new InvalidArgumentException('An image could not be created from the given input');
         }
 
-        $width = imagesx($resource);
-        $height = imagesy($resource);
-
         if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
+            false === imagesavealpha($resource, true) ||
+            false === imageantialias($resource, true)) {
             throw new RuntimeException(
-                'Could not set alphablending and savealpha values'
+                'Could not set alphablending, savealpha and antialias values'
             );
         }
+
+        imageantialias($resource, true);
 
         return new Image($resource);
     }
