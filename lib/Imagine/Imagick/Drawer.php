@@ -236,7 +236,7 @@ final class Drawer implements DrawerInterface
                 true
             );
         } else {
-            $this->arc($center, $width, $height, $start, $end, $color);
+            $this->arc($center, $size, $start, $end, $color);
             $this->line($center, new Point($x1, $y1), $color);
             $this->line($center, new Point($x2, $y2), $color);
         }

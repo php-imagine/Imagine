@@ -64,11 +64,11 @@ abstract class Linear implements FillInterface
         }
 
         $color = new Color(array(
-                (int) round(abs($this->end->getRed() - $this->start->getRed()) * $l / $this->length),
-                (int) round(abs($this->end->getGreen() - $this->start->getGreen()) * $l / $this->length),
-                (int) round(abs($this->end->getBlue() - $this->start->getBlue()) * $l / $this->length),
+                (int) min(255, min($this->start->getRed(), $this->end->getRed()) + round(abs($this->end->getRed() - $this->start->getRed()) * $l / $this->length)),
+                (int) min(255, min($this->start->getGreen(), $this->end->getGreen()) + round(abs($this->end->getGreen() - $this->start->getGreen()) * $l / $this->length)),
+                (int) min(255, min($this->start->getBlue(), $this->end->getBlue()) + round(abs($this->end->getBlue() - $this->start->getBlue()) * $l / $this->length)),
             ),
-            (int) round(abs($this->end->getAlpha() - $this->start->getAlpha()) * $l / $this->length)
+            (int) min(100, min($this->start->getAlpha(), $this->end->getAlpha()) + round(abs($this->end->getAlpha() - $this->start->getAlpha()) * $l / $this->length))
         );
 
         return $color;
