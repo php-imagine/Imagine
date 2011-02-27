@@ -104,8 +104,8 @@ final class Color
     }
 
     /**
-     * Returns a copy of the current color, darkened by the specified number of
-     * shades
+     * Returns a copy of the current color, lightened by the specified number
+     * of shades
      *
      * @param integer $shade
      *
