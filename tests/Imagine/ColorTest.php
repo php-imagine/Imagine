@@ -104,4 +104,28 @@ class ColorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Color('#fff'), new Color('ffffff'));
         $this->assertEquals(new Color('fff'), new Color('#ffffff'));
     }
+
+    public function testShouldLigtenColor()
+    {
+        $color = new Color('000');
+
+        $this->assertEquals(new Color('222'), $color->lighten(34));
+        $this->assertEquals(new Color('fff'), $color->lighten(300));
+    }
+
+    public function testShouldDarnenColor()
+    {
+        $color = new Color('fff');
+
+        $this->assertEquals(new Color('ddd'), $color->darken(34));
+        $this->assertEquals(new Color('000'), $color->darken(300));
+    }
+
+    public function testShouldDissolveColor()
+    {
+        $color = new Color('fff');
+
+        $this->assertEquals(new Color('fff', 50), $color->dissolve(50));
+        $this->assertEquals(new Color('fff'), $color->dissolve(100)->dissolve(-100));
+    }
 }

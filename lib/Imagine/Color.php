@@ -91,6 +91,59 @@ final class Color
     }
 
     /**
+     * Returns a copy of current color, incrementing the alpha channel by the
+     * given amount
+     *
+     * @param integer $alpha
+     *
+     * @return Imagine\Color
+     */
+    public function dissolve($alpha)
+    {
+        return new Color((string) $this, $this->alpha + $alpha);
+    }
+
+    /**
+     * Returns a copy of the current color, darkened by the specified number of
+     * shades
+     *
+     * @param integer $shade
+     *
+     * @retun Imagine\Color
+     */
+    public function lighten($shade)
+    {
+        return new Color(
+            array(
+                min(255, $this->r + $shade),
+                min(255, $this->g + $shade),
+                min(255, $this->b + $shade),
+            ),
+            $this->alpha
+        );
+    }
+
+    /**
+     * Returns a copy of the current color, darkened by the specified number of
+     * shades
+     *
+     * @param integer $shade
+     *
+     * @retun Imagine\Color
+     */
+    public function darken($shade)
+    {
+        return new Color(
+            array(
+                max(0, $this->r - $shade),
+                max(0, $this->g - $shade),
+                max(0, $this->b - $shade),
+            ),
+            $this->alpha
+        );
+    }
+
+    /**
      * Internal
      *
      * Performs checks for validity of given alpha value and sets it
