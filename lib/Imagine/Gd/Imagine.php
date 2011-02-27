@@ -68,11 +68,14 @@ final class Imagine implements ImagineInterface
         $color = $color ? $color : new Color('fff');
 
         if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true) ||
-            false === imageantialias($resource, true)) {
+            false === imagesavealpha($resource, true)) {
             throw new RuntimeException(
                 'Could not set alphablending, savealpha and antialias values'
             );
+        }
+
+        if (function_exists('imageantialias')) {
+            imageantialias($resource, true);
         }
 
         $color = imagecolorallocatealpha(
@@ -131,14 +134,15 @@ final class Imagine implements ImagineInterface
         }
 
         if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true) ||
-            false === imageantialias($resource, true)) {
+            false === imagesavealpha($resource, true)) {
             throw new RuntimeException(
                 'Could not set alphablending, savealpha and antialias values'
             );
         }
 
-        imageantialias($resource, true);
+        if (function_exists('imageantialias')) {
+            imageantialias($resource, true);
+        }
 
         return new Image($resource);
     }
@@ -156,14 +160,15 @@ final class Imagine implements ImagineInterface
         }
 
         if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true) ||
-            false === imageantialias($resource, true)) {
+            false === imagesavealpha($resource, true)) {
             throw new RuntimeException(
                 'Could not set alphablending, savealpha and antialias values'
             );
         }
 
-        imageantialias($resource, true);
+        if (function_exists('imageantialias')) {
+            imageantialias($resource, true);
+        }
 
         return new Image($resource);
     }

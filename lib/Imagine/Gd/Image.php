@@ -67,9 +67,12 @@ final class Image implements ImageInterface
         }
 
         if (false === imagealphablending($copy, false) ||
-            false === imagesavealpha($copy, true) ||
-            false === imageantialias($copy, true)) {
+            false === imagesavealpha($copy, true)) {
             throw new RuntimeException('Image copy operation failed');
+        }
+
+        if (function_exists('imageantialias')) {
+            imageantialias($copy, true);
         }
 
         if (false === imagecopymerge($copy, $this->resource, 0, 0, 0,
@@ -101,7 +104,10 @@ final class Image implements ImageInterface
 
         imagealphablending($dest, false);
         imagesavealpha($dest, true);
-        imageantialias($dest, true);
+
+        if (function_exists('imageantialias')) {
+            imageantialias($dest, true);
+        }
 
         if (false === imagecopymerge($dest, $this->resource, 0, 0,
             $start->getX(), $start->getY(), $width, $height, 100)) {
@@ -165,7 +171,10 @@ final class Image implements ImageInterface
 
         imagealphablending($dest, false);
         imagesavealpha($dest, true);
-        imageantialias($dest, true);
+
+        if (function_exists('imageantialias')) {
+            imageantialias($dest, true);
+        }
 
         if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
             $width, $height, imagesx($this->resource), imagesy($this->resource)
@@ -258,7 +267,10 @@ final class Image implements ImageInterface
 
         imagealphablending($dest, false);
         imagesavealpha($dest, true);
-        imageantialias($dest, true);
+
+        if (function_exists('imageantialias')) {
+            imageantialias($dest, true);
+        }
 
         for ($i = 0; $i < $width; $i++) {
             if (false === imagecopymerge($dest, $this->resource, $i, 0,
@@ -286,7 +298,10 @@ final class Image implements ImageInterface
 
         imagealphablending($dest, false);
         imagesavealpha($dest, true);
-        imageantialias($dest, true);
+
+        if (function_exists('imageantialias')) {
+            imageantialias($dest, true);
+        }
 
         for ($i = 0; $i < $height; $i++) {
             if (false === imagecopymerge($dest, $this->resource, 0, $i,
