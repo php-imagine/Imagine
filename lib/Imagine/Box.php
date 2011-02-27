@@ -75,6 +75,15 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
+     * @see Imagine\BoxInterface::increase()
+     */
+    public function increase($size)
+    {
+        return new Box($size + $this->width, $size + $this->height);
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see Imagine\BoxInterface::contains()
      */
     public function contains(BoxInterface $box, PointInterface $start = null)

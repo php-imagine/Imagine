@@ -108,12 +108,26 @@ class BoxTest extends \PHPUnit_Framework_TestCase
             array(new Box(50, 50), new Box(30, 30), new Point(20, 22), false),
         );
     }
-    
+
     /**
      * @cover Imagine\Box::__toString
      */
     public function testToString()
     {
         $this->assertEquals('100x100 px', (string) new Box(100, 100));
+    }
+
+    public function testShouldScaleBox()
+    {
+        $box = new Box(10, 20);
+
+        $this->assertEquals(new Box(100, 200), $box->scale(10));
+    }
+
+    public function testShouldIncreaseBox()
+    {
+        $box = new Box(10, 20);
+
+        $this->assertEquals(new Box(15, 25), $box->increase(5));
     }
 }
