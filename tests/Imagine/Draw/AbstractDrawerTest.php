@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Draw;
 
 use Imagine\Image\Box;
 use Imagine\Image\Color;

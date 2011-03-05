@@ -11,7 +11,7 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\AbstractDrawerTest;
+use Imagine\Draw\AbstractDrawerTest;
 
 class DrawerTest extends AbstractDrawerTest
 {
