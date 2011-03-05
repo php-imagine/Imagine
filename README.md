@@ -41,3 +41,7 @@ Some of the ideas for upcoming filters:
  - [Image](/avalanche123/Imagine/blob/master/docs/en/image.rst "Image")
  - [Drawing](/avalanche123/Imagine/blob/master/docs/en/drawing.rst "Drawing")
  - [Exceptions](/avalanche123/Imagine/blob/master/docs/en/exceptions.rst "Exceptions")
+
+## Presentations ##
+
+ - [Introduction to Imagine](http://www.slideshare.net/avalanche123/introduction-toimagine)
