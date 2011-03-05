@@ -11,14 +11,14 @@
 
 namespace Imagine\Gmagick;
 
-use Imagine\BoxInterface;
-use Imagine\Color;
 use Imagine\Draw\DrawerInterface;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\Image\Font;
+use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Font;
-use Imagine\Point;
-use Imagine\PointInterface;
 
 final class Drawer implements DrawerInterface
 {

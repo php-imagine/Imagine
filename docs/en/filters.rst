@@ -22,7 +22,7 @@ Example of a naive thumbnail implementation:
     <?php
     $transformation = new Imagine\Filter\Transformation();
     
-    $transformation->thumbnail(Imagine\Box(30, 30))
+    $transformation->thumbnail(Imagine\Image\Box(30, 30))
         ->save('/path/to/resized/thumbnail.jpg');
     
     $transformation->apply($imagine->open('/path/to/image.jpg'));
@@ -34,7 +34,7 @@ The result of ``apply()`` is the modified image instance itself, so if we wanted
     <?php
     $transformation = new Imagine\Filter\Transformation();
     
-    $transformation->thumbnail(Imagine\Box(30, 30));
+    $transformation->thumbnail(Imagine\Image\Box(30, 30));
     
     foreach (glob(/path/to/lots/of/images/*.jpg) as $path) {
         $transformation->apply($imagine->open($path))

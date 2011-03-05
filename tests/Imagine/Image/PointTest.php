@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
 class PointTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @covers Imagine\Point::getX
-	 * @covers Imagine\Point::getY
-	 * @covers Imagine\Point::in
+	 * @covers Imagine\Image\Point::getX
+	 * @covers Imagine\Image\Point::getY
+	 * @covers Imagine\Image\Point::in
 	 *
 	 * @dataProvider getCoordinates
 	 *
@@ -52,7 +52,7 @@ class PointTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Point::__construct
+     * @covers Imagine\Image\Point::__construct
      *
      * @expectedException Imagine\Exception\InvalidArgumentException
      *
@@ -80,7 +80,7 @@ class PointTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Point::__toString
+     * @covers Imagine\Image\Point::__toString
      */
     public function testToString()
     {

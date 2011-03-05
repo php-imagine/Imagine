@@ -11,14 +11,14 @@
 
 namespace Imagine\Gd;
 
-use Imagine\BoxInterface;
-use Imagine\Color;
 use Imagine\Draw\DrawerInterface;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\Image\Font;
+use Imagine\Image\PointInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Font;
-use Imagine\PointInterface;
 
 final class Drawer implements DrawerInterface
 {
@@ -175,7 +175,7 @@ final class Drawer implements DrawerInterface
             if (!$coordinate instanceof PointInterface) {
                 throw new InvalidArgumentException(sprintf(
                     'Each entry in coordinates array must be instance of '.
-                    'Imagine\PointInterface, %s given', var_export($coordinate)
+                    'Imagine\Image\PointInterface, %s given', var_export($coordinate)
                 ));
             }
 

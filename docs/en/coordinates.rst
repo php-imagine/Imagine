@@ -12,8 +12,8 @@ Classes
 
 The whole coordinate system is represented in a handful of classes, but most importantly - its interfaces:
 
-* ``Imagine\PointInterface`` - represents a single point in a bounding box
-* ``Imagine\BoxInterface`` - represents dimensions (width, height)
+* ``Imagine\Image\PointInterface`` - represents a single point in a bounding box
+* ``Imagine\Image\BoxInterface`` - represents dimensions (width, height)
 
 PointInterface
 -------------------
@@ -29,14 +29,14 @@ Center coordinate
 
 It is very well known use case when a coordinate is supposed to represent a center of something.
 
-As part of showing off OO approach to image processing, I added a simple implementation of the core ``Imagine\PointInterface``, which can be found at ``Imagine\Point\Center``. The way it works is simple, it expects and instance of ``Imagine\BoxInterface`` in its constructor and calculates the center position based on that.
+As part of showing off OO approach to image processing, I added a simple implementation of the core ``Imagine\Image\PointInterface``, which can be found at ``Imagine\Image\Point\Center``. The way it works is simple, it expects and instance of ``Imagine\Image\BoxInterface`` in its constructor and calculates the center position based on that.
 
 ::
 
     <?php
-    $size = new Imagine\Box(50, 50);
+    $size = new Imagine\Image\Box(50, 50);
     
-    $center = new Imagine\Point\Center($size);
+    $center = new Imagine\Image\Point\Center($size);
     
     var_dump(array(
         'x' => $center->getX(),

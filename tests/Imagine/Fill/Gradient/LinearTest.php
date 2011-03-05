@@ -11,8 +11,8 @@
 
 namespace Imagine\Fill\Gradient;
 
-use Imagine\Color;
-use Imagine\PointInterface;
+use Imagine\Image\Color;
+use Imagine\Image\PointInterface;
 
 abstract class LinearTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,7 +30,7 @@ abstract class LinearTest extends \PHPUnit_Framework_TestCase
      * @dataProvider getPointsAndColors
      *
      * @param integer                $shade
-     * @param Imagine\PointInterface $position
+     * @param Imagine\Image\PointInterface $position
      */
     public function testShouldProvideCorrectColorsValues(Color $color, PointInterface $position)
     {

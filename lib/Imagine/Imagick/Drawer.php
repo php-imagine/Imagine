@@ -11,13 +11,12 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Font;
-
-use Imagine\Color;
-use Imagine\Point;
-use Imagine\PointInterface;
-use Imagine\BoxInterface;
+use Imagine\Image\BoxInterface;
 use Imagine\Draw\DrawerInterface;
+use Imagine\Image\Color;
+use Imagine\Image\Font;
+use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 

@@ -11,8 +11,8 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Color;
-use Imagine\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\Image\BoxInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\ImageInterface;

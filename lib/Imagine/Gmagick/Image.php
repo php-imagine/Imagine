@@ -11,14 +11,14 @@
 
 namespace Imagine\Gmagick;
 
-use Imagine\Point;
+use Imagine\Image\Point;
 
 use Imagine\Fill\FillInterface;
 
-use Imagine\Color;
-use Imagine\PointInterface;
-use Imagine\Box;
-use Imagine\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\Image\PointInterface;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;

@@ -13,12 +13,13 @@ namespace Imagine;
 
 use Imagine\Fill\FillInterface;
 
-use Imagine\BoxInterface;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\PointInterface;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\Image\PointInterface;
 
 interface ImageInterface
 {
@@ -38,8 +39,8 @@ interface ImageInterface
      * Crops a specified box out of the source image (modifies the source image)
      * Returns cropped self
      *
-     * @param Imagine\PointInterface $start
-     * @param Imagine\BoxInterface   $size
+     * @param Imagine\Image\PointInterface $start
+     * @param Imagine\Image\BoxInterface   $size
      *
      * @throws Imagine\Exception\OutOfBoundsException
      * @throws Imagine\Exception\RuntimeException
@@ -51,7 +52,7 @@ interface ImageInterface
     /**
      * Resizes current image and returns self
      *
-     * @param Imagine\BoxInterface $size
+     * @param Imagine\Image\BoxInterface $size
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -65,7 +66,7 @@ interface ImageInterface
      * area of rotated image.
      *
      * @param integer       $angle
-     * @param Imagine\Color $background
+     * @param Imagine\Image\Color $background
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -81,7 +82,7 @@ interface ImageInterface
      * Returns source image
      *
      * @param Imagine\ImageInterface $image
-     * @param Imagine\PointInterface $start
+     * @param Imagine\Image\PointInterface $start
      *
      * @throws Imagine\Exception\InvalidArgumentException
      * @throws Imagine\Exception\OutOfBoundsException
@@ -163,7 +164,7 @@ interface ImageInterface
      * Generates a thumbnail from a current image
      * Returns it as a new image, doesn't modify the current image
      *
-     * @param Imagine\BoxInterface $size
+     * @param Imagine\Image\BoxInterface $size
      * @param string               $mode
      *
      * @throws Imagine\Exception\RuntimeException
@@ -182,7 +183,7 @@ interface ImageInterface
     /**
      * Returns current image size
      *
-     * @return Imagine\BoxInterface
+     * @return Imagine\Image\BoxInterface
      */
     function getSize();
 

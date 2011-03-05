@@ -12,12 +12,11 @@
 namespace Imagine;
 
 use Imagine\Fill\Gradient\Horizontal;
-
 use Imagine\Fill\Gradient\Vertical;
-
-use Imagine\Point;
-use Imagine\Point\Center;
-use Imagine\Box;
+use Imagine\Image\Box;
+use Imagine\Image\Color;
+use Imagine\Image\Point;
+use Imagine\Image\Point\Center;
 
 abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
 {

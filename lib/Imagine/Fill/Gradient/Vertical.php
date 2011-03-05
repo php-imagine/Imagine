@@ -11,7 +11,7 @@
 
 namespace Imagine\Fill\Gradient;
 
-use Imagine\PointInterface;
+use Imagine\Image\PointInterface;
 
 final class Vertical extends Linear
 {

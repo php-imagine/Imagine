@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
 final class Font
 {
@@ -24,7 +24,7 @@ final class Font
     private $size;
 
     /**
-     * @var Imagine\Color
+     * @var Imagine\Image\Color
      */
     private $color;
 
@@ -35,7 +35,7 @@ final class Font
      *
      * @param string        $file
      * @param integer       $size
-     * @param Imagine\Color $color
+     * @param Imagine\Image\Color $color
      */
     public function __construct($file, $size, Color $color)
     {
@@ -67,7 +67,7 @@ final class Font
     /**
      * Gets font's color
      *
-     * @return Imagine\Color
+     * @return Imagine\Image\Color
      */
     public function getColor()
     {

@@ -11,8 +11,8 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Box;
-use Imagine\BoxInterface;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 use Imagine\Filter\FilterTestCase;
 
 class ResizeTest extends FilterTestCase

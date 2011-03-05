@@ -9,23 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Point;
+namespace Imagine\Image\Point;
 
-use Imagine\Point;
-use Imagine\PointInterface;
-use Imagine\Box;
-use Imagine\BoxInterface;
+use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 
 class CenterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Imagine\Point\Center::getX
-     * @covers Imagine\Point\Center::getY
+     * @covers Imagine\Image\Point\Center::getX
+     * @covers Imagine\Image\Point\Center::getY
      *
      * @dataProvider getSizesAndCoordinates
      *
-     * @param Imagine\BoxInterface   $box
-     * @param Imagine\PointInterface $expected
+     * @param Imagine\Image\BoxInterface   $box
+     * @param Imagine\Image\PointInterface $expected
      */
     public function testShouldGetCenterCoordinates(BoxInterface $box, PointInterface $expected)
     {
@@ -50,7 +50,7 @@ class CenterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Point\Center::__toString
+     * @covers Imagine\Image\Point\Center::__toString
      */
     public function testToString()
     {

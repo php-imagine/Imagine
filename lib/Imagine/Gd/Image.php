@@ -15,17 +15,17 @@ use Imagine\Fill\FillInterface;
 
 use Imagine\Mask\MaskInterface;
 
-use Imagine\Box;
-use Imagine\BoxInterface;
-use Imagine\Color;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 use Imagine\ImageInterface;
-use Imagine\Point;
-use Imagine\Point\Center;
-use Imagine\PointInterface;
+use Imagine\Image\Point;
+use Imagine\Image\Point\Center;
+use Imagine\Image\PointInterface;
 
 final class Image implements ImageInterface
 {

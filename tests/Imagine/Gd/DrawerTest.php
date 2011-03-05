@@ -12,7 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\AbstractDrawerTest;
-use Imagine\Color;
+use Imagine\Image\Color;
 
 class DrawerTest extends AbstractDrawerTest
 {

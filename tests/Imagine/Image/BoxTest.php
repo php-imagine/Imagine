@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
 class BoxTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Imagine\Box::getWidth
-     * @covers Imagine\Box::getHeight
+     * @covers Imagine\Image\Box::getWidth
+     * @covers Imagine\Image\Box::getHeight
      *
      * @dataProvider getSizes
      *
@@ -45,7 +45,7 @@ class BoxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Box::__construct
+     * @covers Imagine\Image\Box::__construct
      *
      * @expectedException Imagine\Exception\InvalidArgumentException
      *
@@ -75,7 +75,7 @@ class BoxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Box::contains
+     * @covers Imagine\Image\Box::contains
      *
      * @dataProvider getSizeBoxStartAndExpected
      *
@@ -110,7 +110,7 @@ class BoxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @cover Imagine\Box::__toString
+     * @cover Imagine\Image\Box::__toString
      */
     public function testToString()
     {

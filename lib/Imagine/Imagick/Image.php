@@ -11,9 +11,9 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Box;
-use Imagine\BoxInterface;
-use Imagine\Color;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -21,8 +21,8 @@ use Imagine\Fill\FillInterface;
 use Imagine\ImageInterface;
 use Imagine\Imagick\Imagine;
 use Imagine\Mask\MaskInterface;
-use Imagine\Point;
-use Imagine\PointInterface;
+use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
 
 final class Image implements ImageInterface
 {

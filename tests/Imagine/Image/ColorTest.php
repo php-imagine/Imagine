@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
 class ColorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @cover Imagine\Color::__construct
-     * @cover Imagine\Color::getRed
-     * @cover Imagine\Color::getGreen
-     * @cover Imagine\Color::getAlpha
-     * @cover Imagine\Color::__toString
+     * @cover Imagine\Image\Color::__construct
+     * @cover Imagine\Image\Color::getRed
+     * @cover Imagine\Image\Color::getGreen
+     * @cover Imagine\Image\Color::getAlpha
+     * @cover Imagine\Image\Color::__toString
      */
     public function testShouldSetColorToWhite()
     {

@@ -11,9 +11,11 @@
 
 namespace Imagine;
 
-use Imagine\Point;
-use Imagine\Point\Center;
-use Imagine\Box;
+use Imagine\Image\Box;
+use Imagine\Image\Color;
+use Imagine\Image\Font;
+use Imagine\Image\Point;
+use Imagine\Image\Point\Center;
 
 abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
 {

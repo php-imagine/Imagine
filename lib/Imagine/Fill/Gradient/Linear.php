@@ -11,9 +11,9 @@
 
 namespace Imagine\Fill\Gradient;
 
-use Imagine\Color;
+use Imagine\Image\Color;
 use Imagine\Fill\FillInterface;
-use Imagine\PointInterface;
+use Imagine\Image\PointInterface;
 
 abstract class Linear implements FillInterface
 {
@@ -23,12 +23,12 @@ abstract class Linear implements FillInterface
     private $length;
 
     /**
-     * @var Imagine\Color
+     * @var Imagine\Image\Color
      */
     private $start;
 
     /**
-     * @var Imagine\Color
+     * @var Imagine\Image\Color
      */
     private $end;
 
@@ -37,8 +37,8 @@ abstract class Linear implements FillInterface
      * end shades, which default to 0 and 255 accordingly
      *
      * @param integer       $length
-     * @param Imagine\Color $start
-     * @param Imagine\Color $end
+     * @param Imagine\Image\Color $start
+     * @param Imagine\Image\Color $end
      */
     public function __construct($length, $start, $end)
     {
@@ -77,7 +77,7 @@ abstract class Linear implements FillInterface
     /**
      * Get the distance of the position relative to the begining of the gradient
      *
-     * @param Imagine\PointInterface $position
+     * @param Imagine\Image\PointInterface $position
      *
      * @return integer
      */

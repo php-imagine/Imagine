@@ -4,7 +4,7 @@ namespace Imagine\Issues;
 
 use Imagine\ImageInterface;
 
-use Imagine\Box;
+use Imagine\Image\Box;
 
 use Imagine\Gd\Imagine;
 

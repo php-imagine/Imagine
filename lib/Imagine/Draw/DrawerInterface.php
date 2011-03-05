@@ -11,11 +11,10 @@
 
 namespace Imagine\Draw;
 
-use Imagine\Font;
-
-use Imagine\PointInterface;
-use Imagine\BoxInterface;
-use Imagine\Color;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\Image\Font;
+use Imagine\Image\PointInterface;
 use Imagine\Filter\FilterInterface;
 
 interface DrawerInterface
@@ -24,11 +23,11 @@ interface DrawerInterface
      * Draws an arc on a starting at a given x, y coordinates under a given
      * start and end angles
      *
-     * @param Imagine\PointInterface $center
-     * @param Imagine\BoxInterface   $size
+     * @param Imagine\Image\PointInterface $center
+     * @param Imagine\Image\BoxInterface   $size
      * @param integer                $start
      * @param integer                $end
-     * @param Imagine\Color          $color
+     * @param Imagine\Image\Color          $color
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -39,11 +38,11 @@ interface DrawerInterface
     /**
      * Same as arc, but also connects end points with a straight line
      *
-     * @param Imagine\PointInterface $center
-     * @param Imagine\BoxInterface   $size
+     * @param Imagine\Image\PointInterface $center
+     * @param Imagine\Image\BoxInterface   $size
      * @param integer                $start
      * @param integer                $end
-     * @param Imagine\Color          $color
+     * @param Imagine\Image\Color          $color
      * @param Boolean                $fill
      *
      * @throws Imagine\Exception\RuntimeException
@@ -56,9 +55,9 @@ interface DrawerInterface
      * Draws and ellipse with center at the given x, y coordinates, and given
      * width and height
      *
-     * @param Imagine\PointInterface $center
-     * @param Imagine\BoxInterface   $size
-     * @param Imagine\Color          $color
+     * @param Imagine\Image\PointInterface $center
+     * @param Imagine\Image\BoxInterface   $size
+     * @param Imagine\Image\Color          $color
      * @param Boolean                $fill
      *
      * @throws Imagine\Exception\RuntimeException
@@ -70,9 +69,9 @@ interface DrawerInterface
     /**
      * Draws a line from start(x, y) to end(x, y) coordinates
      *
-     * @param Imagine\PointInterface $start
-     * @param Imagine\PointInterface $end
-     * @param Imagine\Color          $outline
+     * @param Imagine\Image\PointInterface $start
+     * @param Imagine\Image\PointInterface $end
+     * @param Imagine\Image\Color          $outline
      *
      * @return Imagine\Draw\DrawerInterface
      */
@@ -81,11 +80,11 @@ interface DrawerInterface
     /**
      * Same as arc, but connects end points and the center
      *
-     * @param Imagine\PointInterface $center
-     * @param Imagine\BoxInterface   $size
+     * @param Imagine\Image\PointInterface $center
+     * @param Imagine\Image\BoxInterface   $size
      * @param integer                $start
      * @param integer                $end
-     * @param Imagine\Color          $color
+     * @param Imagine\Image\Color          $color
      * @param Boolean                $fill
      *
      * @throws Imagine\Exception\RuntimeException
@@ -98,8 +97,8 @@ interface DrawerInterface
      * Places a one pixel point at specific coordinates and fills it with
      * specified color
      *
-     * @param Imagine\PointInterface $position
-     * @param Imagine\Color          $color
+     * @param Imagine\Image\PointInterface $position
+     * @param Imagine\Image\Color          $color
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -112,7 +111,7 @@ interface DrawerInterface
      * three coordinates
      *
      * @param array         $coordinates
-     * @param Imagine\Color $color
+     * @param Imagine\Image\Color $color
      * @param Boolean       $fill
      *
      * @throws Imagine\Exception\RuntimeException
@@ -129,7 +128,7 @@ interface DrawerInterface
      *
      * @param string                 $string
      * @param Imagine\Font           $font
-     * @param Imagine\PointInterface $position
+     * @param Imagine\Image\PointInterface $position
      * @param integer                $angle
      *
      * @throws Imagine\Exception\RuntimeException

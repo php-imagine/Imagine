@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
 
@@ -45,7 +45,7 @@ final class Point implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\PointInterface::getX()
+     * @see Imagine\Image\PointInterface::getX()
      */
     public function getX()
     {
@@ -54,7 +54,7 @@ final class Point implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\PointInterface::getY()
+     * @see Imagine\Image\PointInterface::getY()
      */
     public function getY()
     {
@@ -63,7 +63,7 @@ final class Point implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\PointInterface::in()
+     * @see Imagine\Image\PointInterface::in()
      */
     public function in(BoxInterface $box)
     {
@@ -72,7 +72,7 @@ final class Point implements PointInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\PointInterface::__toString()
+     * @see Imagine\Image\PointInterface::__toString()
      */
     public function __toString()
     {

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
 interface PointInterface
 {
@@ -30,7 +30,7 @@ interface PointInterface
     /**
      * Checks if current coordinate is inside a given bo
      *
-     * @param Imagine\BoxInterface $box
+     * @param Imagine\Image\BoxInterface $box
      *
      * @return Boolean
      */

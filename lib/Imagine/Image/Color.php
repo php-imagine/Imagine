@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
 
@@ -96,7 +96,7 @@ final class Color
      *
      * @param integer $alpha
      *
-     * @return Imagine\Color
+     * @return Imagine\Image\Color
      */
     public function dissolve($alpha)
     {
@@ -109,7 +109,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @retun Imagine\Color
+     * @retun Imagine\Image\Color
      */
     public function lighten($shade)
     {
@@ -129,7 +129,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @retun Imagine\Color
+     * @retun Imagine\Image\Color
      */
     public function darken($shade)
     {

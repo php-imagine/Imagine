@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
 interface BoxInterface
 {
@@ -32,7 +32,7 @@ interface BoxInterface
      *
      * @param integer $ratio
      *
-     * @return Imagine\BoxInterface
+     * @return Imagine\Image\BoxInterface
      */
     function scale($ratio);
 
@@ -47,8 +47,8 @@ interface BoxInterface
      * Checks whether curret box can fit given box at a given start position,
      * start position defaults to top left corner xy(0,0)
      *
-     * @param Imagine\BoxInterface       $box
-     * @param Imagine\PointInterface $start
+     * @param Imagine\Image\BoxInterface       $box
+     * @param Imagine\Image\PointInterface $start
      *
      * @return Boolean
      */

@@ -11,8 +11,8 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\PointInterface;
-use Imagine\BoxInterface;
+use Imagine\Image\PointInterface;
+use Imagine\Image\BoxInterface;
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
 
