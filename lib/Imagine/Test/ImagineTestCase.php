@@ -16,7 +16,7 @@ class ImagineTestCase extends \PHPUnit_Framework_TestCase
      * @param float                  $delta
      * @param integer                $buckets
      */
-    public static function assertImageEquals($expected, $actual, $message = '', $delta = 1, $buckets = 4)
+    public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.05, $buckets = 4)
     {
         $constraint = new IsImageEqual($expected, $delta, $buckets);
 
