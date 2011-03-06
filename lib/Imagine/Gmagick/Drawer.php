@@ -350,7 +350,7 @@ final class Drawer implements DrawerInterface
      *
      * @return string
      */
-    protected function getColor(Color $color)
+    private function getColor(Color $color)
     {
         $pixel = new \GmagickPixel((string) $color);
 

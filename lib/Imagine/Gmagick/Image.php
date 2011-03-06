@@ -434,7 +434,7 @@ class Image implements ImageInterface
      *
      * @return string
      */
-    protected function getColor(Color $color)
+    private function getColor(Color $color)
     {
         $pixel = new \GmagickPixel((string) $color);
 
