@@ -130,4 +130,27 @@ class BoxTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(new Box(15, 25), $box->increase(5));
     }
+
+    /**
+     * @dataProvider getSizesAndSquares
+     *
+     * @param integer $width
+     * @param integer $height
+     * @param integer $square
+     */
+    public function testShouldCalculateSquare($width, $height, $square)
+    {
+        $box = new Box($width, $height);
+
+        $this->assertEquals($square, $box->square());
+    }
+
+    public function getSizesAndSquares()
+    {
+        return array(
+            array(10, 15, 150),
+            array(2, 2, 4),
+            array(9, 8, 72),
+        );
+    }
 }

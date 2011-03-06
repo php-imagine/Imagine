@@ -97,6 +97,15 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
+     * @see Imagine\Image\BoxInterface::square()
+     */
+    public function square()
+    {
+        return $this->width * $this->height;
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see Imagine\Image\BoxInterface::__toString()
      */
     public function __toString()
