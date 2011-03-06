@@ -139,9 +139,6 @@ final class Image implements ImageInterface
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
-        $x = $start->getX();
-        $y = $start->getY();
-
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Imagick\Image can '.
                 'only paste() Imagick\Image instances, %s given',
@@ -159,7 +156,9 @@ final class Image implements ImageInterface
         try {
 
             $this->imagick->compositeImage(
-                $image->imagick, \Imagick::COMPOSITE_DEFAULT, $x, $y
+                $image->imagick, \Imagick::COMPOSITE_DEFAULT,
+                $start->getX(),
+                $start->getY()
             );
         } catch (\ImagickException $e) {
             throw new RuntimeException(
@@ -286,19 +285,21 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
+        $width     = $size->getWidth();
+        $height    = $size->getHeight();
         $thumbnail = $this->copy();
 
         try {
             if ($mode === ImageInterface::THUMBNAIL_INSET) {
                 $thumbnail->imagick->thumbnailImage(
-                    $size->getWidth(),
-                    $size->getHeight(),
+                    $width,
+                    $height,
                     true
                 );
             } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
                 $thumbnail->imagick->cropThumbnailImage(
-                    $size->getWidth(),
-                    $size->getHeight()
+                    $width,
+                    $height
                 );
             }
         } catch (\ImagickException $e) {

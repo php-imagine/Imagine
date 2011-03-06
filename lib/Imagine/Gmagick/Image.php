@@ -74,13 +74,13 @@ class Image implements ImageInterface
             );
         }
 
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-        $x      = $start->getX();
-        $y      = $start->getY();
-
         try {
-            $this->gmagick->cropimage($width, $height, $x, $y);
+            $this->gmagick->cropimage(
+                $size->getWidth(),
+                $size->getHeight(),
+                $start->getX(),
+                $start->getY()
+            );
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Crop operation failed', $e->getCode(), $e
@@ -130,9 +130,6 @@ class Image implements ImageInterface
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
-        $x = $start->getX();
-        $y = $start->getY();
-
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf(
                 'Gmagick\Image can only paste() Gmagick\Image instances, '.
@@ -151,7 +148,8 @@ class Image implements ImageInterface
             $this->gmagick->compositeimage(
                 $image->gmagick,
                 \Gmagick::COMPOSITE_DEFAULT,
-                $x, $y
+                $start->getX(),
+                $start->getY()
             );
         } catch (\GmagickException $e) {
             throw new RuntimeException(
