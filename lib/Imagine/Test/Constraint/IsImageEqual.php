@@ -48,8 +48,8 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'Imagine\ImageInterface');
         }
 
-        list($currentRed, $currentGreen, $currentBlue) = $this->normalize($this->value);
-        list($otherRed, $otherGreen, $otherBlue)       = $this->normalize($other);
+        list($currentRed, $currentGreen, $currentBlue, $currentAlpha) = $this->normalize($this->value);
+        list($otherRed, $otherGreen, $otherBlue, $otherAlpha)         = $this->normalize($other);
 
         $total = 0;
 
@@ -63,6 +63,10 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
 
         foreach ($currentBlue as $bucket => $count) {
             $total += abs($count - $otherBlue[$bucket]);
+        }
+
+        foreach ($currentAlpha as $bucket => $count) {
+            $total += abs($count - $otherAlpha[$bucket]);
         }
 
         return $total <= $this->delta;
@@ -79,13 +83,15 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
 
         $red =
         $green =
-        $blue = array();
+        $blue =
+        $alpha = array();
 
         for ($i = 1; $i <= $this->buckets; $i++) {
             $range   = new Range(($i - 1) * $step, $i * $step);
             $red[]   = new Bucket($range);
             $green[] = new Bucket($range);
             $blue[]  = new Bucket($range);
+            $alpha[] = new Bucket($range);
         }
 
         foreach ($image->histogram() as $color) {
@@ -100,6 +106,10 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
             foreach ($blue as $bucket) {
                 $bucket->add($color->getBlue());
             }
+
+            foreach ($alpha as $bucket) {
+                $bucket->add($color->getAlpha());
+            }
         }
 
         $total = $image->getSize()->square();
@@ -113,6 +123,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
             array_map($callback, $red),
             array_map($callback, $green),
             array_map($callback, $blue),
+            array_map($callback, $alpha),
         );
     }
 }
