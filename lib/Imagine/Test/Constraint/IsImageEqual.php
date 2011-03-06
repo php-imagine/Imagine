@@ -2,11 +2,9 @@
 
 namespace Imagine\Test\Constraint;
 
-use Imagine\Image\Histogram\Range;
-
-use Imagine\Image\Histogram\Bucket;
-
 use Imagine\ImageInterface;
+use Imagine\Image\Histogram\Bucket;
+use Imagine\Image\Histogram\Range;
 
 class IsImageEqual extends \PHPUnit_Framework_Constraint
 {
