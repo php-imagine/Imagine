@@ -116,8 +116,6 @@ final class Image implements ImageInterface
 
         imagedestroy($this->resource);
 
-        $this->width    = $width;
-        $this->height   = $height;
         $this->resource = $dest;
 
         return $this;
@@ -206,8 +204,6 @@ final class Image implements ImageInterface
 
         imagedestroy($this->resource);
 
-        $this->width    = imagesx($resource);
-        $this->height   = imagesy($resource);
         $this->resource = $resource;
 
         return $this;
