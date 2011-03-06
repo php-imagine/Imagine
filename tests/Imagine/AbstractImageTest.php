@@ -42,11 +42,13 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
         $image   = $factory->open('tests/Imagine/Fixtures/google.png');
-        $inset   = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_INSET, new Color('fff'));
+        $inset   = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_INSET);
 
         $this->assertImageEquals(
             $factory->open('tests/Imagine/Fixtures/results/thumbnails/inset.png'),
-            $inset
+            $inset,
+            '',
+            0.5
         );
 
         $size = $inset->getSize();
@@ -56,11 +58,13 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals(50, $size->getWidth());
         $this->assertEquals(17, $size->getHeight());
 
-        $outbound = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND, new Color('fff'));
+        $outbound = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
 
         $this->assertImageEquals(
             $factory->open('tests/Imagine/Fixtures/results/thumbnails/outbound.png'),
-            $outbound
+            $outbound,
+            '',
+            0.5
         );
 
         $size = $outbound->getSize();
