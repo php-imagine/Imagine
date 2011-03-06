@@ -214,4 +214,11 @@ interface ImageInterface
      * @return Imagine\ImageInterface
      */
     function fill(FillInterface $fill);
+
+    /**
+     * Returns array of image colors as Imagine\Image\Color instances
+     *
+     * @return array
+     */
+    function histogram();
 }

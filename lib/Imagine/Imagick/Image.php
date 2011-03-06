@@ -434,6 +434,31 @@ final class Image implements ImageInterface
     }
 
     /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::histogram()
+     */
+    public function histogram()
+    {
+        $pixels = $this->imagick->getImageHistogram();
+
+        return array_map(
+            function(\ImagickPixel $pixel)
+            {
+                $info = $pixel->getColor();
+                return new Color(
+                    array(
+                        $info['r'],
+                        $info['g'],
+                        $info['b'],
+                    ),
+                    (int) round($info['a'] * 100)
+                );
+            },
+            $pixels
+        );
+    }
+
+    /**
      * Internal
      *
      * Applies options before save or output

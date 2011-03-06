@@ -167,5 +167,14 @@ abstract class AbstractImageTest extends \PHPUnit_Framework_TestCase
         unlink('tests/Imagine/Fixtures/mask.png');
     }
 
+    public function testColorHistogram()
+    {
+        $factory = $this->getImagine();
+
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+
+        $this->assertEquals(6438, count($image->histogram()));
+    }
+
     abstract protected function getImagine();
 }

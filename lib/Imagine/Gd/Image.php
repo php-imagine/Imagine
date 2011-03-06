@@ -460,6 +460,34 @@ final class Image implements ImageInterface
     }
 
     /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::histogram()
+     */
+    public function histogram()
+    {
+        $size   = $this->getSize();
+        $colors = array();
+
+        for ($x = 0; $x < $size->getWidth(); $x++) {
+            for ($y = 0; $y < $size->getHeight(); $y++) {
+                $index = imagecolorat($this->resource, $x, $y);
+                $info  = imagecolorsforindex($this->resource, $index);
+                $color = new Color(array(
+                        $info['red'],
+                        $info['green'],
+                        $info['blue'],
+                    ),
+                    (int) round($info['alpha'] / 127 * 100)
+                );
+
+                $colors[] = $color;
+            }
+        }
+
+        return array_unique($colors);
+    }
+
+    /**
      * Internal
      *
      * Performs save or show operation using one of GD's image... functions
