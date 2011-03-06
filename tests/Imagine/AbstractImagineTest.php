@@ -12,8 +12,9 @@
 namespace Imagine;
 
 use Imagine\Image\Box;
+use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractImagineTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractImagineTest extends ImagineTestCase
 {
     public function testShouldCreateEmptyImage()
     {

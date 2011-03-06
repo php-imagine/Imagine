@@ -16,8 +16,9 @@ use Imagine\Image\Color;
 use Imagine\Image\Font;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
+use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractDrawerTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractDrawerTest extends ImagineTestCase
 {
     public function testDrawASmileyFace()
     {

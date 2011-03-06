@@ -73,6 +73,7 @@ final class Imagine implements ImagineInterface
             $imagick = new \Imagick();
             $imagick->newImage($width, $height, $pixel);
             $imagick->setImageMatte(true);
+            $imagick->setImageBackgroundColor($pixel);
 
             $pixel->clear();
             $pixel->destroy();
