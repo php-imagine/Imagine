@@ -29,11 +29,12 @@ abstract class AbstractImageTest extends ImagineTestCase
         $size  = $image->getSize();
 
         $image->paste(
-            $image->copy()
-                ->resize($size->scale(0.5))
-                ->flipVertically(),
-            new Center($size)
-        );
+                $image->copy()
+                    ->resize($size->scale(0.5))
+                    ->flipVertically(),
+                new Center($size)
+            )
+            ->save('tests/Imagine/Fixtures/rotate.jpg');
 
         $this->assertImageEquals($factory->open('tests/Imagine/Fixtures/results/rotate.jpg'), $image);
     }
@@ -83,7 +84,8 @@ abstract class AbstractImageTest extends ImagineTestCase
         $image = $factory->open('tests/Imagine/Fixtures/google.png')
             ->crop(new Point(0, 0), new Box(126, 126))
             ->resize(new Box(200, 200))
-            ->flipHorizontally();
+            ->flipHorizontally()
+            ->save('tests/Imagine/Fixtures/crop_resize_flip.png');
 
         $this->assertImageEquals(
             $factory->open('tests/Imagine/Fixtures/results/crop_resize_flip.png'),
