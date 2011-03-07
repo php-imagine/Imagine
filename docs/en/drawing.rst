@@ -39,5 +39,7 @@ Font class
 As you've noticed from ``DrawerInterface::text()``, there is also ``Font`` class. This class is a simple value object, representing the font. To construct a font, you have to pass the ``$file`` string (path to font file), ``$size`` value (integer value, representing size points) and ``$color`` (``Imagine\Image\Color`` instance). After you have a font instance, you can use one of its three methods to inspect any of the values it's been constructed with:
 
 * ``->getFile()`` - returns font file path
+
 * ``->getSize()`` - returns integer size in points (e.g. 10pt = 10)
+
 * ``->getColor()`` - returns ``Imagine\Image\Color`` instance, representing current font color

@@ -45,3 +45,7 @@ Some of the ideas for upcoming filters:
 ## Presentations ##
 
  - [Introduction to Imagine](http://www.slideshare.net/avalanche123/introduction-toimagine)
+
+## Articles ##
+
+ - [Image Processing with Imagine](http://www.phparch.com/2011/03/image-processing-with-imagine)
