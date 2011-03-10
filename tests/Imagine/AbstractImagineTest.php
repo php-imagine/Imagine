@@ -11,6 +11,8 @@
 
 namespace Imagine;
 
+use Imagine\Image\Color;
+
 use Imagine\Image\Box;
 use Imagine\Test\ImagineTestCase;
 
@@ -48,6 +50,17 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
     }
+
+    public function testShouldDetermineFontSize()
+    {
+        $path    = 'tests/Imagine/Fixtures/font/Arial.ttf';
+        $black   = new Color('000');
+        $factory = $this->getImagine();
+
+        $this->assertEquals($this->getEstimatedFontBox(), $factory->font($path, 36, $black)->box('string'));
+    }
+
+    abstract protected function getEstimatedFontBox();
 
     abstract protected function getImagine();
 }

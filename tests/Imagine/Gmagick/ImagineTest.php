@@ -11,6 +11,8 @@
 
 namespace Imagine\Gmagick;
 
+use Imagine\Image\Box;
+
 use Imagine\AbstractImagineTest;
 
 class ImagineTest extends AbstractImagineTest
@@ -20,6 +22,11 @@ class ImagineTest extends AbstractImagineTest
         if (!class_exists('Gmagick')) {
             $this->markTestSkipped('Gmagick is not installed');
         }
+    }
+
+    protected function getEstimatedFontBox()
+    {
+        return new Box(112, 46);
     }
 
     protected function getImagine()
