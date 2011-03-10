@@ -11,9 +11,9 @@
 
 namespace Imagine\Draw;
 
+use Imagine\Image\AbstractFont;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
-use Imagine\Image\Font;
 use Imagine\Image\PointInterface;
 use Imagine\Filter\FilterInterface;
 
@@ -25,8 +25,8 @@ interface DrawerInterface
      *
      * @param Imagine\Image\PointInterface $center
      * @param Imagine\Image\BoxInterface   $size
-     * @param integer                $start
-     * @param integer                $end
+     * @param integer                      $start
+     * @param integer                      $end
      * @param Imagine\Image\Color          $color
      *
      * @throws Imagine\Exception\RuntimeException
@@ -40,10 +40,10 @@ interface DrawerInterface
      *
      * @param Imagine\Image\PointInterface $center
      * @param Imagine\Image\BoxInterface   $size
-     * @param integer                $start
-     * @param integer                $end
+     * @param integer                      $start
+     * @param integer                      $end
      * @param Imagine\Image\Color          $color
-     * @param Boolean                $fill
+     * @param Boolean                      $fill
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -58,7 +58,7 @@ interface DrawerInterface
      * @param Imagine\Image\PointInterface $center
      * @param Imagine\Image\BoxInterface   $size
      * @param Imagine\Image\Color          $color
-     * @param Boolean                $fill
+     * @param Boolean                      $fill
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -82,10 +82,10 @@ interface DrawerInterface
      *
      * @param Imagine\Image\PointInterface $center
      * @param Imagine\Image\BoxInterface   $size
-     * @param integer                $start
-     * @param integer                $end
+     * @param integer                      $start
+     * @param integer                      $end
      * @param Imagine\Image\Color          $color
-     * @param Boolean                $fill
+     * @param Boolean                      $fill
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -110,9 +110,9 @@ interface DrawerInterface
      * Draws a polygon using array of x, y coordinates. Must contain at least
      * three coordinates
      *
-     * @param array         $coordinates
+     * @param array               $coordinates
      * @param Imagine\Image\Color $color
-     * @param Boolean       $fill
+     * @param Boolean             $fill
      *
      * @throws Imagine\Exception\RuntimeException
      *
@@ -126,14 +126,14 @@ interface DrawerInterface
      *
      * The rotation is done CW
      *
-     * @param string                 $string
-     * @param Imagine\Font           $font
+     * @param string                       $string
+     * @param Imagine\Image\AbstractFont   $font
      * @param Imagine\Image\PointInterface $position
-     * @param integer                $angle
+     * @param integer                      $angle
      *
      * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
-    function text($string, Font $font, PointInterface $position, $angle = 0);
+    function text($string, AbstractFont $font, PointInterface $position, $angle = 0);
 }

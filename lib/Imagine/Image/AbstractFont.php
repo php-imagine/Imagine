@@ -11,22 +11,22 @@
 
 namespace Imagine\Image;
 
-final class Font
+abstract class AbstractFont
 {
     /**
      * @var string
      */
-    private $file;
+    protected $file;
 
     /**
      * @var integer
      */
-    private $size;
+    protected $size;
 
     /**
      * @var Imagine\Image\Color
      */
-    private $color;
+    protected $color;
 
     /**
      * Constructs a font with specified $file, $size and $color
@@ -73,4 +73,14 @@ final class Font
     {
         return $this->color;
     }
+
+    /**
+     * Gets BoxInterface of font size on the image based on string and angle
+     *
+     * @param string  $string
+     * @param integer $angle
+     *
+     * @return Imagine\Image\BoxInterface
+     */
+    abstract public function box($string, $angle = 0);
 }

@@ -180,7 +180,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         $imagine = $this->getImagine();
         $canvas  = $imagine->create(new Box(400, 300), new Color('fff'));
-        $font    = new Font($path, 36, $black);
+        $font    = $imagine->font($path, 36, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(0, 0), 135);
@@ -194,7 +194,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         unlink($file36);
 
         $canvas = $imagine->create(new Box(400, 300), new Color('fff'));
-        $font   = new Font($path, 24, $black);
+        $font   = $imagine->font($path, 24, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(24, 24));
@@ -208,7 +208,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         unlink($file24);
 
         $canvas = $imagine->create(new Box(400, 300), new Color('fff'));
-        $font   = new Font($path, 18, $black);
+        $font   = $imagine->font($path, 18, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(18, 18));
@@ -222,7 +222,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         unlink($file18);
 
         $canvas = $imagine->create(new Box(400, 300), new Color('fff'));
-        $font   = new Font($path, 12, $black);
+        $font   = $imagine->font($path, 12, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(12, 12));
