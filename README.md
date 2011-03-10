@@ -38,7 +38,8 @@ Some of the ideas for upcoming filters:
  - [Introduction](/avalanche123/Imagine/blob/master/docs/en/introduction.rst "Introduction")
  - [Coordinate System](/avalanche123/Imagine/blob/master/docs/en/coordinates.rst "Coordinate System")
  - [Filters](/avalanche123/Imagine/blob/master/docs/en/filters.rst "Filters and Transformations")
- - [Image](/avalanche123/Imagine/blob/master/docs/en/image.rst "Image")
+ - [Imagine](/avalanche123/Imagine/blob/master/docs/en/imagine.rst "ImagineInterface")
+ - [Image](/avalanche123/Imagine/blob/master/docs/en/image.rst "ImageInterface")
  - [Drawing](/avalanche123/Imagine/blob/master/docs/en/drawing.rst "Drawing")
  - [Exceptions](/avalanche123/Imagine/blob/master/docs/en/exceptions.rst "Exceptions")
 
