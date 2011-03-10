@@ -26,7 +26,7 @@ class ImagineTest extends AbstractImagineTest
 
     protected function getEstimatedFontBox()
     {
-        return new Box(112, 46);
+        return new Box(86, 41);
     }
 
     protected function getImagine()
