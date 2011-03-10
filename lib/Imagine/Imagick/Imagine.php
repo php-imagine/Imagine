@@ -105,4 +105,13 @@ final class Imagine implements ImagineInterface
             );
         }
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImagineInterface::font()
+     */
+    public function font($file, $size, Color $color)
+    {
+        return new Font(new \Imagick(), $file, $size, $color);
+    }
 }
