@@ -23,7 +23,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
      */
     private $buckets;
 
-    public function __construct($value, $delta = 0.05, $buckets = 4)
+    public function __construct($value, $delta = 0.1, $buckets = 4)
     {
         if (!$value instanceof ImageInterface) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'Imagine\ImageInterface');
