@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Imagick;
+namespace Imagine\Gmagick;
 
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
@@ -18,19 +18,19 @@ use Imagine\Image\Color;
 final class Font extends AbstractFont
 {
     /**
-     * @var Imagick
+     * @var Gmagick
      */
-    private $imagick;
+    private $gmagick;
 
     /**
-     * @param Imagick             $imagick
+     * @param Gmagick             $gmagick
      * @param string              $file
      * @param integer             $size
      * @param Imagine\Image\Color $color
      */
-    public function __construct(\Imagick $imagick, $file, $size, Color $color)
+    public function __construct(\Gmagick $gmagick, $file, $size, Color $color)
     {
-        $this->imagick = $imagick;
+        $this->gmagick = $gmagick;
 
         parent::__construct($file, $size, $color);
     }
@@ -41,13 +41,13 @@ final class Font extends AbstractFont
      */
     public function box($string, $angle = 0)
     {
-        $text  = new \ImagickDraw();
+        $text  = new \GmagickDraw();
 
-        $text->setFont($this->file);
-        $text->setFontSize($this->size);
-        $text->setFontStyle(\Imagick::STYLE_OBLIQUE);
+        $text->setfont($this->file);
+        $text->setfontsize($this->size);
+        $text->setfontstyle(\Gmagick::STYLE_OBLIQUE);
 
-        $info = $this->imagick->queryFontMetrics($text, $string);
+        $info = $this->gmagick->queryfontmetrics($text, $string);
 
         $box = new Box($info['textWidth'], $info['textHeight']);
 

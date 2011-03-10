@@ -12,9 +12,9 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Draw\DrawerInterface;
+use Imagine\Image\AbstractFont;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
-use Imagine\Image\Font;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Exception\InvalidArgumentException;
@@ -305,7 +305,11 @@ final class Drawer implements DrawerInterface
         return $this;
     }
 
-    public function text($string, Font $font, PointInterface $position, $angle = 0)
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Draw\DrawerInterface::text()
+     */
+    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0)
     {
         try {
             $pixel = $this->getColor($font->getColor());

@@ -76,4 +76,17 @@ class Imagine implements ImagineInterface
         $gmagick->readimageblob($string);
         return new Image($gmagick);
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImagineInterface::font()
+     */
+    public function font($file, $size, Color $color)
+    {
+        $gmagick = new \Gmagick();
+
+        $gmagick->newimage(1, 1, 'transparent');
+
+        return new Font($gmagick, $file, $size, $color);
+    }
 }

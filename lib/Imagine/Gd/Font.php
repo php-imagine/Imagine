@@ -11,11 +11,10 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
 
-use Imagine\Image\AbstractFont;
-
-class Font extends AbstractFont
+final class Font extends AbstractFont
 {
     /**
      * (non-PHPdoc)
