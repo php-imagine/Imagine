@@ -43,3 +43,5 @@ As you've noticed from ``DrawerInterface::text()``, there is also ``Font`` class
 * ``->getSize()`` - returns integer size in points (e.g. 10pt = 10)
 
 * ``->getColor()`` - returns ``Imagine\Image\Color`` instance, representing current font color
+
+* ``->box($string, $angle = 0)`` - returns ``Imagine\Image\BoxInterface`` instance, representing the estimated size of the ``$string`` at the given ``$angle`` on the image

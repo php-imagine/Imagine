@@ -18,6 +18,9 @@ To open an existing image, all you need is to instantiate an image factory and i
     
     $image = $imagine->open('/path/to/image.jpg');
 
+.. TIP::
+    Read more about ImagineInterface_
+
 The ``ImagineInterface::open()`` method may throw one of the following exceptions:
 
 * ``Imagine\Exception\InvalidArgumentException``
@@ -40,7 +43,7 @@ Now that you've opened an image, you can perform manipulations on it:
         ->save('/path/to/new/image.jpg');
 
 .. TIP::
-    Read more about Image_
+    Read more about ImageInterface_
     Read more about coordinates_
 
 Create New Images
@@ -136,6 +139,7 @@ The architecture is very flexible, as the filters don't need any processing logi
 
 The ``Transformation`` object is an example of a composite filter, representing a stack or queue of filters, that get applied to an Image upon application of the ``Transformation`` itself.
 
-.. _Image: /avalanche123/Imagine/blob/master/docs/en/image.rst
+.. _ImagineInterface: /avalanche123/Imagine/blob/master/docs/en/imagine.rst
+.. _ImageInterface: /avalanche123/Imagine/blob/master/docs/en/image.rst
 .. _coordinates: /avalanche123/Imagine/blob/master/docs/en/coordinates.rst
 .. _exceptions: /avalanche123/Imagine/blob/master/docs/en/exceptions.rst
