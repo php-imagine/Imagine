@@ -172,4 +172,13 @@ final class Imagine implements ImagineInterface
 
         return new Image($resource);
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImagineInterface::font()
+     */
+    public function font($file, $size, Color $color)
+    {
+        return new Font($file, $size, $color);
+    }
 }

@@ -14,7 +14,7 @@ namespace Imagine\Gd;
 use Imagine\Draw\DrawerInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
-use Imagine\Image\Font;
+use Imagine\Image\AbstractFont;
 use Imagine\Image\PointInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
@@ -203,7 +203,7 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw\DrawerInterface::text()
      */
-    public function text($string, Font $font, PointInterface $position, $angle = 0)
+    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0)
     {
         $angle    = -1 * $angle;
         $fontsize = $font->getSize();
