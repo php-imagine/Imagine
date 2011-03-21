@@ -18,6 +18,8 @@ class ImagineTest extends AbstractImagineTest
 {
     protected function setUp()
     {
+        parent::setUp();
+
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not installed');
         }
