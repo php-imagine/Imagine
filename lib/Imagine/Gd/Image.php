@@ -345,8 +345,8 @@ final class Image implements ImageInterface
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             $thumbnail->crop(new Point(
-                round(($thumbnailSize->getWidth() - $width) / 2),
-                round(($thumbnailSize->getHeight() - $height) / 2)
+                max(0, round(($thumbnailSize->getWidth() - $width) / 2)),
+                max(0, round(($thumbnailSize->getHeight() - $height) / 2))
             ), $size);
         }
 
