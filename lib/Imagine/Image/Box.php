@@ -42,8 +42,8 @@ final class Box implements BoxInterface
             ));
         }
 
-        $this->width  = $width;
-        $this->height = $height;
+        $this->width  = (int) $width;
+        $this->height = (int) $height;
     }
 
     /**
@@ -70,7 +70,7 @@ final class Box implements BoxInterface
      */
     public function scale($ratio)
     {
-        return new Box($ratio * $this->width, $ratio * $this->height);
+        return new Box(round($ratio * $this->width), round($ratio * $this->height));
     }
 
     /**
@@ -79,7 +79,7 @@ final class Box implements BoxInterface
      */
     public function increase($size)
     {
-        return new Box($size + $this->width, $size + $this->height);
+        return new Box((int) $size + $this->width, (int) $size + $this->height);
     }
 
     /**
