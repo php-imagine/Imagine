@@ -16,7 +16,14 @@ use Imagine\Filter\FilterInterface;
 
 class Show implements FilterInterface
 {
+    /**
+     * @var string
+     */
     private $format;
+
+    /**
+     * @var array
+     */
     private $options;
 
     /**

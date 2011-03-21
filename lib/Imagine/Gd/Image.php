@@ -11,21 +11,19 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Fill\FillInterface;
-
-use Imagine\Mask\MaskInterface;
-
+use Imagine\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
+use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
+use Imagine\Image\Point\Center;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Fill\FillInterface;
 use Imagine\Gd\Imagine;
-use Imagine\ImageInterface;
-use Imagine\Image\Point;
-use Imagine\Image\Point\Center;
-use Imagine\Image\PointInterface;
+use Imagine\Mask\MaskInterface;
 
 final class Image implements ImageInterface
 {
@@ -543,10 +541,11 @@ final class Image implements ImageInterface
      *
      * Generates a GD color from Color instance
      *
-     * @param  Color $color
-     * @throws RuntimeException
+     * @param  Imagine\Image\Color $color
      *
      * @return resource
+     *
+     * @throws Imagine\Exception\RuntimeException
      */
     private function getColor(Color $color)
     {

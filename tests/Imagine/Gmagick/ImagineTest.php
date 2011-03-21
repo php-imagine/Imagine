@@ -11,9 +11,8 @@
 
 namespace Imagine\Gmagick;
 
-use Imagine\Image\Box;
-
 use Imagine\AbstractImagineTest;
+use Imagine\Image\Box;
 
 class ImagineTest extends AbstractImagineTest
 {

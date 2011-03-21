@@ -17,7 +17,7 @@ final class Vertical extends Linear
 {
     /**
      * (non-PHPdoc)
-     * @see Imagine\Mask\Gradient.Linear::getDistance()
+     * @see Imagine\Mask\Gradient\Linear::getDistance()
      */
     public function getDistance(PointInterface $position)
     {

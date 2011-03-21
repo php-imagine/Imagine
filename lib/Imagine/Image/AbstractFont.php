@@ -11,7 +11,7 @@
 
 namespace Imagine\Image;
 
-abstract class AbstractFont
+abstract class AbstractFont implements FontInterface
 {
     /**
      * @var string
@@ -33,8 +33,8 @@ abstract class AbstractFont
      *
      * The font size is to be specified in points (e.g. 10pt means 10)
      *
-     * @param string        $file
-     * @param integer       $size
+     * @param string              $file
+     * @param integer             $size
      * @param Imagine\Image\Color $color
      */
     public function __construct($file, $size, Color $color)
@@ -45,9 +45,8 @@ abstract class AbstractFont
     }
 
     /**
-     * Gets the fontfile for current font
-     *
-     * @return string
+     * (non-PHPdoc)
+     * @see Imagine\Image\FontInterface::getFile()
      */
     public function getFile()
     {
@@ -55,9 +54,8 @@ abstract class AbstractFont
     }
 
     /**
-     * Gets font's integer point size
-     *
-     * @return integer
+     * (non-PHPdoc)
+     * @see Imagine\Image\FontInterface::getSize()
      */
     public function getSize()
     {
@@ -65,22 +63,11 @@ abstract class AbstractFont
     }
 
     /**
-     * Gets font's color
-     *
-     * @return Imagine\Image\Color
+     * (non-PHPdoc)
+     * @see Imagine\Image\FontInterface::getColor()
      */
     public function getColor()
     {
         return $this->color;
     }
-
-    /**
-     * Gets BoxInterface of font size on the image based on string and angle
-     *
-     * @param string  $string
-     * @param integer $angle
-     *
-     * @return Imagine\Image\BoxInterface
-     */
-    abstract public function box($string, $angle = 0);
 }

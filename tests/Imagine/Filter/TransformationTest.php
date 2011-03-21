@@ -11,10 +11,9 @@ namespace Imagine\Filter;
  * file that was distributed with this source code.
  */
 
-use Imagine\Image\Point;
-
-use Imagine\Image\Color;
 use Imagine\Image\Box;
+use Imagine\Image\Color;
+use Imagine\Image\Point;
 use Imagine\ImageInterface;
 
 class TransformationTest extends FilterTestCase

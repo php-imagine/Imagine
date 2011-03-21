@@ -12,18 +12,24 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Draw\DrawerInterface;
+use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\RuntimeException;
 
 final class Drawer implements DrawerInterface
 {
+    /**
+     * @var Gmagick
+     */
     private $gmagick;
 
+    /**
+     * @param Gmagick $gmagick
+     */
     public function __construct(\Gmagick $gmagick)
     {
         $this->gmagick = $gmagick;
@@ -350,7 +356,7 @@ final class Drawer implements DrawerInterface
     /**
      * Gets specifically formatted color string from Color instance
      *
-     * @param Color $color
+     * @param Imagine\Image\Color $color
      *
      * @return string
      */
