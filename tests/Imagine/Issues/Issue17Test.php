@@ -8,6 +8,15 @@ use Imagine\Gd\Imagine;
 
 class Issue17Test extends \PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        if (!function_exists('gd_info')) {
+            $this->markTestSkipped('Gd not installed');
+        }
+    }
+
     public function testShouldResize()
     {
         $size    = new Box(100, 10);
