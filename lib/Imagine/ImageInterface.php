@@ -11,12 +11,11 @@
 
 namespace Imagine;
 
-use Imagine\Fill\FillInterface;
-
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Fill\FillInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\PointInterface;

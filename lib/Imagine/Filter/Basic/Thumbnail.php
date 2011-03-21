@@ -11,15 +11,15 @@
 
 namespace Imagine\Filter\Basic;
 
+use Imagine\ImageInterface;
 use Imagine\Image\Color;
 use Imagine\Image\BoxInterface;
-use Imagine\ImageInterface;
 use Imagine\Filter\FilterInterface;
 
 class Thumbnail implements FilterInterface
 {
     /**
-     * @var BoxInterface
+     * @var Imagine\Image\BoxInterface
      */
     private $size;
 
@@ -32,8 +32,8 @@ class Thumbnail implements FilterInterface
      * Constructs the Thumbnail filter with given width, height, mode and
      * background color
      *
-     * @param BoxInterface $size
-     * @param string        $mode
+     * @param Imagine\Image\BoxInterface $size
+     * @param string                     $mode
      */
     public function __construct(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {

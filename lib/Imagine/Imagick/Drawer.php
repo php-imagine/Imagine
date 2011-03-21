@@ -11,19 +11,25 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Image\BoxInterface;
 use Imagine\Draw\DrawerInterface;
+use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
+use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\RuntimeException;
 
 final class Drawer implements DrawerInterface
 {
+    /**
+     * @var Imagick
+     */
     private $imagick;
 
+    /**
+     * @param Imagick $imagick
+     */
     public function __construct(\Imagick $imagick)
     {
         $this->imagick = $imagick;
@@ -375,7 +381,7 @@ final class Drawer implements DrawerInterface
     /**
      * Gets specifically formatted color string from Color instance
      *
-     * @param Color $color
+     * @param Imagine\Image\Color $color
      *
      * @return string
      */

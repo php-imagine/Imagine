@@ -11,8 +11,8 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
+use Imagine\Filter\FilterInterface;
 
 class FlipVertically implements FilterInterface
 {

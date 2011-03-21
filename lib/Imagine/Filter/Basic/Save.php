@@ -12,12 +12,18 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\ImageInterface;
-
 use Imagine\Filter\FilterInterface;
 
 class Save implements FilterInterface
 {
+    /**
+     * @var string
+     */
     private $path;
+
+    /**
+     * @var array
+     */
     private $options;
 
     /**

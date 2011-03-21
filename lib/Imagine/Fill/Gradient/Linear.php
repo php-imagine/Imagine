@@ -12,8 +12,8 @@
 namespace Imagine\Fill\Gradient;
 
 use Imagine\Image\Color;
-use Imagine\Fill\FillInterface;
 use Imagine\Image\PointInterface;
+use Imagine\Fill\FillInterface;
 
 abstract class Linear implements FillInterface
 {

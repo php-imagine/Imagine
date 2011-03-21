@@ -13,13 +13,16 @@ namespace Imagine\Gd;
 
 use Imagine\Image\Color;
 use Imagine\Image\BoxInterface;
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\RuntimeException;
 use Imagine\ImageInterface;
 use Imagine\ImagineInterface;
+use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\RuntimeException;
 
 final class Imagine implements ImagineInterface
 {
+    /**
+     * @var array
+     */
     private $types = array(
         IMAGETYPE_BMP      => 'bmp',
         IMAGETYPE_COUNT    => 'count',
@@ -43,6 +46,9 @@ final class Imagine implements ImagineInterface
         IMAGETYPE_XBM      => 'xbm'
     );
 
+    /**
+     * @throws Imagine\Exception\RuntimeException
+     */
     public function __construct()
     {
         if (!function_exists('gd_info')) {

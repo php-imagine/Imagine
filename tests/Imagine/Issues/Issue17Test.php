@@ -3,9 +3,7 @@
 namespace Imagine\Issues;
 
 use Imagine\ImageInterface;
-
 use Imagine\Image\Box;
-
 use Imagine\Gd\Imagine;
 
 class Issue17Test extends \PHPUnit_Framework_TestCase
