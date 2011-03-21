@@ -19,6 +19,8 @@ class ImageTest extends AbstractImageTest
 {
     protected function setUp()
     {
+        parent::setUp();
+
         if (!function_exists('gd_info')) {
             $this->markTestSkipped('Gd not installed');
         }
