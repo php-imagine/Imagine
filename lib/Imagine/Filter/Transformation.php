@@ -11,10 +11,6 @@
 
 namespace Imagine\Filter;
 
-use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
-use Imagine\ImageInterface;
-use Imagine\ImageFactoryInterface;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
 use Imagine\Filter\Basic\FlipVertically;
@@ -25,6 +21,10 @@ use Imagine\Filter\Basic\Rotate;
 use Imagine\Filter\Basic\Save;
 use Imagine\Filter\Basic\Show;
 use Imagine\Filter\Basic\Thumbnail;
+use Imagine\ImageInterface;
+use Imagine\ImageFactoryInterface;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
@@ -76,7 +76,7 @@ final class Transformation implements FilterInterface
      * Stacks a crop transformation into the current transformations queue
      *
      * @param Imagine\Image\PointInterface $start
-     * @param Imagine\Image\BoxInterface       $size
+     * @param Imagine\Image\BoxInterface   $size
      *
      * @return Imagine\Filter\Transformation
      */
@@ -110,7 +110,7 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a paste transformation into the current transformations queue
      *
-     * @param Imagine\ImageInterface                $image
+     * @param Imagine\ImageInterface       $image
      * @param Imagine\Image\PointInterface $start
      *
      * @return Imagine\Filter\Transformation
@@ -135,8 +135,8 @@ final class Transformation implements FilterInterface
     /**
      * Stacks a rotane transformation into the current transformations queue
      *
-     * @param integer         $angle
-     * @param Imagine\Image\Color   $background
+     * @param integer             $angle
+     * @param Imagine\Image\Color $background
      *
      * @return Imagine\Filter\Transformation
      */
@@ -175,7 +175,7 @@ final class Transformation implements FilterInterface
      * Stacks a thumbnail transformation into the current transformation queue
      *
      * @param Imagine\Image\BoxInterface $size
-     * @param string                          $mode
+     * @param string                     $mode
      *
      * @return Imagine\Filter\Transformation
      */

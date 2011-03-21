@@ -12,13 +12,13 @@
 namespace Imagine\Gd;
 
 use Imagine\Draw\DrawerInterface;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
-use Imagine\Image\AbstractFont;
-use Imagine\Image\PointInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\AbstractFont;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\Image\PointInterface;
 
 final class Drawer implements DrawerInterface
 {
@@ -248,11 +248,11 @@ final class Drawer implements DrawerInterface
      *
      * Generates a GD color from Color instance
      *
-     * @param  Color $color
-     *
-     * @throws RuntimeException
+     * @param  Imagine\Image\Color $color
      *
      * @return resource
+     *
+     * @throws Imagine\Exception\RuntimeException
      */
     private function getColor(Color $color)
     {

@@ -11,14 +11,17 @@
 
 namespace Imagine\Gmagick;
 
-use Imagine\Image\Color;
 use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\ImagineInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\ImagineInterface;
 
 class Imagine implements ImagineInterface
 {
+    /**
+     * @throws Imagine\Exception\RuntimeException
+     */
     public function __construct()
     {
         if (!class_exists('Gmagick')) {

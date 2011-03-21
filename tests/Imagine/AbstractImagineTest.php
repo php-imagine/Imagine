@@ -12,7 +12,6 @@
 namespace Imagine;
 
 use Imagine\Image\Color;
-
 use Imagine\Image\Box;
 use Imagine\Test\ImagineTestCase;
 

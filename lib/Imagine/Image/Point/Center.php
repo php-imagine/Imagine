@@ -11,20 +11,20 @@
 
 namespace Imagine\Image\Point;
 
-use Imagine\Image\PointInterface;
 use Imagine\Image\BoxInterface;
+use Imagine\Image\PointInterface;
 
 final class Center implements PointInterface
 {
     /**
-     * @var BoxInterface
+     * @var Imagine\Image\BoxInterface
      */
     private $box;
 
     /**
      * Constructs coordinate with size instantce, it needs to be relative to
      *
-     * @param BoxInterface $size
+     * @param Imagine\Image\BoxInterface $size
      */
     public function __construct(BoxInterface $box)
     {

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Test\Constraint;
 
 use Imagine\ImageInterface;
@@ -23,6 +32,13 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
      */
     private $buckets;
 
+    /**
+     * @param Imagine\ImageInterface $value
+     * @param float                  $delta
+     * @param integer                $buckets
+     *
+     * @throws InvalidArgumentException
+     */
     public function __construct($value, $delta = 0.1, $buckets = 4)
     {
         if (!$value instanceof ImageInterface) {
@@ -42,6 +58,10 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
         $this->buckets = $buckets;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see PHPUnit_Framework_Constraint::evaluate()
+     */
     public function evaluate($other)
     {
         if (!$other instanceof ImageInterface) {
@@ -68,15 +88,24 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
         foreach ($currentAlpha as $bucket => $count) {
             $total += abs($count - $otherAlpha[$bucket]);
         }
-//var_dump($total);
+
         return $total <= $this->delta;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see PHPUnit_Framework_SelfDescribing::toString()
+     */
     public function toString()
     {
         return sprintf('contains color histogram identical to expected %s', \PHPUnit_Util_Type::toString($this->value));
     }
 
+    /**
+     * @param Imagine\ImageInterface $image
+     *
+     * @return array
+     */
     private function normalize(ImageInterface $image)
     {
         $step    = (int) round(255 / $this->buckets);
