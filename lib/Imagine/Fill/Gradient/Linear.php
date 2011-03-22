@@ -36,11 +36,11 @@ abstract class Linear implements FillInterface
      * Constructs a linear gradient with overal gradient length, and start and
      * end shades, which default to 0 and 255 accordingly
      *
-     * @param integer       $length
+     * @param integer             $length
      * @param Imagine\Image\Color $start
      * @param Imagine\Image\Color $end
      */
-    public function __construct($length, $start, $end)
+    final public function __construct($length, Color $start, Color $end)
     {
         $this->length = $length;
         $this->start  = $start;
@@ -51,7 +51,7 @@ abstract class Linear implements FillInterface
      * (non-PHPdoc)
      * @see Imagine\Fill\FillInterface::getShade()
      */
-    public function getColor(PointInterface $position)
+    final public function getColor(PointInterface $position)
     {
         $l = $this->getDistance($position);
 
@@ -72,6 +72,22 @@ abstract class Linear implements FillInterface
         );
 
         return $color;
+    }
+
+    /**
+     * @return Imagine\Image\Color
+     */
+    final public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @return Imagine\Image\Color
+     */
+    final public function getEnd()
+    {
+        return $this->end;
     }
 
     /**
