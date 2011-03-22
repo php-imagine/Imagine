@@ -19,6 +19,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
      * @cover Imagine\Image\Color::getGreen
      * @cover Imagine\Image\Color::getAlpha
      * @cover Imagine\Image\Color::__toString
+     * @cover Imagine\Image\Color::isOpaque
      */
     public function testShouldSetColorToWhite()
     {
@@ -31,6 +32,8 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('#ffffff', (string) $color);
         $this->assertEquals('#00ff00', (string) new Color('00ff00'));
+
+        $this->assertTrue($color->isOpaque());
     }
 
     /**
@@ -127,5 +130,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(new Color('fff', 50), $color->dissolve(50));
         $this->assertEquals(new Color('fff'), $color->dissolve(100)->dissolve(-100));
+
+        $this->assertFalse($color->dissolve(1)->isOpaque());
     }
 }
