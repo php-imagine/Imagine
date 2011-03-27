@@ -550,7 +550,7 @@ final class Image implements ImageInterface
             0
         );
 
-        $gradient->crear();
+        $gradient->clear();
         $gradient->destroy();
     }
 }
