@@ -529,18 +529,18 @@ final class Image implements ImageInterface
 
         if ($fill instanceof Horizontal) {
             $gradient->newPseudoImage(
-                $size->getWidth(),
-                $size->getHeight(),
-                $color
-            );
-        } else {
-            $gradient->newPseudoImage(
                 $size->getHeight(),
                 $size->getWidth(),
                 $color
             );
 
-            $gradient->rotateImage('000000', 90);
+            $gradient->rotateImage(new \ImagickPixel(), 90);
+        } else {
+            $gradient->newPseudoImage(
+                $size->getWidth(),
+                $size->getHeight(),
+                $color
+            );
         }
 
         $this->imagick->compositeImage(
