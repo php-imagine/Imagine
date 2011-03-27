@@ -24,27 +24,19 @@ final class Imagine implements ImagineInterface
      * @var array
      */
     private $types = array(
-        IMAGETYPE_BMP      => 'bmp',
-        IMAGETYPE_COUNT    => 'count',
         IMAGETYPE_GIF      => 'gif',
-        IMAGETYPE_ICO      => 'ico',
-        IMAGETYPE_IFF      => 'iff',
-        IMAGETYPE_JB2      => 'jb2',
-        IMAGETYPE_JP2      => 'jp2',
-        IMAGETYPE_JPC      => 'jpc',
         IMAGETYPE_JPEG     => 'jpeg',
         IMAGETYPE_JPEG2000 => 'jpeg',
-        IMAGETYPE_JPX      => 'jpx',
         IMAGETYPE_PNG      => 'png',
-        IMAGETYPE_PSD      => 'psd',
-        IMAGETYPE_SWC      => 'swc',
-        IMAGETYPE_SWF      => 'swf',
-        IMAGETYPE_TIFF_II  => 'tiff',
-        IMAGETYPE_TIFF_MM  => 'tiff',
         IMAGETYPE_UNKNOWN  => 'unknown',
         IMAGETYPE_WBMP     => 'wbmp',
         IMAGETYPE_XBM      => 'xbm'
     );
+
+    /**
+     * @var array
+     */
+    private $info;
 
     /**
      * @throws Imagine\Exception\RuntimeException
@@ -54,6 +46,15 @@ final class Imagine implements ImagineInterface
         if (!function_exists('gd_info')) {
             throw new RuntimeException('Gd not installed');
         }
+
+        $info          = gd_info();
+        list($version) = sscanf($info['GD Version'], 'bundled (%s compatible)');
+
+        if (version_compare('2.0.1', $version) > 0) {
+            throw new RuntimeException('GD2 version 2.0.1 or higher is required');
+        }
+
+        $this->info = $info;
     }
 
     /**
@@ -124,6 +125,21 @@ final class Imagine implements ImagineInterface
 
         $format = $this->types[$type];
 
+        $supported = array(
+            'gif'  => 'GIF Read Support',
+            'jpeg' => 'JPEG Support',
+            'png'  => 'PNG Support',
+            'wbmp' => 'WBMP Support',
+            'xbm'  => 'XBM Support'
+        );
+
+        if (!$this->info[$supported[$format]]) {
+            throw new RuntimeException(sprintf(
+                'Installed version of GD doesn\'t support "%s" image format',
+                $format
+            ));
+        }
+
         if (!function_exists('imagecreatefrom'.$format)) {
             throw new InvalidArgumentException(
                 'Invalid image format specified, only "gif", "jpeg", "png", '.
@@ -185,6 +201,10 @@ final class Imagine implements ImagineInterface
      */
     public function font($file, $size, Color $color)
     {
+        if (!$this->info['FreeType Support']) {
+            throw new RuntimeException('GD is not compiled with FreeType support');
+        }
+
         return new Font($file, $size, $color);
     }
 }
