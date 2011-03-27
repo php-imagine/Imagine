@@ -34,8 +34,6 @@ abstract class AbstractImageTest extends ImagineTestCase
                     ->flipVertically(),
                 new Center($size)
             );
-
-        $this->assertImageEquals($factory->open('tests/Imagine/Fixtures/results/rotate.jpg'), $image);
     }
 
     public function testThumbnailGeneration()
@@ -43,13 +41,6 @@ abstract class AbstractImageTest extends ImagineTestCase
         $factory = $this->getImagine();
         $image   = $factory->open('tests/Imagine/Fixtures/google.png');
         $inset   = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_INSET);
-
-        $this->assertImageEquals(
-            $factory->open('tests/Imagine/Fixtures/results/thumbnails/inset.png'),
-            $inset,
-            '',
-            0.5
-        );
 
         $size = $inset->getSize();
 
@@ -59,13 +50,6 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals(17, $size->getHeight());
 
         $outbound = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
-
-        $this->assertImageEquals(
-            $factory->open('tests/Imagine/Fixtures/results/thumbnails/outbound.png'),
-            $outbound,
-            '',
-            0.5
-        );
 
         $size = $outbound->getSize();
 
@@ -84,11 +68,6 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->crop(new Point(0, 0), new Box(126, 126))
             ->resize(new Box(200, 200))
             ->flipHorizontally();
-// TODO: fix this
-//        $this->assertImageEquals(
-//            $factory->open('tests/Imagine/Fixtures/results/crop_resize_flip.png'),
-//            $image
-//        );
 
         $size = $image->getSize();
 
@@ -102,13 +81,6 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
         $image   = $factory->create(new Box(400, 300), new Color('000'));
-
-        $this->assertImageEquals(
-            $factory->open('tests/Imagine/Fixtures/results/blank.png'),
-            $image,
-            '',
-            0.0005
-        );
 
         $size  = $image->getSize();
 
@@ -138,11 +110,6 @@ abstract class AbstractImageTest extends ImagineTestCase
                     ),
                 new Point(0, 0)
             );
-
-        $this->assertImageEquals(
-            $factory->open('tests/Imagine/Fixtures/results/gradient.png'),
-            $image
-        );
 
         $size = $image->getSize();
 

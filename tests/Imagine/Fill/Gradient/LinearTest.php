@@ -21,15 +21,27 @@ abstract class LinearTest extends \PHPUnit_Framework_TestCase
      */
     private $fill;
 
+    /**
+     * @var Imagine\Image\Color
+     */
+    private $start;
+
+    /**
+     * @var Imagine\Image\Color
+     */
+    private $end;
+
     protected function setUp()
     {
-        $this->fill = $this->getFill();
+        $this->start = $this->getStart();
+        $this->end   = $this->getEnd();
+        $this->fill  = $this->getFill($this->start, $this->end);
     }
 
     /**
      * @dataProvider getPointsAndColors
      *
-     * @param integer                $shade
+     * @param integer                      $shade
      * @param Imagine\Image\PointInterface $position
      */
     public function testShouldProvideCorrectColorsValues(Color $color, PointInterface $position)
@@ -38,9 +50,32 @@ abstract class LinearTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Imagine\Fill\Gradient\Linear::getStart
+     * @covers Imagine\Fill\Gradient\Linear::getEnd
+     */
+    public function testShouldReturnCorrectStartAndEnd()
+    {
+        $this->assertSame($this->start, $this->fill->getStart());
+        $this->assertSame($this->end, $this->fill->getEnd());
+    }
+
+    /**
+     * @param Imagine\Image\Color $start
+     * @param Imagine\Image\Color $end
+     *
      * @return Imagine\Fill\FillInterface
      */
-    abstract protected function getFill();
+    abstract protected function getFill(Color $start, Color $end);
+
+    /**
+     * @return Imagine\Image\Color
+     */
+    abstract protected function getStart();
+
+    /**
+     * @return Imagine\Image\Color
+     */
+    abstract protected function getEnd();
 
     /**
      * @return array

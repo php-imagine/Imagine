@@ -219,4 +219,14 @@ final class Color
     {
         return sprintf('#%02x%02x%02x', $this->r, $this->g, $this->b);
     }
+
+    /**
+     * Checks if the current color is opaque
+     *
+     * @return Boolean
+     */
+    public function isOpaque()
+    {
+        return 0 === $this->alpha;
+    }
 }

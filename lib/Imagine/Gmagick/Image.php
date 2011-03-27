@@ -53,7 +53,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::copy()
+     * @see Imagine\Image\ManipulatorInterface::copy()
      */
     public function copy()
     {
@@ -62,7 +62,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::crop()
+     * @see Imagine\Image\ManipulatorInterface::crop()
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -92,7 +92,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::flipHorizontally()
+     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
      */
     public function flipHorizontally()
     {
@@ -109,7 +109,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::flipVertically()
+     * @see Imagine\Image\ManipulatorInterface::flipVertically()
      */
     public function flipVertically()
     {
@@ -126,7 +126,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::paste()
+     * @see Imagine\Image\ManipulatorInterface::paste()
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -175,7 +175,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::resize()
+     * @see Imagine\Image\ManipulatorInterface::resize()
      */
     public function resize(BoxInterface $size)
     {
@@ -197,7 +197,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::rotate()
+     * @see Imagine\Image\ManipulatorInterface::rotate()
      */
     public function rotate($angle, Color $background = null)
     {
@@ -218,7 +218,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::save()
+     * @see Imagine\Image\ManipulatorInterface::save()
      */
     public function save($path, array $options = array())
     {
@@ -235,7 +235,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::show()
+     * @see Imagine\Image\ManipulatorInterface::show()
      */
     public function show($format, array $options = array())
     {
@@ -272,7 +272,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::thumbnail()
+     * @see Imagine\Image\ManipulatorInterface::thumbnail()
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -333,7 +333,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::applyMask()
+     * @see Imagine\Image\ManipulatorInterface::applyMask()
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -392,7 +392,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::fill()
+     * @see Imagine\Image\ManipulatorInterface::fill()
      */
     public function fill(FillInterface $fill)
     {
@@ -457,6 +457,10 @@ class Image implements ImageInterface
      */
     private function getColor(Color $color)
     {
+        if (!$color->isOpaque()) {
+            throw new InvalidArgumentException('Gmagick doesn\'t support transparency');
+        }
+
         $pixel = new \GmagickPixel((string) $color);
 
         $pixel->setColorValue(
