@@ -11,6 +11,11 @@
 
 namespace Imagine\Filter;
 
+use Imagine\Filter\Basic\Fill;
+
+use Imagine\Filter\Basic\ApplyMask;
+
+use Imagine\Fill\FillInterface;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
 use Imagine\Filter\Basic\FlipVertically;
@@ -25,10 +30,11 @@ use Imagine\ImageInterface;
 use Imagine\ImageFactoryInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
+use Imagine\Image\ManipulatorInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
-final class Transformation implements FilterInterface
+final class Transformation implements FilterInterface, ManipulatorInterface
 {
     /**
      * @var array
@@ -63,9 +69,8 @@ final class Transformation implements FilterInterface
     }
 
     /**
-     * Stacks a copy transformation into the current transformations queue
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::copy()
      */
     public function copy()
     {
@@ -73,12 +78,8 @@ final class Transformation implements FilterInterface
     }
 
     /**
-     * Stacks a crop transformation into the current transformations queue
-     *
-     * @param Imagine\Image\PointInterface $start
-     * @param Imagine\Image\BoxInterface   $size
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::crop()
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -86,10 +87,8 @@ final class Transformation implements FilterInterface
     }
 
     /**
-     * Stacks a horizontal flip transformation into the current transformations
-     * queue
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
      */
     public function flipHorizontally()
     {
@@ -97,10 +96,8 @@ final class Transformation implements FilterInterface
     }
 
     /**
-     * Stacks a vertical flip transformation into the current transformations
-     * queue
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::flipVertically()
      */
     public function flipVertically()
     {
@@ -108,24 +105,35 @@ final class Transformation implements FilterInterface
     }
 
     /**
-     * Stacks a paste transformation into the current transformations queue
-     *
-     * @param Imagine\ImageInterface       $image
-     * @param Imagine\Image\PointInterface $start
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::paste()
      */
-    public function paste(ImageInterface $image, Point $start)
+    public function paste(ImageInterface $image, PointInterface $start)
     {
         return $this->add(new Paste($image, $start));
     }
 
     /**
-     * Stacks a resize transformation into the current transformations queue
-     *
-     * @param Imagine\Image\BoxInterface
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::applyMask()
+     */
+    public function applyMask(ImageInterface $mask)
+    {
+        return $this->add(new ApplyMask($mask));
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::fill()
+     */
+    public function fill(FillInterface $fill)
+    {
+        return $this->add(new Fill($fill));
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::resize()
      */
     public function resize(BoxInterface $size)
     {
@@ -133,12 +141,8 @@ final class Transformation implements FilterInterface
     }
 
     /**
-     * Stacks a rotane transformation into the current transformations queue
-     *
-     * @param integer             $angle
-     * @param Imagine\Image\Color $background
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::rotate()
      */
     public function rotate($angle, Color $background = null)
     {
@@ -146,12 +150,8 @@ final class Transformation implements FilterInterface
     }
 
     /**
-     * Stacks a save transformation into the current transformations queue
-     *
-     * @param string $path
-     * @param array  $options
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::save()
      */
     public function save($path, array $options = array())
     {
@@ -159,12 +159,8 @@ final class Transformation implements FilterInterface
     }
 
     /**
-     * Stacks a show transformation into the current transformations queue
-     *
-     * @param string $path
-     * @param array  $options
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::show()
      */
     public function show($format, array $options = array())
     {
@@ -172,12 +168,8 @@ final class Transformation implements FilterInterface
     }
 
     /**
-     * Stacks a thumbnail transformation into the current transformation queue
-     *
-     * @param Imagine\Image\BoxInterface $size
-     * @param string                     $mode
-     *
-     * @return Imagine\Filter\Transformation
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::thumbnail()
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
