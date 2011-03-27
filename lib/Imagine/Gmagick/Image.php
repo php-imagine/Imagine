@@ -457,6 +457,10 @@ class Image implements ImageInterface
      */
     private function getColor(Color $color)
     {
+        if (!$color->isOpaque()) {
+            throw new InvalidArgumentException('Gmagick doesn\'t support transparency');
+        }
+
         $pixel = new \GmagickPixel((string) $color);
 
         $pixel->setColorValue(
