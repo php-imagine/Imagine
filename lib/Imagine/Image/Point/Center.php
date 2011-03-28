@@ -22,7 +22,7 @@ final class Center implements PointInterface
     private $box;
 
     /**
-     * Constructs coordinate with size instantce, it needs to be relative to
+     * Constructs coordinate with size instance, it needs to be relative to
      *
      * @param Imagine\Image\BoxInterface $size
      */

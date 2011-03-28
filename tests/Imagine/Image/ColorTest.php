@@ -105,7 +105,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Color('fff'), new Color('#ffffff'));
     }
 
-    public function testShouldLigtenColor()
+    public function testShouldLightenColor()
     {
         $color = new Color('000');
 
@@ -113,7 +113,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Color('fff'), $color->lighten(300));
     }
 
-    public function testShouldDarnenColor()
+    public function testShouldDarkenColor()
     {
         $color = new Color('fff');
 

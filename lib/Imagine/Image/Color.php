@@ -109,7 +109,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @retun Imagine\Image\Color
+     * @return Imagine\Image\Color
      */
     public function lighten($shade)
     {
@@ -129,7 +129,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @retun Imagine\Image\Color
+     * @return Imagine\Image\Color
      */
     public function darken($shade)
     {
