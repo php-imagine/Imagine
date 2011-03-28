@@ -348,7 +348,7 @@ class Image implements ImageInterface
 
         if ($size != $maskSize) {
             throw new InvalidArgumentException(sprintf(
-                'The given mask doesn\'t match current image\'s sise, current '.
+                'The given mask doesn\'t match current image\'s size, current '.
                 'mask\'s dimensions are %s, while image\'s dimensions are %s',
                 $maskSize, $size
             ));

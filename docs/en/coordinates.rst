@@ -61,7 +61,7 @@ Every box or image or shape has a size, size has the following methods:
 
 * ``->scale($ratio)`` - returns a new ``BoxInterface`` instance with each side multiplied by ``$ratio``
 
-* ``->increate($size)`` - returns a new ``BoxInterface``, with given ``$size`` added to each side
+* ``->increase($size)`` - returns a new ``BoxInterface``, with given ``$size`` added to each side
 
 * ``->contains(BoxInterface $box, PointInterface $start = null)`` - checks that the given ``$box`` is contained inside the current ``BoxInterface`` at ``$start`` position. If no ``$start`` position is given, its assumed to be (0,0)
 

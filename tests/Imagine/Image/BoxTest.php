@@ -54,13 +54,13 @@ class BoxTest extends \PHPUnit_Framework_TestCase
      * @param integer $width
      * @param integer $height
      */
-    public function testShouldThrowExceptionOnInvalieSize($width, $height)
+    public function testShouldThrowExceptionOnInvalidSize($width, $height)
     {
         new Box($width, $height);
     }
 
     /**
-     * Data provider for testShouldThrowExceptionOnInvalieSize
+     * Data provider for testShouldThrowExceptionOnInvalidSize
      *
      * @return array
      */

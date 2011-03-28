@@ -37,7 +37,7 @@ final class Point implements PointInterface
     {
         if ($x < 0 || $y < 0) {
             throw new InvalidArgumentException(
-                'A coordinate cannot be positioned ouside of a bounding box'
+                'A coordinate cannot be positioned outside of a bounding box'
             );
         }
 

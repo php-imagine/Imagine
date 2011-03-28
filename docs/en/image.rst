@@ -38,6 +38,6 @@ Available Methods
 
 * ``->mask()`` - returns a masked copy of current image - masks are grayscale and don't have any transparency
 
-* ``->fill(FillInterface $fill)`` - applies a fill to every pixel in the image, this is rather expensive in performace, as it iterates through every pixel on the image, but gives control to fine-tune the image fill
+* ``->fill(FillInterface $fill)`` - applies a fill to every pixel in the image, this is rather expensive in performance, as it iterates through every pixel on the image, but gives control to fine-tune the image fill
 
-* ``->histogram()`` - returns array of unique ``Image\Color`` instances, that consitute current ``ImageInterface`` instance
+* ``->histogram()`` - returns array of unique ``Image\Color`` instances, that constitute current ``ImageInterface`` instance

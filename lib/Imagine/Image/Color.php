@@ -109,7 +109,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @retun Imagine\Image\Color
+     * @return Imagine\Image\Color
      */
     public function lighten($shade)
     {
@@ -129,7 +129,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @retun Imagine\Image\Color
+     * @return Imagine\Image\Color
      */
     public function darken($shade)
     {
@@ -194,7 +194,7 @@ final class Color
             if (strlen($color) !== 3 && strlen($color) !== 6) {
                 throw new InvalidArgumentException(sprintf(
                     'Color must be a hex value in regular (6 characters) or '.
-                    'short (3 charatcters) notation, "%s" given', $color
+                    'short (3 characters) notation, "%s" given', $color
                 ));
             }
 

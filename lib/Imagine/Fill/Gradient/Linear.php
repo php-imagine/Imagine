@@ -33,7 +33,7 @@ abstract class Linear implements FillInterface
     private $end;
 
     /**
-     * Constructs a linear gradient with overal gradient length, and start and
+     * Constructs a linear gradient with overall gradient length, and start and
      * end shades, which default to 0 and 255 accordingly
      *
      * @param integer             $length
@@ -91,7 +91,7 @@ abstract class Linear implements FillInterface
     }
 
     /**
-     * Get the distance of the position relative to the begining of the gradient
+     * Get the distance of the position relative to the beginning of the gradient
      *
      * @param Imagine\Image\PointInterface $position
      *

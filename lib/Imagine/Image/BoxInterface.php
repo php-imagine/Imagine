@@ -37,14 +37,14 @@ interface BoxInterface
     function scale($ratio);
 
     /**
-     * Creats new BoxInterface, adding given size to both sides
+     * Creates new BoxInterface, adding given size to both sides
      *
      * @param integer $size
      */
     function increase($size);
 
     /**
-     * Checks whether curret box can fit given box at a given start position,
+     * Checks whether current box can fit given box at a given start position,
      * start position defaults to top left corner xy(0,0)
      *
      * @param Imagine\Image\BoxInterface       $box
