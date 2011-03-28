@@ -11,13 +11,11 @@
 
 namespace Imagine\Filter;
 
-use Imagine\Filter\Basic\Fill;
-
-use Imagine\Filter\Basic\ApplyMask;
-
 use Imagine\Fill\FillInterface;
+use Imagine\Filter\Basic\ApplyMask;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
+use Imagine\Filter\Basic\Fill;
 use Imagine\Filter\Basic\FlipVertically;
 use Imagine\Filter\Basic\FlipHorizontally;
 use Imagine\Filter\Basic\Paste;
