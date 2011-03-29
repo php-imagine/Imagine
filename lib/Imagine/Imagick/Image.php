@@ -76,7 +76,7 @@ final class Image implements ImageInterface
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
-        if (!$start->in($size)) {
+        if (!$start->in($this->getSize())) {
             throw new OutOfBoundsException('Crop coordinates must start at '.
                 'minimum 0, 0 position from top left corner, crop height and '.
                 'width must be positive integers and must not exceed the '.
