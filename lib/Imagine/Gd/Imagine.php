@@ -43,18 +43,33 @@ final class Imagine implements ImagineInterface
      */
     public function __construct()
     {
+        $this->loadGdInfo();
+        $this->requireGdVersion('2.0.1');
+    }
+
+    private function loadGdInfo()
+    {
         if (!function_exists('gd_info')) {
             throw new RuntimeException('Gd not installed');
         }
 
-        $info          = gd_info();
-        list($version) = sscanf($info['GD Version'], 'bundled (%s compatible)');
+        $this->info = gd_info();
+    }
 
-        if (version_compare('2.0.1', $version) > 0) {
+    private function requireGdVersion($version)
+    {
+        if (version_compare($this->getCurrentGdVersion(), $version, '<')) {
             throw new RuntimeException('GD2 version 2.0.1 or higher is required');
         }
+    }
 
-        $this->info = $info;
+    private function getCurrentGdVersion()
+    {
+        if (!preg_match('/[\d.]+/', $this->info['GD Version'], $matches)) {
+            throw new RuntimeException("Can't reliably determine GD version");
+        }
+
+        return $matches[0];
     }
 
     /**
