@@ -17,9 +17,9 @@ use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
-use Imagine\Test\ImagineTestCase;
+use Imagine\AbstractLibraryDependentTest;
 
-abstract class AbstractImageTest extends ImagineTestCase
+abstract class AbstractImageTest extends AbstractLibraryDependentTest
 {
     public function testRotate()
     {

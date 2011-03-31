@@ -13,9 +13,9 @@ namespace Imagine;
 
 use Imagine\Image\Color;
 use Imagine\Image\Box;
-use Imagine\Test\ImagineTestCase;
+use Imagine\AbstractLibraryDependentTest;
 
-abstract class AbstractImagineTest extends ImagineTestCase
+abstract class AbstractImagineTest extends AbstractLibraryDependentTest
 {
     public function testShouldCreateEmptyImage()
     {

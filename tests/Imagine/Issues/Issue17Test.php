@@ -5,19 +5,19 @@ namespace Imagine\Issues;
 use Imagine\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Gd\Imagine;
+use Imagine\AbstractLibraryDependentTest;
 use Imagine\Exception\RuntimeException;
 
-class Issue17Test extends \PHPUnit_Framework_TestCase
+class Issue17Test extends AbstractLibraryDependentTest
 {
+    protected function getLibrary()
+    {
+        return 'gd';
+    }
+
     private function getImagine()
     {
-        try {
-            $imagine = new Imagine();
-        } catch (RuntimeException $e) {
-            $this->markTestSkipped($e->getMessage());
-        }
-
-        return $imagine;
+        return new Imagine();
     }
 
     public function testShouldResize()

@@ -16,14 +16,6 @@ use Imagine\Image\Box;
 
 class ImagineTest extends AbstractImagineTest
 {
-    protected function setUp()
-    {
-        parent::setUp();
-
-        if (!class_exists('Gmagick')) {
-            $this->markTestSkipped('Gmagick is not installed');
-        }
-    }
 
     protected function getEstimatedFontBox()
     {
