@@ -58,18 +58,9 @@ final class Imagine implements ImagineInterface
 
     private function requireGdVersion($version)
     {
-        if (version_compare($this->getCurrentGdVersion(), $version, '<')) {
+        if (version_compare(GD_VERSION, $version, '<')) {
             throw new RuntimeException('GD2 version 2.0.1 or higher is required');
         }
-    }
-
-    private function getCurrentGdVersion()
-    {
-        if (!preg_match('/[\d.]+/', $this->info['GD Version'], $matches)) {
-            throw new RuntimeException("Can't reliably determine GD version");
-        }
-
-        return $matches[0];
     }
 
     /**
