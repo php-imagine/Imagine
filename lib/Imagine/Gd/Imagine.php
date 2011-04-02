@@ -30,7 +30,6 @@ final class Imagine implements ImagineInterface
         IMAGETYPE_PNG      => 'png',
         IMAGETYPE_UNKNOWN  => 'unknown',
         IMAGETYPE_WBMP     => 'wbmp',
-        IMAGETYPE_XBM      => 'xbm'
     );
 
     /**
@@ -131,15 +130,19 @@ final class Imagine implements ImagineInterface
 
         $format = $this->types[$type];
 
+        if ('unknown' === $format) {
+            throw new RuntimeException('Unknown image format');
+        }
+
         $supported = array(
-            'gif'  => 'GIF Read Support',
-            'jpeg' => 'JPEG Support',
-            'png'  => 'PNG Support',
-            'wbmp' => 'WBMP Support',
-            'xbm'  => 'XBM Support'
+            'gif'  => IMG_GIF,
+            'jpeg' => IMG_JPEG,
+            'jpg'  => IMG_JPG,
+            'png'  => IMG_PNG,
+            'wbmp' => IMG_WBMP,
         );
 
-        if (!$this->info[$supported[$format]]) {
+        if (!(imagetypes() & $supported[$format])) {
             throw new RuntimeException(sprintf(
                 'Installed version of GD doesn\'t support "%s" image format',
                 $format
@@ -147,10 +150,10 @@ final class Imagine implements ImagineInterface
         }
 
         if (!function_exists('imagecreatefrom'.$format)) {
-            throw new InvalidArgumentException(
-                'Invalid image format specified, only "gif", "jpeg", "png", '.
-                '"wbmp", "xbm" images are supported'
-            );
+            throw new InvalidArgumentException(sprintf(
+                'Invalid image format specified, only "%s" images are '.
+                'supported', implode('", "', array_keys($supported))
+            ));
         }
 
         $resource = call_user_func('imagecreatefrom'.$format, $path);
