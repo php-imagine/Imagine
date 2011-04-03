@@ -91,7 +91,7 @@ final class Imagine implements ImagineInterface
         $resource = $this->gd->open($path);
 
         $this->enableTransparency(
-            $resource, sprintf('File "%s" could not be opened', $path)
+            $resource, sprintf('Image "%s" could not be opened', $path)
         );
 
         return new Image($this->gd, $resource);
