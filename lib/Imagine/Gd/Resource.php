@@ -109,6 +109,15 @@ class Resource implements ResourceInterface
 
     /**
      * (non-PHPdoc)
+     * @see Imagine\Gd\ResourceInterface::filledrectangle()
+     */
+    public function filledrectangle($x1, $y1, $x2, $y2, $color)
+    {
+        return imagefilledrectangle($this->resource, $x1, $y1, $x2, $y2, $color);
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see Imagine\Gd\ResourceInterface::filter()
      */
     public function filter($filtertype, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null)

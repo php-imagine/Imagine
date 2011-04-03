@@ -118,6 +118,19 @@ interface ResourceInterface
     function destroy();
 
     /**
+     * @param integer $x1
+     * @param integer $y1
+     * @param integer $x2
+     * @param integer $y2
+     * @param integer $color
+     *
+     * @return boolean
+     *
+     * @see imagefilledrectangle
+     */
+    function filledrectangle($x1, $y1, $x2, $y2, $color);
+
+    /**
      * @param integer $filtertype
      * @param mixed   $arg1
      * @param mixed   $arg2
