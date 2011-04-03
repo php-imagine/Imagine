@@ -28,18 +28,23 @@ use Imagine\Mask\MaskInterface;
 final class Image implements ImageInterface
 {
     /**
-     * @var resource
+     * @var Imagine\Gd\GdInterface
+     */
+    private $gd;
+
+    /**
+     * @var Imagine\Gd\ResourceInterface
      */
     private $resource;
 
     /**
-     * Constructs a new Image instance using the result of
-     * imagecreatetruecolor()
+     * Constructs a new Image instance using Gd Resource
      *
-     * @param resource $resource
+     * @param Imagine\Gd\ResourceInterface $resource
      */
-    public function __construct($resource)
+    public function __construct(GdInterface $gd, ResourceInterface $resource)
     {
+        $this->gd       = $gd;
         $this->resource = $resource;
     }
 
@@ -48,7 +53,9 @@ final class Image implements ImageInterface
      */
     public function __destruct()
     {
-        imagedestroy($this->resource);
+        if ($this->resource instanceof ResourceInterface) {
+            $this->resource->destroy();
+        }
     }
 
     /**
@@ -57,28 +64,27 @@ final class Image implements ImageInterface
      */
     final public function copy()
     {
-        $size = $this->getSize();
-        $copy = imagecreatetruecolor($size->getWidth(), $size->getHeight());
+        $size   = $this->getSize();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+        $copy   = $this->gd->create($width, $height);
 
-        if (false === $copy) {
+        if (!$copy instanceof ResourceInterface) {
             throw new RuntimeException('Image copy operation failed');
         }
 
-        if (false === imagealphablending($copy, false) ||
-            false === imagesavealpha($copy, true)) {
+        if (false === $copy->alphablending(false) ||
+            false === $copy->savealpha(true)) {
             throw new RuntimeException('Image copy operation failed');
         }
 
-        if (function_exists('imageantialias')) {
-            imageantialias($copy, true);
-        }
-
-        if (false === imagecopymerge($copy, $this->resource, 0, 0, 0,
-            0, $size->getWidth(), $size->getHeight(), 100)) {
+        if (false === $this->resource->imagecopymerge(
+            $copy, 0, 0, 0, 0, $width, $height, 100
+        )) {
             throw new RuntimeException('Image copy operation failed');
         }
 
-        return new Image($copy);
+        return new Image($this->gd, $copy);
     }
 
     /**
@@ -97,22 +103,19 @@ final class Image implements ImageInterface
 
         $width  = $size->getWidth();
         $height = $size->getHeight();
+        $dest   = $this->gd->create($width, $height);
 
-        $dest = imagecreatetruecolor($width, $height);
+        $dest->alphablending(false);
+        $dest->savealpha(true);
+        $dest->antialias(true);
 
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
-
-        if (false === imagecopymerge($dest, $this->resource, 0, 0,
-            $start->getX(), $start->getY(), $width, $height, 100)) {
+        if (false === $this->resource->copymerge(
+            $dest, 0, 0, $start->getX(), $start->getY(), $width, $height, 100
+        )) {
             throw new RuntimeException('Image crop operation failed');
         }
 
-        imagedestroy($this->resource);
+        $this->resource->destroy();
 
         $this->resource = $dest;
 
@@ -133,6 +136,7 @@ final class Image implements ImageInterface
         }
 
         $size = $image->getSize();
+
         if (!$this->getSize()->contains($size, $start)) {
             throw new OutOfBoundsException(
                 'Cannot paste image of the given size at the specified '.
@@ -140,11 +144,13 @@ final class Image implements ImageInterface
             );
         }
 
-        imagealphablending($this->resource, true);
-        imagealphablending($image->resource, true);
+        $this->resource->alphablending(true);
+        $image->resource->alphablending(true);
 
-        if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(),
-            0, 0, $size->getWidth(), $size->getHeight())) {
+        if (false === $image->resource->copy(
+            $this->resource, $start->getX(), $start->getY(), 0, 0,
+            $size->getWidth(), $size->getHeight()
+        )) {
             throw new RuntimeException('Image paste operation failed');
         }
 
@@ -162,23 +168,20 @@ final class Image implements ImageInterface
     {
         $width  = $size->getWidth();
         $height = $size->getHeight();
+        $dest   = $this->gd->create($width, $height);
 
-        $dest = imagecreatetruecolor($width, $height);
+        $dest->alphablending(false);
+        $dest->savealpha(true);
+        $dest->antialias(true);
 
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
-
-        if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
-            $width, $height, imagesx($this->resource), imagesy($this->resource)
+        if (false === $this->resource->copyresampled(
+            $dest, 0, 0, $width, $height, 0, 0,
+            $this->resource->sx(), $this->resource->sy()
         )) {
             throw new RuntimeException('Image resize operation failed');
         }
 
-        imagedestroy($this->resource);
+        $this->resource->destroy();
 
         $this->resource = $dest;
 
@@ -366,7 +369,7 @@ final class Image implements ImageInterface
      */
     public function getSize()
     {
-        return new Box(imagesx($this->resource), imagesy($this->resource));
+        return new Box($this->resource->sx(), $this->resource->sy());
     }
 
     /**

@@ -33,33 +33,16 @@ final class Imagine implements ImagineInterface
     );
 
     /**
-     * @var array
+     * @var Imagine\Gd\GdInterface
      */
-    private $info;
+    private $gd;
 
     /**
-     * @throws Imagine\Exception\RuntimeException
+     * @param Imagine\Gd\GdInterface $gd
      */
-    public function __construct()
+    public function __construct(GdInterface $gd)
     {
-        $this->loadGdInfo();
-        $this->requireGdVersion('2.0.1');
-    }
-
-    private function loadGdInfo()
-    {
-        if (!function_exists('gd_info')) {
-            throw new RuntimeException('Gd not installed');
-        }
-
-        $this->info = gd_info();
-    }
-
-    private function requireGdVersion($version)
-    {
-        if (version_compare(GD_VERSION, $version, '<')) {
-            throw new RuntimeException('GD2 version 2.0.1 or higher is required');
-        }
+        $this->gd = $gd;
     }
 
     /**
@@ -68,30 +51,15 @@ final class Imagine implements ImagineInterface
      */
     public function create(BoxInterface $size, Color $color = null)
     {
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
+        $width    = $size->getWidth();
+        $height   = $size->getHeight();
+        $resource = $this->gd->create($width, $height);
 
-        $resource = imagecreatetruecolor($width, $height);
-
-        if (false === $resource) {
-            throw new RuntimeException('Create operation failed');
-        }
+        $this->enableTransparency($resource, 'Create operation failed');
 
         $color = $color ? $color : new Color('fff');
-
-        if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
-            throw new RuntimeException(
-                'Could not set alphablending, savealpha and antialias values'
-            );
-        }
-
-        if (function_exists('imageantialias')) {
-            imageantialias($resource, true);
-        }
-
-        $color = imagecolorallocatealpha(
-            $resource, $color->getRed(), $color->getGreen(), $color->getBlue(),
+        $color = $resource->colorallocatealpha(
+            $color->getRed(), $color->getGreen(), $color->getBlue(),
             round(127 * $color->getAlpha() / 100)
         );
 
@@ -99,13 +67,13 @@ final class Imagine implements ImagineInterface
             throw new RuntimeException('Unable to allocate color');
         }
 
-        if (false === imagefilledrectangle(
-            $resource, 0, 0, $width, $height, $color
+        if (false === $resource->filledrectangle(
+            0, 0, $width, $height, $color
         )) {
             throw new RuntimeException('Could not set background color fill');
         }
 
-        return new Image($resource, $this);
+        return new Image($this->gd, $resource);
     }
 
     /**
@@ -120,62 +88,13 @@ final class Imagine implements ImagineInterface
             ));
         }
 
-        $info = getimagesize($path);
+        $resource = $this->gd->open($path);
 
-        if (false === $info) {
-            throw new RuntimeException('Could not collect image metadata');
-        }
-
-        list($width, $height, $type) = $info;
-
-        $format = $this->types[$type];
-
-        if ('unknown' === $format) {
-            throw new RuntimeException('Unknown image format');
-        }
-
-        $supported = array(
-            'gif'  => IMG_GIF,
-            'jpeg' => IMG_JPEG,
-            'jpg'  => IMG_JPG,
-            'png'  => IMG_PNG,
-            'wbmp' => IMG_WBMP,
+        $this->enableTransparency(
+            $resource, sprintf('File "%s" could not be opened', $path)
         );
 
-        if (!(imagetypes() & $supported[$format])) {
-            throw new RuntimeException(sprintf(
-                'Installed version of GD doesn\'t support "%s" image format',
-                $format
-            ));
-        }
-
-        if (!function_exists('imagecreatefrom'.$format)) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid image format specified, only "%s" images are '.
-                'supported', implode('", "', array_keys($supported))
-            ));
-        }
-
-        $resource = call_user_func('imagecreatefrom'.$format, $path);
-
-        if (!is_resource($resource)) {
-            throw new RuntimeException(sprintf(
-                'File "%s" could not be opened', $path
-            ));
-        }
-
-        if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
-            throw new RuntimeException(
-                'Could not set alphablending, savealpha and antialias values'
-            );
-        }
-
-        if (function_exists('imageantialias')) {
-            imageantialias($resource, true);
-        }
-
-        return new Image($resource);
+        return new Image($this->gd, $resource);
     }
 
     /**
@@ -184,25 +103,32 @@ final class Imagine implements ImagineInterface
      */
     public function load($string)
     {
-        $resource = imagecreatefromstring($string);
+        $resource = $this->gd->load($string);
 
-        if (!is_resource($resource)) {
-            throw new InvalidArgumentException('An image could not be created from the given input');
+        $this->enableTransparency(
+            $resource, 'An image could not be created from the given input'
+        );
+
+        return new Image($this->gd, $resource);
+    }
+
+    /**
+     * Enter description here ...
+     */
+    private function enableTransparency($resource, $message)
+    {
+        if (!$resource instanceof ResourceInterface) {
+            throw new InvalidArgumentException($message);
         }
 
-        if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
+        if (false === $resource->alphablending(false) ||
+            false === $resource->savealpha(true)) {
             throw new RuntimeException(
                 'Could not set alphablending, savealpha and antialias values'
             );
         }
-
-        if (function_exists('imageantialias')) {
-            imageantialias($resource, true);
-        }
-
-        return new Image($resource);
     }
+
 
     /**
      * (non-PHPdoc)
@@ -210,9 +136,9 @@ final class Imagine implements ImagineInterface
      */
     public function font($file, $size, Color $color)
     {
-        if (!$this->info['FreeType Support']) {
-            throw new RuntimeException('GD is not compiled with FreeType support');
-        }
+//        if (!$this->info['FreeType Support']) {
+//            throw new RuntimeException('GD is not compiled with FreeType support');
+//        }
 
         return new Font($file, $size, $color);
     }
