@@ -40,6 +40,7 @@ final class Image implements ImageInterface
     /**
      * Constructs a new Image instance using Gd Resource
      *
+     * @param Imagine\Gd\GdInterface       $gd
      * @param Imagine\Gd\ResourceInterface $resource
      */
     public function __construct(GdInterface $gd, ResourceInterface $resource)
