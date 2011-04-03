@@ -14,24 +14,114 @@ namespace Imagine\Gd;
 use Imagine\AbstractImagineTest;
 use Imagine\Image\Box;
 
-class ImagineTest extends AbstractImagineTest
+class ImagineTest extends \PHPUnit_Framework_TestCase
 {
+    private $gd;
+    private $imagine;
+
     protected function setUp()
     {
         parent::setUp();
 
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
-        }
+        $this->gd      = $this->getGd();
+        $this->imagine = new Imagine($this->gd);
     }
 
-    protected function getEstimatedFontBox()
+    public function testShouldCreateImage()
     {
-        return new Box(112, 46);
+        $color    = 10;
+        $width    = 100;
+        $height   = 100;
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('create')
+            ->with($width, $height)
+            ->will($this->returnValue($resource));
+
+        $this->expectTransparencyToBeEnabled($resource);
+
+        $resource->expects($this->once())
+            ->method('colorallocatealpha')
+            ->with(255, 255, 255, 0)
+            ->will($this->returnValue($color));
+        $resource->expects($this->once())
+            ->method('filledrectangle')
+            ->with(0, 0, $width, $height, $color)
+            ->will($this->returnValue(true));
+
+        $image = $this->imagine->create(new Box($width, $height));
+
+        $this->assertInstanceOf('Imagine\Gd\Image', $image);
     }
 
-    protected function getImagine()
+    /**
+     * @expectedException Imagine\Exception\InvalidArgumentException
+     */
+    public function testShouldNotOpenImageFromInvalidPath()
     {
-        return new Imagine();
+        $this->imagine->open('/some/path/to/image.jpg');
+    }
+
+    public function testShouldOpenImage()
+    {
+        $path     = 'tests/Imagine/Fixtures/google.png';
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('open')
+            ->with($path)
+            ->will($this->returnValue($resource));
+
+        $this->expectTransparencyToBeEnabled($resource);
+
+        $image = $this->imagine->open($path);
+
+        $this->assertInstanceOf('Imagine\Gd\Image', $image);
+    }
+
+    public function testShouldLoadImageFromString()
+    {
+        $string   = 'foo';
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('load')
+            ->with($string)
+            ->will($this->returnValue($resource));
+
+        $this->expectTransparencyToBeEnabled($resource);
+
+        $image = $this->imagine->load($string);
+
+        $this->assertInstanceOf('Imagine\Gd\Image', $image);
+    }
+
+    /**
+     * Sets transparency related expectations
+     *
+     * @param PHPUnit_Framework_MockObject_MockObject $resource
+     */
+    private function expectTransparencyToBeEnabled(\PHPUnit_Framework_MockObject_MockObject $resource)
+    {
+        $resource->expects($this->once())
+            ->method('savealpha')
+            ->with(true)
+            ->will($this->returnValue(true));
+        $resource->expects($this->once())
+            ->method('alphablending')
+            ->with(false)
+            ->will($this->returnValue(true));
+    }
+
+
+    private function getResource()
+    {
+        return $this->getMock('Imagine\Gd\ResourceInterface');
+    }
+
+    private function getGd()
+    {
+        return $this->getMock('Imagine\Gd\GdInterface');
     }
 }
