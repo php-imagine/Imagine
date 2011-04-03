@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Exception\InvalidArgumentException;
+
 class Resource implements ResourceInterface
 {
     /**
@@ -23,6 +25,16 @@ class Resource implements ResourceInterface
      */
     public function __construct($resource)
     {
+        if (!is_resource($resource)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Argument 1 of %s must be a resource, %s given',
+                    __METHOD__,
+                    gettype($resource)
+                )
+            );
+        }
+
         $this->resource = $resource;
     }
 
