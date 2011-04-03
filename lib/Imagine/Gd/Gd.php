@@ -19,7 +19,7 @@ class Gd implements GdInterface
      */
     public function create($width, $height)
     {
-        return new Resource(imagecreatetruecolor($width, $height));
+        return $this->wrap(imagecreatetruecolor($width, $height));
     }
 
     /**
@@ -28,7 +28,7 @@ class Gd implements GdInterface
      */
     public function load($data)
     {
-        return new Resource(imagecreatefromstring($data));
+        return $this->wrap(imagecreatefromstring($data));
     }
 
     /**
@@ -56,6 +56,19 @@ class Gd implements GdInterface
 
         $extension = ('jpg' === $extension) ? 'jpeg' : $extension;
 
-        return new Resource(call_user_func('imagecreatefrom'.$extension, $path));
+        return $this->wrap(call_user_func('imagecreatefrom'.$extension, $path));
+    }
+
+    /**
+     * Checks if the resource was created successfuly and wraps it in
+     * Imagine\Gd\ResourceInterface, otherwise returns null
+     *
+     * @param mixed $resource
+     *
+     * @return mixed
+     */
+    private function wrap($resource)
+    {
+        return (false === $resource) ? null : new Resource($resource);
     }
 }

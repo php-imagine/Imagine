@@ -17,21 +17,21 @@ interface GdInterface
      * @param integer $width
      * @param integer $height
      *
-     * @return Imagine\Gd\ResourceInterface
+     * @return Imagine\Gd\ResourceInterface|null
      */
     function create($width, $height);
 
     /**
      * @param string $path
      *
-     * @return Imagine\Gd\ResourceInterface
+     * @return Imagine\Gd\ResourceInterface|null
      */
     function open($path);
 
     /**
      * @param string $string
      *
-     * @return Imagine\Gd\ResourceInterface
+     * @return Imagine\Gd\ResourceInterface|null
      */
     function load($string);
 }
