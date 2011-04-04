@@ -27,6 +27,22 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
         $this->imagine = new Imagine($this->gd);
     }
 
+    /**
+     * @expectedException Imagine\Exception\InvalidArgumentException
+     */
+    public function testShouldThrowOnFailedCreate()
+    {
+        $width    = 100;
+        $height   = 100;
+
+        $this->gd->expects($this->once())
+            ->method('create')
+            ->with($width, $height)
+            ->will($this->returnValue(null));
+
+        $this->imagine->create(new Box($width, $height));
+    }
+
     public function testShouldCreateImage()
     {
         $color    = 10;
@@ -63,6 +79,21 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
         $this->imagine->open('/some/path/to/image.jpg');
     }
 
+    /**
+     * @expectedException Imagine\Exception\InvalidArgumentException
+     */
+    public function testShouldThrowOnFailedOpen()
+    {
+        $path = 'tests/Imagine/Fixtures/google.png';
+
+        $this->gd->expects($this->once())
+            ->method('open')
+            ->with($path)
+            ->will($this->returnValue(null));
+
+        $this->imagine->open($path);
+    }
+
     public function testShouldOpenImage()
     {
         $path     = 'tests/Imagine/Fixtures/google.png';
@@ -78,6 +109,21 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
         $image = $this->imagine->open($path);
 
         $this->assertInstanceOf('Imagine\Gd\Image', $image);
+    }
+
+    /**
+     * @expectedException Imagine\Exception\InvalidArgumentException
+     */
+    public function testShouldThrowOnFailedLoad()
+    {
+        $string   = 'foo';
+
+        $this->gd->expects($this->once())
+            ->method('load')
+            ->with($string)
+            ->will($this->returnValue(null));
+
+        $this->imagine->load($string);
     }
 
     public function testShouldLoadImageFromString()
@@ -113,7 +159,6 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
             ->with(false)
             ->will($this->returnValue(true));
     }
-
 
     private function getResource()
     {
