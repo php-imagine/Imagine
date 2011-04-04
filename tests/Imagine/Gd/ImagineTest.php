@@ -13,6 +13,7 @@ namespace Imagine\Gd;
 
 use Imagine\AbstractImagineTest;
 use Imagine\Image\Box;
+use Imagine\Image\Color;
 
 class ImagineTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +29,7 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException Imagine\Exception\RuntimeException
      */
     public function testShouldThrowOnFailedCreate()
     {
@@ -43,9 +44,50 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
         $this->imagine->create(new Box($width, $height));
     }
 
-    public function testShouldCreateImage()
+    /**
+     * @expectedException Imagine\Exception\RuntimeException
+     */
+    public function testShouldThrowOnCreateOnFailedAlphaBlending()
     {
-        $color    = 10;
+        $width    = 100;
+        $height   = 100;
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('create')
+            ->with($width, $height)
+            ->will($this->returnValue($resource));
+
+        $this->expectAlphaBlending($resource, false);
+
+        $this->imagine->create(new Box($width, $height));
+    }
+
+    /**
+     * @expectedException Imagine\Exception\RuntimeException
+     */
+    public function testShouldThrowOnCreateOnFailedSaveAlpha()
+    {
+        $width    = 100;
+        $height   = 100;
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('create')
+            ->with($width, $height)
+            ->will($this->returnValue($resource));
+
+        $this->expectAlphaBlending($resource, true);
+        $this->expectSaveAlpha($resource, false);
+
+        $this->imagine->create(new Box($width, $height));
+    }
+
+    /**
+     * @expectedException Imagine\Exception\RuntimeException
+     */
+    public function testShouldThrowOnCreateOnFailedColorAllocate()
+    {
         $width    = 100;
         $height   = 100;
         $resource = $this->getResource();
@@ -56,15 +98,49 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($resource));
 
         $this->expectTransparencyToBeEnabled($resource);
+        $this->expectColorAllocateAlpha($resource, false);
 
-        $resource->expects($this->once())
-            ->method('colorallocatealpha')
-            ->with(255, 255, 255, 0)
-            ->will($this->returnValue($color));
-        $resource->expects($this->once())
-            ->method('filledrectangle')
-            ->with(0, 0, $width, $height, $color)
-            ->will($this->returnValue(true));
+        $this->imagine->create(new Box($width, $height));
+    }
+
+    /**
+     * @expectedException Imagine\Exception\RuntimeException
+     */
+    public function testShouldThrowOnCreateOnFailedFilledRectangle()
+    {
+        $index    = 10;
+        $width    = 100;
+        $height   = 100;
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('create')
+            ->with($width, $height)
+            ->will($this->returnValue($resource));
+
+        $this->expectTransparencyToBeEnabled($resource);
+        $this->expectColorAllocateAlpha($resource, $index);
+        $this->expectFilledRectangle($resource, $width, $height, $index, false);
+
+        $this->imagine->create(new Box($width, $height));
+    }
+
+
+    public function testShouldCreateImage()
+    {
+        $index    = 10;
+        $width    = 100;
+        $height   = 100;
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('create')
+            ->with($width, $height)
+            ->will($this->returnValue($resource));
+
+        $this->expectTransparencyToBeEnabled($resource);
+        $this->expectColorAllocateAlpha($resource, $index);
+        $this->expectFilledRectangle($resource, $width, $height, $index, true);
 
         $image = $this->imagine->create(new Box($width, $height));
 
@@ -80,7 +156,7 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException Imagine\Exception\RuntimeException
      */
     public function testShouldThrowOnFailedOpen()
     {
@@ -90,6 +166,43 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
             ->method('open')
             ->with($path)
             ->will($this->returnValue(null));
+
+        $this->imagine->open($path);
+    }
+
+    /**
+     * @expectedException Imagine\Exception\RuntimeException
+     */
+    public function testShouldThrowOnOpenOnFailedAlphaBlending()
+    {
+        $path     = 'tests/Imagine/Fixtures/google.png';
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('open')
+            ->with($path)
+            ->will($this->returnValue($resource));
+
+        $this->expectAlphaBlending($resource, false);
+
+        $this->imagine->open($path);
+    }
+
+    /**
+     * @expectedException Imagine\Exception\RuntimeException
+     */
+    public function testShouldThrowOnOpenOnFailedSaveAlpha()
+    {
+        $path     = 'tests/Imagine/Fixtures/google.png';
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('open')
+            ->with($path)
+            ->will($this->returnValue($resource));
+
+        $this->expectAlphaBlending($resource, true);
+        $this->expectSaveAlpha($resource, false);
 
         $this->imagine->open($path);
     }
@@ -112,7 +225,7 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException Imagine\Exception\RuntimeException
      */
     public function testShouldThrowOnFailedLoad()
     {
@@ -122,6 +235,43 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
             ->method('load')
             ->with($string)
             ->will($this->returnValue(null));
+
+        $this->imagine->load($string);
+    }
+
+    /**
+     * @expectedException Imagine\Exception\RuntimeException
+     */
+    public function testShouldThrowOnLoadOnFailedAlphaBlending()
+    {
+        $string   = 'foo';
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('load')
+            ->with($string)
+            ->will($this->returnValue($resource));
+
+        $this->expectAlphaBlending($resource, false);
+
+        $this->imagine->load($string);
+    }
+
+    /**
+     * @expectedException Imagine\Exception\RuntimeException
+     */
+    public function testShouldThrowOnLoadOnFailedSaveAlpha()
+    {
+        $string   = 'foo';
+        $resource = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('load')
+            ->with($string)
+            ->will($this->returnValue($resource));
+
+        $this->expectAlphaBlending($resource, true);
+        $this->expectSaveAlpha($resource, false);
 
         $this->imagine->load($string);
     }
@@ -150,21 +300,69 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
      */
     private function expectTransparencyToBeEnabled(\PHPUnit_Framework_MockObject_MockObject $resource)
     {
+        $this->expectSaveAlpha($resource);
+        $this->expectAlphaBlending($resource);
+    }
+
+    /**
+     * @param PHPUnit_Framework_MockObject_MockObject $resource
+     * @param integer                                 $index
+     */
+    private function expectColorAllocateAlpha(\PHPUnit_Framework_MockObject_MockObject $resource, $index, $red = 255, $green = 255, $blue = 255, $alpha = 0)
+    {
         $resource->expects($this->once())
-            ->method('savealpha')
-            ->with(true)
-            ->will($this->returnValue(true));
+            ->method('colorallocatealpha')
+            ->with($red, $green, $blue, $alpha)
+            ->will($this->returnValue($index));
+    }
+
+    /**
+     * @param PHPUnit_Framework_MockObject_MockObject $resource
+     * @param boolean                                 $result
+     */
+    private function expectAlphaBlending(\PHPUnit_Framework_MockObject_MockObject $resource, $result = true)
+    {
         $resource->expects($this->once())
             ->method('alphablending')
             ->with(false)
-            ->will($this->returnValue(true));
+            ->will($this->returnValue($result));
     }
 
+    /**
+     * @param PHPUnit_Framework_MockObject_MockObject $resource
+     * @param boolean                                 $result
+     */
+    private function expectSaveAlpha(\PHPUnit_Framework_MockObject_MockObject $resource, $result = true)
+    {
+        $resource->expects($this->once())
+            ->method('savealpha')
+            ->with(true)
+            ->will($this->returnValue($result));
+    }
+
+    /**
+     * @param PHPUnit_Framework_MockObject_MockObject $resource
+     * @param boolean                                 $result
+     */
+    private function expectFilledRectangle(\PHPUnit_Framework_MockObject_MockObject $resource, $width, $height, $index, $result = true)
+    {
+        $resource->expects($this->once())
+            ->method('filledrectangle')
+            ->with(0, 0, $width, $height, $index)
+            ->will($this->returnValue($result));
+    }
+
+    /**
+     * @return Imagine\Gd\ResourceInterface
+     */
     private function getResource()
     {
         return $this->getMock('Imagine\Gd\ResourceInterface');
     }
 
+    /**
+     * @return Imagine\Gd\GdInterface
+     */
     private function getGd()
     {
         return $this->getMock('Imagine\Gd\GdInterface');
