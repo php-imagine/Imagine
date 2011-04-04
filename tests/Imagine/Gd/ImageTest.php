@@ -11,23 +11,18 @@
 
 namespace Imagine\Gd;
 
-use Imagine\AbstractImageTest;
-use Imagine\Image\Color;
-use Imagine\ImageInterface;
-
-class ImageTest extends AbstractImageTest
+class ImageTest extends GdTestCase
 {
+    private $gd;
+    private $resource;
+    private $image;
+
     protected function setUp()
     {
         parent::setUp();
 
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
-        }
-    }
-
-    protected function getImagine()
-    {
-        return new Imagine();
+        $this->gd       = $this->getGd();
+        $this->resource = $this->getResource();
+        $this->image    = new Image($this->gd, $this->resource);
     }
 }

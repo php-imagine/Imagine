@@ -15,7 +15,7 @@ use Imagine\AbstractImagineTest;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 
-class ImagineTest extends \PHPUnit_Framework_TestCase
+class ImagineTest extends GdTestCase
 {
     private $gd;
     private $imagine;
@@ -350,21 +350,5 @@ class ImagineTest extends \PHPUnit_Framework_TestCase
             ->method('filledrectangle')
             ->with(0, 0, $width, $height, $index)
             ->will($this->returnValue($result));
-    }
-
-    /**
-     * @return Imagine\Gd\ResourceInterface
-     */
-    private function getResource()
-    {
-        return $this->getMock('Imagine\Gd\ResourceInterface');
-    }
-
-    /**
-     * @return Imagine\Gd\GdInterface
-     */
-    private function getGd()
-    {
-        return $this->getMock('Imagine\Gd\GdInterface');
     }
 }
