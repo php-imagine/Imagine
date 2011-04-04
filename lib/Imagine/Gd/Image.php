@@ -79,7 +79,7 @@ final class Image implements ImageInterface
             throw new RuntimeException('Image copy operation failed');
         }
 
-        if (false === $this->resource->imagecopymerge(
+        if (false === $this->resource->copymerge(
             $copy, 0, 0, 0, 0, $width, $height, 100
         )) {
             throw new RuntimeException('Image copy operation failed');

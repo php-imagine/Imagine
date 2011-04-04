@@ -15,7 +15,7 @@ use Imagine\AbstractImagineTest;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 
-class ImagineTest extends GdTestCase
+class ImagineTest extends TestCase
 {
     private $gd;
     private $imagine;
@@ -294,17 +294,6 @@ class ImagineTest extends GdTestCase
     }
 
     /**
-     * Sets transparency related expectations
-     *
-     * @param PHPUnit_Framework_MockObject_MockObject $resource
-     */
-    private function expectTransparencyToBeEnabled(\PHPUnit_Framework_MockObject_MockObject $resource)
-    {
-        $this->expectSaveAlpha($resource);
-        $this->expectAlphaBlending($resource);
-    }
-
-    /**
      * @param PHPUnit_Framework_MockObject_MockObject $resource
      * @param integer                                 $index
      */
@@ -314,30 +303,6 @@ class ImagineTest extends GdTestCase
             ->method('colorallocatealpha')
             ->with($red, $green, $blue, $alpha)
             ->will($this->returnValue($index));
-    }
-
-    /**
-     * @param PHPUnit_Framework_MockObject_MockObject $resource
-     * @param boolean                                 $result
-     */
-    private function expectAlphaBlending(\PHPUnit_Framework_MockObject_MockObject $resource, $result = true)
-    {
-        $resource->expects($this->once())
-            ->method('alphablending')
-            ->with(false)
-            ->will($this->returnValue($result));
-    }
-
-    /**
-     * @param PHPUnit_Framework_MockObject_MockObject $resource
-     * @param boolean                                 $result
-     */
-    private function expectSaveAlpha(\PHPUnit_Framework_MockObject_MockObject $resource, $result = true)
-    {
-        $resource->expects($this->once())
-            ->method('savealpha')
-            ->with(true)
-            ->will($this->returnValue($result));
     }
 
     /**
