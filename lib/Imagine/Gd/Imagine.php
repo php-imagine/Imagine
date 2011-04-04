@@ -55,7 +55,7 @@ final class Imagine implements ImagineInterface
         $height   = $size->getHeight();
         $resource = $this->gd->create($width, $height);
 
-        $this->enableTransparency($resource, 'Create operation failed');
+        $this->throwOrEnableTransparency($resource, 'Create operation failed');
 
         $color = $color ? $color : new Color('fff');
         $color = $resource->colorallocatealpha(
@@ -83,15 +83,16 @@ final class Imagine implements ImagineInterface
     public function open($path)
     {
         if (!is_file($path)) {
-            throw new InvalidArgumentException(sprintf(
-                'File %s doesn\'t exist', $path
-            ));
+            throw new InvalidArgumentException(
+                sprintf('File %s doesn\'t exist', $path)
+            );
         }
 
         $resource = $this->gd->open($path);
 
-        $this->enableTransparency(
-            $resource, sprintf('Image "%s" could not be opened', $path)
+        $this->throwOrEnableTransparency(
+            $resource,
+            sprintf('Image "%s" could not be opened', $path)
         );
 
         return new Image($this->gd, $resource);
@@ -105,20 +106,24 @@ final class Imagine implements ImagineInterface
     {
         $resource = $this->gd->load($string);
 
-        $this->enableTransparency(
-            $resource, 'An image could not be created from the given input'
+        $this->throwOrEnableTransparency(
+            $resource,
+            'An image could not be created from the given input'
         );
 
         return new Image($this->gd, $resource);
     }
 
     /**
-     * Enter description here ...
+     * Enables transparency on valid Imagine\Gd\ResourceInterface instances or
+     * throw Imagine\Exception\InvalidArgumentException otherwise
+     *
+     * @throws Imagine\Exception\RuntimeException
      */
-    private function enableTransparency($resource, $message)
+    private function throwOrEnableTransparency($resource, $message)
     {
         if (!$resource instanceof ResourceInterface) {
-            throw new InvalidArgumentException($message);
+            throw new RuntimeException($message);
         }
 
         if (false === $resource->alphablending(false) ||
