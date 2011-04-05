@@ -108,7 +108,6 @@ final class Image implements ImageInterface
 
         $dest->alphablending(false);
         $dest->savealpha(true);
-        $dest->antialias(true);
 
         if (false === $this->resource->copymerge(
             $dest, 0, 0, $start->getX(), $start->getY(), $width, $height, 100
