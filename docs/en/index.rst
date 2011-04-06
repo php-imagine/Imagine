@@ -9,7 +9,15 @@ Welcome to Imagine's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
+
+   introduction
+   coordinates
+   imagine
+   image
+   drawing
+   filters
+   exceptions
 
 Indices and tables
 ==================
