@@ -13,6 +13,7 @@ namespace Imagine\Filter;
 
 use Imagine\Fill\FillInterface;
 use Imagine\Filter\Basic\ApplyMask;
+use Imagine\Filter\Basic\Border;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
 use Imagine\Filter\Basic\Fill;
@@ -73,6 +74,18 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     public function copy()
     {
         return $this->add(new Copy());
+    }
+
+    /**
+     * Apply a border to the image
+     *
+     * @param Imagine\Image\Color $color
+     * @param int $width Width of the border on the left and right sides of the image
+     * @param int $height Height of the border on the top and bottom sides of the image
+     */
+    public function border(Color $color, $width = 1, $height = 1)
+    {
+        return $this->add(new Border($color, $width, $height));
     }
 
     /**
