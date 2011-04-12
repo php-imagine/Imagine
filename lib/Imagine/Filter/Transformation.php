@@ -12,8 +12,8 @@
 namespace Imagine\Filter;
 
 use Imagine\Fill\FillInterface;
+use Imagine\Filter\Advanced\Border;
 use Imagine\Filter\Basic\ApplyMask;
-use Imagine\Filter\Basic\Border;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
 use Imagine\Filter\Basic\Fill;

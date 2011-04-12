@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Filter\Basic;
+namespace Imagine\Filter\Advanced;
 
 use Imagine\Filter\FilterInterface;
 use Imagine\ImageInterface;
