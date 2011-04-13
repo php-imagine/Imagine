@@ -13,6 +13,7 @@ namespace Imagine\Gd;
 
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Color;
+use Imagine\Image\PointInterface;
 
 class Resource implements ResourceInterface
 {
@@ -61,7 +62,7 @@ class Resource implements ResourceInterface
      * (non-PHPdoc)
      * @see Imagine\Gd\ResourceInterface::colorallocatealpha()
      */
-    public function colorallocatealpha(Color $color)
+    public function colorToIndex(Color $color)
     {
         return imagecolorallocatealpha(
             $this->resource,
@@ -76,18 +77,24 @@ class Resource implements ResourceInterface
      * (non-PHPdoc)
      * @see Imagine\Gd\ResourceInterface::colorat()
      */
-    public function colorat($x, $y)
+    public function colorat(PointInterface $at)
     {
-        return imagecolorat($this->resource, $x, $y);
+        return imagecolorat($this->resource, $at->getX(), $at->getY());
     }
 
     /**
      * (non-PHPdoc)
      * @see Imagine\Gd\ResourceInterface::colorsforindex()
      */
-    public function colorsforindex($index)
+    public function indexToColor($index)
     {
-        return imagecolorsforindex($this->resource, $index);
+        $data = imagecolorsforindex($this->resource, $index);
+
+        return new Color(array(
+            $data['red'],
+            $data['green'],
+            $data['blue']
+        ), round($data['alpha'] / 127 * 100));
     }
 
     /**

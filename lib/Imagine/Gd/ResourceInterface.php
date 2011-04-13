@@ -12,6 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Image\Color;
+use Imagine\Image\PointInterface;
 
 interface ResourceInterface
 {
@@ -40,26 +41,25 @@ interface ResourceInterface
      *
      * @see imagecolorallocatealpha
      */
-    function colorallocatealpha(Color $color);
+    function colorToIndex(Color $color);
 
     /**
-     * @param integer $x
-     * @param integer $y
+     * @param Imagine\Image\PointInterface $at
      *
      * @return integer
      *
      * @see imagecolorat
      */
-    function colorat($x, $y);
+    function colorat(PointInterface $at);
 
     /**
      * @param integer $index
      *
-     * @return array
+     * @return Imagine\Image\Color
      *
      * @see imagecolorsforindex
      */
-    function colorsforindex($index);
+    function indexToColor($index);
 
     /**
      * @param Imagine\Gd\ResourceInterface $destination

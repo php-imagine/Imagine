@@ -57,7 +57,7 @@ final class Imagine implements ImagineInterface
 
         $this->throwOrEnableTransparency($resource, 'Create operation failed');
 
-        $color = $resource->colorallocatealpha(($color ? $color : new Color('fff')));
+        $color = $resource->colorToIndex(($color ? $color : new Color('fff')));
 
         if (false === $color) {
             throw new RuntimeException('Unable to allocate color');

@@ -302,7 +302,7 @@ class ImagineTest extends TestCase
         $color = $color ? $color : new Color('fff');
 
         $resource->expects($this->once())
-            ->method('colorallocatealpha')
+            ->method('colorToIndex')
             ->with($color)
             ->will($this->returnValue($index));
     }
