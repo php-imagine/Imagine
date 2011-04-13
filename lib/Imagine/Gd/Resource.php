@@ -12,6 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Image\Color;
 
 class Resource implements ResourceInterface
 {
@@ -60,9 +61,15 @@ class Resource implements ResourceInterface
      * (non-PHPdoc)
      * @see Imagine\Gd\ResourceInterface::colorallocatealpha()
      */
-    public function colorallocatealpha($red, $green, $blue, $alpha)
+    public function colorallocatealpha(Color $color)
     {
-        return imagecolorallocatealpha($this->resource, $red, $green, $blue, $alpha);
+        return imagecolorallocatealpha(
+            $this->resource,
+            $color->getRed(),
+            $color->getGreen(),
+            $color->getBlue(),
+            round(127 * $color->getAlpha() / 100)
+        );
     }
 
     /**

@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\Color;
+
 interface ResourceInterface
 {
     /**
@@ -32,16 +34,13 @@ interface ResourceInterface
     function antialias($enabled);
 
     /**
-     * @param integer $red
-     * @param integer $green
-     * @param integer $blue
-     * @param integer $alpha
+     * @param Imagine\Image\Color $color
      *
      * @return integer
      *
      * @see imagecolorallocatealpha
      */
-    function colorallocatealpha($red, $green, $blue, $alpha);
+    function colorallocatealpha(Color $color);
 
     /**
      * @param integer $x
