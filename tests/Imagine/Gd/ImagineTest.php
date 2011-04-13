@@ -297,11 +297,13 @@ class ImagineTest extends TestCase
      * @param PHPUnit_Framework_MockObject_MockObject $resource
      * @param integer                                 $index
      */
-    private function expectColorAllocateAlpha(\PHPUnit_Framework_MockObject_MockObject $resource, $index, $red = 255, $green = 255, $blue = 255, $alpha = 0)
+    private function expectColorAllocateAlpha(\PHPUnit_Framework_MockObject_MockObject $resource, $index, Color $color = null)
     {
+        $color = $color ? $color : new Color('fff');
+
         $resource->expects($this->once())
             ->method('colorallocatealpha')
-            ->with($red, $green, $blue, $alpha)
+            ->with($color)
             ->will($this->returnValue($index));
     }
 
