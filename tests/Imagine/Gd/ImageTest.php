@@ -90,4 +90,52 @@ class ImageTest extends TestCase
 
         $crop = $this->image->crop(new Point($x, $y), new Box($width, $height));
     }
+
+    public function testShouldPasteImage()
+    {
+        $height   = 100;
+        $width    = 100;
+        $start = new Point(0, 0);
+        $resource = $this->getResource();
+        $image    = new Image($this->gd, $resource);
+
+        $resource->expects($this->once())
+            ->method('sx')
+            ->will($this->returnValue($width));
+
+        $resource->expects($this->once())
+            ->method('sy')
+            ->will($this->returnValue($height));
+
+        $this->expectDisableAlphaBlending($resource);
+        $this->expectEnableAlphaBlending($resource);
+
+        $this->resource->expects($this->once())
+            ->method('sx')
+            ->will($this->returnValue($width));
+
+        $this->resource->expects($this->once())
+            ->method('sy')
+            ->will($this->returnValue($height));
+
+        $this->expectDisableAlphaBlending($this->resource);
+        $this->expectEnableAlphaBlending($this->resource);
+
+        $this->resource->expects($this->once())
+            ->method('copy')
+            ->with($resource, new Point(0, 0), $start, new Box($width, $height));
+
+        $this->image->paste($image, $start);
+    }
+
+    /**
+     * @param PHPUnit_Framework_MockObject_MockObject $resource
+     * @param boolean                                 $result
+     */
+    protected function expectEnableAlphaBlending(\PHPUnit_Framework_MockObject_MockObject $resource, $result = true)
+    {
+        $resource->expects($this->once())
+            ->method('enableAlphaBlending')
+            ->will($this->returnValue($result));
+    }
 }

@@ -63,7 +63,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::copy()
      */
-    final public function copy()
+    public function copy()
     {
         $size   = $this->getSize();
         $width  = $size->getWidth();
@@ -74,8 +74,8 @@ final class Image implements ImageInterface
             throw new RuntimeException('Image copy operation failed');
         }
 
-        if (false === $copy->alphablending(false) ||
-            false === $copy->savealpha(true)) {
+        if (false === $copy->disableAlphaBlending() ||
+            false === $copy->enableSaveAlpha()) {
             throw new RuntimeException('Image copy operation failed');
         }
 
@@ -92,7 +92,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::crop()
      */
-    final public function crop(PointInterface $start, BoxInterface $size)
+    public function crop(PointInterface $start, BoxInterface $size)
     {
         if (!$start->in($this->getSize())) {
             throw new OutOfBoundsException(
@@ -106,8 +106,8 @@ final class Image implements ImageInterface
         $height = $size->getHeight();
         $dest   = $this->gd->create($width, $height);
 
-        $dest->alphablending(false);
-        $dest->savealpha(true);
+        $dest->disableAlphaBlending();
+        $dest->enableSaveAlpha();
 
         if (false === $this->resource->copymerge(
             $dest, 0, 0, $start->getX(), $start->getY(), $width, $height, 100
@@ -126,7 +126,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::paste()
      */
-    final public function paste(ImageInterface $image, PointInterface $start)
+    public function paste(ImageInterface $image, PointInterface $start)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf(
@@ -144,18 +144,20 @@ final class Image implements ImageInterface
             );
         }
 
-        $this->resource->alphablending(true);
-        $image->resource->alphablending(true);
+        $this->resource->enableAlphaBlending();
+        $image->resource->enableAlphaBlending();
 
-        if (false === $image->resource->copy(
-            $this->resource, $start->getX(), $start->getY(), 0, 0,
-            $size->getWidth(), $size->getHeight()
+        if (false === $this->resource->copy(
+            $image->resource,
+            new Point(0, 0),
+            $start,
+            $size
         )) {
             throw new RuntimeException('Image paste operation failed');
         }
 
-        imagealphablending($this->resource, false);
-        imagealphablending($image->resource, false);
+        $this->resource->disableAlphaBlending();
+        $image->resource->disableAlphaBlending();
 
         return $this;
     }
@@ -164,15 +166,15 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::resize()
      */
-    final public function resize(BoxInterface $size)
+    public function resize(BoxInterface $size)
     {
         $width  = $size->getWidth();
         $height = $size->getHeight();
         $dest   = $this->gd->create($width, $height);
 
-        $dest->alphablending(false);
-        $dest->savealpha(true);
-        $dest->antialias(true);
+        $dest->disableAlphaBlending();
+        $dest->enableSaveAlpha();
+        $dest->enableAntiAlias();
 
         if (false === $this->resource->copyresampled(
             $dest, 0, 0, $width, $height, 0, 0,
@@ -192,7 +194,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::rotate()
      */
-    final public function rotate($angle, Color $background = null)
+    public function rotate($angle, Color $background = null)
     {
         $color = $background ? $background : new Color('fff');
 
@@ -214,7 +216,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::save()
      */
-    final public function save($path, array $options = array())
+    public function save($path, array $options = array())
     {
         $this->saveOrOutput(pathinfo($path, \PATHINFO_EXTENSION), $options, $path);
 
@@ -256,7 +258,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
      */
-    final public function flipHorizontally()
+    public function flipHorizontally()
     {
         $width  = imagesx($this->resource);
         $height = imagesy($this->resource);
@@ -287,7 +289,7 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::flipVertically()
      */
-    final public function flipVertically()
+    public function flipVertically()
     {
         $width  = imagesx($this->resource);
         $height = imagesy($this->resource);
