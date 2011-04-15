@@ -58,7 +58,7 @@ class ImagineTest extends TestCase
             ->with($width, $height)
             ->will($this->returnValue($resource));
 
-        $this->expectAlphaBlending($resource, false);
+        $this->expectDisableAlphaBlending($resource, false);
 
         $this->imagine->create(new Box($width, $height));
     }
@@ -77,8 +77,8 @@ class ImagineTest extends TestCase
             ->with($width, $height)
             ->will($this->returnValue($resource));
 
-        $this->expectAlphaBlending($resource, true);
-        $this->expectSaveAlpha($resource, false);
+        $this->expectDisableAlphaBlending($resource, true);
+        $this->expectEnableSaveAlpha($resource, false);
 
         $this->imagine->create(new Box($width, $height));
     }
@@ -183,7 +183,7 @@ class ImagineTest extends TestCase
             ->with($path)
             ->will($this->returnValue($resource));
 
-        $this->expectAlphaBlending($resource, false);
+        $this->expectDisableAlphaBlending($resource, false);
 
         $this->imagine->open($path);
     }
@@ -201,8 +201,8 @@ class ImagineTest extends TestCase
             ->with($path)
             ->will($this->returnValue($resource));
 
-        $this->expectAlphaBlending($resource, true);
-        $this->expectSaveAlpha($resource, false);
+        $this->expectDisableAlphaBlending($resource, true);
+        $this->expectEnableSaveAlpha($resource, false);
 
         $this->imagine->open($path);
     }
@@ -252,7 +252,7 @@ class ImagineTest extends TestCase
             ->with($string)
             ->will($this->returnValue($resource));
 
-        $this->expectAlphaBlending($resource, false);
+        $this->expectDisableAlphaBlending($resource, false);
 
         $this->imagine->load($string);
     }
@@ -270,8 +270,8 @@ class ImagineTest extends TestCase
             ->with($string)
             ->will($this->returnValue($resource));
 
-        $this->expectAlphaBlending($resource, true);
-        $this->expectSaveAlpha($resource, false);
+        $this->expectDisableAlphaBlending($resource, true);
+        $this->expectEnableSaveAlpha($resource, false);
 
         $this->imagine->load($string);
     }

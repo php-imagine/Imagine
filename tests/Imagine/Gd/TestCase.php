@@ -36,19 +36,18 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function expectTransparencyToBeEnabled(\PHPUnit_Framework_MockObject_MockObject $resource)
     {
-        $this->expectSaveAlpha($resource);
-        $this->expectAlphaBlending($resource);
+        $this->expectEnableSaveAlpha($resource);
+        $this->expectDisableAlphaBlending($resource);
     }
 
     /**
      * @param PHPUnit_Framework_MockObject_MockObject $resource
      * @param boolean                                 $result
      */
-    protected function expectAlphaBlending(\PHPUnit_Framework_MockObject_MockObject $resource, $result = true)
+    protected function expectDisableAlphaBlending(\PHPUnit_Framework_MockObject_MockObject $resource, $result = true)
     {
         $resource->expects($this->once())
-            ->method('alphablending')
-            ->with(false)
+            ->method('disableAlphaBlending')
             ->will($this->returnValue($result));
     }
 
@@ -56,11 +55,10 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      * @param PHPUnit_Framework_MockObject_MockObject $resource
      * @param boolean                                 $result
      */
-    protected function expectSaveAlpha(\PHPUnit_Framework_MockObject_MockObject $resource, $result = true)
+    protected function expectEnableSaveAlpha(\PHPUnit_Framework_MockObject_MockObject $resource, $result = true)
     {
         $resource->expects($this->once())
-            ->method('savealpha')
-            ->with(true)
+            ->method('enableSaveAlpha')
             ->will($this->returnValue($result));
     }
 }

@@ -122,8 +122,8 @@ final class Imagine implements ImagineInterface
             throw new RuntimeException($message);
         }
 
-        if (false === $resource->alphablending(false) ||
-            false === $resource->savealpha(true)) {
+        if (false === $resource->disableAlphaBlending() ||
+            false === $resource->enableSaveAlpha()) {
             throw new RuntimeException(
                 'Could not set alphablending, savealpha and antialias values'
             );
@@ -137,10 +137,6 @@ final class Imagine implements ImagineInterface
      */
     public function font($file, $size, Color $color)
     {
-//        if (!$this->info['FreeType Support']) {
-//            throw new RuntimeException('GD is not compiled with FreeType support');
-//        }
-
         return new Font($file, $size, $color);
     }
 }
