@@ -73,6 +73,9 @@ interface ResourceInterface
     function indexToColor($index);
 
     /**
+     * Copies a part of the given resource from $from position of $box size
+     * into existing resource at $to position
+     *
      * @param Imagine\Gd\ResourceInterface $destination
      * @param Imagine\Image\PointInterface $from
      * @param Imagine\Image\PointInterface $to
