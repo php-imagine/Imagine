@@ -53,7 +53,7 @@ final class Imagine implements ImagineInterface
     {
         $width    = $size->getWidth();
         $height   = $size->getHeight();
-        $resource = $this->gd->create($width, $height);
+        $resource = $this->gd->create($size);
 
         $this->throwOrEnableTransparency($resource, 'Create operation failed');
 

@@ -11,15 +11,17 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\BoxInterface;
+
 class Gd implements GdInterface
 {
     /**
      * (non-PHPdoc)
      * @see Imagine\Gd\GdInterface::create()
      */
-    public function create($width, $height)
+    public function create(BoxInterface $size)
     {
-        return $this->wrap(imagecreatetruecolor($width, $height));
+        return $this->wrap(imagecreatetruecolor($size->getWidth(), $size->getHeight()));
     }
 
     /**

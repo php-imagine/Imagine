@@ -11,15 +11,16 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\BoxInterface;
+
 interface GdInterface
 {
     /**
-     * @param integer $width
-     * @param integer $height
+     * @param Imagine\Image\BoxInterface $size
      *
      * @return Imagine\Gd\ResourceInterface|null
      */
-    function create($width, $height);
+    function create(BoxInterface $size);
 
     /**
      * @param string $path

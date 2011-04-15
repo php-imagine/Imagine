@@ -68,7 +68,7 @@ final class Image implements ImageInterface
         $box    = $this->resource->box();
         $width  = $box->getWidth();
         $height = $box->getHeight();
-        $copy   = $this->gd->create($width, $height);
+        $copy   = $this->gd->create($box);
 
         if (!$copy instanceof ResourceInterface) {
             throw new RuntimeException('Image copy operation failed');
@@ -104,7 +104,7 @@ final class Image implements ImageInterface
 
         $width  = $size->getWidth();
         $height = $size->getHeight();
-        $dest   = $this->gd->create($width, $height);
+        $dest   = $this->gd->create($size);
 
         $dest->disableAlphaBlending();
         $dest->enableSaveAlpha();
