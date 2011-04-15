@@ -34,14 +34,12 @@ class ImageTest extends TestCase
     {
         $width  = 100;
         $height = 100;
+        $box    = new Box($width, $height);
         $copy   = $this->getResource();
 
         $this->resource->expects($this->once())
-            ->method('sx')
-            ->will($this->returnValue($width));
-        $this->resource->expects($this->once())
-            ->method('sy')
-            ->will($this->returnValue($height));
+            ->method('box')
+            ->will($this->returnValue($box));
 
         $this->gd->expects($this->once())
             ->method('create')
@@ -66,6 +64,7 @@ class ImageTest extends TestCase
         $y      = 0;
         $width  = 100;
         $height = 100;
+        $box    = new Box($width, $height);
         $crop   = $this->getResource();
 
         $this->gd->expects($this->once())
@@ -76,11 +75,8 @@ class ImageTest extends TestCase
         $this->expectTransparencyToBeEnabled($crop);
 
         $this->resource->expects($this->once())
-            ->method('sx')
-            ->will($this->returnValue($width * 2));
-        $this->resource->expects($this->once())
-            ->method('sy')
-            ->will($this->returnValue($height * 2));
+            ->method('box')
+            ->will($this->returnValue($box->scale(2)));
         $this->resource->expects($this->once())
             ->method('copymerge')
             ->with($crop, 0, 0, $x, $y, $width, $height, 100)
@@ -88,42 +84,33 @@ class ImageTest extends TestCase
         $this->resource->expects($this->once())
             ->method('destroy');
 
-        $crop = $this->image->crop(new Point($x, $y), new Box($width, $height));
+        $crop = $this->image->crop(new Point($x, $y), $box);
     }
 
     public function testShouldPasteImage()
     {
-        $height   = 100;
-        $width    = 100;
-        $start = new Point(0, 0);
+        $box      = new Box(100, 100);
+        $start    = new Point(0, 0);
         $resource = $this->getResource();
         $image    = new Image($this->gd, $resource);
 
         $resource->expects($this->once())
-            ->method('sx')
-            ->will($this->returnValue($width));
-
-        $resource->expects($this->once())
-            ->method('sy')
-            ->will($this->returnValue($height));
+            ->method('box')
+            ->will($this->returnValue($box));
 
         $this->expectDisableAlphaBlending($resource);
         $this->expectEnableAlphaBlending($resource);
 
         $this->resource->expects($this->once())
-            ->method('sx')
-            ->will($this->returnValue($width));
-
-        $this->resource->expects($this->once())
-            ->method('sy')
-            ->will($this->returnValue($height));
+            ->method('box')
+            ->will($this->returnValue($box));
 
         $this->expectDisableAlphaBlending($this->resource);
         $this->expectEnableAlphaBlending($this->resource);
 
         $this->resource->expects($this->once())
             ->method('copy')
-            ->with($resource, new Point(0, 0), $start, new Box($width, $height));
+            ->with($resource, $box, new Point(0, 0), $start);
 
         $this->image->paste($image, $start);
     }
