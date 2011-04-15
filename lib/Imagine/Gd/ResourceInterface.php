@@ -73,19 +73,19 @@ interface ResourceInterface
     function indexToColor($index);
 
     /**
-     * Copies a part of the given resource from $from position of $box size
-     * into existing resource at $to position
+     * Copies a part of the given resource of size $box from position $from
+     * into existing resource at position $to
      *
      * @param Imagine\Gd\ResourceInterface $destination
+     * @param Imagine\Image\BoxInterface   $size
      * @param Imagine\Image\PointInterface $from
      * @param Imagine\Image\PointInterface $to
-     * @param Imagine\Image\BoxInterface   $box
      *
      * @return boolean
      *
      * @see imagecopy
      */
-    function copy(ResourceInterface $resource, PointInterface $from, PointInterface $to, BoxInterface $box);
+    function copy(ResourceInterface $resource, BoxInterface $box, PointInterface $from, PointInterface $to);
 
     /**
      * @param Imagine\Gd\ResourceInterface $destination
@@ -101,7 +101,7 @@ interface ResourceInterface
      *
      * @see imagecopymerge
      */
-    function copymerge(ResourceInterface $destination, $destinationX, $destinationY, $x, $y, $width, $height, $pct = 100);
+    function copymerge(ResourceInterface $resource, $destinationX, $destinationY, $x, $y, $width, $height, $pct = 100);
 
     /**
      * @param Imagine\Gd\ResourceInterface $destination
@@ -190,18 +190,12 @@ interface ResourceInterface
     function setpixel($x, $y, $color);
 
     /**
+     * @see imagesy
      * @see imagesx
      *
-     * @return integer
+     * @return Imagine\Image\BoxInterface
      */
-    function sx();
-
-    /**
-     * @see imagesy
-     *
-     * @return integer
-     */
-    function sy();
+    function box();
 
     /**
      * Gets original GD resource

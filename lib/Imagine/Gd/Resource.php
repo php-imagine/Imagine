@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\Box;
+
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
@@ -84,7 +86,7 @@ class Resource implements ResourceInterface
      * (non-PHPdoc)
      * @see Imagine\Gd\ResourceInterface::copy()
      */
-    public function copy(ResourceInterface $resource, PointInterface $from, PointInterface $to, BoxInterface $box);
+    public function copy(ResourceInterface $resource, PointInterface $from, PointInterface $to, BoxInterface $box)
     {
         return imagecopy($this->resource, $resource->unwrap(), $to->getX(), $to->getY(), $from->getX(), $from->getY(), $box->getWidth(), $box->getHeight());
     }
@@ -156,20 +158,11 @@ class Resource implements ResourceInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Gd\ResourceInterface::sx()
+     * @see Imagine\Gd\ResourceInterface::box()
      */
-    public function sx()
+    public function box()
     {
-        return imagesx($this->resource);
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Gd\ResourceInterface::sy()
-     */
-    public function sy()
-    {
-        return imagesy($this->resource);
+        return new Box(imagesx($this->resource), imagesy($this->resource));
     }
 
     /**
