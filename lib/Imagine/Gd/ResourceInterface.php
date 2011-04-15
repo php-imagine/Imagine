@@ -17,22 +17,32 @@ use Imagine\Image\PointInterface;
 interface ResourceInterface
 {
     /**
-     * @param boolean $blendmode
-     *
      * @return boolean
      *
      * @see imagealphablending
      */
-    function alphablending($blendmode);
+    function disableAlphaBlending();
 
     /**
-     * @param boolean $enabled
+     * @return boolean
      *
+     * @see imagealphablending
+     */
+    function enableAlphaBlending();
+
+    /**
      * @return boolean
      *
      * @see imageantialias
      */
-    function antialias($enabled);
+    function disableAntiAlias();
+
+    /**
+     * @return boolean
+     *
+     * @see imageantialias
+     */
+    function enableAntiAlias();
 
     /**
      * @param Imagine\Image\Color $color
@@ -154,13 +164,18 @@ interface ResourceInterface
     function rotate($angle, $bgColor, $ignoreTransparent = null);
 
     /**
-     * @param boolean $saveflag
-     *
      * @return boolean
      *
      * @see imagesavealpha
      */
-    function savealpha($saveflag);
+    function disableSaveAlpha();
+
+    /**
+     * @return boolean
+     *
+     * @see imagesavealpha
+     */
+    function enableSaveAlpha();
 
     /**
      * @param integer $x

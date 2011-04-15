@@ -42,25 +42,7 @@ class Resource implements ResourceInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Gd\ResourceInterface::alphablending()
-     */
-    public function alphablending($blendmode)
-    {
-        return imagealphablending($this->resource, $blendmode);
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Gd\ResourceInterface::antialias()
-     */
-    public function antialias($enabled)
-    {
-        return imageantialias($this->resource, $enabled);
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Gd\ResourceInterface::colorallocatealpha()
+     * @see Imagine\Gd\ResourceInterface::colorToIndex()
      */
     public function colorToIndex(Color $color)
     {
@@ -84,7 +66,7 @@ class Resource implements ResourceInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Gd\ResourceInterface::colorsforindex()
+     * @see Imagine\Gd\ResourceInterface::indexToColor()
      */
     public function indexToColor($index)
     {
@@ -160,15 +142,6 @@ class Resource implements ResourceInterface
         $result = imagerotate($this->resource, $angle, $bgColor, $ignoreTransparent);
 
         return false === $result ? $result : $this;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Gd\ResourceInterface::savealpha()
-     */
-    public function savealpha($saveflag)
-    {
-        return imagesavealpha($this->resource, $saveflag);
     }
 
     /**
@@ -250,5 +223,95 @@ class Resource implements ResourceInterface
     public function xbm($filename = null, $foreground = null)
     {
         return imagexbm($this->resource, $filename, $foreground);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Gd\ResourceInterface::disableAlphaBlending()
+     */
+    public function disableAlphaBlending()
+    {
+        return $this->alphablending(false);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Gd\ResourceInterface::disableAntiAlias()
+     */
+    public function disableAntiAlias()
+    {
+        return $this->antialias(false);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Gd\ResourceInterface::disableSaveAlpha()
+     */
+    public function disableSaveAlpha()
+    {
+        return $this->savealpha(false);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Gd\ResourceInterface::enableAlphaBlending()
+     */
+    public function enableAlphaBlending()
+    {
+        return $this->alphablending(true);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Gd\ResourceInterface::enableAntiAlias()
+     */
+    public function enableAntiAlias()
+    {
+        return $this->antialias(true);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Gd\ResourceInterface::enableSaveAlpha()
+     */
+    public function enableSaveAlpha()
+    {
+        return $this->savealpha(true);
+    }
+
+    /**
+     * @param boolean $blendmode
+     *
+     * @return boolean
+     *
+     * @see imagealphablending
+     */
+    private function alphablending($blendmode)
+    {
+        return imagealphablending($this->resource, $blendmode);
+    }
+
+    /**
+     * @param boolean $enabled
+     *
+     * @return boolean
+     *
+     * @see imageantialias
+     */
+    private function antialias($enabled)
+    {
+        return imageantialias($this->resource, $enabled);
+    }
+
+    /**
+     * @param boolean $saveflag
+     *
+     * @return boolean
+     *
+     * @see imagesavealpha
+     */
+    private function savealpha($saveflag)
+    {
+        return imagesavealpha($this->resource, $saveflag);
     }
 }
