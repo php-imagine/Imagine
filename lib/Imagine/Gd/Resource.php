@@ -12,6 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\PointInterface;
 
@@ -83,9 +84,9 @@ class Resource implements ResourceInterface
      * (non-PHPdoc)
      * @see Imagine\Gd\ResourceInterface::copy()
      */
-    public function copy(ResourceInterface $destination, $destinationX, $destinationY, $x, $y, $width, $height)
+    public function copy(ResourceInterface $resource, PointInterface $from, PointInterface $to, BoxInterface $box);
     {
-        return imagecopy($destination->unwrap(), $this->resource, $destinationX, $destinationY, $x, $y, $width, $height);
+        return imagecopy($this->resource, $resource->unwrap(), $to->getX(), $to->getY(), $from->getX(), $from->getY(), $box->getWidth(), $box->getHeight());
     }
 
     /**

@@ -11,6 +11,7 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\PointInterface;
 
@@ -73,18 +74,15 @@ interface ResourceInterface
 
     /**
      * @param Imagine\Gd\ResourceInterface $destination
-     * @param integer                      $destinationX
-     * @param integer                      $destinationY
-     * @param integer                      $x
-     * @param integer                      $y
-     * @param integer                      $width
-     * @param integer                      $height
+     * @param Imagine\Image\PointInterface $from
+     * @param Imagine\Image\PointInterface $to
+     * @param Imagine\Image\BoxInterface   $box
      *
      * @return boolean
      *
      * @see imagecopy
      */
-    function copy(ResourceInterface $destination, $destinationX, $destinationY, $x, $y, $width, $height);
+    function copy(ResourceInterface $resource, PointInterface $from, PointInterface $to, BoxInterface $box);
 
     /**
      * @param Imagine\Gd\ResourceInterface $destination
