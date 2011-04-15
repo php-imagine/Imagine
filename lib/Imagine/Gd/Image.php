@@ -65,9 +65,9 @@ final class Image implements ImageInterface
      */
     public function copy()
     {
-        $size   = $this->getSize();
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
+        $box    = $this->resource->box();
+        $width  = $box->getWidth();
+        $height = $box->getHeight();
         $copy   = $this->gd->create($width, $height);
 
         if (!$copy instanceof ResourceInterface) {
@@ -149,9 +149,9 @@ final class Image implements ImageInterface
 
         if (false === $this->resource->copy(
             $image->resource,
+            $size,
             new Point(0, 0),
-            $start,
-            $size
+            $start
         )) {
             throw new RuntimeException('Image paste operation failed');
         }
@@ -371,7 +371,7 @@ final class Image implements ImageInterface
      */
     public function getSize()
     {
-        return new Box($this->resource->sx(), $this->resource->sy());
+        return $this->resource->box();
     }
 
     /**
