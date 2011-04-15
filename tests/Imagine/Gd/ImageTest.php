@@ -43,7 +43,7 @@ class ImageTest extends TestCase
 
         $this->gd->expects($this->once())
             ->method('create')
-            ->with($width, $height)
+            ->with($box)
             ->will($this->returnValue($copy));
 
         $this->expectTransparencyToBeEnabled($copy);
@@ -69,7 +69,7 @@ class ImageTest extends TestCase
 
         $this->gd->expects($this->once())
             ->method('create')
-            ->with($width, $height)
+            ->with($box)
             ->will($this->returnValue($crop));
 
         $this->expectTransparencyToBeEnabled($crop);

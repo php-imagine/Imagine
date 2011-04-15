@@ -33,15 +33,14 @@ class ImagineTest extends TestCase
      */
     public function testShouldThrowOnFailedCreate()
     {
-        $width    = 100;
-        $height   = 100;
+        $box = new Box(100, 100);
 
         $this->gd->expects($this->once())
             ->method('create')
-            ->with($width, $height)
+            ->with($box)
             ->will($this->returnValue(null));
 
-        $this->imagine->create(new Box($width, $height));
+        $this->imagine->create($box);
     }
 
     /**
@@ -49,18 +48,17 @@ class ImagineTest extends TestCase
      */
     public function testShouldThrowOnCreateOnFailedAlphaBlending()
     {
-        $width    = 100;
-        $height   = 100;
+        $box      = new Box(100, 100);
         $resource = $this->getResource();
 
         $this->gd->expects($this->once())
             ->method('create')
-            ->with($width, $height)
+            ->with($box)
             ->will($this->returnValue($resource));
 
         $this->expectDisableAlphaBlending($resource, false);
 
-        $this->imagine->create(new Box($width, $height));
+        $this->imagine->create($box);
     }
 
     /**
@@ -68,19 +66,18 @@ class ImagineTest extends TestCase
      */
     public function testShouldThrowOnCreateOnFailedSaveAlpha()
     {
-        $width    = 100;
-        $height   = 100;
+        $box      = new Box(100, 100);
         $resource = $this->getResource();
 
         $this->gd->expects($this->once())
             ->method('create')
-            ->with($width, $height)
+            ->with($box)
             ->will($this->returnValue($resource));
 
         $this->expectDisableAlphaBlending($resource, true);
         $this->expectEnableSaveAlpha($resource, false);
 
-        $this->imagine->create(new Box($width, $height));
+        $this->imagine->create($box);
     }
 
     /**
@@ -88,19 +85,18 @@ class ImagineTest extends TestCase
      */
     public function testShouldThrowOnCreateOnFailedColorAllocate()
     {
-        $width    = 100;
-        $height   = 100;
+        $box      = new Box(100, 100);
         $resource = $this->getResource();
 
         $this->gd->expects($this->once())
             ->method('create')
-            ->with($width, $height)
+            ->with($box)
             ->will($this->returnValue($resource));
 
         $this->expectTransparencyToBeEnabled($resource);
         $this->expectColorAllocateAlpha($resource, false);
 
-        $this->imagine->create(new Box($width, $height));
+        $this->imagine->create($box);
     }
 
     /**
@@ -111,11 +107,12 @@ class ImagineTest extends TestCase
         $index    = 10;
         $width    = 100;
         $height   = 100;
+        $box      = new Box($width, $height);
         $resource = $this->getResource();
 
         $this->gd->expects($this->once())
             ->method('create')
-            ->with($width, $height)
+            ->with($box)
             ->will($this->returnValue($resource));
 
         $this->expectTransparencyToBeEnabled($resource);
@@ -131,11 +128,12 @@ class ImagineTest extends TestCase
         $index    = 10;
         $width    = 100;
         $height   = 100;
+        $box      = new Box($width, $height);
         $resource = $this->getResource();
 
         $this->gd->expects($this->once())
             ->method('create')
-            ->with($width, $height)
+            ->with($box)
             ->will($this->returnValue($resource));
 
         $this->expectTransparencyToBeEnabled($resource);
