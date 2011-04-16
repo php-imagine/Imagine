@@ -32,9 +32,8 @@ class ImageTest extends TestCase
 
     public function testShouldCopyImage()
     {
-        $width  = 100;
-        $height = 100;
-        $box    = new Box($width, $height);
+        $box    = new Box(100, 100);
+        $start  = new Point(0, 0);
         $copy   = $this->getResource();
 
         $this->resource->expects($this->once())
@@ -48,9 +47,9 @@ class ImageTest extends TestCase
 
         $this->expectTransparencyToBeEnabled($copy);
 
-        $this->resource->expects($this->once())
-            ->method('copymerge')
-            ->with($copy, 0, 0, 0, 0, $width, $height, 100)
+        $copy->expects($this->once())
+            ->method('copy')
+            ->with($this->resource, $box, $start, $start)
             ->will($this->returnValue(true));
 
         $image = $this->image->copy();
@@ -60,11 +59,8 @@ class ImageTest extends TestCase
 
     public function testShouldCropImage()
     {
-        $x      = 0;
-        $y      = 0;
-        $width  = 100;
-        $height = 100;
-        $box    = new Box($width, $height);
+        $start  = new Point(0, 0);
+        $box    = new Box(100, 100);
         $crop   = $this->getResource();
 
         $this->gd->expects($this->once())
@@ -74,17 +70,18 @@ class ImageTest extends TestCase
 
         $this->expectTransparencyToBeEnabled($crop);
 
+        $crop->expects($this->once())
+            ->method('copy')
+            ->with($this->resource, $box, $start, new Point(0, 0))
+            ->will($this->returnValue(true));
+
         $this->resource->expects($this->once())
             ->method('box')
             ->will($this->returnValue($box->scale(2)));
         $this->resource->expects($this->once())
-            ->method('copymerge')
-            ->with($crop, 0, 0, $x, $y, $width, $height, 100)
-            ->will($this->returnValue(true));
-        $this->resource->expects($this->once())
             ->method('destroy');
 
-        $crop = $this->image->crop(new Point($x, $y), $box);
+        $crop = $this->image->crop($start, $box);
     }
 
     public function testShouldPasteImage()

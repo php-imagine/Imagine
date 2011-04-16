@@ -65,10 +65,9 @@ final class Image implements ImageInterface
      */
     public function copy()
     {
-        $box    = $this->resource->box();
-        $width  = $box->getWidth();
-        $height = $box->getHeight();
-        $copy   = $this->gd->create($box);
+        $start = new Point(0, 0);
+        $box   = $this->resource->box();
+        $copy  = $this->gd->create($box);
 
         if (!$copy instanceof ResourceInterface) {
             throw new RuntimeException('Image copy operation failed');
@@ -79,9 +78,7 @@ final class Image implements ImageInterface
             throw new RuntimeException('Image copy operation failed');
         }
 
-        if (false === $this->resource->copymerge(
-            $copy, 0, 0, 0, 0, $width, $height, 100
-        )) {
+        if (false === $copy->copy($this->resource, $box, $start, $start)) {
             throw new RuntimeException('Image copy operation failed');
         }
 
@@ -102,22 +99,20 @@ final class Image implements ImageInterface
             );
         }
 
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-        $dest   = $this->gd->create($size);
+        $cropped = $this->gd->create($size);
 
-        $dest->disableAlphaBlending();
-        $dest->enableSaveAlpha();
+        if (false === $cropped->disableAlphaBlending() ||
+            false === $cropped->enableSaveAlpha()) {
+            throw new RuntimeException('Image crop operation failed');
+        }
 
-        if (false === $this->resource->copymerge(
-            $dest, 0, 0, $start->getX(), $start->getY(), $width, $height, 100
-        )) {
+        if (false === $cropped->copy($this->resource, $size, $start, new Point(0, 0))) {
             throw new RuntimeException('Image crop operation failed');
         }
 
         $this->resource->destroy();
 
-        $this->resource = $dest;
+        $this->resource = $cropped;
 
         return $this;
     }
