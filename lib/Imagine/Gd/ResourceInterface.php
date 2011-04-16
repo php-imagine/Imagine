@@ -83,25 +83,9 @@ interface ResourceInterface
      *
      * @return boolean
      *
-     * @see imagecopy
-     */
-    function copy(ResourceInterface $resource, BoxInterface $box, PointInterface $from, PointInterface $to);
-
-    /**
-     * @param Imagine\Gd\ResourceInterface $destination
-     * @param integer                      $destinationX
-     * @param integer                      $destinationY
-     * @param integer                      $x
-     * @param integer                      $y
-     * @param integer                      $width
-     * @param integer                      $height
-     * @param integer                      $pct
-     *
-     * @return boolean
-     *
      * @see imagecopymerge
      */
-    function copymerge(ResourceInterface $resource, $destinationX, $destinationY, $x, $y, $width, $height, $pct = 100);
+    function copy(ResourceInterface $resource, BoxInterface $box, PointInterface $from, PointInterface $to);
 
     /**
      * @param Imagine\Gd\ResourceInterface $destination

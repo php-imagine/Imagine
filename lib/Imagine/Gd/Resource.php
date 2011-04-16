@@ -88,16 +88,7 @@ class Resource implements ResourceInterface
      */
     public function copy(ResourceInterface $resource, PointInterface $from, PointInterface $to, BoxInterface $box)
     {
-        return imagecopy($this->resource, $resource->unwrap(), $to->getX(), $to->getY(), $from->getX(), $from->getY(), $box->getWidth(), $box->getHeight());
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Gd\ResourceInterface::copymerge()
-     */
-    public function copymerge(ResourceInterface $destination, $destinationX, $destinationY, $x, $y, $width, $height, $pct = 100)
-    {
-        return imagecopymerge($destination->unwrap(), $this->resource, $destinationX, $destinationY, $x, $y, $width, $height, $pct);
+        return imagecopymerge($this->resource, $resource->unwrap(), $to->getX(), $to->getY(), $from->getX(), $from->getY(), $box->getWidth(), $box->getHeight(), 100);
     }
 
     /**
