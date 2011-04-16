@@ -49,7 +49,7 @@ class ImageTest extends TestCase
 
         $copy->expects($this->once())
             ->method('copy')
-            ->with($this->resource, $box, $start, $start)
+            ->with($this->resource, $start, $box, $start)
             ->will($this->returnValue(true));
 
         $image = $this->image->copy();
@@ -72,7 +72,7 @@ class ImageTest extends TestCase
 
         $crop->expects($this->once())
             ->method('copy')
-            ->with($this->resource, $box, $start, $box->position('top', 'left'))
+            ->with($this->resource, $start, $box, $box->position('top', 'left'))
             ->will($this->returnValue(true));
 
         $this->resource->expects($this->once())
@@ -108,7 +108,7 @@ class ImageTest extends TestCase
 
         $this->resource->expects($this->once())
             ->method('copy')
-            ->with($resource, $box, $box->position('top', 'left'), $start);
+            ->with($resource, $box->position('top', 'left'), $box, $start);
 
         $this->image->paste($image, $start);
     }

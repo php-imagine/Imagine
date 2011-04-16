@@ -78,7 +78,7 @@ final class Image implements ImageInterface
             throw new RuntimeException('Image copy operation failed');
         }
 
-        if (false === $copy->copy($this->resource, $box, $start, $start)) {
+        if (false === $copy->copy($this->resource, $start, $box, $start)) {
             throw new RuntimeException('Image copy operation failed');
         }
 
@@ -107,7 +107,7 @@ final class Image implements ImageInterface
         }
 
         if (false === $cropped->copy(
-            $this->resource, $size, $start, $size->position(Box::TOP, Box::LEFT)
+            $this->resource, $start, $size, $size->position(Box::TOP, Box::LEFT)
         )) {
             throw new RuntimeException('Image crop operation failed');
         }
@@ -147,7 +147,7 @@ final class Image implements ImageInterface
         }
 
         if (false === $this->resource->copy(
-            $image->resource, $size, $size->position(Box::TOP, Box::LEFT),$start
+            $image->resource, $size->position(Box::TOP, Box::LEFT), $size, $start
         )) {
             throw new RuntimeException('Image paste operation failed');
         }
