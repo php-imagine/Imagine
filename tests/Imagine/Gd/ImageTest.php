@@ -32,9 +32,9 @@ class ImageTest extends TestCase
 
     public function testShouldCopyImage()
     {
-        $box    = new Box(100, 100);
-        $start  = new Point(0, 0);
-        $copy   = $this->getResource();
+        $box   = new Box(100, 100);
+        $start = $box->position('top', 'left');
+        $copy  = $this->getResource();
 
         $this->resource->expects($this->once())
             ->method('box')
@@ -72,7 +72,7 @@ class ImageTest extends TestCase
 
         $crop->expects($this->once())
             ->method('copy')
-            ->with($this->resource, $box, $start, new Point(0, 0))
+            ->with($this->resource, $box, $start, $box->position('top', 'left'))
             ->will($this->returnValue(true));
 
         $this->resource->expects($this->once())
@@ -86,6 +86,7 @@ class ImageTest extends TestCase
 
     public function testShouldPasteImage()
     {
+        $size     = new Box(100, 100);
         $box      = new Box(100, 100);
         $start    = new Point(0, 0);
         $resource = $this->getResource();
@@ -100,14 +101,14 @@ class ImageTest extends TestCase
 
         $this->resource->expects($this->once())
             ->method('box')
-            ->will($this->returnValue($box));
+            ->will($this->returnValue($size));
 
         $this->expectDisableAlphaBlending($this->resource);
         $this->expectEnableAlphaBlending($this->resource);
 
         $this->resource->expects($this->once())
             ->method('copy')
-            ->with($resource, $box, new Point(0, 0), $start);
+            ->with($resource, $box, $box->position('top', 'left'), $start);
 
         $this->image->paste($image, $start);
     }

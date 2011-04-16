@@ -65,8 +65,8 @@ final class Image implements ImageInterface
      */
     public function copy()
     {
-        $start = new Point(0, 0);
         $box   = $this->resource->box();
+        $start = $box->position(Box::TOP, Box::LEFT);
         $copy  = $this->gd->create($box);
 
         if (!$copy instanceof ResourceInterface) {
@@ -106,7 +106,9 @@ final class Image implements ImageInterface
             throw new RuntimeException('Image crop operation failed');
         }
 
-        if (false === $cropped->copy($this->resource, $size, $start, new Point(0, 0))) {
+        if (false === $cropped->copy(
+            $this->resource, $size, $start, $size->position(Box::TOP, Box::LEFT)
+        )) {
             throw new RuntimeException('Image crop operation failed');
         }
 
@@ -145,7 +147,7 @@ final class Image implements ImageInterface
         if (false === $this->resource->copy(
             $image->resource,
             $size,
-            new Point(0, 0),
+            $size->position(Box::TOP, Box::LEFT),
             $start
         )) {
             throw new RuntimeException('Image paste operation failed');
