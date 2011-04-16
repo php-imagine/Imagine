@@ -141,20 +141,21 @@ final class Image implements ImageInterface
             );
         }
 
-        $this->resource->enableAlphaBlending();
-        $image->resource->enableAlphaBlending();
+        if (false === $this->resource->enableAlphaBlending() ||
+            false === $image->resource->enableAlphaBlending()) {
+            throw new RuntimeException('Image paste operation failed');
+        }
 
         if (false === $this->resource->copy(
-            $image->resource,
-            $size,
-            $size->position(Box::TOP, Box::LEFT),
-            $start
+            $image->resource, $size, $size->position(Box::TOP, Box::LEFT),$start
         )) {
             throw new RuntimeException('Image paste operation failed');
         }
 
-        $this->resource->disableAlphaBlending();
-        $image->resource->disableAlphaBlending();
+        if (false === $this->resource->disableAlphaBlending() ||
+            false === $image->resource->disableAlphaBlending()) {
+            throw new RuntimeException('Image paste operation failed');
+        }
 
         return $this;
     }
@@ -171,7 +172,6 @@ final class Image implements ImageInterface
 
         $dest->disableAlphaBlending();
         $dest->enableSaveAlpha();
-        $dest->enableAntiAlias();
 
         if (false === $this->resource->copyresampled(
             $dest, 0, 0, $width, $height, 0, 0,
