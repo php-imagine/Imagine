@@ -153,4 +153,58 @@ class BoxTest extends \PHPUnit_Framework_TestCase
             array(9, 8, 72),
         );
     }
+
+    /**
+     * @dataProvider getPositionsAndPoints
+     *
+     * @param string                       $a
+     * @param string                       $b
+     * @param Imagine\Image\PointInterface $expected
+     */
+    public function testShouldGetCorrectPositions($a, $b, PointInterface $expected)
+    {
+        $box = new Box(100, 100);
+
+        $this->assertEquals($expected, $box->position($a, $b));
+    }
+
+    public function getPositionsAndPoints()
+    {
+        return array(
+            array(Box::TOP, Box::LEFT, new Point(0, 0)),
+            array(Box::BOTTOM, Box::LEFT, new Point(0, 100)),
+            array(Box::MIDDLE, Box::LEFT, new Point(0, 50)),
+            array(Box::TOP, Box::RIGHT, new Point(100, 0)),
+            array(Box::BOTTOM, Box::RIGHT, new Point(100, 100)),
+            array(Box::MIDDLE, Box::RIGHT, new Point(100, 50)),
+            array(Box::TOP, Box::CENTER, new Point(50, 0)),
+            array(Box::BOTTOM, Box::CENTER, new Point(50, 100)),
+            array(Box::MIDDLE, Box::CENTER, new Point(50, 50)),
+            array(Box::CENTER, Box::MIDDLE, new Point(50, 50)),
+        );
+    }
+
+    /**
+     * @dataProvider getInvalidPositions
+     *
+     * @expectedException Imagine\Exception\InvalidArgumentException
+     *
+     * @param string $a
+     * @param string $b
+     */
+    public function testShouldThrowOnInvalidPositions($a, $b)
+    {
+        $box = new Box(100, 100);
+
+        $box->position($a, $b);
+    }
+
+    public function getInvalidPositions()
+    {
+        return array(
+            array('center', 'center'),
+            array('somewhere', 'left'),
+            array('north', 'bottom'),
+        );
+    }
 }

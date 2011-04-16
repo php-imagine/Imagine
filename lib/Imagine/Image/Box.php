@@ -106,6 +106,48 @@ final class Box implements BoxInterface
 
     /**
      * (non-PHPdoc)
+     * @see Imagine\Image\BoxInterface::position()
+     */
+    public function position($a, $b)
+    {
+        $positionOf = function(array $sides) use ($a, $b) {
+            return in_array($a, $sides) ? $a : (in_array($b, $sides) ? $b : null);
+        };
+
+        $x = $positionOf(array(self::LEFT, self::RIGHT, self::CENTER));
+        $y = $positionOf(array(self::TOP, self::BOTTOM, self::MIDDLE));
+
+        if (null === $x || null === $y) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Allowed positions are "%s", "%s" and "%s" given',
+                    implode(
+                        '", "',
+                        array(
+                            self::TOP, self::BOTTOM, self::MIDDLE,
+                            self::LEFT, self::RIGHT, self::CENTER
+                        )
+                    ),
+                    $a, $b
+                )
+            );
+        }
+
+        $values = array(
+            self::TOP    => 0,
+            self::LEFT   => 0,
+            self::BOTTOM => $this->height,
+            self::RIGHT  => $this->width,
+            self::MIDDLE => round($this->height / 2),
+            self::CENTER => round($this->width / 2),
+        );
+
+        return new Point($values[$x], $values[$y]);
+    }
+
+
+    /**
+     * (non-PHPdoc)
      * @see Imagine\Image\BoxInterface::__toString()
      */
     public function __toString()

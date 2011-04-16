@@ -13,6 +13,13 @@ namespace Imagine\Image;
 
 interface BoxInterface
 {
+    const TOP    = 'top';
+    const MIDDLE = 'middle';
+    const BOTTOM = 'bottom';
+    const LEFT   = 'left';
+    const CENTER = 'center';
+    const RIGHT  = 'right';
+
     /**
      * Gets current image height
      *
@@ -61,6 +68,24 @@ interface BoxInterface
      * @return integer
      */
     function square();
+
+    /**
+     * Gets point at the specified position in a box, e.g for a 100x100 box
+     *
+     * The order of parameters doesn't matter
+     *
+     * top,    left   - (0,0)
+     * bottom, left   - (0,100)
+     * bottom, right  - (100,100)
+     * middle, center - (50,50)
+     * middle, right  - (100,50)
+     *
+     * @param string $a
+     * @param string $b
+     *
+     * @return Imagine\Image\PointInterface
+     */
+    function position($a, $b);
 
     /**
      * Returns a string representation of the current box
