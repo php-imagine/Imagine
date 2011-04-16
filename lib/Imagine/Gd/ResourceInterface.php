@@ -77,32 +77,31 @@ interface ResourceInterface
      * into existing resource at position $to
      *
      * @param Imagine\Gd\ResourceInterface $destination
-     * @param Imagine\Image\BoxInterface   $size
      * @param Imagine\Image\PointInterface $from
+     * @param Imagine\Image\BoxInterface   $box
      * @param Imagine\Image\PointInterface $to
      *
      * @return boolean
      *
      * @see imagecopymerge
      */
-    function copy(ResourceInterface $resource, BoxInterface $box, PointInterface $from, PointInterface $to);
+    function copy(ResourceInterface $resource, PointInterface $from, BoxInterface $box, PointInterface $to);
 
     /**
+     * Copies a part of the given resource of size $box from position $from
+     * into existing resource at position $to and stretches it to size $size
+     *
      * @param Imagine\Gd\ResourceInterface $destination
-     * @param integer                      $destinationX
-     * @param integer                      $destinationY
-     * @param integer                      $destinationWidth
-     * @param integer                      $destinationHeight
-     * @param integer                      $x
-     * @param integer                      $y
-     * @param integer                      $width
-     * @param integer                      $height
+     * @param Imagine\Image\PointInterface $from
+     * @param Imagine\Image\BoxInterface   $box
+     * @param Imagine\Image\PointInterface $to
+     * @param Imagine\Image\BoxInterface   $size
      *
      * @return boolean
      *
      * @see imagecopyresampled
      */
-    function copyresampled(ResourceInterface $destination, $destinationX, $destinationY, $destinationWidth, $destinationHeight, $x, $y, $width, $height);
+    function copyResized(ResourceInterface $resource, PointInterface $from, BoxInterface $box, PointInterface $to, BoxInterface $size);
 
     /**
      * @see imagedestroy
