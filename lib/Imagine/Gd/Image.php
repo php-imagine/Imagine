@@ -166,23 +166,27 @@ final class Image implements ImageInterface
      */
     public function resize(BoxInterface $size)
     {
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-        $dest   = $this->gd->create($width, $height);
+        $resized = $this->gd->create($size);
+        $box     = $this->resource->box();
 
-        $dest->disableAlphaBlending();
-        $dest->enableSaveAlpha();
+        if (false === $resized->disableAlphaBlending() ||
+            false === $resized->enableSaveAlpha()) {
+            throw new RuntimeException('Image resize operation failed');
+        }
 
-        if (false === $this->resource->copyresampled(
-            $dest, 0, 0, $width, $height, 0, 0,
-            $this->resource->sx(), $this->resource->sy()
+        if (false === $resized->copyResized(
+            $this->resource,
+            $box->position(Box::TOP, Box::LEFT),
+            $box,
+            $size->position(Box::TOP, Box::LEFT),
+            $size
         )) {
             throw new RuntimeException('Image resize operation failed');
         }
 
         $this->resource->destroy();
 
-        $this->resource = $dest;
+        $this->resource = $resized;
 
         return $this;
     }

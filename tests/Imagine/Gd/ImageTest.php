@@ -12,7 +12,6 @@
 namespace Imagine\Gd;
 
 use Imagine\Image\Box;
-
 use Imagine\Image\Point;
 
 class ImageTest extends TestCase
@@ -97,13 +96,13 @@ class ImageTest extends TestCase
             ->will($this->returnValue($box));
 
         $this->expectDisableAlphaBlending($resource);
-        $this->expectEnableAlphaBlending($resource);
+        $this->expectDisableAlphaBlending($this->resource);
 
         $this->resource->expects($this->once())
             ->method('box')
             ->will($this->returnValue($size));
 
-        $this->expectDisableAlphaBlending($this->resource);
+        $this->expectEnableAlphaBlending($resource);
         $this->expectEnableAlphaBlending($this->resource);
 
         $this->resource->expects($this->once())
@@ -111,6 +110,34 @@ class ImageTest extends TestCase
             ->with($resource, $box->position('top', 'left'), $box, $start);
 
         $this->image->paste($image, $start);
+    }
+
+    public function testShouldResize()
+    {
+        $current = new Box(100, 100);
+        $target  = new Box(200, 200);
+        $resized = $this->getResource();
+
+        $this->gd->expects($this->once())
+            ->method('create')
+            ->with($target)
+            ->will($this->returnValue($resized));
+
+        $this->expectTransparencyToBeEnabled($resized);
+
+        $resized->expects($this->once())
+            ->method('copyResized')
+            ->with($this->resource, $current->position('top', 'left'), $current, $target->position('top', 'left'), $target)
+            ->will($this->returnValue(true));
+
+        $this->resource->expects($this->once())
+            ->method('box')
+            ->will($this->returnValue($current));
+
+        $this->resource->expects($this->once())
+            ->method('destroy');
+
+        $this->image->resize($target);
     }
 
     /**
