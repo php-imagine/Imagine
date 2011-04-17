@@ -503,9 +503,7 @@ final class Image implements ImageInterface
             ));
         }
 
-        $save = 'image'.$format;
-
-        $args = array($this->resource, $filename);
+        $args = array($filename);
 
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
@@ -517,8 +515,8 @@ final class Image implements ImageInterface
         }
 
         if ($format === 'png') {
-            imagealphablending($this->resource, false);
-            imagesavealpha($this->resource, true);
+            $this->resource->disableAlphaBlending();
+            $this->resource->enableSaveAlpha();
 
             if (isset($options['filters'])) {
                 $args[] = $options['filters'];
@@ -530,7 +528,7 @@ final class Image implements ImageInterface
             $args[] = $options['foreground'];
         }
 
-        if (false === call_user_func_array($save, $args)) {
+        if (false === call_user_func_array(array($this->resource, $format), $args)) {
             throw new RuntimeException('Save operation failed');
         }
     }

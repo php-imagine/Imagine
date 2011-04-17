@@ -156,6 +156,57 @@ class ImageTest extends TestCase
     }
 
     /**
+     * @dataProvider getPathsAndSaveMethods
+     *
+     * @param string $path
+     * @param string $method
+     */
+    public function testShouldSaveImage($path, $method)
+    {
+        $this->resource->expects($this->once())
+            ->method($method)
+            ->with($path);
+
+        $this->image->save($path);
+    }
+
+    public function getPathsAndSaveMethods()
+    {
+        return array(
+            array('/path/to/image.jpg', 'jpeg'),
+            array('/path/to/image.jpeg', 'jpeg'),
+            array('/path/to/image.png', 'png'),
+            array('/path/to/image.gif', 'gif'),
+            array('/path/to/image.wbmp', 'wbmp'),
+            array('/path/to/image.xbm', 'xbm'),
+        );
+    }
+
+    public function testShouldSaveWithJpegOptions()
+    {
+        $path    = '/path/to/image.jpg';
+        $quality = 100;
+
+        $this->resource->expects($this->once())
+            ->method('jpeg')
+            ->with($path, $quality);
+
+        $this->image->save($path, array('quality' => $quality));
+    }
+
+    public function testShouldSaveWithPngOptions()
+    {
+        $path    = '/path/to/image.png';
+        $quality = 100;
+
+        $this->resource->expects($this->once())
+            ->method('png')
+            ->with($path, 9);
+
+        $this->image->save($path, array('quality' => $quality));
+    }
+
+    /**
      * @param PHPUnit_Framework_MockObject_MockObject $resource
      * @param boolean                                 $result
      */
