@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\PointInterface;
+
 use Imagine\AbstractImagineTest;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
@@ -83,8 +85,9 @@ class ImagineTest extends TestCase
     /**
      * @expectedException Imagine\Exception\RuntimeException
      */
-    public function testShouldThrowOnCreateOnFailedColorAllocate()
+    public function testShouldThrowOnCreateOnFailedFilledRectangle()
     {
+        $color    = new Color('fff');
         $box      = new Box(100, 100);
         $resource = $this->getResource();
 
@@ -94,38 +97,14 @@ class ImagineTest extends TestCase
             ->will($this->returnValue($resource));
 
         $this->expectTransparencyToBeEnabled($resource);
-        $this->expectColorAllocateAlpha($resource, false);
+        $this->expectFill($resource, $box->position('top', 'left'), $color, false);
 
         $this->imagine->create($box);
     }
 
-    /**
-     * @expectedException Imagine\Exception\RuntimeException
-     */
-    public function testShouldThrowOnCreateOnFailedFilledRectangle()
-    {
-        $index    = 10;
-        $width    = 100;
-        $height   = 100;
-        $box      = new Box($width, $height);
-        $resource = $this->getResource();
-
-        $this->gd->expects($this->once())
-            ->method('create')
-            ->with($box)
-            ->will($this->returnValue($resource));
-
-        $this->expectTransparencyToBeEnabled($resource);
-        $this->expectColorAllocateAlpha($resource, $index);
-        $this->expectFilledRectangle($resource, $width, $height, $index, false);
-
-        $this->imagine->create(new Box($width, $height));
-    }
-
-
     public function testShouldCreateImage()
     {
-        $index    = 10;
+        $color    = new Color('fff');
         $width    = 100;
         $height   = 100;
         $box      = new Box($width, $height);
@@ -137,10 +116,9 @@ class ImagineTest extends TestCase
             ->will($this->returnValue($resource));
 
         $this->expectTransparencyToBeEnabled($resource);
-        $this->expectColorAllocateAlpha($resource, $index);
-        $this->expectFilledRectangle($resource, $width, $height, $index, true);
+        $this->expectFill($resource, $box->position('top', 'left'), $color, true);
 
-        $image = $this->imagine->create(new Box($width, $height));
+        $image = $this->imagine->create(new Box($width, $height), $color);
 
         $this->assertInstanceOf('Imagine\Gd\Image', $image);
     }
@@ -309,11 +287,11 @@ class ImagineTest extends TestCase
      * @param PHPUnit_Framework_MockObject_MockObject $resource
      * @param boolean                                 $result
      */
-    private function expectFilledRectangle(\PHPUnit_Framework_MockObject_MockObject $resource, $width, $height, $index, $result = true)
+    private function expectFill(\PHPUnit_Framework_MockObject_MockObject $resource, PointInterface $point, Color $color, $result = true)
     {
         $resource->expects($this->once())
-            ->method('filledrectangle')
-            ->with(0, 0, $width, $height, $index)
+            ->method('fill')
+            ->with($point, $color)
             ->will($this->returnValue($result));
     }
 }

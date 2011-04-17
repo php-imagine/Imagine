@@ -111,6 +111,18 @@ interface ResourceInterface
     function destroy();
 
     /**
+     * Performs a flood fill starting at the given coordinate
+     *
+     * @param Imagine\Image\PointInterface $start
+     * @param Imagine\Image\Color          $color
+     *
+     * @see imagefill
+     *
+     * @return boolean
+     */
+    function fill(PointInterface $start, Color $color);
+
+    /**
      * @param integer $x1
      * @param integer $y1
      * @param integer $x2

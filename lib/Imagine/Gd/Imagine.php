@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\Box;
+
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\ImageInterface;
@@ -57,14 +59,9 @@ final class Imagine implements ImagineInterface
 
         $this->throwOrEnableTransparency($resource, 'Create operation failed');
 
-        $color = $resource->colorToIndex(($color ? $color : new Color('fff')));
-
-        if (false === $color) {
-            throw new RuntimeException('Unable to allocate color');
-        }
-
-        if (false === $resource->filledrectangle(
-            0, 0, $width, $height, $color
+        if (false === $resource->fill(
+            $size->position(Box::TOP, Box::LEFT),
+            ($color ? $color : new Color('fff'))
         )) {
             throw new RuntimeException('Could not set background color fill');
         }
