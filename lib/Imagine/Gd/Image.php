@@ -199,16 +199,9 @@ final class Image implements ImageInterface
     {
         $color = $background ? $background : new Color('fff');
 
-        $resource = imagerotate($this->resource, $angle,
-            $this->getColor($background));
-
-        if (false === $resource) {
+        if (false === $this->resource->rotate($angle, $color)) {
             throw new RuntimeException('Image rotate operation failed');
         }
-
-        imagedestroy($this->resource);
-
-        $this->resource = $resource;
 
         return $this;
     }

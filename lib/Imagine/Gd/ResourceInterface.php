@@ -137,15 +137,14 @@ interface ResourceInterface
     function filter($filtertype, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null);
 
     /**
-     * @param integer $angle
-     * @param integer $bgColor
-     * @param boolean $ignoreTransparent
+     * @param integer             $angle
+     * @param Imagine\Image\Color $bgColor
      *
-     * @return mixed
+     * @return boolean
      *
      * @see imagerotate
      */
-    function rotate($angle, $bgColor, $ignoreTransparent = null);
+    function rotate($angle, Color $bgColor);
 
     /**
      * @return boolean

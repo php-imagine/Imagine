@@ -11,6 +11,8 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\Color;
+
 use Imagine\Image\Box;
 use Imagine\Image\Point;
 
@@ -138,6 +140,19 @@ class ImageTest extends TestCase
             ->method('destroy');
 
         $this->image->resize($target);
+    }
+
+    public function testShouldRotateAndReplaceResource()
+    {
+        $angle = 90;
+        $color = new Color('000');
+
+        $this->resource->expects($this->once())
+            ->method('rotate')
+            ->with($angle, $color)
+            ->will($this->returnValue(true));
+
+        $this->image->rotate($angle, $color);
     }
 
     /**

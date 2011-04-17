@@ -131,11 +131,19 @@ class Resource implements ResourceInterface
      * (non-PHPdoc)
      * @see Imagine\Gd\ResourceInterface::rotate()
      */
-    public function rotate($angle, $bgColor, $ignoreTransparent = null)
+    public function rotate($angle, Color $bgColor)
     {
-        $result = imagerotate($this->resource, $angle, $bgColor, $ignoreTransparent);
+        $resource = imagerotate($this->resource, $angle, $this->colorToIndex($bgColor));
 
-        return false === $result ? $result : $this;
+        if (false === $resource) {
+            return false;
+        }
+
+        imagedestroy($this->resource);
+
+        $this->resource = $resource;
+
+        return true;
     }
 
     /**
