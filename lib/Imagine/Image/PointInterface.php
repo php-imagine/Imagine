@@ -42,4 +42,22 @@ interface PointInterface
      * @return string
      */
     function __toString();
+
+    /**
+     * Moves point by $x to the right
+     *
+     * @param integer $x
+     *
+     * @return Imagine\Image\PointInterface
+     */
+    function moveX($x);
+
+    /**
+     * Moves point by $y to the bottom
+     *
+     * @param integer $y
+     *
+     * @return Imagine\Image\PointInterface
+     */
+    function moveY($y);
 }

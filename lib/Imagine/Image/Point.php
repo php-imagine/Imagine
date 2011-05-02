@@ -80,4 +80,27 @@ final class Point implements PointInterface
     {
         return sprintf('(%d, %d)', $this->x, $this->y);
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\PointInterface::moveX()
+     */
+    public function moveX($x)
+    {
+        return $this->makePoint($x, 0);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\PointInterface::moveY()
+     */
+    public function moveY($y)
+    {
+        return $this->makePoint(0, $y);
+    }
+
+    private function makePoint($x = 0, $y = 0)
+    {
+        return new Point($this->x + $x, $this->y + $y);
+    }
 }

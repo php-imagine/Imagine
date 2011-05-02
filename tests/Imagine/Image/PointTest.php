@@ -86,4 +86,27 @@ class PointTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('(50, 50)', (string) new Point(50, 50));
     }
+
+    /**
+     * @dataProvider getPointAndMoveAmounts
+     *
+     * @param Imagine\Image\PointInterface $expected
+     * @param integer                      $x
+     * @param integer                      $y
+     */
+    public function testPointMoving(PointInterface $expected, $x, $y)
+    {
+        $point = new Point(0, 0);
+
+        $this->assertEquals($expected, $point->moveX($x)->moveY($y));
+    }
+
+    public function getPointAndMoveAmounts()
+    {
+        return array(
+            array(new Point(5, 5), 5, 5),
+            array(new Point(0, 10), 0, 10),
+            array(new Point(25, 15), 25, 15),
+        );
+    }
 }
