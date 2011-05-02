@@ -97,7 +97,7 @@ class Resource implements ResourceInterface
      */
     public function copyResized(ResourceInterface $resource, PointInterface $from, BoxInterface $box, PointInterface $to, BoxInterface $size)
     {
-        return imagecopyresampled($this->resource, $destination->unwrap(), $to->getX(), $to->getY(), $from->getX(), $from->getY(), $box->getWidth(), $box->getHeight(), $size->getWidth(), $size->getHeight());
+        return imagecopyresampled($this->resource, $resource->unwrap(), $to->getX(), $to->getY(), $from->getX(), $from->getY(), $box->getWidth(), $box->getHeight(), $size->getWidth(), $size->getHeight());
     }
 
     /**
