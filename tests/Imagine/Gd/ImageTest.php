@@ -206,6 +206,32 @@ class ImageTest extends TestCase
         $this->image->save($path, array('quality' => $quality));
     }
 
+    public function testShouldFlipHorizontallyImage()
+    {
+        $box      = new Box(100, 100);
+        $resource = $this->getResource();
+
+        $this->resource->expects($this->once())
+            ->method('box')
+            ->will($this->returnValue($box));
+
+        $this->gd->expects($this->once())
+            ->method('create')
+            ->with($box)
+            ->will($this->returnValue($resource));
+
+        $this->expectTransparencyToBeEnabled($resource);
+
+        $resource->expects($this->exactly($box->getWidth()))
+            ->method('copy')
+            ->will($this->returnValue(true));
+
+        $this->resource->expects($this->once())
+            ->method('destroy');
+
+        $this->image->flipHorizontally();
+    }
+
     /**
      * @param PHPUnit_Framework_MockObject_MockObject $resource
      * @param boolean                                 $result

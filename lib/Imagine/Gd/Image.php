@@ -254,25 +254,25 @@ final class Image implements ImageInterface
      */
     public function flipHorizontally()
     {
-        $width  = imagesx($this->resource);
-        $height = imagesy($this->resource);
-        $dest = imagecreatetruecolor($width, $height);
+        $box   = $this->resource->box();
+        $dest  = $this->gd->create($box);
+        $start = $box->position(Box::TOP, Box::LEFT);
+        $end   = $box->position(Box::TOP, Box::RIGHT);
 
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
+        if (false === $dest->disableAlphaBlending() ||
+            false === $dest->enableSaveAlpha()) {
+            throw new RuntimeException('Horizontal flip operation failed');
         }
 
-        for ($i = 0; $i < $width; $i++) {
-            if (false === imagecopymerge($dest, $this->resource, $i, 0,
-                ($width - 1) - $i, 0, 1, $height, 100)) {
+        for ($i = 0; $i < $box->getWidth(); $i++) {
+            if (false === $dest->copy(
+                $this->resource, $end->moveX(-$i - 1), $box, $start->moveX($i)
+            )) {
                 throw new RuntimeException('Horizontal flip operation failed');
             }
         }
 
-        imagedestroy($this->resource);
+        $this->resource->destroy();
 
         $this->resource = $dest;
 
@@ -285,25 +285,25 @@ final class Image implements ImageInterface
      */
     public function flipVertically()
     {
-        $width  = imagesx($this->resource);
-        $height = imagesy($this->resource);
-        $dest   = imagecreatetruecolor($width, $height);
+        $box   = $this->resource->box();
+        $dest  = $this->gd->create($box);
+        $start = $box->position(Box::TOP, Box::LEFT);
+        $end   = $box->position(Box::BOTTOM, Box::LEFT);
 
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
+        if (false === $dest->disableAlphaBlending() ||
+            false === $dest->enableSaveAlpha()) {
+            throw new RuntimeException('Horizontal flip operation failed');
         }
 
-        for ($i = 0; $i < $height; $i++) {
-            if (false === imagecopymerge($dest, $this->resource, 0, $i,
-                0, ($height - 1) - $i, $width, 1, 100)) {
-                throw new RuntimeException('Vertical flip operation failed');
+        for ($i = 0; $i < $box->getHeight(); $i++) {
+            if (false === $dest->copy(
+                $this->resource, $end->moveY(-$i - 1), $box, $start->moveY($i)
+            )) {
+                throw new RuntimeException('Horizontal flip operation failed');
             }
         }
 
-        imagedestroy($this->resource);
+        $this->resource->destroy();
 
         $this->resource = $dest;
 
