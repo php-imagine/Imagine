@@ -13,8 +13,9 @@ namespace Imagine\Image\Point;
 
 use Imagine\Image\BoxInterface;
 use Imagine\Image\PointInterface;
+use Imagine\Image\AbstractPoint;
 
-final class Center implements PointInterface
+final class Center extends AbstractPoint
 {
     /**
      * @var Imagine\Image\BoxInterface
@@ -29,41 +30,16 @@ final class Center implements PointInterface
     public function __construct(BoxInterface $box)
     {
         $this->box = $box;
+        parent::__construct($this->calculateX(), $this->calculateY());
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\PointInterface::getX()
-     */
-    public function getX()
+    private function calculateX()
     {
         return ceil($this->box->getWidth() / 2);
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\PointInterface::getY()
-     */
-    public function getY()
+    private function calculateY()
     {
         return ceil($this->box->getHeight() / 2);
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\PointInterface::in()
-     */
-    public function in(BoxInterface $box)
-    {
-        return $this->getX() < $box->getWidth() && $this->getY() < $box->getHeight();
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\PointInterface::__toString()
-     */
-    public function __toString()
-    {
-        return sprintf('(%d, %d)', $this->getX(), $this->getY());
     }
 }
