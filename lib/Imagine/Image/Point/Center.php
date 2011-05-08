@@ -18,28 +18,27 @@ use Imagine\Image\AbstractPoint;
 final class Center extends AbstractPoint
 {
     /**
-     * @var Imagine\Image\BoxInterface
-     */
-    private $box;
-
-    /**
      * Constructs coordinate with size instance, it needs to be relative to
      *
      * @param Imagine\Image\BoxInterface $size
      */
     public function __construct(BoxInterface $box)
     {
-        $this->box = $box;
-        parent::__construct($this->calculateX(), $this->calculateY());
+        parent::__construct(
+            $this->middle($box->getWidth()),
+            $this->middle($box->getHeight())
+        );
     }
 
-    private function calculateX()
+    /**
+     * Calculates the middle point of a given length
+     *
+     * @param integer $length
+     *
+     * @return integer
+     */
+    private function middle($length)
     {
-        return ceil($this->box->getWidth() / 2);
-    }
-
-    private function calculateY()
-    {
-        return ceil($this->box->getHeight() / 2);
+        return ceil($length / 2);
     }
 }
