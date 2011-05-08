@@ -87,7 +87,7 @@ abstract class AbstractPoint implements PointInterface
      */
     public function moveX($x)
     {
-        return $this->makePoint($x, 0);
+        return $this->move($x, 0);
     }
 
     /**
@@ -96,10 +96,15 @@ abstract class AbstractPoint implements PointInterface
      */
     public function moveY($y)
     {
-        return $this->makePoint(0, $y);
+        return $this->move(0, $y);
     }
 
-    private function makePoint($x = 0, $y = 0)
+    /**
+     * Moves current point by the given $x and $y
+     *
+     * @return Imagine\Image\PointInterface
+     */
+    private function move($x, $y)
     {
         return new Point($this->x + $x, $this->y + $y);
     }
