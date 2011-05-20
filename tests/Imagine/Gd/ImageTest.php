@@ -11,9 +11,8 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Image\Color;
-
 use Imagine\Image\Box;
+use Imagine\Image\Color;
 use Imagine\Image\Point;
 
 class ImageTest extends TestCase
