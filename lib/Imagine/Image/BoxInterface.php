@@ -93,4 +93,22 @@ interface BoxInterface
      * @return string
      */
     function __toString();
+
+    /**
+     * Resizes box to given width, constraining proportions and returns the new box
+     *
+     * @param integer $width
+     *
+     * @return Imagine\Image\BoxInterface
+     */
+    function widen($width);
+
+    /**
+     * Resizes box to given height, constraining proportions and returns the new box
+     *
+     * @param integer $height
+     *
+     * @return Imagine\Image\BoxInterface
+     */
+    function heighten($height);
 }

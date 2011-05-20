@@ -207,4 +207,29 @@ class BoxTest extends \PHPUnit_Framework_TestCase
             array('north', 'bottom'),
         );
     }
+
+    /**
+     * @dataProvider getDimensionsAndTargets
+     *
+     * @param integer $width
+     * @param integer $height
+     * @param integer $targetWidth
+     * @param integer $targetHeight
+     */
+    public function testShouldResizeToTargetWidthAndHeight($width, $height, $targetWidth, $targetHeight)
+    {
+        $box = new Box($width, $height);
+        $expected = new Box($targetWidth, $targetHeight);
+
+        $this->assertEquals($expected, $box->widen($targetWidth));
+        $this->assertEquals($expected, $box->heighten($targetHeight));
+    }
+
+    public function getDimensionsAndTargets()
+    {
+        return array(
+            array(10, 50, 50, 250),
+            array(25, 40, 50, 80),
+        );
+    }
 }
