@@ -502,7 +502,7 @@ final class Image implements ImageInterface
      *
      * Generates a GD image
      *
-     * @param  Imagine\Image\Box $size
+     * @param  Imagine\Image\BoxInterface $size
      * @param  string the operation initiating the creation
      *
      * @return resource
@@ -510,7 +510,7 @@ final class Image implements ImageInterface
      * @throws RuntimeException
      *
      */
-    private function createImage(Box $size, $operation)
+    private function createImage(BoxInterface $size, $operation)
     {
         $image = imagecreatetruecolor($size->getWidth(), $size->getHeight());
 
