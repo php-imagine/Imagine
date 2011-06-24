@@ -58,20 +58,8 @@ final class Image implements ImageInterface
     final public function copy()
     {
         $size = $this->getSize();
-        $copy = imagecreatetruecolor($size->getWidth(), $size->getHeight());
-
-        if (false === $copy) {
-            throw new RuntimeException('Image copy operation failed');
-        }
-
-        if (false === imagealphablending($copy, false) ||
-            false === imagesavealpha($copy, true)) {
-            throw new RuntimeException('Image copy operation failed');
-        }
-
-        if (function_exists('imageantialias')) {
-            imageantialias($copy, true);
-        }
+        
+        $copy = $this->createImage($this->size);
 
         if (false === imagecopymerge($copy, $this->resource, 0, 0, 0,
             0, $size->getWidth(), $size->getHeight(), 100)) {
@@ -98,14 +86,7 @@ final class Image implements ImageInterface
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
-        $dest = imagecreatetruecolor($width, $height);
-
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
+        $dest = $this->createImage($this->size);
 
         if (false === imagecopymerge($dest, $this->resource, 0, 0,
             $start->getX(), $start->getY(), $width, $height, 100)) {
@@ -163,14 +144,7 @@ final class Image implements ImageInterface
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
-        $dest = imagecreatetruecolor($width, $height);
-
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
+        $dest = $this->createImage($this->size);
 
         if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
             $width, $height, imagesx($this->resource), imagesy($this->resource)
@@ -256,14 +230,8 @@ final class Image implements ImageInterface
     {
         $width  = imagesx($this->resource);
         $height = imagesy($this->resource);
-        $dest = imagecreatetruecolor($width, $height);
 
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
+        $dest = $this->createImage($this->size);
 
         for ($i = 0; $i < $width; $i++) {
             if (false === imagecopymerge($dest, $this->resource, $i, 0,
@@ -287,14 +255,8 @@ final class Image implements ImageInterface
     {
         $width  = imagesx($this->resource);
         $height = imagesy($this->resource);
-        $dest   = imagecreatetruecolor($width, $height);
 
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
+        $dest = $this->createImage($this->size);
 
         for ($i = 0; $i < $height; $i++) {
             if (false === imagecopymerge($dest, $this->resource, 0, $i,
@@ -535,6 +497,38 @@ final class Image implements ImageInterface
         }
     }
 
+    /**
+     * Internal
+     *
+     * Generates a GD image
+     *
+     * @param  Imagine\Image\Box $size
+     *
+     * @return resource
+     *
+     */
+    private function getImage(Box $size)
+    {
+        $image = imagecreatetruecolor($size->getWidth(), $size->getHeight());
+
+        if (false === $copy) {
+            throw new RuntimeException('Image copy operation failed');
+        }
+
+        if (false === imagealphablending($copy, false) ||
+            false === imagesavealpha($copy, true)) {
+            throw new RuntimeException('Image copy operation failed');
+        }
+
+        if (function_exists('imageantialias')) {
+            imageantialias($copy, true);
+        }
+        
+        imagefill($image, 0, 0, imagecolorallocatealpha($image, 255, 255, 255, 127));
+
+        return $c;
+    }
+    
     /**
      * Internal
      *
