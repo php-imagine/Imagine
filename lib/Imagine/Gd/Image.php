@@ -455,7 +455,7 @@ final class Image implements ImageInterface
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    private function saveOrOutput($format, array $options, $filename = null, Color $background=null)
+    private function saveOrOutput($format, array $options, $filename = null, Color $background = null)
     {
 
         if (!$this->supported($format)) {
@@ -477,8 +477,7 @@ final class Image implements ImageInterface
             $args[] = $options['quality'];
         }
         
-        if ($format === 'jpeg') {
-
+        if ($format === 'jpeg') {            
             $output = $this->createImage($this->getSize(), 'save jpeg');
             $size = $this->getSize();
             $color = $this->getColor($background ? $background : new Color('fff'));
@@ -501,11 +500,10 @@ final class Image implements ImageInterface
         }
 
         /*
-         * Very weight function, but obligate to transform each pixels
+         * Very weight treatment, but obligate to transform each pixels
          */
 
-        if ( $format === 'gif') {
-
+        if ( $format === 'gif'){
             $output = $this->createImage($this->getSize(), 'save jpeg');
             $size = $this->getSize();
             $color = $background ? $background : new Color('ffffff');
@@ -517,7 +515,9 @@ final class Image implements ImageInterface
                 for($y=0; $y<$this->getSize()->getHeight(); $y++){
                     $rgb = imagecolorat($this->resource, $x, $y);
                     $colorAt = imagecolorsforindex($this->resource, $rgb);
-                    if($colorAt['alpha']>=100){ //100 because resize with copyresampled dissolve colors, normaly 1 for gif to gif, but as before ending, the output format isn't known'
+                    //100 because resize with copyresampled dissolve colors,
+                    //normaly 1 for gif to gif, but as before ending, the output format isn't known...
+                    if($colorAt['alpha']>=100){ 
                         imagesetpixel($this->resource, $x, $y, $this->getColor($color));
                         $strongalpha = true;
                     }elseif($colorAt['alpha']>0){
