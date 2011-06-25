@@ -450,6 +450,7 @@ final class Image implements ImageInterface
      * @param string $format
      * @param array  $options
      * @param string $filename
+     * @param Imagine\Image\Color $color
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
@@ -477,10 +478,15 @@ final class Image implements ImageInterface
         }
         
         if ($format === 'jpeg') {
+
             $output = $this->createImage($this->getSize(), 'save jpeg');
-            imagefill($output, 0, 0, $this->getColor($background ? $background : new Color('fff')));
+            $size = $this->getSize();
+            $color = $this->getColor($background ? $background : new Color('fff'));
+            
+            imagefill($output, 0, 0, $color);
             imagealphablending($output, true);
-            imagecopy($output, $this->resource, 0, 0, 0, 0, $this->getSize()->getWidth(), $this->getSize()->getHeight());
+            imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
+            
             $this->resource = $output;
         }
 
