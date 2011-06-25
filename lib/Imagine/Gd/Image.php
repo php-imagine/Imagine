@@ -59,10 +59,10 @@ final class Image implements ImageInterface
     {
         $size = $this->getSize();
         
-        $copy = $this->createImage($this->size, 'copy');
+        $copy = $this->createImage($size, 'copy');
 
-        if (false === imagecopymerge($copy, $this->resource, 0, 0, 0,
-            0, $size->getWidth(), $size->getHeight(), 100)) {
+        if (false === imagecopy($copy, $this->resource, 0, 0, 0,
+            0, $size->getWidth(), $size->getHeight())) {
             throw new RuntimeException('Image copy operation failed');
         }
 
@@ -86,10 +86,10 @@ final class Image implements ImageInterface
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
-        $dest = $this->createImage($this->size, 'crop');
+        $dest = $this->createImage($size, 'crop');
 
-        if (false === imagecopymerge($dest, $this->resource, 0, 0,
-            $start->getX(), $start->getY(), $width, $height, 100)) {
+        if (false === imagecopy($dest, $this->resource, 0, 0,
+            $start->getX(), $start->getY(), $width, $height)) {
             throw new RuntimeException('Image crop operation failed');
         }
 
@@ -144,7 +144,7 @@ final class Image implements ImageInterface
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
-        $dest = $this->createImage($this->size, 'resize');
+        $dest = $this->createImage($size, 'resize');
 
         if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
             $width, $height, imagesx($this->resource), imagesy($this->resource)
@@ -231,7 +231,7 @@ final class Image implements ImageInterface
         $width  = imagesx($this->resource);
         $height = imagesy($this->resource);
 
-        $dest = $this->createImage($this->size, 'flip');
+        $dest = $this->createImage($this->getSize(), 'flip');
 
         for ($i = 0; $i < $width; $i++) {
             if (false === imagecopymerge($dest, $this->resource, $i, 0,
@@ -256,7 +256,7 @@ final class Image implements ImageInterface
         $width  = imagesx($this->resource);
         $height = imagesy($this->resource);
 
-        $dest = $this->createImage($this->size, 'flip');
+        $dest = $this->createImage($this->getSize(), 'flip');
 
         for ($i = 0; $i < $height; $i++) {
             if (false === imagecopymerge($dest, $this->resource, 0, $i,
@@ -298,9 +298,9 @@ final class Image implements ImageInterface
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             $ratio = max($ratios);
         }
-
-        $thumbnail->resize($this->getSize()->scale($ratio));
-        $thumbnailSize = $thumbnail->getSize();
+        
+        $thumbnailSize = $thumbnail->getSize()->scale($ratio);
+        $thumbnail->resize($thumbnailSize);
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             $thumbnail->crop(new Point(
@@ -454,7 +454,7 @@ final class Image implements ImageInterface
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    private function saveOrOutput($format, array $options, $filename = null)
+    private function saveOrOutput($format, array $options, $filename = null, Color $background=null)
     {
 
         if (!$this->supported($format)) {
@@ -467,8 +467,6 @@ final class Image implements ImageInterface
 
         $save = 'image'.$format;
 
-        $args = array($this->resource, $filename);
-
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
             // png compression quality is 0-9, so here we get the value from percent
@@ -476,6 +474,14 @@ final class Image implements ImageInterface
                 $options['quality'] = round($options['quality'] * 9 / 100);
             }
             $args[] = $options['quality'];
+        }
+        
+        if ($format === 'jpeg') {
+            $output = $this->createImage($this->getSize(), 'save jpeg');
+            imagefill($output, 0, 0, $this->getColor($background ? $background : new Color('fff')));
+            imagealphablending($output, true);
+            imagecopy($output, $this->resource, 0, 0, 0, 0, $this->getSize()->getWidth(), $this->getSize()->getHeight());
+            $this->resource = $output;
         }
 
         if ($format === 'png') {
@@ -491,6 +497,8 @@ final class Image implements ImageInterface
             isset($options['foreground'])) {
             $args[] = $options['foreground'];
         }
+
+        $args = array($this->resource, $filename);
 
         if (false === call_user_func_array($save, $args)) {
             throw new RuntimeException('Save operation failed');
@@ -529,7 +537,7 @@ final class Image implements ImageInterface
         
         imagefill($image, 0, 0, imagecolorallocatealpha($image, 255, 255, 255, 127));
 
-        return $c;
+        return $image;
     }
     
     /**
