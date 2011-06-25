@@ -234,8 +234,8 @@ final class Image implements ImageInterface
         $dest = $this->createImage($this->getSize(), 'flip');
 
         for ($i = 0; $i < $width; $i++) {
-            if (false === imagecopymerge($dest, $this->resource, $i, 0,
-                ($width - 1) - $i, 0, 1, $height, 100)) {
+            if (false === imagecopy($dest, $this->resource, $i, 0,
+                ($width - 1) - $i, 0, 1, $height)) {
                 throw new RuntimeException('Horizontal flip operation failed');
             }
         }
@@ -259,8 +259,8 @@ final class Image implements ImageInterface
         $dest = $this->createImage($this->getSize(), 'flip');
 
         for ($i = 0; $i < $height; $i++) {
-            if (false === imagecopymerge($dest, $this->resource, 0, $i,
-                0, ($height - 1) - $i, $width, 1, 100)) {
+            if (false === imagecopy($dest, $this->resource, 0, $i,
+                0, ($height - 1) - $i, $width, 1)) {
                 throw new RuntimeException('Vertical flip operation failed');
             }
         }
@@ -486,6 +486,7 @@ final class Image implements ImageInterface
             imagefill($output, 0, 0, $color);
             imagealphablending($output, true);
             imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
+            imagealphablending($output, false);
             
             $this->resource = $output;
         }
@@ -497,6 +498,46 @@ final class Image implements ImageInterface
             if (isset($options['filters'])) {
                 $args[] = $options['filters'];
             }
+        }
+
+        /*
+         * Very weight function, but obligate to transform each pixels
+         */
+
+        if ( $format === 'gif') {
+
+            $output = $this->createImage($this->getSize(), 'save jpeg');
+            $size = $this->getSize();
+            $color = $background ? $background : new Color('ffffff');
+            
+            $lightalpha = $strongalpha = false;
+
+            
+            for($x=0; $x<$this->getSize()->getWidth(); $x++){
+                for($y=0; $y<$this->getSize()->getHeight(); $y++){
+                    $rgb = imagecolorat($this->resource, $x, $y);
+                    $colorAt = imagecolorsforindex($this->resource, $rgb);
+                    if($colorAt['alpha']>=100){ //100 because resize with copyresampled dissolve colors, normaly 1 for gif to gif, but as before ending, the output format isn't known'
+                        imagesetpixel($this->resource, $x, $y, $this->getColor($color));
+                        $strongalpha = true;
+                    }elseif($colorAt['alpha']>0){
+                        $lightalpha = true;
+                    }
+                }
+            }
+            
+            if($lightalpha){ //set a background
+                imagefill($output, 0, 0, $this->getColor($color));
+                imagealphablending($output, true);
+                imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
+                imagealphablending($output, false);                
+                $this->resource = $output;
+            }
+
+            if($strongalpha){ //set a transparency
+                imagecolortransparent( $this->resource, $this->getColor($color));
+            }
+
         }
 
         if (($format === 'wbmp' || $format === 'xbm') &&
@@ -526,24 +567,34 @@ final class Image implements ImageInterface
      */
     private function createImage(BoxInterface $size, $operation)
     {
-        $image = imagecreatetruecolor($size->getWidth(), $size->getHeight());
+        $resource = imagecreatetruecolor($size->getWidth(), $size->getHeight());
 
-        if (false === $image) {
+        if (false === $resource) {
             throw new RuntimeException('Image '.$operation.' failed');
         }
 
-        if (false === imagealphablending($image, false) ||
-            false === imagesavealpha($image, true)) {
+        if (false === imagealphablending($resource, false) ||
+            false === imagesavealpha($resource, true)) {
             throw new RuntimeException('Image '.$operation.' failed');
         }
 
         if (function_exists('imageantialias')) {
-            imageantialias($image, true);
+            imageantialias($resource, true);
+        }
+
+        $red = $green = $blue = 255;
+        
+        $index = imagecolortransparent($this->resource);        
+        if($index != (-1)){
+            $color = ImageColorsForIndex($this->resource, $index);
+            $red = $color['red'];
+            $green = $color['green'];
+            $blue = $color['blue'];
         }
         
-        imagefill($image, 0, 0, imagecolorallocatealpha($image, 255, 255, 255, 127));
+        imagefill($resource, 0, 0, imagecolorallocatealpha($resource, $red, $green, $blue, 127));
 
-        return $image;
+        return $resource;
     }
     
     /**
