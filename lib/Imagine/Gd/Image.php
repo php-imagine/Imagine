@@ -509,7 +509,6 @@ final class Image implements ImageInterface
             $color = $background ? $background : new Color('ffffff');
             
             $lightalpha = $strongalpha = false;
-
             
             for($x=0; $x<$this->getSize()->getWidth(); $x++){
                 for($y=0; $y<$this->getSize()->getHeight(); $y++){
