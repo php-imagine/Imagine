@@ -155,6 +155,16 @@ final class Imagine implements ImagineInterface
 
         $resource = call_user_func('imagecreatefrom'.$format, $path);
 
+        //Active in php development version 5.3, surelly true in 5.4
+        //Inactivate for compatibility
+        if( "gif" === $format and false){
+            $index = imagecolortransparent($resource);
+            if($index != (-1)){
+                $color = ImageColorsForIndex($resource, $index);
+                imagecolorset( $resource, $index, $color['red'], $color['green'], $color['blue'], 127 );
+            }
+        }
+
         if (!is_resource($resource)) {
             throw new RuntimeException(sprintf(
                 'File "%s" could not be opened', $path
