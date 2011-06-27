@@ -146,5 +146,31 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals(6438, count($image->histogram()));
     }
 
+    public function testInOutResult(){
+        
+        $this->processInOut("trans", "png","png");
+        $this->processInOut("trans", "png","gif");
+        $this->processInOut("trans", "png","jpg");
+        $this->processInOut("anima", "gif","png");
+        $this->processInOut("anima", "gif","gif");
+        $this->processInOut("anima", "gif","jpg");
+        $this->processInOut("trans", "gif","png");
+        $this->processInOut("trans", "gif","gif");
+        $this->processInOut("trans", "gif","jpg");
+        $this->processInOut("large", "jpg","png");
+        $this->processInOut("large", "jpg","gif");
+        $this->processInOut("large", "jpg","jpg");
+    }
+
+    protected function processInOut($file, $in, $out)
+    {
+        $factory = $this->getImagine();
+        $class = preg_replace('/\\\\/', "_", get_called_class());
+        $image = $factory->open('tests/Imagine/Fixtures/'.$file.'.'.$in);
+        $thumb = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
+        $thumb->save("tests/Imagine/Fixtures/results/in_out/{$class}_{$file}_from_{$in}_to.{$out}");       
+        
+    }
+
     abstract protected function getImagine();
 }
