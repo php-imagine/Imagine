@@ -441,6 +441,28 @@ final class Image implements ImageInterface
 
         return array_unique($colors);
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::getColorAt()
+     */
+    public function getColorAt(PointInterface $point) {
+        if(!$point->in($this->getSize())) {
+            throw new RuntimeException(sprintf(
+                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]', 
+                $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
+            ));
+        }
+        $index = imagecolorat($this->resource, $point->getX(), $point->getY());
+        $info  = imagecolorsforindex($this->resource, $index);
+        return new Color(array(
+                $info['red'],
+                $info['green'],
+                $info['blue'],
+            ),
+            (int) round($info['alpha'] / 127 * 100)
+        );
+    }
 
     /**
      * Internal
