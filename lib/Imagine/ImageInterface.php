@@ -80,6 +80,8 @@ interface ImageInterface extends ManipulatorInterface
      * 
      * @param PointInterface $point
      * 
+     * @throws Imagine\Exception\RuntimeException
+     * 
      * @return Imagine\Image\Color
      */
     function getColorAt(PointInterface $point);
