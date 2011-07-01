@@ -425,17 +425,7 @@ final class Image implements ImageInterface
 
         for ($x = 0; $x < $size->getWidth(); $x++) {
             for ($y = 0; $y < $size->getHeight(); $y++) {
-                $index = imagecolorat($this->resource, $x, $y);
-                $info  = imagecolorsforindex($this->resource, $index);
-                $color = new Color(array(
-                        $info['red'],
-                        $info['green'],
-                        $info['blue'],
-                    ),
-                    (int) round($info['alpha'] / 127 * 100)
-                );
-
-                $colors[] = $color;
+                $colors[] = $this->getColorAt(new Point($x, $y));;
             }
         }
 
