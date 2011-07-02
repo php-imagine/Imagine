@@ -425,21 +425,33 @@ final class Image implements ImageInterface
 
         for ($x = 0; $x < $size->getWidth(); $x++) {
             for ($y = 0; $y < $size->getHeight(); $y++) {
-                $index = imagecolorat($this->resource, $x, $y);
-                $info  = imagecolorsforindex($this->resource, $index);
-                $color = new Color(array(
-                        $info['red'],
-                        $info['green'],
-                        $info['blue'],
-                    ),
-                    (int) round($info['alpha'] / 127 * 100)
-                );
-
-                $colors[] = $color;
+                $colors[] = $this->getColorAt(new Point($x, $y));;
             }
         }
 
         return array_unique($colors);
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::getColorAt()
+     */
+    public function getColorAt(PointInterface $point) {
+        if(!$point->in($this->getSize())) {
+            throw new RuntimeException(sprintf(
+                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]', 
+                $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
+            ));
+        }
+        $index = imagecolorat($this->resource, $point->getX(), $point->getY());
+        $info  = imagecolorsforindex($this->resource, $index);
+        return new Color(array(
+                $info['red'],
+                $info['green'],
+                $info['blue'],
+            ),
+            (int) round($info['alpha'] / 127 * 100)
+        );
     }
 
     /**

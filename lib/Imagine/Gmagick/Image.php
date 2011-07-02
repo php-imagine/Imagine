@@ -447,6 +447,20 @@ class Image implements ImageInterface
             $pixels
         );
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::getColorAt()
+     */
+    public function getColorAt(PointInterface $point) {
+        if(!$point->in($this->getSize())) {
+            throw new RuntimeException(sprintf(
+                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]', 
+                $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
+            ));
+        }
+        throw new RuntimeException('Not Implemented!');
+    }
 
     /**
      * Gets specifically formatted color string from Color instance
