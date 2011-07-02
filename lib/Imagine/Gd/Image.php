@@ -621,11 +621,11 @@ final class Image implements ImageInterface
      */
     private function getColor(Color $color)
     {
-        $c = imagecolorallocatealpha(
+        $index = imagecolorallocatealpha(
             $this->resource, $color->getRed(), $color->getGreen(),
             $color->getBlue(), round(127 * $color->getAlpha() / 100)
         );
-        if (false === $color) {
+        if (false === $index) {
             throw new RuntimeException(sprintf(
                 'Unable to allocate color "RGB(%s, %s, %s)" with transparency '.
                 'of %d percent', $color->getRed(), $color->getGreen(),
@@ -633,7 +633,7 @@ final class Image implements ImageInterface
             ));
         }
 
-        return $c;
+        return $index;
     }
 
     /**
