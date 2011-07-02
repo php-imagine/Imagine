@@ -464,6 +464,27 @@ final class Image implements ImageInterface
             $pixels
         );
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\ImageInterface::getColorAt()
+     */
+    public function getColorAt(PointInterface $point) {
+        if(!$point->in($this->getSize())) {
+            throw new RuntimeException(sprintf(
+                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]', 
+                $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
+            ));
+        }
+        $pixel = $this->imagick->getImagePixelColor($point->getX(), $point->getY());
+        return new Color(array(
+                $pixel->getColorValue(\Imagick::COLOR_RED) * 255,
+                $pixel->getColorValue(\Imagick::COLOR_GREEN) * 255,
+                $pixel->getColorValue(\Imagick::COLOR_BLUE) * 255,
+            ),
+            (int) round($pixel->getColorValue(\Imagick::COLOR_ALPHA) * 100)
+        );
+    }
 
     /**
      * Internal

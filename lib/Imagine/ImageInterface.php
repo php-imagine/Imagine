@@ -18,6 +18,7 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\ManipulatorInterface;
+use Imagine\Image\PointInterface;
 
 interface ImageInterface extends ManipulatorInterface
 {
@@ -73,4 +74,15 @@ interface ImageInterface extends ManipulatorInterface
      * @return array
      */
     function histogram();
+    
+    /**
+     * Returns color at specified positions of current image
+     * 
+     * @param PointInterface $point
+     * 
+     * @throws Imagine\Exception\RuntimeException
+     * 
+     * @return Imagine\Image\Color
+     */
+    function getColorAt(PointInterface $point);
 }
