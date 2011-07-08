@@ -512,32 +512,30 @@ final class Image implements ImageInterface
         }
 
         /*
-         * Very weight treatment, but obligate to transform each pixels
+         * Very heavy treatment, but obligate to transform each pixels
          */
-
-        if ( $format === 'gif'){
-            $output = $this->createImage($this->getSize(), 'save jpeg');
-            $size = $this->getSize();
-            $color = $background ? $background : new Color('ffffff');
-            
+        if ($format === 'gif'){
+            $size       = $this->getSize();
+            $output     = $this->createImage($size, 'save jpeg');
+            $color      = $background ? $background : new Color('ffffff');
             $lightalpha = $strongalpha = false;
-            
-            for($x=0; $x<$this->getSize()->getWidth(); $x++){
-                for($y=0; $y<$this->getSize()->getHeight(); $y++){
+
+            for ($x = 0; $x < $size->getWidth(); $x++) {
+                for ($y = 0; $y < $size->getHeight(); $y++) {
                     $rgb = imagecolorat($this->resource, $x, $y);
                     $colorAt = imagecolorsforindex($this->resource, $rgb);
                     //100 because resize with copyresampled dissolve colors,
                     //normaly 1 for gif to gif, but as before ending, the output format isn't known...
-                    if($colorAt['alpha']>=100){ 
+                    if ($colorAt['alpha'] >= 100) {
                         imagesetpixel($this->resource, $x, $y, $this->getColor($color));
                         $strongalpha = true;
-                    }elseif($colorAt['alpha']>0){
+                    } elseif ($colorAt['alpha'] > 0) {
                         $lightalpha = true;
                     }
                 }
             }
-            
-            if($lightalpha){ //set a background
+
+            if ($lightalpha) { //set a background
                 imagefill($output, 0, 0, $this->getColor($color));
                 imagealphablending($output, true);
                 imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
@@ -545,8 +543,8 @@ final class Image implements ImageInterface
                 $this->resource = $output;
             }
 
-            if($strongalpha){ //set a transparency
-                imagecolortransparent( $this->resource, $this->getColor($color));
+            if ($strongalpha) { //set a transparency
+                imagecolortransparent($this->resource, $this->getColor($color));
             }
 
         }
