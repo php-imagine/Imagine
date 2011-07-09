@@ -228,10 +228,10 @@ final class Image implements ImageInterface
      */
     final public function flipHorizontally()
     {
-        $width  = imagesx($this->resource);
-        $height = imagesy($this->resource);
-
-        $dest = $this->createImage($this->getSize(), 'flip');
+        $size   = $this->getSize();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+        $dest   = $this->createImage($size, 'flip');
 
         for ($i = 0; $i < $width; $i++) {
             if (false === imagecopy($dest, $this->resource, $i, 0,
@@ -253,10 +253,10 @@ final class Image implements ImageInterface
      */
     final public function flipVertically()
     {
-        $width  = imagesx($this->resource);
-        $height = imagesy($this->resource);
-
-        $dest = $this->createImage($this->getSize(), 'flip');
+        $size   = $this->getSize();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+        $dest   = $this->createImage($size, 'flip');
 
         for ($i = 0; $i < $height; $i++) {
             if (false === imagecopy($dest, $this->resource, 0, $i,
@@ -340,7 +340,7 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Cannot mask non-gd images');
         }
 
-        $size = $this->getSize();
+        $size     = $this->getSize();
         $maskSize = $mask->getSize();
 
         if ($size != $maskSize) {
@@ -351,8 +351,8 @@ final class Image implements ImageInterface
             ));
         }
 
-        for ($x = 0; $x < $size->getWidth(); $x++) {
-            for ($y = 0; $y < $size->getHeight(); $y++) {
+        for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
+            for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
                 $color     = imagecolorat($this->resource, $x, $y);
                 $info      = imagecolorsforindex($this->resource, $color);
                 $maskColor = $color = imagecolorat($mask->resource, $x, $y);
@@ -384,8 +384,8 @@ final class Image implements ImageInterface
     {
         $size = $this->getSize();
 
-        for ($x = 0; $x < $size->getWidth(); $x++) {
-            for ($y = 0; $y < $size->getHeight(); $y++) {
+        for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
+            for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
                 if (false === imagesetpixel(
                     $this->resource,
                     $x, $y,
@@ -423,9 +423,9 @@ final class Image implements ImageInterface
         $size   = $this->getSize();
         $colors = array();
 
-        for ($x = 0; $x < $size->getWidth(); $x++) {
-            for ($y = 0; $y < $size->getHeight(); $y++) {
-                $colors[] = $this->getColorAt(new Point($x, $y));;
+        for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
+            for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
+                $colors[] = $this->getColorAt(new Point($x, $y));
             }
         }
 
@@ -488,17 +488,17 @@ final class Image implements ImageInterface
             }
             $args[] = $options['quality'];
         }
-        
-        if ($format === 'jpeg') {            
-            $output = $this->createImage($this->getSize(), 'save jpeg');
-            $size = $this->getSize();
-            $color = $this->getColor($background ? $background : new Color('fff'));
-            
+
+        if ($format === 'jpeg') {
+            $size   = $this->getSize();
+            $output = $this->createImage($size, 'save jpeg');
+            $color  = $this->getColor($background ? $background : new Color('fff'));
+
             imagefill($output, 0, 0, $color);
             imagealphablending($output, true);
             imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
             imagealphablending($output, false);
-            
+
             $this->resource = $output;
         }
 
@@ -520,12 +520,12 @@ final class Image implements ImageInterface
             $color      = $background ? $background : new Color('ffffff');
             $lightalpha = $strongalpha = false;
 
-            for ($x = 0; $x < $size->getWidth(); $x++) {
-                for ($y = 0; $y < $size->getHeight(); $y++) {
+            for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
+                for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
                     $rgb = imagecolorat($this->resource, $x, $y);
                     $colorAt = imagecolorsforindex($this->resource, $rgb);
-                    //100 because resize with copyresampled dissolve colors,
-                    //normaly 1 for gif to gif, but as before ending, the output format isn't known...
+                    // 100 because resize with copyresampled dissolve colors,
+                    // normaly 1 for gif to gif, but as before ending, the output format isn't known...
                     if ($colorAt['alpha'] >= 100) {
                         imagesetpixel($this->resource, $x, $y, $this->getColor($color));
                         $strongalpha = true;
@@ -592,15 +592,16 @@ final class Image implements ImageInterface
         }
 
         $red = $green = $blue = 255;
-        
-        $index = imagecolortransparent($this->resource);        
-        if($index != (-1)){
-            $color = ImageColorsForIndex($this->resource, $index);
-            $red = $color['red'];
+
+        $index = imagecolortransparent($this->resource);
+
+        if($index !== -1){
+            $color = imagecolorsforindex($this->resource, $index);
+            $red   = $color['red'];
             $green = $color['green'];
-            $blue = $color['blue'];
+            $blue  = $color['blue'];
         }
-        
+
         imagefill($resource, 0, 0, imagecolorallocatealpha($resource, $red, $green, $blue, 127));
 
         return $resource;
