@@ -186,7 +186,7 @@ final class Image implements ImageInterface
     public function resize(BoxInterface $size)
     {
         try {
-            $this->imagick->adaptiveResizeImage($size->getWidth(), $size->getHeight());
+            $this->imagick->thumbnailImage($size->getWidth(), $size->getHeight());
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Resize operation failed', $e->getCode(), $e
