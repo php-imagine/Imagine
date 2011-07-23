@@ -274,26 +274,36 @@ class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::thumbnail()
      */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET
+        , $scaleUp = true)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
+        $width     = $size->getWidth();
+        $height    = $size->getHeight();
         $thumbnail = $this->copy();
+
+        if(!$scaleUp
+            && $this->getSize()->getWidth() <= $width
+            && $this->getSize()->getHeight() <= $height
+        ) {
+            return $thumbnail;
+        }
 
         try {
             if ($mode === ImageInterface::THUMBNAIL_INSET) {
                 $thumbnail->gmagick->thumbnailimage(
-                    $size->getWidth(),
-                    $size->getHeight(),
+                    $width,
+                    $height,
                     true
                 );
             } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
                 $thumbnail->gmagick->cropthumbnailimage(
-                    $size->getWidth(),
-                    $size->getHeight()
+                    $width,
+                    $height
                 );
             }
         } catch (\GmagickException $e) {

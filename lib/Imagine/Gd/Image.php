@@ -276,7 +276,8 @@ final class Image implements ImageInterface
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::thumbnail()
      */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET,
+        $scaleUp = true)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
@@ -286,11 +287,18 @@ final class Image implements ImageInterface
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
+        if(!$scaleUp
+            && $this->getSize()->getWidth() <= $width
+            && $this->getSize()->getHeight() <= $height
+        ) {
+            return $this->copy();
+        }
+
+
         $ratios = array(
             $width / imagesx($this->resource),
             $height / imagesy($this->resource)
         );
-
         $thumbnail = $this->copy();
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
