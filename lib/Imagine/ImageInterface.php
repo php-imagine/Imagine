@@ -47,6 +47,38 @@ interface ImageInterface extends ManipulatorInterface
     function __toString();
 
     /**
+     * Flips current image using horizontal axis
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return Imagine\ImageInterface
+     */
+    function flipHorizontally();
+
+    /**
+     * Flips current image using vertical axis
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return Imagine\ImageInterface
+     */
+    function flipVertically();
+
+    /**
+     * Generates a thumbnail from a current image
+     * Returns it as a new image, doesn't modify the current image
+     *
+     * @param Imagine\Image\BoxInterface $size
+     * @param string                     $mode
+     * @param bool                       $scaleUp
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return Imagine\ImageInterface
+     */
+    function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET, $scaleUp = true);
+
+    /**
      * Instantiates and returns a DrawerInterface instance for image drawing
      *
      * @return Imagine\Draw\DrawerInterface

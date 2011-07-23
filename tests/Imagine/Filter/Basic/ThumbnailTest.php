@@ -15,6 +15,8 @@ use Imagine\Image\Box;
 use Imagine\ImageInterface;
 use Imagine\Filter\FilterTestCase;
 
+use Imagine\Gd\Imagine;
+
 class ThumbnailTest extends FilterTestCase
 {
     public function testShouldMakeAThumbnail()
@@ -26,9 +28,65 @@ class ThumbnailTest extends FilterTestCase
 
         $image->expects($this->once())
             ->method('thumbnail')
-            ->with($size, ImageInterface::THUMBNAIL_INSET)
+            ->with($size, ImageInterface::THUMBNAIL_INSET, true)
             ->will($this->returnValue($thumbnail));
 
         $this->assertSame($thumbnail, $filter->apply($image));
+    }
+
+    public function testShouldScaleUp()
+    {
+        if (!function_exists('gd_info')) {
+            $this->markTestSkipped('Gd not installed');
+        }
+        $size    = new Box(1000, 1000);
+        $imagine = new Imagine();
+
+        $imagine->open('tests/Imagine/Fixtures/large.jpg')
+            ->thumbnail($size, ImageInterface::THUMBNAIL_INSET,true)
+            ->save('tests/Imagine/Fixtures/thumbnail.jpg');
+
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/thumbnail.jpg'));
+
+        $generated = $imagine->open('tests/Imagine/Fixtures/thumbnail.jpg')
+            ->getSize();
+        $original = $imagine->open('tests/Imagine/Fixtures/large.jpg')
+            ->getSize();
+
+        $this->assertNotEquals(
+            $size,
+            $generated
+        );
+        $this->assertTrue($generated->getWidth() >= $original->getWidth());
+        $this->assertTrue($generated->getHeight() >= $original->getHeight());
+        unlink('tests/Imagine/Fixtures/thumbnail.jpg');
+    }
+
+    public function testShouldNotScaleUp()
+    {
+        if (!function_exists('gd_info')) {
+            $this->markTestSkipped('Gd not installed');
+        }
+        $size    = new Box(1000, 1000);
+        $imagine = new Imagine();
+
+        $imagine->open('tests/Imagine/Fixtures/large.jpg')
+            ->thumbnail($size, ImageInterface::THUMBNAIL_INSET,false)
+            ->save('tests/Imagine/Fixtures/thumbnail.jpg');
+
+        $this->assertTrue(file_exists('tests/Imagine/Fixtures/thumbnail.jpg'));
+
+        $generated = $imagine->open('tests/Imagine/Fixtures/thumbnail.jpg')
+            ->getSize();
+        $original = $imagine->open('tests/Imagine/Fixtures/large.jpg')
+            ->getSize();
+
+        $this->assertNotEquals(
+            $size,
+            $generated
+        );
+        $this->assertTrue($generated->getWidth() <= $original->getWidth());
+        $this->assertTrue($generated->getHeight() <= $original->getHeight());
+        unlink('tests/Imagine/Fixtures/thumbnail.jpg');
     }
 }
