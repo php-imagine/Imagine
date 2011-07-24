@@ -14,12 +14,12 @@ namespace Imagine\Gmagick;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Fill\FillInterface;
 use Imagine\Gmagick\Imagine;
 use Imagine\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
+use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
@@ -447,7 +447,7 @@ class Image implements ImageInterface
             $pixels
         );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Imagine\ImageInterface::getColorAt()
@@ -455,7 +455,7 @@ class Image implements ImageInterface
     public function getColorAt(PointInterface $point) {
         if(!$point->in($this->getSize())) {
             throw new RuntimeException(sprintf(
-                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]', 
+                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
             ));
         }

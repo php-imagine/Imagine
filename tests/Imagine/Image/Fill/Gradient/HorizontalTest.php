@@ -7,16 +7,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Imagine\Fill\Gradient;
+namespace Imagine\Image\Fill\Gradient;
 
 use Imagine\Image\Color;
 use Imagine\Image\Point;
 
-class VerticalTest extends LinearTest
+class HorizontalTest extends LinearTest
 {
     /**
      * (non-PHPdoc)
-     * @see Imagine\Fill\Gradient\LinearTest::getEnd()
+     * @see Imagine\Image\Fill\Gradient\LinearTest::getEnd()
      */
     protected function getEnd()
     {
@@ -25,7 +25,7 @@ class VerticalTest extends LinearTest
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Fill\Gradient\LinearTest::getStart()
+     * @see Imagine\Image\Fill\Gradient\LinearTest::getStart()
      */
     protected function getStart()
     {
@@ -34,23 +34,21 @@ class VerticalTest extends LinearTest
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Fill\Gradient\LinearTest::getMask()
+     * @see Imagine\Image\Fill\Gradient\LinearTest::getMask()
      */
     protected function getFill(Color $start, Color $end)
     {
-        return new Vertical(100, $start, $end);
+        return new Horizontal(100, $start, $end);
     }
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Fill\Gradient\LinearTest::getPointsAndShades()
+     * @see Imagine\Image\Fill\Gradient\LinearTest::getPointsAndShades()
      */
     public function getPointsAndColors()
     {
-        return array(
-            array(new Color('fff'), new Point(5, 100)),
-            array(new Color('000'), new Point(15, 0)),
-            array(new Color(array(128, 128, 128)), new Point(25, 50))
-        );
+        return array(array(new Color('fff'), new Point(100, 5)),
+        array(new Color('000'), new Point(0, 15)),
+        array(new Color(array(128, 128, 128)), new Point(50, 25)));
     }
 }

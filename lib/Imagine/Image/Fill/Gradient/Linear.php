@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Fill\Gradient;
+namespace Imagine\Image\Fill\Gradient;
 
 use Imagine\Image\Color;
+use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\PointInterface;
-use Imagine\Fill\FillInterface;
 
 abstract class Linear implements FillInterface
 {
@@ -49,7 +49,7 @@ abstract class Linear implements FillInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Fill\FillInterface::getShade()
+     * @see Imagine\Image\Fill\FillInterface::getShade()
      */
     final public function getColor(PointInterface $position)
     {

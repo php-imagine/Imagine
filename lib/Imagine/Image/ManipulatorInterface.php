@@ -14,10 +14,10 @@ namespace Imagine\Image;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Fill\FillInterface;
 use Imagine\ImageInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
+use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\PointInterface;
 
 interface ManipulatorInterface
@@ -162,7 +162,7 @@ interface ManipulatorInterface
      * the current image with corresponding color from FillInterface, and
      * returns modified image
      *
-     * @param Imagine\Fill\FillInterface $fill
+     * @param Imagine\Image\Fill\FillInterface $fill
      *
      * @return Imagine\Image\ManipulatorInterface
      */

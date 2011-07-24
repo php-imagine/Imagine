@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Fill;
+namespace Imagine\Image\Fill;
 
 use Imagine\Image\PointInterface;
 

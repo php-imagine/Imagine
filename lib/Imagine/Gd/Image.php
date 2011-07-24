@@ -15,13 +15,13 @@ use Imagine\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
+use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\Point\Center;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Fill\FillInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Mask\MaskInterface;
 
@@ -58,7 +58,7 @@ final class Image implements ImageInterface
     final public function copy()
     {
         $size = $this->getSize();
-        
+
         $copy = $this->createImage($size, 'copy');
 
         if (false === imagecopy($copy, $this->resource, 0, 0, 0,
@@ -298,7 +298,7 @@ final class Image implements ImageInterface
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             $ratio = max($ratios);
         }
-        
+
         $thumbnailSize = $thumbnail->getSize()->scale($ratio);
         $thumbnail->resize($thumbnailSize);
 
@@ -431,7 +431,7 @@ final class Image implements ImageInterface
 
         return array_unique($colors);
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Imagine\ImageInterface::getColorAt()
@@ -439,7 +439,7 @@ final class Image implements ImageInterface
     public function getColorAt(PointInterface $point) {
         if(!$point->in($this->getSize())) {
             throw new RuntimeException(sprintf(
-                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]', 
+                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
             ));
         }
@@ -539,7 +539,7 @@ final class Image implements ImageInterface
                 imagefill($output, 0, 0, $this->getColor($color));
                 imagealphablending($output, true);
                 imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
-                imagealphablending($output, false);                
+                imagealphablending($output, false);
                 $this->resource = $output;
             }
 
@@ -606,7 +606,7 @@ final class Image implements ImageInterface
 
         return $resource;
     }
-    
+
     /**
      * Internal
      *

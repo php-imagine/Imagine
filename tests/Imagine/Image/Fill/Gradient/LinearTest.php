@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Fill\Gradient;
+namespace Imagine\Image\Fill\Gradient;
 
 use Imagine\Image\Color;
 use Imagine\Image\PointInterface;
@@ -17,7 +17,7 @@ use Imagine\Image\PointInterface;
 abstract class LinearTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Imagine\Fill\FillInterface
+     * @var Imagine\Image\Fill\FillInterface
      */
     private $fill;
 
@@ -50,8 +50,8 @@ abstract class LinearTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Fill\Gradient\Linear::getStart
-     * @covers Imagine\Fill\Gradient\Linear::getEnd
+     * @covers Imagine\Image\Fill\Gradient\Linear::getStart
+     * @covers Imagine\Image\Fill\Gradient\Linear::getEnd
      */
     public function testShouldReturnCorrectStartAndEnd()
     {
@@ -63,7 +63,7 @@ abstract class LinearTest extends \PHPUnit_Framework_TestCase
      * @param Imagine\Image\Color $start
      * @param Imagine\Image\Color $end
      *
-     * @return Imagine\Fill\FillInterface
+     * @return Imagine\Image\Fill\FillInterface
      */
     abstract protected function getFill(Color $start, Color $end);
 

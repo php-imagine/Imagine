@@ -11,7 +11,6 @@
 
 namespace Imagine\Filter;
 
-use Imagine\Fill\FillInterface;
 use Imagine\Filter\Basic\ApplyMask;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
@@ -28,6 +27,7 @@ use Imagine\ImageInterface;
 use Imagine\ImageFactoryInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
+use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\ManipulatorInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;

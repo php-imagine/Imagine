@@ -14,13 +14,13 @@ namespace Imagine\Imagick;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Fill\FillInterface;
-use Imagine\Fill\Gradient\Horizontal;
-use Imagine\Fill\Gradient\Linear;
-use Imagine\Fill\Gradient\Vertical;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
+use Imagine\Image\Fill\FillInterface;
+use Imagine\Image\Fill\Gradient\Horizontal;
+use Imagine\Image\Fill\Gradient\Linear;
+use Imagine\Image\Fill\Gradient\Vertical;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\ImageInterface;
@@ -464,7 +464,7 @@ final class Image implements ImageInterface
             $pixels
         );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Imagine\ImageInterface::getColorAt()
@@ -472,7 +472,7 @@ final class Image implements ImageInterface
     public function getColorAt(PointInterface $point) {
         if(!$point->in($this->getSize())) {
             throw new RuntimeException(sprintf(
-                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]', 
+                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
             ));
         }
@@ -523,7 +523,7 @@ final class Image implements ImageInterface
     /**
      * Checks whether given $fill is linear and opaque
      *
-     * @param Imagine\Fill\FillInterface $fill
+     * @param Imagine\Image\Fill\FillInterface $fill
      *
      * @return Boolean
      */
@@ -536,7 +536,7 @@ final class Image implements ImageInterface
     /**
      * Performs optimized gradient fill for non-opaque linear gradients
      *
-     * @param Imagine\Fill\Gradient\Linear $fill
+     * @param Imagine\Image\Fill\Gradient\Linear $fill
      */
     private function applyFastLinear(Linear $fill)
     {

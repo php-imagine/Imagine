@@ -11,10 +11,10 @@
 
 namespace Imagine;
 
-use Imagine\Fill\Gradient\Horizontal;
-use Imagine\Fill\Gradient\Vertical;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
+use Imagine\Image\Fill\Gradient\Horizontal;
+use Imagine\Image\Fill\Gradient\Vertical;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
 use Imagine\Test\ImagineTestCase;
@@ -147,7 +147,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     }
 
     public function testInOutResult(){
-        
+
         $this->processInOut("trans", "png","png");
         $this->processInOut("trans", "png","gif");
         $this->processInOut("trans", "png","jpg");
@@ -168,8 +168,8 @@ abstract class AbstractImageTest extends ImagineTestCase
         $class = preg_replace('/\\\\/', "_", get_called_class());
         $image = $factory->open('tests/Imagine/Fixtures/'.$file.'.'.$in);
         $thumb = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
-        $thumb->save("tests/Imagine/Fixtures/results/in_out/{$class}_{$file}_from_{$in}_to.{$out}");       
-        
+        $thumb->save("tests/Imagine/Fixtures/results/in_out/{$class}_{$file}_from_{$in}_to.{$out}");
+
     }
 
     abstract protected function getImagine();

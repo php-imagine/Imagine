@@ -11,19 +11,19 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Fill\FillInterface;
 use Imagine\Filter\FilterInterface;
+use Imagine\Image\Fill\FillInterface;
 use Imagine\ImageInterface;
 
 class Fill implements FilterInterface
 {
     /**
-     * @var Imagine\Fill\FillInterface
+     * @var Imagine\Image\Fill\FillInterface
      */
     private $fill;
 
     /**
-     * @param Imagine\Fill\FillInterface $fill
+     * @param Imagine\Image\Fill\FillInterface $fill
      */
     public function __construct(FillInterface $fill)
     {
