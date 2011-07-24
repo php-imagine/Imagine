@@ -1,5 +1,5 @@
-Image Filters
-=============
+Image filters and delayed processing
+====================================
 
 ``ImageInterface`` in Imagine is very powerful and provides all the basic transformations that you might need, however, sometimes it might be useful to be able to group all of them into a dedicated object, that will know which transformations, in which sequence and with which parameters to invoke on the ``ImageInterface`` instance. For that, Imagine provides ``FilterInterface`` and some basic filters that call transformation on the ``ImageInterface`` directly as an example.
 

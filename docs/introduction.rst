@@ -1,4 +1,4 @@
-Introduction
+Quick introduction
 ============
 
 Basic usage

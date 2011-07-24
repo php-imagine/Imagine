@@ -1,4 +1,4 @@
-Coordinate Coordinates System
+Imagine's coordinates system
 ============================
 
 The coordinate system use by Imagine is very similar to Cartesian Coordinate System, with some exceptions:
@@ -69,17 +69,6 @@ Every box or image or shape has a size, size has the following methods:
 
 * ``->__toString()`` - returns string representation of the current ``BoxInterface``, e.g. ``100x100 px``
 
-A couple of words in defense
-----------------------------
+* ``->widen($width)`` - resizes box to given width, constraining proportions and returns the new box
 
-Having read about this, you might be wondering "Why didn't he keep width and height as simple integer parameters in every method that needed those?" or "Why is x and y coordinates are an object called Point?". These are valid questions and concerns, so let me try to explain why:
-
-* Type-hints and validation - instead of checking for the validity of width and height (e.g. positive integers, greater than zero) or x, y (e.g. non-negative integers), I decided to move that check into constructor of ``Box`` and ``Point`` accordingly. That means, that if something passes the type-hint - a valid implementations of ``BoxInterface`` or ``PointInterface``, it is already valid.
-
-* Utility methods - a lot of functionality, like "determine if a point is inside a given box" or "can this box fit the one we're trying to paste into it" is also to be shared in many places. The fact that these primitives are objects, let's me extract all of that duplication.
-
-* Value objects - as you've noticed neither ``BoxInterface`` nor ``PointInterface`` along with their implementations define any setter. That means the state of those objects is immutable, so there aren't side-effects to happen and the fact that they're passed by reference, will not affect their values.
-
-* Its OOP man, come on - nothing to add here, really.
-
-Enjoy!
+* ``->heighten($height)`` - resizes box to given height, constraining proportions and returns the new box

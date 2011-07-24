@@ -1,5 +1,5 @@
-Image API
-=========
+Manipulating and altering images
+================================
 
 The main piece of image processing functionality is concentrated in the ``ImageInterface`` implementations (one per driver - e.g. ``Imagick\Image``)
 
