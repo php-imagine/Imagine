@@ -15,11 +15,11 @@ After reading the documentation and working with the library for a little while,
 
 * Type-hints and validation - instead of checking for the validity of width and height (e.g. positive integers, greater than zero) or x, y (e.g. non-negative integers), I decided to move that check into constructor of ``Box`` and ``Point`` accordingly. That means, that if something passes the type-hint - a valid implementations of ``BoxInterface`` or ``PointInterface``, it is already valid.
 
-* Utility methods - a lot of functionality, like "determine if a point is inside a given box" or "can this box fit the one we're trying to paste into it" is also to be shared in many places. The fact that these primitives are objects, let's me extract all of that duplication.
+* Utility methods - a lot of functionality, like "determine if a point is inside a given box" or "can this box fit the one we're trying to paste into it" is also to be shared in many places. The fact that these primitives are objects, lets me extract all of that duplication.
 
 * Value objects - as you've noticed neither ``BoxInterface`` nor ``PointInterface`` along with their implementations define any setter. That means the state of those objects is immutable, so there aren't side-effects to happen and the fact that they're passed by reference, will not affect their values.
 
-* Its OOP man, come on - nothing to add here, really.
+* It's OOP man, come on - nothing to add here, really.
 
 Enjoy!
 
