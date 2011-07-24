@@ -186,7 +186,12 @@ final class Image implements ImageInterface
      */
     final public function save($path, array $options = array())
     {
-        $this->saveOrOutput(pathinfo($path, \PATHINFO_EXTENSION), $options, $path);
+    	if (!empty($options['format']) && in_array($options['format'], array('jpg', 'png', 'gif'))) {
+    		$extension = $options['format'];
+    	} else {
+    		$extension = pathinfo($path, \PATHINFO_EXTENSION);
+    	}
+        $this->saveOrOutput($extension, $options, $path);
 
         return $this;
     }
