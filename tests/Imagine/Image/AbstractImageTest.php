@@ -9,13 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
-use Imagine\Image\Box;
-use Imagine\Image\Color;
 use Imagine\Image\Fill\Gradient\Horizontal;
 use Imagine\Image\Fill\Gradient\Vertical;
-use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
 use Imagine\Test\ImagineTestCase;
 

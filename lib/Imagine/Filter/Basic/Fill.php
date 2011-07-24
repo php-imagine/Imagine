@@ -13,7 +13,7 @@ namespace Imagine\Filter\Basic;
 
 use Imagine\Filter\FilterInterface;
 use Imagine\Image\Fill\FillInterface;
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 
 class Fill implements FilterInterface
 {

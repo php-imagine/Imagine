@@ -11,14 +11,14 @@
 
 namespace Imagine\Test\Constraint;
 
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Histogram\Bucket;
 use Imagine\Image\Histogram\Range;
 
 class IsImageEqual extends \PHPUnit_Framework_Constraint
 {
     /**
-     * @var Imagine\ImageInterface
+     * @var Imagine\Image\ImageInterface
      */
     private $value;
 
@@ -33,7 +33,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     private $buckets;
 
     /**
-     * @param Imagine\ImageInterface $value
+     * @param Imagine\Image\ImageInterface $value
      * @param float                  $delta
      * @param integer                $buckets
      *
@@ -42,7 +42,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     public function __construct($value, $delta = 0.1, $buckets = 4)
     {
         if (!$value instanceof ImageInterface) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'Imagine\ImageInterface');
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
         }
 
         if (!is_numeric($delta)) {
@@ -65,7 +65,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     public function evaluate($other)
     {
         if (!$other instanceof ImageInterface) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'Imagine\ImageInterface');
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
         }
 
         list($currentRed, $currentGreen, $currentBlue, $currentAlpha) = $this->normalize($this->value);
@@ -102,7 +102,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     * @param Imagine\ImageInterface $image
+     * @param Imagine\Image\ImageInterface $image
      *
      * @return array
      */

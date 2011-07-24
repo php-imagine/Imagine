@@ -14,7 +14,7 @@ namespace Imagine\Filter;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
-use Imagine\ImageInterface;
+use Imagine\Image\ManipulatorInterface;
 
 class TransformationTest extends FilterTestCase
 {
@@ -68,7 +68,7 @@ class TransformationTest extends FilterTestCase
 
         $clone->expects($this->once())
             ->method('thumbnail')
-            ->with($size, ImageInterface::THUMBNAIL_INSET)
+            ->with($size, ManipulatorInterface::THUMBNAIL_INSET)
             ->will($this->returnValue($thumbnail));
 
         $thumbnail->expects($this->once())
@@ -81,7 +81,7 @@ class TransformationTest extends FilterTestCase
         $transformation->resize($resize)
             ->copy()
             ->rotate($angle, $background)
-            ->thumbnail($size, ImageInterface::THUMBNAIL_INSET)
+            ->thumbnail($size, ManipulatorInterface::THUMBNAIL_INSET)
             ->save($path);
 
         $this->assertSame($thumbnail, $transformation->apply($image));

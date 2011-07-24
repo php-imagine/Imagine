@@ -15,8 +15,7 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\ImageInterface;
-use Imagine\ImagineInterface;
+use Imagine\Image\ImagineInterface;
 
 final class Imagine implements ImagineInterface
 {
@@ -40,7 +39,7 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImagineInterface::open()
+     * @see Imagine\Image\ImagineInterface::open()
      */
     public function open($path)
     {
@@ -65,7 +64,7 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImagineInterface::create()
+     * @see Imagine\Image\ImagineInterface::create()
      */
     public function create(BoxInterface $size, Color $color = null)
     {
@@ -99,7 +98,7 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImagineInterface::load()
+     * @see Imagine\Image\ImagineInterface::load()
      */
     public function load($string)
     {
@@ -119,7 +118,7 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImagineInterface::font()
+     * @see Imagine\Image\ImagineInterface::font()
      */
     public function font($file, $size, Color $color)
     {

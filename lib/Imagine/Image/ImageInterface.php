@@ -9,16 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
-use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
-use Imagine\Image\ManipulatorInterface;
-use Imagine\Image\PointInterface;
 
 interface ImageInterface extends ManipulatorInterface
 {
@@ -64,7 +59,7 @@ interface ImageInterface extends ManipulatorInterface
      * Transforms creates a grayscale mask from current image, returns a new
      * image, while keeping the existing image unmodified
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ImageInterface
      */
     function mask();
 
@@ -74,14 +69,14 @@ interface ImageInterface extends ManipulatorInterface
      * @return array
      */
     function histogram();
-    
+
     /**
      * Returns color at specified positions of current image
-     * 
-     * @param PointInterface $point
-     * 
+     *
+     * @param Imagine\Image\PointInterface $point
+     *
      * @throws Imagine\Exception\RuntimeException
-     * 
+     *
      * @return Imagine\Image\Color
      */
     function getColorAt(PointInterface $point);

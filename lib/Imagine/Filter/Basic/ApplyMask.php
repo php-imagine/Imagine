@@ -12,17 +12,17 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\Filter\FilterInterface;
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 
 class ApplyMask implements FilterInterface
 {
     /**
-     * @var Imagine\ImageInterface
+     * @var Imagine\Image\ImageInterface
      */
     private $mask;
 
     /**
-     * @param Imagine\ImageInterface $mask
+     * @param Imagine\Image\ImageInterface $mask
      */
     public function __construct(ImageInterface $mask)
     {

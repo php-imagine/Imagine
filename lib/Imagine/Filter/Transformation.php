@@ -23,7 +23,7 @@ use Imagine\Filter\Basic\Rotate;
 use Imagine\Filter\Basic\Save;
 use Imagine\Filter\Basic\Show;
 use Imagine\Filter\Basic\Thumbnail;
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\ImageFactoryInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
@@ -44,9 +44,9 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * modified ImageInterface
      *
      * @param Imagine\Filter\FilterInterface $filter
-     * @param Imagine\ImageInterface         $image
+     * @param Imagine\Image\ImageInterface   $image
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ImageInterface
      */
     public function applyFilter(ImageInterface $image, FilterInterface $filter)
     {

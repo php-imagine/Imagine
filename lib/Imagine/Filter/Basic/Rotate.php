@@ -11,7 +11,7 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Color;
 use Imagine\Filter\FilterInterface;
 

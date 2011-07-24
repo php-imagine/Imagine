@@ -15,7 +15,7 @@ use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Gmagick\Imagine;
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
@@ -246,7 +246,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::get()
+     * @see Imagine\Image\ImageInterface::get()
      */
     public function get($format, array $options = array())
     {
@@ -263,7 +263,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::__toString()
+     * @see Imagine\Image\ImageInterface::__toString()
      */
     public function __toString()
     {
@@ -307,7 +307,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::draw()
+     * @see Imagine\Image\ImageInterface::draw()
      */
     public function draw()
     {
@@ -316,7 +316,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::getSize()
+     * @see Imagine\Image\ImageInterface::getSize()
      */
     public function getSize()
     {
@@ -373,7 +373,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::mask()
+     * @see Imagine\Image\ImageInterface::mask()
      */
     public function mask()
     {
@@ -425,7 +425,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::histogram()
+     * @see Imagine\Image\ImageInterface::histogram()
      */
     public function histogram()
     {
@@ -450,7 +450,7 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::getColorAt()
+     * @see Imagine\Image\ImageInterface::getColorAt()
      */
     public function getColorAt(PointInterface $point) {
         if(!$point->in($this->getSize())) {

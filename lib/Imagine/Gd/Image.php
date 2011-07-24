@@ -11,7 +11,7 @@
 
 namespace Imagine\Gd;
 
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
@@ -204,7 +204,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::get()
+     * @see Imagine\Image\ImageInterface::get()
      */
     public function get($format, array $options = array())
     {
@@ -215,7 +215,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::__toString()
+     * @see Imagine\Image\ImageInterface::__toString()
      */
     public function __toString()
     {
@@ -314,7 +314,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::draw()
+     * @see Imagine\Image\ImageInterface::draw()
      */
     public function draw()
     {
@@ -323,7 +323,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::getSize()
+     * @see Imagine\Image\ImageInterface::getSize()
      */
     public function getSize()
     {
@@ -401,7 +401,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::mask()
+     * @see Imagine\Image\ImageInterface::mask()
      */
     public function mask()
     {
@@ -416,7 +416,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::histogram()
+     * @see Imagine\Image\ImageInterface::histogram()
      */
     public function histogram()
     {
@@ -434,7 +434,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::getColorAt()
+     * @see Imagine\Image\ImageInterface::getColorAt()
      */
     public function getColorAt(PointInterface $point) {
         if(!$point->in($this->getSize())) {

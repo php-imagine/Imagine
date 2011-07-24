@@ -12,7 +12,7 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\Filter\FilterInterface;
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 
 class Copy implements FilterInterface
 {

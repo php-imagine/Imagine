@@ -2,7 +2,7 @@
 
 namespace Imagine\Issues;
 
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;

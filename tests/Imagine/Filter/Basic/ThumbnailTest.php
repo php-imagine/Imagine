@@ -12,7 +12,7 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\Image\Box;
-use Imagine\ImageInterface;
+use Imagine\Image\ManipulatorInterface;
 use Imagine\Filter\FilterTestCase;
 
 class ThumbnailTest extends FilterTestCase
@@ -26,7 +26,7 @@ class ThumbnailTest extends FilterTestCase
 
         $image->expects($this->once())
             ->method('thumbnail')
-            ->with($size, ImageInterface::THUMBNAIL_INSET)
+            ->with($size, ManipulatorInterface::THUMBNAIL_INSET)
             ->will($this->returnValue($thumbnail));
 
         $this->assertSame($thumbnail, $filter->apply($image));

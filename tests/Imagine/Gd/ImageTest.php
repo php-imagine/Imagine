@@ -11,9 +11,9 @@
 
 namespace Imagine\Gd;
 
-use Imagine\AbstractImageTest;
+use Imagine\Image\AbstractImageTest;
 use Imagine\Image\Color;
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 
 class ImageTest extends AbstractImageTest
 {

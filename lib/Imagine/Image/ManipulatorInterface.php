@@ -14,11 +14,7 @@ namespace Imagine\Image;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\ImageInterface;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
 use Imagine\Image\Fill\FillInterface;
-use Imagine\Image\PointInterface;
 
 interface ManipulatorInterface
 {
@@ -80,7 +76,7 @@ interface ManipulatorInterface
      *
      * Returns source image
      *
-     * @param Imagine\ImageInterface $image
+     * @param Imagine\Image\ImageInterface $image
      * @param Imagine\Image\PointInterface $start
      *
      * @throws Imagine\Exception\InvalidArgumentException
@@ -151,7 +147,7 @@ interface ManipulatorInterface
     /**
      * Applies a given mask to current image's alpha channel
      *
-     * @param Imagine\ImageInterface $mask
+     * @param Imagine\Image\ImageInterface $mask
      *
      * @return Imagine\Image\ManipulatorInterface
      */

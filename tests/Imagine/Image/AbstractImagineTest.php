@@ -9,10 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
-use Imagine\Image\Color;
-use Imagine\Image\Box;
 use Imagine\Test\ImagineTestCase;
 
 abstract class AbstractImagineTest extends ImagineTestCase
@@ -23,7 +21,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $image   = $factory->create(new Box(50, 50));
         $size    = $image->getSize();
 
-        $this->assertInstanceOf('Imagine\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(50, $size->getWidth());
         $this->assertEquals(50, $size->getHeight());
     }
@@ -34,7 +32,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $image   = $factory->open('tests/Imagine/Fixtures/google.png');
         $size    = $image->getSize();
 
-        $this->assertInstanceOf('Imagine\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
     }
@@ -45,7 +43,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $image   = $factory->load(file_get_contents('tests/Imagine/Fixtures/google.png'));
         $size    = $image->getSize();
 
-        $this->assertInstanceOf('Imagine\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
     }
