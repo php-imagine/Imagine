@@ -18,7 +18,7 @@ Available Methods
 
 * ``->paste(ImageInterface $image, PointInterface $start)`` - pastes another ``$image`` into the source image at the ``$start`` position
 
-* ``->resize($width, $height)`` - resizes image to given ``$height`` and ``$width`` exactly
+* ``->resize(Imagine\Image\BoxInterface $size)`` - resizes image to given ``$size`` exactly (without constraining proportions)
 
 * ``->rotate($angle, Color $background = null)`` - rotates the image clockwise by the given ``$angle``, or counter-clockwise if the angle is negative. If a background ``$color`` is given, it will be used to fill empty parts of the image (white will be used by default).
 
