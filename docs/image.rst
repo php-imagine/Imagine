@@ -22,7 +22,7 @@ Available Methods
 
 * ``->rotate($angle, Color $background = null)`` - rotates the image clockwise by the given ``$angle``, or counter-clockwise if the angle is negative. If a background ``$color`` is given, it will be used to fill empty parts of the image (white will be used by default).
 
-* ``->save($path, array $options = array())`` - saves current image to the specified ``$path``. The target file extension will be used to infer the output format. For 'jpeg/jpg' and 'png' images, a 'quality' option of 0-100 is accepted. 'png' images also accept a 'filter' option (consult the GD manual for more information). For 'wbmp' or 'xbm' images, a 'foreground' option may be specified.
+* ``->save($path, array $options = array())`` - saves current image to the specified ``$path``. The target file extension will be used to infer the output format, unless a 'format' option has been passed explicitly. Three major formats are supported ('gif', 'jpeg/jpg', 'png'). For 'jpeg/jpg' and 'png' images, a 'quality' option of 0-100 is accepted. 'png' images also accept a 'filter' option (consult the GD manual for more information).
 
 * ``->show($format, array $options = array())`` - outputs image content in the given format, allowing the same options as the `save()` method
 
