@@ -227,6 +227,10 @@ final class Image implements ImageInterface
     public function save($path, array $options = array())
     {
         try {
+            if (isset($options['format'])) {
+                $this->imagick->setimageformat($options['format']);
+            }
+
             $this->applyImageOptions($this->imagick, $options);
             $this->imagick->writeImage($path);
         } catch (\ImagickException $e) {

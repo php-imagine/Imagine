@@ -223,6 +223,10 @@ class Image implements ImageInterface
     public function save($path, array $options = array())
     {
         try {
+            if (isset($options['format'])) {
+                $this->gmagick->setimageformat($options['format']);
+            }
+
             $this->gmagick->writeimage($path);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
