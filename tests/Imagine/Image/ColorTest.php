@@ -107,14 +107,14 @@ class ColorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Color('#fff'), new Color('ffffff'));
         $this->assertEquals(new Color('fff'), new Color('#ffffff'));
     }
-    
+
     public function testShouldAllowHexadecimalNotation()
     {
         $this->assertEquals(new Color(0xFF0000), new Color(array(255, 0, 0)));
         $this->assertEquals(new Color(0x00FF00), new Color(array(0, 255, 0)));
         $this->assertEquals(new Color(0x0000FF), new Color(array(0, 0, 255)));
     }
-    
+
     public function testShouldLightenColor()
     {
         $color = new Color('000');
