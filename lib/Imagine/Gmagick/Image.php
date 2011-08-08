@@ -295,9 +295,11 @@ class Image implements ImageInterface
                     true
                 );
             } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->gmagick->cropthumbnailimage(
-                    $size->getWidth(),
-                    $size->getHeight()
+                $thumbnail->imagick->thumbnailImage(
+                    $width,
+                    $height,
+                    true,
+                    true
                 );
             }
         } catch (\GmagickException $e) {
