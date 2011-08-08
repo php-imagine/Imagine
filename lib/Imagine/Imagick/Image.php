@@ -303,9 +303,11 @@ final class Image implements ImageInterface
                     true
                 );
             } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->imagick->cropThumbnailImage(
+                $thumbnail->imagick->thumbnailImage(
                     $width,
-                    $height
+                    $height,
+                    true,
+                    true
                 );
             }
         } catch (\ImagickException $e) {
