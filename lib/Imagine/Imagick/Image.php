@@ -90,6 +90,8 @@ final class Image implements ImageInterface
                 $start->getX(),
                 $start->getY()
             );
+            // Reset canvas for gif format
+            $this->imagick->setImagePage(0, 0, 0, 0);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Crop operation failed', $e->getCode(), $e
