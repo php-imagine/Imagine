@@ -353,9 +353,11 @@ final class Drawer implements DrawerInterface
             $cos  = cos($rad);
             $sin  = sin($rad);
 
-            $x1 = round(0 * $cos - 0 * $sin);
+            // round(0 * $cos - 0 * $sin)
+            $x1 = 0;
             $x2 = round($info['characterWidth'] * $cos - $info['characterHeight'] * $sin);
-            $y1 = round(0 * $sin + 0 * $cos);
+            // round(0 * $sin + 0 * $cos)
+            $y1 = 0;
             $y2 = round($info['characterWidth'] * $sin + $info['characterHeight'] * $cos);
 
             $xdiff = 0 - min($x1, $x2);
