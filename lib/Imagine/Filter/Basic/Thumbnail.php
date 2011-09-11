@@ -12,7 +12,6 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Color;
 use Imagine\Image\BoxInterface;
 use Imagine\Filter\FilterInterface;
 
@@ -29,8 +28,7 @@ class Thumbnail implements FilterInterface
     private $mode;
 
     /**
-     * Constructs the Thumbnail filter with given width, height, mode and
-     * background color
+     * Constructs the Thumbnail filter with given width, height and mode
      *
      * @param Imagine\Image\BoxInterface $size
      * @param string                     $mode
