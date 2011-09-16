@@ -20,7 +20,7 @@ abstract class ImagineAware implements FilterInterface
      *
      * @var ImagineInterface
      */
-    private $imagine;
+    protected $imagine;
 
     /**
      * Set ImagineInterface instance.
@@ -30,15 +30,5 @@ abstract class ImagineAware implements FilterInterface
     public function setImagine(ImagineInterface $imagine)
     {
         $this->imagine = $imagine;
-    }
-
-    /**
-     * Get ImagineInterface instance.
-     *
-     * @return ImagineInterface
-     */
-    public function getImagine()
-    {
-        return $this->imagine;
     }
 }
