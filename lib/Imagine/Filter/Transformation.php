@@ -24,6 +24,7 @@ use Imagine\Filter\Basic\Save;
 use Imagine\Filter\Basic\Show;
 use Imagine\Filter\Basic\Thumbnail;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\ImagineInterface;
 use Imagine\ImageFactoryInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
@@ -40,6 +41,23 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     private $filters = array();
 
     /**
+     * An ImagineInterface instance.
+     *
+     * @var ImagineInterface
+     */
+    private $imagine;
+
+    /**
+     * Class constructor.
+     *
+     * @param ImagineInterface $imagine An ImagineInterface instance
+     */
+    public function __construct(ImagineInterface $imagine = null)
+    {
+        $this->imagine = $imagine;
+    }
+
+    /**
      * Applies a given FilterInterface onto given ImageInterface and returns
      * modified ImageInterface
      *
@@ -50,6 +68,9 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      */
     public function applyFilter(ImageInterface $image, FilterInterface $filter)
     {
+        if ($filter instanceof ImagineAware && $this->imagine) {
+            $filter->setImagine($this->imagine);
+        }
         return $filter->apply($image);
     }
 
