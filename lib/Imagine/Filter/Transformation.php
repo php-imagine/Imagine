@@ -11,6 +11,7 @@
 
 namespace Imagine\Filter;
 
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Filter\Basic\ApplyMask;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
@@ -65,10 +66,14 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * @param Imagine\Image\ImageInterface   $image
      *
      * @return Imagine\Image\ImageInterface
+     * @throws Imagine\Exception\InvalidArgumentException
      */
     public function applyFilter(ImageInterface $image, FilterInterface $filter)
     {
-        if ($filter instanceof ImagineAware && $this->imagine) {
+        if ($filter instanceof ImagineAware) {
+            if (!$this->imagine instanceof ImagineInterface) {
+                throw new InvalidArgumentException(sprintf('In order to use %s pass an Imagine\Image\ImagineInterface instance to Transformation constructor', get_class($filter)));
+            }
             $filter->setImagine($this->imagine);
         }
         return $filter->apply($image);
