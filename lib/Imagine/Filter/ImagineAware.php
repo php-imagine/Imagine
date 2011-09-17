@@ -11,6 +11,7 @@
 
 namespace Imagine\Filter;
 
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\ImagineInterface;
 
 abstract class ImagineAware implements FilterInterface
@@ -20,7 +21,7 @@ abstract class ImagineAware implements FilterInterface
      *
      * @var ImagineInterface
      */
-    protected $imagine;
+    private $imagine;
 
     /**
      * Set ImagineInterface instance.
@@ -30,5 +31,19 @@ abstract class ImagineAware implements FilterInterface
     public function setImagine(ImagineInterface $imagine)
     {
         $this->imagine = $imagine;
+    }
+
+    /**
+     * Get ImagineInterface instance.
+     *
+     * @return ImagineInterface
+     * @throws Imagine\Exception\InvalidArgumentException
+     */
+    public function getImagine()
+    {
+        if (!$this->imagine instanceof ImagineInterface) {
+            throw new InvalidArgumentException(sprintf('In order to use %s pass an Imagine\Image\ImagineInterface instance to filter constructor', get_class($this)));
+        }
+        return $this->imagine;
     }
 }
