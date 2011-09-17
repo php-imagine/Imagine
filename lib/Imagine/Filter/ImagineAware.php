@@ -31,4 +31,14 @@ abstract class ImagineAware implements FilterInterface
     {
         $this->imagine = $imagine;
     }
+
+    /**
+     * Get ImagineInterface instance.
+     *
+     * @return ImagineInterface
+     */
+    public function getImagine()
+    {
+        return $this->imagine;
+    }
 }
