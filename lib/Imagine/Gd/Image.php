@@ -483,6 +483,7 @@ final class Image implements ImageInterface
         }
 
         $save = 'image'.$format;
+        $args = array($this->resource, $filename);
 
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
@@ -557,8 +558,6 @@ final class Image implements ImageInterface
             isset($options['foreground'])) {
             $args[] = $options['foreground'];
         }
-
-        $args = array($this->resource, $filename);
 
         if (false === call_user_func_array($save, $args)) {
             throw new RuntimeException('Save operation failed');
