@@ -664,7 +664,7 @@ final class Image implements ImageInterface
 
         $format  = strtolower($format);
 
-        if ('jpg' === $format) {
+        if ('jpg' === $format || 'pjpeg' === $format) {
             $format = 'jpeg';
         }
 
