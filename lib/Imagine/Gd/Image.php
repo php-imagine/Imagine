@@ -666,6 +666,8 @@ final class Image implements ImageInterface
 
         if ('jpg' === $format) {
             $format = 'jpeg';
+        } elseif ('pjpeg' == $format) {
+            $format = 'jpeg';
         }
 
         return in_array($format, $formats);
