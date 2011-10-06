@@ -19,6 +19,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
      * @cover Imagine\Image\Color::getGreen
      * @cover Imagine\Image\Color::getAlpha
      * @cover Imagine\Image\Color::__toString
+     * @cover Imagine\Image\Color::isOpaque
      */
     public function testShouldSetColorToWhite()
     {
@@ -31,6 +32,8 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('#ffffff', (string) $color);
         $this->assertEquals('#00ff00', (string) new Color('00ff00'));
+
+        $this->assertTrue($color->isOpaque());
     }
 
     /**
@@ -105,7 +108,14 @@ class ColorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Color('fff'), new Color('#ffffff'));
     }
 
-    public function testShouldLigtenColor()
+    public function testShouldAllowHexadecimalNotation()
+    {
+        $this->assertEquals(new Color(0xFF0000), new Color(array(255, 0, 0)));
+        $this->assertEquals(new Color(0x00FF00), new Color(array(0, 255, 0)));
+        $this->assertEquals(new Color(0x0000FF), new Color(array(0, 0, 255)));
+    }
+
+    public function testShouldLightenColor()
     {
         $color = new Color('000');
 
@@ -113,7 +123,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Color('fff'), $color->lighten(300));
     }
 
-    public function testShouldDarnenColor()
+    public function testShouldDarkenColor()
     {
         $color = new Color('fff');
 
@@ -127,5 +137,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(new Color('fff', 50), $color->dissolve(50));
         $this->assertEquals(new Color('fff'), $color->dissolve(100)->dissolve(-100));
+
+        $this->assertFalse($color->dissolve(1)->isOpaque());
     }
 }

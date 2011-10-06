@@ -2,25 +2,28 @@
 
 namespace Imagine\Issues;
 
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Gd\Imagine;
+use Imagine\Exception\RuntimeException;
 
 class Issue17Test extends \PHPUnit_Framework_TestCase
 {
-    protected function setUp()
+    private function getImagine()
     {
-        parent::setUp();
-
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
+        try {
+            $imagine = new Imagine();
+        } catch (RuntimeException $e) {
+            $this->markTestSkipped($e->getMessage());
         }
+
+        return $imagine;
     }
 
     public function testShouldResize()
     {
         $size    = new Box(100, 10);
-        $imagine = new Imagine();
+        $imagine = $this->getImagine();
 
         $imagine->open('tests/Imagine/Fixtures/large.jpg')
             ->thumbnail($size, ImageInterface::THUMBNAIL_OUTBOUND)

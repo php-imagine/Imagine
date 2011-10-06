@@ -1,4 +1,4 @@
-Introduction
+Quick introduction
 ============
 
 Basic usage
@@ -75,6 +75,7 @@ Color is a class in Imagine, which takes two arguments in its constructor: the R
     $white = new Imagine\Image\Color('ffffff', 100);
     $white = new Imagine\Image\Color('#fff', 100);
     $white = new Imagine\Image\Color('#ffffff', 100);
+    $white = new Imagine\Image\Color(0xFFFFFF, 100);
     $white = new Imagine\Image\Color(array(255, 255, 255), 100);
 
 After you have instantiated a color, you can easily get its Red, Green, Blue and Alpha (transparency) values:

@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Fill\Gradient;
+namespace Imagine\Image\Fill\Gradient;
 
 use Imagine\Image\Color;
+use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\PointInterface;
-use Imagine\Fill\FillInterface;
 
 abstract class Linear implements FillInterface
 {
@@ -33,14 +33,14 @@ abstract class Linear implements FillInterface
     private $end;
 
     /**
-     * Constructs a linear gradient with overal gradient length, and start and
+     * Constructs a linear gradient with overall gradient length, and start and
      * end shades, which default to 0 and 255 accordingly
      *
-     * @param integer       $length
+     * @param integer             $length
      * @param Imagine\Image\Color $start
      * @param Imagine\Image\Color $end
      */
-    public function __construct($length, $start, $end)
+    final public function __construct($length, Color $start, Color $end)
     {
         $this->length = $length;
         $this->start  = $start;
@@ -49,9 +49,9 @@ abstract class Linear implements FillInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Fill\FillInterface::getShade()
+     * @see Imagine\Image\Fill\FillInterface::getShade()
      */
-    public function getColor(PointInterface $position)
+    final public function getColor(PointInterface $position)
     {
         $l = $this->getDistance($position);
 
@@ -75,7 +75,23 @@ abstract class Linear implements FillInterface
     }
 
     /**
-     * Get the distance of the position relative to the begining of the gradient
+     * @return Imagine\Image\Color
+     */
+    final public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @return Imagine\Image\Color
+     */
+    final public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * Get the distance of the position relative to the beginning of the gradient
      *
      * @param Imagine\Image\PointInterface $position
      *

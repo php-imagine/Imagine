@@ -37,7 +37,7 @@ final class Font extends AbstractFont
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Image\AbstractFont::box()
+     * @see Imagine\Image\FontInterface::box()
      */
     public function box($string, $angle = 0)
     {

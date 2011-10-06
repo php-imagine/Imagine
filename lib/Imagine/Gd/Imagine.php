@@ -13,8 +13,7 @@ namespace Imagine\Gd;
 
 use Imagine\Image\Color;
 use Imagine\Image\BoxInterface;
-use Imagine\ImageInterface;
-use Imagine\ImagineInterface;
+use Imagine\Image\ImagineInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 
@@ -24,41 +23,48 @@ final class Imagine implements ImagineInterface
      * @var array
      */
     private $types = array(
-        IMAGETYPE_BMP      => 'bmp',
-        IMAGETYPE_COUNT    => 'count',
         IMAGETYPE_GIF      => 'gif',
-        IMAGETYPE_ICO      => 'ico',
-        IMAGETYPE_IFF      => 'iff',
-        IMAGETYPE_JB2      => 'jb2',
-        IMAGETYPE_JP2      => 'jp2',
-        IMAGETYPE_JPC      => 'jpc',
         IMAGETYPE_JPEG     => 'jpeg',
         IMAGETYPE_JPEG2000 => 'jpeg',
-        IMAGETYPE_JPX      => 'jpx',
         IMAGETYPE_PNG      => 'png',
-        IMAGETYPE_PSD      => 'psd',
-        IMAGETYPE_SWC      => 'swc',
-        IMAGETYPE_SWF      => 'swf',
-        IMAGETYPE_TIFF_II  => 'tiff',
-        IMAGETYPE_TIFF_MM  => 'tiff',
         IMAGETYPE_UNKNOWN  => 'unknown',
         IMAGETYPE_WBMP     => 'wbmp',
         IMAGETYPE_XBM      => 'xbm'
     );
 
     /**
+     * @var array
+     */
+    private $info;
+
+    /**
      * @throws Imagine\Exception\RuntimeException
      */
     public function __construct()
     {
+        $this->loadGdInfo();
+        $this->requireGdVersion('2.0.1');
+    }
+
+    private function loadGdInfo()
+    {
         if (!function_exists('gd_info')) {
             throw new RuntimeException('Gd not installed');
+        }
+
+        $this->info = gd_info();
+    }
+
+    private function requireGdVersion($version)
+    {
+        if (version_compare(GD_VERSION, $version, '<')) {
+            throw new RuntimeException('GD2 version 2.0.1 or higher is required');
         }
     }
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImagineInterface::create()
+     * @see Imagine\Image\ImagineInterface::create()
      */
     public function create(BoxInterface $size, Color $color = null)
     {
@@ -104,7 +110,7 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImagineInterface::open()
+     * @see Imagine\Image\ImagineInterface::open()
      */
     public function open($path)
     {
@@ -124,6 +130,21 @@ final class Imagine implements ImagineInterface
 
         $format = $this->types[$type];
 
+        $supported = array(
+            'gif'  => 'GIF Read Support',
+            'jpeg' => 'JPEG Support',
+            'png'  => 'PNG Support',
+            'wbmp' => 'WBMP Support',
+            'xbm'  => 'XBM Support'
+        );
+
+        if (!$this->info[$supported[$format]]) {
+            throw new RuntimeException(sprintf(
+                'Installed version of GD doesn\'t support "%s" image format',
+                $format
+            ));
+        }
+
         if (!function_exists('imagecreatefrom'.$format)) {
             throw new InvalidArgumentException(
                 'Invalid image format specified, only "gif", "jpeg", "png", '.
@@ -132,6 +153,16 @@ final class Imagine implements ImagineInterface
         }
 
         $resource = call_user_func('imagecreatefrom'.$format, $path);
+
+        //Active in php development version 5.3, surelly true in 5.4
+        //Inactivate for compatibility
+        if( "gif" === $format and false){
+            $index = imagecolortransparent($resource);
+            if($index != (-1)){
+                $color = ImageColorsForIndex($resource, $index);
+                imagecolorset( $resource, $index, $color['red'], $color['green'], $color['blue'], 127 );
+            }
+        }
 
         if (!is_resource($resource)) {
             throw new RuntimeException(sprintf(
@@ -155,7 +186,7 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImagineInterface::load()
+     * @see Imagine\Image\ImagineInterface::load()
      */
     public function load($string)
     {
@@ -181,10 +212,14 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImagineInterface::font()
+     * @see Imagine\Image\ImagineInterface::font()
      */
     public function font($file, $size, Color $color)
     {
+        if (!$this->info['FreeType Support']) {
+            throw new RuntimeException('GD is not compiled with FreeType support');
+        }
+
         return new Font($file, $size, $color);
     }
 }

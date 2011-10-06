@@ -1,5 +1,5 @@
-Image Filters
-=============
+Image filters and delayed processing
+====================================
 
 ``ImageInterface`` in Imagine is very powerful and provides all the basic transformations that you might need, however, sometimes it might be useful to be able to group all of them into a dedicated object, that will know which transformations, in which sequence and with which parameters to invoke on the ``ImageInterface`` instance. For that, Imagine provides ``FilterInterface`` and some basic filters that call transformation on the ``ImageInterface`` directly as an example.
 
@@ -9,7 +9,7 @@ Image Filters
 Image Transformations, aka Lazy Processing
 ------------------------------------------
 
-Sometimes we're not confortable with opening an image inline, and would like to apply some pre-defined operations in the lazy manner. 
+Sometimes we're not comfortable with opening an image inline, and would like to apply some pre-defined operations in the lazy manner.
 
 For that, Imagine provides so-called image transformations.
 
@@ -41,7 +41,7 @@ The result of ``apply()`` is the modified image instance itself, so if we wanted
             ->save('/path/to/resized/'.md5($path).'.jpg');
     }
 
-The ``Filter\Tranformation`` class itself is simply a very specific implementation of ``FilterInterface``, which is a more generic interface, that let's you pre-define certain operations and variable calculations and apply them to an ``ImageInterface`` instance later.
+The ``Filter\Transformation`` class itself is simply a very specific implementation of ``FilterInterface``, which is a more generic interface, that let's you pre-define certain operations and variable calculations and apply them to an ``ImageInterface`` instance later.
 
 Filters
 -------

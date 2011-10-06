@@ -237,7 +237,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     }
 
     /**
-     * @return Imagine\ImagineInterface
+     * @return Imagine\Image\ImagineInterface
      */
     abstract protected function getImagine();
 }

@@ -11,17 +11,17 @@
 
 namespace Imagine\Gd;
 
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
+use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\Point\Center;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Fill\FillInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Mask\MaskInterface;
 
@@ -53,28 +53,16 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::copy()
+     * @see Imagine\Image\ManipulatorInterface::copy()
      */
     final public function copy()
     {
         $size = $this->getSize();
-        $copy = imagecreatetruecolor($size->getWidth(), $size->getHeight());
 
-        if (false === $copy) {
-            throw new RuntimeException('Image copy operation failed');
-        }
+        $copy = $this->createImage($size, 'copy');
 
-        if (false === imagealphablending($copy, false) ||
-            false === imagesavealpha($copy, true)) {
-            throw new RuntimeException('Image copy operation failed');
-        }
-
-        if (function_exists('imageantialias')) {
-            imageantialias($copy, true);
-        }
-
-        if (false === imagecopymerge($copy, $this->resource, 0, 0, 0,
-            0, $size->getWidth(), $size->getHeight(), 100)) {
+        if (false === imagecopy($copy, $this->resource, 0, 0, 0,
+            0, $size->getWidth(), $size->getHeight())) {
             throw new RuntimeException('Image copy operation failed');
         }
 
@@ -83,7 +71,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::crop()
+     * @see Imagine\Image\ManipulatorInterface::crop()
      */
     final public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -98,17 +86,10 @@ final class Image implements ImageInterface
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
-        $dest = imagecreatetruecolor($width, $height);
+        $dest = $this->createImage($size, 'crop');
 
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
-
-        if (false === imagecopymerge($dest, $this->resource, 0, 0,
-            $start->getX(), $start->getY(), $width, $height, 100)) {
+        if (false === imagecopy($dest, $this->resource, 0, 0,
+            $start->getX(), $start->getY(), $width, $height)) {
             throw new RuntimeException('Image crop operation failed');
         }
 
@@ -121,7 +102,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::paste()
+     * @see Imagine\Image\ManipulatorInterface::paste()
      */
     final public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -156,21 +137,14 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::resize()
+     * @see Imagine\Image\ManipulatorInterface::resize()
      */
     final public function resize(BoxInterface $size)
     {
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
-        $dest = imagecreatetruecolor($width, $height);
-
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
+        $dest = $this->createImage($size, 'resize');
 
         if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
             $width, $height, imagesx($this->resource), imagesy($this->resource)
@@ -187,7 +161,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::rotate()
+     * @see Imagine\Image\ManipulatorInterface::rotate()
      */
     final public function rotate($angle, Color $background = null)
     {
@@ -208,18 +182,22 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::save()
+     * @see Imagine\Image\ManipulatorInterface::save()
      */
     final public function save($path, array $options = array())
     {
-        $this->saveOrOutput(pathinfo($path, \PATHINFO_EXTENSION), $options, $path);
+        $format = isset($options['format'])
+            ? $options['format']
+            : pathinfo($path, \PATHINFO_EXTENSION);
+
+        $this->saveOrOutput($format, $options, $path);
 
         return $this;
     }
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::show()
+     * @see Imagine\Image\ManipulatorInterface::show()
      */
     public function show($format, array $options = array())
     {
@@ -230,7 +208,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::get()
+     * @see Imagine\Image\ImageInterface::get()
      */
     public function get($format, array $options = array())
     {
@@ -241,7 +219,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::__toString()
+     * @see Imagine\Image\ImageInterface::__toString()
      */
     public function __toString()
     {
@@ -250,24 +228,18 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::flipHorizontally()
+     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
      */
     final public function flipHorizontally()
     {
-        $width  = imagesx($this->resource);
-        $height = imagesy($this->resource);
-        $dest = imagecreatetruecolor($width, $height);
-
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
+        $size   = $this->getSize();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+        $dest   = $this->createImage($size, 'flip');
 
         for ($i = 0; $i < $width; $i++) {
-            if (false === imagecopymerge($dest, $this->resource, $i, 0,
-                ($width - 1) - $i, 0, 1, $height, 100)) {
+            if (false === imagecopy($dest, $this->resource, $i, 0,
+                ($width - 1) - $i, 0, 1, $height)) {
                 throw new RuntimeException('Horizontal flip operation failed');
             }
         }
@@ -281,24 +253,18 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::flipVertically()
+     * @see Imagine\Image\ManipulatorInterface::flipVertically()
      */
     final public function flipVertically()
     {
-        $width  = imagesx($this->resource);
-        $height = imagesy($this->resource);
-        $dest   = imagecreatetruecolor($width, $height);
-
-        imagealphablending($dest, false);
-        imagesavealpha($dest, true);
-
-        if (function_exists('imageantialias')) {
-            imageantialias($dest, true);
-        }
+        $size   = $this->getSize();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
+        $dest   = $this->createImage($size, 'flip');
 
         for ($i = 0; $i < $height; $i++) {
-            if (false === imagecopymerge($dest, $this->resource, 0, $i,
-                0, ($height - 1) - $i, $width, 1, 100)) {
+            if (false === imagecopy($dest, $this->resource, 0, $i,
+                0, ($height - 1) - $i, $width, 1)) {
                 throw new RuntimeException('Vertical flip operation failed');
             }
         }
@@ -312,7 +278,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::thumbnail()
+     * @see Imagine\Image\ManipulatorInterface::thumbnail()
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -337,8 +303,8 @@ final class Image implements ImageInterface
             $ratio = max($ratios);
         }
 
-        $thumbnail->resize($this->getSize()->scale($ratio));
-        $thumbnailSize = $thumbnail->getSize();
+        $thumbnailSize = $thumbnail->getSize()->scale($ratio);
+        $thumbnail->resize($thumbnailSize);
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             $thumbnail->crop(new Point(
@@ -352,7 +318,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::draw()
+     * @see Imagine\Image\ImageInterface::draw()
      */
     public function draw()
     {
@@ -361,7 +327,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::getSize()
+     * @see Imagine\Image\ImageInterface::getSize()
      */
     public function getSize()
     {
@@ -370,7 +336,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::applyMask()
+     * @see Imagine\Image\ManipulatorInterface::applyMask()
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -378,19 +344,19 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Cannot mask non-gd images');
         }
 
-        $size = $this->getSize();
+        $size     = $this->getSize();
         $maskSize = $mask->getSize();
 
         if ($size != $maskSize) {
             throw new InvalidArgumentException(sprintf(
-                'The given mask doesn\'t match current image\'s sise, Current '.
+                'The given mask doesn\'t match current image\'s size, Current '.
                 'mask\'s dimensions are %s, while image\'s dimensions are %s',
                 $maskSize, $size
             ));
         }
 
-        for ($x = 0; $x < $size->getWidth(); $x++) {
-            for ($y = 0; $y < $size->getHeight(); $y++) {
+        for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
+            for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
                 $color     = imagecolorat($this->resource, $x, $y);
                 $info      = imagecolorsforindex($this->resource, $color);
                 $maskColor = $color = imagecolorat($mask->resource, $x, $y);
@@ -416,14 +382,14 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::fill()
+     * @see Imagine\Image\ManipulatorInterface::fill()
      */
     public function fill(FillInterface $fill)
     {
         $size = $this->getSize();
 
-        for ($x = 0; $x < $size->getWidth(); $x++) {
-            for ($y = 0; $y < $size->getHeight(); $y++) {
+        for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
+            for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
                 if (false === imagesetpixel(
                     $this->resource,
                     $x, $y,
@@ -439,7 +405,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::mask()
+     * @see Imagine\Image\ImageInterface::mask()
      */
     public function mask()
     {
@@ -454,30 +420,42 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::histogram()
+     * @see Imagine\Image\ImageInterface::histogram()
      */
     public function histogram()
     {
         $size   = $this->getSize();
         $colors = array();
 
-        for ($x = 0; $x < $size->getWidth(); $x++) {
-            for ($y = 0; $y < $size->getHeight(); $y++) {
-                $index = imagecolorat($this->resource, $x, $y);
-                $info  = imagecolorsforindex($this->resource, $index);
-                $color = new Color(array(
-                        $info['red'],
-                        $info['green'],
-                        $info['blue'],
-                    ),
-                    (int) round($info['alpha'] / 127 * 100)
-                );
-
-                $colors[] = $color;
+        for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
+            for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
+                $colors[] = $this->getColorAt(new Point($x, $y));
             }
         }
 
         return array_unique($colors);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\ImageInterface::getColorAt()
+     */
+    public function getColorAt(PointInterface $point) {
+        if(!$point->in($this->getSize())) {
+            throw new RuntimeException(sprintf(
+                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
+                $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
+            ));
+        }
+        $index = imagecolorat($this->resource, $point->getX(), $point->getY());
+        $info  = imagecolorsforindex($this->resource, $index);
+        return new Color(array(
+                $info['red'],
+                $info['green'],
+                $info['blue'],
+            ),
+            (int) round($info['alpha'] / 127 * 100)
+        );
     }
 
     /**
@@ -488,11 +466,12 @@ final class Image implements ImageInterface
      * @param string $format
      * @param array  $options
      * @param string $filename
+     * @param Imagine\Image\Color $color
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    private function saveOrOutput($format, array $options, $filename = null)
+    private function saveOrOutput($format, array $options, $filename = null, Color $background = null)
     {
 
         if (!$this->supported($format)) {
@@ -504,8 +483,7 @@ final class Image implements ImageInterface
         }
 
         $save = 'image'.$format;
-
-        $args = array($this->resource, $filename);
+        $args = array(&$this->resource, $filename);
 
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
@@ -516,6 +494,19 @@ final class Image implements ImageInterface
             $args[] = $options['quality'];
         }
 
+        if ($format === 'jpeg') {
+            $size   = $this->getSize();
+            $output = $this->createImage($size, 'save jpeg');
+            $color  = $this->getColor($background ? $background : new Color('fff'));
+
+            imagefill($output, 0, 0, $color);
+            imagealphablending($output, true);
+            imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
+            imagealphablending($output, false);
+
+            $this->resource = $output;
+        }
+
         if ($format === 'png') {
             imagealphablending($this->resource, false);
             imagesavealpha($this->resource, true);
@@ -523,6 +514,44 @@ final class Image implements ImageInterface
             if (isset($options['filters'])) {
                 $args[] = $options['filters'];
             }
+        }
+
+        /*
+         * Very heavy treatment, but obligate to transform each pixels
+         */
+        if ($format === 'gif'){
+            $size       = $this->getSize();
+            $output     = $this->createImage($size, 'save jpeg');
+            $color      = $background ? $background : new Color('ffffff');
+            $lightalpha = $strongalpha = false;
+
+            for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
+                for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
+                    $rgb = imagecolorat($this->resource, $x, $y);
+                    $colorAt = imagecolorsforindex($this->resource, $rgb);
+                    // 100 because resize with copyresampled dissolve colors,
+                    // normaly 1 for gif to gif, but as before ending, the output format isn't known...
+                    if ($colorAt['alpha'] >= 100) {
+                        imagesetpixel($this->resource, $x, $y, $this->getColor($color));
+                        $strongalpha = true;
+                    } elseif ($colorAt['alpha'] > 0) {
+                        $lightalpha = true;
+                    }
+                }
+            }
+
+            if ($lightalpha) { //set a background
+                imagefill($output, 0, 0, $this->getColor($color));
+                imagealphablending($output, true);
+                imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
+                imagealphablending($output, false);
+                $this->resource = $output;
+            }
+
+            if ($strongalpha) { //set a transparency
+                imagecolortransparent($this->resource, $this->getColor($color));
+            }
+
         }
 
         if (($format === 'wbmp' || $format === 'xbm') &&
@@ -538,6 +567,52 @@ final class Image implements ImageInterface
     /**
      * Internal
      *
+     * Generates a GD image
+     *
+     * @param  Imagine\Image\BoxInterface $size
+     * @param  string the operation initiating the creation
+     *
+     * @return resource
+     *
+     * @throws RuntimeException
+     *
+     */
+    private function createImage(BoxInterface $size, $operation)
+    {
+        $resource = imagecreatetruecolor($size->getWidth(), $size->getHeight());
+
+        if (false === $resource) {
+            throw new RuntimeException('Image '.$operation.' failed');
+        }
+
+        if (false === imagealphablending($resource, false) ||
+            false === imagesavealpha($resource, true)) {
+            throw new RuntimeException('Image '.$operation.' failed');
+        }
+
+        if (function_exists('imageantialias')) {
+            imageantialias($resource, true);
+        }
+
+        $red = $green = $blue = 255;
+
+        $index = imagecolortransparent($this->resource);
+
+        if($index !== -1){
+            $color = imagecolorsforindex($this->resource, $index);
+            $red   = $color['red'];
+            $green = $color['green'];
+            $blue  = $color['blue'];
+        }
+
+        imagefill($resource, 0, 0, imagecolorallocatealpha($resource, $red, $green, $blue, 127));
+
+        return $resource;
+    }
+
+    /**
+     * Internal
+     *
      * Generates a GD color from Color instance
      *
      * @param  Imagine\Image\Color $color
@@ -548,11 +623,18 @@ final class Image implements ImageInterface
      */
     private function getColor(Color $color)
     {
-        $c = imagecolorallocatealpha(
-            $this->resource, $color->getRed(), $color->getGreen(),
-            $color->getBlue(), round(127 * $color->getAlpha() / 100)
-        );
-        if (false === $color) {
+        static $cache = array();
+
+        $key = (string) $color . "-" . $color->getAlpha();
+
+        if (!isset($cache[$key])) {
+            $cache[$key] = imagecolorallocatealpha(
+                $this->resource, $color->getRed(), $color->getGreen(),
+                $color->getBlue(), round(127 * $color->getAlpha() / 100)
+            );
+        }
+
+        if (false === $cache[$key]) {
             throw new RuntimeException(sprintf(
                 'Unable to allocate color "RGB(%s, %s, %s)" with transparency '.
                 'of %d percent', $color->getRed(), $color->getGreen(),
@@ -560,7 +642,7 @@ final class Image implements ImageInterface
             ));
         }
 
-        return $c;
+        return $cache[$key];
     }
 
     /**
@@ -582,7 +664,7 @@ final class Image implements ImageInterface
 
         $format  = strtolower($format);
 
-        if ('jpg' === $format) {
+        if ('jpg' === $format || 'pjpeg' === $format) {
             $format = 'jpeg';
         }
 

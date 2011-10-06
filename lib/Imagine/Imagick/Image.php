@@ -14,13 +14,16 @@ namespace Imagine\Imagick;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Fill\FillInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
+use Imagine\Image\Fill\FillInterface;
+use Imagine\Image\Fill\Gradient\Horizontal;
+use Imagine\Image\Fill\Gradient\Linear;
+use Imagine\Image\Fill\Gradient\Vertical;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\Mask\MaskInterface;
 
 final class Image implements ImageInterface
@@ -53,7 +56,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::copy()
+     * @see Imagine\Image\ManipulatorInterface::copy()
      */
     public function copy()
     {
@@ -69,11 +72,11 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::crop()
+     * @see Imagine\Image\ManipulatorInterface::crop()
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
-        if (!$start->in($size)) {
+        if (!$start->in($this->getSize())) {
             throw new OutOfBoundsException('Crop coordinates must start at '.
                 'minimum 0, 0 position from top left corner, crop height and '.
                 'width must be positive integers and must not exceed the '.
@@ -87,6 +90,8 @@ final class Image implements ImageInterface
                 $start->getX(),
                 $start->getY()
             );
+            // Reset canvas for gif format
+            $this->imagick->setImagePage(0, 0, 0, 0);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Crop operation failed', $e->getCode(), $e
@@ -98,7 +103,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::flipHorizontally()
+     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
      */
     public function flipHorizontally()
     {
@@ -116,7 +121,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::flipVertically()
+     * @see Imagine\Image\ManipulatorInterface::flipVertically()
      */
     public function flipVertically()
     {
@@ -134,7 +139,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::paste()
+     * @see Imagine\Image\ManipulatorInterface::paste()
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -178,12 +183,12 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::resize()
+     * @see Imagine\Image\ManipulatorInterface::resize()
      */
     public function resize(BoxInterface $size)
     {
         try {
-            $this->imagick->adaptiveResizeImage($size->getWidth(), $size->getHeight());
+            $this->imagick->thumbnailImage($size->getWidth(), $size->getHeight());
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Resize operation failed', $e->getCode(), $e
@@ -195,7 +200,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::rotate()
+     * @see Imagine\Image\ManipulatorInterface::rotate()
      */
     public function rotate($angle, Color $background = null)
     {
@@ -219,11 +224,15 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::save()
+     * @see Imagine\Image\ManipulatorInterface::save()
      */
     public function save($path, array $options = array())
     {
         try {
+            if (isset($options['format'])) {
+                $this->imagick->setimageformat($options['format']);
+            }
+
             $this->applyImageOptions($this->imagick, $options);
             $this->imagick->writeImage($path);
         } catch (\ImagickException $e) {
@@ -237,7 +246,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::show()
+     * @see Imagine\Image\ManipulatorInterface::show()
      */
     public function show($format, array $options = array())
     {
@@ -248,7 +257,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::get()
+     * @see Imagine\Image\ImageInterface::get()
      */
     public function get($format, array $options = array())
     {
@@ -266,7 +275,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::__toString()
+     * @see Imagine\Image\ImageInterface::__toString()
      */
     public function __toString()
     {
@@ -275,7 +284,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::thumbnail()
+     * @see Imagine\Image\ManipulatorInterface::thumbnail()
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -312,7 +321,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::draw()
+     * @see Imagine\Image\ImageInterface::draw()
      */
     public function draw()
     {
@@ -321,7 +330,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::getSize()
+     * @see Imagine\Image\ImageInterface::getSize()
      */
     public function getSize()
     {
@@ -339,7 +348,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::applyMask()
+     * @see Imagine\Image\ManipulatorInterface::applyMask()
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -354,7 +363,7 @@ final class Image implements ImageInterface
 
         if ($size != $maskSize) {
             throw new InvalidArgumentException(sprintf(
-                'The given mask doesn\'t match current image\'s sise, Current '.
+                'The given mask doesn\'t match current image\'s size, Current '.
                 'mask\'s dimensions are %s, while image\'s dimensions are %s',
                 $maskSize, $size
             ));
@@ -384,7 +393,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::mask()
+     * @see Imagine\Image\ImageInterface::mask()
      */
     public function mask()
     {
@@ -404,25 +413,29 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::fill()
+     * @see Imagine\Image\ManipulatorInterface::fill()
      */
     public function fill(FillInterface $fill)
     {
         try {
-            $iterator = $this->imagick->getPixelIterator();
+            if ($this->isLinearOpaque($fill)) {
+                $this->applyFastLinear($fill);
+            } else {
+                $iterator = $this->imagick->getPixelIterator();
 
-            foreach ($iterator as $y => $pixels) {
-                foreach ($pixels as $x => $pixel) {
-                    $color = $fill->getColor(new Point($x, $y));
+                foreach ($iterator as $y => $pixels) {
+                    foreach ($pixels as $x => $pixel) {
+                        $color = $fill->getColor(new Point($x, $y));
 
-                    $pixel->setColor((string) $color);
-                    $pixel->setColorValue(
-                        \Imagick::COLOR_OPACITY,
-                        number_format(abs(round($color->getAlpha() / 100, 1)), 1)
-                    );
+                        $pixel->setColor((string) $color);
+                        $pixel->setColorValue(
+                            \Imagick::COLOR_OPACITY,
+                            number_format(abs(round($color->getAlpha() / 100, 1)), 1)
+                        );
+                    }
+
+                    $iterator->syncIterator();
                 }
-
-                $iterator->syncIterator();
             }
         } catch (\ImagickException $e) {
             throw new RuntimeException(
@@ -435,7 +448,7 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\ImageInterface::histogram()
+     * @see Imagine\Image\ImageInterface::histogram()
      */
     public function histogram()
     {
@@ -455,6 +468,27 @@ final class Image implements ImageInterface
                 );
             },
             $pixels
+        );
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\ImageInterface::getColorAt()
+     */
+    public function getColorAt(PointInterface $point) {
+        if(!$point->in($this->getSize())) {
+            throw new RuntimeException(sprintf(
+                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
+                $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
+            ));
+        }
+        $pixel = $this->imagick->getImagePixelColor($point->getX(), $point->getY());
+        return new Color(array(
+                $pixel->getColorValue(\Imagick::COLOR_RED) * 255,
+                $pixel->getColorValue(\Imagick::COLOR_GREEN) * 255,
+                $pixel->getColorValue(\Imagick::COLOR_BLUE) * 255,
+            ),
+            (int) round($pixel->getColorValue(\Imagick::COLOR_ALPHA) * 100)
         );
     }
 
@@ -490,5 +524,60 @@ final class Image implements ImageInterface
         );
 
         return $pixel;
+    }
+
+    /**
+     * Checks whether given $fill is linear and opaque
+     *
+     * @param Imagine\Image\Fill\FillInterface $fill
+     *
+     * @return Boolean
+     */
+    private function isLinearOpaque(FillInterface $fill)
+    {
+        return $fill instanceof Linear &&
+               ($fill->getStart()->isOpaque() && $fill->getEnd()->isOpaque());
+    }
+
+    /**
+     * Performs optimized gradient fill for non-opaque linear gradients
+     *
+     * @param Imagine\Image\Fill\Gradient\Linear $fill
+     */
+    private function applyFastLinear(Linear $fill)
+    {
+        $gradient = new \Imagick();
+        $size     = $this->getSize();
+        $color    = sprintf(
+            'gradient:%s-%s',
+            (string) $fill->getStart(),
+            (string) $fill->getEnd()
+        );
+
+        if ($fill instanceof Horizontal) {
+            $gradient->newPseudoImage(
+                $size->getHeight(),
+                $size->getWidth(),
+                $color
+            );
+
+            $gradient->rotateImage(new \ImagickPixel(), 90);
+        } else {
+            $gradient->newPseudoImage(
+                $size->getWidth(),
+                $size->getHeight(),
+                $color
+            );
+        }
+
+        $this->imagick->compositeImage(
+            $gradient,
+            \Imagick::COMPOSITE_OVER,
+            0,
+            0
+        );
+
+        $gradient->clear();
+        $gradient->destroy();
     }
 }

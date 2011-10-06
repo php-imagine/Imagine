@@ -40,8 +40,9 @@ final class Color
      *     - new Color('fff') - will produce non-transparent white color
      *     - new Color('ffffff', 50) - will product 50% transparent white
      *     - new Color(array(255, 255, 255)) - another way of getting white
+     *     - new Color(0x00FF00) - hexadecimal notation for green
      *
-     * @param array|string $color
+     * @param array|string|integer $color
      * @param integer      $alpha
      */
     public function __construct($color, $alpha = 0)
@@ -109,7 +110,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @retun Imagine\Image\Color
+     * @return Imagine\Image\Color
      */
     public function lighten($shade)
     {
@@ -129,7 +130,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @retun Imagine\Image\Color
+     * @return Imagine\Image\Color
      */
     public function darken($shade)
     {
@@ -174,10 +175,10 @@ final class Color
      */
     private function setColor($color)
     {
-        if (!is_string($color) && !is_array($color)) {
+        if (!is_string($color) && !is_array($color) && !is_int($color)) {
             throw new InvalidArgumentException(sprintf(
-                'Color must be specified as a hexadecimal string or array, '.
-                '%s given', gettype($color)
+                'Color must be specified as a hexadecimal string, array '.
+                'or integer, %s given', gettype($color)
             ));
         }
         if (is_array($color) && count($color) !== 3) {
@@ -194,7 +195,7 @@ final class Color
             if (strlen($color) !== 3 && strlen($color) !== 6) {
                 throw new InvalidArgumentException(sprintf(
                     'Color must be a hex value in regular (6 characters) or '.
-                    'short (3 charatcters) notation, "%s" given', $color
+                    'short (3 characters) notation, "%s" given', $color
                 ));
             }
 
@@ -205,6 +206,14 @@ final class Color
             }
 
             $color = array_map('hexdec', str_split($color, 2));
+        }
+        
+        if (is_int($color)) {
+            $color = array(
+                255 & ($color >> 16),
+                255 & ($color >> 8),
+                255 & $color
+            );
         }
 
         list($this->r, $this->g, $this->b) = array_values($color);
@@ -218,5 +227,15 @@ final class Color
     public function __toString()
     {
         return sprintf('#%02x%02x%02x', $this->r, $this->g, $this->b);
+    }
+
+    /**
+     * Checks if the current color is opaque
+     *
+     * @return Boolean
+     */
+    public function isOpaque()
+    {
+        return 0 === $this->alpha;
     }
 }

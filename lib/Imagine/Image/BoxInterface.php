@@ -37,14 +37,14 @@ interface BoxInterface
     function scale($ratio);
 
     /**
-     * Creats new BoxInterface, adding given size to both sides
+     * Creates new BoxInterface, adding given size to both sides
      *
      * @param integer $size
      */
     function increase($size);
 
     /**
-     * Checks whether curret box can fit given box at a given start position,
+     * Checks whether current box can fit given box at a given start position,
      * start position defaults to top left corner xy(0,0)
      *
      * @param Imagine\Image\BoxInterface       $box
@@ -68,4 +68,22 @@ interface BoxInterface
      * @return string
      */
     function __toString();
+
+    /**
+     * Resizes box to given width, constraining proportions and returns the new box
+     *
+     * @param integer $width
+     *
+     * @return Imagine\Image\BoxInterface
+     */
+    function widen($width);
+
+    /**
+     * Resizes box to given height, constraining proportions and returns the new box
+     *
+     * @param integer $height
+     *
+     * @return Imagine\Image\BoxInterface
+     */
+    function heighten($height);
 }

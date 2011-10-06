@@ -1,4 +1,4 @@
-#Imagine#
+#Imagine![project status](http://stillmaintained.com/avalanche123/Imagine.png)#
 
 Image manipulation library for PHP 5.3 inspired by Python's PIL and other image
 libraries.

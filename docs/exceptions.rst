@@ -1,4 +1,4 @@
-Handling Exceptions
+Handling exceptions
 ===================
 
 Imagine is good with exceptions, in fact, it will throw a lot of them for every possible thing that goes wrong. There are no methods that return ``false`` on failure, its all exception based.

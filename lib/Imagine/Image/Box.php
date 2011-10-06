@@ -112,4 +112,22 @@ final class Box implements BoxInterface
     {
         return sprintf('%dx%d px', $this->width, $this->height);
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\BoxInterface::widen()
+     */
+    public function widen($width)
+    {
+        return $this->scale($width / $this->width);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\BoxInterface::heighten()
+     */
+    public function heighten($height)
+    {
+        return $this->scale($height / $this->height);
+    }
 }

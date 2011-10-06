@@ -9,18 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine;
+namespace Imagine\Image;
 
-use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Fill\FillInterface;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
-use Imagine\Image\PointInterface;
+use Imagine\Image\Fill\FillInterface;
 
-interface ImageInterface
+interface ManipulatorInterface
 {
     const THUMBNAIL_INSET    = 'inset';
     const THUMBNAIL_OUTBOUND = 'outbound';
@@ -30,7 +26,7 @@ interface ImageInterface
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function copy();
 
@@ -44,7 +40,7 @@ interface ImageInterface
      * @throws Imagine\Exception\OutOfBoundsException
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function crop(PointInterface $start, BoxInterface $size);
 
@@ -55,7 +51,7 @@ interface ImageInterface
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function resize(BoxInterface $size);
 
@@ -64,12 +60,12 @@ interface ImageInterface
      * Optional $background can be used to specify the fill color of the empty
      * area of rotated image.
      *
-     * @param integer       $angle
+     * @param integer             $angle
      * @param Imagine\Image\Color $background
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function rotate($angle, Color $background = null);
 
@@ -80,14 +76,14 @@ interface ImageInterface
      *
      * Returns source image
      *
-     * @param Imagine\ImageInterface $image
+     * @param Imagine\Image\ImageInterface $image
      * @param Imagine\Image\PointInterface $start
      *
      * @throws Imagine\Exception\InvalidArgumentException
      * @throws Imagine\Exception\OutOfBoundsException
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function paste(ImageInterface $image, PointInterface $start);
 
@@ -101,7 +97,7 @@ interface ImageInterface
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function save($path, array $options = array());
 
@@ -113,40 +109,16 @@ interface ImageInterface
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function show($format, array $options = array());
-
-    /**
-     * Returns the image content as a binary string
-     *
-     * @param string $format
-     * @param array  $options
-     *
-     * @throws Imagine\Exception\RuntimeException
-     *
-     * @return string binary
-     */
-    function get($format, array $options = array());
-
-    /**
-     * Returns the image content as a PNG binary string
-     *
-     * @param string $format
-     * @param array  $options
-     *
-     * @throws Imagine\Exception\RuntimeException
-     *
-     * @return string binary
-     */
-    function __toString();
 
     /**
      * Flips current image using horizontal axis
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function flipHorizontally();
 
@@ -155,7 +127,7 @@ interface ImageInterface
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function flipVertically();
 
@@ -164,60 +136,31 @@ interface ImageInterface
      * Returns it as a new image, doesn't modify the current image
      *
      * @param Imagine\Image\BoxInterface $size
-     * @param string               $mode
+     * @param string                     $mode
      *
      * @throws Imagine\Exception\RuntimeException
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET);
 
     /**
-     * Instantiates and returns a DrawerInterface instance for image drawing
-     *
-     * @return Imagine\Draw\DrawerInterface
-     */
-    function draw();
-
-    /**
-     * Returns current image size
-     *
-     * @return Imagine\Image\BoxInterface
-     */
-    function getSize();
-
-    /**
      * Applies a given mask to current image's alpha channel
      *
-     * @param Imagine\ImageInterface $mask
+     * @param Imagine\Image\ImageInterface $mask
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function applyMask(ImageInterface $mask);
-
-    /**
-     * Transforms creates a grayscale mask from current image, returns a new
-     * image, while keeping the existing image unmodified
-     *
-     * @return Imagine\ImageInterface
-     */
-    function mask();
 
     /**
      * Fills image with provided filling, by replacing each pixel's color in
      * the current image with corresponding color from FillInterface, and
      * returns modified image
      *
-     * @param Imagine\Fill\FillInterface $fill
+     * @param Imagine\Image\Fill\FillInterface $fill
      *
-     * @return Imagine\ImageInterface
+     * @return Imagine\Image\ManipulatorInterface
      */
     function fill(FillInterface $fill);
-
-    /**
-     * Returns array of image colors as Imagine\Image\Color instances
-     *
-     * @return array
-     */
-    function histogram();
 }

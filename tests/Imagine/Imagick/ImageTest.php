@@ -11,9 +11,9 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\AbstractImageTest;
+use Imagine\Image\AbstractImageTest;
 use Imagine\Image\Color;
-use Imagine\ImageInterface;
+use Imagine\Image\ImageInterface;
 
 class ImageTest extends AbstractImageTest
 {
@@ -29,5 +29,26 @@ class ImageTest extends AbstractImageTest
     protected function getImagine()
     {
         return new Imagine();
+    }
+
+    public function testImageResizeUsesProperMethodBasedOnInputAndOutputSizes()
+    {
+        $imagine = $this->getImagine();
+
+        $image = $imagine->open('tests/Imagine/Fixtures/resize/210-design-19933.jpg');
+        $size  = $image->getSize();
+
+        $image
+            ->resize(new \Imagine\Image\Box(1500, 750))
+            ->save('tests/Imagine/Fixtures/resize/large.png')
+        ;
+
+        $image
+            ->resize(new \Imagine\Image\Box(100, 50))
+            ->save('tests/Imagine/Fixtures/resize/small.png')
+        ;
+
+        unlink('tests/Imagine/Fixtures/resize/large.png');
+        unlink('tests/Imagine/Fixtures/resize/small.png');
     }
 }

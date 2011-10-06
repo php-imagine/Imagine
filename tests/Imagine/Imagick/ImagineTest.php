@@ -11,7 +11,7 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\AbstractImagineTest;
+use Imagine\Image\AbstractImagineTest;
 use Imagine\Image\Box;
 
 class ImagineTest extends AbstractImagineTest

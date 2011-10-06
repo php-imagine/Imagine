@@ -54,13 +54,13 @@ class BoxTest extends \PHPUnit_Framework_TestCase
      * @param integer $width
      * @param integer $height
      */
-    public function testShouldThrowExceptionOnInvalieSize($width, $height)
+    public function testShouldThrowExceptionOnInvalidSize($width, $height)
     {
         new Box($width, $height);
     }
 
     /**
-     * Data provider for testShouldThrowExceptionOnInvalieSize
+     * Data provider for testShouldThrowExceptionOnInvalidSize
      *
      * @return array
      */
@@ -151,6 +151,31 @@ class BoxTest extends \PHPUnit_Framework_TestCase
             array(10, 15, 150),
             array(2, 2, 4),
             array(9, 8, 72),
+        );
+    }
+
+    /**
+     * @dataProvider getDimensionsAndTargets
+     *
+     * @param integer $width
+     * @param integer $height
+     * @param integer $targetWidth
+     * @param integer $targetHeight
+     */
+    public function testShouldResizeToTargetWidthAndHeight($width, $height, $targetWidth, $targetHeight)
+    {
+        $box = new Box($width, $height);
+        $expected = new Box($targetWidth, $targetHeight);
+
+        $this->assertEquals($expected, $box->widen($targetWidth));
+        $this->assertEquals($expected, $box->heighten($targetHeight));
+    }
+
+    public function getDimensionsAndTargets()
+    {
+        return array(
+            array(10, 50, 50, 250),
+            array(25, 40, 50, 80),
         );
     }
 }
