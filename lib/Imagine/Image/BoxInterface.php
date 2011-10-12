@@ -30,7 +30,7 @@ interface BoxInterface
     /**
      * Creates new BoxInterface instance with ratios applied to both sides
      *
-     * @param integer $ratio
+     * @param float $ratio
      *
      * @return Imagine\Image\BoxInterface
      */
