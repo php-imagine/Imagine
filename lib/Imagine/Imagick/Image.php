@@ -374,6 +374,13 @@ final class Image implements ImageInterface
         $mask->imagick->negateImage(true);
 
         try {
+            // remove transparent areas of the original from the mask
+            $mask->imagick->compositeImage(
+                $this->imagick,
+                \Imagick::COMPOSITE_DSTIN,
+                0, 0
+            );
+
             $this->imagick->compositeImage(
                 $mask->imagick,
                 \Imagick::COMPOSITE_COPYOPACITY,
