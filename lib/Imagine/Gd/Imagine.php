@@ -80,7 +80,8 @@ final class Imagine implements ImagineInterface
         $color = $color ? $color : new Color('fff');
 
         if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
+            false === imagesavealpha($resource, true) ||
+            false === imageantialias($resource, true)) {
             throw new RuntimeException(
                 'Could not set alphablending, savealpha and antialias values'
             );
