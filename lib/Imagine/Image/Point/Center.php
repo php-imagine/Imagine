@@ -65,7 +65,7 @@ final class Center implements PointInterface
      */
     public function move($amount)
     {
-        return new OriginalPoint($this->getX() + $amount, $this->getX() + $amount);
+        return new OriginalPoint($this->getX() + $amount, $this->getY() + $amount);
     }
 
     /**

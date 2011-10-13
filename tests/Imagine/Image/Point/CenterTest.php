@@ -50,6 +50,35 @@ class CenterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Imagine\Image\Point::getX
+     * @covers Imagine\Image\Point::getY
+     * @covers Imagine\Image\Point::move
+     *
+     * @dataProvider getMoves
+     *
+     * @param Imagine\Image\BoxInterface $box
+     * @param integer                    $move
+     * @param integer                    $x1
+     * @param integer                    $y1
+     */
+    public function testShouldMoveByGivenAmount(BoxInterface $box, $move, $x1, $y1)
+    {
+        $point = new Center($box);
+        $shift = $point->move($move);
+
+        $this->assertEquals($x1, $shift->getX());
+        $this->assertEquals($y1, $shift->getY());
+    }
+
+    public function getMoves()
+    {
+        return array(
+            array(new Box(10, 20), 5, 10, 15),
+            array(new Box(5, 37), 2, 5, 21),
+        );
+    }
+
+    /**
      * @covers Imagine\Image\Point\Center::__toString
      */
     public function testToString()
