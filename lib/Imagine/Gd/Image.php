@@ -357,20 +357,15 @@ final class Image implements ImageInterface
 
         for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
             for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
-                $color     = imagecolorat($this->resource, $x, $y);
-                $info      = imagecolorsforindex($this->resource, $color);
-                $maskColor = $color = imagecolorat($mask->resource, $x, $y);
-                $maskInfo  = imagecolorsforindex($mask->resource, $maskColor);
+                $position  = new Point($x, $y);
+                $color     = $this->getColorAt($position);
+                $maskColor = $mask->getColorAt($position);
+                $round     = (int) round(max($color->getAlpha(), (100 - $color->getAlpha()) * $maskColor->getRed() / 255));
+
                 if (false === imagesetpixel(
                     $this->resource,
                     $x, $y,
-                    imagecolorallocatealpha(
-                        $this->resource,
-                        $info['red'],
-                        $info['green'],
-                        $info['blue'],
-                        round((127 - $info['alpha']) * $maskInfo['red'] / 255)
-                    )
+                    $this->getColor($color->dissolve($round - $color->getAlpha()))
                 )) {
                     throw new RuntimeException('Apply mask operation failed');
                 }
