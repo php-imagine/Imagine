@@ -74,6 +74,15 @@ final class Point implements PointInterface
 
     /**
      * (non-PHPdoc)
+     * @see Imagine\Image\PointInterface::move()
+     */
+    public function move($amount)
+    {
+        return new Point($this->x + $amount, $this->y + $amount);
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see Imagine\Image\PointInterface::__toString()
      */
     public function __toString()

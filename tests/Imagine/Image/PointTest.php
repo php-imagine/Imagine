@@ -80,6 +80,37 @@ class PointTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Imagine\Image\Point::getX
+     * @covers Imagine\Image\Point::getY
+     * @covers Imagine\Image\Point::move
+     *
+     * @dataProvider getMoves
+     *
+     * @param integer $x
+     * @param integer $y
+     * @param integer $move
+     * @param integer $x1
+     * @param integer $y1
+     */
+    public function testShouldMoveByGivenAmount($x, $y, $move, $x1, $y1)
+    {
+        $point = new Point($x, $y);
+        $shift = $point->move($move);
+
+        $this->assertEquals($x1, $shift->getX());
+        $this->assertEquals($y1, $shift->getY());
+    }
+
+    public function getMoves()
+    {
+        return array(
+            array(0, 0, 5, 5, 5),
+            array(20, 30, 5, 25, 35),
+            array(0, 2, 7, 7, 9),
+        );
+    }
+
+    /**
      * @covers Imagine\Image\Point::__toString
      */
     public function testToString()

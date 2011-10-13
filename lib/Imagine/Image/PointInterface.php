@@ -37,6 +37,14 @@ interface PointInterface
     function in(BoxInterface $box);
 
     /**
+     * Returns another point, moved by a given amout from current coordinates
+     *
+     * @param $amout
+     * @return Imagine\Image\ImageInterface
+     */
+    function move($amout);
+
+    /**
      * Gets a string representation for the current point
      *
      * @return string
