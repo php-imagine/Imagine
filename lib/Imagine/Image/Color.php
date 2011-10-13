@@ -156,9 +156,9 @@ final class Color
     private function setAlpha($alpha)
     {
         if (!is_int($alpha) || $alpha < 0 || $alpha > 100) {
-            throw new InvalidArgumentException(
-                'Alpha must be an integer between 0 and 100'
-            );
+            throw new InvalidArgumentException(sprintf(
+                'Alpha must be an integer between 0 and 100, %s given', $alpha
+            ));
         }
 
         $this->alpha = $alpha;
