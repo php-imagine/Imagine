@@ -35,13 +35,13 @@ Some of the ideas for upcoming filters:
 
 ## Documentation ##
 
- - [Introduction](/avalanche123/Imagine/blob/master/docs/en/introduction.rst "Introduction")
- - [Coordinate System](/avalanche123/Imagine/blob/master/docs/en/coordinates.rst "Coordinate System")
- - [Filters](/avalanche123/Imagine/blob/master/docs/en/filters.rst "Filters and Transformations")
- - [Imagine](/avalanche123/Imagine/blob/master/docs/en/imagine.rst "ImagineInterface")
- - [Image](/avalanche123/Imagine/blob/master/docs/en/image.rst "ImageInterface")
- - [Drawing](/avalanche123/Imagine/blob/master/docs/en/drawing.rst "Drawing")
- - [Exceptions](/avalanche123/Imagine/blob/master/docs/en/exceptions.rst "Exceptions")
+ - [Introduction](/avalanche123/Imagine/blob/master/docs/introduction.rst "Introduction")
+ - [Coordinate System](/avalanche123/Imagine/blob/master/docs/coordinates.rst "Coordinate System")
+ - [Filters](/avalanche123/Imagine/blob/master/docs/filters.rst "Filters and Transformations")
+ - [Imagine](/avalanche123/Imagine/blob/master/docs/imagine.rst "ImagineInterface")
+ - [Image](/avalanche123/Imagine/blob/master/docs/image.rst "ImageInterface")
+ - [Drawing](/avalanche123/Imagine/blob/master/docs/drawing.rst "Drawing")
+ - [Exceptions](/avalanche123/Imagine/blob/master/docs/exceptions.rst "Exceptions")
 
 ## Presentations ##
 
