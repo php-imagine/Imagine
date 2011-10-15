@@ -583,8 +583,7 @@ final class Image implements ImageInterface
         }
 
         if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true) ||
-            false === imageantialias($resource, true)) {
+            false === imagesavealpha($resource, true)) {
             throw new RuntimeException('Image '.$operation.' failed');
         }
 
