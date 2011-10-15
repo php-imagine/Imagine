@@ -482,9 +482,11 @@ final class Image implements ImageInterface
 
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
-            // png compression quality is 0-9, so here we get the value from percent
+            // Png compression quality is 0-9, so here we get the value from percent.
+            // Beaware that compression level for png works the other way around.
+            // For PNG 0 means no compression and 9 means highest compression level.
             if ($format === 'png') {
-                $options['quality'] = round($options['quality'] * 9 / 100);
+                $options['quality'] = round((100 - $options['quality']) * 9 / 100);
             }
             $args[] = $options['quality'];
         }
