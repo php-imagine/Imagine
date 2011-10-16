@@ -7,9 +7,10 @@ To use the api, you need to get a drawer instance from you current image instanc
 Example
 -------
 
-::
+.. code-block:: php
 
     <?php
+
     $image = $imagine->create(new Box(400, 300), new Color('#000'));
     
     $image->draw()

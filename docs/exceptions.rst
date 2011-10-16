@@ -8,7 +8,7 @@ Exception interface
 
 Every exception class in Imagine implements ``Imagine\Exception\Exception`` interface, making it possible to catch all Imagine exceptions without catching anything not Imagine specific.
 
-::
+.. code-block:: php
 
     <?php
     

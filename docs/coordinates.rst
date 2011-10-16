@@ -36,9 +36,10 @@ It is very well known use case when a coordinate is supposed to represent a cent
 
 As part of showing off OO approach to image processing, I added a simple implementation of the core ``Imagine\Image\PointInterface``, which can be found at ``Imagine\Image\Point\Center``. The way it works is simple, it expects and instance of ``Imagine\Image\BoxInterface`` in its constructor and calculates the center position based on that.
 
-::
+.. code-block:: php
 
     <?php
+
     $size = new Imagine\Image\Box(50, 50);
     
     $center = new Imagine\Image\Point\Center($size);
