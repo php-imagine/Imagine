@@ -1,9 +1,9 @@
 {
-  "name": "avalanche123/Imagine",
+  "name": "imagine/Imagine",
   "description": "Image processing for PHP 5.3",
   "keywords": ["image manipulation","image processing", "drawing", "graphics"],
   "homepage": "http://imagine.readthedocs.org/",
-  "version": "0.2.0-dev",
+  "version": "0.2.1-dev",
   "license": "MIT",
   "authors": [
     {
