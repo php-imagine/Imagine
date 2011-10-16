@@ -23,19 +23,19 @@ After reading the documentation and working with the library for a little while,
 
 Enjoy!
 
-Contents:
+Usage:
 ---------
 
 .. toctree::
    :maxdepth: 3
 
-   introduction
-   coordinates
-   imagine
-   image
-   drawing
-   filters
-   exceptions
+   usage/introduction
+   usage/coordinates
+   usage/imagine
+   usage/image
+   usage/drawing
+   usage/filters
+   usage/exceptions
 
 Indices and tables
 ==================
