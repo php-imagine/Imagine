@@ -20,7 +20,7 @@ Imagine is a OOP library for image manipulation built in PHP 5.3 using the lates
     
     $imagine->open('/path/to/large_image.jpg')
         ->thumbnail($size, $mode)
-        ->save()
+        ->save('/path/to/thumbnail.png')
     ;
 
 
