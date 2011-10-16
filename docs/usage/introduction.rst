@@ -150,7 +150,7 @@ The architecture is very flexible, as the filters don't need any processing logi
 
 The ``Transformation`` object is an example of a composite filter, representing a stack or queue of filters, that get applied to an Image upon application of the ``Transformation`` itself.
 
-.. _ImagineInterface: /avalanche123/Imagine/blob/master/docs/en/imagine.rst
-.. _ImageInterface: /avalanche123/Imagine/blob/master/docs/en/image.rst
-.. _coordinates: /avalanche123/Imagine/blob/master/docs/en/coordinates.rst
-.. _exceptions: /avalanche123/Imagine/blob/master/docs/en/exceptions.rst
+.. _ImagineInterface: imagine.html
+.. _ImageInterface: image.html
+.. _coordinates: coordinates.html
+.. _exceptions: exceptions.html
