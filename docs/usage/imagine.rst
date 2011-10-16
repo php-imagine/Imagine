@@ -1,5 +1,5 @@
-Opening existing images and creating new ones
-=============================================
+Opening or creating images
+==========================
 
 ``Imagine\Image\ImagineInterface`` and its implementations is the main entry point into Imagine. You may think of it as a factory for ``Imagine\Image\ImageInterface`` as it is responsible for creating and opening instances of it and also for instantiating ``Imagine\Image\FontInterface`` object.
 

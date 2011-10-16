@@ -17,9 +17,10 @@ Image transformation is implemented via the ``Filter\Transformation`` class, whi
 
 Example of a naive thumbnail implementation:
 
-::
+.. code-block:: php
 
     <?php
+
     $transformation = new Imagine\Filter\Transformation();
     
     $transformation->thumbnail(new Imagine\Image\Box(30, 30))
@@ -29,9 +30,10 @@ Example of a naive thumbnail implementation:
 
 The result of ``apply()`` is the modified image instance itself, so if we wanted to create a mass-processing thumbnail script, we would do something like the following:
 
-::
+.. code-block:: php
 
     <?php
+
     $transformation = new Imagine\Filter\Transformation();
     
     $transformation->thumbnail(new Imagine\Image\Box(30, 30));

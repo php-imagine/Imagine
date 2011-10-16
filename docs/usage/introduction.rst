@@ -1,5 +1,5 @@
 Quick introduction
-============
+==================
 
 Basic usage
 -----------
@@ -9,9 +9,10 @@ Open Existing Images
 
 To open an existing image, all you need is to instantiate an image factory and invoke ``ImagineInterface::open()`` with ``$path`` to image as the  argument
 
-::
+.. code-block:: php
 
     <?php
+
     $imagine = new Imagine\Gd\Imagine();
     // or
     $imagine = new Imagine\Imagick\Imagine();
@@ -31,9 +32,10 @@ The ``ImagineInterface::open()`` method may throw one of the following exception
 
 Now that you've opened an image, you can perform manipulations on it:
 
-::
+.. code-block:: php
 
     <?php
+
     use Imagine\Image\Box;
     use Imagine\Image\Point;
     
@@ -51,26 +53,32 @@ Create New Images
 
 Imagine also lets you create new, empty images. The following example creates an empty image of width 400px and height 300px:
 
-::
+.. code-block:: php
 
     <?php
-    $image = $imagine->create(new Imagine\Image\Box(400, 300));
+
+    $size  = new Imagine\Image\Box(400, 300);
+    $image = $imagine->create($size);
 
 You can optionally specify the fill color for the new image, which defaults to opaque white. The following example creates a new image with a fully-transparent black background:
 
-::
+.. code-block:: php
 
     <?php
-    $image = $imagine->create(new Imagine\Image\Box(400, 300), new Imagine\Image\Color('000', 100));
+
+    $size  = new Imagine\Image\Box(400, 300);
+    $color = new Imagine\Image\Color('000', 100);
+    $image = $imagine->create($size, $color);
 
 Color Class
 +++++++++++
 
 Color is a class in Imagine, which takes two arguments in its constructor: the RGB color code and a transparency percentage. The following examples are equivalent ways of defining a fully-transparent white color.
 
-::
+.. code-block:: php
 
     <?php
+
     $white = new Imagine\Image\Color('fff', 100);
     $white = new Imagine\Image\Color('ffffff', 100);
     $white = new Imagine\Image\Color('#fff', 100);
@@ -80,9 +88,10 @@ Color is a class in Imagine, which takes two arguments in its constructor: the R
 
 After you have instantiated a color, you can easily get its Red, Green, Blue and Alpha (transparency) values:
 
-::
+.. code-block:: php
 
     <?php
+
     var_dump(array(
         'R' => $white->getRed(),
         'G' => $white->getGreen(),
@@ -97,9 +106,10 @@ Assume we were given the not-so-easy task of creating a four-by-four collage of 
 
 Here is how we would approach this problem with Imagine.
 
-::
+.. code-block:: php
 
     <?php
+
     use Imagine;
     
     // make an empty image (canvas) 120x160px
@@ -140,7 +150,7 @@ The architecture is very flexible, as the filters don't need any processing logi
 
 The ``Transformation`` object is an example of a composite filter, representing a stack or queue of filters, that get applied to an Image upon application of the ``Transformation`` itself.
 
-.. _ImagineInterface: /avalanche123/Imagine/blob/master/docs/en/imagine.rst
-.. _ImageInterface: /avalanche123/Imagine/blob/master/docs/en/image.rst
-.. _coordinates: /avalanche123/Imagine/blob/master/docs/en/coordinates.rst
-.. _exceptions: /avalanche123/Imagine/blob/master/docs/en/exceptions.rst
+.. _ImagineInterface: imagine.html
+.. _ImageInterface: image.html
+.. _coordinates: coordinates.html
+.. _exceptions: exceptions.html

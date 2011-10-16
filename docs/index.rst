@@ -8,6 +8,38 @@ Welcome to Imagine's documentation!
 
 Imagine is a OOP library for image manipulation built in PHP 5.3 using the latest best practices and thoughtful design that should allow for decoupled and unit-testable code.
 
+.. code-block:: php
+
+    <?php
+
+    $imagine = new Imagine\Gd\Imagine();
+    $size    = new Imagine\Image\Box(40, 40);
+    $mode    = Imagine\Image\ImageInterface::THUMBNAIL_INSET;
+    // or
+    $mode    = Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND;
+    
+    $imagine->open('/path/to/large_image.jpg')
+        ->thumbnail($size, $mode)
+        ->save('/path/to/thumbnail.png')
+    ;
+
+
+Enjoy!
+
+Usage:
+---------
+
+.. toctree::
+   :maxdepth: 3
+
+   usage/introduction
+   usage/coordinates
+   usage/imagine
+   usage/image
+   usage/drawing
+   usage/filters
+   usage/exceptions
+
 A couple of words in defense
 ----------------------------
 
@@ -20,22 +52,6 @@ After reading the documentation and working with the library for a little while,
 * Value objects - as you've noticed neither ``BoxInterface`` nor ``PointInterface`` along with their implementations define any setter. That means the state of those objects is immutable, so there aren't side-effects to happen and the fact that they're passed by reference, will not affect their values.
 
 * It's OOP man, come on - nothing to add here, really.
-
-Enjoy!
-
-Contents:
----------
-
-.. toctree::
-   :maxdepth: 3
-
-   introduction
-   coordinates
-   imagine
-   image
-   drawing
-   filters
-   exceptions
 
 Indices and tables
 ==================
