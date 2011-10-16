@@ -8,6 +8,22 @@ Welcome to Imagine's documentation!
 
 Imagine is a OOP library for image manipulation built in PHP 5.3 using the latest best practices and thoughtful design that should allow for decoupled and unit-testable code.
 
+.. code-block:: php
+
+    <?php
+
+    $imagine = new Imagine\Gd\Imagine();
+    $size    = new Imagine\Image\Box(40, 40);
+    $mode    = Imagine\Image\ImageInterface::THUMBNAIL_INSET;
+    // or
+    $mode    = Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND;
+    
+    $imagine->open('/path/to/large_image.jpg')
+        ->thumbnail($size, $mode)
+        ->save()
+    ;
+
+
 Enjoy!
 
 Usage:
