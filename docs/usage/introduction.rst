@@ -205,7 +205,7 @@ Image Reflection Filter
    ;
 
 .. TIP::
-   For step by step explanation of the above code `see Introduction to Imagine <http://speakerdeck.com/u/avalanche123/p/introduction-to-imagine?slide=31>`_
+   For step by step explanation of the above code `see Reflection section of Introduction to Imagine <http://speakerdeck.com/u/avalanche123/p/introduction-to-imagine?slide=31>`_
 
 Architecture
 ------------
@@ -213,6 +213,10 @@ Architecture
 The architecture is very flexible, as the filters don't need any processing logic other than calculating the variables based on some settings and invoking the corresponding method, or sequence of methods, on the ``ImageInterface`` implementation.
 
 The ``Transformation`` object is an example of a composite filter, representing a stack or queue of filters, that get applied to an Image upon application of the ``Transformation`` itself.
+
+.. TIP::
+   For more information about ``Transformation`` filter `see Transformation section of Introduction to Imagine <http://speakerdeck.com/u/avalanche123/p/introduction-to-imagine?slide=57>`_
+
 
 .. _ImagineInterface: ../api/image.html#Imagine\\Image\\ImagineInterface
 .. _ImageInterface: ../api/image.html#Imagine\\Image\\ImageInterface
