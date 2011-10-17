@@ -45,9 +45,6 @@ Some of the ideas for upcoming filters:
 
 ## Presentations ##
 
-<script src="http://speakerdeck.com/embed/4e9ba1ad8a525f0054016490.js">
-</script>
-
  - [Introduction to Imagine](http://www.slideshare.net/avalanche123/introduction-toimagine)
 
 ## Articles ##
