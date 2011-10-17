@@ -40,6 +40,17 @@ Usage:
    usage/filters
    usage/exceptions
 
+Api docs:
+---------
+
+.. toctree::
+   :maxdepth: 3
+
+   api/draw
+   api/exception
+   api/filter
+   api/image
+
 A couple of words in defense
 ----------------------------
 
