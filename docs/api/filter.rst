@@ -1,6 +1,8 @@
 namespace `Imagine\\Filter`
 ===========================
 
+.. php:namespace:: Imagine\Filter
+
 .. php:interface:: FilterInterface
 
    Imagine Filter interface.
@@ -120,10 +122,10 @@ namespace `Imagine\\Filter`
 
       :returns: Imagine\\Filter\\Transformation
 
-.. php:namespace:: Imagine\Filter
-
 namespace `Imagine\\Filter\\Basic`
 ----------------------------------
+
+.. php:namespace:: Imagine\Filter\Basic
 
 .. php:class:: ApplyMask
 
@@ -256,5 +258,3 @@ namespace `Imagine\\Filter\\Basic`
    .. php:method:: apply(ImageInterface $image)
 
       see :php:meth:`Imagine\\Filter\\FilterInterface::apply`
-
-.. php:namespace:: Imagine\Filter\Basic

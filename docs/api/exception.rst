@@ -1,6 +1,8 @@
 namespace `Imagine\\Exception`
 =============================
 
+.. php:namespace:: Imagine\Exception
+
 .. php:interface:: Exception
 
    Generic exception interface, allows catching all `Imagine` related exceptions.
@@ -28,5 +30,3 @@ namespace `Imagine\\Exception`
    Extends :php:exc:`RuntimeException`
 
    Implements :php:interface:`Imagine\\Exception\\Exception`
-
-.. php:namespace:: Imagine\Exception

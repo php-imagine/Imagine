@@ -1,7 +1,9 @@
 namespace `Imagine\\Draw`
 ===========================
 
-.. php:interface:: DrawerInterface
+.. php:namespace:: Imagine\Draw
+
+.. php:class:: DrawerInterface
 
    Instance of this interface is returned by :php:meth:`Imagine\\Image\\ImageInterface::draw`.
 
@@ -110,5 +112,3 @@ namespace `Imagine\\Draw`
       :throws: Imagine\\Exception\\RuntimeException
 
       :returns: Imagine\\Draw\\DrawerInterface
-
-.. php:namespace:: Imagine\Draw

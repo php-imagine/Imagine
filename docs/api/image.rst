@@ -1,6 +1,8 @@
 namespace `Imagine\\Image`
 ==========================
 
+.. php:namespace:: Imagine\Image
+
 .. php:class:: AbstractFont
 
    .. php:method:: __construct($file, $size, Color $color)
@@ -566,10 +568,10 @@ namespace `Imagine\\Image`
 
       :returns: string
 
-.. php:namespace:: Imagine\Image
-
 namespace `Imagine\\Image\\Fill`
 --------------------------------
+
+.. php:namespace:: Imagine\Image\Fill
 
 .. php:interface:: FillInterface
 
@@ -581,11 +583,10 @@ namespace `Imagine\\Image\\Fill`
 
    :returns: Imagine\\Image\\Color
 
-
-.. php:namespace:: Imagine\Image\Fill
-
 namespace `Imagine\\Image\\Fill\\Gradient`
 ++++++++++++++++++++++++++++++++++++++++++
+
+.. php:namespace:: Imagine\Image\Fill\Gradient
 
 .. php:class:: Horizontal
 
@@ -630,10 +631,10 @@ namespace `Imagine\\Image\\Fill\\Gradient`
 
       see :php:meth:`Imagine\\Mask\\Gradient\\Linear::getDistance`
 
-.. php:namespace:: Imagine\Image\Fill\Gradient
-
 namespace `Imagine\\Image\\Point`
 ---------------------------------
+
+.. php:namespace:: Imagine\Image\Point
 
 .. php:class:: Center
 
@@ -663,5 +664,3 @@ namespace `Imagine\\Image\\Point`
    .. php:method:: __toString()
 
       see :php:meth:`Imagine\\Image\\PointInterface::__toString`
-
-.. php:namespace:: Imagine\Image\Point
