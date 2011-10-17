@@ -52,6 +52,17 @@ interface ImagineInterface
     function load($string);
 
     /**
+     * Loads an image from a resource $resource
+     *
+     * @param resource $resource
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return Imagine\Image\ImageInterface
+     */
+    function read($resource);
+
+    /**
      * Constructs a font with specified $file, $size and $color
      *
      * The font size is to be specified in points (e.g. 10pt means 10)
