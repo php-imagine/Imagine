@@ -48,6 +48,18 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertEquals(126, $size->getHeight());
     }
 
+    public function testShouldCreateImageFromResource()
+    {
+        $factory = $this->getImagine();
+        $resource = fopen('tests/Imagine/Fixtures/google.png', 'r');
+        $image   = $factory->read($resource);
+        $size    = $image->getSize();
+
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertEquals(364, $size->getWidth());
+        $this->assertEquals(126, $size->getHeight());
+    }
+
     public function testShouldDetermineFontSize()
     {
         $path    = 'tests/Imagine/Fixtures/font/Arial.ttf';
