@@ -366,7 +366,7 @@ namespace `Imagine\\Image`
 
    .. php:const:: THUMBNAIL_OUTBOUND
 
-      Image is resized to fix thumbnail inside and the rest is cropped out.
+      Image is resized to fit thumbnail inside and the rest is cropped out.
 
    .. php:method:: copy()
 
