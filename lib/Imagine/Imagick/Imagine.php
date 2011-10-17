@@ -118,6 +118,19 @@ final class Imagine implements ImagineInterface
 
     /**
      * (non-PHPdoc)
+     * @see Imagine\Image\ImagineInterface::read()
+     */
+    public function read($resource)
+    {
+        if (!is_resource($resource)) {
+            throw new InvalidArgumentException('Variable does not contain a stream resource');
+        }
+
+        return $this->load(stream_get_contents($resource));
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see Imagine\Image\ImagineInterface::font()
      */
     public function font($file, $size, Color $color)
