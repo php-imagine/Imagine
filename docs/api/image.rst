@@ -1,6 +1,8 @@
 namespace `Imagine\\Image`
 ==========================
 
+.. php:class:: Imagine
+
 .. php:namespace:: Imagine\Image
 
 .. php:class:: AbstractFont

@@ -1,6 +1,8 @@
 namespace `Imagine\\Exception`
 ==============================
 
+.. php:class:: Imagine
+
 .. php:namespace:: Imagine\Exception
 
 .. php:interface:: Exception

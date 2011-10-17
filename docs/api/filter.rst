@@ -1,6 +1,8 @@
 namespace `Imagine\\Filter`
 ===========================
 
+.. php:class:: Imagine
+
 .. php:namespace:: Imagine\Filter
 
 .. php:class:: ImagineAware

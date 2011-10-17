@@ -1,6 +1,8 @@
 namespace `Imagine\\Draw`
 ===========================
 
+.. php:class:: Imagine
+
 .. php:namespace:: Imagine\Draw
 
 .. php:class:: DrawerInterface
