@@ -1,6 +1,12 @@
 Quick introduction
 ==================
 
+ImagineInterface_ (``Imagine\Image\ImagineInterface``) and its implementations is the main entry point into Imagine. You may think of it as a factory for ``Imagine\Image\ImageInterface`` as it is responsible for creating and opening instances of it and also for instantiating ``Imagine\Image\FontInterface`` object.
+
+The main piece of image processing functionality is concentrated in the ``ImageInterface`` implementations (one per driver - e.g. ``Imagick\Image``)
+
+The main idea of Imagine is to avoid driver specific methods spill outside of this class and couple of other internal interfaces (``Draw\DrawerInterface``), so that the filters and any other image manipulations can operate on ``ImageInterface`` through its public API.
+
 Basic usage
 -----------
 
@@ -150,7 +156,7 @@ The architecture is very flexible, as the filters don't need any processing logi
 
 The ``Transformation`` object is an example of a composite filter, representing a stack or queue of filters, that get applied to an Image upon application of the ``Transformation`` itself.
 
-.. _ImagineInterface: imagine.html
-.. _ImageInterface: image.html
+.. _ImagineInterface: ../api/image.html#Imagine\\Image\\ImagineInterface
+.. _ImageInterface: ../api/image.html#Imagine\\Image\\ImageInterface
 .. _coordinates: coordinates.html
 .. _exceptions: exceptions.html

@@ -1,5 +1,5 @@
 namespace `Imagine\\Exception`
-=============================
+==============================
 
 .. php:namespace:: Imagine\Exception
 
@@ -11,7 +11,7 @@ namespace `Imagine\\Exception`
 
    This is exception is thrown whenever an invalid argument is provided.
 
-   Extends :php:exc:`InvalidArgumentException`
+   Extends ``InvalidArgumentException``
 
    Implements :php:interface:`Imagine\\Exception\\Exception`
 
@@ -19,7 +19,7 @@ namespace `Imagine\\Exception`
 
    This is exception is thrown whenever value is not within expected boundaries.
 
-   Extends :php:exc:`OutOfBoundsException`
+   Extends ``OutOfBoundsException``
 
    Implements :php:interface:`Imagine\\Exception\\Exception`
 
@@ -27,6 +27,6 @@ namespace `Imagine\\Exception`
 
    This is exception is thrown whenever the underlying driver fails to perform.
 
-   Extends :php:exc:`RuntimeException`
+   Extends ``RuntimeException``
 
    Implements :php:interface:`Imagine\\Exception\\Exception`

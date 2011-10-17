@@ -7,14 +7,14 @@ namespace `Imagine\\Image`
 
    .. php:method:: __construct($file, $size, Color $color)
 
-      Constructs :php:class:`Imagine\\Image\\Font` instance
+      Constructs :php:class:`Imagine\\Image\\AbstractFont` instance
       with specified $file, $size and $color
 
       The font size is to be specified in points (e.g. 10pt means 10)
 
-      :param string              $file:  Path to a font file. 
-      :param integer             $size:  Font size in points (pts).
-      :param Imagine\Image\Color $color: Font color.
+      :param string                $file:  Path to a font file. 
+      :param integer               $size:  Font size in points (pts).
+      :param Imagine\\Image\\Color $color: Font color.
 
    .. php:method:: getFile()
 
@@ -64,7 +64,7 @@ namespace `Imagine\\Image`
       start position defaults to top left corner xy(0,0)
 
       :param Imagine\\Image\\BoxInterface   $box:   Size of the box that we're checking.
-      :param Imagine\Image\PointInterface $start: Position to see if the box fits at.
+      :param Imagine\\Image\\PointInterface $start: Position to see if the box fits at.
 
       :returns: Boolean
 
@@ -149,10 +149,10 @@ namespace `Imagine\\Image`
    .. php:method:: __construct($color, $alpha = 0)
 
       Constructs :php:class:`Imagine\\Image\\Color`, e.g.:
-          - `new Color('fff')` - will produce non-transparent white color
-          - `new Color('ffffff', 50)` - will product 50% transparent white
-          - `new Color(array(255, 255, 255))` - another way of getting white
-          - `new Color(0x00FF00)` - hexadecimal notation for green
+          - ``new Color('fff')`` - will produce non-transparent white color
+          - ``new Color('ffffff', 50)`` - will produce 50% transparent white
+          - ``new Color(array(255, 255, 255))`` - another way of getting white
+          - ``new Color(0x00FF00)`` - hexadecimal notation for green
 
       :param array|string|integer $color: Color value in one of the allowed formats.
       :param integer              $alpha: Percentage of transparency.
@@ -188,7 +188,7 @@ namespace `Imagine\\Image`
 
       :param integer $alpha: Percent of tranparency to add.
 
-      :returns: Imagine\Image\Color
+      :returns: Imagine\\Image\\Color
 
    .. php:method:: lighten($shade)
 
@@ -197,7 +197,7 @@ namespace `Imagine\\Image`
 
       :param integer $shade: Shade to lighten the color by (0 to 127).
 
-      :returns: Imagine\Image\Color
+      :returns: Imagine\\Image\\Color
 
    .. php:method:: darken($shade)
 
@@ -206,7 +206,7 @@ namespace `Imagine\\Image`
 
       :param integer $shade: Shade to darken the color by (0 to 127).
 
-      :returns: Imagine\Image\Color
+      :returns: Imagine\\Image\\Color
 
    .. php:method:: __toString()
 
@@ -238,7 +238,7 @@ namespace `Imagine\\Image`
 
       Gets font's color.
 
-      :returns: Imagine\Image\Color
+      :returns: Imagine\\Image\\Color
 
    .. php:method:: box($string, $angle = 0)
 
@@ -279,7 +279,7 @@ namespace `Imagine\\Image`
 
       Instantiates and returns a DrawerInterface instance for image drawing.
 
-      :returns: Imagine\Draw\DrawerInterface
+      :returns: Imagine\\Draw\\DrawerInterface
 
    .. php:method:: getSize()
 
@@ -292,11 +292,11 @@ namespace `Imagine\\Image`
       Transforms creates a grayscale mask from current image, returns a new
       image, while keeping the existing image unmodified.
 
-      :returns: Imagine\Image\ImageInterface
+      :returns: Imagine\\Image\\ImageInterface
 
    .. php:method:: histogram()
 
-      Returns array of image colors as Imagine\Image\Color instances.
+      Returns array of image colors as Imagine\\Image\\Color instances.
 
       :returns: array
 
@@ -304,11 +304,11 @@ namespace `Imagine\\Image`
 
       Returns color at specified positions of current image.
 
-      :param Imagine\Image\PointInterface $point: Position to get the color for.
+      :param Imagine\\Image\\PointInterface $point: Position to get the color for.
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\Color
+      :returns: Imagine\\Image\\Color
 
 .. php:interface:: ImagineInterface
 
@@ -317,12 +317,12 @@ namespace `Imagine\\Image`
       Creates a new empty image with an optional background color.
 
       :param Imagine\\Image\\BoxInterface $size:  Size of the box of the new image.
-      :param Imagine\Image\Color        $color: Color to fill the image with.
+      :param Imagine\\Image\\Color        $color: Color to fill the image with.
 
       :throws: Imagine\\Exception\\InvalidArgumentException
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ImageInterface
+      :returns: Imagine\\Image\\ImageInterface
 
    .. php:method:: open($path)
 
@@ -332,7 +332,7 @@ namespace `Imagine\\Image`
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ImageInterface
+      :returns: Imagine\\Image\\ImageInterface
 
    .. php:method:: load($string)
 
@@ -342,7 +342,7 @@ namespace `Imagine\\Image`
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ImageInterface
+      :returns: Imagine\\Image\\ImageInterface
 
    .. php:method:: font($file, $size, Color $color)
 
@@ -352,9 +352,9 @@ namespace `Imagine\\Image`
 
       :param string              $file:  Font file to use.
       :param integer             $size:  Font size in points (pts).
-      :param Imagine\Image\Color $color: Font color.
+      :param Imagine\\Image\\Color $color: Font color.
 
-      :returns: Imagine\Image\AbstractFont
+      :returns: Imagine\\Image\\AbstractFont
 
 .. php:interface:: ManipulatorInterface
 
@@ -372,20 +372,20 @@ namespace `Imagine\\Image`
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: crop(PointInterface $start, BoxInterface $size)
 
       Crops a specified box out of the source image (modifies the source image)
       Returns cropped self.
 
-      :param Imagine\Image\PointInterface $start: Position to start cropping at.
+      :param Imagine\\Image\\PointInterface $start: Position to start cropping at.
       :param Imagine\\Image\\BoxInterface   $size:  Size of the area to crop to.
 
       :throws: Imagine\\Exception\\OutOfBoundsException
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: resize(BoxInterface $size)
 
@@ -395,7 +395,7 @@ namespace `Imagine\\Image`
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: rotate($angle, Color $background = null)
 
@@ -405,11 +405,11 @@ namespace `Imagine\\Image`
       area of rotated image.
 
       :param integer             $angle:      Integer rotation angle value.
-      :param Imagine\Image\Color $background: Color to fill extra area with.
+      :param Imagine\\Image\\Color $background: Color to fill extra area with.
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: paste(ImageInterface $image, PointInterface $start)
 
@@ -420,14 +420,14 @@ namespace `Imagine\\Image`
 
       Returns source image.
 
-      :param Imagine\Image\ImageInterface $image: Image to paste.
-      :param Imagine\Image\PointInterface $start: Where to paste the image at.
+      :param Imagine\\Image\\ImageInterface $image: Image to paste.
+      :param Imagine\\Image\\PointInterface $start: Where to paste the image at.
 
       :throws: Imagine\\Exception\\InvalidArgumentException
       :throws: Imagine\\Exception\\OutOfBoundsException
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: save($path, array $options = array())
 
@@ -440,7 +440,7 @@ namespace `Imagine\\Image`
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: show($format, array $options = array())
 
@@ -451,7 +451,7 @@ namespace `Imagine\\Image`
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: flipHorizontally()
 
@@ -459,7 +459,7 @@ namespace `Imagine\\Image`
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: flipVertically()
 
@@ -467,7 +467,7 @@ namespace `Imagine\\Image`
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET)
 
@@ -476,19 +476,19 @@ namespace `Imagine\\Image`
       Returns it as a new image, doesn't modify the current image.
 
       :param Imagine\\Image\\BoxInterface $size: Target thumbnail size.
-      :param string                     $mode: Mode to use.
+      :param string                       $mode: Mode to use.
 
       :throws: Imagine\\Exception\\RuntimeException
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: applyMask(ImageInterface $mask)
 
       Applies a given mask to current image's alpha channel.
 
-      :param Imagine\Image\ImageInterface $mask: Mask to apply transparency over.
+      :param Imagine\\Image\\ImageInterface $mask: Mask to apply transparency over.
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
    .. php:method:: fill(FillInterface $fill)
 
@@ -496,9 +496,9 @@ namespace `Imagine\\Image`
       the current image with corresponding color from FillInterface, and
       returns modified image.
 
-      :param Imagine\Image\Fill\FillInterface $fill: Type of fill to apply.
+      :param Imagine\\Image\\Fill\\FillInterface $fill: Type of fill to apply.
 
-      :returns: Imagine\Image\ManipulatorInterface
+      :returns: Imagine\\Image\\ManipulatorInterface
 
 .. php:class:: Point
 
@@ -560,7 +560,7 @@ namespace `Imagine\\Image`
 
       :param integer $amout: Amount to move the point by.
 
-      :returns: Imagine\Image\ImageInterface
+      :returns: Imagine\\Image\\ImageInterface
 
    .. php:method:: __toString()
 
@@ -640,7 +640,7 @@ namespace `Imagine\\Image\\Point`
 
    .. php:method:: __construct(BoxInterface $box)
 
-      Constructs :php:class:`Imagine\\Image\\Point\Center` with size instance,
+      Constructs :php:class:`Imagine\\Image\\Point\\Center` with size instance,
       it needs to be relative to.
 
       :param Imagine\\Image\\BoxInterface $size: Box to get center for.

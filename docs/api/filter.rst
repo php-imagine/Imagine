@@ -3,20 +3,6 @@ namespace `Imagine\\Filter`
 
 .. php:namespace:: Imagine\Filter
 
-.. php:interface:: FilterInterface
-
-   Imagine Filter interface.
-
-   .. php:method:: apply(ImageInterface $image)
-
-      Applies scheduled transformation to ImageInterface instance
-
-      Returns processed ImageInterface instance
-
-      :param Imagine\\Image\\ImageInterface $image: Image to apply the filter to.
-
-      :returns: Imagine\\Image\\ImageInterface
-
 .. php:class:: ImagineAware
 
    .. php:method:: setImagine(ImagineInterface $imagine)
@@ -35,13 +21,27 @@ namespace `Imagine\\Filter`
 
       :returns: Imagine\\Image\\ImagineInterface
 
+.. php:interface:: FilterInterface
+
+   Imagine Filter interface.
+
+   .. php:method:: apply(ImageInterface $image)
+
+      Applies scheduled transformation to ImageInterface instance
+
+      Returns processed ImageInterface instance
+
+      :param Imagine\\Image\\ImageInterface $image: Image to apply the filter to.
+
+      :returns: Imagine\\Image\\ImageInterface
+
 .. php:class:: Transformation
 
-   Implements :php:interface:`Imagine\Image\ManipulatorInterface`.
+   Implements :php:interface:`Imagine\\Image\\ManipulatorInterface`.
 
    Lets you operate on it just like on a regular image, without doing eager processing.
 
-   Lets you apply it to an :php:interface:`Imagine\Image\ImageInterface` instance later
+   Lets you apply it to an :php:interface:`Imagine\\Image\\ImageInterface` instance later
    and repeats all of it opertations.
 
    .. php:method:: __construct(ImagineInterface $imagine = null)
@@ -133,7 +133,7 @@ namespace `Imagine\\Filter\\Basic`
 
       Constructs :php:class:`Imagine\\Filter\\Basic\\ApplyMask` instance
 
-      :param Imagine\Image\ImageInterface $mask: Mask to apply to image.
+      :param Imagine\\Image\\ImageInterface $mask: Mask to apply to image.
 
    .. php:method:: apply(ImageInterface $image)
 
@@ -164,7 +164,7 @@ namespace `Imagine\\Filter\\Basic`
 
       Constructs :php:class:`Imagine\\Filter\\Basic\\Fill` instance
 
-      :param Imagine\Image\Fill\FillInterface $fill: Fill to apply.
+      :param Imagine\\Image\\Fill\\FillInterface $fill: Fill to apply.
 
    .. php:method:: apply(ImageInterface $image)
 
@@ -188,8 +188,8 @@ namespace `Imagine\\Filter\\Basic`
 
       Constructs :php:class:`Imagine\\Filter\\Basic\\Paste` instance
 
-      :param Imagine\Image\ImageInterface $image: Image to paste.
-      :param Imagine\Image\PointInterface $start: Position to paste image at.
+      :param Imagine\\Image\\ImageInterface $image: Image to paste.
+      :param Imagine\\Image\\PointInterface $start: Position to paste image at.
 
    .. php:method:: apply(ImageInterface $image)
 
@@ -201,7 +201,7 @@ namespace `Imagine\\Filter\\Basic`
 
       Constructs :php:class:`Imagine\\Filter\\Basic\\Resize` instance
 
-      :param Imagine\Image\BoxInterface $size: Target size.
+      :param Imagine\\Image\\BoxInterface $size: Target size.
 
    .. php:method:: apply(ImageInterface $image)
 
@@ -214,7 +214,7 @@ namespace `Imagine\\Filter\\Basic`
       Constructs :php:class:`Imagine\\Filter\\Basic\\Rotate` instance
 
       :param integer             $angle:      Rotation angle.
-      :param Imagine\Image\Color $background: Color to fill extra areas.
+      :param Imagine\\Image\\Color $background: Color to fill extra areas.
 
    .. php:method:: apply(ImageInterface $image)
 
@@ -252,7 +252,7 @@ namespace `Imagine\\Filter\\Basic`
 
       Constructs :php:class:`Imagine\\Filter\\Basic\\Thumbnail` instance
 
-      :param Imagine\Image\BoxInterface $size: Thumbnail size.
+      :param Imagine\\Image\\BoxInterface $size: Thumbnail size.
       :param string                     $mode: Thumbnail generation mode.
 
    .. php:method:: apply(ImageInterface $image)

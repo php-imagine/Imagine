@@ -34,8 +34,6 @@ Usage:
 
    usage/introduction
    usage/coordinates
-   usage/imagine
-   usage/image
    usage/drawing
    usage/filters
    usage/exceptions
