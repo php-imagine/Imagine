@@ -7,6 +7,31 @@ The main piece of image processing functionality is concentrated in the ``ImageI
 
 The main idea of Imagine is to avoid driver specific methods spill outside of this class and couple of other internal interfaces (``Draw\DrawerInterface``), so that the filters and any other image manipulations can operate on ``ImageInterface`` through its public API.
 
+Installation
+------------
+
+Phar file
++++++++++
+
+`Download Imagine PHAR file here <https://github.com/avalanche123/Imagine/raw/master/imagine.phar>`_
+
+.. code-block:: php
+
+   <?php
+
+   require_once 'phar://imagine.phar';
+
+   var_dump(class_exists('Imagine\Image\ImageInterface'));
+
+Clone from GitHub
++++++++++++++++++
+
+.. ::
+
+   git clone git://github.com/avalanche123/Imagine.git
+
+then require files as usual, note that classes won't be registered with autoload and you have to do it yourself, this will change in future.
+
 Basic usage
 -----------
 
