@@ -38,7 +38,7 @@ The result of ``apply()`` is the modified image instance itself, so if we wanted
     
     $transformation->thumbnail(new Imagine\Image\Box(30, 30));
     
-    foreach (glob(/path/to/lots/of/images/*.jpg) as $path) {
+    foreach (glob('/path/to/lots/of/images/*.jpg') as $path) {
         $transformation->apply($imagine->open($path))
             ->save('/path/to/resized/'.md5($path).'.jpg');
     }
