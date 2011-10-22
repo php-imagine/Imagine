@@ -1,5 +1,5 @@
-namespace `Imagine\\Filter`
-===========================
+`Imagine\\Filter`
+=================
 
 .. php:class:: Imagine
 
@@ -124,7 +124,7 @@ namespace `Imagine\\Filter`
 
       :returns: Imagine\\Filter\\Transformation
 
-namespace `Imagine\\Filter\\Basic`
+`Imagine\\Filter\\Basic`
 ----------------------------------
 
 .. php:namespace:: Imagine\Filter\Basic

@@ -1,5 +1,5 @@
-namespace `Imagine\\Exception`
-==============================
+`Imagine\\Exception`
+====================
 
 .. php:class:: Imagine
 

@@ -1,5 +1,5 @@
-namespace `Imagine\\Draw`
-===========================
+`Imagine\\Draw`
+===============
 
 .. php:class:: Imagine
 

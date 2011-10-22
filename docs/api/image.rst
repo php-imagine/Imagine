@@ -1,5 +1,5 @@
-namespace `Imagine\\Image`
-==========================
+`Imagine\\Image`
+================
 
 .. php:class:: Imagine
 
@@ -570,7 +570,7 @@ namespace `Imagine\\Image`
 
       :returns: string
 
-namespace `Imagine\\Image\\Fill`
+`Imagine\\Image\\Fill`
 --------------------------------
 
 .. php:namespace:: Imagine\Image\Fill
@@ -585,7 +585,7 @@ namespace `Imagine\\Image\\Fill`
 
    :returns: Imagine\\Image\\Color
 
-namespace `Imagine\\Image\\Fill\\Gradient`
+`Imagine\\Image\\Fill\\Gradient`
 ++++++++++++++++++++++++++++++++++++++++++
 
 .. php:namespace:: Imagine\Image\Fill\Gradient
@@ -633,7 +633,7 @@ namespace `Imagine\\Image\\Fill\\Gradient`
 
       see :php:meth:`Imagine\\Mask\\Gradient\\Linear::getDistance`
 
-namespace `Imagine\\Image\\Point`
+`Imagine\\Image\\Point`
 ---------------------------------
 
 .. php:namespace:: Imagine\Image\Point
