@@ -202,3 +202,11 @@ dl dt em { font-weight: bold; }
 dl dd { margin-left: 3em; }
 ul, ol, dl { padding-left: 1em; }
 table tr td ul { padding-left: 0; }
+
+# div.admonition:before, div.admonition:after { display: table; content: ""; zoom: 1; *display: inline; }
+# div.admonition:after { clear: both; }
+div.admonition { padding: 0.5em; margin-bottom: 14px; }
+div.admonition p { margin-bottom: 0; }
+div.admonition p.admonition-title { display: inline; padding: 1px 3px 2px; background-color: #bfbfbf; font-size: 0.85em; font-weight: bold; color: #ffffff; text-transform: uppercase; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; float: left; margin-right: 1em; }
+div.admonition.tip p.admonition-title { background-color: #46a546; }
+div.admonition.note p.admonition-title { background-color: #f89406; }
