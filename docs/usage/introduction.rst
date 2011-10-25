@@ -21,7 +21,7 @@ Phar file
 
    require_once 'phar://imagine.phar';
 
-   var_dump(class_exists('Imagine\Image\ImageInterface'));
+   var_dump(interface_exists('Imagine\Image\ImageInterface'));
 
 Clone from GitHub
 +++++++++++++++++
