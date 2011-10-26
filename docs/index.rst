@@ -41,13 +41,7 @@ Usage:
 Api docs:
 ---------
 
-.. toctree::
-   :maxdepth: 3
-
-   api/draw
-   api/exception
-   api/filter
-   api/image
+Find them in the :ref:`genindex`
 
 A couple of words in defense
 ----------------------------
