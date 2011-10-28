@@ -23,6 +23,9 @@ endef
 
 export stub
 
+.PHONY: phar test sphinxdocs clean
+
+
 phar:
 	echo "$$stub" >> .stub
 	phar-build -s ./lib/Imagine -S ./.stub --phar ./imagine.phar --ns
@@ -36,3 +39,6 @@ test:
 sphinxdocs:
 	@echo "Making docs"
 	git ls-files lib/Imagine | while read line; do DIR=`dirname docs/api$${line/#lib\/Imagine/}`; FILE=docs/api$${line/#lib\/Imagine/}; echo $$DIR; test -d $$DIR || mkdir -p $$DIR && doxphp < $$line | doxphp2sphinx > $${FILE/%.php/.rst}; done
+
+clean:
+	git clean -df
