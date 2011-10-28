@@ -461,12 +461,11 @@ final class Image implements ImageInterface
      * @param string $format
      * @param array  $options
      * @param string $filename
-     * @param Imagine\Image\Color $color
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    private function saveOrOutput($format, array $options, $filename = null, Color $background = null)
+    private function saveOrOutput($format, array $options, $filename = null)
     {
 
         if (!$this->supported($format)) {
@@ -491,64 +490,10 @@ final class Image implements ImageInterface
             $args[] = $options['quality'];
         }
 
-        if ($format === 'jpeg') {
-            $size   = $this->getSize();
-            $output = $this->createImage($size, 'save jpeg');
-            $color  = $this->getColor($background ? $background : new Color('fff'));
-
-            imagefill($output, 0, 0, $color);
-            imagealphablending($output, true);
-            imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
-            imagealphablending($output, false);
-
-            $this->resource = $output;
-        }
-
         if ($format === 'png') {
-            imagealphablending($this->resource, false);
-            imagesavealpha($this->resource, true);
-
             if (isset($options['filters'])) {
                 $args[] = $options['filters'];
             }
-        }
-
-        /*
-         * Very heavy treatment, but obligate to transform each pixels
-         */
-        if ($format === 'gif'){
-            $size       = $this->getSize();
-            $output     = $this->createImage($size, 'save jpeg');
-            $color      = $background ? $background : new Color('ffffff');
-            $lightalpha = $strongalpha = false;
-
-            for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
-                for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
-                    $rgb = imagecolorat($this->resource, $x, $y);
-                    $colorAt = imagecolorsforindex($this->resource, $rgb);
-                    // 100 because resize with copyresampled dissolve colors,
-                    // normaly 1 for gif to gif, but as before ending, the output format isn't known...
-                    if ($colorAt['alpha'] >= 100) {
-                        imagesetpixel($this->resource, $x, $y, $this->getColor($color));
-                        $strongalpha = true;
-                    } elseif ($colorAt['alpha'] > 0) {
-                        $lightalpha = true;
-                    }
-                }
-            }
-
-            if ($lightalpha) { //set a background
-                imagefill($output, 0, 0, $this->getColor($color));
-                imagealphablending($output, true);
-                imagecopy($output, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight());
-                imagealphablending($output, false);
-                $this->resource = $output;
-            }
-
-            if ($strongalpha) { //set a transparency
-                imagecolortransparent($this->resource, $this->getColor($color));
-            }
-
         }
 
         if (($format === 'wbmp' || $format === 'xbm') &&
