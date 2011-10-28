@@ -24,7 +24,6 @@ use Imagine\Image\Fill\Gradient\Vertical;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ImageInterface;
-use Imagine\Mask\MaskInterface;
 
 final class Image implements ImageInterface
 {
