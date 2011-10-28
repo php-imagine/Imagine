@@ -48,6 +48,6 @@ clean:
 release:
 	git checkout master
 	git merge develop
-	git tag $(TAG)
+	git tag $(TAG) -m "release $(TAG)"
 	git push
 	git push --tags
