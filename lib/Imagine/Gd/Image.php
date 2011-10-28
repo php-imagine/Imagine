@@ -304,11 +304,8 @@ final class Image implements ImageInterface
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
             $ratio = min($ratios);
-        } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $ratio = max($ratios);
         } else {
-            // TODO: is this the right initialization value?
-            $ratio = 1;
+            $ratio = max($ratios);
         }
 
         $thumbnailSize = $thumbnail->getSize()->scale($ratio);
