@@ -146,7 +146,9 @@ final class Image implements ImageInterface
 
         $dest = $this->createImage($size, 'resize');
 
-        if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
+        $function = imageistruecolor($this->resource) ? 'imagecopyresampled' : 'imagecopyresized';
+
+        if (false === $function($dest, $this->resource, 0, 0, 0, 0,
             $width, $height, imagesx($this->resource), imagesy($this->resource)
         )) {
             throw new RuntimeException('Image resize operation failed');
@@ -491,6 +493,9 @@ final class Image implements ImageInterface
         }
 
         if ($format === 'png') {
+            imagealphablending($this->resource, false);
+            imagesavealpha($this->resource, true);
+
             if (isset($options['filters'])) {
                 $args[] = $options['filters'];
             }
@@ -500,7 +505,7 @@ final class Image implements ImageInterface
             isset($options['foreground'])) {
             $args[] = $options['foreground'];
         }
-
+        
         if (false === call_user_func_array($save, $args)) {
             throw new RuntimeException('Save operation failed');
         }
@@ -536,18 +541,7 @@ final class Image implements ImageInterface
             imageantialias($resource, true);
         }
 
-        $red = $green = $blue = 255;
-
-        $index = imagecolortransparent($this->resource);
-
-        if($index !== -1){
-            $color = imagecolorsforindex($this->resource, $index);
-            $red   = $color['red'];
-            $green = $color['green'];
-            $blue  = $color['blue'];
-        }
-
-        imagefill($resource, 0, 0, imagecolorallocatealpha($resource, $red, $green, $blue, 127));
+        imagecolortransparent($resource, imagecolorallocate($resource, 0, 0, 0));
 
         return $resource;
     }
