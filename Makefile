@@ -1,3 +1,5 @@
+TAG=""
+
 define stub
 <?php
 Phar::mapPhar();
@@ -42,3 +44,10 @@ sphinxdocs:
 
 clean:
 	git clean -df
+
+release:
+	git checkout master
+	git merge develop
+	git tag v$(TAG)
+	git push
+	git push --tags
