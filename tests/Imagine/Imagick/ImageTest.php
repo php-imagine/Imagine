@@ -36,7 +36,6 @@ class ImageTest extends AbstractImageTest
         $imagine = $this->getImagine();
 
         $image = $imagine->open('tests/Imagine/Fixtures/resize/210-design-19933.jpg');
-        $size  = $image->getSize();
 
         $image
             ->resize(new \Imagine\Image\Box(1500, 750))

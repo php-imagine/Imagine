@@ -26,7 +26,6 @@ use Imagine\Filter\Basic\Show;
 use Imagine\Filter\Basic\Thumbnail;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
-use Imagine\ImageFactoryInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\Fill\FillInterface;

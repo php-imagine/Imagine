@@ -211,8 +211,6 @@ final class Drawer implements DrawerInterface
         $info     = imageftbbox($fontsize, $angle, $fontfile, $string);
         $xs       = array($info[0], $info[2], $info[4], $info[6]);
         $ys       = array($info[1], $info[3], $info[5], $info[7]);
-        $width    = abs(max($xs) - min($xs));
-        $height   = abs(max($ys) - min($ys));
 
         $xdiff = 0 - min($xs) + $position->getX();
         $ydiff = 0 - min($ys) + $position->getY();

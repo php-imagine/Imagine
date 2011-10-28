@@ -23,7 +23,6 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
-use Imagine\Mask\MaskInterface;
 
 final class Image implements ImageInterface
 {
@@ -307,6 +306,9 @@ final class Image implements ImageInterface
             $ratio = min($ratios);
         } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             $ratio = max($ratios);
+        } else {
+            // TODO: is this the right initialization value?
+            $ratio = 1;
         }
 
         $thumbnailSize = $thumbnail->getSize()->scale($ratio);
