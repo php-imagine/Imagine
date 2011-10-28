@@ -146,18 +146,22 @@ final class Image implements ImageInterface
 
         $dest = $this->createImage($size, 'resize');
 
-        $function = imageistruecolor($this->resource) ? 'imagecopyresampled' : 'imagecopyresized';
+        imagealphablending($this->resource, true);
+        imagealphablending($dest, true);
 
-        if (false === $function($dest, $this->resource, 0, 0, 0, 0,
+        if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
             $width, $height, imagesx($this->resource), imagesy($this->resource)
         )) {
             throw new RuntimeException('Image resize operation failed');
         }
 
+        imagealphablending($this->resource, false);
+        imagealphablending($dest, false);
+
         imagedestroy($this->resource);
 
         $this->resource = $dest;
-
+        
         return $this;
     }
 
@@ -492,20 +496,15 @@ final class Image implements ImageInterface
             $args[] = $options['quality'];
         }
 
-        if ($format === 'png') {
-            imagealphablending($this->resource, false);
-            imagesavealpha($this->resource, true);
-
-            if (isset($options['filters'])) {
-                $args[] = $options['filters'];
-            }
+        if ($format === 'png' && isset($options['filters'])) {
+            $args[] = $options['filters'];
         }
 
         if (($format === 'wbmp' || $format === 'xbm') &&
             isset($options['foreground'])) {
             $args[] = $options['foreground'];
         }
-        
+
         if (false === call_user_func_array($save, $args)) {
             throw new RuntimeException('Save operation failed');
         }
@@ -541,7 +540,9 @@ final class Image implements ImageInterface
             imageantialias($resource, true);
         }
 
-        imagecolortransparent($resource, imagecolorallocate($resource, 0, 0, 0));
+        $transparent = imagecolorallocatealpha($resource, 255, 255, 255, 127);
+        imagefill($resource, 0, 0, $transparent);
+        imagecolortransparent($resource, $transparent);
 
         return $resource;
     }

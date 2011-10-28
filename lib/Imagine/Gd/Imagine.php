@@ -158,8 +158,11 @@ final class Imagine implements ImagineInterface
 
         if (!imageistruecolor($resource)) {
             // create transparent truecolor canvas
-            $truecolor = imagecreatetruecolor($width, $height);
-            imagefill($truecolor, 0, 0, imagecolorallocatealpha($truecolor, 0, 0, 0, 127));
+            $truecolor   = imagecreatetruecolor($width, $height);
+            $transparent = imagecolorallocatealpha($truecolor, 255, 255, 255, 127);
+
+            imagefill($truecolor, 0, 0, $transparent);
+            imagecolortransparent($truecolor, $transparent);
 
             imagecopymerge($truecolor, $resource, 0, 0, 0, 0, $width, $height, 100);
 
