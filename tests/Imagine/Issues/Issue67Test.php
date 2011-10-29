@@ -27,7 +27,7 @@ class Issue67Test extends \PHPUnit_Framework_TestCase
     public function testShouldThrowExceptionNotError()
     {
         $invalidPath = '/thispathdoesnotexist';
-        
+
         $imagine = $this->getImagine();
 
         $imagine->open('tests/Imagine/Fixtures/large.jpg')

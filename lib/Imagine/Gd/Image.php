@@ -504,9 +504,13 @@ final class Image implements ImageInterface
             $args[] = $options['foreground'];
         }
 
+        $this->setExceptionHandler();
+
         if (false === call_user_func_array($save, $args)) {
             throw new RuntimeException('Save operation failed');
         }
+
+        $this->resetExceptionHandler();
     }
 
     /**
@@ -599,5 +603,25 @@ final class Image implements ImageInterface
         }
 
         return in_array($format, $formats);
+    }
+
+    private function setExceptionHandler()
+    {
+        set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+
+            if (0 === error_reporting()) {
+                return;
+            }
+
+            throw new RuntimeException(
+                $errstr, $errno,
+                new \ErrorException($errstr, 0, $errno, $errfile, $errline)
+            );
+        }, E_WARNING | E_NOTICE);
+    }
+
+    private function resetExceptionHandler()
+    {
+        restore_error_handler();
     }
 }
