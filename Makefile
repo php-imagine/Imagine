@@ -103,8 +103,11 @@ package:
 	mv lib/Imagine-$(VERSION).tgz .
 
 release:
-	# git checkout master
-	# git merge develop
-	# git tag v$(VERSION) -m "release v$(VERSION)"
-	# git push
-	# git push --tags
+	make package
+	@echo "a new package Imagine-$(VERSION).tgz has been created"
+	git checkout master
+	git merge develop
+	git tag v$(VERSION) -m "release v$(VERSION)"
+	git push
+	git push --tags
+	@echo "code pushed"
