@@ -1,4 +1,4 @@
-TAG=""
+VERSION=""
 
 define stub
 <?php
@@ -23,7 +23,60 @@ spl_autoload_register(function($$class) use ($$basePath)
 __HALT_COMPILER();
 endef
 
-export stub
+define package_start
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.8.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+  <name>Imagine</name>
+  <channel>avalanche123.github.com/pear</channel>
+  <summary>
+    PHP 5.3 Object Oriented image manipulation library.
+  </summary>
+  <description>
+    Image manipulation library for PHP 5.3 inspired by Python's PIL and other image libraries.
+  </description>
+  <lead>
+    <name>Bulat Shakirzyanov</name>
+    <user>avalanche123</user>
+    <email>mallluhuct at gmail.com</email>
+    <active>yes</active>
+  </lead>
+  <date>$(shell date +%Y-%m-%d)</date>
+  <time>$(shell date +%H:%M:%S)</time>
+  <version>
+    <release>$(VERSION)</release>
+    <api>$(VERSION)</api>
+  </version>
+  <stability>
+    <release>beta</release>
+    <api>beta</api>
+  </stability>
+  <license uri="http://www.opensource.org/licenses/mit-license.php">MIT</license>
+  <notes>-</notes>
+  <contents>
+    <dir name="/">
+endef
+
+define package_end
+    </dir>
+  </contents>
+  <dependencies>
+    <required>
+      <php>
+        <min>5.3.2</min>
+      </php>
+      <pearinstaller>
+        <min>1.4.0</min>
+      </pearinstaller>
+    </required>
+  </dependencies>
+  <phprelease />
+</package>
+endef
+
+export stub package_start package_end
 
 .PHONY: phar test sphinxdocs clean
 
@@ -45,9 +98,13 @@ sphinxdocs:
 clean:
 	git clean -df
 
+package:
+	cd lib/; echo "$$package_start" > package.xml; git ls-files | while read line; do echo "      <file md5sum=\"$$(md5 < $$line)\" name=\"$$line\" role=\"php\" />" >> package.xml; done; echo "$$package_end" >> package.xml; pear package; rm -f package.xml; cd ../
+	mv lib/Imagine-$(VERSION).tgz .
+
 release:
-	git checkout master
-	git merge develop
-	git tag $(TAG) -m "release $(TAG)"
-	git push
-	git push --tags
+	# git checkout master
+	# git merge develop
+	# git tag v$(VERSION) -m "release v$(VERSION)"
+	# git push
+	# git push --tags
