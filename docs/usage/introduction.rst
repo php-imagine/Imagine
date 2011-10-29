@@ -28,7 +28,7 @@ PEAR package
 
 Install using pear package:
 
-.. code-block:: shell
+.. code-block:: console
 
    pear channel-discover avalanche123.github.com/pear
    pear install avalanche123/Imagine-beta
@@ -38,7 +38,7 @@ Clone from GitHub
 
 Clone Imagine git repository:
 
-.. code-block:: shell
+.. code-block:: console
 
    git clone git://github.com/avalanche123/Imagine.git
 
