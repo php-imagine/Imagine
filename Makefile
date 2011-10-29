@@ -76,7 +76,28 @@ define package_end
 </package>
 endef
 
-export stub package_start package_end
+define composer
+{
+  "name": "imagine/Imagine",
+  "description": "Image processing for PHP 5.3",
+  "keywords": ["image manipulation","image processing", "drawing", "graphics"],
+  "homepage": "http://imagine.readthedocs.org/",
+  "version": "$(VERSION)-dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Bulat Shakirzyanov",
+      "email": "mallluhuct@gmail.com",
+      "homepage": "http://avalanche123.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.2"
+  }
+}
+endef
+
+export stub package_start package_end composer
 
 .PHONY: phar test sphinxdocs clean
 
@@ -103,6 +124,9 @@ package:
 	mv lib/Imagine-$(VERSION).tgz .
 
 release:
+	echo "$$composer" > composer.json
+	git add composer.json; git commit -m "updated composer.json for $(VERSION) release"
+	@echo "composer.json updated"
 	make package
 	@echo "a new package Imagine-$(VERSION).tgz has been created"
 	make phar
