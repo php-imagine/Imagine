@@ -30,7 +30,7 @@ Install using pear package:
 
 .. code-block:: console
 
-   pear channel-discover avalanche123.github.com/pear
+   pear channel-discover pear.avalanche123.com
    pear install avalanche123/Imagine-beta
 
 Clone from GitHub
