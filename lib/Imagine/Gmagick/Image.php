@@ -243,6 +243,7 @@ class Image implements ImageInterface
      */
     public function show($format, array $options = array())
     {
+        header('Content-type: '.$this->getMimeType($format));
         echo $this->get($format, $options);
 
         return $this;
@@ -487,5 +488,33 @@ class Image implements ImageInterface
         );
 
         return $pixel;
+    }
+
+    /**
+     * Internal
+     * 
+     * Get the mime type based on format.
+     * 
+     * @param string $format
+     * 
+     * @return string mime-type
+     * 
+     * @throws RuntimeException
+     */
+    private function getMimeType($format) {
+        if (!$this->supported($format)) {
+            throw new RuntimeException('Invalid format');
+        }
+
+        static $mimeTypes = array(
+            'jpeg' => 'image/jpeg',
+            'jpg'  => 'image/jpeg',
+            'gif'  => 'image/gif',
+            'png'  => 'image/png',
+            'wbmp' => 'image/vnd.wap.wbmp',
+            'xbm'  => 'image/xbm',
+        );
+
+        return $mimeTypes[$format];
     }
 }

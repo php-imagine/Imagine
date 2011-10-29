@@ -249,7 +249,7 @@ final class Image implements ImageInterface
      */
     public function show($format, array $options = array())
     {
-    	header('Content-type: '.$this->getMimeType($format));
+        header('Content-type: '.$this->getMimeType($format));
         echo $this->get($format, $options);
 
         return $this;
@@ -587,43 +587,32 @@ final class Image implements ImageInterface
         $gradient->clear();
         $gradient->destroy();
     }
-    
+
     /**
-    * Internal
-    *
-    * Get the mime type based on format.
-    *
-    * @param string $format
-    *
-    * @return string mime-type
-    *
-    * @throws RuntimeException
-    */
+     * Internal
+     * 
+     * Get the mime type based on format.
+     * 
+     * @param string $format
+     * 
+     * @return string mime-type
+     * 
+     * @throws RuntimeException
+     */
     private function getMimeType($format) {
-    	switch ($format) {
-    		case 'jpeg':
-    			return 'image/jpeg';
-    		break;
-    
-    		case 'gif':
-    			return 'image/gif';
-    		break;
-    
-    		case 'png':
-    			return 'image/png';
-    		break;
-    
-    		case 'wbmp':
-    			return 'image/vnd.wap.wbmp';
-    		break;
-    
-    		case 'xbm':
-    			return 'image/xbm';
-    		break;
-    			 
-    		default:
-    			throw new RuntimeException('Invalid format');
-    		break;
-    	}
+        if (!$this->supported($format)) {
+            throw new RuntimeException('Invalid format');
+        }
+
+        static $mimeTypes = array(
+            'jpeg' => 'image/jpeg',
+            'jpg'  => 'image/jpeg',
+            'gif'  => 'image/gif',
+            'png'  => 'image/png',
+            'wbmp' => 'image/vnd.wap.wbmp',
+            'xbm'  => 'image/xbm',
+        );
+
+        return $mimeTypes[$format];
     }
 }
