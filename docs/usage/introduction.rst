@@ -10,8 +10,8 @@ The main idea of Imagine is to avoid driver specific methods spill outside of th
 Installation
 ------------
 
-Phar file
-+++++++++
+Phar file (recommended)
++++++++++++++++++++++++
 
 `Download Imagine PHAR file here <https://github.com/avalanche123/Imagine/raw/master/imagine.phar>`_
 
@@ -23,14 +23,28 @@ Phar file
 
    var_dump(interface_exists('Imagine\Image\ImageInterface'));
 
+PEAR package
+++++++++++++
+
+Install using pear package:
+
+.. ::
+
+   pear channel-discover avalanche123.github.com/pear
+   pear install avalanche123/Imagine-beta
+
 Clone from GitHub
 +++++++++++++++++
 
+Clone Imagine git repository:
 .. ::
 
    git clone git://github.com/avalanche123/Imagine.git
 
-then require files as usual, note that classes won't be registered with autoload and you have to do it yourself, this will change in future.
+then require files as usual
+
+.. NOTE::
+   when using git clone or pear install methods, classes don't get registered with autoload and you have to do it yourself, this will change in future.
 
 Basic usage
 -----------
