@@ -504,6 +504,10 @@ final class Image implements ImageInterface
             $args[] = $options['foreground'];
         }
 
+        if (empty($filename)) {
+        	header('Content-type: '.$this->getMimeType($format));
+        }
+        
         $this->setExceptionHandler();
 
         if (false === call_user_func_array($save, $args)) {
@@ -623,5 +627,49 @@ final class Image implements ImageInterface
     private function resetExceptionHandler()
     {
         restore_error_handler();
+    }
+    
+    /**
+     * Internal
+     * 
+     * Get the mime type based on format.
+     * @see http://us2.php.net/manual/en/function.image-type-to-mime-type.php
+     * 
+     * @param string $format
+     * 
+     * @return string mime-type
+     * 
+     * @throws RuntimeException
+     */
+    private function getMimeType($format) {
+    	if (!$this->supported($format)) throw new RuntimeException('Invalid format');
+    	    	
+    	switch ($format) {
+    		case 'jpeg':
+    			$imgTypeConstant = IMAGETYPE_JPEG;
+    		break;
+
+    		case 'gif':
+    			$imgTypeConstant = IMAGETYPE_GIF;
+    		break;
+
+    		case 'png':
+    			$imgTypeConstant = IMAGETYPE_PNG;
+    		break;
+    		
+    		case 'wbmp':
+    			$imgTypeConstant = IMAGETYPE_WBMP;
+    		break;
+    		
+    		case 'xbm':
+    			$imgTypeConstant = IMAGETYPE_XBM;
+    		break;
+    			
+    		default:
+    			throw new RuntimeException('Invalid format');
+    		break;
+    	}
+    	
+    	return image_type_to_mime_type($imgTypeConstant);
     }
 }
