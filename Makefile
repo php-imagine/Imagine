@@ -105,9 +105,13 @@ package:
 release:
 	make package
 	@echo "a new package Imagine-$(VERSION).tgz has been created"
-	git checkout master
-	git merge develop
+	make phar
+	@echo "a new phar distribution has been created"
+	git add imagine.phar; git commit -m "update phar distribution for $(VERSION)"
+	@echo "phar committed"
+	git checkout master; git merge develop
+	@echo "develop merged into master"
 	git tag v$(VERSION) -m "release v$(VERSION)"
-	git push
-	git push --tags
+	@echo "tag v$(VERSION) created"
+	git push; git push --tags
 	@echo "code pushed"
