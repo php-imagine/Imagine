@@ -206,6 +206,8 @@ final class Image implements ImageInterface
      */
     public function show($format, array $options = array())
     {
+    	header('Content-type: '.$this->getMimeType($format));
+    	
         $this->saveOrOutput($format, $options);
 
         return $this;
@@ -502,10 +504,6 @@ final class Image implements ImageInterface
         if (($format === 'wbmp' || $format === 'xbm') &&
             isset($options['foreground'])) {
             $args[] = $options['foreground'];
-        }
-
-        if (empty($filename)) {
-        	header('Content-type: '.$this->getMimeType($format));
         }
         
         $this->setExceptionHandler();
