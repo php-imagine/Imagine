@@ -30,7 +30,7 @@ define package_start
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
   <name>Imagine</name>
-  <channel>avalanche123.github.com/pear</channel>
+  <channel>pear.avalanche123.com</channel>
   <summary>
     PHP 5.3 Object Oriented image manipulation library.
   </summary>
