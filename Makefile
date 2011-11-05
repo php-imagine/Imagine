@@ -13,7 +13,6 @@ spl_autoload_register(function($$class) use ($$basePath)
     }
     $$path = str_replace('\\\\', DIRECTORY_SEPARATOR, substr($$class, 8));
     $$file = $$basePath.$$path.'.php';
-    var_dump($$file);
     if (file_exists($$file)) {
         require_once $$file;
         return true;
