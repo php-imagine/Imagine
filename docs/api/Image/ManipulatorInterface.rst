@@ -2,9 +2,9 @@
 
 .. php:interface:: ManipulatorInterface
 
-   .. php:const:: ManipulatorInterface::;
+   .. php:const:: ManipulatorInterface:: THUMBNAIL_INSET    = 'inset';
 
-   .. php:const:: ManipulatorInterface::;
+   .. php:const:: ManipulatorInterface:: THUMBNAIL_OUTBOUND = 'outbound';
 
    .. php:method:: ManipulatorInterface::copy()
 
@@ -17,7 +17,7 @@
    .. php:method:: ManipulatorInterface::crop()
 
       Crops a specified box out of the source image (modifies the source image)
-Returns cropped self
+      Returns cropped self
 
       :param Imagine\\Image\\PointInterface $start:
       :param Imagine\\Image\\BoxInterface $size:
@@ -41,8 +41,8 @@ Returns cropped self
    .. php:method:: ManipulatorInterface::rotate()
 
       Rotates an image at the given angle.
-Optional $background can be used to specify the fill color of the empty
-area of rotated image.
+      Optional $background can be used to specify the fill color of the empty
+      area of rotated image.
 
       :param integer $angle:
       :param Imagine\\Image\\Color $background:
@@ -54,10 +54,10 @@ area of rotated image.
    .. php:method:: ManipulatorInterface::paste()
 
       Pastes an image into a parent image
-Throws exceptions if image exceeds parent image borders or if paste
-operation fails
+      Throws exceptions if image exceeds parent image borders or if paste
+      operation fails
 
-Returns source image
+      Returns source image
 
       :param Imagine\\Image\\ImageInterface $image:
       :param Imagine\\Image\\PointInterface $start:
@@ -73,8 +73,8 @@ Returns source image
    .. php:method:: ManipulatorInterface::save()
 
       Saves the image at a specified path, the target file extension is used
-to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are
-supported
+      to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are
+      supported
 
       :param string $path:
       :param array $options:
@@ -113,7 +113,7 @@ supported
    .. php:method:: ManipulatorInterface::thumbnail()
 
       Generates a thumbnail from a current image
-Returns it as a new image, doesn't modify the current image
+      Returns it as a new image, doesn't modify the current image
 
       :param Imagine\\Image\\BoxInterface $size:
       :param string $mode:
@@ -133,8 +133,8 @@ Returns it as a new image, doesn't modify the current image
    .. php:method:: ManipulatorInterface::fill()
 
       Fills image with provided filling, by replacing each pixel's color in
-the current image with corresponding color from FillInterface, and
-returns modified image
+      the current image with corresponding color from FillInterface, and
+      returns modified image
 
       :param Imagine\\Image\\Fill\\FillInterface $fill:
 

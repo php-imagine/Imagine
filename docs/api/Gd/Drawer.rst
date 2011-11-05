@@ -18,7 +18,7 @@
 
       This function doesn't work properly because of a bug in GD
 
-(non-PHPdoc)
+      (non-PHPdoc)
 
       :see: Imagine\\Draw\\DrawerInterface::chord()
 

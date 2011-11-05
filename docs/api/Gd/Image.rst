@@ -5,7 +5,7 @@
    .. php:method:: Image::__construct()
 
       Constructs a new Image instance using the result of
-imagecreatetruecolor()
+      imagecreatetruecolor()
 
       :param resource $resource:
 

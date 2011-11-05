@@ -39,7 +39,7 @@
    .. php:method:: ImageInterface::mask()
 
       Transforms creates a grayscale mask from current image, returns a new
-image, while keeping the existing image unmodified
+      image, while keeping the existing image unmodified
 
       :returns: Imagine\\Image\\ImageInterface
 

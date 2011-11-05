@@ -5,7 +5,7 @@
    .. php:method:: DrawerInterface::arc()
 
       Draws an arc on a starting at a given x, y coordinates under a given
-start and end angles
+      start and end angles
 
       :param Imagine\\Image\\PointInterface $center:
       :param Imagine\\Image\\BoxInterface $size:
@@ -35,7 +35,7 @@ start and end angles
    .. php:method:: DrawerInterface::ellipse()
 
       Draws and ellipse with center at the given x, y coordinates, and given
-width and height
+      width and height
 
       :param Imagine\\Image\\PointInterface $center:
       :param Imagine\\Image\\BoxInterface $size:
@@ -74,7 +74,7 @@ width and height
    .. php:method:: DrawerInterface::dot()
 
       Places a one pixel point at specific coordinates and fills it with
-specified color
+      specified color
 
       :param Imagine\\Image\\PointInterface $position:
       :param Imagine\\Image\\Color $color:
@@ -86,7 +86,7 @@ specified color
    .. php:method:: DrawerInterface::polygon()
 
       Draws a polygon using array of x, y coordinates. Must contain at least
-three coordinates
+      three coordinates
 
       :param array $coordinates:
       :param Imagine\\Image\\Color $color:
@@ -99,9 +99,9 @@ three coordinates
    .. php:method:: DrawerInterface::text()
 
       Annotates image with specified text at a given position starting on the
-top left of the final text box
+      top left of the final text box
 
-The rotation is done CW
+      The rotation is done CW
 
       :param string $string:
       :param Imagine\\Image\\AbstractFont $font:

@@ -5,7 +5,7 @@
    .. php:method:: Linear::__construct()
 
       Constructs a linear gradient with overall gradient length, and start and
-end shades, which default to 0 and 255 accordingly
+      end shades, which default to 0 and 255 accordingly
 
       :param integer $length:
       :param Imagine\\Image\\Color $start:

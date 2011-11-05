@@ -5,7 +5,7 @@
    .. php:method:: Crop::__construct()
 
       Constructs a Crop filter with given x, y, coordinates and crop width and
-height values
+      height values
 
       :param Imagine\\Image\\PointInterface $start:
       :param Imagine\\Image\\BoxInterface $size:

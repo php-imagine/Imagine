@@ -258,7 +258,7 @@ The ``Transformation`` object is an example of a composite filter, representing 
    For more information about ``Transformation`` filter `see Transformation section of Introduction to Imagine <http://speakerdeck.com/u/avalanche123/p/introduction-to-imagine?slide=57>`_
 
 
-.. _ImagineInterface: ../api/image.html#Imagine\\Image\\ImagineInterface
-.. _ImageInterface: ../api/image.html#Imagine\\Image\\ImageInterface
+.. _ImagineInterface: ../api/Image/ImagineInterface.html
+.. _ImageInterface: ../api/Image/ImageInterface.html
 .. _coordinates: coordinates.html
 .. _exceptions: exceptions.html

@@ -5,7 +5,7 @@
    .. php:method:: Paste::__construct()
 
       Constructs a Paste filter with given ImageInterface to paste and x, y
-coordinates of target position
+      coordinates of target position
 
       :param Imagine\\Image\\ImageInterface $image:
       :param Imagine\\Image\\PointInterface $start:

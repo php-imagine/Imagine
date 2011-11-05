@@ -33,7 +33,7 @@
    .. php:method:: BoxInterface::contains()
 
       Checks whether current box can fit given box at a given start position,
-start position defaults to top left corner xy(0,0)
+      start position defaults to top left corner xy(0,0)
 
       :param Imagine\\Image\\BoxInterface $box:
       :param Imagine\\Image\\PointInterface $start:
@@ -43,7 +43,7 @@ start position defaults to top left corner xy(0,0)
    .. php:method:: BoxInterface::square()
 
       Gets current box square, useful for getting total number of pixels in a
-given box
+      given box
 
       :returns: integer
 

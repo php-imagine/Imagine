@@ -2,15 +2,15 @@
 
 .. php:class:: AbstractFont
 
-   .. php:attr:: AbstractFont::$file
+   .. php:attr:: $file
 
       :var: string
 
-   .. php:attr:: AbstractFont::$size
+   .. php:attr:: $size
 
       :var: integer
 
-   .. php:attr:: AbstractFont::$color
+   .. php:attr:: $color
 
       :var: Imagine\\Image\\Color
 
@@ -18,7 +18,7 @@
 
       Constructs a font with specified $file, $size and $color
 
-The font size is to be specified in points (e.g. 10pt means 10)
+      The font size is to be specified in points (e.g. 10pt means 10)
 
       :param string $file:
       :param integer $size:

@@ -11,7 +11,7 @@
    .. php:method:: Transformation::applyFilter()
 
       Applies a given FilterInterface onto given ImageInterface and returns
-modified ImageInterface
+      modified ImageInterface
 
       :param Imagine\\Filter\\FilterInterface $filter:
       :param Imagine\\Image\\ImageInterface $image:
@@ -101,7 +101,7 @@ modified ImageInterface
    .. php:method:: Transformation::add()
 
       Registers a given FilterInterface in an internal array of filters for
-later application to an instance of ImageInterface
+      later application to an instance of ImageInterface
 
       :param Imagine\\Filter\\FilterInterface $filter:
 

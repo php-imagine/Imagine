@@ -5,10 +5,10 @@
    .. php:method:: Color::__construct()
 
       Constructs image color, e.g.:
-    - new Color('fff') - will produce non-transparent white color
-    - new Color('ffffff', 50) - will product 50% transparent white
-    - new Color(array(255, 255, 255)) - another way of getting white
-    - new Color(0x00FF00) - hexadecimal notation for green
+          - new Color('fff') - will produce non-transparent white color
+          - new Color('ffffff', 50) - will product 50% transparent white
+          - new Color(array(255, 255, 255)) - another way of getting white
+          - new Color(0x00FF00) - hexadecimal notation for green
 
       :param array|string|integer $color:
       :param integer $alpha:
@@ -40,7 +40,7 @@
    .. php:method:: Color::dissolve()
 
       Returns a copy of current color, incrementing the alpha channel by the
-given amount
+      given amount
 
       :param integer $alpha:
 
@@ -49,7 +49,7 @@ given amount
    .. php:method:: Color::lighten()
 
       Returns a copy of the current color, lightened by the specified number
-of shades
+      of shades
 
       :param integer $shade:
 
@@ -58,7 +58,7 @@ of shades
    .. php:method:: Color::darken()
 
       Returns a copy of the current color, darkened by the specified number of
-shades
+      shades
 
       :param integer $shade:
 
