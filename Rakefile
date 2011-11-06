@@ -144,7 +144,6 @@ task :composer, :version do |t, args|
       "description" => "Image processing for PHP 5.3",
       "keywords" => ["image manipulation","image processing", "drawing", "graphics"],
       "homepage" => "http://imagine.readthedocs.org/",
-      "version" => "#{version}-dev",
       "license" => "MIT",
       "authors" => [
         {
