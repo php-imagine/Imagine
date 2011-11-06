@@ -13,7 +13,13 @@ Imagine is a OOP library for image manipulation built in PHP 5.3 using the lates
     <?php
 
     $imagine = new Imagine\Gd\Imagine();
+    // or
+    $imagine = new Imagine\Imagick\Imagine();
+    // or
+    $imagine = new Imagine\Gmagick\Imagine();
+
     $size    = new Imagine\Image\Box(40, 40);
+
     $mode    = Imagine\Image\ImageInterface::THUMBNAIL_INSET;
     // or
     $mode    = Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND;
