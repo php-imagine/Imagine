@@ -600,10 +600,6 @@ final class Image implements ImageInterface
      * @throws RuntimeException
      */
     private function getMimeType($format) {
-        if (!$this->supported($format)) {
-            throw new RuntimeException('Invalid format');
-        }
-
         static $mimeTypes = array(
             'jpeg' => 'image/jpeg',
             'jpg'  => 'image/jpeg',
@@ -612,6 +608,13 @@ final class Image implements ImageInterface
             'wbmp' => 'image/vnd.wap.wbmp',
             'xbm'  => 'image/xbm',
         );
+
+        if (!isset($mimeTypes[$format])) {
+            throw new RuntimeException(sprintf(
+                'Unsupported format given. Only %s are supported, %s given',
+                implode(", ", array_keys($mimeTypes)), $format
+            ));
+        }
 
         return $mimeTypes[$format];
     }
