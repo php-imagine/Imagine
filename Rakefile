@@ -169,13 +169,13 @@ task :release, :version do |t, args|
   system "git add docs/api"
   system "git commit -m \"updated api docs for release #{version}\""
 
-  Rake::Task["composer"].invoke(args)
+  Rake::Task["composer"].invoke(version)
 
   system "git add composer.json"
   system "git commit -m \"updated composer.json for #{version} release\""
 
-  Rake::Task["pear"].invoke(args)
-  Rake::Task["phar"].invoke(args)
+  Rake::Task["pear"].invoke(version)
+  Rake::Task["phar"].invoke(version)
 
   system "git add imagine.phar"
   system "git commit -m \"update phar distribution for #{version}\""
