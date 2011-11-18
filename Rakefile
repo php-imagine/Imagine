@@ -154,6 +154,9 @@ task :composer, :version do |t, args|
       ],
       "require" => {
         "php" => ">=5.3.2"
+      },
+      "autoload" => {
+        "psr-0" => { "Imagine" => "lib/" }
       }
     ))
   end
