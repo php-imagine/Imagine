@@ -51,10 +51,10 @@ end
 task :test do
   if ENV["TRAVIS"] == 'true'
     puts "Travis CI"
-    system "apt-get install imagemagick libmagick9-dev"
+    system "sudo apt-get install imagemagick libmagick9-dev"
     system "pecl install imagick"
 
-    system "apt-get install graphicsmagick libgraphicsmagick1-dev"
+    system "sudo apt-get install graphicsmagick libgraphicsmagick1-dev"
     system "pecl install gmagick"
   end
 
