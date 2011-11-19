@@ -1,8 +1,6 @@
 require 'date'
-require 'nokogiri'
 require 'digest/md5'
 require 'fileutils'
-require 'json'
 
 class String
   def underscore
@@ -51,7 +49,43 @@ task :phar, :version do |t, args|
 end
 
 task :test do
+  if ENV["TRAVIS"] == 'true'
+    puts "Travis CI"
+    system "sudo apt-get install -y imagemagick libmagick9-dev"
+    system "pecl install imagick"
+
+    system "sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev"
+    system "pecl install gmagick"
+  end
+
+  ini_file = Hash[`php --ini`.split("\n").map {|l| l.split(/:\s+/)}]["Loaded Configuration File"]
+  original_ini_contents = File.read(ini_file)
+
+  puts "testing with gmagick enabled"
+
+  File.open(ini_file, "w") do |f|
+    f.write(original_ini_contents)
+    f.write(<<-INI.unindent)
+    extension=gmagick.so
+    INI
+  end
+
   system "phpunit tests/"
+
+  puts "testing with imagick enabled"
+  
+  File.open(ini_file, "w") do |f|
+    f.write(original_ini_contents)
+    f.write(<<-INI.unindent)
+    extension=imagick.so
+    INI
+  end
+
+  system "phpunit tests/"
+
+  File.open(ini_file, "w") do |f|
+    f.write(original_ini_contents)
+  end
 end
 
 task :sphinx do
@@ -68,6 +102,8 @@ task :clean do
 end
 
 task :pear, :version do |t, args|
+  require 'nokogiri'
+
   Dir.chdir("lib")
   version = args[:version]
   now     = DateTime.now
@@ -136,32 +172,6 @@ task :pear, :version do |t, args|
   FileUtils.mv("Imagine-#{version}.tgz", "../")
 end
 
-task :composer, :version do |t, args|
-  version = args[:version]
-  File.open("composer.json", "w") do |f|
-    f.write(JSON.pretty_generate(
-      "name" => "imagine/Imagine",
-      "description" => "Image processing for PHP 5.3",
-      "keywords" => ["image manipulation","image processing", "drawing", "graphics"],
-      "homepage" => "http://imagine.readthedocs.org/",
-      "license" => "MIT",
-      "authors" => [
-        {
-          "name" => "Bulat Shakirzyanov",
-          "email" => "mallluhuct@gmail.com",
-          "homepage" => "http://avalanche123.com"
-        }
-      ],
-      "require" => {
-        "php" => ">=5.3.2"
-      },
-      "autoload" => {
-        "psr-0" => { "Imagine" => "lib/" }
-      }
-    ))
-  end
-end
-
 task :release, :version do |t, args|
   version = args[:version]
 
@@ -171,11 +181,6 @@ task :release, :version do |t, args|
 
   system "git add docs/api"
   system "git commit -m \"updated api docs for release #{version}\""
-
-  Rake::Task["composer"].invoke(version)
-
-  system "git add composer.json"
-  system "git commit -m \"updated composer.json for #{version} release\""
 
   Rake::Task["pear"].invoke(version)
   Rake::Task["phar"].invoke(version)
