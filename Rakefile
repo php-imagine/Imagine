@@ -1,8 +1,6 @@
 require 'date'
-require 'nokogiri'
 require 'digest/md5'
 require 'fileutils'
-require 'json'
 
 class String
   def underscore
@@ -71,6 +69,8 @@ task :clean do
 end
 
 task :pear, :version do |t, args|
+  require 'nokogiri'
+
   Dir.chdir("lib")
   version = args[:version]
   now     = DateTime.now
