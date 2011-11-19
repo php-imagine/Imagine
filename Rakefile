@@ -58,13 +58,15 @@ task :test do
     system "pecl install gmagick"
   end
 
-  ini_dir = Hash[`php --ini`.split("\n").map {|l| l.split(/:\s+/)}]["Scan for additional .ini files in"]
+  ini_file = Hash[`php --ini`.split("\n").map {|l| l.split(/:\s+/)}]["Loaded Configuration File"]
+  original_ini_contents = File.read(ini_file)
 
   puts "testing with gmagick enabled"
 
   file = ini_dir + "/extensions.ini"
 
   File.open(file, "w") do |f|
+    f.write(ini_file)
     f.write(<<-INI.unindent)
     extension=gmagick.so
     INI
@@ -75,6 +77,7 @@ task :test do
   puts "testing with imagick enabled"
   
   File.open(file, "w") do |f|
+    f.write(ini_file)
     f.write(<<-INI.unindent)
     extension=imagick.so
     INI
@@ -82,7 +85,9 @@ task :test do
 
   system "phpunit tests/"
 
-  File.unlink(file)
+  File.open(file, "w") do |f|
+    f.write(ini_file)
+  end
 end
 
 task :sphinx do
