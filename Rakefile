@@ -49,7 +49,8 @@ task :phar, :version do |t, args|
 end
 
 task :test do
-  if ENV["TRAVIS"]
+  if ENV["TRAVIS"] == 'true'
+    puts "Travis CI"
     system "pecl install imagick"
   end
   system "phpunit tests/"
