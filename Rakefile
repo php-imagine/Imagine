@@ -63,10 +63,8 @@ task :test do
 
   puts "testing with gmagick enabled"
 
-  file = ini_dir + "/extensions.ini"
-
-  File.open(file, "w") do |f|
-    f.write(ini_file)
+  File.open(ini_file, "w") do |f|
+    f.write(original_ini_contents)
     f.write(<<-INI.unindent)
     extension=gmagick.so
     INI
@@ -76,8 +74,8 @@ task :test do
 
   puts "testing with imagick enabled"
   
-  File.open(file, "w") do |f|
-    f.write(ini_file)
+  File.open(ini_file, "w") do |f|
+    f.write(original_ini_contents)
     f.write(<<-INI.unindent)
     extension=imagick.so
     INI
@@ -85,8 +83,8 @@ task :test do
 
   system "phpunit tests/"
 
-  File.open(file, "w") do |f|
-    f.write(ini_file)
+  File.open(ini_file, "w") do |f|
+    f.write(original_ini_contents)
   end
 end
 
