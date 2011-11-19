@@ -51,9 +51,38 @@ end
 task :test do
   if ENV["TRAVIS"] == 'true'
     puts "Travis CI"
+    system "apt-get install imagemagick libmagick9-dev"
     system "pecl install imagick"
+
+    system "apt-get install graphicsmagick libgraphicsmagick1-dev"
+    system "pecl install gmagick"
   end
+
+  ini_dir = Hash[`php --ini`.split("\n").map {|l| l.split(/:\s+/)}]["Scan for additional .ini files in"]
+
+  puts "testing with gmagick enabled"
+
+  file = ini_dir + "/extensions.ini"
+
+  File.open(file, "w") do |f|
+    f.write(<<-INI.unindent)
+    extension=gmagick.so
+    INI
+  end
+
   system "phpunit tests/"
+
+  puts "testing with imagick enabled"
+  
+  File.open(file, "w") do |f|
+    f.write(<<-INI.unindent)
+    extension=imagick.so
+    INI
+  end
+
+  system "phpunit tests/"
+
+  File.unlink(file)
 end
 
 task :sphinx do
