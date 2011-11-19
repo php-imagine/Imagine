@@ -136,32 +136,6 @@ task :pear, :version do |t, args|
   FileUtils.mv("Imagine-#{version}.tgz", "../")
 end
 
-task :composer, :version do |t, args|
-  version = args[:version]
-  File.open("composer.json", "w") do |f|
-    f.write(JSON.pretty_generate(
-      "name" => "imagine/Imagine",
-      "description" => "Image processing for PHP 5.3",
-      "keywords" => ["image manipulation","image processing", "drawing", "graphics"],
-      "homepage" => "http://imagine.readthedocs.org/",
-      "license" => "MIT",
-      "authors" => [
-        {
-          "name" => "Bulat Shakirzyanov",
-          "email" => "mallluhuct@gmail.com",
-          "homepage" => "http://avalanche123.com"
-        }
-      ],
-      "require" => {
-        "php" => ">=5.3.2"
-      },
-      "autoload" => {
-        "psr-0" => { "Imagine" => "lib/" }
-      }
-    ))
-  end
-end
-
 task :release, :version do |t, args|
   version = args[:version]
 
@@ -171,11 +145,6 @@ task :release, :version do |t, args|
 
   system "git add docs/api"
   system "git commit -m \"updated api docs for release #{version}\""
-
-  Rake::Task["composer"].invoke(version)
-
-  system "git add composer.json"
-  system "git commit -m \"updated composer.json for #{version} release\""
 
   Rake::Task["pear"].invoke(version)
   Rake::Task["phar"].invoke(version)
