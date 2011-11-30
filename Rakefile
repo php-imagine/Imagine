@@ -43,7 +43,7 @@ task :phar, :version do |t, args|
     STUB
   end
 
-  system "phar-build -s #{Dir.pwd}/lib/Imagine -S #{Dir.pwd}/stub.php --phar #{Dir.pwd}/imagine.phar --ns"
+  system "phar-build -s #{Dir.pwd}/lib/Imagine -S #{Dir.pwd}/stub.php --phar #{Dir.pwd}/imagine.phar --ns --strip-files '.php$'"
 
   File.unlink("stub.php")
 end
