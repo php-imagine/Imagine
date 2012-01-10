@@ -136,6 +136,43 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::canvas()
+     */
+    final public function canvas(BoxInterface $size, PointInterface $placement = null, Color $background = null)
+    {
+        if (!$placement) {
+            $placement = new Point(0, 0);
+        }
+
+        $dest = $this->createImage($size, 'canvas');
+
+        if ($background) {
+            imagefill($dest, 0, 0, $this->getColor($background));
+        }
+
+        $orgSize = $this->getSize();
+
+        imagealphablending($this->resource, true);
+        imagealphablending($dest, true);
+
+        if (false === imagecopyresampled($dest, $this->resource, $placement->getX(), $placement->getY(), 0, 0,
+            $orgSize->getWidth(), $orgSize->getHeight(), $orgSize->getWidth(), $orgSize->getHeight()
+        )) {
+            throw new RuntimeException('Image canvas operation failed');
+        }
+
+        imagealphablending($this->resource, false);
+        imagealphablending($dest, false);
+
+        imagedestroy($this->resource);
+
+        $this->resource = $dest;
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::resize()
      */
     final public function resize(BoxInterface $size)

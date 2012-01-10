@@ -197,6 +197,31 @@ final class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::canvas()
+     */
+    public function canvas(BoxInterface $size, PointInterface $placement = null, Color $background = null)
+    {
+        if (!$placement) {
+            $placement = new Point(0, 0);
+        }
+
+        try {
+            if ($background) {
+                $this->imagick->setImageBackgroundColor(new \ImagickPixel((string) $background));
+            }
+
+            $this->imagick->extentImage($size->getWidth(), $size->getHeight(), $placement->getX(), $placement->getY());
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Canvas operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::resize()
      */
     public function resize(BoxInterface $size)
