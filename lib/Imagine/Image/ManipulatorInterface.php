@@ -56,6 +56,19 @@ interface ManipulatorInterface
     function resize(BoxInterface $size);
 
     /**
+     * Resizes the current image canvas and returns self
+     *
+     * @param Imagine\Image\BoxInterface $size
+     * @param Imagine\Image\PointInterface $placement
+     * @param Imagine\Image\Color $background
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return Imagine\Image\ManipulatorInterface
+     */
+    function canvas(BoxInterface $size, PointInterface $placement = null, Color $background = null);
+
+    /**
      * Rotates an image at the given angle.
      * Optional $background can be used to specify the fill color of the empty
      * area of rotated image.
