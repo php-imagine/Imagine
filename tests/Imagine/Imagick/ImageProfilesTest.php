@@ -47,6 +47,29 @@ class ImageProfilesTest extends ImagineTestCase
         $this->assertProfilesEquals($expected, $copy->getProfile(), 'Object copy');
     }
 
+    public function testImageCopySaveMaintainsICCProfile() {
+        $imagine = $this->getImagine();
+        $image = $imagine->open($this->testOn);
+        $expected = $image->getProfile('icc');
+        $copy = $image->copy();
+
+        // Save it
+        $copy->save($this->saveTo);
+        // Re-open to be sure
+        $copy = $imagine->open($this->saveTo);
+
+        $this->assertProfilesEquals($expected, $copy->getProfile('icc'), 'Simple save of copy');
+
+        // Verify that stringify-and-save maintains profiles
+        $copy = $image->copy();
+        file_put_contents($this->saveTo, $copy->get('jpg'));
+
+        // Re-open from disk
+        $copy = $imagine->open($this->saveTo);
+
+        $this->assertProfilesEquals($expected, $copy->getProfile('icc'), 'Stringify-save');
+    }
+
     protected function assertProfilesEquals($expect, $actual, $mode = '') {
         foreach ($expect as $key => $profile) {
             $this->assertTrue(isset($actual[$key]), "Profile $key missing: $mode");
