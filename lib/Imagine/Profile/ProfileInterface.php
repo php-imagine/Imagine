@@ -23,13 +23,4 @@ interface ProfileInterface
      * @return string|mixed Binary string or specific to profile type
      */
     public function get($binary = false);
-
-    /**
-     * Create new profile
-     *
-     * @param string $name Name of profile (icc, exif)
-     * @param mixed $content
-     * @param false|\Imagick $owner Image where this profile instance is stored
-     */
-    public function __construct($name, $content, $owner = false);
 }

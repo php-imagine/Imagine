@@ -526,10 +526,12 @@ final class Image implements ImageInterface
      * @param string $pattern Profiles must match pattern
      * @return array
      */
-    public function getProfile($pattern = false) {
-        if (!$this->profiles)
-            $this->profiles = $this->loadProfiles($this->imagick);
-        if (!$pattern) return $this->profiles;
+    public function getProfile($pattern = false)
+    {
+        $this->profiles = $this->profiles ?: $this->loadProfiles($this->imagick);
+        if (!$pattern) {
+            return $this->profiles;
+        }
         return array_filter($this->profiles, function($profile) use ($pattern) {
             return $profile->matches($pattern);
         });
@@ -540,7 +542,8 @@ final class Image implements ImageInterface
      * @param string $name
      * @param string|null|false $value If string, set $name to $value. If null, remove $name. If false, get $name
      */
-    public function profile($name, Profile $profile) {
+    public function profile($name, Profile $profile)
+    {
         return $this->imagick->setImageProfile($name, $profile->get(true));
     }
 
@@ -550,10 +553,12 @@ final class Image implements ImageInterface
      * @param \Imagick $imagick
      * @return array
      */
-    private function loadProfiles(\Imagick $imagick) {
+    private function loadProfiles(\Imagick $imagick)
+    {
         $profiles = array();
-        foreach ($imagick->getImageProfiles() as $name => $content)
+        foreach ($imagick->getImageProfiles() as $name => $content) {
             $profiles[$name] = new Profile($name, $content);
+        }
         return $profiles;
     }
 

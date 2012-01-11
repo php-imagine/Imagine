@@ -34,7 +34,8 @@ class ImageProfilesTest extends ImagineTestCase
     }
 
 
-    public function testImageCopyMaintainsProfiles() {
+    public function testImageCopyMaintainsProfiles()
+    {
         $imagine = $this->getImagine();
         $image = $imagine->open($this->testOn);
         $expected = $image->getProfile();
@@ -47,7 +48,8 @@ class ImageProfilesTest extends ImagineTestCase
         $this->assertProfilesEquals($expected, $copy->getProfile(), 'Object copy');
     }
 
-    public function testImageCopySaveMaintainsICCProfile() {
+    public function testImageCopySaveMaintainsICCProfile()
+    {
         $imagine = $this->getImagine();
         $image = $imagine->open($this->testOn);
         $expected = $image->getProfile('icc');
@@ -70,7 +72,8 @@ class ImageProfilesTest extends ImagineTestCase
         $this->assertProfilesEquals($expected, $copy->getProfile('icc'), 'Stringify-save');
     }
 
-    protected function assertProfilesEquals($expect, $actual, $mode = '') {
+    protected function assertProfilesEquals($expect, $actual, $mode = '')
+    {
         foreach ($expect as $key => $profile) {
             $this->assertTrue(isset($actual[$key]), "Profile $key missing: $mode");
             $this->assertEquals($profile->get(), $actual[$key]->get(), "Profile $key doesnt match expected: $mode. Content is base64 encoded");
