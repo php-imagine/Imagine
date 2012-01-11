@@ -11,7 +11,13 @@
 
 namespace Imagine\Profile;
 
-class Profile {
+class Profile implements ProfileInterface
+{
+    /**
+     * Register over all hardcoded available profiles
+     * that can be injected into images
+     * @var array
+     */
     protected static $_profiles = array(
         'icc' => array(
             'srgb' => 'sRGB_IEC61966-2-1_no_black_scaling.icc'
@@ -21,30 +27,37 @@ class Profile {
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $content;
+    protected $content;
+
+    /**
+     * @var false|\Imagick
+     */
+    protected $owner;
 
     /**
      * Create new profile
      *
      * @param string $name Name of profile (icc, exif)
      * @param mixed $content
+     * @param false|\Imagick $owner Image where this profile instance is stored
      */
-    public function __construct($name, $content) {
+    public function __construct($name, $content, $owner = false) {
         $this->name = $name;
         $this->content = $content;
+        $this->owner = $owner;
     }
 
     /**
      * Get profile content
      * @return mixed
      */
-    public function get($base64 = false) {
-        return $base64 ? base64_encode($this->content) : $this->content;
+    public function get($binary = false) {
+        return !$binary ? base64_encode($this->content) : $this->content;
     }
 
     /**
@@ -54,7 +67,7 @@ class Profile {
      * @param bool $matchContent
      */
     public function matches($pattern, $matchContent = false) {
-        $check = $matchContent ? $this->get() : $this->name;
+        $check = $matchContent ? $this->get(true) : $this->name;
         if ($pattern === '*') $pattern = '.*';
         return preg_match("#$pattern#", $check);
     }
