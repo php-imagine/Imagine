@@ -45,7 +45,7 @@ class ProfileTest extends ImagineTestCase
         $expect = 'lib/Imagine/Profile/profiles/sRGB_IEC61966-2-1_no_black_scaling.icc';
         $profile = Profile::open('icc', 'srgb');
         $this->assertTrue($profile instanceof Profile);
-        $this->assertEquals(file_get_contents($expect), $profile->get(true));
+        $this->assertEquals(file_get_contents($expect), $profile->get());
     }
 
     public function testRegisterNewProfile()
@@ -53,7 +53,7 @@ class ProfileTest extends ImagineTestCase
         $this->mockProfile = realpath($this->mockProfile);
         Profile::register('icc', 'test', $this->mockProfile);
         $profile = Profile::open('icc', 'test');
-        $this->assertEquals(file_get_contents($this->mockProfile), $profile->get(true));
+        $this->assertEquals(file_get_contents($this->mockProfile), $profile->get());
     }
 
     public function testReadImageProfiles()

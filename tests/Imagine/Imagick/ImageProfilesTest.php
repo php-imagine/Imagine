@@ -76,7 +76,7 @@ class ImageProfilesTest extends ImagineTestCase
     {
         foreach ($expect as $key => $profile) {
             $this->assertTrue(isset($actual[$key]), "Profile $key missing: $mode");
-            $this->assertEquals($profile->get(), $actual[$key]->get(), "Profile $key doesnt match expected: $mode. Content is base64 encoded");
+            $this->assertEquals(base64_encode($profile->get()), base64_encode($actual[$key]->get()), "Profile $key doesnt match expected: $mode. Content is base64 encoded");
         }
     }
 }

@@ -35,31 +35,24 @@ class Profile implements ProfileInterface
     protected $content;
 
     /**
-     * @var false|\Imagick
-     */
-    protected $owner;
-
-    /**
      * Create new profile
      *
      * @param string $name Name of profile (icc, exif)
      * @param mixed $content
-     * @param false|\Imagick $owner Image where this profile instance is stored
      */
-    public function __construct($name, $content, $owner = false)
+    public function __construct($name, $content)
     {
         $this->name = $name;
         $this->content = $content;
-        $this->owner = $owner;
     }
 
     /**
      * Get profile content
-     * @return mixed
+     * @return string Binary data
      */
-    public function get($binary = false)
+    public function get()
     {
-        return !$binary ? base64_encode($this->content) : $this->content;
+        return $this->content;
     }
 
     /**
@@ -70,7 +63,7 @@ class Profile implements ProfileInterface
      */
     public function matches($pattern, $matchContent = false)
     {
-        $check = $matchContent ? $this->get(true) : $this->name;
+        $check = $matchContent ? $this->get() : $this->name;
         if ($pattern === '*') {
             $pattern = '.*';
         }
@@ -112,7 +105,6 @@ class Profile implements ProfileInterface
      */
     public static function open($type, $name)
     {
-        $icc = static::$_profiles['icc'];
         if (!static::has($type, $name)) {
             throw new \Exception("$type profile $name does not exist");
         }

@@ -18,9 +18,7 @@ interface ProfileInterface
      * Inbuilt is binary string but various profiles can have specific parsers
      * to provide an improved interface
      *
-     * @param bool $binary Set to true to get binary data
-     *
-     * @return string|mixed Binary string or specific to profile type
+     * @return string Binary string
      */
-    public function get($binary = false);
+    public function get();
 }

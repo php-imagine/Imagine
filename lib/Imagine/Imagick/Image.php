@@ -23,6 +23,7 @@ use Imagine\Image\Fill\Gradient\Linear;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ImageInterface;
+use Imagine\Profile\ProfileInterface;
 use Imagine\Profile\Profile;
 
 final class Image implements ImageInterface
@@ -542,21 +543,21 @@ final class Image implements ImageInterface
      * @param string $name
      * @param string|null|false $value If string, set $name to $value. If null, remove $name. If false, get $name
      */
-    public function profile($name, Profile $profile)
+    public function profile($name, ProfileInterface $profile)
     {
-        return $this->imagick->setImageProfile($name, $profile->get(true));
+        return $this->imagick->setImageProfile($name, $profile->get());
     }
 
     /**
      * Load all profiles from open image
      *
-     * @param \Imagick $imagick
+     * @param \Imagick $image
      * @return array
      */
-    private function loadProfiles(\Imagick $imagick)
+    private function loadProfiles(\Imagick $image)
     {
         $profiles = array();
-        foreach ($imagick->getImageProfiles() as $name => $content) {
+        foreach ($image->getImageProfiles() as $name => $content) {
             $profiles[$name] = new Profile($name, $content);
         }
         return $profiles;
