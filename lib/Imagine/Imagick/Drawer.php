@@ -51,7 +51,7 @@ final class Drawer implements DrawerInterface
             $arc   = new \ImagickDraw();
 
             $arc->setStrokeColor($pixel);
-            $arc->setStrokeWidth(min(1, (int) $thickness));
+            $arc->setStrokeWidth(max(1, (int) $thickness));
             $arc->setFillColor('transparent');
             $arc->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
 
@@ -87,7 +87,7 @@ final class Drawer implements DrawerInterface
             $chord = new \ImagickDraw();
 
             $chord->setStrokeColor($pixel);
-            $chord->setStrokeWidth(min(1, (int) $thickness));
+            $chord->setStrokeWidth(max(1, (int) $thickness));
 
             if ($fill) {
                 $chord->setFillColor($pixel);
@@ -146,7 +146,7 @@ final class Drawer implements DrawerInterface
             $ellipse = new \ImagickDraw();
 
             $ellipse->setStrokeColor($pixel);
-            $ellipse->setStrokeWidth(min(1, (int) $thickness));
+            $ellipse->setStrokeWidth(max(1, (int) $thickness));
 
             if ($fill) {
                 $ellipse->setFillColor($pixel);
@@ -191,7 +191,7 @@ final class Drawer implements DrawerInterface
             $line  = new \ImagickDraw();
 
             $line->setStrokeColor($pixel);
-            $line->setStrokeWidth(min(1, (int) $thickness));
+            $line->setStrokeWidth(max(1, (int) $thickness));
             $line->line(
                 $start->getX(),
                 $start->getY(),
@@ -308,7 +308,7 @@ final class Drawer implements DrawerInterface
             $polygon = new \ImagickDraw();
 
             $polygon->setStrokeColor($pixel);
-            $polygon->setStrokeWidth(min(1, (int) $thickness));
+            $polygon->setStrokeWidth(max(1, (int) $thickness));
 
             if ($fill) {
                 $polygon->setFillColor($pixel);

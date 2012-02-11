@@ -108,8 +108,7 @@ final class Image implements ImageInterface
     {
         try {
             $this->imagick->flopImage();
-        }
-        catch (\ImagickException $e) {
+        } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Horizontal Flip operation failed', $e->getCode(), $e
             );
@@ -126,10 +125,26 @@ final class Image implements ImageInterface
     {
         try {
             $this->imagick->flipImage();
-        }
-        catch (\ImagickException $e) {
+        } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Vertical flip operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::strip()
+     */
+    public function strip()
+    {
+        try {
+            $this->imagick->stripImage();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Strip operation failed', $e->getCode(), $e
             );
         }
 
@@ -590,13 +605,13 @@ final class Image implements ImageInterface
 
     /**
      * Internal
-     * 
+     *
      * Get the mime type based on format.
-     * 
+     *
      * @param string $format
-     * 
+     *
      * @return string mime-type
-     * 
+     *
      * @throws RuntimeException
      */
     private function getMimeType($format) {

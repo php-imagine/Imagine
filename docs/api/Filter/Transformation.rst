@@ -50,6 +50,12 @@
 
       :see: Imagine\\Image\\ManipulatorInterface::flipVertically()
 
+   .. php:method:: Transformation::strip()
+
+      (non-PHPdoc)
+
+      :see: Imagine\\Image\\ManipulatorInterface::strip()
+
    .. php:method:: Transformation::paste()
 
       (non-PHPdoc)
