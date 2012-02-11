@@ -51,11 +51,11 @@ end
 task :test do
   if ENV["TRAVIS"] == 'true'
     puts "Travis CI"
-    system "sudo apt-get install -y imagemagick libmagick9-dev"
-    system "pyrus install pecl/imagick"
+    system "sudo apt-get install -y imagemagick libmagickwand-dev libmagickcore-dev"
+    system "sudo pyrus install pecl/imagick"
 
     system "sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev"
-    system "pyrus install pecl/gmagick-beta"
+    system "sudo pyrus install pecl/gmagick-beta"
   end
 
   ini_file = Hash[`php --ini`.split("\n").map {|l| l.split(/:\s+/)}]["Loaded Configuration File"]
