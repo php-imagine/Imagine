@@ -51,7 +51,7 @@ final class Drawer implements DrawerInterface
             $arc   = new \GmagickDraw();
 
             $arc->setstrokecolor($pixel);
-            $arc->setstrokewidth(min(1, (int) $thickness));
+            $arc->setstrokewidth(max(1, (int) $thickness));
             $arc->setfillcolor('transparent');
             $arc->arc(
                 $x - $width / 2,
@@ -92,7 +92,7 @@ final class Drawer implements DrawerInterface
             $chord = new \GmagickDraw();
 
             $chord->setstrokecolor($pixel);
-            $chord->setstrokewidth(min(1, (int) $thickness));
+            $chord->setstrokewidth(max(1, (int) $thickness));
 
             if ($fill) {
                 $chord->setfillcolor($pixel);
@@ -137,7 +137,7 @@ final class Drawer implements DrawerInterface
             $ellipse = new \GmagickDraw();
 
             $ellipse->setstrokecolor($pixel);
-            $ellipse->setstrokewidth(min(1, (int) $thickness));
+            $ellipse->setstrokewidth(max(1, (int) $thickness));
 
             if ($fill) {
                 $ellipse->setfillcolor($pixel);
@@ -178,7 +178,7 @@ final class Drawer implements DrawerInterface
             $line  = new \GmagickDraw();
 
             $line->setstrokecolor($pixel);
-            $line->setstrokewidth(min(1, (int) $thickness));
+            $line->setstrokewidth(max(1, (int) $thickness));
             $line->line(
                 $start->getX(),
                 $start->getY(),
@@ -288,7 +288,7 @@ final class Drawer implements DrawerInterface
             $polygon = new \GmagickDraw();
 
             $polygon->setstrokecolor($pixel);
-            $polygon->setstrokewidth(min(1, (int) $thickness));
+            $polygon->setstrokewidth(max(1, (int) $thickness));
 
             if ($fill) {
                 $polygon->setfillcolor($pixel);
