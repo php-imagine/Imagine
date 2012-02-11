@@ -41,8 +41,9 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw\DrawerInterface::arc()
      */
-    public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color)
+    public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $thickness = 1)
     {
+        imagesetthickness($this->resource, min(1, (int) $thickness));
         if (false === imagearc(
             $this->resource, $center->getX(), $center->getY(),
             $size->getWidth(), $size->getHeight(), $start, $end,
@@ -60,8 +61,9 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw\DrawerInterface::chord()
      */
-    public function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false)
+    public function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
     {
+        imagesetthickness($this->resource, min(1, (int) $thickness));
         if ($fill) {
             $style = IMG_ARC_CHORD;
         } else {
@@ -83,8 +85,9 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw\DrawerInterface::ellipse()
      */
-    public function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false)
+    public function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false, $thickness = 1)
     {
+        imagesetthickness($this->resource, min(1, (int) $thickness));
         if ($fill) {
             $callback = 'imagefilledellipse';
         } else {
@@ -105,8 +108,9 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw\DrawerInterface::line()
      */
-    public function line(PointInterface $start, PointInterface $end, Color $color)
+    public function line(PointInterface $start, PointInterface $end, Color $color, $thickness = 1)
     {
+        imagesetthickness($this->resource, min(1, (int) $thickness));
         if (false === imageline(
             $this->resource, $start->getX(), $start->getY(),
             $end->getX(), $end->getY(), $this->getColor($color)
@@ -121,8 +125,9 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw\DrawerInterface::pieSlice()
      */
-    public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false)
+    public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
     {
+        imagesetthickness($this->resource, min(1, (int) $thickness));
         if ($fill) {
             $style = IMG_ARC_EDGED;
         } else {
@@ -160,8 +165,9 @@ final class Drawer implements DrawerInterface
      * (non-PHPdoc)
      * @see Imagine\Draw\DrawerInterface::polygon()
      */
-    public function polygon(array $coordinates, Color $color, $fill = false)
+    public function polygon(array $coordinates, Color $color, $fill = false, $thickness = 1)
     {
+        imagesetthickness($this->resource, min(1, (int) $thickness));
         if (count($coordinates) < 3) {
             throw new InvalidArgumentException(sprintf(
                 'A polygon must consist of at least 3 points, %d given',

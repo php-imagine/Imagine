@@ -28,12 +28,13 @@ interface DrawerInterface
      * @param integer                      $start
      * @param integer                      $end
      * @param Imagine\Image\Color          $color
+     * @param integer                      $thickness
      *
      * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
-    function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color);
+    function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $thickness = 1);
 
     /**
      * Same as arc, but also connects end points with a straight line
@@ -44,12 +45,13 @@ interface DrawerInterface
      * @param integer                      $end
      * @param Imagine\Image\Color          $color
      * @param Boolean                      $fill
+     * @param integer                      $thickness
      *
      * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
-    function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false);
+    function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1);
 
     /**
      * Draws and ellipse with center at the given x, y coordinates, and given
@@ -59,12 +61,13 @@ interface DrawerInterface
      * @param Imagine\Image\BoxInterface   $size
      * @param Imagine\Image\Color          $color
      * @param Boolean                      $fill
+     * @param integer                      $thickness
      *
      * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
-    function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false);
+    function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false, $thickness = 1);
 
     /**
      * Draws a line from start(x, y) to end(x, y) coordinates
@@ -72,10 +75,11 @@ interface DrawerInterface
      * @param Imagine\Image\PointInterface $start
      * @param Imagine\Image\PointInterface $end
      * @param Imagine\Image\Color          $outline
+     * @param integer                      $thickness
      *
      * @return Imagine\Draw\DrawerInterface
      */
-    function line(PointInterface $start, PointInterface $end, Color $outline);
+    function line(PointInterface $start, PointInterface $end, Color $outline, $thickness = 1);
 
     /**
      * Same as arc, but connects end points and the center
@@ -86,12 +90,13 @@ interface DrawerInterface
      * @param integer                      $end
      * @param Imagine\Image\Color          $color
      * @param Boolean                      $fill
+     * @param integer                      $thickness
      *
      * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
-    function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false);
+    function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1);
 
     /**
      * Places a one pixel point at specific coordinates and fills it with
@@ -113,12 +118,13 @@ interface DrawerInterface
      * @param array               $coordinates
      * @param Imagine\Image\Color $color
      * @param Boolean             $fill
+     * @param integer             $thickness
      *
      * @throws Imagine\Exception\RuntimeException
      *
      * @return Imagine\Draw\DrawerInterface
      */
-    function polygon(array $coordinates, Color $color, $fill = false);
+    function polygon(array $coordinates, Color $color, $fill = false, $thickness = 1);
 
     /**
      * Annotates image with specified text at a given position starting on the
