@@ -51,7 +51,7 @@ end
 task :test do
   if ENV["TRAVIS"] == 'true'
     puts "Travis CI"
-    system "sudo apt-get install -y  imagemagick libdjvulibre-dev libwmf-dev libmagickcore-dev libmagickwand-dev"
+    system "sudo apt-get install -y  imagemagick libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev libmagickcore-dev libmagickwand-dev"
 
     system "wget http://pecl.php.net/get/imagick-3.0.1.tgz"
     system "tar -xzf imagick-3.0.1.tgz"
