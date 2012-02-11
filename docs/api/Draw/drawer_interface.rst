@@ -12,6 +12,7 @@
       :param integer $start:
       :param integer $end:
       :param Imagine\\Image\\Color $color:
+      :param integer $thickness:
 
       :throws: Imagine\\Exception\\RuntimeException
 
@@ -27,6 +28,7 @@
       :param integer $end:
       :param Imagine\\Image\\Color $color:
       :param Boolean $fill:
+      :param integer $thickness:
 
       :throws: Imagine\\Exception\\RuntimeException
 
@@ -41,6 +43,7 @@
       :param Imagine\\Image\\BoxInterface $size:
       :param Imagine\\Image\\Color $color:
       :param Boolean $fill:
+      :param integer $thickness:
 
       :throws: Imagine\\Exception\\RuntimeException
 
@@ -53,6 +56,7 @@
       :param Imagine\\Image\\PointInterface $start:
       :param Imagine\\Image\\PointInterface $end:
       :param Imagine\\Image\\Color $outline:
+      :param integer $thickness:
 
       :returns: Imagine\\Draw\\DrawerInterface
 
@@ -66,6 +70,7 @@
       :param integer $end:
       :param Imagine\\Image\\Color $color:
       :param Boolean $fill:
+      :param integer $thickness:
 
       :throws: Imagine\\Exception\\RuntimeException
 
@@ -91,6 +96,7 @@
       :param array $coordinates:
       :param Imagine\\Image\\Color $color:
       :param Boolean $fill:
+      :param integer $thickness:
 
       :throws: Imagine\\Exception\\RuntimeException
 
