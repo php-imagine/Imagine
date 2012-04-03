@@ -132,8 +132,7 @@ class Image implements ImageInterface
     {
         try {
             $this->gmagick->stripimage();
-        }
-        catch (\GmagickException $e) {
+        } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Strip operation failed', $e->getCode(), $e
             );

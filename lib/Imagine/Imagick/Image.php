@@ -108,8 +108,7 @@ final class Image implements ImageInterface
     {
         try {
             $this->imagick->flopImage();
-        }
-        catch (\ImagickException $e) {
+        } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Horizontal Flip operation failed', $e->getCode(), $e
             );
@@ -126,8 +125,7 @@ final class Image implements ImageInterface
     {
         try {
             $this->imagick->flipImage();
-        }
-        catch (\ImagickException $e) {
+        } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Vertical flip operation failed', $e->getCode(), $e
             );
@@ -144,8 +142,7 @@ final class Image implements ImageInterface
     {
         try {
             $this->imagick->stripImage();
-        }
-        catch (\ImagickException $e) {
+        } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Strip operation failed', $e->getCode(), $e
             );
