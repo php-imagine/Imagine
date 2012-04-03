@@ -132,6 +132,15 @@ interface ManipulatorInterface
     function flipVertically();
 
     /**
+     * Remove all profiles and comments
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return Imagine\Image\ManipulatorInterface
+     */
+    function strip();
+
+    /**
      * Generates a thumbnail from a current image
      * Returns it as a new image, doesn't modify the current image
      *

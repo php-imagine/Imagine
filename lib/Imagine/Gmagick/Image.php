@@ -126,6 +126,24 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::strip()
+     */
+    public function strip()
+    {
+        try {
+            $this->gmagick->stripimage();
+        }
+        catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Strip operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::paste()
      */
     public function paste(ImageInterface $image, PointInterface $start)
@@ -492,13 +510,13 @@ class Image implements ImageInterface
 
     /**
      * Internal
-     * 
+     *
      * Get the mime type based on format.
-     * 
+     *
      * @param string $format
-     * 
+     *
      * @return string mime-type
-     * 
+     *
      * @throws RuntimeException
      */
     private function getMimeType($format) {
