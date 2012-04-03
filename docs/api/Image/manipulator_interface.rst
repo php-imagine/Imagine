@@ -112,6 +112,16 @@
 
    .. php:method:: ManipulatorInterface::thumbnail()
 
+   .. php:method:: ManipulatorInterface::strip()
+
+      Removes Profiles and Comments from the image
+
+      :throws: Imagine\\Exception\\RuntimeException
+
+      :returns: Imagine\\Image\\ManipulatorInterface
+
+   .. php:method:: ManipulatorInterface::thumbnail()
+
       Generates a thumbnail from a current image
       Returns it as a new image, doesn't modify the current image
 
