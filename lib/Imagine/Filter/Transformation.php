@@ -23,6 +23,7 @@ use Imagine\Filter\Basic\Resize;
 use Imagine\Filter\Basic\Rotate;
 use Imagine\Filter\Basic\Save;
 use Imagine\Filter\Basic\Show;
+use Imagine\Filter\Basic\Strip;
 use Imagine\Filter\Basic\Thumbnail;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
@@ -128,6 +129,15 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     public function flipVertically()
     {
         return $this->add(new FlipVertically());
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::strip()
+     */
+    public function strip()
+    {
+        return $this->add(new Strip());
     }
 
     /**
