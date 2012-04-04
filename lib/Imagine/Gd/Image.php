@@ -160,7 +160,7 @@ final class Image implements ImageInterface
         imagedestroy($this->resource);
 
         $this->resource = $dest;
-        
+
         return $this;
     }
 
@@ -207,7 +207,7 @@ final class Image implements ImageInterface
     public function show($format, array $options = array())
     {
         header('Content-type: '.$this->getMimeType($format));
-        
+
         $this->saveOrOutput($format, $options);
 
         return $this;
@@ -280,6 +280,18 @@ final class Image implements ImageInterface
 
         $this->resource = $dest;
 
+        return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::strip()
+     */
+    final public function strip()
+    {
+        /**
+         * GD strips profiles and comment, so there's nothing to do here
+         */
         return $this;
     }
 
@@ -505,7 +517,7 @@ final class Image implements ImageInterface
             isset($options['foreground'])) {
             $args[] = $options['foreground'];
         }
-        
+
         $this->setExceptionHandler();
 
         if (false === call_user_func_array($save, $args)) {
@@ -629,13 +641,13 @@ final class Image implements ImageInterface
 
     /**
      * Internal
-     * 
+     *
      * Get the mime type based on format.
-     * 
+     *
      * @param string $format
-     * 
+     *
      * @return string mime-type
-     * 
+     *
      * @throws RuntimeException
      */
     private function getMimeType($format) {
