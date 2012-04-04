@@ -79,6 +79,12 @@
 
       :see: Imagine\\Image\\ManipulatorInterface::flipVertically()
 
+   .. php:method:: Image::strip()
+
+      (non-PHPdoc)
+
+      :see: Imagine\\Image\\ManipulatorInterface::strip()
+
    .. php:method:: Image::thumbnail()
 
       (non-PHPdoc)
