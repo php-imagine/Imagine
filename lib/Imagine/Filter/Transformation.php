@@ -12,7 +12,6 @@
 namespace Imagine\Filter;
 
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Filter\Advanced\Canvas;
 use Imagine\Filter\Basic\ApplyMask;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
@@ -175,15 +174,6 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     public function resize(BoxInterface $size)
     {
         return $this->add(new Resize($size));
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::canvas()
-     */
-    public function canvas(BoxInterface $size, PointInterface $placement = null, Color $background = null)
-    {
-        return $this->add(new Canvas($size, $placement, $background));
     }
 
     /**

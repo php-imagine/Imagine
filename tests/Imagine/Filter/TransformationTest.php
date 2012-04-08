@@ -51,9 +51,6 @@ class TransformationTest extends FilterTestCase
         $resize     = new Box(200, 200);
         $angle      = 90;
         $background = new Color('fff');
-        $canvasSize = new Box(800, 600);
-        $placement  = new Point(10, 10);
-        $canvasBackground = new Color('000');
 
         $image->expects($this->once())
             ->method('resize')
@@ -75,11 +72,6 @@ class TransformationTest extends FilterTestCase
             ->will($this->returnValue($thumbnail));
 
         $thumbnail->expects($this->once())
-            ->method('canvas')
-            ->with($canvasSize, $placement, $canvasBackground)
-            ->will($this->returnValue($thumbnail));
-
-        $thumbnail->expects($this->once())
             ->method('save')
             ->with($path)
             ->will($this->returnValue($thumbnail));
@@ -90,7 +82,6 @@ class TransformationTest extends FilterTestCase
             ->copy()
             ->rotate($angle, $background)
             ->thumbnail($size, ManipulatorInterface::THUMBNAIL_INSET)
-            ->canvas($canvasSize, $placement, $canvasBackground)
             ->save($path);
 
         $this->assertSame($thumbnail, $transformation->apply($image));
