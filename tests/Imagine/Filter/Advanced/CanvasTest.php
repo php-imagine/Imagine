@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Filter\Basic;
+namespace Imagine\Filter\Advanced;
 
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
@@ -21,7 +21,7 @@ use Imagine\Filter\FilterTestCase;
 class CanvasTest extends FilterTestCase
 {
     /**
-     * @covers Imagine\Filter\Basic\Canvas::apply
+     * @covers Imagine\Filter\Advanced\Canvas::apply
      *
      * @dataProvider getDataSet
      *

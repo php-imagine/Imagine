@@ -12,8 +12,8 @@
 namespace Imagine\Filter;
 
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Filter\Advanced\Canvas;
 use Imagine\Filter\Basic\ApplyMask;
-use Imagine\Filter\Basic\Canvas;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
 use Imagine\Filter\Basic\Fill;
