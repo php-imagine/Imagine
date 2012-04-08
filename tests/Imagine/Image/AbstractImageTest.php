@@ -57,20 +57,6 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals(50, $size->getHeight());
     }
 
-    public function testCanvas()
-    {
-        $factory = $this->getImagine();
-        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
-        $canvas  = $image->canvas(new Box(500, 400), new Point(10, 10), new Color('000'));
-
-        $size = $canvas->getSize();
-
-        unset($canvas);
-
-        $this->assertEquals(500, $size->getWidth());
-        $this->assertEquals(400, $size->getHeight());
-    }
-
     public function testCropResizeFlip()
     {
         $factory = $this->getImagine();
