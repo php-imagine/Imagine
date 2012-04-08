@@ -17,4 +17,9 @@ abstract class FilterTestCase extends \PHPUnit_Framework_TestCase
     {
         return $this->getMock('Imagine\\Image\\ImageInterface');
     }
+
+    protected function getImagine()
+    {
+        return $this->getMock('Imagine\\Image\\ImagineInterface');
+    }
 }
