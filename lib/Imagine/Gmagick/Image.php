@@ -192,36 +192,6 @@ class Image implements ImageInterface
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::canvas()
-     */
-    public function canvas(BoxInterface $size, PointInterface $placement = null, Color $background = null)
-    {
-        if (!$placement) {
-            $placement = new Point(0, 0);
-        }
-
-        $dest = $this->createImage($size, $background);
-
-        try {
-            $dest->compositeimage(
-                $this->gmagick,
-                \Gmagick::COMPOSITE_DEFAULT,
-                $placement->getX(),
-                $placement->getY()
-            );
-        } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Canvas operation failed', $e->getCode(), $e
-            );
-        }
-
-        $this->gmagick = $dest;
-
-        return $this;
-    }
-
-    /**
-     * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::resize()
      */
     public function resize(BoxInterface $size)
@@ -566,33 +536,5 @@ class Image implements ImageInterface
         }
 
         return $mimeTypes[$format];
-    }
-
-    /**
-     * Internal
-     *
-     * Generates a Gmagick image
-     *
-     * @param  Imagine\Image\BoxInterface $size
-     * @param  Imagine\Image\Color $color
-     *
-     * @return Gmagick
-     *
-     * @throws RuntimeException
-     *
-     */
-    private function createImage(BoxInterface $size, Color $color = null)
-    {
-        $width   = $size->getWidth();
-        $height  = $size->getHeight();
-        $color   = null !== $color ? $color : new Color('fff');
-        $gmagick = new \Gmagick();
-        $pixel   = new \GmagickPixel((string) $color);
-
-        $gmagick->newimage($width, $height, $pixel->getcolor(false));
-        $gmagick->setimagecolorspace(\Gmagick::COLORSPACE_TRANSPARENT);
-        $gmagick->setimagebackgroundcolor($pixel);
-
-        return $gmagick;
     }
 }
