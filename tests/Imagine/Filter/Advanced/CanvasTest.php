@@ -31,16 +31,18 @@ class CanvasTest extends FilterTestCase
      */
     public function testShouldCanvasImageAndReturnResult(BoxInterface $size, PointInterface $placement = null, Color $background = null)
     {
+        $placement = $placement ?: new Point(0, 0);
         $image = $this->getImage();
 
-        $image->expects($this->once())
-            ->method('canvas')
-            ->with($size, $placement, $background)
-            ->will($this->returnValue($image));
+        $canvas = $this->getImage();
+        $canvas->expects($this->once())->method('paste')->with($image, $placement);
 
-        $command = new Canvas($size, $placement, $background);
+        $imagine = $this->getImagine();
+        $imagine->expects($this->once())->method('create')->with($size, $background)->will($this->returnValue($canvas));
 
-        $this->assertSame($image, $command->apply($image));
+        $command = new Canvas($imagine, $size, $placement, $background);
+
+        $this->assertSame($canvas, $command->apply($image));
     }
 
     /**
