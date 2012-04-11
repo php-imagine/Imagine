@@ -219,6 +219,7 @@ class Image implements ImageInterface
     public function rotate($angle, Color $background = null)
     {
         try {
+            $background = $background ?: new Color('fff');
             $pixel = $this->getColor($background);
 
             $this->gmagick->rotateimage($pixel, $angle);

@@ -18,7 +18,20 @@ use Imagine\Test\ImagineTestCase;
 
 abstract class AbstractImageTest extends ImagineTestCase
 {
-    public function testRotate()
+    public function testRotateWithNoBackgroundColor()
+    {
+        $factory = $this->getImagine();
+
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image->rotate(90);
+
+        $size = $image->getSize();
+
+        $this->assertSame(126, $size->getWidth());
+        $this->assertSame(364, $size->getHeight());
+    }
+
+    public function testCopyResizedImageToImage()
     {
         $factory = $this->getImagine();
 
