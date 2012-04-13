@@ -42,6 +42,7 @@ Some of the ideas for upcoming filters:
 ## Presentations ##
 
  - [Introduction to Imagine](http://www.slideshare.net/avalanche123/introduction-toimagine)
+ - [How to Take Over the World with Lithium](http://speakerdeck.com/u/nateabele/p/how-to-take-over-the-world-with-lithium?slide=33)
 
 ## Articles ##
 
