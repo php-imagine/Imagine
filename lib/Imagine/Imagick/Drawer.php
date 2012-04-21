@@ -192,6 +192,7 @@ final class Drawer implements DrawerInterface
 
             $line->setStrokeColor($pixel);
             $line->setStrokeWidth(max(1, (int) $thickness));
+            $line->setFillColor($pixel);
             $line->line(
                 $start->getX(),
                 $start->getY(),
