@@ -235,6 +235,31 @@ class Image implements ImageInterface
     }
 
     /**
+     * Internal
+     *
+     * Applies options before save or output
+     *
+     * @param \Gmagick $image
+     * @param array $options
+     */
+    private function applyImageOptions(\Gmagick $image, array $options)
+    {
+        if(isset($options['resolution-units']) && isset($options['resolution-x'])
+          && isset($options['resolution-y'])) {
+
+            if ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
+                $image->setimageunits(\Gmagick::RESOLUTION_PIXELSPERCENTIMETER);
+            } elseif ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERINCH) {
+                $image->setimageunits(\Gmagick::RESOLUTION_PIXELSPERINCH);
+            } else {
+                throw new RuntimeException('Unsupported image unit format');
+            }
+
+            $image->setimageresolution($options['resolution-x'], $options['resolution-y']);
+        }
+    }
+
+    /**
      * (non-PHPdoc)
      * @see Imagine\Image\ManipulatorInterface::save()
      */
@@ -245,6 +270,7 @@ class Image implements ImageInterface
                 $this->gmagick->setimageformat($options['format']);
             }
 
+            $this->applyImageOptions($this->gmagick, $options);
             $this->gmagick->writeimage($path);
         } catch (\GmagickException $e) {
             throw new RuntimeException(

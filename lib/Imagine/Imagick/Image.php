@@ -527,6 +527,20 @@ final class Image implements ImageInterface
         if (isset($options['quality'])) {
             $image->setImageCompressionQuality($options['quality']);
         }
+
+        if(isset($options['resolution-units']) && isset($options['resolution-x'])
+          && isset($options['resolution-y'])) {
+
+            if($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
+                $image->setImageUnits(\Imagick::RESOLUTION_PIXELSPERCENTIMETER);
+            } elseif($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERINCH) {
+                $image->setImageUnits(\Imagick::RESOLUTION_PIXELSPERINCH);
+            } else {
+                throw new RuntimeException('Unsupported image unit format');
+            }
+
+            $image->setResolution($options['resolution-x'], $options['resolution-y']);
+        }
     }
 
     /**
