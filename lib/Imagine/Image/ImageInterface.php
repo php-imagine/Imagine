@@ -17,6 +17,9 @@ use Imagine\Exception\RuntimeException;
 
 interface ImageInterface extends ManipulatorInterface
 {
+    const RESOLUTION_PIXELSPERINCH = 'ppi';
+    const RESOLUTION_PIXELSPERCENTIMETER = 'ppc';
+    
     /**
      * Returns the image content as a binary string
      *

@@ -2,6 +2,10 @@
 
 .. php:interface:: ImagineInterface
 
+   .. php:const:: ImagineInterface:: RESOLUTION_PIXELSPERINCH       = 'ppi';
+
+   .. php:const:: ImagineInterface:: RESOLUTION_PIXELSPERCENTIMETER = 'ppc';
+
    .. php:method:: ImagineInterface::create()
 
       Creates a new empty image with an optional background color
