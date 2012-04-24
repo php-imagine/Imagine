@@ -62,7 +62,7 @@ To open an existing image, all you need is to instantiate an image factory and i
    $imagine = new Imagine\Gd\Imagine();
    // or
    $imagine = new Imagine\Imagick\Imagine();
-   
+
    $image = $imagine->open('/path/to/image.jpg');
 
 .. TIP::
@@ -84,7 +84,7 @@ Now that you've opened an image, you can perform manipulations on it:
 
    use Imagine\Image\Box;
    use Imagine\Image\Point;
-   
+
    $image->resize(new Box(15, 25))
       ->rotate(45)
       ->crop(new Point(0, 0), new Box(45, 45))
@@ -115,6 +115,78 @@ You can optionally specify the fill color for the new image, which defaults to o
    $size  = new Imagine\Image\Box(400, 300);
    $color = new Imagine\Image\Color('000', 100);
    $image = $imagine->create($size, $color);
+
+Save Images
++++++++++++
+
+Images are saved given a path and options.
+
+The following example opens a Jpg image and saves it as Png format :
+
+.. code-block:: php
+
+   <?php
+
+   $imagine = new Imagine\Imagick\Imagine();
+
+   $imagine->open('/path/to/image.jpg')
+      ->save('/path/to/image.png');
+
+Two options groups are currently supported : quality and resolution.
+
+.. TIP::
+   Default values are 75 for Jpeg quality and 72 dpi for x/y-resolution.
+
+The following example opens a Jpg image and saves it with its quality set to 50.
+
+.. code-block:: php
+
+   <?php
+
+   $imagine = new Imagine\Imagick\Imagine();
+
+   $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', array('quality' => 50));
+
+The following example opens a Jpg image and saves it with it with 150 dpi horizontal resolution and 120 dpi vertical resolution.
+
+.. code-block:: php
+
+   <?php
+
+   use Imagine\Image\ImageInterface;
+
+   $imagine = new Imagine\Imagick\Imagine();
+
+   $options = array(
+       'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
+       'resolution-x' => 150,
+       'resolution-y' => 120,
+   );
+
+   $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', $options);
+
+.. TIP::
+   You **MUST** provide a unit system when setting resolution values.
+   There are two available unit systems for resolution : ``ImageInterface::RESOLUTION_PIXELSPERINCH`` and ``ImageInterface::RESOLUTION_PIXELSPERCENTIMETER``.
+
+Of course, you can combine options :
+
+.. code-block:: php
+
+   <?php
+
+   use Imagine\Image\ImageInterface;
+
+   $imagine = new Imagine\Imagick\Imagine();
+
+   $options = array(
+       'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
+       'resolution-x' => 300,
+       'resolution-y' => 300,
+       'quality' => 100,
+   );
+
+   $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', $options);
 
 Color Class
 +++++++++++
@@ -160,36 +232,36 @@ Here is how we would approach this problem with Imagine.
    <?php
 
    use Imagine;
-   
+
    // make an empty image (canvas) 120x160px
    $collage = $imagine->create(new Imagine\Image\Box(120, 160));
-   
+
    // starting coordinates (in pixels) for inserting the first image
    $x = 0;
    $y = 0;
-   
+
    foreach (glob('/path/to/people/photos/*.jpg') as $path) {
       // open photo
       $photo = $imagine->open($path);
-      
+
       // paste photo at current position
       $collage->paste($photo, new Imagine\Image\Point($x, $y));
-      
+
       // move position by 30px to the right
       $x += 30;
-      
+
       if ($x >= 120) {
          // we reached the right border of our collage, so advance to the
          // next row and reset our column to the left.
          $y += 40;
          $x = 0;
       }
-      
+
       if ($y >= 160) {
          break; // done
       }
    }
-   
+
    $collage->save('/path/to/collage.jpg');
 
 Image Reflection Filter
@@ -207,7 +279,7 @@ Image Reflection Filter
        {
            $this->imagine = $imagine;
        }
-    
+
        public function apply(Imagine\Image\ImageInterface $image)
        {
            $size       = $image->getSize();
@@ -239,7 +311,7 @@ Image Reflection Filter
 
    $imagine = new Imagine\Gd\Imagine();
    $filter  = new ReflectionFilter($imagine);
-   
+
    $filter->apply($imagine->open('/path/to/image/to/reflect.png'))
       ->save('/path/to/processed/image.png')
    ;
