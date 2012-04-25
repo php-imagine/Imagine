@@ -28,7 +28,7 @@ class GrayscaleTest extends FilterTestCase
      * @param \Imagine\Image\Color $color
      * @param \Imagine\Image\Color $filteredColor
      */
-    public function testBorderImage(BoxInterface $size, Color $color, Color $filteredColor)
+    public function testGrayscaling(BoxInterface $size, Color $color, Color $filteredColor)
     {
         $image       = $this->getImage();
         $imageWidth  = $size->getWidth();
