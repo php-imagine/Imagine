@@ -2,36 +2,28 @@
 
 namespace Imagine\Filter\Advanced;
 
-use \Imagine\Filter\FilterInterface;
-use \Imagine\Image\Color;
-use \Imagine\Image\ImageInterface;
-use \Imagine\Image\Point;
+use Imagine\Filter\FilterInterface;
+use Imagine\Image\Color;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Point;
 
-class Grayscale implements FilterInterface
+/**
+ * The Grayscale filter calculates the gray-value based on RGB.
+ */
+class Grayscale extends OnPixelBased implements FilterInterface
 {
-    /**
-     * Applies scheduled transformation to ImageInterface instance
-     * Returns processed ImageInterface instance
-     *
-     * @param \Imagine\Image\ImageInterface $image
-     *
-     * @return \Imagine\Image\ImageInterface
-     */
-    public function apply(ImageInterface $image)
+    public function __construct()
     {
-        for ($x = 0; $x < $image->getSize()->getWidth(); $x++)
-            for ($y = 0; $y < $image->getSize()->getHeight(); $y++)
-            {
-                $point = new Point($x, $y);
-                $color = $image->getColorAt($point);
-                $gray  = round(($color->getRed() + $color->getBlue() + $color->getGreen())/3);
-                $image->draw()->dot($point, new Color(array(
-                    'red'   => $gray,
-                    'green' => $gray,
-                    'blue'  => $gray
-                )));
-            }
+        parent::__construct(function (ImageInterface $image, Point $point)
+        {
+            $color = $image->getColorAt($point);
+            $gray  = min(255, round(($color->getRed() + $color->getBlue() + $color->getGreen())/3));
 
-        return $image;
+            $image->draw()->dot($point, new Color(array(
+                'red'   => $gray,
+                'green' => $gray,
+                'blue'  => $gray
+            )));
+        });
     }
 }
