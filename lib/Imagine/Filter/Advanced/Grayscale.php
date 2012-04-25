@@ -10,11 +10,6 @@ use \Imagine\Image\Point;
 class Grayscale implements FilterInterface
 {
     /**
-     * @var Imagine\Image\PointInterface
-     */
-    private $placement;
-
-    /**
      * Applies scheduled transformation to ImageInterface instance
      * Returns processed ImageInterface instance
      *
@@ -24,12 +19,13 @@ class Grayscale implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        for ($y = 0; $y < $image->getSize()->getHeight(); $y++)
-            for ($x = 0; $x < $image->getSize()->getWidth(); $x++)
+        for ($x = 0; $x < $image->getSize()->getWidth(); $x++)
+            for ($y = 0; $y < $image->getSize()->getHeight(); $y++)
             {
-                $color = $image->getColorAt(new Point($x, $y));
+                $point = new Point($x, $y);
+                $color = $image->getColorAt($point);
                 $gray  = round(($color->getRed() + $color->getBlue() + $color->getGreen())/3);
-                $image->draw()->dot(new Point($x, $y), new Color(array(
+                $image->draw()->dot($point, new Color(array(
                     'red'   => $gray,
                     'green' => $gray,
                     'blue'  => $gray

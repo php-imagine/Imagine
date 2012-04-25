@@ -35,7 +35,7 @@ class BorderTest extends FilterTestCase
              ->method('getHeight')
              ->will($this->returnValue($height));
 
-        $draw = $this->getMock('Imagine\\Draw\\DrawerInterface');
+        $draw = $this->getDrawer();
         $draw->expects($this->exactly(4))
              ->method('line')
              ->will($this->returnValue($draw));
