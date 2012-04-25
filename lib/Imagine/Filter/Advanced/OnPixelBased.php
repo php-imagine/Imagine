@@ -18,8 +18,7 @@ class OnPixelBased implements FilterInterface
 
     public function __construct($callback)
     {
-        if (!is_callable($callback))
-        {
+        if (!is_callable($callback)) {
             throw new InvalidArgumentException('$callback has to be callable');
         }
 
