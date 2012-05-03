@@ -60,7 +60,11 @@ final class Image implements ImageInterface
     public function copy()
     {
         try {
-            $clone = clone $this->imagick;
+            if (version_compare(phpversion("imagick"), "3.1.0b1", ">=")) {
+                $clone = clone $this->imagick;
+            } else {
+                $clone = $this->imagick->clone();
+            }
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Copy operation failed', $e->getCode(), $e
