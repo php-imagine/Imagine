@@ -130,8 +130,11 @@ final class Imagine implements ImagineInterface
 
         list($width, $height, $type) = $info;
 
-        $format = $this->types[$type];
-
+        $format = null;
+        if (isset($this->types[$type]) {
+            $format = $this->types[$type];
+        }
+        
         $supported = array(
             'gif'  => 'GIF Read Support',
             'jpeg' => 'JPEG Support',
@@ -140,14 +143,14 @@ final class Imagine implements ImagineInterface
             'xbm'  => 'XBM Support'
         );
 
-        if (!$this->info[$supported[$format]]) {
+        if (null !== $format && !$this->info[$supported[$format]]) {
             throw new RuntimeException(sprintf(
                 'Installed version of GD doesn\'t support "%s" image format',
                 $format
             ));
         }
 
-        if (!function_exists('imagecreatefrom'.$format)) {
+        if (null === $format || !function_exists('imagecreatefrom'.$format)) {
             throw new InvalidArgumentException(
                 'Invalid image format specified, only "gif", "jpeg", "png", '.
                 '"wbmp", "xbm" images are supported'
