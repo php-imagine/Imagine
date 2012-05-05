@@ -131,7 +131,7 @@ final class Imagine implements ImagineInterface
         list($width, $height, $type) = $info;
 
         $format = null;
-        if (isset($this->types[$type]) {
+        if (isset($this->types[$type])) {
             $format = $this->types[$type];
         }
         
