@@ -324,7 +324,12 @@ final class Drawer implements DrawerInterface
             $text  = new \GmagickDraw();
 
             $text->setfont($font->getFile());
-            $text->setfontsize($font->getSize());
+            /**
+             * @see http://www.php.net/manual/en/imagick.queryfontmetrics.php#101027
+             *
+             * ensure font resolution is the same as GD's hard-coded 96
+             */
+            $text->setfontsize((int) ($font->getSize() * (96 / 72)));
             $text->setfillcolor($pixel);
 
             $info = $this->gmagick->queryfontmetrics($text, $string);

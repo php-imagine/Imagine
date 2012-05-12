@@ -44,7 +44,12 @@ final class Font extends AbstractFont
         $text  = new \GmagickDraw();
 
         $text->setfont($this->file);
-        $text->setfontsize($this->size);
+        /**
+         * @see http://www.php.net/manual/en/imagick.queryfontmetrics.php#101027
+         *
+         * ensure font resolution is the same as GD's hard-coded 96
+         */
+        $text->setfontsize((int) ($this->size * (96 / 72)));
         $text->setfontstyle(\Gmagick::STYLE_OBLIQUE);
 
         $info = $this->gmagick->queryfontmetrics($text, $string);

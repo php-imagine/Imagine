@@ -346,7 +346,17 @@ final class Drawer implements DrawerInterface
             $text  = new \ImagickDraw();
 
             $text->setFont($font->getFile());
-            $text->setFontSize($font->getSize());
+            /**
+             * @see http://www.php.net/manual/en/imagick.queryfontmetrics.php#101027
+             *
+             * ensure font resolution is the same as GD's hard-coded 96
+             */
+            if (version_compare(phpversion("imagick"), "3.0.2", ">=")) {
+                $text->setResolution(96, 96);
+                $text->setFontSize($font->getSize());
+            } else {
+                $text->setFontSize((int) ($font->getSize() * (96 / 72)));
+            }
             $text->setFillColor($pixel);
             $text->setTextAntialias(true);
 
