@@ -199,7 +199,7 @@ final class Imagine implements ImagineInterface
      */
     public function load($string)
     {
-        $resource = imagecreatefromstring($string);
+        $resource = @imagecreatefromstring($string);
 
         if (!is_resource($resource)) {
             throw new InvalidArgumentException('An image could not be created from the given input');
