@@ -116,7 +116,7 @@ final class Imagine implements ImagineInterface
      */
     public function open($path)
     {
-        if (!is_file($path)) {
+        if (!fopen($path, "r")) {
             throw new InvalidArgumentException(sprintf(
                 'File %s doesn\'t exist', $path
             ));
