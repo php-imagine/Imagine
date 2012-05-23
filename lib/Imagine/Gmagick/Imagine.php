@@ -35,13 +35,15 @@ class Imagine implements ImagineInterface
      */
     public function open($path)
     {
-        if (!is_file($path)) {
+        $handle = @fopen($path, 'r');
+
+        if (false === $handle) {
             throw new InvalidArgumentException(sprintf(
                 'File %s doesn\'t exist', $path
             ));
         }
 
-        return new Image(new \Gmagick($path));
+        return $this->read($handle);
     }
 
     /**
@@ -90,7 +92,13 @@ class Imagine implements ImagineInterface
             throw new InvalidArgumentException('Variable does not contain a stream resource');
         }
 
-        return $this->load(stream_get_contents($resource));
+        $content = stream_get_contents($resource);
+
+        if (false === $content) {
+            throw new InvalidArgumentException('Cannot read resource content');
+        }
+
+        return $this->load($content);
     }
 
     /**

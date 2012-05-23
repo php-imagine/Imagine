@@ -43,23 +43,15 @@ final class Imagine implements ImagineInterface
      */
     public function open($path)
     {
-        if (!is_file($path)) {
+        $handle = @fopen($path, 'r');
+
+        if (false === $handle) {
             throw new InvalidArgumentException(sprintf(
                 'File %s doesn\'t exist', $path
             ));
         }
 
-        try {
-            $imagick = new \Imagick($path);
-
-            $imagick->setImageMatte(true);
-
-            return new Image($imagick);
-        } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                sprintf('Could not open path "%s"', $path), $e->getCode(), $e
-            );
-        }
+        return $this->read($handle);
     }
 
     /**
@@ -126,7 +118,13 @@ final class Imagine implements ImagineInterface
             throw new InvalidArgumentException('Variable does not contain a stream resource');
         }
 
-        return $this->load(stream_get_contents($resource));
+        $content = stream_get_contents($resource);
+
+        if (false === $content) {
+            throw new InvalidArgumentException('Cannot read resource content');
+        }
+
+        return $this->load($content);
     }
 
     /**
