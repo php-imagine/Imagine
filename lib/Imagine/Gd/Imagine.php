@@ -116,10 +116,11 @@ final class Imagine implements ImagineInterface
      */
     public function open($path)
     {
-        if (!is_file($path)) {
-            throw new InvalidArgumentException(sprintf(
-                'File %s doesn\'t exist', $path
-            ));
+        $path_is_local = false === stripos($path,'http://');
+        
+        if ((!$path_is_local && !preg_match('~HTTP/1\.\d\s+200\s+OK~', @current(get_headers($path)))) ||
+            ($path_is_local && !is_file($path))) {
+                throw new InvalidArgumentException(sprintf('File %s doesn\'t exist', $path));
         }
 
         $info = getimagesize($path);
