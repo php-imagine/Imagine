@@ -116,12 +116,14 @@ final class Imagine implements ImagineInterface
      */
     public function open($path)
     {
-        if (!is_file($path)) {
+        $handle = @fopen($path, "r");
+        if (!fread($handle, 1)) {
             throw new InvalidArgumentException(sprintf(
                 'File %s doesn\'t exist', $path
             ));
         }
-
+        fclose($handle);
+        
         $info = getimagesize($path);
 
         if (false === $info) {
