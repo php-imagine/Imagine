@@ -78,18 +78,6 @@ final class Imagine implements ImagineInterface
         }
 
         $color = $color ? $color : new Color('fff');
-
-        if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
-            throw new RuntimeException(
-                'Could not set alphablending, savealpha and antialias values'
-            );
-        }
-
-        if (function_exists('imageantialias')) {
-            imageantialias($resource, true);
-        }
-
         $index = imagecolorallocatealpha(
             $resource, $color->getRed(), $color->getGreen(), $color->getBlue(),
             round(127 * $color->getAlpha() / 100)
@@ -107,7 +95,7 @@ final class Imagine implements ImagineInterface
             imagecolortransparent($resource, $index);
         }
 
-        return new Image($resource, $this);
+        return $this->wrap($resource);
     }
 
     /**
@@ -116,81 +104,15 @@ final class Imagine implements ImagineInterface
      */
     public function open($path)
     {
-        if (!is_file($path)) {
+        $handle = @fopen($path, 'r');
+
+        if (false === $handle) {
             throw new InvalidArgumentException(sprintf(
                 'File %s doesn\'t exist', $path
             ));
         }
 
-        $info = getimagesize($path);
-
-        if (false === $info) {
-            throw new RuntimeException('Could not collect image metadata');
-        }
-
-        list($width, $height, $type) = $info;
-
-        $format = null;
-        if (isset($this->types[$type])) {
-            $format = $this->types[$type];
-        }
-        
-        $supported = array(
-            'gif'  => 'GIF Read Support',
-            'jpeg' => 'JPEG Support',
-            'png'  => 'PNG Support',
-            'wbmp' => 'WBMP Support',
-            'xbm'  => 'XBM Support'
-        );
-
-        if (null !== $format && !$this->info[$supported[$format]]) {
-            throw new RuntimeException(sprintf(
-                'Installed version of GD doesn\'t support "%s" image format',
-                $format
-            ));
-        }
-
-        if (null === $format || !function_exists('imagecreatefrom'.$format)) {
-            throw new InvalidArgumentException(
-                'Invalid image format specified, only "gif", "jpeg", "png", '.
-                '"wbmp", "xbm" images are supported'
-            );
-        }
-
-        $resource = call_user_func('imagecreatefrom'.$format, $path);
-
-        if (!imageistruecolor($resource)) {
-            // create transparent truecolor canvas
-            $truecolor   = imagecreatetruecolor($width, $height);
-            $transparent = imagecolorallocatealpha($truecolor, 255, 255, 255, 127);
-
-            imagefill($truecolor, 0, 0, $transparent);
-            imagecolortransparent($truecolor, $transparent);
-
-            imagecopymerge($truecolor, $resource, 0, 0, 0, 0, $width, $height, 100);
-
-            imagedestroy($resource);
-            $resource = $truecolor;
-        }
-
-        if (!is_resource($resource)) {
-            throw new RuntimeException(sprintf(
-                'File "%s" could not be opened', $path
-            ));
-        }
-
-        if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
-            throw new RuntimeException(
-                'Could not set alphablending, savealpha and antialias values'
-            );
-        }
-
-        if (function_exists('imageantialias')) {
-            imageantialias($resource, true);
-        }
-
-        return new Image($resource);
+        return $this->read($handle);
     }
 
     /**
@@ -205,18 +127,7 @@ final class Imagine implements ImagineInterface
             throw new InvalidArgumentException('An image could not be created from the given input');
         }
 
-        if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
-            throw new RuntimeException(
-                'Could not set alphablending, savealpha and antialias values'
-            );
-        }
-
-        if (function_exists('imageantialias')) {
-            imageantialias($resource, true);
-        }
-
-        return new Image($resource);
+        return $this->wrap($resource);
     }
 
     /**
@@ -229,7 +140,13 @@ final class Imagine implements ImagineInterface
             throw new InvalidArgumentException('Variable does not contain a stream resource');
         }
 
-        return $this->load(stream_get_contents($resource));
+        $content = stream_get_contents($resource);
+
+        if (false === $content) {
+            throw new InvalidArgumentException('Cannot read resource content');
+        }
+
+        return $this->load($content);
     }
 
     /**
@@ -243,5 +160,38 @@ final class Imagine implements ImagineInterface
         }
 
         return new Font($file, $size, $color);
+    }
+
+    private function wrap($resource)
+    {
+
+        if (!imageistruecolor($resource)) {
+            list($width, $height) = array(imagesx($resource), imagesy($resource));
+
+            // create transparent truecolor canvas
+            $truecolor   = imagecreatetruecolor($width, $height);
+            $transparent = imagecolorallocatealpha($truecolor, 255, 255, 255, 127);
+
+            imagefill($truecolor, 0, 0, $transparent);
+            imagecolortransparent($truecolor, $transparent);
+
+            imagecopymerge($truecolor, $resource, 0, 0, 0, 0, $width, $height, 100);
+
+            imagedestroy($resource);
+            $resource = $truecolor;
+        }
+
+        if (false === imagealphablending($resource, false) ||
+            false === imagesavealpha($resource, true)) {
+            throw new RuntimeException(
+                'Could not set alphablending, savealpha and antialias values'
+            );
+        }
+
+        if (function_exists('imageantialias')) {
+            imageantialias($resource, true);
+        }
+
+        return new Image($resource);
     }
 }
