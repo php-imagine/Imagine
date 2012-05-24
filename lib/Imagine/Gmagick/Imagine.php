@@ -35,15 +35,13 @@ class Imagine implements ImagineInterface
      */
     public function open($path)
     {
-        $handle = @fopen($path, 'r');
-
-        if (false === $handle) {
+        if (!is_file($path)) {
             throw new InvalidArgumentException(sprintf(
                 'File %s doesn\'t exist', $path
             ));
         }
 
-        return $this->read($handle);
+        return new Image(new \Gmagick($path));
     }
 
     /**

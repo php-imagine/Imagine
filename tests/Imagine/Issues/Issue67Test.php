@@ -9,7 +9,7 @@ use Imagine\Exception\RuntimeException;
 
 class Issue67Test extends \PHPUnit_Framework_TestCase
 {
-    
+
     private function getImagine()
     {
         try {
@@ -31,6 +31,6 @@ class Issue67Test extends \PHPUnit_Framework_TestCase
         $imagine = $this->getImagine();
 
         $imagine->open('tests/Imagine/Fixtures/large.jpg')
-            ->save($invalidPath . 'myfile.jpg');
+            ->save($invalidPath . '/myfile.jpg');
     }
 }
