@@ -55,20 +55,27 @@ class Imagine implements ImagineInterface
         $width   = $size->getWidth();
         $height  = $size->getHeight();
         $color   = null !== $color ? $color : new Color('fff');
-        $gmagick = new \Gmagick();
-        $pixel   = new \GmagickPixel((string) $color);
 
-        if ($color->getAlpha() > 0) {
-            // TODO: implement support for transparent background
-            throw new RuntimeException('alpha transparency not implemented');
+        try {
+            $gmagick = new \Gmagick();
+            $pixel   = new \GmagickPixel((string) $color);
+
+            if ($color->getAlpha() > 0) {
+                // TODO: implement support for transparent background
+                throw new RuntimeException('alpha transparency not implemented');
+            }
+
+            $gmagick->newimage($width, $height, $pixel->getcolor(false));
+            $gmagick->setimagecolorspace(\Gmagick::COLORSPACE_TRANSPARENT);
+            // this is needed to propagate transparency
+            $gmagick->setimagebackgroundcolor($pixel);
+
+            return new Image($gmagick);
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Could not create empty image', $e->getCode(), $e
+            );
         }
-
-        $gmagick->newimage($width, $height, $pixel->getcolor(false));
-        $gmagick->setimagecolorspace(\Gmagick::COLORSPACE_TRANSPARENT);
-        // this is needed to propagate transparency
-        $gmagick->setimagebackgroundcolor($pixel);
-
-        return new Image($gmagick);
     }
 
     /**
@@ -77,9 +84,16 @@ class Imagine implements ImagineInterface
      */
     public function load($string)
     {
-        $gmagick = new \Gmagick();
-        $gmagick->readimageblob($string);
-        return new Image($gmagick);
+        try
+        {
+            $gmagick = new \Gmagick();
+            $gmagick->readimageblob($string);
+            return new Image($gmagick);
+        } catch(\GmagickException $e) {
+            throw new RuntimeException(
+                'Could not load image from string', $e->getCode(), $e
+            );
+        }
     }
 
     /**
