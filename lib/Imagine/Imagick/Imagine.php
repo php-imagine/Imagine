@@ -51,7 +51,14 @@ final class Imagine implements ImagineInterface
             ));
         }
 
-        return $this->read($handle);
+        try {
+            $image = $this->read($handle);
+        } catch(\Exception $e) {
+            fclose($handle);
+            throw $e;
+        }
+
+        return $image;
     }
 
     /**
@@ -118,13 +125,16 @@ final class Imagine implements ImagineInterface
             throw new InvalidArgumentException('Variable does not contain a stream resource');
         }
 
-        $content = stream_get_contents($resource);
-
-        if (false === $content) {
-            throw new InvalidArgumentException('Cannot read resource content');
+        try {
+            $imagick = new \Imagick();
+            $imagick->readImageFile($resource);
+        } catch(\ImagickException $e) {
+            throw new RuntimeException(
+                'Could not read image from resource', $e->getCode(), $e
+            );
         }
 
-        return $this->load($content);
+        return new Image($imagick);
     }
 
     /**

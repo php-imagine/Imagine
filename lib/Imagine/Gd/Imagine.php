@@ -112,7 +112,14 @@ final class Imagine implements ImagineInterface
             ));
         }
 
-        return $this->read($handle);
+        try {
+            $image = $this->read($handle);
+        } catch(\Exception $e) {
+            fclose($handle);
+            throw $e;
+        }
+
+        return $image;
     }
 
     /**

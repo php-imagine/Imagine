@@ -43,7 +43,16 @@ class Imagine implements ImagineInterface
             ));
         }
 
-        return $this->read($handle);
+        try {
+            $image = new Image(new \Gmagick($path));
+            fclose($handle);
+        } catch(\GmagickException $e) {
+            throw new RuntimeException(
+                sprintf('Could not open image %s', $path), $e->getCode(), $e
+            );
+        }
+
+        return $image;
     }
 
     /**
@@ -84,16 +93,16 @@ class Imagine implements ImagineInterface
      */
     public function load($string)
     {
-        try
-        {
+        try {
             $gmagick = new \Gmagick();
             $gmagick->readimageblob($string);
-            return new Image($gmagick);
         } catch(\GmagickException $e) {
             throw new RuntimeException(
                 'Could not load image from string', $e->getCode(), $e
             );
         }
+
+        return new Image($gmagick);
     }
 
     /**
@@ -109,7 +118,7 @@ class Imagine implements ImagineInterface
         $content = stream_get_contents($resource);
 
         if (false === $content) {
-            throw new InvalidArgumentException('Cannot read resource content');
+            throw new InvalidArgumentException('Couldn\'t read given resource');
         }
 
         return $this->load($content);
