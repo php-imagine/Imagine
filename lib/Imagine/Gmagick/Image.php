@@ -174,18 +174,7 @@ class Image implements ImageInterface
             );
         }
 
-        /**
-         * @see http://pecl.php.net/bugs/bug.php?id=22435
-         */
-        if (method_exists($this->gmagick, 'flattenImages')) {
-            try {
-                $this->gmagick->flattenImages();
-            } catch (\GmagickException $e) {
-                throw new RuntimeException(
-                    'Paste operation failed', $e->getCode(), $e
-                );
-            }
-        }
+        $this->flatten();
 
         return $this;
     }
@@ -271,6 +260,7 @@ class Image implements ImageInterface
             }
 
             $this->applyImageOptions($this->gmagick, $options);
+            $this->flatten();
             $this->gmagick->writeimage($path);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
@@ -509,6 +499,27 @@ class Image implements ImageInterface
             ));
         }
         throw new RuntimeException('Not Implemented!');
+    }
+
+    /**
+     * Internal
+     * 
+     * Flatten the image.
+     */
+    private function flatten()
+    {
+        /**
+         * @see http://pecl.php.net/bugs/bug.php?id=22435
+         */
+        if (method_exists($this->gmagick, 'flattenImages')) {
+            try {
+                $this->gmagick = $this->gmagick->flattenImages();
+            } catch (\GmagickException $e) {
+                throw new RuntimeException(
+                    'Flatten operation failed', $e->getCode(), $e
+                );
+            }
+        }
     }
 
     /**
