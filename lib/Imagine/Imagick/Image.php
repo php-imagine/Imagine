@@ -187,14 +187,8 @@ final class Image implements ImageInterface
                 'Paste operation failed', $e->getCode(), $e
             );
         }
-
-        try {
-            $this->imagick->flattenImages();
-        } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Paste operation failed', $e->getCode(), $e
-            );
-        }
+        
+        $this->flatten();
 
         return $this;
     }
@@ -252,6 +246,7 @@ final class Image implements ImageInterface
             }
 
             $this->applyImageOptions($this->imagick, $options);
+            $this->flatten();
             $this->imagick->writeImage($path);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
@@ -516,6 +511,22 @@ final class Image implements ImageInterface
             ),
             (int) round($pixel->getColorValue(\Imagick::COLOR_ALPHA) * 100)
         );
+    }
+    
+    /**
+     * Internal
+     * 
+     * Flatten the image.
+     */
+    private function flatten()
+    {
+        try {
+            $this->imagick = $this->imagick->flattenImages();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Flatten operation failed', $e->getCode(), $e
+            );
+        }
     }
 
     /**
