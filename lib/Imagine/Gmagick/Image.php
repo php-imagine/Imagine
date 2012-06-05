@@ -473,7 +473,7 @@ class Image implements ImageInterface
         return array_map(
             function(\GmagickPixel $pixel)
             {
-                $info = $pixel->getColor();
+                $info = $pixel->getColor(true);
                 return new Color(
                     array(
                         $info['r'],
