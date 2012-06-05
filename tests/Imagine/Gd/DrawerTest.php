@@ -28,4 +28,11 @@ class DrawerTest extends AbstractDrawerTest
     {
         return new Imagine();
     }
+    
+    protected function isFontTestSupported()
+    {
+        $infos = gd_info();
+        
+        return isset($infos['FreeType Support']) ? $infos['FreeType Support'] : false;
+    }
 }

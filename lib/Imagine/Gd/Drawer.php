@@ -28,12 +28,18 @@ final class Drawer implements DrawerInterface
     private $resource;
 
     /**
+     * @var array
+     */
+    private $info;
+
+    /**
      * Constructs Drawer with a given gd image resource
      *
      * @param resource $resource
      */
     public function __construct($resource)
     {
+        $this->loadGdInfo();
         $this->resource = $resource;
     }
 
@@ -211,6 +217,10 @@ final class Drawer implements DrawerInterface
      */
     public function text($string, AbstractFont $font, PointInterface $position, $angle = 0)
     {
+        if (!$this->info['FreeType Support']) {
+            throw new RuntimeException('GD is not compiled with FreeType support');
+        }
+        
         $angle    = -1 * $angle;
         $fontsize = $font->getSize();
         $fontfile = $font->getFile();
@@ -274,5 +284,14 @@ final class Drawer implements DrawerInterface
         }
 
         return $color;
+    }
+
+    private function loadGdInfo()
+    {
+        if (!function_exists('gd_info')) {
+            throw new RuntimeException('Gd not installed');
+        }
+
+        $this->info = gd_info();
     }
 }
