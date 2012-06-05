@@ -62,6 +62,10 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldDetermineFontSize()
     {
+        if (!$this->isFontTestSupported()) {
+            $this->markTestSkipped('This install does not support font tests');
+        }
+        
         $path    = 'tests/Imagine/Fixtures/font/Arial.ttf';
         $black   = new Color('000');
         $factory = $this->getImagine();
@@ -72,4 +76,6 @@ abstract class AbstractImagineTest extends ImagineTestCase
     abstract protected function getEstimatedFontBox();
 
     abstract protected function getImagine();
+    
+    abstract protected function isFontTestSupported();
 }

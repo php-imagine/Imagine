@@ -479,13 +479,14 @@ final class Image implements ImageInterface
             function(\ImagickPixel $pixel)
             {
                 $info = $pixel->getColor();
+                $opacity = isset($infos['a']) ? $info['a'] : 0;
                 return new Color(
                     array(
                         $info['r'],
                         $info['g'],
                         $info['b'],
                     ),
-                    (int) round($info['a'] * 100)
+                    (int) round($opacity * 100)
                 );
             },
             $pixels

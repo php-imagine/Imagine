@@ -28,4 +28,9 @@ class DrawerTest extends AbstractDrawerTest
     {
         return new Imagine();
     }
+    
+    protected function isFontTestSupported()
+    {
+        return true;
+    }
 }

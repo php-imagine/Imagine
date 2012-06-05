@@ -34,4 +34,9 @@ class ImagineTest extends AbstractImagineTest
     {
         return new Imagine();
     }
+    
+    protected function isFontTestSupported()
+    {
+        return true;
+    }
 }
