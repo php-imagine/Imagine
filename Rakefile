@@ -49,6 +49,8 @@ task :phar, :version do |t, args|
 end
 
 task :test do
+  exitcode = 0
+
   if ENV["TRAVIS"] == 'true'
     puts "Travis CI"
     system "sudo apt-get install -y  imagemagick libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev libmagickcore-dev libmagickwand-dev"
