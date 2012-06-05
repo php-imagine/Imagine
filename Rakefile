@@ -76,7 +76,7 @@ task :test do
     INI
   end
 
-  system "phpunit tests/"
+  exitcode = 1 unless system "phpunit tests/"
 
   puts "testing with imagick enabled"
   
@@ -87,11 +87,13 @@ task :test do
     INI
   end
 
-  system "phpunit tests/"
+  exitcode = 1 unless system "phpunit tests/"
 
   File.open(ini_file, "w") do |f|
     f.write(original_ini_contents)
   end
+
+  exit exitcode
 end
 
 task :sphinx do
