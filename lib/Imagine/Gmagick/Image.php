@@ -474,13 +474,14 @@ class Image implements ImageInterface
             function(\GmagickPixel $pixel)
             {
                 $info = $pixel->getColor(true);
+                $opacity = isset($infos['a']) ? $info['a'] : 0;
                 return new Color(
                     array(
                         $info['r'],
                         $info['g'],
                         $info['b'],
                     ),
-                    (int) round($info['a'] * 100)
+                    (int) round($opacity * 100)
                 );
             },
             $pixels
