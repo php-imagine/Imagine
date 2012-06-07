@@ -13,7 +13,6 @@ namespace Imagine\Test\Filter;
 
 use Imagine\Filter\Transformation;
 use Imagine\Image\Box;
-use Imagine\Image\Color;
 use Imagine\Image\Point;
 use Imagine\Image\ManipulatorInterface;
 
@@ -51,7 +50,7 @@ class TransformationTest extends FilterTestCase
         $size       = new Box(50, 50);
         $resize     = new Box(200, 200);
         $angle      = 90;
-        $background = new Color('fff');
+        $background = $this->getPalette()->color('fff');
 
         $image->expects($this->once())
             ->method('resize')

@@ -3,18 +3,19 @@
 namespace Imagine\Test\Effects;
 
 use Imagine\Image\Box;
-use Imagine\Image\Color;
 use Imagine\Image\Point;
 use Imagine\Image\ImagineInterface;
+use Imagine\Image\Palette\RGB;
 
 abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testNegate()
     {
+        $palette = new RGB();
         $imagine = $this->getImagine();
 
-        $image = $imagine->create(new Box(20, 20), new Color('ff0'));
+        $image = $imagine->create(new Box(20, 20), $palette->color('ff0'));
         $image->effects()
             ->negative();
 
@@ -28,13 +29,14 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
 
     public function testGamma()
     {
+        $palette = new RGB();
         $imagine = $this->getImagine();
 
         $r = 20;
         $g = 90;
         $b = 240;
 
-        $image = $imagine->create(new Box(20, 20), new Color(array($r, $g, $b)));
+        $image = $imagine->create(new Box(20, 20), $palette->color(array($r, $g, $b)));
         $image->effects()
             ->gamma(1.2);
 
@@ -47,13 +49,14 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
 
     public function testGrayscale()
     {
+        $palette = new RGB();
         $imagine = $this->getImagine();
 
         $r = 20;
         $g = 90;
         $b = 240;
 
-        $image = $imagine->create(new Box(20, 20), new Color(array($r, $g, $b)));
+        $image = $imagine->create(new Box(20, 20), $palette->color(array($r, $g, $b)));
         $image->effects()
             ->grayscale();
 
@@ -83,11 +86,12 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
 
     public function testColorize()
     {
+        $palette = new RGB();
         $imagine = $this->getImagine();
 
-        $blue = new Color('#0000FF');
+        $blue = $palette->color('#0000FF');
 
-        $image = $imagine->create(new Box(15, 15), new Color('000'));
+        $image = $imagine->create(new Box(15, 15), $palette->color('000'));
         $image->effects()
             ->colorize($blue);
 

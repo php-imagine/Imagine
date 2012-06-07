@@ -16,7 +16,8 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\PointInterface;
 
 /**
@@ -48,7 +49,7 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
-    public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $thickness = 1)
+    public function arc(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if (false === imagearc(
@@ -67,7 +68,7 @@ final class Drawer implements DrawerInterface
      *
      * {@inheritdoc}
      */
-    public function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
+    public function chord(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if ($fill) {
@@ -90,7 +91,7 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
-    public function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false, $thickness = 1)
+    public function ellipse(PointInterface $center, BoxInterface $size, ColorInterface $color, $fill = false, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if ($fill) {
@@ -112,7 +113,7 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
-    public function line(PointInterface $start, PointInterface $end, Color $color, $thickness = 1)
+    public function line(PointInterface $start, PointInterface $end, ColorInterface $color, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if (false === imageline(
@@ -128,7 +129,7 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
-    public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
+    public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if ($fill) {
@@ -151,7 +152,7 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
-    public function dot(PointInterface $position, Color $color)
+    public function dot(PointInterface $position, ColorInterface $color)
     {
         if (false === imagesetpixel(
             $this->resource, $position->getX(), $position->getY(),
@@ -166,7 +167,7 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
-    public function polygon(array $coordinates, Color $color, $fill = false, $thickness = 1)
+    public function polygon(array $coordinates, ColorInterface $color, $fill = false, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if (count($coordinates) < 3) {
@@ -234,14 +235,20 @@ final class Drawer implements DrawerInterface
      *
      * Generates a GD color from Color instance
      *
-     * @param Imagine\Image\Color $color
+     * @param ColorInterface $color
      *
      * @return resource
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      */
-    private function getColor(Color $color)
+    private function getColor(ColorInterface $color)
     {
+        if (!$color instanceof RGBColor) {
+            throw new InvalidArgumentException(
+                'GD driver only supports RGB colors'
+            );
+        }
+
         $gdColor = imagecolorallocatealpha(
             $this->resource,
             $color->getRed(), $color->getGreen(), $color->getBlue(),

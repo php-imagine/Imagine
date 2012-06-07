@@ -20,6 +20,10 @@ class ImageTest extends AbstractImageTest
     {
         parent::setUp();
 
+        // disable GC while https://bugs.php.net/bug.php?id=63677 is still open
+        // If GC enabled, Gmagick unit tests fail
+        gc_disable();
+
         if (!class_exists('Gmagick')) {
             $this->markTestSkipped('Gmagick is not installed');
         }
@@ -33,10 +37,5 @@ class ImageTest extends AbstractImageTest
     protected function supportMultipleLayers()
     {
         return true;
-    }
-
-    public function testColorHistogram()
-    {
-        $this->markTestSkipped('Test skipped while bug https://bugs.php.net/bug.php?id=63677 is not fixed');
     }
 }

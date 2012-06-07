@@ -2,7 +2,9 @@
 
 namespace Imagine\Test\Functional;
 
-use Imagine\Image\Color;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Box;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
@@ -33,7 +35,7 @@ class GdTransparentGifHandlingTest extends \PHPUnit_Framework_TestCase
         ;
 
         $imagine
-            ->create($size, new Color("fff", 100))
+            ->create($size)
             ->paste($image, new Point(0, 0))
             ->save($new)
         ;

@@ -12,8 +12,11 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\ImagineInterface;
+use Imagine\Image\Palette\CMYK;
+use Imagine\Image\Palette\RGB;
+use Imagine\Image\Palette\Color\CMYK as CMYKColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 
@@ -46,7 +49,9 @@ class Imagine implements ImagineInterface
         }
 
         try {
-            $image = new Image(new \Gmagick($path));
+            $gmagick = new \Gmagick($path);
+
+            $image = new Image($gmagick, $this->createPalette($gmagick));
             fclose($handle);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
@@ -60,15 +65,28 @@ class Imagine implements ImagineInterface
     /**
      * {@inheritdoc}
      */
-    public function create(BoxInterface $size, Color $color = null)
+    public function create(BoxInterface $size, ColorInterface $color = null)
     {
-        $width   = $size->getWidth();
-        $height  = $size->getHeight();
-        $color   = null !== $color ? $color : new Color('fff');
+        $width = $size->getWidth();
+        $height = $size->getHeight();
+
+        $palette = null !== $color ? $color->getPalette() : new RGB();
+        $color = null !== $color ? $color : $palette->color('fff');
 
         try {
             $gmagick = new \Gmagick();
-            $pixel   = new \GmagickPixel((string) $color);
+
+            // Gmagick does not support creation of CMYK GmagickPixel
+            // see https://bugs.php.net/bug.php?id=64466
+            if ($color instanceof CMYKColor) {
+                $switchPalette = $palette;
+                $palette = new RGB();
+                $pixel   = new \GmagickPixel($palette->color((string) $color));
+            } else {
+                $switchPalette = null;
+                $pixel   = new \GmagickPixel((string) $color);
+            }
+
 
             if ($color->getAlpha() > 0) {
                 // TODO: implement support for transparent background
@@ -80,7 +98,13 @@ class Imagine implements ImagineInterface
             // this is needed to propagate transparency
             $gmagick->setimagebackgroundcolor($pixel);
 
-            return new Image($gmagick);
+            $image = new Image($gmagick, $palette);
+
+            if ($switchPalette) {
+                $image->usePalette($switchPalette);
+            }
+
+            return $image;
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Could not create empty image', $e->getCode(), $e
@@ -102,7 +126,7 @@ class Imagine implements ImagineInterface
             );
         }
 
-        return new Image($gmagick);
+        return new Image($gmagick, $this->createPalette($gmagick));
     }
 
     /**
@@ -126,12 +150,30 @@ class Imagine implements ImagineInterface
     /**
      * {@inheritdoc}
      */
-    public function font($file, $size, Color $color)
+    public function font($file, $size, ColorInterface $color)
     {
         $gmagick = new \Gmagick();
 
         $gmagick->newimage(1, 1, 'transparent');
 
         return new Font($gmagick, $file, $size, $color);
+    }
+
+    private function createPalette(\Gmagick $gmagick)
+    {
+        switch ($gmagick->getimagecolorspace()) {
+            case \Gmagick::COLORSPACE_SRGB:
+            case \Gmagick::COLORSPACE_RGB:
+                return new RGB();
+                break;
+            case \Gmagick::COLORSPACE_CMYK:
+                return new CMYK();
+                break;
+            default:
+                throw new RuntimeException(
+                    'Only RGB and CMYK colorspace are curently supported'
+                );
+                break;
+        }
     }
 }

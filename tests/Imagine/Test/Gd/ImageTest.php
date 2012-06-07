@@ -14,6 +14,7 @@ namespace Imagine\Test\Gd;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractImageTest;
 use Imagine\Image\ImageInterface;
+use Imagine\Exception\RuntimeException;
 
 class ImageTest extends AbstractImageTest
 {
@@ -36,6 +37,52 @@ class ImageTest extends AbstractImageTest
         return array(
             array(ImageInterface::FILTER_UNDEFINED),
         );
+    }
+
+    public function providePalettes()
+    {
+        return array(
+            array('Imagine\Image\Palette\RGB', array(255, 0, 0)),
+        );
+    }
+
+    public function provideFromAndToPalettes()
+    {
+        return array(
+            array(
+                'Imagine\Image\Palette\RGB',
+                'Imagine\Image\Palette\RGB',
+            ),
+        );
+    }
+
+    public function testProfile()
+    {
+        try {
+            parent::testProfile();
+            $this->fail('A RuntimeException should have been raised');
+        } catch (RuntimeException $e) {
+
+        }
+    }
+
+    public function testPaletteIsCMYKIfCMYKImage()
+    {
+        $this->markTestSkipped('GD driver does not recognize CMYK images properly');
+    }
+
+    public function testImageResolutionChange() {
+        $this->markTestSkipped('GD driver does not support resolution options');
+    }
+
+    public function testChangeColorSpaceAndStripImage()
+    {
+        $this->markTestSkipped('GD driver does not support ICC profiles');
+    }
+
+    public function testStripGBRImageHasGoodColors()
+    {
+        $this->markTestSkipped('GD driver does not support ICC profiles');
     }
 
     protected function getImagine()
