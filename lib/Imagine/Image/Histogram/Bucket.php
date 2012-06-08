@@ -44,8 +44,7 @@ final class Bucket implements \Countable
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Countable::count()
+     * {@inheritdoc}
      */
     public function count()
     {

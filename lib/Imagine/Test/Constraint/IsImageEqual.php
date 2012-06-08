@@ -59,8 +59,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_Constraint::evaluate()
+     * {@inheritdoc}
      */
     public function evaluate($other)
     {
@@ -93,8 +92,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_SelfDescribing::toString()
+     * {@inheritdoc}
      */
     public function toString()
     {

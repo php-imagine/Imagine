@@ -54,8 +54,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::copy()
+     * {@inheritdoc}
      */
     public function copy()
     {
@@ -74,8 +73,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::crop()
+     * {@inheritdoc}
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -105,8 +103,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
+     * {@inheritdoc}
      */
     public function flipHorizontally()
     {
@@ -122,8 +119,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipVertically()
+     * {@inheritdoc}
      */
     public function flipVertically()
     {
@@ -139,8 +135,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::strip()
+     * {@inheritdoc}
      */
     public function strip()
     {
@@ -156,8 +151,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::paste()
+     * {@inheritdoc}
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -194,8 +188,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::resize()
+     * {@inheritdoc}
      */
     public function resize(BoxInterface $size)
     {
@@ -211,8 +204,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::rotate()
+     * {@inheritdoc}
      */
     public function rotate($angle, Color $background = null)
     {
@@ -235,8 +227,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::save()
+     * {@inheritdoc}
      */
     public function save($path, array $options = array())
     {
@@ -258,8 +249,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::show()
+     * {@inheritdoc}
      */
     public function show($format, array $options = array())
     {
@@ -270,8 +260,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::get()
+     * {@inheritdoc}
      */
     public function get($format, array $options = array())
     {
@@ -288,8 +277,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::__toString()
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -297,8 +285,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::thumbnail()
+     * {@inheritdoc}
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -334,8 +321,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::draw()
+     * {@inheritdoc}
      */
     public function draw()
     {
@@ -343,8 +329,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::getSize()
+     * {@inheritdoc}
      */
     public function getSize()
     {
@@ -361,8 +346,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::applyMask()
+     * {@inheritdoc}
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -413,8 +397,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::mask()
+     * {@inheritdoc}
      */
     public function mask()
     {
@@ -433,8 +416,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::fill()
+     * {@inheritdoc}
      */
     public function fill(FillInterface $fill)
     {
@@ -468,8 +450,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::histogram()
+     * {@inheritdoc}
      */
     public function histogram()
     {
@@ -494,8 +475,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::getColorAt()
+     * {@inheritdoc}
      */
     public function getColorAt(PointInterface $point) {
         if(!$point->in($this->getSize())) {

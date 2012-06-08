@@ -36,8 +36,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::arc()
+     * {@inheritdoc}
      */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $thickness = 1)
     {
@@ -72,8 +71,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::chord()
+     * {@inheritdoc}
      */
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
     {
@@ -133,8 +131,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::ellipse()
+     * {@inheritdoc}
      */
     public function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false, $thickness = 1)
     {
@@ -181,8 +178,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::line()
+     * {@inheritdoc}
      */
     public function line(PointInterface $start, PointInterface $end, Color $color, $thickness = 1)
     {
@@ -217,8 +213,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::pieSlice()
+     * {@inheritdoc}
      */
     public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
     {
@@ -252,8 +247,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::dot()
+     * {@inheritdoc}
      */
     public function dot(PointInterface $position, Color $color)
     {
@@ -284,8 +278,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::polygon()
+     * {@inheritdoc}
      */
     public function polygon(array $coordinates, Color $color, $fill = false, $thickness = 1)
     {
@@ -336,8 +329,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::text()
+     * {@inheritdoc}
      */
     public function text($string, AbstractFont $font, PointInterface $position, $angle = 0)
     {

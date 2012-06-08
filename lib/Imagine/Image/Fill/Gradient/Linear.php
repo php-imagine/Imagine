@@ -48,8 +48,7 @@ abstract class Linear implements FillInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\Fill\FillInterface::getShade()
+     * {@inheritdoc}
      */
     final public function getColor(PointInterface $position)
     {

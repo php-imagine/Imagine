@@ -63,8 +63,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::create()
+     * {@inheritdoc}
      */
     public function create(BoxInterface $size, Color $color = null)
     {
@@ -99,8 +98,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::open()
+     * {@inheritdoc}
      */
     public function open($path)
     {
@@ -123,8 +121,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::load()
+     * {@inheritdoc}
      */
     public function load($string)
     {
@@ -138,8 +135,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::read()
+     * {@inheritdoc}
      */
     public function read($resource)
     {
@@ -157,8 +153,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::font()
+     * {@inheritdoc}
      */
     public function font($file, $size, Color $color)
     {
@@ -171,7 +166,6 @@ final class Imagine implements ImagineInterface
 
     private function wrap($resource)
     {
-
         if (!imageistruecolor($resource)) {
             list($width, $height) = array(imagesx($resource), imagesy($resource));
 

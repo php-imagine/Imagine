@@ -35,9 +35,6 @@ interface ImageInterface extends ManipulatorInterface
     /**
      * Returns the image content as a PNG binary string
      *
-     * @param string $format
-     * @param array  $options
-     *
      * @throws Imagine\Exception\RuntimeException
      *
      * @return string binary

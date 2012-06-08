@@ -30,8 +30,7 @@ class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::open()
+     * {@inheritdoc}
      */
     public function open($path)
     {
@@ -56,8 +55,7 @@ class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::create()
+     * {@inheritdoc}
      */
     public function create(BoxInterface $size, Color $color = null)
     {
@@ -88,8 +86,7 @@ class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::load()
+     * {@inheritdoc}
      */
     public function load($string)
     {
@@ -106,8 +103,7 @@ class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::read()
+     * {@inheritdoc}
      */
     public function read($resource)
     {
@@ -125,8 +121,7 @@ class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::font()
+     * {@inheritdoc}
      */
     public function font($file, $size, Color $color)
     {

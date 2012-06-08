@@ -62,8 +62,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * Applies a given FilterInterface onto given ImageInterface and returns
      * modified ImageInterface
      *
-     * @param Imagine\Filter\FilterInterface $filter
      * @param Imagine\Image\ImageInterface   $image
+     * @param Imagine\Filter\FilterInterface $filter
      *
      * @return Imagine\Image\ImageInterface
      * @throws Imagine\Exception\InvalidArgumentException
@@ -83,8 +83,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {
@@ -96,8 +95,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::copy()
+     * {@inheritdoc}
      */
     public function copy()
     {
@@ -105,8 +103,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::crop()
+     * {@inheritdoc}
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -114,8 +111,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
+     * {@inheritdoc}
      */
     public function flipHorizontally()
     {
@@ -123,8 +119,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipVertically()
+     * {@inheritdoc}
      */
     public function flipVertically()
     {
@@ -132,8 +127,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::strip()
+     * {@inheritdoc}
      */
     public function strip()
     {
@@ -141,8 +135,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::paste()
+     * {@inheritdoc}
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -150,8 +143,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::applyMask()
+     * {@inheritdoc}
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -159,8 +151,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::fill()
+     * {@inheritdoc}
      */
     public function fill(FillInterface $fill)
     {
@@ -168,8 +159,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::resize()
+     * {@inheritdoc}
      */
     public function resize(BoxInterface $size)
     {
@@ -177,8 +167,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::rotate()
+     * {@inheritdoc}
      */
     public function rotate($angle, Color $background = null)
     {
@@ -186,8 +175,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::save()
+     * {@inheritdoc}
      */
     public function save($path, array $options = array())
     {
@@ -195,8 +183,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::show()
+     * {@inheritdoc}
      */
     public function show($format, array $options = array())
     {
@@ -204,8 +191,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::thumbnail()
+     * {@inheritdoc}
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
