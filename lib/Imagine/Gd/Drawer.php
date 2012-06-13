@@ -270,12 +270,12 @@ final class Drawer implements DrawerInterface
      */
     private function getColor(Color $color)
     {
-        $color = imagecolorallocatealpha(
+        $gdColor = imagecolorallocatealpha(
             $this->resource,
             $color->getRed(), $color->getGreen(), $color->getBlue(),
             round(127 * $color->getAlpha() / 100)
         );
-        if (false === $color) {
+        if (false === $gdColor) {
             throw new RuntimeException(sprintf(
                 'Unable to allocate color "RGB(%s, %s, %s)" with '.
                 'transparency of %d percent', $color->getRed(),
@@ -283,7 +283,7 @@ final class Drawer implements DrawerInterface
             ));
         }
 
-        return $color;
+        return $gdColor;
     }
 
     private function loadGdInfo()
