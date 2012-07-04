@@ -162,7 +162,17 @@ final class Image implements ImageInterface
         $this->resource = $dest;
 
         return $this;
-    }
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see Imagine|Image|ManipulatorInterface::blur()
+	 */
+	final public function blur()
+	{
+		imagefilter($this->resource, IMG_FILTER_GAUSSIAN_BLUR);
+		return $this;
+	}
 
     /**
      * (non-PHPdoc)

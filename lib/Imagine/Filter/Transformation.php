@@ -20,6 +20,7 @@ use Imagine\Filter\Basic\FlipVertically;
 use Imagine\Filter\Basic\FlipHorizontally;
 use Imagine\Filter\Basic\Paste;
 use Imagine\Filter\Basic\Resize;
+use Imagine\Filter\Basic\Blur;
 use Imagine\Filter\Basic\Rotate;
 use Imagine\Filter\Basic\Save;
 use Imagine\Filter\Basic\Show;
@@ -174,6 +175,15 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     public function resize(BoxInterface $size)
     {
         return $this->add(new Resize($size));
+	}
+
+	/**
+     * (non-PHPdoc)
+     * @see Imagine\Image\ManipulatorInterface::resize()
+     */
+    public function blur()
+    {
+        return $this->add(new Blur());
     }
 
     /**

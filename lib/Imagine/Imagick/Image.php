@@ -208,7 +208,24 @@ final class Image implements ImageInterface
         }
 
         return $this;
-    }
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see Imagine|Image|ManipulatorInterface::blur()
+	 */
+	public function blur()
+	{
+		try {
+            $this->imagick->blurImage(0, 1, \Imagick::CHANNEL_ALL);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Blur operation failed', $e->getCode(), $e
+            );
+        }
+
+        return $this;
+	}
 
     /**
      * (non-PHPdoc)

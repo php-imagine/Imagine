@@ -54,6 +54,15 @@ interface ManipulatorInterface
      * @return Imagine\Image\ManipulatorInterface
      */
     function resize(BoxInterface $size);
+	
+	/**
+     * Blurs current image with a Gaussian blur of 1px radius
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return Imagine\Image\ManipulatorInterface
+     */
+    function blur();
 
     /**
      * Rotates an image at the given angle.
