@@ -200,6 +200,23 @@ class Image implements ImageInterface
 
         return $this;
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see Imagine|Image|ManipulatorInterface::blur()
+     */
+    final public function blur()
+    {
+        try {
+            $this->gmagick->blurImage(0, 1, \Gmagick::CHANNEL_ALL);
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Blur operation failed', $e->getCode(), $e
+            );
+        }
+        
+        return $this;
+    }
 
     /**
      * (non-PHPdoc)
