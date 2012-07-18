@@ -23,12 +23,12 @@ use Imagine\Image\PointInterface;
 final class Drawer implements DrawerInterface
 {
     /**
-     * @var Gmagick
+     * @var \Gmagick
      */
     private $gmagick;
 
     /**
-     * @param Gmagick $gmagick
+     * @param \Gmagick $gmagick
      */
     public function __construct(\Gmagick $gmagick)
     {
@@ -272,8 +272,7 @@ final class Drawer implements DrawerInterface
             ));
         }
 
-        $points = array_map(function(PointInterface $p)
-        {
+        $points = array_map(function(PointInterface $p) {
             return array('x' => $p->getX(), 'y' => $p->getY());
         }, $coordinates);
 
@@ -355,7 +354,7 @@ final class Drawer implements DrawerInterface
     /**
      * Gets specifically formatted color string from Color instance
      *
-     * @param Imagine\Image\Color $color
+     * @param Color $color
      *
      * @return string
      */

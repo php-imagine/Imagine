@@ -31,7 +31,7 @@ final class Point implements PointInterface
      * @param integer $x
      * @param integer $y
      *
-     * @throws Imagine\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($x, $y)
     {

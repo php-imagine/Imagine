@@ -38,7 +38,7 @@ final class Imagine implements ImagineInterface
     private $info;
 
     /**
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function __construct()
     {
@@ -112,7 +112,7 @@ final class Imagine implements ImagineInterface
 
         try {
             $image = $this->read($handle);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             fclose($handle);
             throw $e;
         }

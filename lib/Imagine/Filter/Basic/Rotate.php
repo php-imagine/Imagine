@@ -23,15 +23,15 @@ class Rotate implements FilterInterface
     private $angle;
 
     /**
-     * @var Imagine\Image\Color
+     * @var Color
      */
     private $background;
 
     /**
      * Constructs Rotate filter with given angle and background color
      *
-     * @param integer             $angle
-     * @param Imagine\Image\Color $background
+     * @param integer $angle
+     * @param Color   $background
      */
     public function __construct($angle, Color $background = null)
     {

@@ -20,7 +20,7 @@ use Imagine\Exception\RuntimeException;
 class Imagine implements ImagineInterface
 {
     /**
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function __construct()
     {
@@ -45,7 +45,7 @@ class Imagine implements ImagineInterface
         try {
             $image = new Image(new \Gmagick($path));
             fclose($handle);
-        } catch(\GmagickException $e) {
+        } catch (\GmagickException $e) {
             throw new RuntimeException(
                 sprintf('Could not open image %s', $path), $e->getCode(), $e
             );
@@ -93,7 +93,7 @@ class Imagine implements ImagineInterface
         try {
             $gmagick = new \Gmagick();
             $gmagick->readimageblob($string);
-        } catch(\GmagickException $e) {
+        } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Could not load image from string', $e->getCode(), $e
             );

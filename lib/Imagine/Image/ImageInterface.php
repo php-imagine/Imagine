@@ -11,73 +11,75 @@
 
 namespace Imagine\Image;
 
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\OutOfBoundsException;
+use Imagine\Draw\DrawerInterface;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\Image\PointInterface;
 use Imagine\Exception\RuntimeException;
 
 interface ImageInterface extends ManipulatorInterface
 {
     const RESOLUTION_PIXELSPERINCH = 'ppi';
     const RESOLUTION_PIXELSPERCENTIMETER = 'ppc';
-    
+
     /**
      * Returns the image content as a binary string
      *
      * @param string $format
      * @param array  $options
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
      * @return string binary
      */
-    function get($format, array $options = array());
+    public function get($format, array $options = array());
 
     /**
      * Returns the image content as a PNG binary string
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
      * @return string binary
      */
-    function __toString();
+    public function __toString();
 
     /**
      * Instantiates and returns a DrawerInterface instance for image drawing
      *
-     * @return Imagine\Draw\DrawerInterface
+     * @return DrawerInterface
      */
-    function draw();
+    public function draw();
 
     /**
      * Returns current image size
      *
-     * @return Imagine\Image\BoxInterface
+     * @return BoxInterface
      */
-    function getSize();
+    public function getSize();
 
     /**
      * Transforms creates a grayscale mask from current image, returns a new
      * image, while keeping the existing image unmodified
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
-    function mask();
+    public function mask();
 
     /**
      * Returns array of image colors as Imagine\Image\Color instances
      *
      * @return array
      */
-    function histogram();
+    public function histogram();
 
     /**
      * Returns color at specified positions of current image
      *
-     * @param Imagine\Image\PointInterface $point
+     * @param PointInterface $point
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\Color
+     * @return Color
      */
-    function getColorAt(PointInterface $point);
+    public function getColorAt(PointInterface $point);
 }

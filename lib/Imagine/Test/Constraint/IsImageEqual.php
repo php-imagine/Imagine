@@ -34,8 +34,8 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
 
     /**
      * @param Imagine\Image\ImageInterface $value
-     * @param float                  $delta
-     * @param integer                $buckets
+     * @param float                        $delta
+     * @param integer                      $buckets
      *
      * @throws InvalidArgumentException
      */
@@ -141,8 +141,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
 
         $total = $image->getSize()->square();
 
-        $callback = function (Bucket $bucket) use ($total)
-        {
+        $callback = function (Bucket $bucket) use ($total) {
             return count($bucket) / $total;
         };
 

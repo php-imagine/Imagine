@@ -28,7 +28,7 @@ final class Drawer implements DrawerInterface
     private $imagick;
 
     /**
-     * @param Imagick $imagick
+     * @param \Imagick $imagick
      */
     public function __construct(\Imagick $imagick)
     {
@@ -290,8 +290,7 @@ final class Drawer implements DrawerInterface
         }
 
         $points = array_map(
-            function(PointInterface $p)
-            {
+            function(PointInterface $p) {
                 return array('x' => $p->getX(), 'y' => $p->getY());
             },
             $coordinates
@@ -387,7 +386,7 @@ final class Drawer implements DrawerInterface
     /**
      * Gets specifically formatted color string from Color instance
      *
-     * @param Imagine\Image\Color $color
+     * @param Color $color
      *
      * @return string
      */

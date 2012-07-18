@@ -26,14 +26,14 @@ use Imagine\Image\PointInterface;
 class Image implements ImageInterface
 {
     /**
-     * @var Gmagick
+     * @var \Gmagick
      */
     private $gmagick;
 
     /**
      * Constructs Image with Gmagick and Imagine instances
      *
-     * @param Gmagick $gmagick
+     * @param \Gmagick $gmagick
      */
     public function __construct(\Gmagick $gmagick)
     {
@@ -221,7 +221,7 @@ class Image implements ImageInterface
      * Applies options before save or output
      *
      * @param \Gmagick $image
-     * @param array $options
+     * @param array    $options
      */
     private function applyImageOptions(\Gmagick $image, array $options)
     {
@@ -352,6 +352,7 @@ class Image implements ImageInterface
                 'Get size operation failed', $e->getCode(), $e
             );
         }
+
         return new Box($width, $height);
     }
 
@@ -452,10 +453,10 @@ class Image implements ImageInterface
         $pixels = $this->gmagick->getimagehistogram();
 
         return array_map(
-            function(\GmagickPixel $pixel)
-            {
+            function(\GmagickPixel $pixel) {
                 $info = $pixel->getColor(true);
                 $opacity = isset($infos['a']) ? $info['a'] : 0;
+
                 return new Color(
                     array(
                         $info['r'],
@@ -472,8 +473,9 @@ class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function getColorAt(PointInterface $point) {
-        if(!$point->in($this->getSize())) {
+    public function getColorAt(PointInterface $point)
+    {
+        if (!$point->in($this->getSize())) {
             throw new RuntimeException(sprintf(
                 'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
@@ -484,7 +486,7 @@ class Image implements ImageInterface
 
     /**
      * Internal
-     * 
+     *
      * Flatten the image.
      */
     private function flatten()
@@ -506,7 +508,7 @@ class Image implements ImageInterface
     /**
      * Gets specifically formatted color string from Color instance
      *
-     * @param Imagine\Image\Color $color
+     * @param Color $color
      *
      * @return string
      */
@@ -537,7 +539,8 @@ class Image implements ImageInterface
      *
      * @throws RuntimeException
      */
-    private function getMimeType($format) {
+    private function getMimeType($format)
+    {
         static $mimeTypes = array(
             'jpeg' => 'image/jpeg',
             'jpg'  => 'image/jpeg',

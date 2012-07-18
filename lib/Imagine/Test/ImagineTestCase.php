@@ -20,9 +20,9 @@ class ImagineTestCase extends \PHPUnit_Framework_TestCase
      *
      * @param Imagine\Image\ImageInterface $expected
      * @param Imagine\Image\ImageInterface $actual
-     * @param string                 $message
-     * @param float                  $delta
-     * @param integer                $buckets
+     * @param string                       $message
+     * @param float                        $delta
+     * @param integer                      $buckets
      */
     public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, $buckets = 4)
     {

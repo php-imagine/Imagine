@@ -18,11 +18,9 @@ use Imagine\Image\Color;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
-use Imagine\Image\Point\Center;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Gd\Imagine;
 
 final class Image implements ImageInterface
 {
@@ -213,6 +211,7 @@ final class Image implements ImageInterface
     {
         ob_start();
         $this->saveOrOutput($format, $options);
+
         return ob_get_clean();
     }
 
@@ -280,6 +279,7 @@ final class Image implements ImageInterface
         /**
          * GD strips profiles and comment, so there's nothing to do here
          */
+
         return $this;
     }
 
@@ -434,8 +434,9 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function getColorAt(PointInterface $point) {
-        if(!$point->in($this->getSize())) {
+    public function getColorAt(PointInterface $point)
+    {
+        if (!$point->in($this->getSize())) {
             throw new RuntimeException(sprintf(
                 'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
@@ -443,6 +444,7 @@ final class Image implements ImageInterface
         }
         $index = imagecolorat($this->resource, $point->getX(), $point->getY());
         $info  = imagecolorsforindex($this->resource, $index);
+
         return new Color(array(
                 $info['red'],
                 $info['green'],
@@ -512,7 +514,7 @@ final class Image implements ImageInterface
      *
      * Generates a GD image
      *
-     * @param  Imagine\Image\BoxInterface $size
+     * @param BoxInterface $size
      * @param  string the operation initiating the creation
      *
      * @return resource
@@ -549,11 +551,11 @@ final class Image implements ImageInterface
      *
      * Generates a GD color from Color instance
      *
-     * @param  Imagine\Image\Color $color
+     * @param Color $color
      *
      * @return resource
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      */
     private function getColor(Color $color)
     {
@@ -630,7 +632,8 @@ final class Image implements ImageInterface
      *
      * @throws RuntimeException
      */
-    private function getMimeType($format) {
+    private function getMimeType($format)
+    {
         if (!$this->supported($format)) {
             throw new RuntimeException('Invalid format');
         }

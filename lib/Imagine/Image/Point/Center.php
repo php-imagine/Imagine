@@ -18,14 +18,14 @@ use Imagine\Image\PointInterface;
 final class Center implements PointInterface
 {
     /**
-     * @var Imagine\Image\BoxInterface
+     * @var BoxInterface
      */
     private $box;
 
     /**
      * Constructs coordinate with size instance, it needs to be relative to
      *
-     * @param Imagine\Image\BoxInterface $box
+     * @param BoxInterface $box
      */
     public function __construct(BoxInterface $box)
     {

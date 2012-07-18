@@ -20,7 +20,7 @@ use Imagine\Image\ImagineInterface;
 final class Imagine implements ImagineInterface
 {
     /**
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function __construct()
     {
@@ -52,7 +52,7 @@ final class Imagine implements ImagineInterface
 
         try {
             $image = $this->read($handle);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             fclose($handle);
             throw $e;
         }
@@ -124,7 +124,7 @@ final class Imagine implements ImagineInterface
         try {
             $imagick = new \Imagick();
             $imagick->readImageFile($resource);
-        } catch(\ImagickException $e) {
+        } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Could not read image from resource', $e->getCode(), $e
             );

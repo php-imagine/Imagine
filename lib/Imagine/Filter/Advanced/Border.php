@@ -19,26 +19,26 @@ use Imagine\Image\Point;
 class Border implements FilterInterface
 {
     /**
-     * @var Imagine\Image\Color
+     * @var Color
      */
     private $color;
 
     /**
-     * @var int
+     * @var integer
      */
     private $width;
 
     /**
-     * @var int
+     * @var integer
      */
     private $height;
 
     /**
      * Constructs Border filter with given color, width and height
      *
-     * @param Imagine\Image\Color $color
-     * @param int $width Width of the border on the left and right sides of the image
-     * @param int $height Height of the border on the top and bottom sides of the image
+     * @param Color   $color
+     * @param integer $width  Width of the border on the left and right sides of the image
+     * @param integer $height Height of the border on the top and bottom sides of the image
      */
     public function __construct(Color $color, $width = 1, $height = 1)
     {

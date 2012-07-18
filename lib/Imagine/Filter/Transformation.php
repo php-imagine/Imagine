@@ -31,7 +31,6 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\ManipulatorInterface;
-use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
 final class Transformation implements FilterInterface, ManipulatorInterface
@@ -62,11 +61,11 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * Applies a given FilterInterface onto given ImageInterface and returns
      * modified ImageInterface
      *
-     * @param Imagine\Image\ImageInterface   $image
-     * @param Imagine\Filter\FilterInterface $filter
+     * @param ImageInterface  $image
+     * @param FilterInterface $filter
      *
-     * @return Imagine\Image\ImageInterface
-     * @throws Imagine\Exception\InvalidArgumentException
+     * @return ImageInterface
+     * @throws InvalidArgumentException
      */
     public function applyFilter(ImageInterface $image, FilterInterface $filter)
     {
@@ -79,6 +78,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
             }
             $filter->setImagine($this->imagine);
         }
+
         return $filter->apply($image);
     }
 
@@ -202,9 +202,9 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * Registers a given FilterInterface in an internal array of filters for
      * later application to an instance of ImageInterface
      *
-     * @param Imagine\Filter\FilterInterface $filter
+     * @param FilterInterface $filter
      *
-     * @return Imagine\Filter\Transformation
+     * @return Transformation
      */
     public function add(FilterInterface $filter)
     {

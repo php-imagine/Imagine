@@ -18,12 +18,12 @@ use Imagine\Image\ImageInterface;
 class Fill implements FilterInterface
 {
     /**
-     * @var Imagine\Image\Fill\FillInterface
+     * @var FillInterface
      */
     private $fill;
 
     /**
-     * @param Imagine\Image\Fill\FillInterface $fill
+     * @param FillInterface $fill
      */
     public function __construct(FillInterface $fill)
     {

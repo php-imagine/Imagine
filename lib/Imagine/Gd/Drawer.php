@@ -13,7 +13,6 @@ namespace Imagine\Gd;
 
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\BoxInterface;
@@ -212,7 +211,7 @@ final class Drawer implements DrawerInterface
         if (!$this->info['FreeType Support']) {
             throw new RuntimeException('GD is not compiled with FreeType support');
         }
-        
+
         $angle    = -1 * $angle;
         $fontsize = $font->getSize();
         $fontfile = $font->getFile();
@@ -254,7 +253,7 @@ final class Drawer implements DrawerInterface
      *
      * Generates a GD color from Color instance
      *
-     * @param  Imagine\Image\Color $color
+     * @param Imagine\Image\Color $color
      *
      * @return resource
      *

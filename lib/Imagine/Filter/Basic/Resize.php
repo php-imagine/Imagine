@@ -18,14 +18,14 @@ use Imagine\Image\BoxInterface;
 class Resize implements FilterInterface
 {
     /**
-     * @var Imagine\Image\BoxInterface
+     * @var BoxInterface
      */
     private $size;
 
     /**
      * Constructs Resize filter with given width and height
      *
-     * @param Imagine\Image\BoxInterface $size
+     * @param BoxInterface $size
      */
     public function __construct(BoxInterface $size)
     {
