@@ -23,7 +23,7 @@ Imagine is a OOP library for image manipulation built in PHP 5.3 using the lates
     $mode    = Imagine\Image\ImageInterface::THUMBNAIL_INSET;
     // or
     $mode    = Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND;
-    
+
     $imagine->open('/path/to/large_image.jpg')
         ->thumbnail($size, $mode)
         ->save('/path/to/thumbnail.png')
@@ -47,7 +47,7 @@ Usage:
 Api docs:
 ---------
 
-Find them in the :ref:`genindex`
+Find them in the `API browser <_static/API>`_
 
 A couple of words in defense
 ----------------------------
