@@ -16,9 +16,18 @@
       "homepage": "http://avalanche123.com"
     }
   ],
+  "config": {
+    "bin-dir": "bin"
+  },
   "require": {
     "php": ">=5.3.2"
   },
+  "repositories": [
+    {
+        "type": "vcs",
+        "url": "git://github.com/romainneutron/Sami.git"
+    }
+  ],
   "require-dev": {
     "sami/sami": "dev-master"
   },
