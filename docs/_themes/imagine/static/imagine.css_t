@@ -210,3 +210,16 @@ div.admonition p { margin-bottom: 0; }
 div.admonition p.admonition-title { display: inline; padding: 1px 3px 2px; background-color: #bfbfbf; font-size: 0.85em; font-weight: bold; color: #ffffff; text-transform: uppercase; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; float: left; margin-right: 1em; }
 div.admonition.tip p.admonition-title { background-color: #46a546; }
 div.admonition.note p.admonition-title { background-color: #f89406; }
+
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.github_ribbon img {
+    z-index:600;position: fixed; top: 0; right: 0; border: 0;
+}
+
+.navbar {
+    z-index:400;
+}
