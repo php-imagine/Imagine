@@ -222,4 +222,10 @@ body {
 
 .navbar {
     z-index:400;
+    font-size:14px;
+}
+
+.nav.nav-api {
+    float: right;
+    margin-right:190px;
 }

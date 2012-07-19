@@ -156,7 +156,6 @@
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
           <div class="nav-collapse">
             <ul class="nav">
               <li {% if pagename == "index" %}class="active"{% endif %}>
@@ -177,13 +176,13 @@
               <li {% if pagename == "usage/exceptions" %}class="active"{% endif %}>
                   <a href="{{ pathto('usage/exceptions') }}">Exceptions</a>
               </li>
-              <li class="divider-vertical"></li>
+            </ul>
+            <ul class="nav nav-api">
               <li>
                   <a href="{{ pathto('_static/API/', 1) }}" target="_blank">API</a>
               </li>
             </ul>
           </div><!--/.nav-collapse -->
-        </div>
       </div>
     </div>
 
