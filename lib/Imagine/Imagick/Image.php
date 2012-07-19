@@ -242,7 +242,12 @@ final class Image implements ImageInterface
             }
 
             $this->applyImageOptions($this->imagick, $options);
-            $this->flatten();
+
+            // flatten only if image has multiple layers
+            if ($this->imagick->hasNextImage() || $this->imagick->hasPreviousImage()) {
+                $this->flatten();
+            }
+
             $this->imagick->writeImage($path);
         } catch (\ImagickException $e) {
             throw new RuntimeException(

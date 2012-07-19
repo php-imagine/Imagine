@@ -251,7 +251,12 @@ class Image implements ImageInterface
             }
 
             $this->applyImageOptions($this->gmagick, $options);
-            $this->flatten();
+
+            // flatten only if image has multiple layers
+            if ($this->gmagick->hasnextimage() || $this->gmagick->haspreviousimage()) {
+                $this->flatten();
+            }
+
             $this->gmagick->writeimage($path);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
