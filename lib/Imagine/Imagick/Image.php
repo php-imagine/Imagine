@@ -20,7 +20,6 @@ use Imagine\Image\Color;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Fill\Gradient\Horizontal;
 use Imagine\Image\Fill\Gradient\Linear;
-use Imagine\Image\Fill\Gradient\Vertical;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ImageInterface;
@@ -35,7 +34,7 @@ final class Image implements ImageInterface
     /**
      * Constructs Image with Imagick and Imagine instances
      *
-     * @param Imagick $imagick
+     * @param \Imagick $imagick
      */
     public function __construct(\Imagick $imagick)
     {
@@ -54,8 +53,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::copy()
+     * {@inheritdoc}
      */
     public function copy()
     {
@@ -70,12 +68,12 @@ final class Image implements ImageInterface
                 'Copy operation failed', $e->getCode(), $e
             );
         }
+
         return new self($clone);
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::crop()
+     * {@inheritdoc}
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -105,8 +103,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
+     * {@inheritdoc}
      */
     public function flipHorizontally()
     {
@@ -122,8 +119,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipVertically()
+     * {@inheritdoc}
      */
     public function flipVertically()
     {
@@ -139,8 +135,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::strip()
+     * {@inheritdoc}
      */
     public function strip()
     {
@@ -156,8 +151,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::paste()
+     * {@inheritdoc}
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -194,8 +188,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::resize()
+     * {@inheritdoc}
      */
     public function resize(BoxInterface $size)
     {
@@ -216,8 +209,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::rotate()
+     * {@inheritdoc}
      */
     public function rotate($angle, Color $background = null)
     {
@@ -240,8 +232,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::save()
+     * {@inheritdoc}
      */
     public function save($path, array $options = array())
     {
@@ -263,8 +254,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::show()
+     * {@inheritdoc}
      */
     public function show($format, array $options = array())
     {
@@ -275,8 +265,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::get()
+     * {@inheritdoc}
      */
     public function get($format, array $options = array())
     {
@@ -293,8 +282,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::__toString()
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -302,8 +290,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::thumbnail()
+     * {@inheritdoc}
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -323,7 +310,7 @@ final class Image implements ImageInterface
                     $height,
                     true
                 );
-            } else if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
                 $thumbnail->imagick->cropThumbnailImage(
                     $width,
                     $height
@@ -339,8 +326,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::draw()
+     * {@inheritdoc}
      */
     public function draw()
     {
@@ -348,8 +334,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::getSize()
+     * {@inheritdoc}
      */
     public function getSize()
     {
@@ -366,8 +351,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::applyMask()
+     * {@inheritdoc}
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -418,8 +402,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::mask()
+     * {@inheritdoc}
      */
     public function mask()
     {
@@ -438,8 +421,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::fill()
+     * {@inheritdoc}
      */
     public function fill(FillInterface $fill)
     {
@@ -473,18 +455,17 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::histogram()
+     * {@inheritdoc}
      */
     public function histogram()
     {
         $pixels = $this->imagick->getImageHistogram();
 
         return array_map(
-            function(\ImagickPixel $pixel)
-            {
+            function(\ImagickPixel $pixel) {
                 $info = $pixel->getColor();
                 $opacity = isset($infos['a']) ? $info['a'] : 0;
+
                 return new Color(
                     array(
                         $info['r'],
@@ -499,17 +480,18 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::getColorAt()
+     * {@inheritdoc}
      */
-    public function getColorAt(PointInterface $point) {
-        if(!$point->in($this->getSize())) {
+    public function getColorAt(PointInterface $point)
+    {
+        if (!$point->in($this->getSize())) {
             throw new RuntimeException(sprintf(
                 'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
             ));
         }
         $pixel = $this->imagick->getImagePixelColor($point->getX(), $point->getY());
+
         return new Color(array(
                 $pixel->getColorValue(\Imagick::COLOR_RED) * 255,
                 $pixel->getColorValue(\Imagick::COLOR_GREEN) * 255,
@@ -541,7 +523,7 @@ final class Image implements ImageInterface
      * Applies options before save or output
      *
      * @param \Imagick $image
-     * @param array $options
+     * @param array    $options
      */
     private function applyImageOptions(\Imagick $image, array $options)
     {
@@ -552,9 +534,9 @@ final class Image implements ImageInterface
         if(isset($options['resolution-units']) && isset($options['resolution-x'])
           && isset($options['resolution-y'])) {
 
-            if($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
+            if ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
                 $image->setImageUnits(\Imagick::RESOLUTION_PIXELSPERCENTIMETER);
-            } elseif($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERINCH) {
+            } elseif ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERINCH) {
                 $image->setImageUnits(\Imagick::RESOLUTION_PIXELSPERINCH);
             } else {
                 throw new RuntimeException('Unsupported image unit format');
@@ -567,7 +549,7 @@ final class Image implements ImageInterface
     /**
      * Gets specifically formatted color string from Color instance
      *
-     * @param Imagine\Image\Color $color
+     * @param Color $color
      *
      * @return string
      */
@@ -586,7 +568,7 @@ final class Image implements ImageInterface
     /**
      * Checks whether given $fill is linear and opaque
      *
-     * @param Imagine\Image\Fill\FillInterface $fill
+     * @param FillInterface $fill
      *
      * @return Boolean
      */
@@ -599,7 +581,7 @@ final class Image implements ImageInterface
     /**
      * Performs optimized gradient fill for non-opaque linear gradients
      *
-     * @param Imagine\Image\Fill\Gradient\Linear $fill
+     * @param Linear $fill
      */
     private function applyFastLinear(Linear $fill)
     {
@@ -649,7 +631,8 @@ final class Image implements ImageInterface
      *
      * @throws RuntimeException
      */
-    private function getMimeType($format) {
+    private function getMimeType($format)
+    {
         static $mimeTypes = array(
             'jpeg' => 'image/jpeg',
             'jpg'  => 'image/jpeg',

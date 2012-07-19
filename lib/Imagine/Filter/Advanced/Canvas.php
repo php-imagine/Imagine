@@ -22,22 +22,22 @@ use Imagine\Image\ImagineInterface;
 class Canvas implements FilterInterface
 {
     /**
-     * @var Imagine\Image\BoxInterface
+     * @var BoxInterface
      */
     private $size;
 
     /**
-     * @var Imagine\Image\PointInterface
+     * @var PointInterface
      */
     private $placement;
 
     /**
-     * @var Imagine\Image\Color
+     * @var Color
      */
     private $background;
 
     /**
-     * @var Imagine\Image\ImagineInterface
+     * @var ImagineInterface
      */
     private $imagine;
 
@@ -45,10 +45,10 @@ class Canvas implements FilterInterface
      * Constructs Canvas filter with given width and height and the placement of the current image
      * inside the new canvas
      *
-     * @param Imagine\Image\ImagineInterface $imagine
-     * @param Imagine\Image\BoxInterface $size
-     * @param Imagine\Image\PointInterface $placement
-     * @param Imagine\Image\Color $background
+     * @param ImagineInterface $imagine
+     * @param BoxInterface     $size
+     * @param PointInterface   $placement
+     * @param Color            $background
      */
     public function __construct(ImagineInterface $imagine, BoxInterface $size, PointInterface $placement = null, Color $background = null)
     {
@@ -59,8 +59,7 @@ class Canvas implements FilterInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {

@@ -13,7 +13,6 @@ namespace Imagine\Gd;
 
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\BoxInterface;
@@ -44,8 +43,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::arc()
+     * {@inheritdoc}
      */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $thickness = 1)
     {
@@ -64,8 +62,7 @@ final class Drawer implements DrawerInterface
     /**
      * This function doesn't work properly because of a bug in GD
      *
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::chord()
+     * {@inheritdoc}
      */
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
     {
@@ -88,8 +85,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::ellipse()
+     * {@inheritdoc}
      */
     public function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false, $thickness = 1)
     {
@@ -111,8 +107,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::line()
+     * {@inheritdoc}
      */
     public function line(PointInterface $start, PointInterface $end, Color $color, $thickness = 1)
     {
@@ -128,8 +123,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::pieSlice()
+     * {@inheritdoc}
      */
     public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
     {
@@ -152,8 +146,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::dot()
+     * {@inheritdoc}
      */
     public function dot(PointInterface $position, Color $color)
     {
@@ -168,8 +161,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::polygon()
+     * {@inheritdoc}
      */
     public function polygon(array $coordinates, Color $color, $fill = false, $thickness = 1)
     {
@@ -212,15 +204,14 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::text()
+     * {@inheritdoc}
      */
     public function text($string, AbstractFont $font, PointInterface $position, $angle = 0)
     {
         if (!$this->info['FreeType Support']) {
             throw new RuntimeException('GD is not compiled with FreeType support');
         }
-        
+
         $angle    = -1 * $angle;
         $fontsize = $font->getSize();
         $fontfile = $font->getFile();
@@ -262,7 +253,7 @@ final class Drawer implements DrawerInterface
      *
      * Generates a GD color from Color instance
      *
-     * @param  Imagine\Image\Color $color
+     * @param Imagine\Image\Color $color
      *
      * @return resource
      *

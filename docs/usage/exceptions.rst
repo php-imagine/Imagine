@@ -11,10 +11,10 @@ Every exception class in Imagine implements Exception_ (``Imagine\Exception\Exce
 .. code-block:: php
 
     <?php
-    
+
     try {
         $imagine = new Imagine\Gd\Imagine();
-        
+
         $imagine->open('/path/to/image.jpg')
             ->thumbnail(new Imagine\Image\Box(50, 50))
             ->save('/path/to/image/thumbnail.png');
@@ -32,4 +32,4 @@ In Imagine, each exception class is extending one of the SPL exception classes, 
 .. NOTE::
     This technique came from Zend Framework 2
 
-.. _Exception: ../api/exception.html#Imagine\\Exception\\Exception
+.. _Exception: ../_static/API/Imagine/Exception.html

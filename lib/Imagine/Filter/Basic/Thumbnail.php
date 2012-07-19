@@ -18,7 +18,7 @@ use Imagine\Filter\FilterInterface;
 class Thumbnail implements FilterInterface
 {
     /**
-     * @var Imagine\Image\BoxInterface
+     * @var BoxInterface
      */
     private $size;
 
@@ -30,8 +30,8 @@ class Thumbnail implements FilterInterface
     /**
      * Constructs the Thumbnail filter with given width, height and mode
      *
-     * @param Imagine\Image\BoxInterface $size
-     * @param string                     $mode
+     * @param BoxInterface $size
+     * @param string       $mode
      */
     public function __construct(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -40,8 +40,7 @@ class Thumbnail implements FilterInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {

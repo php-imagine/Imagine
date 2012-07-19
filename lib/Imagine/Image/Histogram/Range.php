@@ -29,7 +29,7 @@ final class Range
      * @param integer $start
      * @param integer $end
      *
-     * @throws Imagine\Exception\OutOfBoundsException
+     * @throws OutOfBoundsException
      */
     public function __construct($start, $end)
     {

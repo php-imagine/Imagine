@@ -4,7 +4,6 @@ namespace Imagine\Filter\Advanced;
 
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Filter\FilterInterface;
-use Imagine\Image\Color;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
 
@@ -29,9 +28,9 @@ class OnPixelBased implements FilterInterface
      * Applies scheduled transformation to ImageInterface instance
      * Returns processed ImageInterface instance
      *
-     * @param \Imagine\Image\ImageInterface $image
+     * @param ImageInterface $image
      *
-     * @return \Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
     public function apply(ImageInterface $image)
     {

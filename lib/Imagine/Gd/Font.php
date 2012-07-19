@@ -17,8 +17,7 @@ use Imagine\Image\Box;
 final class Font extends AbstractFont
 {
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\FontInterface::box()
+     * {@inheritdoc}
      */
     public function box($string, $angle = 0)
     {

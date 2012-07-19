@@ -19,12 +19,12 @@ use Imagine\Filter\FilterInterface;
 class Crop implements FilterInterface
 {
     /**
-     * @var Imagine\Image\PointInterface
+     * @var PointInterface
      */
     private $start;
 
     /**
-     * @var Imagine\Image\BoxInterface
+     * @var BoxInterface
      */
     private $size;
 
@@ -32,8 +32,8 @@ class Crop implements FilterInterface
      * Constructs a Crop filter with given x, y, coordinates and crop width and
      * height values
      *
-     * @param Imagine\Image\PointInterface $start
-     * @param Imagine\Image\BoxInterface   $size
+     * @param PointInterface $start
+     * @param BoxInterface   $size
      */
     public function __construct(PointInterface $start, BoxInterface $size)
     {
@@ -42,8 +42,7 @@ class Crop implements FilterInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {

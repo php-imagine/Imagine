@@ -11,9 +11,12 @@
 
 namespace Imagine\Image;
 
-use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\PointInterface;
 use Imagine\Image\Fill\FillInterface;
 
 interface ManipulatorInterface
@@ -24,50 +27,50 @@ interface ManipulatorInterface
     /**
      * Copies current source image into a new ImageInterface instance
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function copy();
+    public function copy();
 
     /**
      * Crops a specified box out of the source image (modifies the source image)
      * Returns cropped self
      *
-     * @param Imagine\Image\PointInterface $start
-     * @param Imagine\Image\BoxInterface   $size
+     * @param PointInterface $start
+     * @param BoxInterface   $size
      *
-     * @throws Imagine\Exception\OutOfBoundsException
-     * @throws Imagine\Exception\RuntimeException
+     * @throws OutOfBoundsException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function crop(PointInterface $start, BoxInterface $size);
+    public function crop(PointInterface $start, BoxInterface $size);
 
     /**
      * Resizes current image and returns self
      *
-     * @param Imagine\Image\BoxInterface $size
+     * @param BoxInterface $size
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function resize(BoxInterface $size);
+    public function resize(BoxInterface $size);
 
     /**
      * Rotates an image at the given angle.
      * Optional $background can be used to specify the fill color of the empty
      * area of rotated image.
      *
-     * @param integer             $angle
-     * @param Imagine\Image\Color $background
+     * @param integer $angle
+     * @param Color   $background
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function rotate($angle, Color $background = null);
+    public function rotate($angle, Color $background = null);
 
     /**
      * Pastes an image into a parent image
@@ -76,16 +79,16 @@ interface ManipulatorInterface
      *
      * Returns source image
      *
-     * @param Imagine\Image\ImageInterface $image
-     * @param Imagine\Image\PointInterface $start
+     * @param ImageInterface $image
+     * @param PointInterface $start
      *
-     * @throws Imagine\Exception\InvalidArgumentException
-     * @throws Imagine\Exception\OutOfBoundsException
-     * @throws Imagine\Exception\RuntimeException
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function paste(ImageInterface $image, PointInterface $start);
+    public function paste(ImageInterface $image, PointInterface $start);
 
     /**
      * Saves the image at a specified path, the target file extension is used
@@ -95,11 +98,11 @@ interface ManipulatorInterface
      * @param string $path
      * @param array  $options
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function save($path, array $options = array());
+    public function save($path, array $options = array());
 
     /**
      * Outputs the image content
@@ -107,69 +110,69 @@ interface ManipulatorInterface
      * @param string $format
      * @param array  $options
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function show($format, array $options = array());
+    public function show($format, array $options = array());
 
     /**
      * Flips current image using horizontal axis
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function flipHorizontally();
+    public function flipHorizontally();
 
     /**
      * Flips current image using vertical axis
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function flipVertically();
+    public function flipVertically();
 
     /**
      * Remove all profiles and comments
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function strip();
+    public function strip();
 
     /**
      * Generates a thumbnail from a current image
      * Returns it as a new image, doesn't modify the current image
      *
-     * @param Imagine\Image\BoxInterface $size
-     * @param string                     $mode
+     * @param BoxInterface $size
+     * @param string       $mode
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET);
+    public function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET);
 
     /**
      * Applies a given mask to current image's alpha channel
      *
-     * @param Imagine\Image\ImageInterface $mask
+     * @param ImageInterface $mask
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function applyMask(ImageInterface $mask);
+    public function applyMask(ImageInterface $mask);
 
     /**
      * Fills image with provided filling, by replacing each pixel's color in
      * the current image with corresponding color from FillInterface, and
      * returns modified image
      *
-     * @param Imagine\Image\Fill\FillInterface $fill
+     * @param FillInterface $fill
      *
-     * @return Imagine\Image\ManipulatorInterface
+     * @return ManipulatorInterface
      */
-    function fill(FillInterface $fill);
+    public function fill(FillInterface $fill);
 }

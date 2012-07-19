@@ -16,8 +16,7 @@ use Imagine\Image\PointInterface;
 final class Vertical extends Linear
 {
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Mask\Gradient\Linear::getDistance()
+     * {@inheritdoc}
      */
     public function getDistance(PointInterface $position)
     {
