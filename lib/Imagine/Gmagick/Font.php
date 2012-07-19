@@ -18,15 +18,15 @@ use Imagine\Image\Color;
 final class Font extends AbstractFont
 {
     /**
-     * @var Gmagick
+     * @var \Gmagick
      */
     private $gmagick;
 
     /**
-     * @param Gmagick             $gmagick
-     * @param string              $file
-     * @param integer             $size
-     * @param Imagine\Image\Color $color
+     * @param \Gmagick $gmagick
+     * @param string   $file
+     * @param integer  $size
+     * @param Color    $color
      */
     public function __construct(\Gmagick $gmagick, $file, $size, Color $color)
     {
@@ -36,8 +36,7 @@ final class Font extends AbstractFont
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\FontInterface::box()
+     * {@inheritdoc}
      */
     public function box($string, $angle = 0)
     {

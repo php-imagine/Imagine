@@ -18,12 +18,12 @@ use Imagine\Filter\FilterInterface;
 class Paste implements FilterInterface
 {
     /**
-     * @var Imagine\Image\ImageInterface
+     * @var ImageInterface
      */
     private $image;
 
     /**
-     * @var Imagine\Image\PointInterface
+     * @var PointInterface
      */
     private $start;
 
@@ -31,8 +31,8 @@ class Paste implements FilterInterface
      * Constructs a Paste filter with given ImageInterface to paste and x, y
      * coordinates of target position
      *
-     * @param Imagine\Image\ImageInterface $image
-     * @param Imagine\Image\PointInterface $start
+     * @param ImageInterface $image
+     * @param PointInterface $start
      */
     public function __construct(ImageInterface $image, PointInterface $start)
     {
@@ -41,8 +41,7 @@ class Paste implements FilterInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {

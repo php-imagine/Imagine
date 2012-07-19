@@ -17,12 +17,12 @@ use Imagine\Image\ImageInterface;
 class ApplyMask implements FilterInterface
 {
     /**
-     * @var Imagine\Image\ImageInterface
+     * @var ImageInterface
      */
     private $mask;
 
     /**
-     * @param Imagine\Image\ImageInterface $mask
+     * @param ImageInterface $mask
      */
     public function __construct(ImageInterface $mask)
     {
@@ -30,8 +30,7 @@ class ApplyMask implements FilterInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {

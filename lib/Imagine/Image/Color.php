@@ -43,7 +43,7 @@ final class Color
      *     - new Color(0x00FF00) - hexadecimal notation for green
      *
      * @param array|string|integer $color
-     * @param integer      $alpha
+     * @param integer              $alpha
      */
     public function __construct($color, $alpha = 0)
     {
@@ -97,7 +97,7 @@ final class Color
      *
      * @param integer $alpha
      *
-     * @return Imagine\Image\Color
+     * @return Color
      */
     public function dissolve($alpha)
     {
@@ -110,7 +110,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @return Imagine\Image\Color
+     * @return Color
      */
     public function lighten($shade)
     {
@@ -130,7 +130,7 @@ final class Color
      *
      * @param integer $shade
      *
-     * @return Imagine\Image\Color
+     * @return Color
      */
     public function darken($shade)
     {
@@ -207,7 +207,7 @@ final class Color
 
             $color = array_map('hexdec', str_split($color, 2));
         }
-        
+
         if (is_int($color)) {
             $color = array(
                 255 & ($color >> 16),

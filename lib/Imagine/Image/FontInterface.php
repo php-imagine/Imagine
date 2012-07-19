@@ -11,6 +11,9 @@
 
 namespace Imagine\Image;
 
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Color;
+
 interface FontInterface
 {
     /**
@@ -18,21 +21,21 @@ interface FontInterface
      *
      * @return string
      */
-    function getFile();
+    public function getFile();
 
     /**
      * Gets font's integer point size
      *
      * @return integer
      */
-    function getSize();
+    public function getSize();
 
     /**
      * Gets font's color
      *
-     * @return Imagine\Image\Color
+     * @return Color
      */
-    function getColor();
+    public function getColor();
 
     /**
      * Gets BoxInterface of font size on the image based on string and angle
@@ -40,7 +43,7 @@ interface FontInterface
      * @param string  $string
      * @param integer $angle
      *
-     * @return Imagine\Image\BoxInterface
+     * @return BoxInterface
      */
-    function box($string, $angle = 0);
+    public function box($string, $angle = 0);
 }

@@ -11,6 +11,9 @@
 
 namespace Imagine\Image;
 
+use Imagine\Image\BoxInterface;
+use Imagine\Image\ImageInterface;
+
 interface PointInterface
 {
     /**
@@ -18,36 +21,36 @@ interface PointInterface
      *
      * @return integer
      */
-    function getX();
+    public function getX();
 
     /**
      * Gets points y coordinate
      *
      * @return integer
      */
-    function getY();
+    public function getY();
 
     /**
      * Checks if current coordinate is inside a given bo
      *
-     * @param Imagine\Image\BoxInterface $box
+     * @param BoxInterface $box
      *
      * @return Boolean
      */
-    function in(BoxInterface $box);
+    public function in(BoxInterface $box);
 
     /**
      * Returns another point, moved by a given amount from current coordinates
      *
-     * @param $amount
-     * @return Imagine\Image\ImageInterface
+     * @param  integer        $amount
+     * @return ImageInterface
      */
-    function move($amount);
+    public function move($amount);
 
     /**
      * Gets a string representation for the current point
      *
      * @return string
      */
-    function __toString();
+    public function __toString();
 }

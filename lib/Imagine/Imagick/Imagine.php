@@ -20,7 +20,7 @@ use Imagine\Image\ImagineInterface;
 final class Imagine implements ImagineInterface
 {
     /**
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function __construct()
     {
@@ -38,8 +38,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::open()
+     * {@inheritdoc}
      */
     public function open($path)
     {
@@ -53,7 +52,7 @@ final class Imagine implements ImagineInterface
 
         try {
             $image = $this->read($handle);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             fclose($handle);
             throw $e;
         }
@@ -62,8 +61,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::create()
+     * {@inheritdoc}
      */
     public function create(BoxInterface $size, Color $color = null)
     {
@@ -96,8 +94,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::load()
+     * {@inheritdoc}
      */
     public function load($string)
     {
@@ -116,8 +113,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::read()
+     * {@inheritdoc}
      */
     public function read($resource)
     {
@@ -128,7 +124,7 @@ final class Imagine implements ImagineInterface
         try {
             $imagick = new \Imagick();
             $imagick->readImageFile($resource);
-        } catch(\ImagickException $e) {
+        } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Could not read image from resource', $e->getCode(), $e
             );
@@ -138,8 +134,7 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::font()
+     * {@inheritdoc}
      */
     public function font($file, $size, Color $color)
     {
