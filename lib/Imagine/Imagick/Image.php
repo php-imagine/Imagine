@@ -187,7 +187,7 @@ final class Image implements ImageInterface
                 'Paste operation failed', $e->getCode(), $e
             );
         }
-        
+
         $this->flatten();
 
         return $this;
@@ -200,7 +200,12 @@ final class Image implements ImageInterface
     public function resize(BoxInterface $size)
     {
         try {
-            $this->imagick->thumbnailImage($size->getWidth(), $size->getHeight());
+            $this->imagick->resizeImage(
+                $size->getWidth(),
+                $size->getHeight(),
+                \Imagick::FILTER_UNDEFINED,
+                1
+            );
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Resize operation failed', $e->getCode(), $e
@@ -513,10 +518,10 @@ final class Image implements ImageInterface
             (int) round($pixel->getColorValue(\Imagick::COLOR_ALPHA) * 100)
         );
     }
-    
+
     /**
      * Internal
-     * 
+     *
      * Flatten the image.
      */
     private function flatten()
