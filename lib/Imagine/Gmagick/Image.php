@@ -225,6 +225,10 @@ class Image implements ImageInterface
      */
     private function applyImageOptions(\Gmagick $image, array $options)
     {
+        if (isset($options['quality'])) {
+            $image->setCompressionQuality($options['quality']);
+        }
+
         if(isset($options['resolution-units']) && isset($options['resolution-x'])
           && isset($options['resolution-y'])) {
 
