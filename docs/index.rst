@@ -41,6 +41,7 @@ Usage:
    usage/introduction
    usage/coordinates
    usage/drawing
+   usage/effects
    usage/filters
    usage/exceptions
 
