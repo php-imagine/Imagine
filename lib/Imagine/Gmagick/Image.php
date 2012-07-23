@@ -342,6 +342,14 @@ class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
+    public function effects()
+    {
+        return new Effects($this->gmagick);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getSize()
     {
         try {

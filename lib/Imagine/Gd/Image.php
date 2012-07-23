@@ -333,6 +333,14 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
+    public function effects()
+    {
+        return new Effects($this->resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getSize()
     {
         return new Box(imagesx($this->resource), imagesy($this->resource));
