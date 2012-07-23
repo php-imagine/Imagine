@@ -506,7 +506,7 @@ class Image implements ImageInterface
         } catch (\GmagickException $e) {
             throw new RuntimeException('Unable to get the pixel');
         }
-        
+
         $pixel = array_shift($histogram);
 
         unset($histogram, $cropped);

@@ -18,7 +18,7 @@ interface EffectsInterface
     /**
      * Apply gamma correction
      *
-     * @param float $correction
+     * @param  float            $correction
      * @return EffectsInterface
      *
      * @throws RuntimeException

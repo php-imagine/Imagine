@@ -54,7 +54,7 @@ interface ImageInterface extends ManipulatorInterface
     /**
      * @return EffectsInterface
      */
-    function effects();
+    public function effects();
 
     /**
      * Returns current image size
