@@ -12,6 +12,7 @@
 namespace Imagine\Image;
 
 use Imagine\Draw\DrawerInterface;
+use Imagine\Effects\EffectsInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\PointInterface;
@@ -49,6 +50,11 @@ interface ImageInterface extends ManipulatorInterface
      * @return DrawerInterface
      */
     public function draw();
+
+    /**
+     * @return EffectsInterface
+     */
+    function effects();
 
     /**
      * Returns current image size
