@@ -16,6 +16,7 @@ use Imagine\Image\Color;
 use Imagine\Image\Font;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
+use Imagine\Image\ImagineInterface;
 use Imagine\Test\ImagineTestCase;
 
 abstract class AbstractDrawerTest extends ImagineTestCase
@@ -174,7 +175,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         if (!$this->isFontTestSupported()) {
             $this->markTestSkipped('This install does not support font tests');
         }
-        
+
         $path   = 'tests/Imagine/Fixtures/font/Arial.ttf';
         $black  = new Color('000');
         $file36 = 'tests/Imagine/Fixtures/bulat36.png';
@@ -241,9 +242,9 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     }
 
     /**
-     * @return Imagine\Image\ImagineInterface
+     * @return ImagineInterface
      */
     abstract protected function getImagine();
-    
+
     abstract protected function isFontTestSupported();
 }

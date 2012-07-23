@@ -29,7 +29,7 @@ class Effects implements EffectsInterface
     public function gamma($correction)
     {
         try {
-            $this->gmagick->gammaimage($correction, \Gmagick::CHANNEL_ALL);
+            $this->gmagick->gammaimage($correction);
         } catch (\GmagickException $e) {
             throw new RuntimeException('Gamma correction failed');
         }
@@ -42,8 +42,13 @@ class Effects implements EffectsInterface
      */
     public function negative()
     {
+        if (!method_exists($this->gmagick, 'negateimage')) {
+            throw new RuntimeException('Gmagick version 1.1.0 RC3 is required'
+                . ' for negative effect');
+        }
+
         try {
-            $this->gmagick->negateimage(true, \Gmagick::CHANNEL_ALL);
+            $this->gmagick->negateimage(false, \Gmagick::CHANNEL_ALL);
         } catch (\GmagickException $e) {
             throw new RuntimeException('Failed to negate image');
         }
