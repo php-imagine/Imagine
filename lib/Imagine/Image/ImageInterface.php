@@ -52,7 +52,7 @@ interface ImageInterface extends ManipulatorInterface
     public function draw();
 
     /**
-     * @return EffectInterface
+     * @return EffectsInterface
      */
     function effects();
 
