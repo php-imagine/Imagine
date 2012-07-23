@@ -61,9 +61,9 @@ task :test do
 
     system "sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev"
 
-    system "wget http://pecl.php.net/get/gmagick-1.1.0RC2.tgz"
-    system "tar -xzf gmagick-1.1.0RC2.tgz"
-    system "sh -c \"cd gmagick-1.1.0RC2 && phpize && ./configure --with-gmagick=/usr/local && make && sudo make install\""
+    system "wget http://pecl.php.net/get/gmagick-1.1.0RC3.tgz"
+    system "tar -xzf gmagick-1.1.0RC3.tgz"
+    system "sh -c \"cd gmagick-1.1.0RC3 && phpize && ./configure --with-gmagick=/usr/local && make && sudo make install\""
   end
 
   ini_file = Hash[`php --ini`.split("\n").map {|l| l.split(/:\s+/)}]["Loaded Configuration File"]
