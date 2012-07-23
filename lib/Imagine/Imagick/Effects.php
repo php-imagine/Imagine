@@ -42,7 +42,7 @@ class Effects implements EffectsInterface
     public function negative()
     {
         try {
-            $this->imagick->negateImage(true, \Imagick::CHANNEL_ALL);
+            $this->imagick->negateImage(false, \Imagick::CHANNEL_ALL);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to negate image');
         }
