@@ -498,7 +498,25 @@ class Image implements ImageInterface
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
             ));
         }
-        throw new RuntimeException('Not Implemented!');
+
+        try {
+            $cropped   = clone $this->gmagick;
+            $histogram = $cropped->cropImage(1, 1, $point->getX(), $point->getY())
+                ->getImageHistogram();
+        } catch (\GmagickException $e) {
+            throw new RuntimeException('Unable to get the pixel');
+        }
+        
+        $pixel = array_shift($histogram);
+
+        unset($histogram, $cropped);
+
+        return new Color(array(
+                $pixel->getColorValue(\Gmagick::COLOR_RED) * 255,
+                $pixel->getColorValue(\Gmagick::COLOR_GREEN) * 255,
+                $pixel->getColorValue(\Gmagick::COLOR_BLUE) * 255,
+            )
+        );
     }
 
     /**
