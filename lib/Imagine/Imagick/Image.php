@@ -341,6 +341,14 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
+    public function effects()
+    {
+        return new Effects($this->imagick);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getSize()
     {
         try {
