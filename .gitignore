@@ -2,5 +2,5 @@ tests/Imagine/Fixtures/results/in_out
 !tests/Imagine/Fixtures/results/in_out/.placeholder
 docs/_build
 Imagine-*.tgz
-imagine.phar
+imagine-*.phar
 composer.phar
