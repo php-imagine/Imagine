@@ -5,3 +5,4 @@ Imagine-*.tgz
 imagine-*.phar
 composer.phar
 vendor/
+bin/
