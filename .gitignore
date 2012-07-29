@@ -3,3 +3,4 @@ tests/Imagine/Fixtures/results/in_out
 docs/_build
 Imagine-*.tgz
 imagine.phar
+composer.phar
