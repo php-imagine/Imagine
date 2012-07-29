@@ -13,7 +13,7 @@ Installation
 Phar file (recommended)
 +++++++++++++++++++++++
 
-`Download Imagine PHAR file here <https://github.com/downloads/avalanche123/Imagine/imagine.phar>`_
+`Download Imagine PHAR file here <https://github.com/downloads/avalanche123/Imagine/imagine-v0.3.0.phar>`_
 
 .. code-block:: php
 
