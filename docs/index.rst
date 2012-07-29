@@ -32,23 +32,6 @@ Imagine is a OOP library for image manipulation built in PHP 5.3 using the lates
 
 Enjoy!
 
-Usage:
----------
-
-.. toctree::
-   :maxdepth: 3
-
-   usage/introduction
-   usage/coordinates
-   usage/drawing
-   usage/effects
-   usage/filters
-   usage/exceptions
-
-Api docs:
----------
-
-Find them in the `API browser <_static/API>`_
 
 Contribute:
 -----------
@@ -67,6 +50,31 @@ If you modify Imagine API, please update the API documentation by running at the
 and commit the updated files in the *docs/API/* folder.
 
 If you're a beginner, you will find some guidelines about code contributions at `Symfony <http://symfony.com/doc/current/contributing/code/patches.html>`_
+
+
+Ask a question:
+---------------
+
+We're on IRC: ``#php-imagine`` on Freenode
+
+
+Usage:
+---------
+
+.. toctree::
+   :maxdepth: 3
+
+   usage/introduction
+   usage/coordinates
+   usage/drawing
+   usage/effects
+   usage/filters
+   usage/exceptions
+
+Api docs:
+---------
+
+Find them in the `API browser <_static/API>`_
 
 
 A couple of words in defense
