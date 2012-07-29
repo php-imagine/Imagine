@@ -4,3 +4,4 @@ docs/_build
 Imagine-*.tgz
 imagine-*.phar
 composer.phar
+vendor/
