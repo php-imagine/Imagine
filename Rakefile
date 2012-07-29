@@ -98,15 +98,6 @@ task :test do
   exit exitcode
 end
 
-task :sphinx do
-  `git ls-files lib/Imagine*.php`.split("\n").each do |f|
-    rst_file = f.gsub(/^lib\/Imagine(.*)\.php/) { |s| "docs/api#{$1}.rst" }.underscore
-    rst_dir  = File.dirname(rst_file)
-    FileUtils.mkdir_p(rst_dir) unless Dir.exists?(rst_dir)
-    system "doxphp < #{f} | doxphp2sphinx > #{rst_file}"
-  end
-end
-
 task :clean do
   system "git clean -df"
 end
@@ -182,21 +173,13 @@ task :pear, :version do |t, args|
   FileUtils.mv("Imagine-#{version}.tgz", "../")
 end
 
+desc "create a new Imagine release - involves "
 task :release, :version do |t, args|
   version = args[:version]
 
   Rake::Task["test"]
-
-  Rake::Task["sphinx"].invoke
-
-  system "git add docs/api"
-  system "git commit -m \"updated api docs for release #{version}\""
-
   Rake::Task["pear"].invoke(version)
   Rake::Task["phar"].invoke(version)
-
-  system "git add imagine.phar"
-  system "git commit -m \"update phar distribution for #{version}\""
 
   system "git checkout master"
   system "git merge develop"
