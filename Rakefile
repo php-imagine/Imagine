@@ -173,11 +173,21 @@ task :pear, :version do |t, args|
   FileUtils.mv("Imagine-#{version}.tgz", "../")
 end
 
+task :sami do
+  system "bin/sami.php update docs/sami_configuration.php -v"
+end
+
 desc "create a new Imagine release - involves "
 task :release, :version do |t, args|
   version = args[:version]
 
   Rake::Task["test"]
+
+  Rake::Task["sami"].invoke
+
+  system "git add docs/API"
+  system "git commit -m \"updated api docs for release #{version}\""
+
   Rake::Task["pear"].invoke(version)
   Rake::Task["phar"].invoke(version)
 
