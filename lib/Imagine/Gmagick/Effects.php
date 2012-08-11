@@ -59,12 +59,12 @@ class Effects implements EffectsInterface
     /**
      * {@inheritdoc}
      */
-    public function greyscale()
+    public function grayscale()
     {
         try {
-            $this->gmagick->setImageType(\Gmagick::GreyscaleType);
+            $this->gmagick->setImageType(2);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Failed to greyscale image');
+            throw new RuntimeException('Failed to grayscale image');
         }
 
         return $this;

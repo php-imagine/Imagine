@@ -35,11 +35,11 @@ interface EffectsInterface
     public function negative();
 
     /**
-     * Greyscale the image
+     * Grayscale the image
      *
      * @return EffectsInterface
      *
      * @throws RuntimeException
      */
-    public function greyscale();
+    public function grayscale();
 }

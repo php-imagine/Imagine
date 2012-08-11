@@ -53,12 +53,12 @@ class Effects implements EffectsInterface
     /**
      * {@inheritdoc}
      */
-    public function greyscale()
+    public function grayscale()
     {
         try {
             $this->imagick->setImageType(\Imagick::IMGTYPE_GRAYSCALE);
         } catch (\ImagickException $e) {
-            throw new RuntimeException('Failed to apply greyscale the image');
+            throw new RuntimeException('Failed to grayscale the image');
         }
 
         return $this;

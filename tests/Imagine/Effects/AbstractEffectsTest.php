@@ -45,6 +45,33 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($b, $pixel->getBlue());
     }
 
+    public function testGrayscale()
+    {
+        $imagine = $this->getImagine();
+
+        $r = 20;
+        $g = 90;
+        $b = 240;
+
+        $image = $imagine->create(new Box(20, 20), new Color(array($r, $g, $b)));
+        $image->effects()
+            ->grayscale();
+
+        $pixel = $image->getColorAt(new Point(10, 10));
+
+        $this->assertEquals('#565656', (string) $pixel);
+
+        $greyR = (int)$pixel->getRed();
+        $greyG = (int)$pixel->getGreen();
+        $greyB = (int)$pixel->getBlue();
+
+        $this->assertEquals($greyR, (int)86);
+        $this->assertEquals($greyR, $greyG);
+        $this->assertEquals($greyR, $greyB);
+        $this->assertEquals($greyG, $greyB);
+    }
+
+
     /**
      * @return ImagineInterface
      */

@@ -50,10 +50,10 @@ class Effects implements EffectsInterface
     /**
      * {@inheritdoc}
      */
-    public function greyscale()
+    public function grayscale()
     {
         if (false === imagefilter($this->ressource, IMG_FILTER_GRAYSCALE)) {
-           throw new RuntimeException('GD Failed to greyscale image');
+           throw new RuntimeException('GD Failed to grayscale image');
         }
 
         return $this;
