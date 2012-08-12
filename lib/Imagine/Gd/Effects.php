@@ -29,7 +29,7 @@ class Effects implements EffectsInterface
     public function gamma($correction)
     {
         if (false === imagegammacorrect($this->ressource, 1.0, $correction)) {
-            throw new RuntimeException('Gamma correction failed');
+            throw new RuntimeException('Failed to apply gamma correction to the image');
         }
 
         return $this;
@@ -41,7 +41,19 @@ class Effects implements EffectsInterface
     public function negative()
     {
         if (false === imagefilter($this->ressource, IMG_FILTER_NEGATE)) {
-           throw new RuntimeException('GD Failed to negate image');
+           throw new RuntimeException('Failed to negate the image');
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function grayscale()
+    {
+        if (false === imagefilter($this->ressource, IMG_FILTER_GRAYSCALE)) {
+           throw new RuntimeException('Failed to grayscale the image');
         }
 
         return $this;

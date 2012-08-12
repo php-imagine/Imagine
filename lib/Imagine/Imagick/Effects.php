@@ -30,7 +30,7 @@ class Effects implements EffectsInterface
         try {
             $this->imagick->gammaImage($correction, \Imagick::CHANNEL_ALL);
         } catch (\ImagickException $e) {
-            throw new RuntimeException('Failed to negate image');
+            throw new RuntimeException('Failed to apply gamma correction to the image');
         }
 
         return $this;
@@ -44,7 +44,21 @@ class Effects implements EffectsInterface
         try {
             $this->imagick->negateImage(false, \Imagick::CHANNEL_ALL);
         } catch (\ImagickException $e) {
-            throw new RuntimeException('Failed to negate image');
+            throw new RuntimeException('Failed to negate the image');
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function grayscale()
+    {
+        try {
+            $this->imagick->setImageType(\Imagick::IMGTYPE_GRAYSCALE);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to grayscale the image');
         }
 
         return $this;
