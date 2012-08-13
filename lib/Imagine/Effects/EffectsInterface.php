@@ -33,4 +33,13 @@ interface EffectsInterface
      * @throws RuntimeException
      */
     public function negative();
+
+    /**
+     * Grayscale the image
+     *
+     * @return EffectsInterface
+     *
+     * @throws RuntimeException
+     */
+    public function grayscale();
 }
