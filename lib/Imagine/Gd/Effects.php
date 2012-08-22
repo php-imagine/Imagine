@@ -60,7 +60,15 @@ class Effects implements EffectsInterface
     }
     
     /**
-     * {@inheritdoc}
+     * Colorize the image
+     *
+     * @param $r Value of red component
+     * @param $g Value of green component
+     * @param $b Value of blue component
+     *
+     * @return EffectsInterface
+     *
+     * @throws RuntimeException
      */
     public function colorize($r, $v, $b)
     {
