@@ -64,3 +64,22 @@ Apply a gamma correction. It takes one float argument, the correction parameter.
 
     $image->save('negative-portrait.png');
 
+Colorize
+++++++++++++++++
+
+Colorize the image. It takes one ``Imagine\Image\Color`` argument, which represents the color applied on top of the image.
+
+This feature only works with the Gd and Imagick drivers.
+
+.. code-block:: php
+
+    <?php
+
+    $image = $imagine->open('portrait.jpeg');
+
+    $pink = new Imagine\Image\Color('#FF00D0');
+
+    $image->effects()
+        ->colorize($pink);
+
+    $image->save('pink-portrait.png');
