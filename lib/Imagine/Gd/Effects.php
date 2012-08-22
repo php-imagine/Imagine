@@ -58,4 +58,16 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function colorize($r, $v, $b)
+    {
+        if (false === imagefilter($this->ressource, IMG_FILTER_COLORIZE, $r, $v, $b)) {
+            throw new RuntimeException('Failed to grayscale the image');
+        }
+
+        return $this;
+    }
 }
