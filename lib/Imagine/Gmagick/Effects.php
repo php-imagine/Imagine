@@ -13,6 +13,7 @@ namespace Imagine\Gmagick;
 
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Color;
 
 class Effects implements EffectsInterface
 {
