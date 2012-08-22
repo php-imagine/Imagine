@@ -69,4 +69,12 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function colorize(Color $color)
+    {
+        throw new RuntimeException('Gmagick does not support colorize');
+    }
 }
