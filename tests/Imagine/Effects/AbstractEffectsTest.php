@@ -75,19 +75,19 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
     {
         $imagine = $this->getImagine();
 
-        $pink = new Color('#FF00D0');
+        $blue = new Color('#0000FF');
 
         $image = $imagine->create(new Box(15, 15), new Color('000'));
         $image->effects()
-            ->colorize($pink);
+            ->colorize($blue);
 
         $pixel = $image->getColorAt(new Point(10, 10));
 
-        $this->assertEquals((string) $pink, (string) $pixel);
+        $this->assertEquals((string) $blue, (string) $pixel);
 
-        $this->assertEquals($pink->getRed(), $pixel->getRed());
-        $this->assertEquals($pink->getGreen(), $pixel->getGreen());
-        $this->assertEquals($pink->getBlue(), $pixel->getBlue());
+        $this->assertEquals($blue->getRed(), $pixel->getRed());
+        $this->assertEquals($blue->getGreen(), $pixel->getGreen());
+        $this->assertEquals($blue->getBlue(), $pixel->getBlue());
     }
 
 

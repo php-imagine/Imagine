@@ -26,7 +26,8 @@ class EffectsTest extends AbstractEffectsTest
 
     public function testColorize()
     {
-        $this->markTestSkipped('Gmagick does not support colorize');
+        $this->setExpectedException('RuntimeException');
+        parent::testColorize();
     }
 
     protected function getImagine()
