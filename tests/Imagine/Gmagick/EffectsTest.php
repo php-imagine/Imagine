@@ -24,6 +24,11 @@ class EffectsTest extends AbstractEffectsTest
         }
     }
 
+    public function testColorize()
+    {
+        $this->markTestSkipped('Gmagick does not support colorize');
+    }
+
     protected function getImagine()
     {
         return new Imagine();
