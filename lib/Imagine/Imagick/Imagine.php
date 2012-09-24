@@ -17,6 +17,9 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\ImagineInterface;
 
+/**
+ * Imagine implementation using the Imagick PHP extension
+ */
 final class Imagine implements ImagineInterface
 {
     /**

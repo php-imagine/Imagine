@@ -22,6 +22,9 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * Image implementation using the GD library
+ */
 final class Image implements ImageInterface
 {
     /**

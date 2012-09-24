@@ -13,6 +13,9 @@ namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
 
+/**
+ * A box implementation
+ */
 final class Box implements BoxInterface
 {
     /**

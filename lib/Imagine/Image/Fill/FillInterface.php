@@ -14,6 +14,9 @@ namespace Imagine\Image\Fill;
 use Imagine\Image\Color;
 use Imagine\Image\PointInterface;
 
+/**
+ * Interface for the fill
+ */
 interface FillInterface
 {
     /**

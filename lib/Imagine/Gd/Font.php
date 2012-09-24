@@ -14,6 +14,9 @@ namespace Imagine\Gd;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
 
+/**
+ * Font implementation using the GD library
+ */
 final class Font extends AbstractFont
 {
     /**

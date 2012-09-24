@@ -19,6 +19,9 @@ use Imagine\Image\PointInterface;
 use Imagine\Image\Color;
 use Imagine\Image\ImagineInterface;
 
+/**
+ * A canvas filter
+ */
 class Canvas implements FilterInterface
 {
     /**

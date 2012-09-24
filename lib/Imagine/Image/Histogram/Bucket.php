@@ -11,6 +11,9 @@
 
 namespace Imagine\Image\Histogram;
 
+/**
+ * Bucket histogram
+ */
 final class Bucket implements \Countable
 {
     /**

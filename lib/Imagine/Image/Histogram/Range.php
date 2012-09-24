@@ -13,6 +13,9 @@ namespace Imagine\Image\Histogram;
 
 use Imagine\Exception\OutOfBoundsException;
 
+/**
+ * Range histogram
+ */
 final class Range
 {
     /**
