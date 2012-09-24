@@ -17,6 +17,9 @@ use Imagine\Image\ImagineInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * Imagine implementation using the GD library
+ */
 final class Imagine implements ImagineInterface
 {
     /**

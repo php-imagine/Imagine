@@ -15,6 +15,9 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\PointInterface;
 use Imagine\Filter\FilterInterface;
 
+/**
+ * A paste filter
+ */
 class Paste implements FilterInterface
 {
     /**

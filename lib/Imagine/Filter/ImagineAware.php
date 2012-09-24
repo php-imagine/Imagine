@@ -14,6 +14,9 @@ namespace Imagine\Filter;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\ImagineInterface;
 
+/**
+ * ImagineAware base class
+ */
 abstract class ImagineAware implements FilterInterface
 {
     /**

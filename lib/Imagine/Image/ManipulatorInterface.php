@@ -19,6 +19,9 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\PointInterface;
 use Imagine\Image\Fill\FillInterface;
 
+/**
+ * The manipulator interface
+ */
 interface ManipulatorInterface
 {
     const THUMBNAIL_INSET    = 'inset';

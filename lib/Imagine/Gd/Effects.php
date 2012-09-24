@@ -14,6 +14,9 @@ namespace Imagine\Gd;
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * Effects implementation using the GD library
+ */
 class Effects implements EffectsInterface
 {
     private $ressource;

@@ -15,6 +15,9 @@ use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\BoxInterface;
 
+/**
+ * A resize filter
+ */
 class Resize implements FilterInterface
 {
     /**

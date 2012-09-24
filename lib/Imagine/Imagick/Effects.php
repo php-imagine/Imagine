@@ -13,6 +13,9 @@ namespace Imagine\Imagick;
 
 use Imagine\Effects\EffectsInterface;
 
+/**
+ * Effects implementation using the Imagick PHP extension
+ */
 class Effects implements EffectsInterface
 {
     private $imagick;

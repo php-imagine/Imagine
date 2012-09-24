@@ -18,6 +18,9 @@ use Imagine\Image\ImageInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * The imagine interface
+ */
 interface ImagineInterface
 {
     const VERSION = '0.3.0';
