@@ -24,6 +24,9 @@ use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ImageInterface;
 
+/**
+ * Image implementation using the Imagick PHP extension
+ */
 final class Image implements ImageInterface
 {
     /**

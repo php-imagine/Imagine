@@ -15,6 +15,9 @@ use Imagine\Image\Color;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\PointInterface;
 
+/**
+ * Linear gradient fill
+ */
 abstract class Linear implements FillInterface
 {
     /**

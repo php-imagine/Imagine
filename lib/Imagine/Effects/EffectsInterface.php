@@ -13,6 +13,9 @@ namespace Imagine\Effects;
 
 use Imagine\Exception\RuntimeException;
 
+/**
+ * Interface for the effects
+ */
 interface EffectsInterface
 {
     /**

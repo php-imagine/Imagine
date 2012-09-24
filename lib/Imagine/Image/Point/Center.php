@@ -15,6 +15,9 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\Point as OriginalPoint;
 use Imagine\Image\PointInterface;
 
+/**
+ * Point center
+ */
 final class Center implements PointInterface
 {
     /**

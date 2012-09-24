@@ -14,6 +14,9 @@ namespace Imagine\Gmagick;
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * Effects implementation using the Gmagick PHP extension
+ */
 class Effects implements EffectsInterface
 {
     private $gmagick;

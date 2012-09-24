@@ -15,6 +15,9 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Filter\FilterInterface;
 
+/**
+ * A thumbnail filter
+ */
 class Thumbnail implements FilterInterface
 {
     /**

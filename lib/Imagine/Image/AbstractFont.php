@@ -13,6 +13,9 @@ namespace Imagine\Image;
 
 use Imagine\Image\Color;
 
+/**
+ * Abstract font base class
+ */
 abstract class AbstractFont implements FontInterface
 {
     /**

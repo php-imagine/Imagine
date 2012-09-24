@@ -13,6 +13,9 @@ namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
 
+/**
+ * The color class
+ */
 final class Color
 {
     /**

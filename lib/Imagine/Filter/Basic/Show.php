@@ -14,6 +14,9 @@ namespace Imagine\Filter\Basic;
 use Imagine\Image\ImageInterface;
 use Imagine\Filter\FilterInterface;
 
+/**
+ * A show filter
+ */
 class Show implements FilterInterface
 {
     /**

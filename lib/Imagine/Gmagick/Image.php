@@ -23,6 +23,9 @@ use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
+/**
+ * Image implementation using the Gmagick PHP extension
+ */
 class Image implements ImageInterface
 {
     /**

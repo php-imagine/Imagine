@@ -18,6 +18,9 @@ use Imagine\Image\Color;
 use Imagine\Image\PointInterface;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * The image interface
+ */
 interface ImageInterface extends ManipulatorInterface
 {
     const RESOLUTION_PIXELSPERINCH = 'ppi';

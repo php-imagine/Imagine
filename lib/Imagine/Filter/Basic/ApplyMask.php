@@ -14,6 +14,9 @@ namespace Imagine\Filter\Basic;
 use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
 
+/**
+ * An apply mask filter
+ */
 class ApplyMask implements FilterInterface
 {
     /**

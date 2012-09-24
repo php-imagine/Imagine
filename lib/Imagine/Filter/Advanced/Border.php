@@ -16,6 +16,9 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
 
+/**
+ * A border filter
+ */
 class Border implements FilterInterface
 {
     /**
