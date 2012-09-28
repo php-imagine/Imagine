@@ -24,6 +24,12 @@ class EffectsTest extends AbstractEffectsTest
         }
     }
 
+    public function testColorize()
+    {
+        $this->setExpectedException('RuntimeException');
+        parent::testColorize();
+    }
+
     protected function getImagine()
     {
         return new Imagine();
