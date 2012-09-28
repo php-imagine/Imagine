@@ -291,6 +291,7 @@ class Image implements ImageInterface
     public function get($format, array $options = array())
     {
         try {
+            $this->applyImageOptions($this->gmagick, $options);
             $this->gmagick->setimageformat($format);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
