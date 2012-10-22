@@ -19,11 +19,11 @@ use Imagine\Exception\RuntimeException;
  */
 class Effects implements EffectsInterface
 {
-    private $ressource;
+    private $resource;
 
-    public function __construct($ressource)
+    public function __construct($resource)
     {
-        $this->ressource = $ressource;
+        $this->resource = $resource;
     }
 
     /**
@@ -31,7 +31,7 @@ class Effects implements EffectsInterface
      */
     public function gamma($correction)
     {
-        if (false === imagegammacorrect($this->ressource, 1.0, $correction)) {
+        if (false === imagegammacorrect($this->resource, 1.0, $correction)) {
             throw new RuntimeException('Failed to apply gamma correction to the image');
         }
 
@@ -43,7 +43,7 @@ class Effects implements EffectsInterface
      */
     public function negative()
     {
-        if (false === imagefilter($this->ressource, IMG_FILTER_NEGATE)) {
+        if (false === imagefilter($this->resource, IMG_FILTER_NEGATE)) {
            throw new RuntimeException('Failed to negate the image');
         }
 
@@ -55,7 +55,7 @@ class Effects implements EffectsInterface
      */
     public function grayscale()
     {
-        if (false === imagefilter($this->ressource, IMG_FILTER_GRAYSCALE)) {
+        if (false === imagefilter($this->resource, IMG_FILTER_GRAYSCALE)) {
            throw new RuntimeException('Failed to grayscale the image');
         }
 
