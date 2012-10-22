@@ -12,6 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Effects\EffectsInterface;
+use Imagine\Exception\RuntimeException;
 
 /**
  * Effects implementation using the Imagick PHP extension
