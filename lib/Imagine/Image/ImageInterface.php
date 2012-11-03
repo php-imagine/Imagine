@@ -17,6 +17,7 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\Color;
 use Imagine\Image\PointInterface;
 use Imagine\Exception\RuntimeException;
+use Imagine\Profile\ProfileInterface;
 
 /**
  * The image interface
@@ -91,4 +92,15 @@ interface ImageInterface extends ManipulatorInterface
      * @return Color
      */
     public function getColorAt(PointInterface $point);
+
+    /**
+     * Inject profile in image
+     *
+     * @param Imagine\Profile\ProfileInterface
+     *
+     * @throws Imagine\Exception\RuntimeException
+     *
+     * @return bool
+     */
+    function profile($name, ProfileInterface $profile);
 }

@@ -23,6 +23,8 @@ use Imagine\Image\Fill\Gradient\Linear;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ImageInterface;
+use Imagine\Profile\ProfileInterface;
+use Imagine\Profile\Profile;
 
 /**
  * Image implementation using the Imagick PHP extension
@@ -33,6 +35,11 @@ final class Image implements ImageInterface
      * @var Imagick
      */
     private $imagick;
+
+    /**
+     * @var array
+     */
+    private $profiles;
 
     /**
      * Constructs Image with Imagick and Imagine instances
@@ -516,6 +523,49 @@ final class Image implements ImageInterface
             (int) round($pixel->getColorValue(\Imagick::COLOR_ALPHA) * 100)
         );
     }
+
+    /**
+     * Retrieve an array of profiles for current image
+     *
+     * @param string $pattern Profiles must match pattern
+     * @return array
+     */
+    public function getProfile($pattern = false)
+    {
+        $this->profiles = $this->profiles ?: $this->loadProfiles($this->imagick);
+        if (!$pattern) {
+            return $this->profiles;
+        }
+        return array_filter($this->profiles, function($profile) use ($pattern) {
+            return $profile->matches($pattern);
+        });
+    }
+    /**
+     * Get, set or remove an image profile
+     *
+     * @param string $name
+     * @param string|null|false $value If string, set $name to $value. If null, remove $name. If false, get $name
+     */
+    public function profile($name, ProfileInterface $profile)
+    {
+        return $this->imagick->setImageProfile($name, $profile->get());
+    }
+
+    /**
+     * Load all profiles from open image
+     *
+     * @param \Imagick $image
+     * @return array
+     */
+    private function loadProfiles(\Imagick $image)
+    {
+        $profiles = array();
+        foreach ($image->getImageProfiles() as $name => $content) {
+            $profiles[$name] = new Profile($name, $content);
+        }
+        return $profiles;
+    }
+
 
     /**
      * Internal
