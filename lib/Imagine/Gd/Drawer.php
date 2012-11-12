@@ -218,27 +218,15 @@ final class Drawer implements DrawerInterface
         $angle    = -1 * $angle;
         $fontsize = $font->getSize();
         $fontfile = $font->getFile();
-        $info     = imageftbbox($fontsize, $angle, $fontfile, $string);
-        $xs       = array($info[0], $info[2], $info[4], $info[6]);
-        $ys       = array($info[1], $info[3], $info[5], $info[7]);
-
-        $xdiff = 0 - min($xs) + $position->getX();
-        $ydiff = 0 - min($ys) + $position->getY();
-
-        foreach ($xs as &$x) {
-            $x += $xdiff;
-        }
-
-        foreach ($ys as &$y) {
-            $y += $ydiff;
-        }
+        $x        = $position->getX();
+        $y        = $position->getY() + $fontsize;
 
         if (false === imagealphablending($this->resource, true)) {
             throw new RuntimeException('Font mask operation failed');
         }
 
         if (false === imagefttext(
-                $this->resource, $fontsize, $angle, $xs[0], $ys[0],
+                $this->resource, $fontsize, $angle, $x, $y,
                 $this->getColor($font->getColor()), $fontfile, $string
             )) {
             throw new RuntimeException('Font mask operation failed');
