@@ -132,7 +132,7 @@ The following example opens a Jpg image and saves it as Png format :
    $imagine->open('/path/to/image.jpg')
       ->save('/path/to/image.png');
 
-Two options groups are currently supported : quality and resolution.
+Three options groups are currently supported : quality, resolution and flatten.
 
 .. NOTE::
    GD does not support resolution options group
@@ -171,6 +171,27 @@ The following example opens a Jpg image and saves it with it with 150 dpi horizo
 .. TIP::
    You **MUST** provide a unit system when setting resolution values.
    There are two available unit systems for resolution : ``ImageInterface::RESOLUTION_PIXELSPERINCH`` and ``ImageInterface::RESOLUTION_PIXELSPERCENTIMETER``.
+`
+The flatten option is used when dealing with multi-layers images (see the
+`layers <layers>`_ section for information). Image are saved flatten by default,
+you can avoid this by explicitly set this option to ``false`` when saving :
+
+.. code-block:: php
+
+   <?php
+
+   use Imagine\Image\Box;
+   use Imagine\Image\ImageInterface;
+   use Imagine\Imagick\Imagine;
+
+   $imagine = new Imagine();
+
+   $imagine->open('/path/to/animated.gif')
+           ->resize(new Box(320, 240))
+           ->save('/path/to/animated-resized.gif', array('flatten' => false));
+
+.. TIP::
+   You **SHOULD** not flatten image only for animated gif and png images.
 
 Of course, you can combine options :
 

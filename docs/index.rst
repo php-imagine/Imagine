@@ -68,6 +68,7 @@ Usage:
    usage/coordinates
    usage/drawing
    usage/effects
+   usage/layers
    usage/filters
    usage/exceptions
 
