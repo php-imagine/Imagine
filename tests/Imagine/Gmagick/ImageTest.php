@@ -30,4 +30,9 @@ class ImageTest extends AbstractImageTest
     {
         return new Imagine();
     }
+
+    protected function supportMultipleLayers()
+    {
+        return true;
+    }
 }

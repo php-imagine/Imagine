@@ -30,9 +30,13 @@ use Imagine\Image\ImageInterface;
 final class Image implements ImageInterface
 {
     /**
-     * @var Imagick
+     * @var \Imagick
      */
     private $imagick;
+    /**
+     * @var Layers
+     */
+    private $layers;
 
     /**
      * Constructs Image with Imagick and Imagine instances
@@ -42,6 +46,7 @@ final class Image implements ImageInterface
     public function __construct(\Imagick $imagick)
     {
         $this->imagick = $imagick;
+        $this->layers = new Layers($this, $this->imagick);
     }
 
     /**
@@ -244,10 +249,12 @@ final class Image implements ImageInterface
                 $this->imagick->setimageformat($options['format']);
             }
 
+            $this->layers()->merge();
             $this->applyImageOptions($this->imagick, $options);
 
             // flatten only if image has multiple layers
-            if ($this->imagick->hasNextImage() || $this->imagick->hasPreviousImage()) {
+            if ((!isset($options['flatten']) || $options['flatten'] === true)
+                && count($this) > 1) {
                 $this->flatten();
             }
 
@@ -515,6 +522,14 @@ final class Image implements ImageInterface
             ),
             (int) round($pixel->getColorValue(\Imagick::COLOR_ALPHA) * 100)
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function layers()
+    {
+        return $this->layers;
     }
 
     /**

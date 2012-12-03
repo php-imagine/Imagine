@@ -50,4 +50,9 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/resize/large.png');
         unlink('tests/Imagine/Fixtures/resize/small.png');
     }
+
+    protected function supportMultipleLayers()
+    {
+        return true;
+    }
 }
