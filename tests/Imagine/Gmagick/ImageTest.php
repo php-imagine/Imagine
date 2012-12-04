@@ -35,4 +35,9 @@ class ImageTest extends AbstractImageTest
     {
         return true;
     }
+
+    public function testColorHistogram()
+    {
+        $this->markTestSkipped('Test skipped while bug https://bugs.php.net/bug.php?id=63677 is not fixed');
+    }
 }
