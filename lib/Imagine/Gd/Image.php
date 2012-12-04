@@ -31,6 +31,7 @@ final class Image implements ImageInterface
      * @var resource
      */
     private $resource;
+    private $layers;
 
     /**
      * Constructs a new Image instance using the result of
@@ -41,6 +42,7 @@ final class Image implements ImageInterface
     public function __construct($resource)
     {
         $this->resource = $resource;
+        $this->layers = new Layers($this, $this->resource);
     }
 
     /**
@@ -48,7 +50,9 @@ final class Image implements ImageInterface
      */
     public function __destruct()
     {
-        imagedestroy($this->resource);
+        if (is_resource($this->resource) && 'gd' === get_resource_type($this->resource)) {
+            imagedestroy($this->resource);
+        }
     }
 
     /**
@@ -463,6 +467,14 @@ final class Image implements ImageInterface
             ),
             (int) round($info['alpha'] / 127 * 100)
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function layers()
+    {
+        return $this->layers;
     }
 
     /**

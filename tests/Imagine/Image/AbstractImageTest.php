@@ -199,6 +199,55 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->processInOut("large", "jpg","jpg");
     }
 
+    public function testLayerReturnsALayerInterface()
+    {
+        $factory = $this->getImagine();
+
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+
+        $this->assertInstanceOf('Imagine\\Image\\LayersInterface', $image->layers());
+    }
+
+    public function testCountAMonoLayeredImage()
+    {
+        $this->assertEquals(1, count($this->getMonoLayeredImage()->layers()));
+    }
+
+    public function testCountAMultiLayeredImage()
+    {
+        if (!$this->supportMultipleLayers()) {
+            $this->markTestSkipped('This driver does not support multiple layers');
+        }
+
+        $this->assertGreaterThan(1, count($this->getMultiLayeredImage()->layers()));
+    }
+
+    public function testLayerOnMonoLayeredImage()
+    {
+        foreach ($this->getMonoLayeredImage()->layers() as $layer) {
+            $this->assertInstanceOf('Imagine\\Image\\ImageInterface', $layer);
+            $this->assertCount(1, $layer->layers());
+        }
+    }
+
+    public function testLayerOnMultiLayeredImage()
+    {
+        foreach ($this->getMultiLayeredImage()->layers()  as $layer) {
+            $this->assertInstanceOf('Imagine\\Image\\ImageInterface', $layer);
+            $this->assertCount(1, $layer->layers());
+        }
+    }
+
+    private function getMonoLayeredImage()
+    {
+        return $this->getImagine()->open('tests/Imagine/Fixtures/google.png');
+    }
+
+    private function getMultiLayeredImage()
+    {
+        return $this->getImagine()->open('tests/Imagine/Fixtures/cat.gif');
+    }
+
     protected function processInOut($file, $in, $out)
     {
         $factory = $this->getImagine();
@@ -210,4 +259,5 @@ abstract class AbstractImageTest extends ImagineTestCase
     }
 
     abstract protected function getImagine();
+    abstract protected function supportMultipleLayers();
 }

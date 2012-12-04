@@ -55,9 +55,9 @@ task :test do
     puts "Travis CI"
     system "sudo apt-get install -y  imagemagick libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev libmagickcore-dev libmagickwand-dev"
 
-    system "wget http://pecl.php.net/get/imagick-3.0.1.tgz"
-    system "tar -xzf imagick-3.0.1.tgz"
-    system "sh -c \"cd imagick-3.0.1 && phpize && ./configure --with-imagick=/usr/local && make && sudo make install\""
+    system "wget http://pecl.php.net/get/imagick-3.1.0RC2.tgz"
+    system "tar -xzf imagick-3.1.0RC2.tgz"
+    system "sh -c \"cd imagick-3.1.0RC2 && phpize && ./configure --with-imagick=/usr/local && make && sudo make install\""
 
     system "sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev"
 
@@ -81,7 +81,7 @@ task :test do
   exitcode = 1 unless system "phpunit tests/"
 
   puts "testing with imagick enabled"
-  
+
   File.open(ini_file, "w") do |f|
     f.write(original_ini_contents)
     f.write(<<-INI.unindent)
