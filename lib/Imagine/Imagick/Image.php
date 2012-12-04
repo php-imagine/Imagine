@@ -558,7 +558,8 @@ final class Image implements ImageInterface
                 throw new RuntimeException('Unsupported image unit format');
             }
 
-            $image->setResolution($options['resolution-x'], $options['resolution-y']);
+            $image->setImageResolution($options['resolution-x'], $options['resolution-y']);
+            $image->resampleImage($options['resolution-x'], $options['resolution-y'], \Imagick::FILTER_UNDEFINED, 0);
         }
     }
 
