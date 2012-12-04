@@ -156,6 +156,33 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals(6438, count($image->histogram()));
     }
 
+    public function testImageResolutionChange()
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->open('tests/Imagine/Fixtures/resize/210-design-19933.jpg');
+        $outfile = 'tests/Imagine/Fixtures/resize/reduced.jpg';
+        $image->save($outfile, array(
+            'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
+            'resolution-x' => 144,
+            'resolution-y' => 144
+        ));
+
+        if ($imagine instanceof \Imagine\Imagick\Imagine) {
+            $i = new \Imagick($outfile);
+            $info = $i->identifyimage();
+            $this->assertEquals(144, $info['resolution']['x']);
+            $this->assertEquals(144, $info['resolution']['y']);
+        }
+        if ($imagine instanceof \Imagine\Gmagick\Imagine) {
+            $i = new \Gmagick($outfile);
+            $info = $i->getimageresolution();
+            $this->assertEquals(144, $info['x']);
+            $this->assertEquals(144, $info['y']);
+        }
+
+        unlink($outfile);
+    }
+
     public function testInOutResult(){
 
         $this->processInOut("trans", "png","png");
