@@ -13,6 +13,7 @@ namespace Imagine\Gd;
 
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Color;
 
 /**
  * Effects implementation using the GD library
@@ -57,6 +58,18 @@ class Effects implements EffectsInterface
     {
         if (false === imagefilter($this->resource, IMG_FILTER_GRAYSCALE)) {
            throw new RuntimeException('Failed to grayscale the image');
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function colorize(Color $color)
+    {
+        if (false === imagefilter($this->resource, IMG_FILTER_COLORIZE, $color->getRed(), $color->getGreen(), $color->getBlue())) {
+            throw new RuntimeException('Failed to colorize the image');
         }
 
         return $this;

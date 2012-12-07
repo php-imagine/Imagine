@@ -13,6 +13,7 @@ namespace Imagine\Gmagick;
 
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Color;
 
 /**
  * Effects implementation using the Gmagick PHP extension
@@ -71,5 +72,13 @@ class Effects implements EffectsInterface
         }
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function colorize(Color $color)
+    {
+        throw new RuntimeException('Gmagick does not support colorize');
     }
 }

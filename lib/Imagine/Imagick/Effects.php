@@ -13,6 +13,7 @@ namespace Imagine\Imagick;
 
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Color;
 
 /**
  * Effects implementation using the Imagick PHP extension
@@ -63,6 +64,20 @@ class Effects implements EffectsInterface
             $this->imagick->setImageType(\Imagick::IMGTYPE_GRAYSCALE);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to grayscale the image');
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function colorize(Color $color)
+    {
+        try {
+            $this->imagick->colorizeImage((string) $color, 1);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to colorize the image');
         }
 
         return $this;
