@@ -64,6 +64,22 @@ Apply a gamma correction. It takes one float argument, the correction parameter.
 
     $image->save('negative-portrait.png');
 
+Grayscale
+++++++++++++++++
+
+Create a grayscale version of the image.
+
+.. code-block:: php
+
+    <?php
+
+    $image = $imagine->open('portrait.jpeg');
+
+    $image->effects()
+        ->grayscale();
+
+    $image->save('grayscale-portrait.png');
+
 Colorize
 ++++++++++++++++
 
