@@ -42,7 +42,6 @@ final class Image implements ImageInterface
     public function __construct($resource)
     {
         $this->resource = $resource;
-        $this->layers = new Layers($this, $this->resource);
     }
 
     /**
@@ -474,6 +473,10 @@ final class Image implements ImageInterface
      */
     public function layers()
     {
+        if (null === $this->layers) {
+            $this->layers = new Layers($this, $this->resource);
+        }
+
         return $this->layers;
     }
 
