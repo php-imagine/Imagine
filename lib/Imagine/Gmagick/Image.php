@@ -257,9 +257,14 @@ class Image implements ImageInterface
      */
     public function save($path, array $options = array())
     {
-        $this->prepareOutput();
-
-        $this->gmagick->writeimage($path, true);
+        try {
+            $this->prepareOutput();
+            $this->gmagick->writeimage($path, true);
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Save operation failed', $e->getCode(), $e
+            );
+        }
 
         return $this;
     }
@@ -280,8 +285,14 @@ class Image implements ImageInterface
      */
     public function get($format, array $options = array())
     {
-        $options["format"] = $format;
-        $this->prepareOutput($options);
+        try {
+            $options["format"] = $format;
+            $this->prepareOutput($options);
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Get operation failed', $e->getCode(), $e
+            );
+        }
 
         return $this->gmagick->getimagesblob();
     }
@@ -291,23 +302,17 @@ class Image implements ImageInterface
      */
     private function prepareOutput(array $options = array())
     {
-        try {
-            if (isset($options['format'])) {
-                $this->gmagick->setimageformat($options['format']);
-            }
+        if (isset($options['format'])) {
+            $this->gmagick->setimageformat($options['format']);
+        }
 
-            $this->layers()->merge();
-            $this->applyImageOptions($this->gmagick, $options);
+        $this->layers()->merge();
+        $this->applyImageOptions($this->gmagick, $options);
 
-            // flatten only if image has multiple layers
-            if ((!isset($options['flatten']) || $options['flatten'] === true)
-                && count($this->layers()) > 1) {
-                $this->flatten();
-            }
-        } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Output preparation failed', $e->getCode(), $e
-            );
+        // flatten only if image has multiple layers
+        if ((!isset($options['flatten']) || $options['flatten'] === true)
+            && count($this->layers()) > 1) {
+            $this->flatten();
         }
     }
 
