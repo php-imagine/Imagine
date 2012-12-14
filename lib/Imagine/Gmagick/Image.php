@@ -280,10 +280,6 @@ class Image implements ImageInterface
      */
     public function get($format, array $options = array())
     {
-        if (!is_array($options)) {
-            $options = array();
-        }
-
         $options["format"] = $format;
         $this->prepareOutput($options);
 
