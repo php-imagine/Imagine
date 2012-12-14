@@ -57,7 +57,7 @@ final class Imagine implements ImagineInterface
             $image = $this->read($handle);
         } catch (\Exception $e) {
             fclose($handle);
-            throw $e;
+            throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
         }
 
         return $image;
