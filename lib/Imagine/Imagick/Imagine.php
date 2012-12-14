@@ -107,6 +107,8 @@ final class Imagine implements ImagineInterface
             $imagick->readImageBlob($string);
             $imagick->setImageMatte(true);
 
+            $imagick = $imagick->coalesceImages();
+
             return new Image($imagick);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
@@ -127,6 +129,8 @@ final class Imagine implements ImagineInterface
         try {
             $imagick = new \Imagick();
             $imagick->readImageFile($resource);
+
+            $imagick = $imagick->coalesceImages();
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Could not read image from resource', $e->getCode(), $e

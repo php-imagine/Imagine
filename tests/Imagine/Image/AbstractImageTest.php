@@ -238,6 +238,32 @@ abstract class AbstractImageTest extends ImagineTestCase
         }
     }
 
+    public function testMultiLayeredImageHasConsistentSize()
+    {
+        if (!$this->supportMultipleLayers()) {
+            $this->markTestSkipped('This driver does not support multiple layers');
+        }
+
+        $width = null;
+        $height = null;
+
+        foreach ($this->getInconsistentMultiLayeredImage()->layers() as $layer) {
+            $size = $layer->getSize();
+
+            if ($width === null) {
+                $width = $size->getWidth();
+            } else {
+                $this->assertEquals($width, $size->getWidth());
+            }
+
+            if ($height === null) {
+                $height = $size->getHeight();
+            } else {
+                $this->assertEquals($height, $size->getHeight());
+            }
+        }
+    }
+
     private function getMonoLayeredImage()
     {
         return $this->getImagine()->open('tests/Imagine/Fixtures/google.png');
@@ -246,6 +272,11 @@ abstract class AbstractImageTest extends ImagineTestCase
     private function getMultiLayeredImage()
     {
         return $this->getImagine()->open('tests/Imagine/Fixtures/cat.gif');
+    }
+
+    private function getInconsistentMultiLayeredImage()
+    {
+        return $this->getImagine()->open('tests/Imagine/Fixtures/anima.gif');
     }
 
     protected function processInOut($file, $in, $out)
