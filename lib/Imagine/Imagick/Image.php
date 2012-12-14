@@ -244,26 +244,8 @@ final class Image implements ImageInterface
      */
     public function save($path, array $options = array())
     {
-        try {
-            if (isset($options['format'])) {
-                $this->imagick->setimageformat($options['format']);
-            }
-
-            $this->layers()->merge();
-            $this->applyImageOptions($this->imagick, $options);
-
-            // flatten only if image has multiple layers
-            if ((!isset($options['flatten']) || $options['flatten'] === true)
-                && count($this->layers()) > 1) {
-                $this->flatten();
-            }
-
-            $this->imagick->writeImages($path, true);
-        } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Save operation failed', $e->getCode(), $e
-            );
-        }
+        $this->prepareOutput($options);
+        $this->imagick->writeImages($path, true);
 
         return $this;
     }
@@ -284,16 +266,39 @@ final class Image implements ImageInterface
      */
     public function get($format, array $options = array())
     {
-        try {
-            $this->applyImageOptions($this->imagick, $options);
-            $this->imagick->setImageFormat($format);
-        } catch (\ImagickException $e) {
-            throw new InvalidArgumentException(
-                'Show operation failed', $e->getCode(), $e
-            );
+        if (!is_array($options)) {
+            $options = array();
         }
 
-        return (string) $this->imagick;
+        $options["format"] = $format;
+        $this->prepareOutput($options);
+        
+        return $this->imagick->getImagesBlob();
+    }
+
+    /**
+     * @param array $options
+     */
+    private function prepareOutput(array $options = array())
+    {
+        try {
+            if (isset($options['format'])) {
+                $this->imagick->setImageFormat($options['format']);
+            }
+
+            $this->layers()->merge();
+            $this->applyImageOptions($this->imagick, $options);
+
+            // flatten only if image has multiple layers
+            if ((!isset($options['flatten']) || $options['flatten'] === true)
+                && count($this->layers()) > 1) {
+                $this->flatten();
+            }
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Output preparation failed', $e->getCode(), $e
+            );
+        }
     }
 
     /**

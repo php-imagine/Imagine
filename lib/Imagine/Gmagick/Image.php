@@ -257,26 +257,9 @@ class Image implements ImageInterface
      */
     public function save($path, array $options = array())
     {
-        try {
-            if (isset($options['format'])) {
-                $this->gmagick->setimageformat($options['format']);
-            }
+        $this->prepareOutput();
 
-            $this->layers()->merge();
-            $this->applyImageOptions($this->gmagick, $options);
-
-            // flatten only if image has multiple layers
-            if ((!isset($options['flatten']) || $options['flatten'] === true)
-                && count($this->layers()) > 1) {
-                $this->flatten();
-            }
-
-            $this->gmagick->writeimage($path);
-        } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Save operation failed', $e->getCode(), $e
-            );
-        }
+        $this->gmagick->writeimage($path, true);
 
         return $this;
     }
@@ -297,16 +280,41 @@ class Image implements ImageInterface
      */
     public function get($format, array $options = array())
     {
-        try {
-            $this->applyImageOptions($this->gmagick, $options);
-            $this->gmagick->setimageformat($format);
-        } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Show operation failed', $e->getCode(), $e
-            );
+        if (!is_array($options)) {
+            $options = array();
         }
 
+        $options["format"] = $format;
+        $this->prepareOutput($options);
+
         return (string) $this->gmagick;
+    }
+
+    /**
+     * @param array $options
+     */
+    private function prepareOutput(array $options = array())
+    {
+        try {
+            if (isset($options['format'])) {
+                $this->gmagick->setimageformat($options['format']);
+            }
+
+            $this->layers()->merge();
+            $this->applyImageOptions($this->gmagick, $options);
+
+            // flatten only if image has multiple layers
+            if ((!isset($options['flatten']) || $options['flatten'] === true)
+                && count($this->layers()) > 1) {
+                $this->flatten();
+            }
+
+            $this->gmagick->writeimage($path);
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Output preparation failed', $e->getCode(), $e
+            );
+        }
     }
 
     /**
