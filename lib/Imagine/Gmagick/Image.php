@@ -258,7 +258,7 @@ class Image implements ImageInterface
     public function save($path, array $options = array())
     {
         try {
-            $this->prepareOutput();
+            $this->prepareOutput($options);
             $this->gmagick->writeimage($path, true);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
