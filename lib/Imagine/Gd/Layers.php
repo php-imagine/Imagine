@@ -41,6 +41,13 @@ class Layers implements LayersInterface
     /**
      * {@inheritdoc}
      */
+    public function coalesce()
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function current()
     {
         return new Image($this->resource);

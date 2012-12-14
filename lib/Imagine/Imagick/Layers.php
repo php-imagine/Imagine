@@ -58,6 +58,25 @@ class Layers implements LayersInterface
     /**
      * {@inheritdoc}
      */
+    public function coalesce()
+    {
+        $coalesced_resource = $this->resource->coalesceImages();
+
+        foreach ($this as $offset => $image) {
+            try {
+                $coalesced_resource->setIteratorIndex($offset);
+                $this->layers[$offset] = $coalesced_resource->getImage();
+            } catch (\ImagickException $e) {
+                throw new RuntimeException(
+                    'Failed to retrieve layer', $e->getCode(), $e
+                );
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function current()
     {
         if (!isset($this->layers[$this->offset])) {
