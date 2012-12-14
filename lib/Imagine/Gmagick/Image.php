@@ -287,7 +287,7 @@ class Image implements ImageInterface
         $options["format"] = $format;
         $this->prepareOutput($options);
 
-        return (string) $this->gmagick;
+        return $this->gmagick->getimagesblob();
     }
 
     /**
