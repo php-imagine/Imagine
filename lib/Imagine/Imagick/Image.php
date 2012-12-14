@@ -254,7 +254,7 @@ final class Image implements ImageInterface
 
             // flatten only if image has multiple layers
             if ((!isset($options['flatten']) || $options['flatten'] === true)
-                && count($this) > 1) {
+                && count($this->layers()) > 1) {
                 $this->flatten();
             }
 
