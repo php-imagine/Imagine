@@ -68,7 +68,8 @@ class Layers implements LayersInterface
             );
         }
 
-        foreach ($this as $offset => $image) {
+        $count = $coalescedResource->getNumberImages();
+        for ($offset = 0; $offset < $count; $offset++) {
             try {
                 $coalescedResource->setIteratorIndex($offset);
                 $this->layers[$offset] = $coalescedResource->getImage();
