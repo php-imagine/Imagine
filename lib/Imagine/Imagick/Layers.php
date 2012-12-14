@@ -47,7 +47,7 @@ class Layers implements LayersInterface
             try {
                 $this->resource->setIteratorIndex($offset);
                 $this->resource->setImage($image);
-            } catch (\GmagickException $e) {
+            } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     'Failed to substitute layer', $e->getCode(), $e
                 );
@@ -83,7 +83,7 @@ class Layers implements LayersInterface
             try {
                 $this->resource->setIteratorIndex($this->offset);
                 $this->layers[$this->offset] = $this->resource->getImage();
-            } catch (\GmagickException $e) {
+            } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     sprintf('Failed to extract layer %d', $this->offset),
                     $e->getCode(), $e
