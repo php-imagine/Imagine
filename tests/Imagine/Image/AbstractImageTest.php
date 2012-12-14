@@ -264,6 +264,51 @@ abstract class AbstractImageTest extends ImagineTestCase
         }
     }
 
+    public function testMultiLayeredImageToMonoLayeredPng()
+    {
+        if (!$this->supportMultipleLayers()) {
+            $this->markTestSkipped('This driver does not support multiple layers');
+        }
+
+        $path = "tests/Imagine/Fixtures/results/layers-multi-mono.png";
+
+        $image = $this->getInconsistentMultiLayeredImage();
+        $image->save($path, array("format" => "png"));
+
+        $image = $this->getImagine()->open($path);
+        $this->assertEquals(1, count($image->layers()));
+    }
+
+    public function testMultiLayeredImageToMultiLayeredGif()
+    {
+        if (!$this->supportMultipleLayers()) {
+            $this->markTestSkipped('This driver does not support multiple layers');
+        }
+
+        $path = "tests/Imagine/Fixtures/results/layers-multi-multi.gif";
+
+        $image = $this->getInconsistentMultiLayeredImage();
+        $image->save($path, array("format" => "gif", "flatten" => false));
+
+        $image = $this->getImagine()->open($path);
+        $this->assertGreaterThan(1, count($image->layers()));
+    }
+
+    public function testMultiLayeredImageToMonoLayeredGif()
+    {
+        if (!$this->supportMultipleLayers()) {
+            $this->markTestSkipped('This driver does not support multiple layers');
+        }
+
+        $path = "tests/Imagine/Fixtures/results/layers-multi-multi.gif";
+
+        $image = $this->getInconsistentMultiLayeredImage();
+        $image->save($path, array("format" => "gif"));
+
+        $image = $this->getImagine()->open($path);
+        $this->assertEquals(1, count($image->layers()));
+    }
+
     private function getMonoLayeredImage()
     {
         return $this->getImagine()->open('tests/Imagine/Fixtures/google.png');

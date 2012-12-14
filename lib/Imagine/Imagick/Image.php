@@ -258,7 +258,7 @@ final class Image implements ImageInterface
                 $this->flatten();
             }
 
-            $this->imagick->writeImage($path);
+            $this->imagick->writeImages($path, true);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Save operation failed', $e->getCode(), $e
