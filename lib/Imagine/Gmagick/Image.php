@@ -308,8 +308,6 @@ class Image implements ImageInterface
                 && count($this->layers()) > 1) {
                 $this->flatten();
             }
-
-            $this->gmagick->writeimage($path);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Output preparation failed', $e->getCode(), $e
