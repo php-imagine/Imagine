@@ -64,6 +64,35 @@ class LayersTest extends AbstractLayersTest
         }
     }
 
+    public function testCoalesce()
+    {
+        $width = null;
+        $height = null;
+
+        $resource = new \Imagick;
+        $resource->newImage(20, 10, new \ImagickPixel("black"));
+        $resource->newImage(10, 10, new \ImagickPixel("black"));
+
+        $layers = new Layers(new Image($resource), $resource);
+        $layers->coalesce();
+
+        foreach ($layers as $layer) {
+            $size = $layer->getSize();
+
+            if ($width === null) {
+                $width = $size->getWidth();
+            } else {
+                $this->assertEquals($width, $size->getWidth());
+            }
+
+            if ($height === null) {
+                $height = $size->getHeight();
+            } else {
+                $this->assertEquals($height, $size->getHeight());
+            }
+        }
+    }
+
     protected function getImagine()
     {
         return new Imagine();

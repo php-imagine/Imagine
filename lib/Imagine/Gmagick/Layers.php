@@ -59,6 +59,14 @@ class Layers implements LayersInterface
     /**
      * {@inheritdoc}
      */
+    public function coalesce()
+    {
+        throw new RuntimeException("Gmagick does not support coalescing");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function current()
     {
         if (!isset($this->layers[$this->offset])) {

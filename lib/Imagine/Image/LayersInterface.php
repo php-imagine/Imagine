@@ -22,4 +22,10 @@ interface LayersInterface extends \Iterator, \Countable
      * @throws RuntimeException
      */
     public function merge();
+
+    /**
+     * Coalesce layers. Each layer in the sequence is the same size as the first and composited with the next layer in
+     * the sequence.
+     */
+    public function coalesce();
 }

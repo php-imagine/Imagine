@@ -47,9 +47,35 @@ class Layers implements LayersInterface
             try {
                 $this->resource->setIteratorIndex($offset);
                 $this->resource->setImage($image);
-            } catch (\GmagickException $e) {
+            } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     'Failed to substitute layer', $e->getCode(), $e
+                );
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function coalesce()
+    {
+        try {
+            $coalescedResource = $this->resource->coalesceImages();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Failed to coalesce layers', $e->getCode(), $e
+            );
+        }
+
+        $count = $coalescedResource->getNumberImages();
+        for ($offset = 0; $offset < $count; $offset++) {
+            try {
+                $coalescedResource->setIteratorIndex($offset);
+                $this->layers[$offset] = $coalescedResource->getImage();
+            } catch (\ImagickException $e) {
+                throw new RuntimeException(
+                    'Failed to retrieve layer', $e->getCode(), $e
                 );
             }
         }
@@ -64,7 +90,7 @@ class Layers implements LayersInterface
             try {
                 $this->resource->setIteratorIndex($this->offset);
                 $this->layers[$this->offset] = $this->resource->getImage();
-            } catch (\GmagickException $e) {
+            } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     sprintf('Failed to extract layer %d', $this->offset),
                     $e->getCode(), $e
