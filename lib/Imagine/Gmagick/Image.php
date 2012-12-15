@@ -26,7 +26,7 @@ use Imagine\Image\PointInterface;
 /**
  * Image implementation using the Gmagick PHP extension
  */
-class Image implements ImageInterface
+final class Image implements ImageInterface
 {
     /**
      * @var \Gmagick
