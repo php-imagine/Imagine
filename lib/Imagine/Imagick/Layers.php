@@ -61,12 +61,23 @@ class Layers implements LayersInterface
     public function coalesce()
     {
         try {
-            $this->resource = $this->resource->coalesceImages();
-            $this->layers = array();
+            $coalescedResource = $this->resource->coalesceImages();
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Failed to coalesce layers', $e->getCode(), $e
             );
+        }
+
+        $count = $coalescedResource->getNumberImages();
+        for ($offset = 0; $offset < $count; $offset++) {
+            try {
+                $coalescedResource->setIteratorIndex($offset);
+                $this->layers[$offset] = $coalescedResource->getImage();
+            } catch (\ImagickException $e) {
+                throw new RuntimeException(
+                    'Failed to retrieve layer', $e->getCode(), $e
+                );
+            }
         }
     }
 
