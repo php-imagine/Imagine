@@ -248,6 +248,11 @@ abstract class AbstractImageTest extends ImagineTestCase
         return $this->getImagine()->open('tests/Imagine/Fixtures/cat.gif');
     }
 
+    private function getInconsistentMultiLayeredImage()
+    {
+        return $this->getImagine()->open('tests/Imagine/Fixtures/anima.gif');
+    }
+
     protected function processInOut($file, $in, $out)
     {
         $factory = $this->getImagine();

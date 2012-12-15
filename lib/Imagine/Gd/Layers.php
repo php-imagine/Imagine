@@ -31,7 +31,17 @@ class Layers implements LayersInterface
         $this->offset = 0;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function merge()
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function coalesce()
     {
     }
 

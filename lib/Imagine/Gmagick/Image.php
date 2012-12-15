@@ -26,7 +26,7 @@ use Imagine\Image\PointInterface;
 /**
  * Image implementation using the Gmagick PHP extension
  */
-class Image implements ImageInterface
+final class Image implements ImageInterface
 {
     /**
      * @var \Gmagick
@@ -258,20 +258,8 @@ class Image implements ImageInterface
     public function save($path, array $options = array())
     {
         try {
-            if (isset($options['format'])) {
-                $this->gmagick->setimageformat($options['format']);
-            }
-
-            $this->layers()->merge();
-            $this->applyImageOptions($this->gmagick, $options);
-
-            // flatten only if image has multiple layers
-            if ((!isset($options['flatten']) || $options['flatten'] === true)
-                && count($this->layers()) > 1) {
-                $this->flatten();
-            }
-
-            $this->gmagick->writeimage($path);
+            $this->prepareOutput($options);
+            $this->gmagick->writeimage($path, true);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Save operation failed', $e->getCode(), $e
@@ -298,15 +286,34 @@ class Image implements ImageInterface
     public function get($format, array $options = array())
     {
         try {
-            $this->applyImageOptions($this->gmagick, $options);
-            $this->gmagick->setimageformat($format);
+            $options["format"] = $format;
+            $this->prepareOutput($options);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
-                'Show operation failed', $e->getCode(), $e
+                'Get operation failed', $e->getCode(), $e
             );
         }
 
-        return (string) $this->gmagick;
+        return $this->gmagick->getimagesblob();
+    }
+
+    /**
+     * @param array $options
+     */
+    private function prepareOutput(array $options)
+    {
+        if (isset($options['format'])) {
+            $this->gmagick->setimageformat($options['format']);
+        }
+
+        $this->layers()->merge();
+        $this->applyImageOptions($this->gmagick, $options);
+
+        // flatten only if image has multiple layers
+        if ((!isset($options['flatten']) || $options['flatten'] === true)
+            && count($this->layers()) > 1) {
+            $this->flatten();
+        }
     }
 
     /**
