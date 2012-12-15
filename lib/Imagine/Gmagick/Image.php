@@ -300,7 +300,7 @@ class Image implements ImageInterface
     /**
      * @param array $options
      */
-    private function prepareOutput(array $options = array())
+    private function prepareOutput(array $options)
     {
         if (isset($options['format'])) {
             $this->gmagick->setimageformat($options['format']);
