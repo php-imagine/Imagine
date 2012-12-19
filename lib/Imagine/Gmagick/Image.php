@@ -176,8 +176,6 @@ final class Image implements ImageInterface
             );
         }
 
-        $this->flatten();
-
         return $this;
     }
 
