@@ -543,7 +543,6 @@ final class Image implements ImageInterface
         return $this->layers;
     }
 
-
     /**
      * Internal
      *

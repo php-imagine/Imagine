@@ -278,7 +278,7 @@ final class Image implements ImageInterface
                 'Get operation failed', $e->getCode(), $e
             );
         }
-        
+
         return $this->imagick->getImagesBlob();
     }
 
