@@ -488,7 +488,7 @@ final class Image implements ImageInterface
         return array_map(
             function(\GmagickPixel $pixel) {
                 $info = $pixel->getColor(true);
-                $opacity = isset($infos['a']) ? $info['a'] : 0;
+                $opacity = isset($info['a']) ? $info['a'] : 0;
 
                 return new Color(
                     array(
