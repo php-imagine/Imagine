@@ -506,6 +506,10 @@ final class Image implements ImageInterface
         $save = 'image'.$format;
         $args = array(&$this->resource, $filename);
 
+        if (isset($options['interlace'])) {
+            imageinterlace($this->resource, $options['interlace'] ? 1 : 0);
+        }
+
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
             // Png compression quality is 0-9, so here we get the value from percent.
