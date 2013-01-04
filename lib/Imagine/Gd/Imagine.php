@@ -196,6 +196,6 @@ final class Imagine implements ImagineInterface
             imageantialias($resource, true);
         }
 
-        return new Image($resource);
+        return new Image(new Gd($resource));
     }
 }

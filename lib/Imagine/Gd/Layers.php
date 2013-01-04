@@ -18,16 +18,16 @@ class Layers implements LayersInterface
 {
     private $image;
     private $offset;
-    private $resource;
+    private $gd;
 
-    public function __construct(Image $image, $resource)
+    public function __construct(Image $image, Gd $gd)
     {
-        if (!is_resource($resource)) {
+        if (!is_resource($gd->resource) || get_resource_type($gd->resource) !== "gd") {
             throw new RuntimeException('Invalid Gd resource provided');
         }
 
         $this->image = $image;
-        $this->resource = $resource;
+        $this->gd = $gd;
         $this->offset = 0;
     }
 
@@ -58,7 +58,7 @@ class Layers implements LayersInterface
             throw new RuntimeException("Replacement image must be Gd image.");
         }
 
-        $this->resource = $image->getResource();
+        $this->gd = $image->getResource();
     }
 
     /**
@@ -66,7 +66,7 @@ class Layers implements LayersInterface
      */
     public function current()
     {
-        return new Image($this->resource);
+        return new Image($this->gd);
     }
 
     /**
