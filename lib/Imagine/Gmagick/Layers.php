@@ -71,6 +71,10 @@ class Layers implements LayersInterface
      */
     public function replace($offset, ImageInterface $image)
     {
+        if (!$this->isValidOffset($offset)) {
+            throw new RuntimeException("Given offset is out of bounds");
+        }
+
         if (!$image instanceof Image) {
             throw new RuntimeException("Replacement image must be Gmagick image.");
         }
@@ -122,12 +126,21 @@ class Layers implements LayersInterface
         $this->offset = 0;
     }
 
-    /**
+/**
      * {@inheritdoc}
      */
     public function valid()
     {
-        return $this->offset < count($this);
+        return $this->isValidOffset($this->offset);
+    }
+
+    /**
+     * @param int $offset
+     * @return bool
+     */
+    private function isValidOffset($offset)
+    {
+        return $offset < count($this);
     }
 
     /**
