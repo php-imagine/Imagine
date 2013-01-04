@@ -302,6 +302,10 @@ final class Image implements ImageInterface
     {
         if (isset($options['format'])) {
             $this->gmagick->setimageformat($options['format']);
+            
+            foreach ($this->layers() as $layer) {
+                $layer->getResource()->setimageformat($options['format']);
+            }
         }
 
         $this->layers()->merge();

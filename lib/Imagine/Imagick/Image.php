@@ -289,6 +289,10 @@ final class Image implements ImageInterface
     {
         if (isset($options['format'])) {
             $this->imagick->setImageFormat($options['format']);
+
+            foreach ($this->layers() as $layer) {
+                $layer->getResource()->setImageFormat($options['format']);
+            }
         }
 
         $this->layers()->merge();
