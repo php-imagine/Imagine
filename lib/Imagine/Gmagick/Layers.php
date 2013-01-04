@@ -65,9 +65,7 @@ class Layers implements LayersInterface
     }
 
     /**
-     * @param int $offset
-     * @param ImageInterface $image
-     * @throws RuntimeException Thrown when replacement image is not an Gmagick image.
+     * {@inheritdoc}
      */
     public function replace($offset, ImageInterface $image)
     {
