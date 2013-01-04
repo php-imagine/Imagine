@@ -532,6 +532,32 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
+    public function getDelay()
+    {
+        try {
+            return 10 * $this->imagick->getImageDelay();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException("Delay retrieval failed", $e->getCode(), $e);
+        }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setDelay($delay)
+    {
+        $delay = round($delay / 10);
+
+        try {
+            $this->imagick->setImageDelay($delay);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException("Failed to set image delay", $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function layers()
     {
         return $this->layers;

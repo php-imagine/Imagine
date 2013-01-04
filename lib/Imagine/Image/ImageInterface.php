@@ -94,6 +94,23 @@ interface ImageInterface extends ManipulatorInterface
     public function getColorAt(PointInterface $point);
 
     /**
+     * Returns this image's delay. Useful for animated GIFs.
+     *
+     * @return int Delay in milliseconds.
+     * @throws RuntimeException
+     */
+    public function getDelay();
+
+    /**
+     * Sets this image's delay. Useful for animated GIFs.
+     *
+     * @param int $delay Delay in milliseconds.
+     * @return ImageInterface
+     * @throws RuntimeException
+     */
+    public function setDelay($delay);
+
+    /**
      * Returns the image layers when applicable.
      *
      * @throws RuntimeException     In case the layer can not be returned

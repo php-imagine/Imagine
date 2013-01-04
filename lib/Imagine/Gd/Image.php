@@ -471,6 +471,22 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
+    public function getDelay()
+    {
+        throw new RuntimeException("GD doesn't support image delays");
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setDelay($delay)
+    {
+        throw new RuntimeException("GD doesn't support image delays");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function layers()
     {
         if (null === $this->layers) {
