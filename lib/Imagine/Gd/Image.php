@@ -530,8 +530,12 @@ final class Image implements ImageInterface
             ));
         }
 
+        # Get resource through layers, as the resource may have been replaced
+        $layers = $this->layers();
+        $resource = $layers->current();
+
         $save = 'image'.$format;
-        $args = array(&$this->resource, $filename);
+        $args = array(&$resource, $filename);
 
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
