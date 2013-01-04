@@ -28,4 +28,11 @@ interface LayersInterface extends \Iterator, \Countable
      * the sequence.
      */
     public function coalesce();
+
+    /**
+     * @param int $offset
+     * @param ImageInterface $image
+     * @throws RuntimeException
+     */
+    public function replace($offset, ImageInterface $image);
 }

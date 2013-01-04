@@ -562,6 +562,17 @@ final class Image implements ImageInterface
     }
 
     /**
+     * Gets the internal Gmagick resource. For internal use only.
+     *
+     * @internal
+     * @return Gmagick
+     */
+    public function getResource()
+    {
+        return $this->gmagick;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function layers()

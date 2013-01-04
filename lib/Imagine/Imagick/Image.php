@@ -556,6 +556,17 @@ final class Image implements ImageInterface
     }
 
     /**
+     * Gets the internal Imagick resource. For internal use only.
+     *
+     * @internal
+     * @return Imagick
+     */
+    public function getResource()
+    {
+        return $this->imagick;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function layers()

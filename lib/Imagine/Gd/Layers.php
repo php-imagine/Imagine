@@ -48,6 +48,22 @@ class Layers implements LayersInterface
     /**
      * {@inheritdoc}
      */
+    public function replace($offset, ImageInterface $image)
+    {
+        if ($offset !== 0) {
+            throw new RuntimeException("Index out of bounds: $offset");
+        }
+
+        if (!$image instanceof Image) {
+            throw new RuntimeException("Replacement image must be Gd image.");
+        }
+
+        $this->resource = $image->getResource();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function current()
     {
         return new Image($this->resource);

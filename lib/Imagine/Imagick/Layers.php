@@ -12,6 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Image\LayersInterface;
+use Imagine\Image\ImageInterface;
 
 class Layers implements LayersInterface
 {
@@ -79,6 +80,20 @@ class Layers implements LayersInterface
                 );
             }
         }
+    }
+
+    /**
+     * @param int $offset
+     * @param ImageInterface $image
+     * @throws RuntimeException Thrown when replacement image is not an Imagick image.
+     */
+    public function replace($offset, ImageInterface $image)
+    {
+        if (!$image instanceof Image) {
+            throw new RuntimeException("Replacement image must be Imagick image.");
+        }
+
+        $this->layers[$offset] = $image->getResource();
     }
 
     /**

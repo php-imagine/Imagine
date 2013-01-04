@@ -485,6 +485,17 @@ final class Image implements ImageInterface
     }
 
     /**
+     * Gets the internal GD resource. For internal use only.
+     *
+     * @internal
+     * @return resource A GD resource
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function layers()
