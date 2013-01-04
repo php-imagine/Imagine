@@ -273,13 +273,13 @@ final class Image implements ImageInterface
         try {
             $options["format"] = $format;
             $this->prepareOutput($options);
+
+            return $this->imagick->getImagesBlob();
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Get operation failed', $e->getCode(), $e
             );
         }
-
-        return $this->imagick->getImagesBlob();
     }
 
     /**
