@@ -14,7 +14,7 @@ namespace Imagine\Gd;
 use Imagine\Exception\RuntimeException;
 
 /**
- * Gd resource wrapper for proper garbage collection.
+ * Gd resource wrapper for resource reuse.
  */
 final class Gd
 {
