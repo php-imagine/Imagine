@@ -11,6 +11,7 @@
 
 namespace Imagine\Gmagick;
 
+use Imagine\Image\ImageInterface;
 use Imagine\Image\LayersInterface;
 use Imagine\Exception\RuntimeException;
 
