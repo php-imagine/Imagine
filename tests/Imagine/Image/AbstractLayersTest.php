@@ -29,28 +29,28 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
     public function testReplace()
     {
         $red = new Color("#FF0000");
-        $red_image = $this->getPolygonImage($red);
+        $redImage = $this->getPolygonImage($red);
 
         $blue = new Color("#0000FF");
-        $blue_image = $this->getPolygonImage($blue);
+        $blueImage = $this->getPolygonImage($blue);
 
         # Replace our first red image layer with the first blue image layer
-        $red_layers = $red_image->layers();
+        $redLayers = $redImage->layers();
 
-        $blue_layers = $blue_image->layers();
-        $blue_layers->rewind();
+        $blueLayers = $blueImage->layers();
+        $blueLayers->rewind();
 
-        $red_layers->replace(0, $blue_layers->current());
+        $redLayers->replace(0, $blueLayers->current());
 
         # Merge all layers and "save" to PNG
-        $red_image->layers()->merge();
-        $red_image_string = $red_image->get("png");
+        $redImage->layers()->merge();
+        $redImage_string = $redImage->get("png");
 
         # Load in PNG
-        $red_image = $this->getImagine()->load($red_image_string);
+        $redImage = $this->getImagine()->load($redImage_string);
 
         # Assert the red image is now actually blue
-        $this->assertEquals((string) $blue, (string) $red_image->getColorAt(new Point(5,5)));
+        $this->assertEquals((string) $blue, (string) $redImage->getColorAt(new Point(5,5)));
     }
 
     protected function getPolygonImage(Color $color)
