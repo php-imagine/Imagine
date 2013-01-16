@@ -26,9 +26,9 @@
     "sami/sami": "dev-master"
   },
   "suggest": {
-    "ext-gd": "Might be needed depending on the chosen Image implementation",
-    "ext-imagick": "Might be needed depending on the chosen Image implementation",
-    "ext-gmagick": "Might be needed depending on the chosen Image implementation"
+    "ext-gd": "to use the GD implementation",
+    "ext-imagick": "to use the Imagick implementation",
+    "ext-gmagick": "to use the Gmagick implementation"
   },
   "autoload": {
     "psr-0": {
