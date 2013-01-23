@@ -90,6 +90,17 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals((string) $blue, (string) $redImage[1]->getColorAt(new Point(5,5)));
     }
 
+    public function testRemove()
+    {
+        $image = $this->getImagine()->open('tests/Imagine/Fixtures/cat.gif');
+
+        $layer_count = count($image);
+
+        unset($image[1]);
+
+        $this->assertEquals($layer_count - 1, count($image));
+    }
+
     protected function getPolygonImage(Color $color)
     {
         $image = $this->getImagine()->create(new Box(20, 20), new Color('#FFFFFF'));
