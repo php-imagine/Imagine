@@ -29,6 +29,12 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($image, $image->layers());
     }
 
+    public function testLayerCount()
+    {
+        $this->assertEquals(1, count($this->getPolygonImage()));
+        $this->assertEquals(31, count($this->getMultiLayeredImage()));
+    }
+
     public function testMerge()
     {
         $red = new Color("#FF0000");
@@ -92,7 +98,7 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
     public function testRemove()
     {
-        $image = $this->getImagine()->open('tests/Imagine/Fixtures/cat.gif');
+        $image = $this->getMultiLayeredImage();
 
         $layer_count = count($image);
 
@@ -115,6 +121,11 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         }
 
         return $image;
+    }
+
+    protected function getMultiLayeredImage()
+    {
+        return $this->getImagine()->open('tests/Imagine/Fixtures/cat.gif');
     }
 
     abstract protected function getImagine();
