@@ -52,6 +52,8 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
         $redLayers[0] = $blueLayers[0];
 
+        $this->assertEquals((string) $blue, (string) $redImage[0]->getColorAt(new Point(5,5)));
+
         # Merge all layers and "save" to PNG
         $redImage->layers()->merge();
         $redImage_string = $redImage->get("png");
