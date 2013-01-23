@@ -76,6 +76,16 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         # Add a blue layer to our red image.
         $redLayers[] = $blueLayers[0];
 
+        # Check the red and blue layers
+        $this->assertEquals((string) $red, (string) $redImage[0]->getColorAt(new Point(5,5)));
+        $this->assertEquals((string) $blue, (string) $redImage[1]->getColorAt(new Point(5,5)));
+
+        $redImage_string = $redImage->get("png");
+
+        # Load in PNG
+        $redImage = $this->getImagine()->load($redImage_string);
+
+        # Check the red and blue layers
         $this->assertEquals((string) $red, (string) $redImage[0]->getColorAt(new Point(5,5)));
         $this->assertEquals((string) $blue, (string) $redImage[1]->getColorAt(new Point(5,5)));
     }
