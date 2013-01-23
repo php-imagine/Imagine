@@ -65,6 +65,21 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals((string) $blue, (string) $redImage->getColorAt(new Point(5,5)));
     }
 
+    public function testAdd()
+    {
+        $red = new Color("#FF0000");
+        $redImage = $this->getPolygonImage($red);
+
+        $blue = new Color("#0000FF");
+        $blueImage = $this->getPolygonImage($blue);
+
+        # Add a blue layer to our red image.
+        $redLayers[] = $blueLayers[0];
+
+        $this->assertEquals((string) $red, (string) $redImage[0]->getColorAt(new Point(5,5)));
+        $this->assertEquals((string) $blue, (string) $redImage[1]->getColorAt(new Point(5,5)));
+    }
+
     protected function getPolygonImage(Color $color)
     {
         $image = $this->getImagine()->create(new Box(20, 20), new Color('#FFFFFF'));
