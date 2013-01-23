@@ -48,11 +48,9 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
         # Replace our first red image layer with the first blue image layer
         $redLayers = $redImage->layers();
-
         $blueLayers = $blueImage->layers();
-        $blueLayers->rewind();
 
-        $redLayers->replace(0, $blueLayers->current());
+        $redLayers[0] = $blueLayers[0];
 
         # Merge all layers and "save" to PNG
         $redImage->layers()->merge();
