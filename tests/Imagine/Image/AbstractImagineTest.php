@@ -22,6 +22,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\LayeredImageInterface', $image);
+        $this->assertInstanceOf('ArrayAccess', $image);
+        $this->assertInstanceOf('Countable', $image);
         $this->assertEquals(50, $size->getWidth());
         $this->assertEquals(50, $size->getHeight());
     }
@@ -33,6 +36,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\LayeredImageInterface', $image);
+        $this->assertInstanceOf('ArrayAccess', $image);
+        $this->assertInstanceOf('Countable', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
     }
@@ -44,6 +50,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\LayeredImageInterface', $image);
+        $this->assertInstanceOf('ArrayAccess', $image);
+        $this->assertInstanceOf('Countable', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
     }
@@ -56,6 +65,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\LayeredImageInterface', $image);
+        $this->assertInstanceOf('ArrayAccess', $image);
+        $this->assertInstanceOf('Countable', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
     }
