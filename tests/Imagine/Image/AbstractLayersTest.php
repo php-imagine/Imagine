@@ -17,6 +17,18 @@ use Imagine\Image\Point;
 
 abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Testing `LayeredImageInterface#layers()` returns itself. If this is true, all other tests
+     * should also cover `LayeredImageInterface`.
+     */
+    public function testImageLayersReturnsItself()
+    {
+        $red = new Color("#FF0000");
+        $image = $this->getPolygonImage($red);
+        
+        $this->assertSame($image, $image->layers());
+    }
+
     public function testMerge()
     {
         $red = new Color("#FF0000");
