@@ -29,6 +29,17 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertEquals(50, $size->getHeight());
     }
 
+    public function testShouldCreateImageWithWhiteBackground()
+    {
+        $factory = $this->getImagine();
+        $image   = $factory->create(new Box(50, 50));
+        
+        $color = $image->getColorAt(new Point(0, 0));
+
+        $this->assertEquals('#ffffff', (string) $color);
+        $this->assertTrue($color->isOpaque());
+    }
+
     public function testShouldOpenAnImage()
     {
         $factory = $this->getImagine();
