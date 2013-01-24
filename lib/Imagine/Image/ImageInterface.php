@@ -109,14 +109,4 @@ interface ImageInterface extends ManipulatorInterface
      * @throws RuntimeException
      */
     public function setDelay($delay);
-
-    /**
-     * Returns the image layers when applicable.
-     *
-     * @throws RuntimeException     In case the layer can not be returned
-     * @throws OutOfBoundsException In case the index is not a valid value
-     *
-     * @return LayersInterface
-     */
-    public function layers();
 }
