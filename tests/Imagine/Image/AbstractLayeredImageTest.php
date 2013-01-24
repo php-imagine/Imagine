@@ -18,8 +18,8 @@ abstract class AbstractLayeredImageTest extends \PHPUnit_Framework_TestCase
         $image = $this->getMultiLayeredImage();
 
         $point = new Point(130, 77);
-        $color = $image->getColorAt($point);
-        $this->assertEquals("#78874e", (string) $color);
+        $this->assertEquals("#78874e", (string) $image[0]->getColorAt($point));
+        $this->assertEquals((string) $image[0]->getColorAt($point), (string) $image->getColorAt($point));
     }
 
     protected function getMultiLayeredImage()
