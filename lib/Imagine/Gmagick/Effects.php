@@ -81,4 +81,12 @@ class Effects implements EffectsInterface
     {
         throw new RuntimeException('Gmagick does not support colorize');
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sharpen(Color $color)
+    {
+        throw new RuntimeException('Gmagick does not support sharpen yet');
+    }
 }
