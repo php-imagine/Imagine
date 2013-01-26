@@ -85,7 +85,7 @@ class Effects implements EffectsInterface
     /**
      * {@inheritdoc}
      */
-    public function sharpen(Color $color)
+    public function sharpen()
     {
         throw new RuntimeException('Gmagick does not support sharpen yet');
     }
