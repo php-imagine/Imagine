@@ -57,4 +57,13 @@ interface EffectsInterface
      * @throws RuntimeException
      */
     public function colorize(Color $color);
+
+    /**
+     * Sharpens the image
+     *
+     * @return EffectsInterface
+     *
+     * @throws RuntimeException
+     */
+    public function sharpen();
 }
