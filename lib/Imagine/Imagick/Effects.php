@@ -82,4 +82,18 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sharpen()
+    {
+        try {
+            $this->imagick->sharpenImage(2, 1);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to sharpen the image');
+        }
+
+        return $this;
+    }
 }
