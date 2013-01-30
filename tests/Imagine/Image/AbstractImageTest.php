@@ -46,6 +46,26 @@ abstract class AbstractImageTest extends ImagineTestCase
             );
     }
 
+    /**
+     * @test
+     */
+    public function resizeReturnsSameInstance() {
+        $factory = $this->getImagine();
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $this->assertSame($image, $image->resize(new Box(200, 200)));
+    }
+
+    /**
+     * @test
+     */
+    public function resizeCreatesNewImageResource() {
+        $factory = $this->getImagine();
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $imageResource = $this->readAttribute($image, 'resource');
+        $resized = $image->resize(new Box(200, 200));
+        $this->assertAttributeNotSame($imageResource, 'resource', $resized);
+    }
+
     public function testThumbnailGeneration()
     {
         $factory = $this->getImagine();
@@ -68,6 +88,28 @@ abstract class AbstractImageTest extends ImagineTestCase
 
         $this->assertEquals(50, $size->getWidth());
         $this->assertEquals(50, $size->getHeight());
+    }
+
+    /**
+     * @test
+     */
+    public function thumbnailCreatesNewImageInstance() {
+        $factory = $this->getImagine();
+        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
+        $this->assertNotSame($image, $image->thumbnail(new Box(50, 50)));
+    }
+
+    /**
+     * @test
+     */
+    public function thumbnailSetsOriginalAndNewImageInstancesClonedFlag() {
+        $factory = $this->getImagine();
+        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
+        $this->assertAttributeSame(false, 'cloned', $image);
+
+        $thumbnail = $image->thumbnail(new Box(50, 50));
+        $this->assertAttributeSame(true, 'cloned', $image);
+        $this->assertAttributeSame(true, 'cloned', $thumbnail);
     }
 
     public function testCropResizeFlip()
@@ -263,6 +305,13 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     }
 
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
     abstract protected function getImagine();
+
+    /**
+     * @return boolean
+     */
     abstract protected function supportMultipleLayers();
 }

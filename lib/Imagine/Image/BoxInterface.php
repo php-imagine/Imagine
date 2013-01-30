@@ -42,6 +42,24 @@ interface BoxInterface
     public function scale($ratio);
 
     /**
+     * Creates new BoxInterface with sizes according to inset mode
+     *
+     * @param BoxInterface $targetSize
+     *
+     * @return BoxInterface
+     */
+    public function inset(BoxInterface $targetSize);
+
+    /**
+     * Creates new BoxInterface with sizes according to outbound mode
+     *
+     * @param BoxInterface $targetSize
+     *
+     * @return BoxInterface
+     */
+    public function outbound(BoxInterface $targetSize);
+
+    /**
      * Creates new BoxInterface, adding given size to both sides
      *
      * @param integer $size
