@@ -55,4 +55,9 @@ class ImageTest extends AbstractImageTest
     {
         return true;
     }
+
+    protected function supportDelays()
+    {
+        return true;
+    }
 }

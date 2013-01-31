@@ -26,7 +26,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testCount()
     {
-        $resource = imagecreate(20, 20);
+        $resource = new Gd(imagecreate(20, 20));
         $layers = new Layers(new Image($resource), $resource);
 
         $this->assertCount(1, $layers);
@@ -34,7 +34,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testGetLayer()
     {
-        $resource = imagecreate(20, 20);
+        $resource = new Gd(imagecreate(20, 20));
         $layers = new Layers(new Image($resource), $resource);
 
         foreach($layers as $layer) {

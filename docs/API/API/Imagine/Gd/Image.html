@@ -40,18 +40,8 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(<abbr title="Imagine\Gd\resource">resource</abbr> $resource)
+                    <a href="#method___construct">__construct</a>(<a href="../../Imagine/Gd/Gd.html"><abbr title="Imagine\Gd\Gd">Gd</abbr></a> $gd)
                     <p>Constructs a new Image instance using the result of imagecreatetruecolor()</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method___destruct">__destruct</a>()
-                    <p>Makes sure the current image resource is destroyed</p>
                 </td>
                 <td></td>
             </tr>
@@ -267,6 +257,36 @@
             </tr>
                     <tr>
                 <td class="type">
+                    int
+                </td>
+                <td class="last">
+                    <a href="#method_getDelay">getDelay</a>()
+                    <p>Returns this image&#039;s delay.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setDelay">setDelay</a>(int $delay)
+                    <p>Sets this image&#039;s delay.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getResource">getResource</a>()
+                    <p>Gets the internal GD resource.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
                     <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
                 </td>
                 <td class="last">
@@ -283,7 +303,7 @@
                         <h3 id="method___construct">
         <div class="location">at line 42</div>
         <code>            public            
-    <strong>__construct</strong>(<abbr title="Imagine\Gd\resource">resource</abbr> $resource)</code>
+    <strong>__construct</strong>(<a href="../../Imagine/Gd/Gd.html"><abbr title="Imagine\Gd\Gd">Gd</abbr></a> $gd)</code>
     </h3>
     <div class="details">
         <p>Constructs a new Image instance using the result of imagecreatetruecolor()</p>
@@ -293,8 +313,8 @@
 
                     <table>
                     <tr>
-                <td><abbr title="Imagine\Gd\resource">resource</abbr></td>
-                <td>$resource</td>
+                <td><a href="../../Imagine/Gd/Gd.html"><abbr title="Imagine\Gd\Gd">Gd</abbr></a></td>
+                <td>$gd</td>
                 <td></td>
             </tr>
             </table>
@@ -305,23 +325,8 @@
                     </div>
     </div>
 
-                <h3 id="method___destruct">
-        <div class="location">at line 50</div>
-        <code>            public            
-    <strong>__destruct</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Makes sure the current image resource is destroyed</p>
-        <p></p>
-        <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
                 <h3 id="method_copy">
-        <div class="location">at line 60</div>
+        <div class="location">at line 50</div>
         <code>final            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>copy</strong>()</code>
     </h3>
@@ -354,7 +359,7 @@
     </div>
 
                 <h3 id="method_crop">
-        <div class="location">at line 77</div>
+        <div class="location">at line 67</div>
         <code>final            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>crop</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size)</code>
     </h3>
@@ -406,7 +411,7 @@
     </div>
 
                 <h3 id="method_paste">
-        <div class="location">at line 107</div>
+        <div class="location">at line 95</div>
         <code>final            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>paste</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start)</code>
     </h3>
@@ -462,7 +467,7 @@
     </div>
 
                 <h3 id="method_resize">
-        <div class="location">at line 141</div>
+        <div class="location">at line 129</div>
         <code>final            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>resize</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size)</code>
     </h3>
@@ -505,7 +510,7 @@
     </div>
 
                 <h3 id="method_rotate">
-        <div class="location">at line 170</div>
+        <div class="location">at line 156</div>
         <code>final            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>rotate</strong>(integer $angle, <a href="../../Imagine/Image/Color.html"><abbr title="Imagine\Image\Color">Color</abbr></a> $background = null)</code>
     </h3>
@@ -554,7 +559,7 @@
     </div>
 
                 <h3 id="method_save">
-        <div class="location">at line 190</div>
+        <div class="location">at line 174</div>
         <code>final            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>save</strong>(string $path, array $options = array())</code>
     </h3>
@@ -602,7 +607,7 @@
     </div>
 
                 <h3 id="method_show">
-        <div class="location">at line 204</div>
+        <div class="location">at line 188</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>show</strong>(string $format, array $options = array())</code>
     </h3>
@@ -650,7 +655,7 @@
     </div>
 
                 <h3 id="method_get">
-        <div class="location">at line 216</div>
+        <div class="location">at line 200</div>
         <code>            public            string
     <strong>get</strong>(string $format, array $options = array())</code>
     </h3>
@@ -698,7 +703,7 @@
     </div>
 
                 <h3 id="method___toString">
-        <div class="location">at line 227</div>
+        <div class="location">at line 211</div>
         <code>            public            string
     <strong>__toString</strong>()</code>
     </h3>
@@ -731,7 +736,7 @@
     </div>
 
                 <h3 id="method_flipHorizontally">
-        <div class="location">at line 235</div>
+        <div class="location">at line 219</div>
         <code>final            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipHorizontally</strong>()</code>
     </h3>
@@ -764,7 +769,7 @@
     </div>
 
                 <h3 id="method_flipVertically">
-        <div class="location">at line 259</div>
+        <div class="location">at line 241</div>
         <code>final            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipVertically</strong>()</code>
     </h3>
@@ -797,7 +802,7 @@
     </div>
 
                 <h3 id="method_strip">
-        <div class="location">at line 283</div>
+        <div class="location">at line 263</div>
         <code>final            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>strip</strong>()</code>
     </h3>
@@ -830,7 +835,7 @@
     </div>
 
                 <h3 id="method_thumbnail">
-        <div class="location">at line 295</div>
+        <div class="location">at line 275</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET)</code>
     </h3>
@@ -878,7 +883,7 @@
     </div>
 
                 <h3 id="method_draw">
-        <div class="location">at line 334</div>
+        <div class="location">at line 314</div>
         <code>            public            <a href="../../Imagine/Draw/DrawerInterface.html"><abbr title="Imagine\Draw\DrawerInterface">DrawerInterface</abbr></a>
     <strong>draw</strong>()</code>
     </h3>
@@ -902,7 +907,7 @@
     </div>
 
                 <h3 id="method_effects">
-        <div class="location">at line 342</div>
+        <div class="location">at line 322</div>
         <code>            public            <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>effects</strong>()</code>
     </h3>
@@ -926,7 +931,7 @@
     </div>
 
                 <h3 id="method_getSize">
-        <div class="location">at line 350</div>
+        <div class="location">at line 330</div>
         <code>            public            <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a>
     <strong>getSize</strong>()</code>
     </h3>
@@ -950,7 +955,7 @@
     </div>
 
                 <h3 id="method_applyMask">
-        <div class="location">at line 358</div>
+        <div class="location">at line 338</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>applyMask</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $mask)</code>
     </h3>
@@ -984,7 +989,7 @@
     </div>
 
                 <h3 id="method_fill">
-        <div class="location">at line 398</div>
+        <div class="location">at line 378</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>fill</strong>(<a href="../../Imagine/Image/Fill/FillInterface.html"><abbr title="Imagine\Image\Fill\FillInterface">FillInterface</abbr></a> $fill)</code>
     </h3>
@@ -1018,7 +1023,7 @@
     </div>
 
                 <h3 id="method_mask">
-        <div class="location">at line 420</div>
+        <div class="location">at line 400</div>
         <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>mask</strong>()</code>
     </h3>
@@ -1042,7 +1047,7 @@
     </div>
 
                 <h3 id="method_histogram">
-        <div class="location">at line 434</div>
+        <div class="location">at line 414</div>
         <code>            public            array
     <strong>histogram</strong>()</code>
     </h3>
@@ -1066,7 +1071,7 @@
     </div>
 
                 <h3 id="method_getColorAt">
-        <div class="location">at line 451</div>
+        <div class="location">at line 431</div>
         <code>            public            <a href="../../Imagine/Image/Color.html"><abbr title="Imagine\Image\Color">Color</abbr></a>
     <strong>getColorAt</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $point)</code>
     </h3>
@@ -1108,8 +1113,99 @@
                     </div>
     </div>
 
+                <h3 id="method_getDelay">
+        <div class="location">at line 454</div>
+        <code>            public            int
+    <strong>getDelay</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Returns this image&#039;s delay.</p>
+        <p>Useful for animated GIFs.</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>int</td>
+            <td>Delay in milliseconds.</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/RuntimeException"><abbr title="RuntimeException">RuntimeException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setDelay">
+        <div class="location">at line 462</div>
+        <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
+    <strong>setDelay</strong>(int $delay)</code>
+    </h3>
+    <div class="details">
+        <p>Sets this image&#039;s delay.</p>
+        <p>Useful for animated GIFs.</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$delay</td>
+                <td>Delay in milliseconds.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/RuntimeException"><abbr title="RuntimeException">RuntimeException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getResource">
+        <div class="location">at line 473</div>
+        <code>            public            
+    <strong>getResource</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Gets the internal GD resource.</p>
+        <p>For internal use only.</p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_layers">
-        <div class="location">at line 474</div>
+        <div class="location">at line 481</div>
         <code>            public            <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
     <strong>layers</strong>()</code>
     </h3>

@@ -273,13 +273,13 @@ final class Image implements ImageInterface
         try {
             $options["format"] = $format;
             $this->prepareOutput($options);
+
+            return $this->imagick->getImagesBlob();
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Get operation failed', $e->getCode(), $e
             );
         }
-
-        return $this->imagick->getImagesBlob();
     }
 
     /**
@@ -289,6 +289,10 @@ final class Image implements ImageInterface
     {
         if (isset($options['format'])) {
             $this->imagick->setImageFormat($options['format']);
+
+            foreach ($this->layers() as $layer) {
+                $layer->getResource()->setImageFormat($options['format']);
+            }
         }
 
         $this->layers()->merge();
@@ -527,6 +531,43 @@ final class Image implements ImageInterface
             ),
             (int) round($pixel->getColorValue(\Imagick::COLOR_ALPHA) * 100)
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDelay()
+    {
+        try {
+            return 10 * $this->imagick->getImageDelay();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException("Delay retrieval failed", $e->getCode(), $e);
+        }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setDelay($delay)
+    {
+        $delay = round($delay / 10);
+
+        try {
+            $this->imagick->setImageDelay($delay);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException("Failed to set image delay", $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * Gets the internal Imagick resource. For internal use only.
+     *
+     * @internal
+     * @return Imagick
+     */
+    public function getResource()
+    {
+        return $this->imagick;
     }
 
     /**

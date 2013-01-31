@@ -22,8 +22,22 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\LayeredImageInterface', $image);
+        $this->assertInstanceOf('ArrayAccess', $image);
+        $this->assertInstanceOf('Countable', $image);
         $this->assertEquals(50, $size->getWidth());
         $this->assertEquals(50, $size->getHeight());
+    }
+
+    public function testShouldCreateImageWithWhiteBackground()
+    {
+        $factory = $this->getImagine();
+        $image   = $factory->create(new Box(50, 50));
+        
+        $color = $image->getColorAt(new Point(0, 0));
+
+        $this->assertEquals('#ffffff', (string) $color);
+        $this->assertTrue($color->isOpaque());
     }
 
     public function testShouldOpenAnImage()
@@ -33,6 +47,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\LayeredImageInterface', $image);
+        $this->assertInstanceOf('ArrayAccess', $image);
+        $this->assertInstanceOf('Countable', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
     }
@@ -44,6 +61,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\LayeredImageInterface', $image);
+        $this->assertInstanceOf('ArrayAccess', $image);
+        $this->assertInstanceOf('Countable', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
     }
@@ -56,6 +76,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertInstanceOf('Imagine\Image\LayeredImageInterface', $image);
+        $this->assertInstanceOf('ArrayAccess', $image);
+        $this->assertInstanceOf('Countable', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
     }

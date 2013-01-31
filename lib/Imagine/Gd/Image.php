@@ -28,30 +28,20 @@ use Imagine\Exception\RuntimeException;
 final class Image implements ImageInterface
 {
     /**
-     * @var resource
+     * @var Gd
      */
-    private $resource;
+    private $gd;
     private $layers;
 
     /**
      * Constructs a new Image instance using the result of
      * imagecreatetruecolor()
      *
-     * @param resource $resource
+     * @param Gd $gd
      */
-    public function __construct($resource)
+    public function __construct(Gd $gd)
     {
-        $this->resource = $resource;
-    }
-
-    /**
-     * Makes sure the current image resource is destroyed
-     */
-    public function __destruct()
-    {
-        if (is_resource($this->resource) && 'gd' === get_resource_type($this->resource)) {
-            imagedestroy($this->resource);
-        }
+        $this->gd = $gd;
     }
 
     /**
@@ -63,7 +53,7 @@ final class Image implements ImageInterface
 
         $copy = $this->createImage($size, 'copy');
 
-        if (false === imagecopy($copy, $this->resource, 0, 0, 0,
+        if (false === imagecopy($copy->resource, $this->gd->resource, 0, 0, 0,
             0, $size->getWidth(), $size->getHeight())) {
             throw new RuntimeException('Image copy operation failed');
         }
@@ -89,14 +79,12 @@ final class Image implements ImageInterface
 
         $dest = $this->createImage($size, 'crop');
 
-        if (false === imagecopy($dest, $this->resource, 0, 0,
+        if (false === imagecopy($dest->resource, $this->gd->resource, 0, 0,
             $start->getX(), $start->getY(), $width, $height)) {
             throw new RuntimeException('Image crop operation failed');
         }
 
-        imagedestroy($this->resource);
-
-        $this->resource = $dest;
+        $this->gd = $dest;
 
         return $this;
     }
@@ -121,16 +109,16 @@ final class Image implements ImageInterface
             );
         }
 
-        imagealphablending($this->resource, true);
-        imagealphablending($image->resource, true);
+        imagealphablending($this->gd->resource, true);
+        imagealphablending($image->gd->resource, true);
 
-        if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(),
+        if (false === imagecopy($this->gd->resource, $image->gd->resource, $start->getX(), $start->getY(),
             0, 0, $size->getWidth(), $size->getHeight())) {
             throw new RuntimeException('Image paste operation failed');
         }
 
-        imagealphablending($this->resource, false);
-        imagealphablending($image->resource, false);
+        imagealphablending($this->gd->resource, false);
+        imagealphablending($image->gd->resource, false);
 
         return $this;
     }
@@ -145,21 +133,19 @@ final class Image implements ImageInterface
 
         $dest = $this->createImage($size, 'resize');
 
-        imagealphablending($this->resource, true);
-        imagealphablending($dest, true);
+        imagealphablending($this->gd->resource, true);
+        imagealphablending($dest->resource, true);
 
-        if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
-            $width, $height, imagesx($this->resource), imagesy($this->resource)
+        if (false === imagecopyresampled($dest->resource, $this->gd->resource, 0, 0, 0, 0,
+            $width, $height, imagesx($this->gd->resource), imagesy($this->gd->resource)
         )) {
             throw new RuntimeException('Image resize operation failed');
         }
 
-        imagealphablending($this->resource, false);
-        imagealphablending($dest, false);
+        imagealphablending($this->gd->resource, false);
+        imagealphablending($dest->resource, false);
 
-        imagedestroy($this->resource);
-
-        $this->resource = $dest;
+        $this->gd = $dest;
 
         return $this;
     }
@@ -171,15 +157,13 @@ final class Image implements ImageInterface
     {
         $color = $background ? $background : new Color('fff');
 
-        $resource = imagerotate($this->resource, -1 * $angle, $this->getColor($color));
+        $resource = imagerotate($this->gd->resource, -1 * $angle, $this->getColor($color));
 
         if (false === $resource) {
             throw new RuntimeException('Image rotate operation failed');
         }
 
-        imagedestroy($this->resource);
-
-        $this->resource = $resource;
+        $this->gd = new Gd($resource);
 
         return $this;
     }
@@ -240,15 +224,13 @@ final class Image implements ImageInterface
         $dest   = $this->createImage($size, 'flip');
 
         for ($i = 0; $i < $width; $i++) {
-            if (false === imagecopy($dest, $this->resource, $i, 0,
+            if (false === imagecopy($dest->resource, $this->gd->resource, $i, 0,
                 ($width - 1) - $i, 0, 1, $height)) {
                 throw new RuntimeException('Horizontal flip operation failed');
             }
         }
 
-        imagedestroy($this->resource);
-
-        $this->resource = $dest;
+        $this->gd = $dest;
 
         return $this;
     }
@@ -264,15 +246,13 @@ final class Image implements ImageInterface
         $dest   = $this->createImage($size, 'flip');
 
         for ($i = 0; $i < $height; $i++) {
-            if (false === imagecopy($dest, $this->resource, 0, $i,
+            if (false === imagecopy($dest->resource, $this->gd->resource, 0, $i,
                 0, ($height - 1) - $i, $width, 1)) {
                 throw new RuntimeException('Vertical flip operation failed');
             }
         }
 
-        imagedestroy($this->resource);
-
-        $this->resource = $dest;
+        $this->gd = $dest;
 
         return $this;
     }
@@ -303,8 +283,8 @@ final class Image implements ImageInterface
         $height = $size->getHeight();
 
         $ratios = array(
-            $width / imagesx($this->resource),
-            $height / imagesy($this->resource)
+            $width / imagesx($this->gd->resource),
+            $height / imagesy($this->gd->resource)
         );
 
         $thumbnail = $this->copy();
@@ -333,7 +313,7 @@ final class Image implements ImageInterface
      */
     public function draw()
     {
-        return new Drawer($this->resource);
+        return new Drawer($this->gd);
     }
 
     /**
@@ -341,7 +321,7 @@ final class Image implements ImageInterface
      */
     public function effects()
     {
-        return new Effects($this->resource);
+        return new Effects($this->gd);
     }
 
     /**
@@ -349,7 +329,7 @@ final class Image implements ImageInterface
      */
     public function getSize()
     {
-        return new Box(imagesx($this->resource), imagesy($this->resource));
+        return new Box(imagesx($this->gd->resource), imagesy($this->gd->resource));
     }
 
     /**
@@ -380,7 +360,7 @@ final class Image implements ImageInterface
                 $round     = (int) round(max($color->getAlpha(), (100 - $color->getAlpha()) * $maskColor->getRed() / 255));
 
                 if (false === imagesetpixel(
-                    $this->resource,
+                    $this->gd->resource,
                     $x, $y,
                     $this->getColor($color->dissolve($round - $color->getAlpha()))
                 )) {
@@ -402,7 +382,7 @@ final class Image implements ImageInterface
         for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
             for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
                 if (false === imagesetpixel(
-                    $this->resource,
+                    $this->gd->resource,
                     $x, $y,
                     $this->getColor($fill->getColor(new Point($x, $y))))
                 ) {
@@ -421,7 +401,7 @@ final class Image implements ImageInterface
     {
         $mask = $this->copy();
 
-        if (false === imagefilter($mask->resource, IMG_FILTER_GRAYSCALE)) {
+        if (false === imagefilter($mask->gd->resource, IMG_FILTER_GRAYSCALE)) {
             throw new RuntimeException('Mask operation failed');
         }
 
@@ -456,8 +436,8 @@ final class Image implements ImageInterface
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
             ));
         }
-        $index = imagecolorat($this->resource, $point->getX(), $point->getY());
-        $info  = imagecolorsforindex($this->resource, $index);
+        $index = imagecolorat($this->gd->resource, $point->getX(), $point->getY());
+        $info  = imagecolorsforindex($this->gd->resource, $index);
 
         return new Color(array(
                 $info['red'],
@@ -471,10 +451,37 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
+    public function getDelay()
+    {
+        throw new RuntimeException("GD doesn't support image delays");
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setDelay($delay)
+    {
+        throw new RuntimeException("GD doesn't support image delays");
+    }
+
+    /**
+     * Gets the internal GD resource. For internal use only.
+     *
+     * @internal
+     * @return Gd
+     */
+    public function getResource()
+    {
+        return $this->gd;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function layers()
     {
         if (null === $this->layers) {
-            $this->layers = new Layers($this, $this->resource);
+            $this->layers = new Layers($this, $this->gd);
         }
 
         return $this->layers;
@@ -503,8 +510,13 @@ final class Image implements ImageInterface
             ));
         }
 
+        # Get resource through layers, as the resource may have been replaced
+        $layers = $this->layers();
+        $layer = $layers->current();
+        $gd = $layer->getResource();
+
         $save = 'image'.$format;
-        $args = array(&$this->resource, $filename);
+        $args = array(&$gd->resource, $filename);
 
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
@@ -543,7 +555,7 @@ final class Image implements ImageInterface
      * @param BoxInterface $size
      * @param  string the operation initiating the creation
      *
-     * @return resource
+     * @return Gd
      *
      * @throws RuntimeException
      *
@@ -569,7 +581,7 @@ final class Image implements ImageInterface
         imagefill($resource, 0, 0, $transparent);
         imagecolortransparent($resource, $transparent);
 
-        return $resource;
+        return new Gd($resource);
     }
 
     /**
@@ -586,7 +598,7 @@ final class Image implements ImageInterface
     private function getColor(Color $color)
     {
         $index = imagecolorallocatealpha(
-            $this->resource, $color->getRed(), $color->getGreen(),
+            $this->gd->resource, $color->getRed(), $color->getGreen(),
             $color->getBlue(), round(127 * $color->getAlpha() / 100)
         );
 

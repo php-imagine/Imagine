@@ -238,6 +238,34 @@ abstract class AbstractImageTest extends ImagineTestCase
         }
     }
 
+    public function testImageGetDelay()
+    {
+        if (!$this->supportDelays()) {
+            $this->markTestSkipped("This driver does not support image delays");
+        }
+
+        $imagine = $this->getImagine();
+
+        $image = $imagine->open('tests/Imagine/Fixtures/cat.gif');
+        
+        $this->assertGreaterThan(0, $image->getDelay());
+    }
+
+    public function testImageSetDelay()
+    {
+        if (!$this->supportDelays()) {
+            $this->markTestSkipped("This driver does not support image delays");
+        }
+
+        $imagine = $this->getImagine();
+
+        $image = $imagine->open('tests/Imagine/Fixtures/cat.gif');
+        
+        $image->setDelay(450);
+
+        $this->assertEquals($image->getDelay(), 450);
+    }
+
     private function getMonoLayeredImage()
     {
         return $this->getImagine()->open('tests/Imagine/Fixtures/google.png');
@@ -265,4 +293,5 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     abstract protected function getImagine();
     abstract protected function supportMultipleLayers();
+    abstract protected function supportDelays();
 }

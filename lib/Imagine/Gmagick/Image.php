@@ -302,6 +302,10 @@ final class Image implements ImageInterface
     {
         if (isset($options['format'])) {
             $this->gmagick->setimageformat($options['format']);
+            
+            foreach ($this->layers() as $layer) {
+                $layer->getResource()->setimageformat($options['format']);
+            }
         }
 
         $this->layers()->merge();
@@ -533,6 +537,43 @@ final class Image implements ImageInterface
                 $pixel->getColorValue(\Gmagick::COLOR_BLUE) * 255,
             )
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDelay()
+    {
+        try {
+            return 10 * $this->gmagick->getImageDelay();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException("Delay retrieval failed", $e->getCode(), $e);
+        }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setDelay($delay)
+    {
+        $delay = round($delay / 10);
+
+        try {
+            $this->gmagick->setImageDelay($delay);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException("Setting image delay failed", $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * Gets the internal Gmagick resource. For internal use only.
+     *
+     * @internal
+     * @return Gmagick
+     */
+    public function getResource()
+    {
+        return $this->gmagick;
     }
 
     /**

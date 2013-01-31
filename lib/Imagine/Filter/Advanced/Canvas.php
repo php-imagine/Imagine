@@ -67,6 +67,7 @@ class Canvas implements FilterInterface
     public function apply(ImageInterface $image)
     {
         $canvas = $this->imagine->create($this->size, $this->background);
+        $canvas->setDelay($image->getDelay());
         $canvas->paste($image, $this->placement);
 
         return $canvas;
