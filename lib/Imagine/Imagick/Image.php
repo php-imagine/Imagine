@@ -542,6 +542,23 @@ final class Image implements ImageInterface
     }
 
     /**
+     * unsharpMask the image
+     *
+     * @param float $radius
+     * @param float $sigma
+     * @param float $amount
+     * @param float $threshold
+     *
+     * @return \Imagine\Imagick\Image
+     */
+    public function unsharpMask($radius, $sigma, $amount, $threshold)
+    {
+        $this->imagick->unsharpMaskImage($radius, $sigma, $amount, $threshold);
+
+        return $this;
+    }
+
+    /**
      * Internal
      *
      * Flatten the image.
