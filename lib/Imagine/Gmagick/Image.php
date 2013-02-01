@@ -182,13 +182,17 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function resize(BoxInterface $size)
+    public function resize(BoxInterface $size, $filter = null)
     {
+        if (is_null($filter)) {
+            $filter = \Gmagick::FILTER_UNDEFINED;
+        }
+
         try {
             $this->gmagick->resizeimage(
                 $size->getWidth(),
                 $size->getHeight(),
-                \Gmagick::FILTER_UNDEFINED,
+                $filter,
                 1
             );
         } catch (\GmagickException $e) {

@@ -196,13 +196,17 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function resize(BoxInterface $size)
+    public function resize(BoxInterface $size, $filter = null)
     {
+        if (is_null($filter)) {
+            $filter = \Imagick::FILTER_UNDEFINED;
+        }
+
         try {
             $this->imagick->resizeImage(
                 $size->getWidth(),
                 $size->getHeight(),
-                \Imagick::FILTER_UNDEFINED,
+                $filter,
                 1
             );
         } catch (\ImagickException $e) {
