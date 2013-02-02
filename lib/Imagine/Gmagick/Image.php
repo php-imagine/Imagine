@@ -542,6 +542,27 @@ final class Image implements ImageInterface
     {
         return $this->layers;
     }
+    
+    /**
+     * {@inheritdoc}
+     **/
+    public function interlace($type)
+    {
+        $supportedInterlaceTypes = array(
+            ImageInterface::INTERLACE_NONE      => \Gmagick::INTERLACE_NO,
+            ImageInterface::INTERLACE_LINE      => \Gmagick::INTERLACE_LINE,
+            ImageInterface::INTERLACE_PLANE     => \Gmagick::INTERLACE_PLANE,
+            ImageInterface::INTERLACE_PARTITION => \Gmagick::INTERLACE_PARITION,
+        );
+
+        if (!array_key_exists($supportedInterlaceTypes)) {
+            throw new InvalidArgumentException('Unsupported interlace type');
+        }
+        
+        $this->gmagick->setInterlaceScheme($supportedInterlaceTypes[$type]);
+        
+        return $this;
+    }
 
     /**
      * Internal

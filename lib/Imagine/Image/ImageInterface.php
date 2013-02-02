@@ -26,6 +26,11 @@ interface ImageInterface extends ManipulatorInterface
 {
     const RESOLUTION_PIXELSPERINCH = 'ppi';
     const RESOLUTION_PIXELSPERCENTIMETER = 'ppc';
+    
+    const INTERLACE_NONE = 'none';
+    const INTERLACE_LINE = 'line';
+    const INTERLACE_PLANE = 'plane';
+    const INTERLACE_PARTITION = 'partition';
 
     /**
      * Returns the image content as a binary string
@@ -102,4 +107,13 @@ interface ImageInterface extends ManipulatorInterface
      * @return LayersInterface
      */
     public function layers();
+    
+    /**
+     * Enables or disables interlacing
+     *
+     * @throws InvalidArgumentException When an unsupported Interface type is supplied
+     * 
+     * @return ImageInterface
+     */
+    public function interlace($type);
 }
