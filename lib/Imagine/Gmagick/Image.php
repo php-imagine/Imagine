@@ -548,7 +548,7 @@ final class Image implements ImageInterface
      **/
     public function interlace($type)
     {
-        $supportedInterlaceTypes = array(
+        static $supportedInterlaceTypes = array(
             ImageInterface::INTERLACE_NONE      => \Gmagick::INTERLACE_NO,
             ImageInterface::INTERLACE_LINE      => \Gmagick::INTERLACE_LINE,
             ImageInterface::INTERLACE_PLANE     => \Gmagick::INTERLACE_PLANE,

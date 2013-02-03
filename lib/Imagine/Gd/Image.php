@@ -485,7 +485,7 @@ final class Image implements ImageInterface
      **/
     public function interlace($type)
     {
-        $supportedInterlaceTypes = array(
+        static $supportedInterlaceTypes = array(
             ImageInterface::INTERLACE_NONE      => 0,
             ImageInterface::INTERLACE_LINE      => 1,
             ImageInterface::INTERLACE_PLANE     => 1,
