@@ -281,6 +281,27 @@ final class Image implements ImageInterface
 
         return $this->imagick->getImagesBlob();
     }
+    
+    /**
+     * {@inheritdoc}
+     **/
+    public function interlace($scheme)
+    {
+        static $supportedInterlaceSchemes = array(
+            ImageInterface::INTERLACE_NONE      => \Imagick::INTERLACE_NO,
+            ImageInterface::INTERLACE_LINE      => \Imagick::INTERLACE_LINE,
+            ImageInterface::INTERLACE_PLANE     => \Imagick::INTERLACE_PLANE,
+            ImageInterface::INTERLACE_PARTITION => \Imagick::INTERLACE_PARTITION,
+        );
+
+        if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
+            throw new InvalidArgumentException('Unsupported interlace type');
+        }
+        
+        $this->imagick->setInterlaceScheme($supportedInterlaceSchemes[$scheme]);
+        
+        return $this;
+    }
 
     /**
      * @param array $options
