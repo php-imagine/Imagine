@@ -111,9 +111,11 @@ interface ImageInterface extends ManipulatorInterface
     /**
      * Enables or disables interlacing
      *
+     * @param string $scheme
+     *
      * @throws InvalidArgumentException When an unsupported Interface type is supplied
      * 
      * @return ImageInterface
      */
-    public function interlace($type);
+    public function interlace($scheme);
 }

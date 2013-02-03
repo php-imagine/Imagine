@@ -483,20 +483,20 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      **/
-    public function interlace($type)
+    public function interlace($scheme)
     {
-        static $supportedInterlaceTypes = array(
+        static $supportedInterlaceSchemes = array(
             ImageInterface::INTERLACE_NONE      => 0,
             ImageInterface::INTERLACE_LINE      => 1,
             ImageInterface::INTERLACE_PLANE     => 1,
             ImageInterface::INTERLACE_PARTITION => 1,
         );
 
-        if (!array_key_exists($supportedInterlaceTypes)) {
+        if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
             throw new InvalidArgumentException('Unsupported interlace type');
         }
         
-        imageinterlace($this->resource, $supportedInterlaceTypes[$type]);
+        imageinterlace($this->resource, $supportedInterlaceSchemes[$scheme]);
         
         return $this;
     }
