@@ -552,7 +552,7 @@ final class Image implements ImageInterface
             ImageInterface::INTERLACE_NONE      => \Gmagick::INTERLACE_NO,
             ImageInterface::INTERLACE_LINE      => \Gmagick::INTERLACE_LINE,
             ImageInterface::INTERLACE_PLANE     => \Gmagick::INTERLACE_PLANE,
-            ImageInterface::INTERLACE_PARTITION => \Gmagick::INTERLACE_PARITION,
+            ImageInterface::INTERLACE_PARTITION => \Gmagick::INTERLACE_PARTITION,
         );
 
         if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
