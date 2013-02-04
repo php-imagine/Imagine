@@ -198,7 +198,11 @@ final class Image implements ImageInterface
      */
     public function resize(BoxInterface $size, $filter = null)
     {
-        if (is_null($filter)) {
+        if ($filter == ImageInterface::FILTER_GAUSSIAN) {
+            $filter = \Imagick::FILTER_GAUSSIAN;
+        } elseif ($filter == ImageInterface::FILTER_LANCZOS) {
+            $filter = \Imagick::FILTER_LANCZOS;
+        } else {
             $filter = \Imagick::FILTER_UNDEFINED;
         }
 

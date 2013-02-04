@@ -27,6 +27,9 @@ interface ImageInterface extends ManipulatorInterface
     const RESOLUTION_PIXELSPERINCH = 'ppi';
     const RESOLUTION_PIXELSPERCENTIMETER = 'ppc';
 
+    const FILTER_GAUSSIAN = "fga";
+    const FILTER_LANCZOS = "fla";
+
     /**
      * Returns the image content as a binary string
      *
