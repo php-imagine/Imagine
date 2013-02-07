@@ -481,6 +481,15 @@ final class Image implements ImageInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function unsharpMask($radius, $sigma, $amount, $threshold)
+    {
+        //it's not implemented in Gd
+        return $this;
+    }
+
+    /**
      * Internal
      *
      * Performs save or show operation using one of GD's image... functions
