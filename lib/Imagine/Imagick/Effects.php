@@ -96,4 +96,18 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unsharpMask($radius, $sigma, $amount, $threshold)
+    {
+        try {
+            $this->imagick->unsharpMaskImage($radius, $sigma, $amount, $threshold);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to sharpen the image with unsharpMask');
+        }
+
+        return $this;
+    }
 }

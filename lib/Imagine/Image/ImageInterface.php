@@ -105,16 +105,4 @@ interface ImageInterface extends ManipulatorInterface
      * @return LayersInterface
      */
     public function layers();
-
-    /**
-     * Sharpens the image, returns the modified image
-     *
-     * @param float $radius
-     * @param float $sigma
-     * @param float $amount
-     * @param float $threshold
-     *
-     * @return ImageInterface
-     */
-    public function unsharpMask($radius, $sigma, $amount, $threshold);
 }

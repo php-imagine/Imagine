@@ -552,15 +552,6 @@ final class Image implements ImageInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function unsharpMask($radius, $sigma, $amount, $threshold)
-    {
-        //it's not implemented in Gmagick until now
-        return $this;
-    }
-
-    /**
      * Internal
      *
      * Flatten the image.

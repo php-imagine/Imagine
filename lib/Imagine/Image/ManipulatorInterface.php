@@ -54,7 +54,7 @@ interface ManipulatorInterface
      * Resizes current image and returns self
      *
      * @param BoxInterface $size
-     * @param integer|null $filter
+     * @param string|null $filter
      *
      * @throws RuntimeException
      *

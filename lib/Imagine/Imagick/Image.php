@@ -546,16 +546,6 @@ final class Image implements ImageInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function unsharpMask($radius, $sigma, $amount, $threshold)
-    {
-        $this->imagick->unsharpMaskImage($radius, $sigma, $amount, $threshold);
-
-        return $this;
-    }
-
-    /**
      * Internal
      *
      * Flatten the image.
