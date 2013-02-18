@@ -369,6 +369,10 @@ final class Drawer implements DrawerInterface
             $xdiff = 0 - min($x1, $x2);
             $ydiff = 0 - min($y1, $y2);
 
+            if ($width !== null) {
+                $string = $this->wrapText($string, $text, $angle, $width);
+            }
+
             $this->imagick->annotateImage(
                 $text, $position->getX() + $x1 + $xdiff,
                 $position->getY() + $y2 + $ydiff, $angle, $string
@@ -403,5 +407,28 @@ final class Drawer implements DrawerInterface
         );
 
         return $pixel;
+    }
+
+    /**
+     * Internal
+     * 
+     * Fits a string into box with given width
+     */
+    private function wrapText($string, $text, $angle, $width)
+    {
+        $result = '';
+        $words = explode(' ', $string);
+        foreach ($words as $word)
+        {
+            $teststring = $result . ' ' . $word;
+            $testbox = $this->imagick->queryFontMetrics($text, $teststring, true);
+            if ($testbox['textWidth'] > $width){
+                $result .= ($result == '' ? '' : "\n") . $word;
+            } else {
+                $result .= ($result == '' ? '' : ' ') . $word;
+            }
+        }
+
+        return $result;
     }
 }

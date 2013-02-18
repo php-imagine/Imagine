@@ -209,7 +209,7 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
-    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0)
+    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0, $width = null)
     {
         if (!$this->info['FreeType Support']) {
             throw new RuntimeException('GD is not compiled with FreeType support');
@@ -220,6 +220,10 @@ final class Drawer implements DrawerInterface
         $fontfile = $font->getFile();
         $x        = $position->getX();
         $y        = $position->getY() + $fontsize;
+
+        if ($width !== null) {
+            $string = $this->wrapText($string, $font, $angle, $width);
+        }
 
         if (false === imagealphablending($this->resource, true)) {
             throw new RuntimeException('Font mask operation failed');
@@ -275,5 +279,28 @@ final class Drawer implements DrawerInterface
         }
 
         $this->info = gd_info();
+    }
+
+    /**
+     * Internal
+     * 
+     * Fits a string into box with given width
+     */
+    private function wrapText($string, AbstractFont $font, $angle, $width)
+    {
+        $result = '';
+        $words = explode(' ', $string);
+        foreach ($words as $word)
+        {
+            $teststring = $result . ' ' . $word;
+            $testbox = imagettfbbox($font->getSize(), $angle, $font->getFile(), $teststring);
+            if ($testbox[2] > $width){
+                $result .= ($result == '' ? '' : "\n") . $word;
+            } else {
+                $result .= ($result == '' ? '' : ' ') . $word;
+            }
+        }
+
+        return $result;
     }
 }
