@@ -333,7 +333,7 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
-    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0)
+    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0, $width = null)
     {
         try {
             $pixel = $this->getColor($font->getColor());
