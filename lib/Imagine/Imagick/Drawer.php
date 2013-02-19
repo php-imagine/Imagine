@@ -418,8 +418,7 @@ final class Drawer implements DrawerInterface
     {
         $result = '';
         $words = explode(' ', $string);
-        foreach ($words as $word)
-        {
+        foreach ($words as $word) {
             $teststring = $result . ' ' . $word;
             $testbox = $this->imagick->queryFontMetrics($text, $teststring, true);
             if ($testbox['textWidth'] > $width){

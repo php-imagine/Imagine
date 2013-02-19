@@ -290,8 +290,7 @@ final class Drawer implements DrawerInterface
     {
         $result = '';
         $words = explode(' ', $string);
-        foreach ($words as $word)
-        {
+        foreach ($words as $word) {
             $teststring = $result . ' ' . $word;
             $testbox = imagettfbbox($font->getSize(), $angle, $font->getFile(), $teststring);
             if ($testbox[2] > $width){
