@@ -130,8 +130,9 @@ You can optionally specify the fill color for the new image, which defaults to o
 
    <?php
 
+   $palette = new Imagine\Image\Palette\RGB();
    $size  = new Imagine\Image\Box(400, 300);
-   $color = new Imagine\Image\Color('000', 100);
+   $color = $palette->color('#000', 100);
    $image = $imagine->create($size, $color);
 
 Save Images
@@ -189,7 +190,7 @@ The following example opens a Jpg image and saves it with it with 150 dpi horizo
 .. TIP::
    You **MUST** provide a unit system when setting resolution values.
    There are two available unit systems for resolution : ``ImageInterface::RESOLUTION_PIXELSPERINCH`` and ``ImageInterface::RESOLUTION_PIXELSPERCENTIMETER``.
-`
+
 The flatten option is used when dealing with multi-layers images (see the
 `layers <layers>`_ section for information). Image are saved flatten by default,
 you can avoid this by explicitly set this option to ``false`` when saving :
@@ -229,35 +230,6 @@ Of course, you can combine options :
    );
 
    $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', $options);
-
-Color Class
-+++++++++++
-
-Color is a class in Imagine, which takes two arguments in its constructor: the RGB color code and a transparency percentage. The following examples are equivalent ways of defining a fully-transparent white color.
-
-.. code-block:: php
-
-   <?php
-
-   $white = new Imagine\Image\Color('fff', 100);
-   $white = new Imagine\Image\Color('ffffff', 100);
-   $white = new Imagine\Image\Color('#fff', 100);
-   $white = new Imagine\Image\Color('#ffffff', 100);
-   $white = new Imagine\Image\Color(0xFFFFFF, 100);
-   $white = new Imagine\Image\Color(array(255, 255, 255), 100);
-
-After you have instantiated a color, you can easily get its Red, Green, Blue and Alpha (transparency) values:
-
-.. code-block:: php
-
-   <?php
-
-   var_dump(array(
-      'R' => $white->getRed(),
-      'G' => $white->getGreen(),
-      'B' => $white->getBlue(),
-      'A' => $white->getAlpha()
-   ));
 
 Advanced Examples
 -----------------
@@ -328,17 +300,17 @@ Image Reflection Filter
            $canvas     = new Imagine\Image\Box($size->getWidth(), $size->getHeight() * 2);
            $reflection = $image->copy()
                ->flipVertically()
-               ->applyMask($this->getTransparencyMask($size))
+               ->applyMask($this->getTransparencyMask($image->palette(), $size))
            ;
 
-           return $this->imagine->create($canvas, new Imagine\Image\Color('fff', 100))
+           return $this->imagine->create($canvas, $image->palette()->color('fff', 100))
                ->paste($image, new Imagine\Image\Point(0, 0))
                ->paste($reflection, new Imagine\Image\Point(0, $size->getHeight()));
        }
 
-       private function getTransparencyMask(Imagine\Image\BoxInterface $size)
+       private function getTransparencyMask(Imagine\Image\Palette\PaletteInterface $palette, Imagine\Image\BoxInterface $size)
        {
-           $white = new Imagine\Image\Color('fff');
+           $white = $palette->color('fff');
            $fill  = new Imagine\Image\Fill\Gradient\Vertical(
                $size->getHeight(),
                $white->darken(127),

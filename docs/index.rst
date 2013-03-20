@@ -67,6 +67,7 @@ Usage:
    usage/introduction
    usage/coordinates
    usage/drawing
+   usage/colors
    usage/effects
    usage/layers
    usage/filters
