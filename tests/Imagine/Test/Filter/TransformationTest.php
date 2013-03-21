@@ -1,7 +1,5 @@
 <?php
 
-namespace Imagine\Test\Filter;
-
 /*
  * This file is part of the Imagine package.
  *
@@ -10,6 +8,8 @@ namespace Imagine\Test\Filter;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+namespace Imagine\Test\Filter;
 
 use Imagine\Filter\Transformation;
 use Imagine\Image\Box;
