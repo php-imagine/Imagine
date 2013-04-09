@@ -47,6 +47,10 @@ class Thumbnail implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->thumbnail($this->size, $this->mode);
+        if (($image->getSize()->getWidth() <= $this->size->getWidth()) && ($image->getSize()->getHeight() <= $this->size->getHeight())) {
+            return $image;
+        } else {
+            return $image->thumbnail($this->size, $this->mode);
+        }
     }
 }
