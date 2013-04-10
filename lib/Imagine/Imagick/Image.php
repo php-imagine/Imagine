@@ -27,12 +27,12 @@ use Imagine\Image\ImageInterface;
 /**
  * Image implementation using the Imagick PHP extension
  */
-final class Image implements ImageInterface
+class Image implements ImageInterface
 {
     /**
      * @var \Imagick
      */
-    private $imagick;
+    protected $imagick;
     /**
      * @var Layers
      */
@@ -289,7 +289,7 @@ final class Image implements ImageInterface
 
         return $this->imagick->getImagesBlob();
     }
-    
+
     /**
      * {@inheritdoc}
      **/
@@ -305,9 +305,9 @@ final class Image implements ImageInterface
         if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
             throw new InvalidArgumentException('Unsupported interlace type');
         }
-        
+
         $this->imagick->setInterlaceScheme($supportedInterlaceSchemes[$scheme]);
-        
+
         return $this;
     }
 

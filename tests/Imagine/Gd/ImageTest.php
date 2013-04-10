@@ -30,6 +30,14 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('GD driver does not support resolution options');
     }
 
+    public function testGdExtension()
+    {
+        $resource = imagecreatetruecolor(10, 10);
+
+        $image = new ExtendedGD($resource);
+        $this->assertEquals($resource, $image->getResource());
+    }
+
     protected function getImagine()
     {
         return new Imagine();
@@ -38,5 +46,13 @@ class ImageTest extends AbstractImageTest
     protected function supportMultipleLayers()
     {
         return false;
+    }
+}
+
+class ExtendedGD extends Image
+{
+    public function getResource()
+    {
+        return $this->resource;
     }
 }

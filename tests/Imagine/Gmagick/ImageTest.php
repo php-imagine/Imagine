@@ -40,4 +40,20 @@ class ImageTest extends AbstractImageTest
     {
         $this->markTestSkipped('Test skipped while bug https://bugs.php.net/bug.php?id=63677 is not fixed');
     }
+
+    public function testGmagickExtension()
+    {
+        $gmagick = $this->getMock('Gmagick');
+
+        $image = new ExtendedGmagick($gmagick);
+        $this->assertEquals($gmagick, $image->getResource());
+    }
+}
+
+class ExtendedGmagick extends Image
+{
+    public function getResource()
+    {
+        return $this->gmagick;
+    }
 }

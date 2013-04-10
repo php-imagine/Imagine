@@ -51,8 +51,24 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/resize/small.png');
     }
 
+    public function testImagickExtension()
+    {
+        $imagick = $this->getMock('Imagick');
+
+        $image = new ExtendedImagick($imagick);
+        $this->assertEquals($imagick, $image->getResource());
+    }
+
     protected function supportMultipleLayers()
     {
         return true;
+    }
+}
+
+class ExtendedImagick extends Image
+{
+    public function getResource()
+    {
+        return $this->imagick;
     }
 }
