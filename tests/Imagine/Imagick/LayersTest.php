@@ -94,9 +94,13 @@ class LayersTest extends AbstractLayersTest
         }
     }
 
-    public function getImage($resource)
+    public function getImage($path = null)
     {
-        return new Image($resource);
+        if ($path ) {
+            return new Image(new \Imagick($path));
+        } else {
+            return new Image(new \Imagick());
+        }
     }
 
     protected function getImagine()
@@ -104,13 +108,8 @@ class LayersTest extends AbstractLayersTest
         return new Imagine();
     }
 
-    public function getResource()
+    protected function assertLayersEquals($expected, $actual)
     {
-        return new \Imagick(__DIR__ . '/../Fixtures/large.jpg');
-    }
-
-    public function getLayers(ImageInterface $image, $resource)
-    {
-        return new Layers($image, $resource);
+        $this->assertEquals($expected->getImagick(), $actual->getImagick());
     }
 }

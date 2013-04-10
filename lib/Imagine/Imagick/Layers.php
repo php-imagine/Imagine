@@ -11,12 +11,13 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Image\LayersInterface;
+use Imagine\Image\AbstractLayers;
+use Imagine\Imagick\Image;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 
-class Layers implements LayersInterface
+class Layers extends AbstractLayers
 {
     /**
      * @var Image
@@ -56,6 +57,36 @@ class Layers implements LayersInterface
                 );
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function animate($format, $delay, $loops)
+    {
+        if ('gif' !== strtolower($format)) {
+            throw new InvalidArgumentException('Animated picture is currently only supported on gif');
+        }
+
+        foreach (array('Loops' => $loops, 'Delay' => $delay) as $name => $value) {
+            if (!is_int($value) || $value < 0) {
+                throw new InvalidArgumentException(sprintf('%s must be a positive integer.', $name));
+            }
+        }
+
+        try {
+            foreach ($this as $offset => $layer) {
+                $this->resource->setIteratorIndex($offset);
+                $this->resource->setFormat($format);
+                $this->resource->setImageDelay($delay / 10);
+                $this->resource->setImageTicksPerSecond(100);
+                $this->resource->setImageIterations($loops);
+            }
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to animate layers', $e->getCode(), $e);
+        }
+
+        return $this;
     }
 
     /**
@@ -180,9 +211,11 @@ class Layers implements LayersInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $image)
     {
-        $currentOffset = $this->offset;
+        if (!$image instanceof Image) {
+            throw new InvalidArgumentException('Only an Imagick Image can be used as layer');
+        }
 
         if (null === $offset) {
             $offset = count($this) - 1;
@@ -194,10 +227,10 @@ class Layers implements LayersInterface
             }
 
             if (count($this) < $offset || 0 > $offset) {
-                throw new OutOfBoundsException(
-                    'Invalid offset for layer, it must be a value between 0 and %d',
-                    count($this)
-                );
+                throw new OutOfBoundsException(sprintf(
+                    'Invalid offset for layer, it must be a value between 0 and %d, %d given',
+                    count($this), $offset
+                ));
             }
 
             if (isset($this[$offset])) {
@@ -206,20 +239,17 @@ class Layers implements LayersInterface
             }
         }
 
-        if ($value instanceof \Imagick) {
-            $frame = $value;
-        } elseif (file_exists($value) && is_file($value)) {
-            $frame = new \Imagick($value);
-        } else {
-            throw new InvalidArgumentException(
-                'Invalid argument, a new layer must be an Imagick instance or a filepath'
-            );
+        $frame = $image->getImagick();
+
+        try {
+            if (count($this) > 0) {
+                $this->resource->setIteratorIndex($offset);
+            }
+            $this->resource->addImage($frame);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Unable to set the layer', $e->getCode(), $e);
         }
 
-        $this->resource->setIteratorIndex($offset);
-        $this->resource->addImage($frame);
-
-        $this->resource->setIteratorIndex($currentOffset);
         $this->layers = array();
     }
 
@@ -234,7 +264,11 @@ class Layers implements LayersInterface
             return;
         }
 
-        $this->resource->setIteratorIndex($offset);
-        $this->resource->removeImage();
+        try {
+            $this->resource->setIteratorIndex($offset);
+            $this->resource->removeImage();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Unable to remove layer', $e->getCode(), $e);
+        }
     }
 }

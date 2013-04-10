@@ -11,12 +11,13 @@
 
 namespace Imagine\Gmagick;
 
-use Imagine\Image\LayersInterface;
+use Imagine\Image\AbstractLayers;
+use Imagine\Gmagick\Image;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 
-class Layers implements LayersInterface
+class Layers extends AbstractLayers
 {
     /**
      * @var Image
@@ -64,6 +65,35 @@ class Layers implements LayersInterface
     public function coalesce()
     {
         throw new RuntimeException("Gmagick does not support coalescing");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function animate($format, $delay, $loops)
+    {
+        if ('gif' !== strtolower($format)) {
+            throw new InvalidArgumentException('Animated picture is currently only supported on gif');
+        }
+
+        foreach (array('Loops' => $loops, 'Delay' => $delay) as $name => $value) {
+            if (!is_int($value) || $value < 0) {
+                throw new InvalidArgumentException(sprintf('%s must be a positive integer.', $name));
+            }
+        }
+
+        try {
+            foreach ($this as $offset => $layer) {
+                $this->resource->setimageindex($offset);
+                $this->resource->setimageformat($format);
+                $this->resource->setimagedelay($delay / 10);
+                $this->resource->setimageiterations($loops);
+            }
+        } catch (\GmagickException $e) {
+            throw new RuntimeException('Failed to animate layers', $e->getCode(), $e);
+        }
+
+        return $this;
     }
 
     /**
@@ -162,9 +192,11 @@ class Layers implements LayersInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $image)
     {
-        $currentOffset = $this->offset;
+        if (!$image instanceof Image) {
+            throw new InvalidArgumentException('Only a Gmagick Image can be used as layer');
+        }
 
         if (null === $offset) {
             $offset = count($this) - 1;
@@ -176,10 +208,10 @@ class Layers implements LayersInterface
             }
 
             if (count($this) < $offset || 0 > $offset) {
-                throw new OutOfBoundsException(
-                    'Invalid offset for layer, it must be a value between 0 and %d',
-                    count($this)
-                );
+                throw new OutOfBoundsException(sprintf(
+                    'Invalid offset for layer, it must be a value between 0 and %d, %d given',
+                    count($this), $offset
+                ));
             }
 
             if (isset($this[$offset])) {
@@ -188,31 +220,28 @@ class Layers implements LayersInterface
             }
         }
 
-        if ($value instanceof \Gmagick) {
-            $frame = $value;
-        } elseif (file_exists($value) && is_file($value)) {
-            $frame = new \Gmagick($value);
-        } else {
-            throw new InvalidArgumentException(
-                'Invalid argument, a new layer must be an Gmagick instance or a filepath'
-            );
-        }
+        $frame = $image->getGmagick();
 
-        $this->resource->setimageindex($offset);
-        $this->resource->nextimage();
-        $this->resource->addimage($frame);
-
-        /**
-         * ugly hack to bypass issue https://bugs.php.net/bug.php?id=64623
-         */
-        if (count($this) == 2) {
-            $this->resource->setimageindex($offset+1);
-            $this->resource->nextimage();
+        try {
+            if (count($this) > 0) {
+                $this->resource->setimageindex($offset);
+                $this->resource->nextimage();
+            }
             $this->resource->addimage($frame);
-            unset($this[0]);
+
+            /**
+             * ugly hack to bypass issue https://bugs.php.net/bug.php?id=64623
+             */
+            if (count($this) == 2) {
+                $this->resource->setimageindex($offset+1);
+                $this->resource->nextimage();
+                $this->resource->addimage($frame);
+                unset($this[0]);
+            }
+        } catch (\GmagickException $e) {
+            throw new RuntimeException('Unable to set the layer', $e->getCode(), $e);
         }
 
-        $this->resource->setimageindex($currentOffset);
         $this->layers = array();
     }
 
@@ -227,7 +256,11 @@ class Layers implements LayersInterface
             return;
         }
 
-        $this->resource->setimageindex($offset);
-        $this->resource->removeimage();
+        try {
+            $this->resource->setimageindex($offset);
+            $this->resource->removeimage();
+        } catch (\GmagickException $e) {
+            throw new RuntimeException('Unable to remove layer', $e->getCode(), $e);
+        }
     }
 }

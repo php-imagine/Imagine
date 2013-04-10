@@ -37,32 +37,32 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
     public function testLayerArrayAccess()
     {
-        $resource = $this->getResource();
-        $secondResource = $this->getResource();
-        $thirdResource = $this->getResource();
+        $firstImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $secondImage = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $thirdImage = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
 
-        $layers = $this->getLayers($this->getImage($resource), $resource);
+        $layers = $firstImage->layers();
 
         $this->assertCount(1, $layers);
 
-        $layers[] = $secondResource;
+        $layers[] = $secondImage;
 
         $this->assertCount(2, $layers);
-        $this->assertEquals($this->getImage($resource), $layers[0]);
-        $this->assertEquals($this->getImage($secondResource), $layers[1]);
+        $this->assertLayersEquals($firstImage, $layers[0]);
+        $this->assertLayersEquals($secondImage, $layers[1]);
 
-        $layers[1] = $thirdResource;
+        $layers[1] = $thirdImage;
 
         $this->assertCount(2, $layers);
-        $this->assertEquals($this->getImage($resource), $layers[0]);
-        $this->assertEquals($this->getImage($thirdResource), $layers[1]);
+        $this->assertLayersEquals($firstImage, $layers[0]);
+        $this->assertLayersEquals($thirdImage, $layers[1]);
 
-        $layers[] = $secondResource;
+        $layers[] = $secondImage;
 
         $this->assertCount(3, $layers);
-        $this->assertEquals($this->getImage($resource), $layers[0]);
-        $this->assertEquals($this->getImage($thirdResource), $layers[1]);
-        $this->assertEquals($this->getImage($secondResource), $layers[2]);
+        $this->assertLayersEquals($firstImage, $layers[0]);
+        $this->assertLayersEquals($thirdImage, $layers[1]);
+        $this->assertLayersEquals($secondImage, $layers[2]);
 
         $this->assertTrue(isset($layers[2]));
         $this->assertTrue(isset($layers[1]));
@@ -71,12 +71,56 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         unset($layers[1]);
 
         $this->assertCount(2, $layers);
-        $this->assertEquals($this->getImage($resource), $layers[0]);
-        $this->assertEquals($this->getImage($secondResource), $layers[1]);
+        $this->assertLayersEquals($firstImage, $layers[0]);
+        $this->assertLayersEquals($secondImage, $layers[1]);
 
         $this->assertFalse(isset($layers[2]));
         $this->assertTrue(isset($layers[1]));
         $this->assertTrue(isset($layers[0]));
+    }
+
+    public function testLayerAddGetSetRemove()
+    {
+        $firstImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $secondImage = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $thirdImage = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
+
+        $layers = $firstImage->layers();
+
+        $this->assertCount(1, $layers);
+
+        $layers->add($secondImage);
+
+        $this->assertCount(2, $layers);
+        $this->assertLayersEquals($firstImage, $layers->get(0));
+        $this->assertLayersEquals($secondImage, $layers->get(1));
+
+        $layers->set(1, $thirdImage);
+
+        $this->assertCount(2, $layers);
+        $this->assertLayersEquals($firstImage, $layers->get(0));
+        $this->assertLayersEquals($thirdImage, $layers->get(1));
+
+        $layers->add($secondImage);
+
+        $this->assertCount(3, $layers);
+        $this->assertLayersEquals($firstImage, $layers->get(0));
+        $this->assertLayersEquals($thirdImage, $layers->get(1));
+        $this->assertLayersEquals($secondImage, $layers->get(2));
+
+        $this->assertTrue($layers->has(2));
+        $this->assertTrue($layers->has(1));
+        $this->assertTrue($layers->has(0));
+
+        $layers->remove(1);
+
+        $this->assertCount(2, $layers);
+        $this->assertLayersEquals($firstImage, $layers->get(0));
+        $this->assertLayersEquals($secondImage, $layers->get(1));
+
+        $this->assertFalse($layers->has(2));
+        $this->assertTrue($layers->has(1));
+        $this->assertTrue($layers->has(0));
     }
 
     /**
@@ -84,13 +128,13 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testLayerArrayAccessInvalidArgumentExceptions($offset)
     {
-        $resource = $this->getResource();
-        $layers = $this->getLayers($this->getImage($resource), $resource);
+        $firstImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $secondImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
 
-        $secondResource = $this->getResource();
+        $layers = $firstImage->layers();
 
         try {
-            $layers[$offset] = $secondResource;
+            $layers[$offset] = $secondImage;
             $this->fail('An exception should have been raised');
         } catch (InvalidArgumentException $e) {
 
@@ -102,17 +146,52 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testLayerArrayAccessOutOfBoundsExceptions($offset)
     {
-        $resource = $this->getResource();
-        $layers = $this->getLayers($this->getImage($resource), $resource);
+        $firstImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $secondImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
 
-        $secondResource = $this->getResource();
+        $layers = $firstImage->layers();
 
         try {
-            $layers[$offset] = $secondResource;
+            $layers[$offset] = $secondImage;
             $this->fail('An exception should have been raised');
         } catch (OutOfBoundsException $e) {
 
         }
+    }
+
+    public function testAnimateEmpty()
+    {
+        $image = $this->getImage();
+        $layers = $image->layers();
+
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
+
+        $target = __DIR__ . '/../Fixtures/temporary-gif.gif';
+
+        $image->save($target, array(
+            'animated' => true,
+        ));
+
+        @unlink($target);
+    }
+
+    public function testAnimateLoaded()
+    {
+        $image = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $layers = $image->layers();
+
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
+
+        $target = __DIR__ . '/../Fixtures/temporary-gif.gif';
+
+        $image->save($target, array(
+            'animated' => true,
+        ));
+
+        @unlink($target);
     }
 
     public function provideInvalidArguments()
@@ -133,8 +212,7 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    abstract protected function getResource();
-    abstract protected function getImage($resource);
+    abstract protected function getImage($path = null);
     abstract protected function getImagine();
-    abstract protected function getLayers(ImageInterface $image, $resource);
+    abstract protected function assertLayersEquals($expected, $actual);
 }

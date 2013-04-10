@@ -11,10 +11,10 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Image\LayersInterface;
+use Imagine\Image\AbstractLayers;
 use Imagine\Exception\RuntimeException;
 
-class Layers implements LayersInterface
+class Layers extends AbstractLayers
 {
     private $image;
     private $offset;
@@ -43,6 +43,14 @@ class Layers implements LayersInterface
      */
     public function coalesce()
     {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function animate($format, $delay, $loops)
+    {
+        return $this;
     }
 
     /**
@@ -101,7 +109,7 @@ class Layers implements LayersInterface
     public function offsetGet($offset)
     {
         if (0 === $offset) {
-            return $this->resource;
+            return new Image($this->resource);
         }
 
         throw new RuntimeException('GD only supports one layer at offset 0');

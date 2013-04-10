@@ -60,6 +60,16 @@ final class Image implements ImageInterface
     }
 
     /**
+     * Returns gmagick instance
+     *
+     * @return Gmagick
+     */
+    public function getGmagick()
+    {
+        return $this->gmagick;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function copy()
@@ -257,7 +267,8 @@ final class Image implements ImageInterface
     {
         try {
             $this->prepareOutput($options);
-            $this->gmagick->writeimage($path, true);
+            $all_frames = !isset($options['animated']) || false === $options['animated'];
+            $this->gmagick->writeimage($path, $all_frames);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Save operation failed', $e->getCode(), $e
@@ -304,7 +315,18 @@ final class Image implements ImageInterface
             $this->gmagick->setimageformat($options['format']);
         }
 
-        $this->layers()->merge();
+        if (isset($options['animated']) && true === $options['animated']) {
+
+            $format = isset($options['format']) ? $options['format'] : 'gif';
+            $delay = isset($options['animated.delay']) ? $options['animated.delay'] : 800;
+            $loops = isset($options['animated.loops']) ? $options['animated.loops'] : 0;
+
+            $options['flatten'] = false;
+
+            $this->layers->animate($format, $delay, $loops);
+        } else {
+            $this->layers()->merge();
+        }
         $this->applyImageOptions($this->gmagick, $options);
 
         // flatten only if image has multiple layers
@@ -542,7 +564,7 @@ final class Image implements ImageInterface
     {
         return $this->layers;
     }
-    
+
     /**
      * {@inheritdoc}
      **/
@@ -558,9 +580,9 @@ final class Image implements ImageInterface
         if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
             throw new InvalidArgumentException('Unsupported interlace type');
         }
-        
+
         $this->gmagick->setInterlaceScheme($supportedInterlaceSchemes[$scheme]);
-        
+
         return $this;
     }
 

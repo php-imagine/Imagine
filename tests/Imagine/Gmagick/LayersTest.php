@@ -65,14 +65,18 @@ class LayersTest extends AbstractLayersTest
         }
     }
 
-    public function getImage($resource)
+    public function testAnimateEmpty()
     {
-        return new Image($resource);
+        $this->markTestSkipped('Animate empty is skipped due to https://bugs.php.net/bug.php?id=62309');
     }
 
-    public function getResource()
+    public function getImage($path = null)
     {
-        return new \Gmagick(__DIR__ . '/../Fixtures/large.jpg');
+        if ($path ) {
+            return new Image(new \Gmagick($path));
+        } else {
+            return new Image(new \Gmagick());
+        }
     }
 
     public function getImagine()
@@ -83,5 +87,10 @@ class LayersTest extends AbstractLayersTest
     public function getLayers(ImageInterface $image, $resource)
     {
         return new Layers($image, $resource);
+    }
+
+    protected function assertLayersEquals($expected, $actual)
+    {
+        $this->assertEquals($expected->getGmagick(), $actual->getGmagick());
     }
 }

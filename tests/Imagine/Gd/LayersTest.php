@@ -45,29 +45,45 @@ class LayersTest extends AbstractLayersTest
 
     public function testLayerArrayAccess()
     {
-        $resource = $this->getResource();
-        $secondResource = $this->getResource();
-        $thirdResource = $this->getResource();
+        $image = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $layers = $image->layers();
 
-        $layers = $this->getLayers($this->getImage($resource), $resource);
-
-        $this->assertEquals($resource, $layers[0]);
+        $this->assertLayersEquals($image, $layers[0]);
         $this->assertTrue(isset($layers[0]));
+    }
+
+    public function testLayerAddGetSetRemove()
+    {
+        $image = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $layers = $image->layers();
+
+        $this->assertLayersEquals($image, $layers->get(0));
+        $this->assertTrue($layers->has(0));
     }
 
     public function testLayerArrayAccessInvalidArgumentExceptions($offset = null)
     {
-        $this->markTestSkipped('Gd does not fully supports layers array access');
+        $this->markTestSkipped('Gd does not fully support layers array access');
     }
 
     public function testLayerArrayAccessOutOfBoundsExceptions($offset = null)
     {
-        $this->markTestSkipped('Gd does not fully supports layers array access');
+        $this->markTestSkipped('Gd does not fully support layers array access');
     }
 
-    public function getImage($resource)
+    public function testAnimateEmpty()
     {
-        return new Image($resource);
+        $this->markTestSkipped('Gd does not support animated gifs');
+    }
+
+    public function testAnimateLoaded()
+    {
+        $this->markTestSkipped('Gd does not support animated gifs');
+    }
+
+    public function getImage($path = null)
+    {
+        return new Image(imagecreatetruecolor(10, 10));
     }
 
     public function getLayers(ImageInterface $image, $resource)
@@ -75,13 +91,13 @@ class LayersTest extends AbstractLayersTest
         return new Layers($image, $resource);
     }
 
-    public function getResource()
-    {
-        return imagecreatetruecolor(10, 10);
-    }
-
     public function getImagine()
     {
         return new Imagine();
+    }
+
+    protected function assertLayersEquals($expected, $actual)
+    {
+        $this->assertEquals($expected->getGdResource(), $actual->getGdResource());
     }
 }
