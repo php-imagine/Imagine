@@ -66,4 +66,16 @@ interface EffectsInterface
      * @throws RuntimeException
      */
     public function sharpen();
+
+    /**
+     * Sharpens the image with an unsharpMask
+     *
+     * @param float $radius
+     * @param float $sigma
+     * @param float $amount
+     * @param float $threshold
+     *
+     * @return ImageInterface
+     */
+    public function unsharpMask($radius, $sigma, $amount, $threshold);
 }

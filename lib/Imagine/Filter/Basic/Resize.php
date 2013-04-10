@@ -26,13 +26,20 @@ class Resize implements FilterInterface
     private $size;
 
     /**
+     * @var integer
+     */
+    private $filter;
+
+    /**
      * Constructs Resize filter with given width and height
      *
      * @param BoxInterface $size
+     * @param integer|null $filter
      */
-    public function __construct(BoxInterface $size)
+    public function __construct(BoxInterface $size, $filter = null)
     {
         $this->size = $size;
+        $this->filter = $filter;
     }
 
     /**
@@ -40,6 +47,6 @@ class Resize implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->resize($this->size);
+        return $image->resize($this->size, $this->filter);
     }
 }

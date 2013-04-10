@@ -182,13 +182,21 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function resize(BoxInterface $size)
+    public function resize(BoxInterface $size, $filter = null)
     {
+        if ($filter == ImageInterface::FILTER_GAUSSIAN) {
+            $filter = \Gmagick::FILTER_GAUSSIAN;
+        } elseif ($filter == ImageInterface::FILTER_LANCZOS) {
+             $filter = \Gmagick::FILTER_LANCZOS;
+        } else {
+            $filter = \Gmagick::FILTER_UNDEFINED;
+        }
+
         try {
             $this->gmagick->resizeimage(
                 $size->getWidth(),
                 $size->getHeight(),
-                \Gmagick::FILTER_UNDEFINED,
+                $filter,
                 1
             );
         } catch (\GmagickException $e) {

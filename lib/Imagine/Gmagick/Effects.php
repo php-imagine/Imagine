@@ -89,4 +89,12 @@ class Effects implements EffectsInterface
     {
         throw new RuntimeException('Gmagick does not support sharpen yet');
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unsharpMask($radius, $sigma, $amount, $threshold)
+    {
+        throw new RuntimeException('Gmagick does not support unsharpMask yet');
+    }
 }

@@ -54,12 +54,13 @@ interface ManipulatorInterface
      * Resizes current image and returns self
      *
      * @param BoxInterface $size
+     * @param string|null $filter
      *
      * @throws RuntimeException
      *
      * @return ManipulatorInterface
      */
-    public function resize(BoxInterface $size);
+    public function resize(BoxInterface $size, $filter = null);
 
     /**
      * Rotates an image at the given angle.

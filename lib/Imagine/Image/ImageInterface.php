@@ -32,6 +32,9 @@ interface ImageInterface extends ManipulatorInterface
     const INTERLACE_PLANE = 'plane';
     const INTERLACE_PARTITION = 'partition';
 
+    const FILTER_GAUSSIAN = "fga";
+    const FILTER_LANCZOS = "fla";
+
     /**
      * Returns the image content as a binary string
      *

@@ -89,4 +89,12 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unsharpMask($radius, $sigma, $amount, $threshold)
+    {
+        throw new RuntimeException('Gd does not support unsharpMask yet');
+    }
 }
