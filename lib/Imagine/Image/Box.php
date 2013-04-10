@@ -76,6 +76,30 @@ final class Box implements BoxInterface
     /**
      * {@inheritdoc}
      */
+    public function inset(BoxInterface $targetSize)
+    {
+        $ratio = min(array(
+            $targetSize->getWidth() / $this->getWidth(),
+            $targetSize->getHeight() / $this->getHeight()
+        ));
+        return $this->scale($ratio);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function outbound(BoxInterface $targetSize)
+    {
+        $ratio = max(array(
+            $targetSize->getWidth() / $this->getWidth(),
+            $targetSize->getHeight() / $this->getHeight()
+        ));
+        return $this->scale($ratio);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function increase($size)
     {
         return new Box((int) $size + $this->width, (int) $size + $this->height);

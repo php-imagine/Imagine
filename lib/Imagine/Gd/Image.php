@@ -31,6 +31,13 @@ final class Image implements ImageInterface
      * @var resource
      */
     private $resource;
+
+    /**
+     * Flag whether this class has been cloned. Important for maintaining the resource object
+     *
+     * @var boolean
+     */
+    private $cloned = false;
     private $layers;
 
     /**
@@ -49,10 +56,18 @@ final class Image implements ImageInterface
      */
     public function __destruct()
     {
-        if (is_resource($this->resource) && 'gd' === get_resource_type($this->resource)) {
+        if (!$this->cloned && is_resource($this->resource) && 'gd' === get_resource_type($this->resource)) {
             imagedestroy($this->resource);
         }
     }
+
+    /**
+     */
+    public function __clone()
+    {
+        $this->cloned = true;
+    }
+
 
     /**
      * {@inheritdoc}
@@ -157,7 +172,9 @@ final class Image implements ImageInterface
         imagealphablending($this->resource, false);
         imagealphablending($dest, false);
 
-        imagedestroy($this->resource);
+        if (!$this->cloned) {
+            imagedestroy($this->resource);
+        }
 
         $this->resource = $dest;
 
@@ -302,21 +319,16 @@ final class Image implements ImageInterface
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
-        $ratios = array(
-            $width / imagesx($this->resource),
-            $height / imagesy($this->resource)
-        );
-
-        $thumbnail = $this->copy();
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            $ratio = min($ratios);
+            $thumbnailSize = $this->getSize()->inset($size);
         } else {
-            $ratio = max($ratios);
+            $thumbnailSize = $this->getSize()->outbound($size);
         }
 
-        $thumbnailSize = $thumbnail->getSize()->scale($ratio);
-        $thumbnail->resize($thumbnailSize);
+        $thumbnail = clone $this;
+        $this->cloned = true;
+        $thumbnail->resize($thumbnailSize, true);
 
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
             $thumbnail->crop(new Point(

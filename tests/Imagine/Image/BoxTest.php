@@ -124,6 +124,22 @@ class BoxTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Box(100, 200), $box->scale(10));
     }
 
+    /**
+     * @test
+     */
+    public function insetScalesTheBoxCorrectly() {
+        $box = new Box(600, 400);
+        $this->assertEquals(new Box(300, 200), $box->inset(new Box(400, 200)));
+    }
+
+    /**
+     * @test
+     */
+    public function outboundScalesTheBoxCorrectly() {
+        $box = new Box(600, 400);
+        $this->assertEquals(new Box(400, 267), $box->outbound(new Box(400, 200)));
+    }
+
     public function testShouldIncreaseBox()
     {
         $box = new Box(10, 20);
