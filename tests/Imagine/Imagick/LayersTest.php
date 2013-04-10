@@ -12,6 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Image\AbstractLayersTest;
+use Imagine\Image\ImageInterface;
 
 class LayersTest extends AbstractLayersTest
 {
@@ -93,8 +94,23 @@ class LayersTest extends AbstractLayersTest
         }
     }
 
+    public function getImage($resource)
+    {
+        return new Image($resource);
+    }
+
     protected function getImagine()
     {
         return new Imagine();
+    }
+
+    public function getResource()
+    {
+        return new \Imagick(__DIR__ . '/../Fixtures/large.jpg');
+    }
+
+    public function getLayers(ImageInterface $image, $resource)
+    {
+        return new Layers($image, $resource);
     }
 }

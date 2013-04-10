@@ -14,7 +14,7 @@ namespace Imagine\Image;
 /**
  * The layers interface
  */
-interface LayersInterface extends \Iterator, \Countable
+interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
 {
     /**
      * Merge layers into the original objects

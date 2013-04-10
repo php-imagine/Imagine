@@ -12,6 +12,7 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Image\AbstractLayersTest;
+use Imagine\Image\ImageInterface;
 
 class LayersTest extends AbstractLayersTest
 {
@@ -64,8 +65,23 @@ class LayersTest extends AbstractLayersTest
         }
     }
 
+    public function getImage($resource)
+    {
+        return new Image($resource);
+    }
+
+    public function getResource()
+    {
+        return new \Gmagick(__DIR__ . '/../Fixtures/large.jpg');
+    }
+
     public function getImagine()
     {
         return new Imagine();
+    }
+
+    public function getLayers(ImageInterface $image, $resource)
+    {
+        return new Layers($image, $resource);
     }
 }

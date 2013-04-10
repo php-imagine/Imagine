@@ -92,4 +92,28 @@ class Layers implements LayersInterface
     {
         return 1;
     }
+
+    public function offsetExists($offset)
+    {
+        return 0 === $offset;
+    }
+
+    public function offsetGet($offset)
+    {
+        if (0 === $offset) {
+            return $this->resource;
+        }
+
+        throw new RuntimeException('GD only supports one layer at offset 0');
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        throw new RuntimeException('GD does not support layer set');
+    }
+
+    public function offsetUnset($offset)
+    {
+        throw new RuntimeException('GD does not support layer unset');
+    }
 }
