@@ -61,6 +61,14 @@ final class Image implements ImageInterface
     }
 
     /**
+     * Return imagick instance
+     */
+    public function getImagick()
+    {
+        return $this->imagick;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function copy()
