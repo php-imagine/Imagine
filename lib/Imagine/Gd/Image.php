@@ -21,6 +21,8 @@ use Imagine\Image\PointInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Effects\EffectsInterface;
+use Imagine\Draw\DrawerInterface;
 
 /**
  * Image implementation using the GD library
@@ -331,17 +333,31 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function draw()
+    public function draw($drawerClass = null)
     {
+       if($drawerClass){
+          $drawer = new $drawerClass($this->resource);
+          if(!$drawer instanceof DrawerInterface){
+             throw new InvalidArgumentException("Draw class not instance of Imagine DrawerInterface");
+          }
+          return $drawer;
+       }
         return new Drawer($this->resource);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function effects()
+    public function effects($effectsClass = null)
     {
-        return new Effects($this->resource);
+       if($effectsClass){
+          $effects = new $effectsClass($this->resource);
+          if(!$effects instanceof EffectsInterface){
+             throw new InvalidArgumentException("Effects class not instance of Imagine EffectsInterface");
+          }
+          return $effects;
+       }
+       return new Effects($this->resource);
     }
 
     /**

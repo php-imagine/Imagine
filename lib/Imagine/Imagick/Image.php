@@ -23,6 +23,8 @@ use Imagine\Image\Fill\Gradient\Linear;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ImageInterface;
+use Imagine\Effects\EffectsInterface;
+use Imagine\Draw\DrawerInterface;
 
 /**
  * Image implementation using the Imagick PHP extension
@@ -369,17 +371,31 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function draw()
+    public function draw($drawerClass = null)
     {
-        return new Drawer($this->imagick);
+       if($drawerClass){
+          $drawer = new $drawerClass($this->resource);
+          if(!$drawer instanceof DrawerInterface){
+             throw new InvalidArgumentException("Draw class not instance of Imagine DrawerInterface");
+          }
+          return $drawer;
+       }
+        return new Drawer($this->resource);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function effects()
+    public function effects($effectsClass = null)
     {
-        return new Effects($this->imagick);
+       if($effectsClass){
+          $effects = new $effectsClass($this->resource);
+          if(!$effects instanceof EffectsInterface){
+             throw new InvalidArgumentException("Effects class not instance of Imagine EffectsInterface");
+          }
+          return $effects;
+       }
+       return new Effects($this->resource);
     }
 
     /**
