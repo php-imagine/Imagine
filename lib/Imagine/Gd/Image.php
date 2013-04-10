@@ -25,12 +25,12 @@ use Imagine\Exception\RuntimeException;
 /**
  * Image implementation using the GD library
  */
-final class Image implements ImageInterface
+class Image implements ImageInterface
 {
     /**
      * @var resource
      */
-    private $resource;
+    protected $resource;
     private $layers;
 
     /**
@@ -479,7 +479,7 @@ final class Image implements ImageInterface
 
         return $this->layers;
     }
-    
+
     /**
      * {@inheritdoc}
      **/
@@ -495,9 +495,9 @@ final class Image implements ImageInterface
         if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
             throw new InvalidArgumentException('Unsupported interlace type');
         }
-        
+
         imageinterlace($this->resource, $supportedInterlaceSchemes[$scheme]);
-        
+
         return $this;
     }
 
