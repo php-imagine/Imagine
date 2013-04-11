@@ -267,8 +267,8 @@ final class Image implements ImageInterface
     {
         try {
             $this->prepareOutput($options);
-            $all_frames = !isset($options['animated']) || false === $options['animated'];
-            $this->gmagick->writeimage($path, $all_frames);
+            $allFrames = !isset($options['animated']) || false === $options['animated'];
+            $this->gmagick->writeimage($path, $allFrames);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Save operation failed', $e->getCode(), $e

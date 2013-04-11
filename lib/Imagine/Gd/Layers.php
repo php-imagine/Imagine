@@ -101,11 +101,17 @@ class Layers extends AbstractLayers
         return 1;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetExists($offset)
     {
         return 0 === $offset;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetGet($offset)
     {
         if (0 === $offset) {
@@ -115,11 +121,17 @@ class Layers extends AbstractLayers
         throw new RuntimeException('GD only supports one layer at offset 0');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetSet($offset, $value)
     {
         throw new RuntimeException('GD does not support layer set');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetUnset($offset)
     {
         throw new RuntimeException('GD does not support layer unset');
