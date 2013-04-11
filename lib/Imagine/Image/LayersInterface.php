@@ -31,11 +31,11 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
     /**
      * Animates layers
      *
-     * @param type $format The output output format
-     * @param type $delay  The delay in milliseconds between two frames
-     * @param type $loops  The number of loops, 0 means infinite
+     * @param string  $format The output output format
+     * @param integer $delay  The delay in milliseconds between two frames
+     * @param integer $loops  The number of loops, 0 means infinite
      *
-     * @return Layers
+     * @return LayersInterface
      *
      * @throws InvalidArgumentException In case an invalid argument is provided
      * @throws RuntimeException         In case the driver fails to animate
@@ -53,7 +53,7 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
      *
      * @param ImageInterface $image
      *
-     * @return Layers
+     * @return LayersInterface
      *
      * @throws RuntimeException
      */
@@ -62,10 +62,10 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
     /**
      * Set an image at offset
      *
-     * @param integer $offset
+     * @param integer        $offset
      * @param ImageInterface $image
      *
-     * @return Layers
+     * @return LayersInterface
      *
      * @throws RuntimeException
      * @throws InvalidArgumentException
@@ -78,7 +78,7 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
      *
      * @param integer $offset
      *
-     * @return Layers
+     * @return LayersInterface
      *
      * @throws RuntimeException
      * @throws InvalidArgumentException

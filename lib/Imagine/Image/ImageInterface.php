@@ -26,7 +26,7 @@ interface ImageInterface extends ManipulatorInterface
 {
     const RESOLUTION_PIXELSPERINCH = 'ppi';
     const RESOLUTION_PIXELSPERCENTIMETER = 'ppc';
-    
+
     const INTERLACE_NONE = 'none';
     const INTERLACE_LINE = 'line';
     const INTERLACE_PLANE = 'plane';
@@ -107,14 +107,14 @@ interface ImageInterface extends ManipulatorInterface
      * @return LayersInterface
      */
     public function layers();
-    
+
     /**
      * Enables or disables interlacing
      *
      * @param string $scheme
      *
      * @throws InvalidArgumentException When an unsupported Interface type is supplied
-     * 
+     *
      * @return ImageInterface
      */
     public function interlace($scheme);
