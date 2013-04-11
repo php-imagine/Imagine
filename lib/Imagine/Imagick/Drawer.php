@@ -41,6 +41,14 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
+    public static function create($resource)
+    {
+        return new static($resource);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $thickness = 1)
     {
         $x      = $center->getX();

@@ -20,11 +20,19 @@ use Imagine\Image\Color;
  */
 class Effects implements EffectsInterface
 {
-    private $imagick;
+    protected $imagick;
 
     public function __construct(\Imagick $imagick)
     {
         $this->imagick = $imagick;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function create($resource)
+    {
+        return new static($resource);
     }
 
     /**

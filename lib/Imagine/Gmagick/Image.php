@@ -22,8 +22,6 @@ use Imagine\Image\Color;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
-use Imagine\Effects\EffectsInterface;
-use Imagine\Draw\DrawerInterface;
 
 /**
  * Image implementation using the Gmagick PHP extension
@@ -363,14 +361,15 @@ final class Image implements ImageInterface
      */
     public function draw($drawerClass = null)
     {
-       if($drawerClass){
-          $drawer = new $drawerClass($this->resource);
-          if(!$drawer instanceof DrawerInterface){
-             throw new InvalidArgumentException("Draw class not instance of Imagine DrawerInterface");
-          }
-          return $drawer;
-       }
-        return new Drawer($this->resource);
+        if(null !== $drawerClass){
+            if (false === in_array('Imagine\Draw\DrawerInterface', class_implements($drawerClass))) {
+                throw new RuntimeException('Drawer class not instance of DrawerInterface');
+            }
+
+            return $drawerClass::create($this->gmagick);
+        }
+
+        return new Drawer($this->gmagick);
     }
 
     /**
@@ -378,14 +377,15 @@ final class Image implements ImageInterface
      */
     public function effects($effectsClass = null)
     {
-       if($effectsClass){
-          $effects = new $effectsClass($this->resource);
-          if(!$effects instanceof EffectsInterface){
-             throw new InvalidArgumentException("Effects class not instance of Imagine EffectsInterface");
-          }
-          return $effects;
-       }
-       return new Effects($this->resource);
+        if(null !== $effectsClass) {
+            if (false === in_array('Imagine\Effects\EffectsInterface', class_implements($effectsClass))) {
+                throw new RuntimeException('Effects class not instance of EffectsInterface');
+            }
+
+            return $effectsClass::create($this->gmagick);
+        }
+
+        return new Effects($this->gmagick);
     }
 
     /**

@@ -22,6 +22,14 @@ use Imagine\Image\PointInterface;
 interface DrawerInterface
 {
     /**
+     * New drawer object create factory
+     *
+     * @param  mixed            $resource
+     * @return EffectsInterface
+     */
+     public static function create($resource);
+
+    /**
      * Draws an arc on a starting at a given x, y coordinates under a given
      * start and end angles
      *

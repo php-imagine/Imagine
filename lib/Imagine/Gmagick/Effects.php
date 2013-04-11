@@ -20,11 +20,19 @@ use Imagine\Image\Color;
  */
 class Effects implements EffectsInterface
 {
-    private $gmagick;
+    protected $gmagick;
 
     public function __construct(\Gmagick $gmagick)
     {
         $this->gmagick = $gmagick;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function create($resource)
+    {
+        return new static($resource);
     }
 
     /**
