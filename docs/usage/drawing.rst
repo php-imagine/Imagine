@@ -11,10 +11,10 @@ Example
 
     <?php
 
-    $image = $imagine->create(new Box(400, 300), new Color('#000'));
+    $image = $imagine->create(new Box(400, 300), $imagine->palette()->color('#000'));
 
     $image->draw()
-        ->ellipse(new Point(200, 150), new Box(300, 225), new Color('fff'));
+        ->ellipse(new Point(200, 150), new Box(300, 225), $imagine->palette()->color('fff'));
 
     $image->save('/path/to/ellipse.png');
 

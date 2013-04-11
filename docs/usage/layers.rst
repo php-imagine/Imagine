@@ -150,7 +150,7 @@ This one adds some text on frames :
     $i = 0;
     foreach ($image->layers() as $layer) {
         $layer->draw()
-              ->text($i, new Font('coolfont.ttf', 12, new Color('white')), new Point(10, 10));
+              ->text($i, new Font('coolfont.ttf', 12, $imagine->palette()->color('white')), new Point(10, 10));
         $i++;
     }
 
