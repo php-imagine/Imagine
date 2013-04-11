@@ -332,13 +332,13 @@ final class Image implements ImageInterface
 
             $this->layers->animate($format, $delay, $loops);
         } else {
-            $this->layers()->merge();
+            $this->layers->merge();
         }
         $this->applyImageOptions($this->imagick, $options);
 
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true)
-            && count($this->layers()) > 1) {
+            && count($this->layers) > 1) {
             $this->flatten();
         }
     }
