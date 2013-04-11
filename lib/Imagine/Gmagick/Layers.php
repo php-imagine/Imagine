@@ -50,7 +50,7 @@ class Layers extends AbstractLayers
         foreach ($this->layers as $offset => $image) {
             try {
                 $this->resource->setimageindex($offset);
-                $this->resource->setimage($image);
+                $this->resource->setimage($image->getGmagick());
             } catch (\GmagickException $e) {
                 throw new RuntimeException(
                     'Failed to substitute layer', $e->getCode(), $e
@@ -101,7 +101,7 @@ class Layers extends AbstractLayers
      */
     public function current()
     {
-        return new Image($this->extractAt($this->offset));
+        return $this->extractAt($this->offset);
     }
 
     /**
@@ -115,7 +115,7 @@ class Layers extends AbstractLayers
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setimageindex($offset);
-                $this->layers[$offset] = $this->resource->getimage();
+                $this->layers[$offset] = new Image($this->resource->getimage());
             } catch (\GmagickException $e) {
                 throw new RuntimeException(
                     sprintf('Failed to extract layer %d', $offset),
@@ -186,7 +186,7 @@ class Layers extends AbstractLayers
      */
     public function offsetGet($offset)
     {
-        return new Image($this->extractAt($offset));
+        return $this->extractAt($offset);
     }
 
     /**
