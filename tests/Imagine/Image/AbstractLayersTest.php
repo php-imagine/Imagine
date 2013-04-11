@@ -177,7 +177,10 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         @unlink($target);
     }
 
-    public function testAnimateLoaded()
+    /**
+     * @dataProvider provideAnimationParameters
+     */
+    public function testAnimateWithParameters($delay, $loops)
     {
         $image = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
         $layers = $image->layers();
@@ -189,9 +192,54 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
         $image->save($target, array(
             'animated' => true,
+            'animated.delay' => $delay,
+            'animated.loops' => $loops,
         ));
 
         @unlink($target);
+    }
+
+    public function provideAnimationParameters()
+    {
+        return array(
+            array(0, 0),
+            array(500, 0),
+            array(0, 10),
+            array(5000, 10),
+        );
+    }
+
+    /**
+     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @dataProvider provideWrongAnimationParameters
+     */
+    public function testAnimateWithWrongParameters($delay, $loops)
+    {
+        $image = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $layers = $image->layers();
+
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
+
+        $target = __DIR__ . '/../Fixtures/temporary-gif.gif';
+
+        $image->save($target, array(
+            'animated' => true,
+            'animated.delay' => $delay,
+            'animated.loops' => $loops,
+        ));
+
+        @unlink($target);
+    }
+
+    public function provideWrongAnimationParameters()
+    {
+        return array(
+            array(-1, 0),
+            array(500, -1),
+            array(-1, 10),
+            array(0, -1),
+        );
     }
 
     public function provideInvalidArguments()

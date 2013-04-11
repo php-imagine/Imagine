@@ -81,6 +81,22 @@ class LayersTest extends AbstractLayersTest
         $this->markTestSkipped('Gd does not support animated gifs');
     }
 
+    /**
+     * @dataProvider provideAnimationParameters
+     */
+    public function testAnimateWithParameters($delay, $loops)
+    {
+        $this->markTestSkipped('Gd does not support animated gifs');
+    }
+
+    /**
+     * @dataProvider provideAnimationParameters
+     */
+    public function testAnimateWithWrongParameters($delay, $loops)
+    {
+        $this->markTestSkipped('Gd does not support animated gifs');
+    }
+
     public function getImage($path = null)
     {
         return new Image(imagecreatetruecolor(10, 10));
