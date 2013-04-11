@@ -105,9 +105,10 @@ class Layers extends AbstractLayers
     }
 
     /**
+     * Tries to extract layer at given offset
      *
-     * @param integer $offset
-     * @return \Gmagick
+     * @param  integer          $offset
+     * @return Image
      * @throws RuntimeException
      */
     private function extractAt($offset)
