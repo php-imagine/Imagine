@@ -11,9 +11,13 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Image\LayersInterface;
+use Imagine\Image\AbstractLayers;
+use Imagine\Imagick\Image;
+use Imagine\Exception\RuntimeException;
+use Imagine\Exception\OutOfBoundsException;
+use Imagine\Exception\InvalidArgumentException;
 
-class Layers implements LayersInterface
+class Layers extends AbstractLayers
 {
     /**
      * @var Image
@@ -46,13 +50,43 @@ class Layers implements LayersInterface
         foreach ($this->layers as $offset => $image) {
             try {
                 $this->resource->setIteratorIndex($offset);
-                $this->resource->setImage($image);
+                $this->resource->setImage($image->getImagick());
             } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     'Failed to substitute layer', $e->getCode(), $e
                 );
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function animate($format, $delay, $loops)
+    {
+        if ('gif' !== strtolower($format)) {
+            throw new InvalidArgumentException('Animated picture is currently only supported on gif');
+        }
+
+        foreach (array('Loops' => $loops, 'Delay' => $delay) as $name => $value) {
+            if (!is_int($value) || $value < 0) {
+                throw new InvalidArgumentException(sprintf('%s must be a positive integer.', $name));
+            }
+        }
+
+        try {
+            foreach ($this as $offset => $layer) {
+                $this->resource->setIteratorIndex($offset);
+                $this->resource->setFormat($format);
+                $this->resource->setImageDelay($delay / 10);
+                $this->resource->setImageTicksPerSecond(100);
+                $this->resource->setImageIterations($loops);
+            }
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to animate layers', $e->getCode(), $e);
+        }
+
+        return $this;
     }
 
     /**
@@ -72,7 +106,7 @@ class Layers implements LayersInterface
         for ($offset = 0; $offset < $count; $offset++) {
             try {
                 $coalescedResource->setIteratorIndex($offset);
-                $this->layers[$offset] = $coalescedResource->getImage();
+                $this->layers[$offset] = new Image($coalescedResource->getImage());
             } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     'Failed to retrieve layer', $e->getCode(), $e
@@ -86,19 +120,31 @@ class Layers implements LayersInterface
      */
     public function current()
     {
-        if (!isset($this->layers[$this->offset])) {
+        return $this->extractAt($this->offset);
+    }
+
+    /**
+     * Tries to extract layer at given offset
+     *
+     * @param  integer          $offset
+     * @return Image
+     * @throws RuntimeException
+     */
+    private function extractAt($offset)
+    {
+        if (!isset($this->layers[$offset])) {
             try {
-                $this->resource->setIteratorIndex($this->offset);
-                $this->layers[$this->offset] = $this->resource->getImage();
+                $this->resource->setIteratorIndex($offset);
+                $this->layers[$offset] = new Image($this->resource->getImage());
             } catch (\ImagickException $e) {
                 throw new RuntimeException(
-                    sprintf('Failed to extract layer %d', $this->offset),
+                    sprintf('Failed to extract layer %d', $offset),
                     $e->getCode(), $e
                 );
             }
         }
 
-        return new Image($this->layers[$this->offset]);
+        return $this->layers[$offset];
     }
 
     /**
@@ -144,6 +190,86 @@ class Layers implements LayersInterface
             throw new RuntimeException(
                 'Failed to count the number of layers', $e->getCode(), $e
             );
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($offset)
+    {
+        return is_int($offset) && $offset >= 0 && $offset < count($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($offset)
+    {
+        return $this->extractAt($offset);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetSet($offset, $image)
+    {
+        if (!$image instanceof Image) {
+            throw new InvalidArgumentException('Only an Imagick Image can be used as layer');
+        }
+
+        if (null === $offset) {
+            $offset = count($this) - 1;
+        } else {
+            if (!is_int($offset)) {
+                throw new InvalidArgumentException(
+                    'Invalid offset for layer, it must be an integer'
+                );
+            }
+
+            if (count($this) < $offset || 0 > $offset) {
+                throw new OutOfBoundsException(sprintf(
+                    'Invalid offset for layer, it must be a value between 0 and %d, %d given',
+                    count($this), $offset
+                ));
+            }
+
+            if (isset($this[$offset])) {
+                unset($this[$offset]);
+                $offset = $offset - 1;
+            }
+        }
+
+        $frame = $image->getImagick();
+
+        try {
+            if (count($this) > 0) {
+                $this->resource->setIteratorIndex($offset);
+            }
+            $this->resource->addImage($frame);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Unable to set the layer', $e->getCode(), $e);
+        }
+
+        $this->layers = array();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($offset)
+    {
+        try {
+            $this->extractAt($offset);
+        } catch (RuntimeException $e) {
+            return;
+        }
+
+        try {
+            $this->resource->setIteratorIndex($offset);
+            $this->resource->removeImage();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Unable to remove layer', $e->getCode(), $e);
         }
     }
 }
