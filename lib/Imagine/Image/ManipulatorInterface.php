@@ -84,6 +84,8 @@ interface ManipulatorInterface
      *
      * @param ImageInterface $image
      * @param PointInterface $start
+     * @param Int $alpha Pasting image alpha 0 ~ 100
+     * @param Fixed closure or function name, blending options callback
      *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
@@ -91,7 +93,7 @@ interface ManipulatorInterface
      *
      * @return ManipulatorInterface
      */
-    public function paste(ImageInterface $image, PointInterface $start);
+    public function paste(ImageInterface $image, PointInterface $start, $alpha = 100, $blendCallback = null);
 
     /**
      * Saves the image at a specified path, the target file extension is used

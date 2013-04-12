@@ -161,7 +161,7 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function paste(ImageInterface $image, PointInterface $start)
+    public function paste(ImageInterface $image, PointInterface $start, $alpha = 100, $blendCallback = null)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Imagick\Image can '.
@@ -178,6 +178,12 @@ final class Image implements ImageInterface
         }
 
         try {
+
+            if(null !== $blendCallback && true === is_callable($blendCallback)){
+                call_user_func($blendCallback, $image, $this, $image->imagick, $this->imagick);
+            }
+
+            $image->imagick->setImageOpacity($alpha / 100);
 
             $this->imagick->compositeImage(
                 $image->imagick, \Imagick::COMPOSITE_DEFAULT,

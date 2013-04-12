@@ -140,7 +140,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function paste(ImageInterface $image, PointInterface $start)
+    public function paste(ImageInterface $image, PointInterface $start, $alpha = 100, $blendCallback = null)
     {
         return $this->add(new Paste($image, $start));
     }

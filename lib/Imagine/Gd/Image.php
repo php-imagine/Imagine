@@ -104,7 +104,7 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    final public function paste(ImageInterface $image, PointInterface $start)
+    final public function paste(ImageInterface $image, PointInterface $start, $alpha = 100, $blendCallback = null)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf(
@@ -124,8 +124,12 @@ final class Image implements ImageInterface
         imagealphablending($this->resource, true);
         imagealphablending($image->resource, true);
 
-        if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(),
-            0, 0, $size->getWidth(), $size->getHeight())) {
+        if(null !== $blendCallback && true === is_callable($blendCallback)){
+            call_user_func($blendCallback, $image, $this, $image->resource, $this->resource);
+        }
+
+        if (false === imagecopymerge($this->resource, $image->resource, $start->getX(), $start->getY(),
+            0, 0, $size->getWidth(), $size->getHeight(), $alpha)) {
             throw new RuntimeException('Image paste operation failed');
         }
 
