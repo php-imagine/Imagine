@@ -354,25 +354,41 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        $thumbnail = $this->copy();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
-        try {
-            if ($mode === ImageInterface::THUMBNAIL_INSET) {
-                $thumbnail->gmagick->thumbnailimage(
-                    $size->getWidth(),
-                    $size->getHeight(),
-                    true
-                );
-            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->gmagick->cropthumbnailimage(
-                    $size->getWidth(),
-                    $size->getHeight()
+        $ratios = array(
+            $width / $this->getSize()->getWidth(),
+            $height / $this->getSize()->getHeight()
+        );
+
+        if ($mode === ImageInterface::THUMBNAIL_INSET) {
+            $ratio = min($ratios);
+        } else {
+            $ratio = max($ratios);
+        }
+
+        $thumbnail = $this->copy();
+        
+        if ($ratio < 1) {
+            try {
+                if ($mode === ImageInterface::THUMBNAIL_INSET) {
+                    $thumbnail->gmagick->thumbnailimage(
+                        $size->getWidth(),
+                        $size->getHeight(),
+                        true
+                    );
+                } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+                    $thumbnail->gmagick->cropthumbnailimage(
+                        $size->getWidth(),
+                        $size->getHeight()
+                    );
+                }
+            } catch (\GmagickException $e) {
+                throw new RuntimeException(
+                    'Thumbnail operation failed', $e->getCode(), $e
                 );
             }
-        } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Thumbnail operation failed', $e->getCode(), $e
-            );
         }
 
         return $thumbnail;
