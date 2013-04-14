@@ -70,6 +70,37 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals(50, $size->getHeight());
     }
 
+    public function testThumbnailGenerationToDimensionsLergestThanSource()
+    {
+        $test_image = 'tests/Imagine/Fixtures/google.png';
+        $test_image_width = 364;
+        $test_image_height = 126;
+        $width = $test_image_width + 1;
+        $height = $test_image_height + 1;
+        
+        $factory = $this->getImagine();
+        $image   = $factory->open($test_image);
+        $size = $image->getSize();
+        
+        $this->assertEquals($test_image_width, $size->getWidth());
+        $this->assertEquals($test_image_height, $size->getHeight());
+        
+        $inset   = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_INSET);
+        $size = $inset->getSize();
+        unset($inset);
+
+        $this->assertEquals($test_image_width, $size->getWidth());
+        $this->assertEquals($test_image_height, $size->getHeight());
+
+        $outbound = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_OUTBOUND);
+        $size = $outbound->getSize();
+        unset($outbound);
+        unset($image);
+
+        $this->assertEquals($test_image_width, $size->getWidth());
+        $this->assertEquals($test_image_height, $size->getHeight()); 
+    }
+
     public function testCropResizeFlip()
     {
         $factory = $this->getImagine();
