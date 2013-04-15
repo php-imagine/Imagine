@@ -363,25 +363,39 @@ final class Image implements ImageInterface
 
         $width     = $size->getWidth();
         $height    = $size->getHeight();
-        $thumbnail = $this->copy();
 
-        try {
-            if ($mode === ImageInterface::THUMBNAIL_INSET) {
-                $thumbnail->imagick->thumbnailImage(
-                    $width,
-                    $height,
-                    true
-                );
-            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->imagick->cropThumbnailImage(
-                    $width,
-                    $height
+        $ratios = array(
+            $width / $this->getSize()->getWidth(),
+            $height / $this->getSize()->getHeight()
+        );
+
+        if ($mode === ImageInterface::THUMBNAIL_INSET) {
+            $ratio = min($ratios);
+        } else {
+            $ratio = max($ratios);
+        }
+        
+        $thumbnail = $this->copy();
+        
+        if ($ratio < 1) {
+            try {
+                if ($mode === ImageInterface::THUMBNAIL_INSET) {
+                    $thumbnail->imagick->thumbnailImage(
+                        $width,
+                        $height,
+                        true
+                    );
+                } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+                    $thumbnail->imagick->cropThumbnailImage(
+                        $width,
+                        $height
+                    );
+                }
+            } catch (\ImagickException $e) {
+                throw new RuntimeException(
+                    'Thumbnail operation failed', $e->getCode(), $e
                 );
             }
-        } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Thumbnail operation failed', $e->getCode(), $e
-            );
         }
 
         return $thumbnail;
