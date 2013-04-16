@@ -12,6 +12,7 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Image\AbstractLayersTest;
+use Imagine\Image\ImageInterface;
 
 class LayersTest extends AbstractLayersTest
 {
@@ -64,8 +65,32 @@ class LayersTest extends AbstractLayersTest
         }
     }
 
+    public function testAnimateEmpty()
+    {
+        $this->markTestSkipped('Animate empty is skipped due to https://bugs.php.net/bug.php?id=62309');
+    }
+
+    public function getImage($path = null)
+    {
+        if ($path ) {
+            return new Image(new \Gmagick($path));
+        } else {
+            return new Image(new \Gmagick());
+        }
+    }
+
     public function getImagine()
     {
         return new Imagine();
+    }
+
+    public function getLayers(ImageInterface $image, $resource)
+    {
+        return new Layers($image, $resource);
+    }
+
+    protected function assertLayersEquals($expected, $actual)
+    {
+        $this->assertEquals($expected->getGmagick(), $actual->getGmagick());
     }
 }

@@ -60,6 +60,16 @@ final class Image implements ImageInterface
     }
 
     /**
+     * Returns gmagick instance
+     *
+     * @return Gmagick
+     */
+    public function getGmagick()
+    {
+        return $this->gmagick;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function copy()
@@ -262,7 +272,8 @@ final class Image implements ImageInterface
     {
         try {
             $this->prepareOutput($options);
-            $this->gmagick->writeimage($path, true);
+            $allFrames = !isset($options['animated']) || false === $options['animated'];
+            $this->gmagick->writeimage($path, $allFrames);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Save operation failed', $e->getCode(), $e
@@ -309,12 +320,23 @@ final class Image implements ImageInterface
             $this->gmagick->setimageformat($options['format']);
         }
 
-        $this->layers()->merge();
+        if (isset($options['animated']) && true === $options['animated']) {
+
+            $format = isset($options['format']) ? $options['format'] : 'gif';
+            $delay = isset($options['animated.delay']) ? $options['animated.delay'] : 800;
+            $loops = isset($options['animated.loops']) ? $options['animated.loops'] : 0;
+
+            $options['flatten'] = false;
+
+            $this->layers->animate($format, $delay, $loops);
+        } else {
+            $this->layers->merge();
+        }
         $this->applyImageOptions($this->gmagick, $options);
 
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true)
-            && count($this->layers()) > 1) {
+            && count($this->layers) > 1) {
             $this->flatten();
         }
     }
@@ -337,25 +359,41 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        $thumbnail = $this->copy();
+        $width  = $size->getWidth();
+        $height = $size->getHeight();
 
-        try {
-            if ($mode === ImageInterface::THUMBNAIL_INSET) {
-                $thumbnail->gmagick->thumbnailimage(
-                    $size->getWidth(),
-                    $size->getHeight(),
-                    true
-                );
-            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->gmagick->cropthumbnailimage(
-                    $size->getWidth(),
-                    $size->getHeight()
+        $ratios = array(
+            $width / $this->getSize()->getWidth(),
+            $height / $this->getSize()->getHeight()
+        );
+
+        if ($mode === ImageInterface::THUMBNAIL_INSET) {
+            $ratio = min($ratios);
+        } else {
+            $ratio = max($ratios);
+        }
+
+        $thumbnail = $this->copy();
+        
+        if ($ratio < 1) {
+            try {
+                if ($mode === ImageInterface::THUMBNAIL_INSET) {
+                    $thumbnail->gmagick->thumbnailimage(
+                        $size->getWidth(),
+                        $size->getHeight(),
+                        true
+                    );
+                } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+                    $thumbnail->gmagick->cropthumbnailimage(
+                        $size->getWidth(),
+                        $size->getHeight()
+                    );
+                }
+            } catch (\GmagickException $e) {
+                throw new RuntimeException(
+                    'Thumbnail operation failed', $e->getCode(), $e
                 );
             }
-        } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Thumbnail operation failed', $e->getCode(), $e
-            );
         }
 
         return $thumbnail;
@@ -547,7 +585,7 @@ final class Image implements ImageInterface
     {
         return $this->layers;
     }
-    
+
     /**
      * {@inheritdoc}
      **/
@@ -563,9 +601,9 @@ final class Image implements ImageInterface
         if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
             throw new InvalidArgumentException('Unsupported interlace type');
         }
-        
+
         $this->gmagick->setInterlaceScheme($supportedInterlaceSchemes[$scheme]);
-        
+
         return $this;
     }
 

@@ -61,6 +61,16 @@ final class Image implements ImageInterface
     }
 
     /**
+     * Returns imagick instance
+     *
+     * @return Imagick
+     */
+    public function getImagick()
+    {
+        return $this->imagick;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function copy()
@@ -287,7 +297,7 @@ final class Image implements ImageInterface
 
         return $this->imagick->getImagesBlob();
     }
-    
+
     /**
      * {@inheritdoc}
      **/
@@ -303,9 +313,9 @@ final class Image implements ImageInterface
         if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
             throw new InvalidArgumentException('Unsupported interlace type');
         }
-        
+
         $this->imagick->setInterlaceScheme($supportedInterlaceSchemes[$scheme]);
-        
+
         return $this;
     }
 
@@ -318,12 +328,23 @@ final class Image implements ImageInterface
             $this->imagick->setImageFormat($options['format']);
         }
 
-        $this->layers()->merge();
+        if (isset($options['animated']) && true === $options['animated']) {
+
+            $format = isset($options['format']) ? $options['format'] : 'gif';
+            $delay = isset($options['animated.delay']) ? $options['animated.delay'] : 800;
+            $loops = isset($options['animated.loops']) ? $options['animated.loops'] : 0;
+
+            $options['flatten'] = false;
+
+            $this->layers->animate($format, $delay, $loops);
+        } else {
+            $this->layers->merge();
+        }
         $this->applyImageOptions($this->imagick, $options);
 
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true)
-            && count($this->layers()) > 1) {
+            && count($this->layers) > 1) {
             $this->flatten();
         }
     }
@@ -348,25 +369,39 @@ final class Image implements ImageInterface
 
         $width     = $size->getWidth();
         $height    = $size->getHeight();
-        $thumbnail = $this->copy();
 
-        try {
-            if ($mode === ImageInterface::THUMBNAIL_INSET) {
-                $thumbnail->imagick->thumbnailImage(
-                    $width,
-                    $height,
-                    true
-                );
-            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->imagick->cropThumbnailImage(
-                    $width,
-                    $height
+        $ratios = array(
+            $width / $this->getSize()->getWidth(),
+            $height / $this->getSize()->getHeight()
+        );
+
+        if ($mode === ImageInterface::THUMBNAIL_INSET) {
+            $ratio = min($ratios);
+        } else {
+            $ratio = max($ratios);
+        }
+        
+        $thumbnail = $this->copy();
+        
+        if ($ratio < 1) {
+            try {
+                if ($mode === ImageInterface::THUMBNAIL_INSET) {
+                    $thumbnail->imagick->thumbnailImage(
+                        $width,
+                        $height,
+                        true
+                    );
+                } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+                    $thumbnail->imagick->cropThumbnailImage(
+                        $width,
+                        $height
+                    );
+                }
+            } catch (\ImagickException $e) {
+                throw new RuntimeException(
+                    'Thumbnail operation failed', $e->getCode(), $e
                 );
             }
-        } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Thumbnail operation failed', $e->getCode(), $e
-            );
         }
 
         return $thumbnail;

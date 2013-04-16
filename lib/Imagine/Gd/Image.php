@@ -55,6 +55,16 @@ final class Image implements ImageInterface
     }
 
     /**
+     * Returns Gd resource
+     *
+     * @return resource
+     */
+    public function getGdResource()
+    {
+        return $this->resource;
+    }
+
+    /**
      * {@inheritdoc}
      */
     final public function copy()
@@ -311,22 +321,24 @@ final class Image implements ImageInterface
             $height / imagesy($this->resource)
         );
 
-        $thumbnail = $this->copy();
-
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
             $ratio = min($ratios);
         } else {
             $ratio = max($ratios);
         }
 
-        $thumbnailSize = $thumbnail->getSize()->scale($ratio);
-        $thumbnail->resize($thumbnailSize);
+        $thumbnail = $this->copy();
+        
+        if ($ratio < 1) {
+            $thumbnailSize = $thumbnail->getSize()->scale($ratio);
+            $thumbnail->resize($thumbnailSize);
 
-        if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $thumbnail->crop(new Point(
-                max(0, round(($thumbnailSize->getWidth() - $width) / 2)),
-                max(0, round(($thumbnailSize->getHeight() - $height) / 2))
-            ), $size);
+            if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+                $thumbnail->crop(new Point(
+                    max(0, round(($thumbnailSize->getWidth() - $width) / 2)),
+                    max(0, round(($thumbnailSize->getHeight() - $height) / 2))
+                ), $size);
+            }
         }
 
         return $thumbnail;
@@ -483,7 +495,7 @@ final class Image implements ImageInterface
 
         return $this->layers;
     }
-    
+
     /**
      * {@inheritdoc}
      **/
@@ -499,9 +511,9 @@ final class Image implements ImageInterface
         if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
             throw new InvalidArgumentException('Unsupported interlace type');
         }
-        
+
         imageinterlace($this->resource, $supportedInterlaceSchemes[$scheme]);
-        
+
         return $this;
     }
 

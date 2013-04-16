@@ -50,7 +50,7 @@ interface EffectsInterface
     /**
      * Colorize the image
      *
-     * @param Color             $color
+     * @param Color $color
      *
      * @return EffectsInterface
      *

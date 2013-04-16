@@ -12,6 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Image\AbstractLayersTest;
+use Imagine\Image\ImageInterface;
 
 class LayersTest extends AbstractLayersTest
 {
@@ -93,8 +94,22 @@ class LayersTest extends AbstractLayersTest
         }
     }
 
+    public function getImage($path = null)
+    {
+        if ($path ) {
+            return new Image(new \Imagick($path));
+        } else {
+            return new Image(new \Imagick());
+        }
+    }
+
     protected function getImagine()
     {
         return new Imagine();
+    }
+
+    protected function assertLayersEquals($expected, $actual)
+    {
+        $this->assertEquals($expected->getImagick(), $actual->getImagick());
     }
 }
