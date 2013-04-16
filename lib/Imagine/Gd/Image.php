@@ -135,7 +135,7 @@ final class Image implements ImageInterface
         imagealphablending($image->resource, true);
 
         if(null !== $blendCallback && true === is_callable($blendCallback)){
-            call_user_func($blendCallback, $image, $this, $image->resource, $this->resource);
+            call_user_func($blendCallback, $image, $this);
         }
 
         if (false === imagecopymerge($this->resource, $image->resource, $start->getX(), $start->getY(),

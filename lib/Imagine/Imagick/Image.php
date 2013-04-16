@@ -190,7 +190,7 @@ final class Image implements ImageInterface
         try {
 
             if(null !== $blendCallback && true === is_callable($blendCallback)){
-                call_user_func($blendCallback, $image, $this, $image->imagick, $this->imagick);
+                call_user_func($blendCallback, $image, $this);
             }
 
             $image->imagick->setImageOpacity($alpha / 100);

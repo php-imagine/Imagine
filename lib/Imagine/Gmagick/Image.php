@@ -176,7 +176,7 @@ final class Image implements ImageInterface
         try {
 
             if(null !== $blendCallback && true === is_callable($blendCallback)){
-                call_user_func($blendCallback, $image, $this, $image->gmagick, $this->gmagick);
+                call_user_func($blendCallback, $image, $this);
             }
 
             $this->gmagick->compositeimage(
