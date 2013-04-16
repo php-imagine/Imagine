@@ -32,7 +32,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return ImageInterface
      */
     public function copy();
 
