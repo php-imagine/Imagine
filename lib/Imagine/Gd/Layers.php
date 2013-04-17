@@ -118,7 +118,7 @@ class Layers extends AbstractLayers
     public function offsetGet($offset)
     {
         if (0 === $offset) {
-            return new Image($this->resource);
+            return new Image($this->resource, $this->palette);
         }
 
         throw new RuntimeException('GD only supports one layer at offset 0');
