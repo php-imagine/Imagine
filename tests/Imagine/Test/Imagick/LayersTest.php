@@ -16,6 +16,7 @@ use Imagine\Imagick\Layers;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractLayersTest;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Palette\RGB;
 
 class LayersTest extends AbstractLayersTest
 {
@@ -102,10 +103,10 @@ class LayersTest extends AbstractLayersTest
 
     public function getImage($path = null)
     {
-        if ($path) {
-            return new Image(new \Imagick($path));
+        if ($path ) {
+            return new Image(new \Imagick($path), new RGB());
         } else {
-            return new Image(new \Imagick());
+            return new Image(new \Imagick(), new RGB());
         }
     }
 
