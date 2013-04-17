@@ -16,6 +16,7 @@ use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractLayersTest;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Palette\RGB;
 
 class LayersTest extends AbstractLayersTest
 {
@@ -104,7 +105,7 @@ class LayersTest extends AbstractLayersTest
 
     public function getImage($path = null)
     {
-        return new Image(imagecreatetruecolor(10, 10));
+        return new Image(imagecreatetruecolor(10, 10), new RGB());
     }
 
     public function getLayers(ImageInterface $image, $resource)
