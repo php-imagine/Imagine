@@ -299,7 +299,7 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         $ratios = array(
@@ -314,11 +314,11 @@ final class Image implements ImageInterface
         }
 
         $thumbnail = $this->copy();
-
+        
         if ($ratio < 1) {
             $thumbnailSize = $thumbnail->getSize()->scale($ratio);
             $thumbnail->resize($thumbnailSize);
-    
+
             if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
                 $thumbnail->crop(new Point(
                     max(0, round(($thumbnailSize->getWidth() - $width) / 2)),
