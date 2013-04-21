@@ -327,23 +327,23 @@ class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         $ratios = array(
             $width / $this->getSize()->getWidth(),
             $height / $this->getSize()->getHeight()
         );
-        
+
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
             $ratio = min($ratios);
         } else {
             $ratio = max($ratios);
         }
-        
+
         $thumbnail = $this->copy();
         
-        if ($ratio < 1) { 
+        if ($ratio < 1) {
             try {
                 if ($mode === ImageInterface::THUMBNAIL_INSET) {
                     $thumbnail->gmagick->thumbnailimage(
