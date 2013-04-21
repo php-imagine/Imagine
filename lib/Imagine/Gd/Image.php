@@ -299,7 +299,7 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         $ratios = array(
@@ -307,22 +307,24 @@ final class Image implements ImageInterface
             $height / imagesy($this->resource)
         );
 
-        $thumbnail = $this->copy();
-
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
             $ratio = min($ratios);
         } else {
             $ratio = max($ratios);
         }
 
-        $thumbnailSize = $thumbnail->getSize()->scale($ratio);
-        $thumbnail->resize($thumbnailSize);
+        $thumbnail = $this->copy();
+        
+        if ($ratio < 1) {
+            $thumbnailSize = $thumbnail->getSize()->scale($ratio);
+            $thumbnail->resize($thumbnailSize);
 
-        if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            $thumbnail->crop(new Point(
-                max(0, round(($thumbnailSize->getWidth() - $width) / 2)),
-                max(0, round(($thumbnailSize->getHeight() - $height) / 2))
-            ), $size);
+            if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+                $thumbnail->crop(new Point(
+                    max(0, round(($thumbnailSize->getWidth() - $width) / 2)),
+                    max(0, round(($thumbnailSize->getHeight() - $height) / 2))
+                ), $size);
+            }
         }
 
         return $thumbnail;
