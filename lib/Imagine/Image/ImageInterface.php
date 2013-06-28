@@ -55,15 +55,20 @@ interface ImageInterface extends ManipulatorInterface
 
     /**
      * Instantiates and returns a DrawerInterface instance for image drawing
+     * 
+     * @param string drawer class name
      *
      * @return DrawerInterface
      */
-    public function draw();
+    public function draw($drawerClass = null);
 
     /**
+     * 
+     * @param string effects class name
+     * 
      * @return EffectsInterface
      */
-    public function effects();
+    public function effects($effectsClass = null);
 
     /**
      * Returns current image size

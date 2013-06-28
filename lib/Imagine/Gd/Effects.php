@@ -20,11 +20,19 @@ use Imagine\Image\Color;
  */
 class Effects implements EffectsInterface
 {
-    private $resource;
+    protected $resource;
 
     public function __construct($resource)
     {
         $this->resource = $resource;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function create($resource)
+    {
+        return new static($resource);
     }
 
     /**

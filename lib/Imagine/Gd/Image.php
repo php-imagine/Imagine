@@ -343,16 +343,32 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function draw()
+    public function draw($drawerClass = null)
     {
+        if(null !== $drawerClass){
+            if (false === in_array('Imagine\Draw\DrawerInterface', class_implements($drawerClass))) {
+                throw new RuntimeException('Drawer class not instance of DrawerInterface');
+            }
+
+            return $drawerClass::create($this->resource);
+        }
+
         return new Drawer($this->resource);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function effects()
+    public function effects($effectsClass = null)
     {
+        if(null !== $effectsClass) {
+            if (false === in_array('Imagine\Effects\EffectsInterface', class_implements($effectsClass))) {
+                throw new RuntimeException('Effects class not instance of EffectsInterface');
+            }
+
+            return $effectsClass::create($this->resource);
+        }
+
         return new Effects($this->resource);
     }
 

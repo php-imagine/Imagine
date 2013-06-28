@@ -269,6 +269,43 @@ abstract class AbstractImageTest extends ImagineTestCase
         }
     }
 
+    public function testCustomEffect()
+    {
+        $factory = $this->getImagine();
+        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
+        $this->assertInstanceOf('Imagine\\Effects\\EffectsInterface', $image->effects());
+        $this->assertInstanceOf('Imagine\\Effects\\EffectsInterface', $image->effects('Imagine\\Gd\\Effects'));
+    }
+
+    /**
+    * @expectedException Imagine\Exception\RuntimeException
+    */
+    public function testCustomEffectException()
+    {
+        $factory = $this->getImagine();
+        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image->effects('Imagine\\Image\\Point');
+    }
+
+    public function testCustomDrawer()
+    {
+        $factory = $this->getImagine();
+        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
+        $this->assertInstanceOf('Imagine\\Draw\\DrawerInterface', $image->draw());
+        $this->assertInstanceOf('Imagine\\Draw\\DrawerInterface', $image->draw('Imagine\\Gd\\Drawer'));
+    }
+
+    /**
+    * @expectedException Imagine\Exception\RuntimeException
+    */
+    public function testCustomDrawerException()
+    {
+        $factory = $this->getImagine();
+        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image->draw('Imagine\\Image\\Point');
+    }
+
+
     private function getMonoLayeredImage()
     {
         return $this->getImagine()->open('tests/Imagine/Fixtures/google.png');

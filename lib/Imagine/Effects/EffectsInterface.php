@@ -20,6 +20,14 @@ use Imagine\Image\Color;
 interface EffectsInterface
 {
     /**
+     * New effects object create factory
+     *
+     * @param  mixed            $resource
+     * @return EffectsInterface
+     */
+    public static function create($resource);
+
+    /**
      * Apply gamma correction
      *
      * @param  float            $correction
