@@ -138,10 +138,11 @@ interface DrawerInterface
      * @param Imagine\Image\AbstractFont   $font
      * @param Imagine\Image\PointInterface $position
      * @param integer                      $angle
+     * @param integer                      $width
      *
      * @throws Imagine\Exception\RuntimeException
      *
      * @return DrawerInterface
      */
-    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0);
+    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0, $width = null);
 }

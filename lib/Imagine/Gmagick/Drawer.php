@@ -311,7 +311,7 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      */
-    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0)
+    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0, $width = null)
     {
         try {
             $pixel = $this->getColor($font->getColor());
@@ -338,6 +338,10 @@ final class Drawer implements DrawerInterface
 
             $xdiff = 0 - min($x1, $x2);
             $ydiff = 0 - min($y1, $y2);
+
+            if ($width !== null) {
+                throw new RuntimeException("Gmagick doesn't support queryfontmetrics function for multiline text", 1);
+            }
 
             $this->gmagick->annotateimage(
                 $text, $position->getX() + $x1 + $xdiff,
