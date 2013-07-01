@@ -39,4 +39,14 @@ class ImageTest extends AbstractImageTest
     {
         return false;
     }
+
+    public function testRotateWithNoBackgroundColor()
+    {
+        if (version_compare(PHP_VERSION, '5.5', '>=')) {
+            // see https://bugs.php.net/bug.php?id=65148
+            $this->markTestSkipped('Disabling test while bug #65148 is open');
+        }
+
+        parent::testRotateWithNoBackgroundColor();
+    }
 }
