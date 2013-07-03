@@ -8,6 +8,8 @@
   * `LayersInterface` now extends `ArrayAccess`, gives support for animated gifs.
   * Remove Imagick and Gmagick flatten after composite.
   * Fix pixel opacity reading in `Gmagick::histogram`.
+  * Deprecate pear channel installation.
+  * Deprecate phar installation.
 
 ### 0.4.1 (2012-12-13)
 

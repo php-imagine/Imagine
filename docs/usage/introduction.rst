@@ -10,42 +10,28 @@ The main idea of Imagine is to avoid driver specific methods spill outside of th
 Installation
 ------------
 
-Phar file (recommended)
-+++++++++++++++++++++++
+The recommended way to install Imagine is through `Composer`_.
+Composer is a dependency management library for PHP.
 
-`Download Imagine PHAR file here <https://github.com/downloads/avalanche123/Imagine/imagine-v0.3.0.phar>`_
+Here is an example of composer project configuration that requires imagine
+version 0.4.
+
+.. code-block:: json
+
+    {
+        "require": {
+            "imagine/imagine": "~0.4.0"
+        }
+    }
+
+Update the dependencies using composer.phar and use Imagine :
 
 .. code-block:: php
 
-   <?php
+    <?php
+    require 'vendor/autoload.php';
 
-   require_once 'phar://imagine.phar';
-
-   var_dump(interface_exists('Imagine\Image\ImageInterface'));
-
-PEAR package
-++++++++++++
-
-Install using pear package:
-
-.. code-block:: console
-
-   pear channel-discover pear.avalanche123.com
-   pear install avalanche123/Imagine-beta
-
-Clone from GitHub
-+++++++++++++++++
-
-Clone Imagine git repository:
-
-.. code-block:: console
-
-   git clone git://github.com/avalanche123/Imagine.git
-
-then require files as usual
-
-.. NOTE::
-   when using git clone or pear install methods, classes don't get registered with autoload and you have to do it yourself, this will change in future.
+    $imagine = new Imagine\Gd\Imagine();
 
 Basic usage
 -----------
@@ -357,3 +343,4 @@ The ``Transformation`` object is an example of a composite filter, representing 
 .. _ImageInterface: ../_static/API/Imagine/Image/ImageInterface.html
 .. _coordinates: coordinates.html
 .. _exceptions: exceptions.html
+.. _Composer: https://getcomposer.org/
