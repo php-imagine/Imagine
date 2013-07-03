@@ -50,28 +50,59 @@ abstract class AbstractImageTest extends ImagineTestCase
             );
     }
 
-    public function testThumbnailGeneration()
+    /**
+     * @dataProvider provideDimensionsAndModesForThumbnailGeneration
+     */
+    public function testThumbnailGeneration($sourceW, $sourceH, $thumbW, $thumbH, $mode, $expectedW, $expectedH)
     {
         $factory = $this->getImagine();
-        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
-        $inset   = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_INSET);
+        $image   = $factory->create(new Box($sourceW, $sourceH));
+        $inset   = $image->thumbnail(new Box($thumbW, $thumbH), $mode);
 
         $size = $inset->getSize();
 
-        unset($inset);
+        $this->assertEquals($expectedW, $size->getWidth());
+        $this->assertEquals($expectedH, $size->getHeight());
+    }
 
-        $this->assertEquals(50, $size->getWidth());
-        $this->assertEquals(17, $size->getHeight());
+    public function provideDimensionsAndModesForThumbnailGeneration()
+    {
+        return array(
+            // landscape with smaller portrait
+            array(320, 240, 32, 48, ImageInterface::THUMBNAIL_INSET, 32, round(32 * 240 / 320)),
+            array(320, 240, 32, 48, ImageInterface::THUMBNAIL_OUTBOUND, 32, 48),
+            // landscape with smaller landscape
+            array(320, 240, 32, 16, ImageInterface::THUMBNAIL_INSET, round(16 * 320 / 240), 16),
+            array(320, 240, 32, 16, ImageInterface::THUMBNAIL_OUTBOUND, 32, 16),
 
-        $outbound = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
+            // portait with smaller portrait
+            array(240, 320, 24, 48, ImageInterface::THUMBNAIL_INSET, 24, round(24 * 320 / 240)),
+            array(240, 320, 24, 48, ImageInterface::THUMBNAIL_OUTBOUND, 24, 48),
+            // portait with smaller landscape
+            array(240, 320, 24, 16, ImageInterface::THUMBNAIL_INSET, round(16 * 240 / 320), 16),
+            array(240, 320, 24, 16, ImageInterface::THUMBNAIL_OUTBOUND, 24, 16),
 
-        $size = $outbound->getSize();
+            // landscape with larger portrait
+            array(32, 24, 320, 300, ImageInterface::THUMBNAIL_INSET, 32, 24),
+            array(32, 24, 320, 300, ImageInterface::THUMBNAIL_OUTBOUND, 32, 24),
+            // landscape with larger landscape
+            array(32, 24, 320, 200, ImageInterface::THUMBNAIL_INSET, 32, 24),
+            array(32, 24, 320, 200, ImageInterface::THUMBNAIL_OUTBOUND, 32, 24),
 
-        unset($outbound);
-        unset($image);
+            // portait with larger portrait
+            array(24, 32, 240, 300, ImageInterface::THUMBNAIL_INSET, 24, 32),
+            array(24, 32, 240, 300, ImageInterface::THUMBNAIL_OUTBOUND, 24, 32),
+            // portait with larger landscape
+            array(24, 32, 240, 400, ImageInterface::THUMBNAIL_INSET, 24, 32),
+            array(24, 32, 240, 400, ImageInterface::THUMBNAIL_OUTBOUND, 24, 32),
 
-        $this->assertEquals(50, $size->getWidth());
-        $this->assertEquals(50, $size->getHeight());
+            // landscape with intersect portrait
+            array(320, 240, 340, 220, ImageInterface::THUMBNAIL_INSET, round(220 * 320 / 240), 220),
+            array(320, 240, 340, 220, ImageInterface::THUMBNAIL_OUTBOUND, 320, 220),
+            // landscape with intersect portrait
+            array(320, 240, 300, 360, ImageInterface::THUMBNAIL_INSET, 300, round(300 / 320 * 240)),
+            array(320, 240, 300, 360, ImageInterface::THUMBNAIL_OUTBOUND, 300, 240),
+        );
     }
 
     public function testThumbnailGenerationToDimensionsLergestThanSource()
