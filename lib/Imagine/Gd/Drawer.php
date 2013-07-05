@@ -176,19 +176,9 @@ final class Drawer implements DrawerInterface
             ));
         }
 
-        $points = array();
-
-        foreach ($coordinates as $coordinate) {
-            if (!$coordinate instanceof PointInterface) {
-                throw new InvalidArgumentException(sprintf(
-                    'Each entry in coordinates array must be instance of '.
-                    'Imagine\Image\PointInterface, %s given', var_export($coordinate)
-                ));
-            }
-
-            $points[] = $coordinate->getX();
-            $points[] = $coordinate->getY();
-        }
+        $points = call_user_func_array('array_merge', array_map(function(PointInterface $p) {
+            return array($p->getX(), $p->getY());
+        }, $coordinates));
 
         if ($fill) {
             $callback = 'imagefilledpolygon';
