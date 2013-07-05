@@ -14,7 +14,6 @@ namespace Imagine\Gmagick;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Gmagick\Imagine;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
@@ -369,7 +368,7 @@ final class Image implements ImageInterface
         }
 
         $thumbnail = $this->copy();
-        
+
         if ($ratio < 1) {
             try {
                 if ($mode === ImageInterface::THUMBNAIL_INSET) {

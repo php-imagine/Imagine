@@ -374,9 +374,9 @@ final class Image implements ImageInterface
         } else {
             $ratio = max($ratios);
         }
-        
+
         $thumbnail = $this->copy();
-        
+
         if ($ratio < 1) {
             try {
                 if ($mode === ImageInterface::THUMBNAIL_INSET) {
