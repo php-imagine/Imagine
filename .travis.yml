@@ -1,4 +1,7 @@
 language: php
+before_script:
+  - composer self-update
+  - composer install
 php:
   - 5.3.3
   - 5.3
