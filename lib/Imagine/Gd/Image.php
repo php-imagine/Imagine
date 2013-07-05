@@ -324,7 +324,7 @@ final class Image implements ImageInterface
         }
 
         $thumbnail = $this->copy();
-        
+
         if ($ratio < 1) {
             $thumbnailSize = $thumbnail->getSize()->scale($ratio);
             $thumbnail->resize($thumbnailSize);
@@ -662,7 +662,7 @@ final class Image implements ImageInterface
 
     private function setExceptionHandler()
     {
-        set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+        set_error_handler(function($errno, $errstr, $errfile, $errline) {
 
             if (0 === error_reporting()) {
                 return;

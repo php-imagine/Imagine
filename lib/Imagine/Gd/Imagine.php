@@ -25,19 +25,6 @@ final class Imagine implements ImagineInterface
     /**
      * @var array
      */
-    private $types = array(
-        IMAGETYPE_GIF      => 'gif',
-        IMAGETYPE_JPEG     => 'jpeg',
-        IMAGETYPE_JPEG2000 => 'jpeg',
-        IMAGETYPE_PNG      => 'png',
-        IMAGETYPE_UNKNOWN  => 'unknown',
-        IMAGETYPE_WBMP     => 'wbmp',
-        IMAGETYPE_XBM      => 'xbm'
-    );
-
-    /**
-     * @var array
-     */
     private $info;
 
     /**
