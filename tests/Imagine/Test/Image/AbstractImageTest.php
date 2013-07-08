@@ -50,6 +50,26 @@ abstract class AbstractImageTest extends ImagineTestCase
             );
     }
 
+    public function testThumbnailShouldReturnACopy()
+    {
+        $factory = $this->getImagine();
+
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $thumbnail = $image->thumbnail(new Box(20, 20));
+
+        $this->assertNotSame($image, $thumbnail);
+    }
+
+    public function testResizeShouldReturnTheImage()
+    {
+        $factory = $this->getImagine();
+
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $resized = $image->resize(new Box(20, 20));
+
+        $this->assertSame($image, $resized);
+    }
+
     /**
      * @dataProvider provideDimensionsAndModesForThumbnailGeneration
      */
