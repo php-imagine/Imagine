@@ -309,13 +309,19 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-
         $ratios = array(
-            $width / imagesx($this->resource),
-            $height / imagesy($this->resource)
+            $size->getWidth() / imagesx($this->resource),
+            $size->getHeight() / imagesy($this->resource)
         );
+
+        $imageSize = $this->getSize();
+        $thumbnail = $this->copy();
+
+        // if target width is larger than image width
+        // AND target height is longer than image height
+        if ($size->contains($imageSize)) {
+            return $thumbnail;
+        }
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
             $ratio = min($ratios);
@@ -323,17 +329,27 @@ final class Image implements ImageInterface
             $ratio = max($ratios);
         }
 
-        $thumbnail = $this->copy();
-
-        if ($ratio < 1) {
-            $thumbnailSize = $thumbnail->getSize()->scale($ratio);
-            $thumbnail->resize($thumbnailSize);
-
-            if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->crop(new Point(
-                    max(0, round(($thumbnailSize->getWidth() - $width) / 2)),
-                    max(0, round(($thumbnailSize->getHeight() - $height) / 2))
-                ), $size);
+        if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+            if (!$imageSize->contains($size)) {
+                $size = new Box(
+                    min($imageSize->getWidth(), $size->getWidth()),
+                    min($imageSize->getHeight(), $size->getHeight())
+                );
+            }else {
+                $imageSize = $thumbnail->getSize()->scale($ratio);
+                $thumbnail->resize($imageSize);
+            }
+            $thumbnail->crop(new Point(
+                max(0, round(($imageSize->getWidth() - $size->getWidth()) / 2)),
+                max(0, round(($imageSize->getHeight() - $size->getHeight()) / 2))
+            ), $size);
+        } else {
+            if (!$imageSize->contains($size)) {
+                $imageSize = $imageSize->scale($ratio);
+                $thumbnail->resize($imageSize);
+            } else {
+                $imageSize = $thumbnail->getSize()->scale($ratio);
+                $thumbnail->resize($imageSize);
             }
         }
 

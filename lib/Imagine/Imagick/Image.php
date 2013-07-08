@@ -361,41 +361,41 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        $width     = $size->getWidth();
-        $height    = $size->getHeight();
-
-        $ratios = array(
-            $width / $this->getSize()->getWidth(),
-            $height / $this->getSize()->getHeight()
-        );
-
-        if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            $ratio = min($ratios);
-        } else {
-            $ratio = max($ratios);
-        }
-
+        $imageSize = $this->getSize();
         $thumbnail = $this->copy();
 
-        if ($ratio < 1) {
-            try {
-                if ($mode === ImageInterface::THUMBNAIL_INSET) {
-                    $thumbnail->imagick->thumbnailImage(
-                        $width,
-                        $height,
-                        true
-                    );
-                } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                    $thumbnail->imagick->cropThumbnailImage(
-                        $width,
-                        $height
-                    );
-                }
-            } catch (\ImagickException $e) {
-                throw new RuntimeException(
-                    'Thumbnail operation failed', $e->getCode(), $e
+        // if target width is larger than image width
+        // AND target height is longer than image height
+        if ($size->contains($imageSize)) {
+            return $thumbnail;
+        }
+
+        // if target width is larger than image width
+        // OR target height is longer than image height
+        if (!$imageSize->contains($size)) {
+            $size = new Box(
+                min($imageSize->getWidth(), $size->getWidth()),
+                min($imageSize->getHeight(), $size->getHeight())
+            );
+        }
+
+        try {
+            if ($mode === ImageInterface::THUMBNAIL_INSET) {
+                $thumbnail->imagick->thumbnailImage(
+                    $size->getWidth(),
+                    $size->getHeight(),
+                    true
+                );
+            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+                $thumbnail->imagick->cropThumbnailImage(
+                    $size->getWidth(),
+                    $size->getHeight()
                 );
             }
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Thumbnail operation failed', $e->getCode(), $e
+            );
         }
 
         return $thumbnail;
