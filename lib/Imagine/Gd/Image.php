@@ -150,6 +150,10 @@ final class Image implements ImageInterface
      */
     final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
+        if (ImageInterface::FILTER_UNDEFINED !== $filter) {
+            throw new InvalidArgumentException('Unsupported filter type, GD only supports ImageInterface::FILTER_UNDEFINED filter');
+        }
+
         $width  = $size->getWidth();
         $height = $size->getHeight();
 

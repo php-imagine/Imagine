@@ -56,7 +56,7 @@ interface ManipulatorInterface
      * @param BoxInterface $size
      * @param string       $filter
      *
-     * @internal param \Imagine\Exception\RuntimeException $
+     * @throws RuntimeException
      *
      * @return ManipulatorInterface
      */
