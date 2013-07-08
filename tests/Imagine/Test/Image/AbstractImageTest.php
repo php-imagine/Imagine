@@ -49,6 +49,48 @@ abstract class AbstractImageTest extends ImagineTestCase
             );
     }
 
+    /**
+     * @dataProvider provideFilters
+     */
+    public function testResizeWithVariousFilters($filter)
+    {
+        $factory = $this->getImagine();
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+
+        $image->resize(new Box(30, 30), $filter);
+    }
+
+    public function testResizeWithInvalidFilter()
+    {
+        $factory = $this->getImagine();
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+
+        $this->setExpectedException('Imagine\Exception\InvalidArgumentException');
+        $image->resize(new Box(30, 30), 'no filter');
+    }
+
+    public function provideFilters()
+    {
+        return array(
+            array(ImageInterface::FILTER_UNDEFINED),
+            array(ImageInterface::FILTER_POINT),
+            array(ImageInterface::FILTER_BOX),
+            array(ImageInterface::FILTER_TRIANGLE),
+            array(ImageInterface::FILTER_HERMITE),
+            array(ImageInterface::FILTER_HANNING),
+            array(ImageInterface::FILTER_HAMMING),
+            array(ImageInterface::FILTER_BLACKMAN),
+            array(ImageInterface::FILTER_GAUSSIAN),
+            array(ImageInterface::FILTER_QUADRATIC),
+            array(ImageInterface::FILTER_CUBIC),
+            array(ImageInterface::FILTER_CATROM),
+            array(ImageInterface::FILTER_MITCHELL),
+            array(ImageInterface::FILTER_LANCZOS),
+            array(ImageInterface::FILTER_BESSEL),
+            array(ImageInterface::FILTER_SINC),
+        );
+    }
+
     public function testThumbnailShouldReturnACopy()
     {
         $factory = $this->getImagine();

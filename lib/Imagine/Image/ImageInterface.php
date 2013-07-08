@@ -32,6 +32,23 @@ interface ImageInterface extends ManipulatorInterface
     const INTERLACE_PLANE = 'plane';
     const INTERLACE_PARTITION = 'partition';
 
+    const FILTER_UNDEFINED = 'undefined';
+    const FILTER_POINT = 'point';
+    const FILTER_BOX = 'box';
+    const FILTER_TRIANGLE = 'triangle';
+    const FILTER_HERMITE = 'hermite';
+    const FILTER_HANNING = 'hanning';
+    const FILTER_HAMMING = 'hamming';
+    const FILTER_BLACKMAN = 'blackman';
+    const FILTER_GAUSSIAN = 'gaussian';
+    const FILTER_QUADRATIC = 'quadratic';
+    const FILTER_CUBIC = 'cubic';
+    const FILTER_CATROM = 'catrom';
+    const FILTER_MITCHELL = 'mitchell';
+    const FILTER_LANCZOS = 'lanczos';
+    const FILTER_BESSEL = 'bessel';
+    const FILTER_SINC = 'sinc';
+
     /**
      * Returns the image content as a binary string
      *

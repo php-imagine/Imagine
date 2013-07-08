@@ -164,9 +164,9 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function resize(BoxInterface $size)
+    public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-        return $this->add(new Resize($size));
+        return $this->add(new Resize($size, $filter));
     }
 
     /**
