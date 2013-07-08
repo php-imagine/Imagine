@@ -148,7 +148,7 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    final public function resize(BoxInterface $size)
+    final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
         $width  = $size->getWidth();
         $height = $size->getHeight();
