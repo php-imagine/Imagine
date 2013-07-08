@@ -22,7 +22,7 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
     public function testMerge()
     {
         $image = $this->getImagine()->create(new Box(20, 20), new Color('#FFFFFF'));
-        foreach($image->layers() as $layer) {
+        foreach ($image->layers() as $layer) {
             $layer->draw()
                 ->polygon(
                 array(new Point(0, 0),new Point(0, 20),new Point(20, 20),new Point(20, 0)),

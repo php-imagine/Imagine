@@ -63,7 +63,7 @@ class LayersTest extends AbstractLayersTest
 
         $layers = new Layers(new Image($resource), $resource);
 
-        foreach($layers as $layer) {
+        foreach ($layers as $layer) {
             $this->assertInstanceOf('Imagine\Image\ImageInterface', $layer);
         }
     }
@@ -75,7 +75,7 @@ class LayersTest extends AbstractLayersTest
 
     public function getImage($path = null)
     {
-        if ($path ) {
+        if ($path) {
             return new Image(new \Gmagick($path));
         } else {
             return new Image(new \Gmagick());

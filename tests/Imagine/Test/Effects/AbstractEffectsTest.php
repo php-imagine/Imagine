@@ -61,11 +61,11 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('#565656', (string) $pixel);
 
-        $greyR = (int)$pixel->getRed();
-        $greyG = (int)$pixel->getGreen();
-        $greyB = (int)$pixel->getBlue();
+        $greyR = (int) $pixel->getRed();
+        $greyG = (int) $pixel->getGreen();
+        $greyB = (int) $pixel->getBlue();
 
-        $this->assertEquals($greyR, (int)86);
+        $this->assertEquals($greyR, (int) 86);
         $this->assertEquals($greyR, $greyG);
         $this->assertEquals($greyR, $greyB);
         $this->assertEquals($greyG, $greyB);
@@ -89,7 +89,6 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($blue->getGreen(), $pixel->getGreen());
         $this->assertEquals($blue->getBlue(), $pixel->getBlue());
     }
-
 
     /**
      * @return ImagineInterface

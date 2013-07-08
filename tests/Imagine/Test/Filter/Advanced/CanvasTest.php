@@ -26,9 +26,9 @@ class CanvasTest extends FilterTestCase
      *
      * @dataProvider getDataSet
      *
-     * @param BoxInterface $size
+     * @param BoxInterface   $size
      * @param PointInterface $placement
-     * @param Color $background
+     * @param Color          $background
      */
     public function testShouldCanvasImageAndReturnResult(BoxInterface $size, PointInterface $placement = null, Color $background = null)
     {

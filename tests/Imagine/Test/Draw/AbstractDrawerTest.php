@@ -71,7 +71,6 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         unlink('tests/Imagine/Fixtures/pie.png');
     }
 
-
     public function testDrawAChord()
     {
         $imagine = $this->getImagine();

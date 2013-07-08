@@ -2,8 +2,6 @@
 
 namespace Imagine\Test\Issues;
 
-use Imagine\Image\ImageInterface;
-use Imagine\Image\Box;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
 

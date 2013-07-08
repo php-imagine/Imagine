@@ -13,7 +13,6 @@ namespace Imagine\Test\Filter\Advanced;
 
 use Imagine\Image\BoxInterface;
 use Imagine\Filter\Advanced\Border;
-use Imagine\Image\Point;
 use Imagine\Image\Color;
 use Imagine\Test\Filter\FilterTestCase;
 

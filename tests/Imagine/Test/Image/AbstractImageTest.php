@@ -16,7 +16,6 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
 use Imagine\Image\Color;
 use Imagine\Image\Fill\Gradient\Horizontal;
-use Imagine\Image\Fill\Gradient\Vertical;
 use Imagine\Image\Point\Center;
 use Imagine\Test\ImagineTestCase;
 
@@ -269,8 +268,8 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink($outfile);
     }
 
-    public function testInOutResult(){
-
+    public function testInOutResult()
+    {
         $this->processInOut("trans", "png","png");
         $this->processInOut("trans", "png","gif");
         $this->processInOut("trans", "png","jpg");

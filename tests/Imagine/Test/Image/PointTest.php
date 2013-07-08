@@ -17,18 +17,18 @@ use Imagine\Image\Point;
 
 class PointTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * @covers Imagine\Image\Point::getX
-	 * @covers Imagine\Image\Point::getY
-	 * @covers Imagine\Image\Point::in
-	 *
-	 * @dataProvider getCoordinates
-	 *
-	 * @param integer       $x
-	 * @param integer       $y
-	 * @param BoxInterface $box
-	 * @param Boolean       $expected
-	 */
+    /**
+     * @covers Imagine\Image\Point::getX
+     * @covers Imagine\Image\Point::getY
+     * @covers Imagine\Image\Point::in
+     *
+     * @dataProvider getCoordinates
+     *
+     * @param integer      $x
+     * @param integer      $y
+     * @param BoxInterface $box
+     * @param Boolean      $expected
+     */
     public function testShouldAssignXYCoordinates($x, $y, BoxInterface $box, $expected)
     {
         $coordinate = new Point($x, $y);

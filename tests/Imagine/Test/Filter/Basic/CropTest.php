@@ -26,7 +26,7 @@ class CropTest extends FilterTestCase
      * @dataProvider getDataSet
      *
      * @param PointInterface $start
-     * @param BoxInterface       $size
+     * @param BoxInterface   $size
      */
     public function testShouldApplyCropAndReturnResult(PointInterface $start, BoxInterface $size)
     {

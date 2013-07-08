@@ -13,8 +13,6 @@ namespace Imagine\Test\Gmagick;
 
 use Imagine\Gmagick\Imagine;
 use Imagine\Test\Image\AbstractImageTest;
-use Imagine\Image\Color;
-use Imagine\Image\ImageInterface;
 
 class ImageTest extends AbstractImageTest
 {

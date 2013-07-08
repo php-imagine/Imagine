@@ -2,8 +2,6 @@
 
 namespace Imagine\Test\Functional;
 
-use Imagine\Image\ImageInterface;
-use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
@@ -33,13 +31,12 @@ class GdTransparentGifHandlingTest extends \PHPUnit_Framework_TestCase
         $image
             ->resize($size)
         ;
-        
+
         $imagine
             ->create($size, new Color("fff", 100))
             ->paste($image, new Point(0, 0))
             ->save($new)
         ;
-
 
         unlink($new);
     }

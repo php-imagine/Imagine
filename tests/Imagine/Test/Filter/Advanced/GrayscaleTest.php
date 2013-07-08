@@ -26,8 +26,8 @@ class GrayscaleTest extends FilterTestCase
      * @dataProvider getDataSet
      *
      * @param \Imagine\Image\BoxInterface $size
-     * @param \Imagine\Image\Color $color
-     * @param \Imagine\Image\Color $filteredColor
+     * @param \Imagine\Image\Color        $color
+     * @param \Imagine\Image\Color        $filteredColor
      */
     public function testGrayscaling(BoxInterface $size, Color $color, Color $filteredColor)
     {

@@ -335,7 +335,7 @@ final class Image implements ImageInterface
                     min($imageSize->getWidth(), $size->getWidth()),
                     min($imageSize->getHeight(), $size->getHeight())
                 );
-            }else {
+            } else {
                 $imageSize = $thumbnail->getSize()->scale($ratio);
                 $thumbnail->resize($imageSize);
             }

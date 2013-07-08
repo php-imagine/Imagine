@@ -41,7 +41,7 @@ class LayersTest extends AbstractLayersTest
         $resource = imagecreate(20, 20);
         $layers = new Layers(new Image($resource), $resource);
 
-        foreach($layers as $layer) {
+        foreach ($layers as $layer) {
             $this->assertInstanceOf('Imagine\Image\ImageInterface', $layer);
         }
     }
