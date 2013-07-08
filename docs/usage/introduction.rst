@@ -80,6 +80,38 @@ Now that you've opened an image, you can perform manipulations on it:
    Read more about ImageInterface_
    Read more about coordinates_
 
+Resize Images
++++++++++++++
+
+Resize an image is very easy, just pass the box size you want as argument :
+
+.. code-block:: php
+
+   <?php
+
+   use Imagine\Image\Box;
+   use Imagine\Image\Point;
+
+   $image->resize(new Box(15, 25))
+
+You can also specify the filter you want as second argument :
+
+.. code-block:: php
+
+   <?php
+
+   use Imagine\Image\Box;
+   use Imagine\Image\Point;
+   use Imagine\Image\ImageInterface;
+
+   // resize with lanczos filter
+   $image->resize(new Box(15, 25), ImageInterface::FILTER_LANCZOS);
+
+Available filters are ImageInterface::FILTER_* constants.
+
+.. NOTE::
+   GD only supports ImageInterface::RESIZE_UNDEFINED filter.
+
 Create New Images
 +++++++++++++++++
 

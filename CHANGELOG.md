@@ -3,6 +3,7 @@
 ### 0.5.0 (2013-xx-xx)
 
   * Add `Layers::coalesce`.
+  * Add filter option to `ImageInterface::resize`.
   * Add sharpen effect.
   * Add interlace support.
   * `LayersInterface` now extends `ArrayAccess`, gives support for animated gifs.

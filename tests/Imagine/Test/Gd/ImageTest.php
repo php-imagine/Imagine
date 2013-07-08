@@ -13,6 +13,7 @@ namespace Imagine\Test\Gd;
 
 use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractImageTest;
+use Imagine\Image\ImageInterface;
 
 class ImageTest extends AbstractImageTest
 {
@@ -28,6 +29,13 @@ class ImageTest extends AbstractImageTest
     public function testImageResolutionChange()
     {
         $this->markTestSkipped('GD driver does not support resolution options');
+    }
+
+    public function provideFilters()
+    {
+        return array(
+            array(ImageInterface::FILTER_UNDEFINED),
+        );
     }
 
     protected function getImagine()
