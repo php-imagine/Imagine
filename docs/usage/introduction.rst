@@ -20,7 +20,7 @@ version 0.4.
 
     {
         "require": {
-            "imagine/imagine": "~0.4.0"
+            "imagine/imagine": "~0.5.0"
         }
     }
 
