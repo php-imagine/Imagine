@@ -9,9 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Image\Palette\Color;
+namespace Imagine\Test\Image\Palette\Color;
 
 use Imagine\Image\Palette\Color\CMYK;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\CMYK as CMYKPalette;
 
 class CMYKTest extends AbstractColorTest

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Image\Palette\Color;
+namespace Imagine\Test\Image\Palette\Color;
 
 use Imagine\Test\ImagineTestCase;
 

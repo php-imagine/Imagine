@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Image\Palette;
+namespace Imagine\Test\Image\Palette;
 
 use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\Color\CMYK as CMYKColor;

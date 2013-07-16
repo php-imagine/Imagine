@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Image;
+namespace Imagine\Test\Image;
 
+use Imagine\Image\Profile;
 use Imagine\Test\ImagineTestCase;
 
 class ProfileTest extends ImagineTestCase
@@ -29,7 +30,7 @@ class ProfileTest extends ImagineTestCase
 
     public function testFromPath()
     {
-        $file = __DIR__ . '/../../../lib/Imagine/resources/Adobe/CMYK/JapanColor2001Uncoated.icc';
+        $file = __DIR__ . '/../../../../lib/Imagine/resources/Adobe/CMYK/JapanColor2001Uncoated.icc';
         $profile = Profile::fromPath($file);
 
         $this->assertEquals(basename($file), $profile->name());

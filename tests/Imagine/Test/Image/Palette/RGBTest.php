@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Image\Palette;
+namespace Imagine\Test\Image\Palette;
 
+use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 
 class RGBTest extends AbstractPaletteTest

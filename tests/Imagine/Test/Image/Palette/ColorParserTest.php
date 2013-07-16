@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Image\Palette;
+namespace Imagine\Test\Image\Palette;
 
+use Imagine\Image\Palette\ColorParser;
 use Imagine\Test\ImagineTestCase;
 
 class ColorParserTest extends ImagineTestCase
