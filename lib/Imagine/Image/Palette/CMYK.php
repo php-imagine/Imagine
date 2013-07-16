@@ -17,7 +17,6 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Profile;
 use Imagine\Image\ProfileInterface;
-use Imagine\Image\ImageInterface;
 
 class CMYK implements PaletteInterface
 {

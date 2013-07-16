@@ -78,7 +78,7 @@ class LayersTest extends AbstractLayersTest
 
     public function getImage($path = null)
     {
-        if ($path ) {
+        if ($path) {
             return new Image(new \Gmagick($path), new RGB());
         } else {
             return new Image(new \Gmagick(), new RGB());

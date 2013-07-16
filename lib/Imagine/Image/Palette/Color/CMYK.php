@@ -54,8 +54,7 @@ final class CMYK implements ColorInterface
      */
     public function getValue($component)
     {
-        switch($component)
-        {
+        switch ($component) {
             case ColorInterface::COLOR_CYAN:
                 return $this->getCyan();
             case ColorInterface::COLOR_MAGENTA:

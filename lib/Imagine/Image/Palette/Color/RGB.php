@@ -54,8 +54,7 @@ final class RGB implements ColorInterface
      */
     public function getValue($component)
     {
-        switch($component)
-        {
+        switch ($component) {
             case ColorInterface::COLOR_RED:
                 return $this->getRed();
             case ColorInterface::COLOR_GREEN:

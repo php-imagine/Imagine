@@ -11,9 +11,6 @@
 
 namespace Imagine\Test\Functional;
 
-use Imagine\Image\ImageInterface;
-use Imagine\Image\Box;
-use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;

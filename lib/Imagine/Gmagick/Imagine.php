@@ -87,7 +87,6 @@ class Imagine implements ImagineInterface
                 $pixel   = new \GmagickPixel((string) $color);
             }
 
-
             if ($color->getAlpha() > 0) {
                 // TODO: implement support for transparent background
                 throw new RuntimeException('alpha transparency not implemented');

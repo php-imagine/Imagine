@@ -24,7 +24,7 @@ class GrayscaleTest extends FilterTestCase
      *
      * @dataProvider getDataSet
      *
-     * @param BoxInterface $size
+     * @param BoxInterface   $size
      * @param ColorInterface $color
      * @param ColorInterface $filteredColor
      */

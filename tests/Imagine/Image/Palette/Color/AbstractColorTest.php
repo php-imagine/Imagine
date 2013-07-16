@@ -35,7 +35,7 @@ abstract class AbstractColorTest extends ImagineTestCase
     {
         $data = array();
 
-        foreach($color->getPalette()->pixelDefinition() as $component) {
+        foreach ($color->getPalette()->pixelDefinition() as $component) {
             $data[$component] = $color->getValue($component);
         }
 

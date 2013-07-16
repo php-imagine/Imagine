@@ -11,7 +11,6 @@
 
 namespace Imagine\Image\Palette;
 
-use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\ProfileInterface;

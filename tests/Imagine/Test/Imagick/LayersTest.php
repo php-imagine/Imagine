@@ -103,7 +103,7 @@ class LayersTest extends AbstractLayersTest
 
     public function getImage($path = null)
     {
-        if ($path ) {
+        if ($path) {
             return new Image(new \Imagick($path), new RGB());
         } else {
             return new Image(new \Imagick(), new RGB());

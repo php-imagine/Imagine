@@ -13,7 +13,7 @@ namespace Imagine\Filter\Basic;
 
 use Imagine\Image\ImageInterface;
 use Imagine\Filter\Basic\WebOptimization;
-use Imagine\Filter\FilterTestCase;
+use Imagine\Test\Filter\FilterTestCase;
 
 class WebOptimizationTest extends FilterTestCase
 {

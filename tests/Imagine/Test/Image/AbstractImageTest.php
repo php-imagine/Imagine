@@ -14,25 +14,23 @@ namespace Imagine\Test\Image;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
-use Imagine\Image\Color;
 use Imagine\Image\Fill\Gradient\Horizontal;
 use Imagine\Image\Point\Center;
 use Imagine\Test\ImagineTestCase;
 use Imagine\Image\Palette\RGB;
-use Imagine\Image\Palette\CMYK;
-use Imagine\Image\Box;
+use Imagine\Image\Profile;
 
 abstract class AbstractImageTest extends ImagineTestCase
 {
     public function testPaletteIsRGBIfRGBImage()
     {
-        $image = $this->getImagine()->open(__DIR__ . '/../Fixtures/google.png');
+        $image = $this->getImagine()->open(__DIR__ . '/../../Fixtures/google.png');
         $this->assertInstanceOf('Imagine\Image\Palette\RGB', $image->palette());
     }
 
     public function testPaletteIsCMYKIfCMYKImage()
     {
-        $image = $this->getImagine()->open(__DIR__ . '/../Fixtures/pixel-CMYK.jpg');
+        $image = $this->getImagine()->open(__DIR__ . '/../../Fixtures/pixel-CMYK.jpg');
         $this->assertInstanceOf('Imagine\Image\Palette\CMYK', $image->palette());
     }
 
@@ -107,7 +105,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this
             ->getImagine()
             ->create(new Box(10, 10))
-            ->profile(Profile::fromPath(__DIR__ . '/../../../lib/Imagine/resources/Adobe/RGB/VideoHD.icc'));
+            ->profile(Profile::fromPath(__DIR__ . '/../../../../lib/Imagine/resources/Adobe/RGB/VideoHD.icc'));
     }
 
     public function testRotateWithNoBackgroundColor()
