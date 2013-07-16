@@ -1,6 +1,8 @@
 # CHANGELOG
 
-### 0.5.0 (2013-xx-xx)
+### 0.6.0 (2013-xx-xx)
+
+### 0.5.0 (2013-07-10)
 
   * Add `Layers::coalesce`.
   * Add filter option to `ImageInterface::resize`.
