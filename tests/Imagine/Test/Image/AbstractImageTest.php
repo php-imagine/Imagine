@@ -34,6 +34,12 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertInstanceOf('Imagine\Image\Palette\CMYK', $image->palette());
     }
 
+    public function testPaletteIsGrayIfGrayImage()
+    {
+        $image = $this->getImagine()->open(__DIR__ . '/../../Fixtures/pixel-grayscale.jpg');
+        $this->assertInstanceOf('Imagine\Image\Palette\Grayscale', $image->palette());
+    }
+
     public function testDefaultPaletteCreationIsRGB()
     {
         $image = $this->getImagine()->create(new Box(10, 10));
@@ -59,25 +65,26 @@ abstract class AbstractImageTest extends ImagineTestCase
         return array(
             array('Imagine\Image\Palette\RGB', array(255, 0, 0)),
             array('Imagine\Image\Palette\CMYK', array(10, 0, 0, 0)),
+            array('Imagine\Image\Palette\Grayscale', array(25)),
         );
     }
 
     /**
      * @dataProvider provideFromAndToPalettes
      */
-    public function testUsePalette($from, $to)
+    public function testUsePalette($from, $to, $color)
     {
         $palette = new $from();
 
         $image = $this
             ->getImagine()
-            ->create(new Box(10, 10), $palette->color(array(10, 10, 10, 0)));
+            ->create(new Box(10, 10), $palette->color($color));
 
-        $rgb = new $to();
+        $targetPalette = new $to();
 
-        $image->usePalette($rgb);
+        $image->usePalette($targetPalette);
 
-        $this->assertEquals($rgb, $image->palette());
+        $this->assertEquals($targetPalette, $image->palette());
         $image->save(__DIR__ . '/tmp.jpg');
 
         $image = $this->getImagine()->open(__DIR__ . '/tmp.jpg');
@@ -92,11 +99,33 @@ abstract class AbstractImageTest extends ImagineTestCase
             array(
                 'Imagine\Image\Palette\RGB',
                 'Imagine\Image\Palette\CMYK',
+                array(10, 10, 10),
+            ),
+            array(
+                'Imagine\Image\Palette\RGB',
+                'Imagine\Image\Palette\Grayscale',
+                array(10, 10, 10),
             ),
             array(
                 'Imagine\Image\Palette\CMYK',
                 'Imagine\Image\Palette\RGB',
-            )
+                array(10, 10, 10, 0),
+            ),
+            array(
+                'Imagine\Image\Palette\CMYK',
+                'Imagine\Image\Palette\Grayscale',
+                array(10, 10, 10, 0),
+            ),
+            array(
+                'Imagine\Image\Palette\Grayscale',
+                'Imagine\Image\Palette\RGB',
+                array(10),
+            ),
+            array(
+                'Imagine\Image\Palette\Grayscale',
+                'Imagine\Image\Palette\CMYK',
+                array(10),
+            ),
         );
     }
 

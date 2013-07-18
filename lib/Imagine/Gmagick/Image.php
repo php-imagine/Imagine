@@ -38,7 +38,15 @@ final class Image implements ImageInterface
      */
     private $layers;
 
+    /**
+     * @var PaletteInterface
+     */
     private $palette;
+
+    private static $colorspaceMapping = array(
+        PaletteInterface::PALETTE_CMYK      => \Gmagick::COLORSPACE_CMYK,
+        PaletteInterface::PALETTE_RGB       => \Gmagick::COLORSPACE_RGB,
+    );
 
     /**
      * Constructs Image with Gmagick and Imagine instances
@@ -49,7 +57,7 @@ final class Image implements ImageInterface
     public function __construct(\Gmagick $gmagick, PaletteInterface $palette)
     {
         $this->gmagick = $gmagick;
-        $this->palette = $palette;
+        $this->setColorspace($palette);
         $this->layers = new Layers($this, $this->palette, $this->gmagick);
     }
 
@@ -676,12 +684,7 @@ final class Image implements ImageInterface
      */
     public function usePalette(PaletteInterface $palette)
     {
-        static $colorspaceMapping = array(
-            PaletteInterface::PALETTE_CMYK => \Gmagick::COLORSPACE_CMYK,
-            PaletteInterface::PALETTE_RGB  => \Gmagick::COLORSPACE_RGB,
-        );
-
-        if (!isset($colorspaceMapping[$palette->name()])) {
+        if (!isset(static::$colorspaceMapping[$palette->name()])) {
             throw new InvalidArgumentException(sprintf(
                 'The palette %s is not supported by Gmagick driver',
                 $palette->name()
@@ -705,7 +708,7 @@ final class Image implements ImageInterface
 
             $this->profile($palette->profile());
 
-            $this->gmagick->setimagecolorspace($colorspaceMapping[$palette->name()]);
+            $this->setColorspace($palette);
             $this->palette = $palette;
         } catch (\GmagickException $e) {
             throw new RuntimeException('Failed to set colorspace', $e->getCode(), $e);
@@ -812,5 +815,25 @@ final class Image implements ImageInterface
         }
 
         return $mimeTypes[$format];
+    }
+
+    /**
+     * Sets colorspace and image type, assigns the palette.
+     *
+     * @param PaletteInterface $palette
+     *
+     * @throws InvalidArgumentException
+     */
+    private function setColorspace(PaletteInterface $palette)
+    {
+        if (!isset(static::$colorspaceMapping[$palette->name()])) {
+            throw new InvalidArgumentException(sprintf(
+                'The palette %s is not supported by Gmagick driver',
+                $palette->name()
+            ));
+        }
+
+        $this->gmagick->setimagecolorspace(static::$colorspaceMapping[$palette->name()]);
+        $this->palette = $palette;
     }
 }

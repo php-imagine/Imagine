@@ -14,6 +14,7 @@ namespace Imagine\Gmagick;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\ImagineInterface;
+use Imagine\Image\Palette\Grayscale;
 use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Color\CMYK as CMYKColor;
@@ -167,6 +168,9 @@ class Imagine implements ImagineInterface
                 break;
             case \Gmagick::COLORSPACE_CMYK:
                 return new CMYK();
+                break;
+            case \Gmagick::COLORSPACE_GRAY:
+                return new Grayscale();
                 break;
             default:
                 throw new RuntimeException(

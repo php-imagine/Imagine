@@ -893,7 +893,7 @@ final class Image implements ImageInterface
         static $typeMapping = array(
             PaletteInterface::PALETTE_CMYK      => \Imagick::IMGTYPE_TRUECOLOR,
             PaletteInterface::PALETTE_RGB       => \Imagick::IMGTYPE_TRUECOLOR,
-            PaletteInterface::PALETTE_GRAYSCALE => \Imagick::IMGTYPE_BILEVEL,
+            PaletteInterface::PALETTE_GRAYSCALE => \Imagick::IMGTYPE_GRAYSCALE,
         );
 
         if (!isset(static::$colorspaceMapping[$palette->name()])) {
@@ -905,7 +905,6 @@ final class Image implements ImageInterface
 
         $this->imagick->setType($typeMapping[$palette->name()]);
         $this->imagick->setImageColorspace(static::$colorspaceMapping[$palette->name()]);
-        $this->imagick->setColorspace(static::$colorspaceMapping[$palette->name()]);
         $this->palette = $palette;
     }
 }

@@ -29,6 +29,35 @@ class ImageTest extends AbstractImageTest
         }
     }
 
+    public function provideFromAndToPalettes()
+    {
+        return array(
+            array(
+                'Imagine\Image\Palette\RGB',
+                'Imagine\Image\Palette\CMYK',
+                array(10, 10, 10),
+            ),
+            array(
+                'Imagine\Image\Palette\CMYK',
+                'Imagine\Image\Palette\RGB',
+                array(10, 10, 10, 0),
+            ),
+        );
+    }
+
+    public function providePalettes()
+    {
+        return array(
+            array('Imagine\Image\Palette\RGB', array(255, 0, 0)),
+            array('Imagine\Image\Palette\CMYK', array(10, 0, 0, 0)),
+        );
+    }
+
+    public function testPaletteIsGrayIfGrayImage()
+    {
+        $this->markTestSkipped('Gmagick does not support Gray colorspace, because of the lack omg image type support');
+    }
+
     protected function getImagine()
     {
         return new Imagine();

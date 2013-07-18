@@ -52,6 +52,7 @@ class ImageTest extends AbstractImageTest
             array(
                 'Imagine\Image\Palette\RGB',
                 'Imagine\Image\Palette\RGB',
+                array(10, 10, 10),
             ),
         );
     }
@@ -64,6 +65,11 @@ class ImageTest extends AbstractImageTest
         } catch (RuntimeException $e) {
 
         }
+    }
+
+    public function testPaletteIsGrayIfGrayImage()
+    {
+        $this->markTestSkipped('Gd does not support Gray colorspace');
     }
 
     public function testPaletteIsCMYKIfCMYKImage()
