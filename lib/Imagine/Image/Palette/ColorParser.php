@@ -76,7 +76,7 @@ class ColorParser
      * @param string|array|integer $color
      *
      * @return array
-     * 
+     *
      * @throws InvalidArgumentException
      */
     public function parseToGrayscale($color)

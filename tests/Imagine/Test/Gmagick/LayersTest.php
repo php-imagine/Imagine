@@ -31,7 +31,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testCount()
     {
-        $palette = $this->getMock('Imagine\Image\Palette\PaletteInterface');
+        $palette = new RGB();
         $resource = $this->getMockBuilder('\Gmagick')
             ->disableOriginalConstructor()
             ->getMock();
@@ -47,7 +47,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testGetLayer()
     {
-        $palette = $this->getMock('Imagine\Image\Palette\PaletteInterface');
+        $palette = new RGB();
         $resource = $this->getMockBuilder('\Gmagick')
             ->disableOriginalConstructor()
             ->getMock();
