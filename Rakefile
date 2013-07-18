@@ -53,17 +53,20 @@ task :test do
 
   if ENV["TRAVIS"] == 'true'
     puts "Travis CI"
-    system "sudo apt-get install -y  imagemagick libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev libmagickcore-dev libmagickwand-dev"
+    system "sudo apt-get install -ylibtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev"
 
     system "wget http://pecl.php.net/get/imagick-3.1.0RC2.tgz"
     system "tar -xzf imagick-3.1.0RC2.tgz"
-    system "sh -c \"cd imagick-3.1.0RC2 && phpize && ./configure --with-imagick=/usr/local && make && sudo make install\""
+    system "sh -c \"cd imagick-3.1.0RC2 && phpize && ./configure --with-imagick=/usr/local && make -j && sudo make install\""
 
     system "sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev"
 
     system "wget http://pecl.php.net/get/gmagick-1.1.0RC3.tgz"
     system "tar -xzf gmagick-1.1.0RC3.tgz"
-    system "sh -c \"cd gmagick-1.1.0RC3 && phpize && ./configure --with-gmagick=/usr/local && make && sudo make install\""
+    system "sh -c \"cd gmagick-1.1.0RC3 && phpize && ./configure --with-gmagick=/usr/local && make -j && sudo make install\""
+
+    system "wget http://www.imagemagick.org/download/legacy/ImageMagick-6.8.5-10.tar.gz"
+    system "sh -c \"tar xzf ImageMagick-6.8.5-10.tar.gz && cd ImageMagick-6.8.5-10 && ./configure && make -j && sudo make install\""
   end
 
   ini_file = Hash[`php --ini`.split("\n").map {|l| l.split(/:\s+/)}]["Loaded Configuration File"]
