@@ -904,7 +904,7 @@ final class Image implements ImageInterface
         }
 
         $this->imagick->setType($typeMapping[$palette->name()]);
-        $this->imagick->setImageColorspace(static::$colorspaceMapping[$palette->name()]);
+        $this->imagick->setColorspace(static::$colorspaceMapping[$palette->name()]);
         $this->palette = $palette;
     }
 }
