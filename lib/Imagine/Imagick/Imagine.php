@@ -18,6 +18,7 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
+use Imagine\Image\Palette\Grayscale;
 
 /**
  * Imagine implementation using the Imagick PHP extension
@@ -157,6 +158,9 @@ final class Imagine implements ImagineInterface
                 break;
             case \Imagick::COLORSPACE_CMYK:
                 return new CMYK();
+                break;
+            case \Imagick::COLORSPACE_GRAY:
+                return new Grayscale();
                 break;
             default:
                 throw new RuntimeException(

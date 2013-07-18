@@ -45,6 +45,12 @@ final class Image implements ImageInterface
      */
     private $palette;
 
+    private static $colorspaceMapping = array(
+        PaletteInterface::PALETTE_CMYK      => \Imagick::COLORSPACE_CMYK,
+        PaletteInterface::PALETTE_RGB       => \Imagick::COLORSPACE_RGB,
+        PaletteInterface::PALETTE_GRAYSCALE => \Imagick::COLORSPACE_GRAY,
+    );
+
     /**
      * Constructs Image with Imagick and Imagine instances
      *
@@ -53,7 +59,7 @@ final class Image implements ImageInterface
     public function __construct(\Imagick $imagick, PaletteInterface $palette)
     {
         $this->imagick = $imagick;
-        $this->palette = $palette;
+        $this->setColorspace($palette);
         $this->layers = new Layers($this, $this->palette, $this->imagick);
     }
 
@@ -668,12 +674,7 @@ final class Image implements ImageInterface
      */
     public function usePalette(PaletteInterface $palette)
     {
-        static $colorspaceMapping = array(
-            PaletteInterface::PALETTE_CMYK => \Imagick::COLORSPACE_CMYK,
-            PaletteInterface::PALETTE_RGB  => \Imagick::COLORSPACE_RGB,
-        );
-
-        if (!isset($colorspaceMapping[$palette->name()])) {
+        if (!isset(static::$colorspaceMapping[$palette->name()])) {
             throw new InvalidArgumentException(sprintf(
                 'The palette %s is not supported by Imagick driver',
                 $palette->name()
@@ -696,9 +697,7 @@ final class Image implements ImageInterface
             }
 
             $this->profile($palette->profile());
-
-            $this->imagick->setImageColorspace($colorspaceMapping[$palette->name()]);
-            $this->palette = $palette;
+            $this->setColorspace($palette);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to set colorspace', $e->getCode(), $e);
         }
@@ -880,5 +879,33 @@ final class Image implements ImageInterface
         }
 
         return $mimeTypes[$format];
+    }
+
+    /**
+     * Sets colorspace and image type, assigns the palette.
+     *
+     * @param PaletteInterface $palette
+     *
+     * @throws InvalidArgumentException
+     */
+    private function setColorspace(PaletteInterface $palette)
+    {
+        static $typeMapping = array(
+            PaletteInterface::PALETTE_CMYK      => \Imagick::IMGTYPE_TRUECOLOR,
+            PaletteInterface::PALETTE_RGB       => \Imagick::IMGTYPE_TRUECOLOR,
+            PaletteInterface::PALETTE_GRAYSCALE => \Imagick::IMGTYPE_BILEVEL,
+        );
+
+        if (!isset(static::$colorspaceMapping[$palette->name()])) {
+            throw new InvalidArgumentException(sprintf(
+                'The palette %s is not supported by Imagick driver',
+                $palette->name()
+            ));
+        }
+
+        $this->imagick->setType($typeMapping[$palette->name()]);
+        $this->imagick->setImageColorspace(static::$colorspaceMapping[$palette->name()]);
+        $this->imagick->setColorspace(static::$colorspaceMapping[$palette->name()]);
+        $this->palette = $palette;
     }
 }
