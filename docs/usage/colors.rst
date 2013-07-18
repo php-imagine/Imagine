@@ -39,6 +39,13 @@ You can switch your palette at any moment, for example to turn a CMYK image in R
 .. NOTE::
     Switching to a palette is the same a changing the colorspace.
 
+About colorspaces support
++++++++++++++++++++++++++
+
+Drivers do not handle colorspace the same way.
+Whereas GD only supports RGB images, Imagick supports CMYK, RGB and Grayscale
+colorspaces. Gmagick only supports CMYK and RGB colorspaces.
+
 Color Class
 +++++++++++
 
