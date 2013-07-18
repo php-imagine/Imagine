@@ -16,6 +16,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
 
 interface PaletteInterface
 {
+    const PALETTE_GRAYSCALE = 'gray';
     const PALETTE_RGB = 'rgb';
     const PALETTE_CMYK = 'cmyk';
 

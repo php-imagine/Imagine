@@ -106,4 +106,50 @@ class ColorParserTest extends ImagineTestCase
             array(imagecreatetruecolor(10, 10)),
         );
     }
+
+    /**
+     * @dataProvider provideGrayscaledataToParse
+     */
+    public function testParseToGrayscale($expected, $value)
+    {
+        $parser = new ColorParser();
+
+        $this->assertEquals($expected, $parser->parseToGrayscale($value));
+    }
+
+    /**
+     * @dataProvider provideGrayscaledataThatFail
+     * @expectedException Imagine\Exception\InvalidArgumentException
+     */
+    public function testParseToGrayscaleThatFails($value)
+    {
+        $parser = new ColorParser();
+        $parser->parseToGrayscale($value);
+    }
+
+    public function provideGrayscaledataToParse()
+    {
+        return array(
+            array(array(23), array(23, 23, 23)),
+            array(array(0), array(0, 0, 0)),
+            array(array(255), array(255, 255, 255)),
+            array(array(23), array(23)),
+            array(array(0), array(0)),
+            array(array(255), array(255)),
+            array(array(136), '#888888'),
+            array(array(153), '999999'),
+            array(array(0), '#000000'),
+            array(array(255), 'FFFFFF'),
+        );
+    }
+
+    public function provideGrayscaledataThatFail()
+    {
+        return array(
+            array(array(23, 23, 24)),
+            array(array(0, 0, 1)),
+            array('#656666'),
+            array('777677'),
+        );
+    }
 }

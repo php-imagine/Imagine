@@ -71,6 +71,7 @@ abstract class AbstractPaletteTest extends ImagineTestCase
             ColorInterface::COLOR_MAGENTA,
             ColorInterface::COLOR_YELLOW,
             ColorInterface::COLOR_KEYLINE,
+            ColorInterface::COLOR_GRAY,
         );
 
         foreach ($this->getPalette()->pixelDefinition() as $color) {

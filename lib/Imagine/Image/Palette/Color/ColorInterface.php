@@ -24,6 +24,8 @@ interface ColorInterface
     const COLOR_YELLOW = 'yellow';
     const COLOR_KEYLINE = 'keyline';
 
+    const COLOR_GRAY = 'gray';
+
     /**
      * Return the value of one of the component.
      *

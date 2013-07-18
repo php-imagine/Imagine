@@ -71,6 +71,34 @@ class ColorParser
     }
 
     /**
+     * Parses a color to a grayscale value
+     *
+     * @param string|array|integer $color
+     *
+     * @return array
+     * 
+     * @throws InvalidArgumentException
+     */
+    public function parseToGrayscale($color)
+    {
+        if (is_array($color) && 1 === count($color)) {
+            return array_values($color);
+        }
+
+        $color = array_unique($this->parse($color));
+
+        if (1 !== count($color)) {
+            throw new InvalidArgumentException(
+                'The provided color has different values of red, green and ' .
+                'blue components. Grayscale colors must have the same values ' .
+                'for these.'
+            );
+        }
+
+        return $color;
+    }
+
+    /**
      * Parses a color
      *
      * @param string|array|integer $color
