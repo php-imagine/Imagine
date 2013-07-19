@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Test\Functional;
 
-use Imagine\Image\Color;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
@@ -33,7 +41,7 @@ class GdTransparentGifHandlingTest extends \PHPUnit_Framework_TestCase
         ;
 
         $imagine
-            ->create($size, new Color("fff", 100))
+            ->create($size)
             ->paste($image, new Point(0, 0))
             ->save($new)
         ;

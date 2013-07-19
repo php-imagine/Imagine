@@ -14,9 +14,9 @@ namespace Imagine\Test\Filter\Advanced;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Filter\Advanced\Canvas;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
-use Imagine\Image\Color;
 use Imagine\Test\Filter\FilterTestCase;
 
 class CanvasTest extends FilterTestCase
@@ -28,9 +28,9 @@ class CanvasTest extends FilterTestCase
      *
      * @param BoxInterface   $size
      * @param PointInterface $placement
-     * @param Color          $background
+     * @param ColorInterface $background
      */
-    public function testShouldCanvasImageAndReturnResult(BoxInterface $size, PointInterface $placement = null, Color $background = null)
+    public function testShouldCanvasImageAndReturnResult(BoxInterface $size, PointInterface $placement = null, ColorInterface $background = null)
     {
         $placement = $placement ?: new Point(0, 0);
         $image = $this->getImage();
@@ -54,7 +54,7 @@ class CanvasTest extends FilterTestCase
     public function getDataSet()
     {
         return array(
-            array(new Box(50, 15), new Point(10, 10), new Color('fff')),
+            array(new Box(50, 15), new Point(10, 10), $this->getColor()),
             array(new Box(300, 25), new Point(15, 15)),
             array(new Box(123, 23)),
         );

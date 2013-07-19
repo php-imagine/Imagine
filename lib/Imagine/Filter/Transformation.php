@@ -28,7 +28,7 @@ use Imagine\Filter\Basic\Thumbnail;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\ManipulatorInterface;
 use Imagine\Image\PointInterface;
@@ -172,7 +172,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function rotate($angle, Color $background = null)
+    public function rotate($angle, ColorInterface $background = null)
     {
         return $this->add(new Rotate($angle, $background));
     }

@@ -14,6 +14,7 @@ namespace Imagine\Test\Image;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Test\ImagineTestCase;
+use Imagine\Image\Palette\RGB;
 
 abstract class AbstractImagineTest extends ImagineTestCase
 {
@@ -68,8 +69,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
             $this->markTestSkipped('This install does not support font tests');
         }
 
+        $palette = new RGB();
         $path    = 'tests/Imagine/Fixtures/font/Arial.ttf';
-        $black   = new Color('000');
+        $black   = $palette->color('000');
         $factory = $this->getImagine();
 
         $this->assertEquals($this->getEstimatedFontBox(), $factory->font($path, 36, $black)->box('string'));

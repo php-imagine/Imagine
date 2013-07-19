@@ -16,7 +16,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\ImagineInterface;
 
 /**
@@ -35,7 +35,7 @@ class Canvas implements FilterInterface
     private $placement;
 
     /**
-     * @var Color
+     * @var ColorInterface
      */
     private $background;
 
@@ -51,9 +51,9 @@ class Canvas implements FilterInterface
      * @param ImagineInterface $imagine
      * @param BoxInterface     $size
      * @param PointInterface   $placement
-     * @param Color            $background
+     * @param ColorInterface   $background
      */
-    public function __construct(ImagineInterface $imagine, BoxInterface $size, PointInterface $placement = null, Color $background = null)
+    public function __construct(ImagineInterface $imagine, BoxInterface $size, PointInterface $placement = null, ColorInterface $background = null)
     {
         $this->imagine = $imagine;
         $this->size = $size;

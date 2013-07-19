@@ -14,13 +14,15 @@ namespace Imagine\Gmagick;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
+use Imagine\Image\ProfileInterface;
 
 /**
  * Image implementation using the Gmagick PHP extension
@@ -37,14 +39,26 @@ final class Image implements ImageInterface
     private $layers;
 
     /**
+     * @var PaletteInterface
+     */
+    private $palette;
+
+    private static $colorspaceMapping = array(
+        PaletteInterface::PALETTE_CMYK      => \Gmagick::COLORSPACE_CMYK,
+        PaletteInterface::PALETTE_RGB       => \Gmagick::COLORSPACE_RGB,
+    );
+
+    /**
      * Constructs Image with Gmagick and Imagine instances
      *
-     * @param \Gmagick $gmagick
+     * @param \Gmagick         $gmagick
+     * @param PaletteInterface $palette
      */
-    public function __construct(\Gmagick $gmagick)
+    public function __construct(\Gmagick $gmagick, PaletteInterface $palette)
     {
         $this->gmagick = $gmagick;
-        $this->layers = new Layers($this, $this->gmagick);
+        $this->setColorspace($palette);
+        $this->layers = new Layers($this, $this->palette, $this->gmagick);
     }
 
     /**
@@ -73,7 +87,7 @@ final class Image implements ImageInterface
      */
     public function copy()
     {
-        return new self(clone $this->gmagick);
+        return new self(clone $this->gmagick, $this->palette);
     }
 
     /**
@@ -143,6 +157,7 @@ final class Image implements ImageInterface
     public function strip()
     {
         try {
+            $this->profile($this->palette->profile());
             $this->gmagick->stripimage();
         } catch (\GmagickException $e) {
             throw new RuntimeException(
@@ -235,15 +250,15 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function rotate($angle, Color $background = null)
+    public function rotate($angle, ColorInterface $background = null)
     {
         try {
-            $background = $background ?: new Color('fff');
+            $background = $background ?: $this->palette->color('fff');
             $pixel = $this->getColor($background);
 
             $this->gmagick->rotateimage($pixel, $angle);
 
-            $pixel = null;
+            unset($pixel);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Rotate operation failed', $e->getCode(), $e
@@ -543,21 +558,19 @@ final class Image implements ImageInterface
      */
     public function histogram()
     {
-        $pixels = $this->gmagick->getimagehistogram();
+        try {
+            $pixels = $this->gmagick->getimagehistogram();
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Error while fetching histogram', $e->getCode(), $e
+            );
+        }
+
+        $image = $this;
 
         return array_map(
-            function(\GmagickPixel $pixel) {
-                $info = $pixel->getColor(true);
-                $opacity = isset($info['a']) ? $info['a'] : 0;
-
-                return new Color(
-                    array(
-                        $info['r'],
-                        $info['g'],
-                        $info['b'],
-                    ),
-                    (int) round($opacity * 100)
-                );
+            function(\GmagickPixel $pixel) use ($image) {
+                return $image->pixelToColor($pixel);
             },
             $pixels
         );
@@ -587,11 +600,53 @@ final class Image implements ImageInterface
 
         unset($histogram, $cropped);
 
-        return new Color(array(
-                $pixel->getColorValue(\Gmagick::COLOR_RED) * 255,
-                $pixel->getColorValue(\Gmagick::COLOR_GREEN) * 255,
-                $pixel->getColorValue(\Gmagick::COLOR_BLUE) * 255,
-            )
+        return $this->pixelToColor($pixel);
+    }
+
+    /**
+     * Returns a color given a pixel, depending the Palette context
+     *
+     * Note : this method is public for PHP 5.3 compatibility
+     *
+     * @param \ImagickPixel $pixel
+     *
+     * @return ColorInterface
+     *
+     * @throws InvalidArgumentException In case a unknown color is requested
+     */
+    public function pixelToColor(\GmagickPixel $pixel)
+    {
+        static $colorMapping = array(
+            ColorInterface::COLOR_RED     => \Gmagick::COLOR_RED,
+            ColorInterface::COLOR_GREEN   => \Gmagick::COLOR_GREEN,
+            ColorInterface::COLOR_BLUE    => \Gmagick::COLOR_BLUE,
+            ColorInterface::COLOR_CYAN    => \Gmagick::COLOR_CYAN,
+            ColorInterface::COLOR_MAGENTA => \Gmagick::COLOR_MAGENTA,
+            ColorInterface::COLOR_YELLOW  => \Gmagick::COLOR_YELLOW,
+            ColorInterface::COLOR_KEYLINE => \Gmagick::COLOR_BLACK,
+        );
+
+        if ($this->palette->supportsAlpha()) {
+            try {
+                $alpha = (int) round($pixel->getcolorvalue(\Gmagick::COLOR_ALPHA) * 100);
+            } catch (\GmagickPixelException $e) {
+                $alpha = null;
+            }
+        } else {
+            $alpha = null;
+        }
+
+        return $this->palette->color(
+            array_map(function ($color) use ($pixel, $colorMapping) {
+                if (!isset($colorMapping[$color])) {
+                    throw new InvalidArgumentException(
+                        'Color %s is not mapped in Imagick'
+                    );
+                }
+
+                return $pixel->getcolorvalue($colorMapping[$color]) * 255;
+            }, $this->palette->pixelDefinition()),
+            $alpha
         );
     }
 
@@ -605,7 +660,7 @@ final class Image implements ImageInterface
 
     /**
      * {@inheritdoc}
-     **/
+     */
     public function interlace($scheme)
     {
         static $supportedInterlaceSchemes = array(
@@ -620,6 +675,68 @@ final class Image implements ImageInterface
         }
 
         $this->gmagick->setInterlaceScheme($supportedInterlaceSchemes[$scheme]);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function usePalette(PaletteInterface $palette)
+    {
+        if (!isset(static::$colorspaceMapping[$palette->name()])) {
+            throw new InvalidArgumentException(sprintf(
+                'The palette %s is not supported by Gmagick driver',
+                $palette->name()
+            ));
+        }
+
+        if ($this->palette->name() === $palette->name()) {
+            return $this;
+        }
+
+        try {
+            try {
+                $hasICCProfile = (Boolean) $this->gmagick->getimageprofile('ICM');
+            } catch (\GmagickException $e) {
+                $hasICCProfile = false;
+            }
+
+            if (!$hasICCProfile) {
+                $this->profile($this->palette->profile());
+            }
+
+            $this->profile($palette->profile());
+
+            $this->setColorspace($palette);
+            $this->palette = $palette;
+        } catch (\GmagickException $e) {
+            throw new RuntimeException('Failed to set colorspace', $e->getCode(), $e);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function palette()
+    {
+        return $this->palette;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function profile(ProfileInterface $profile)
+    {
+        try {
+            $this->gmagick->profileimage('ICM', $profile->data());
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(sprintf(
+                'Unable to add profile %s to image', $profile->name()
+            ), $e->getCode(), $e);
+        }
 
         return $this;
     }
@@ -648,11 +765,11 @@ final class Image implements ImageInterface
     /**
      * Gets specifically formatted color string from Color instance
      *
-     * @param Color $color
+     * @param ColorInterface $color
      *
      * @return string
      */
-    private function getColor(Color $color)
+    private function getColor(ColorInterface $color)
     {
         if (!$color->isOpaque()) {
             throw new InvalidArgumentException('Gmagick doesn\'t support transparency');
@@ -698,5 +815,25 @@ final class Image implements ImageInterface
         }
 
         return $mimeTypes[$format];
+    }
+
+    /**
+     * Sets colorspace and image type, assigns the palette.
+     *
+     * @param PaletteInterface $palette
+     *
+     * @throws InvalidArgumentException
+     */
+    private function setColorspace(PaletteInterface $palette)
+    {
+        if (!isset(static::$colorspaceMapping[$palette->name()])) {
+            throw new InvalidArgumentException(sprintf(
+                'The palette %s is not supported by Gmagick driver',
+                $palette->name()
+            ));
+        }
+
+        $this->gmagick->setimagecolorspace(static::$colorspaceMapping[$palette->name()]);
+        $this->palette = $palette;
     }
 }

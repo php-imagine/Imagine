@@ -12,8 +12,8 @@
 namespace Imagine\Test\Draw;
 
 use Imagine\Image\Box;
-use Imagine\Image\Color;
 use Imagine\Image\Font;
+use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
 use Imagine\Image\ImagineInterface;
@@ -25,12 +25,12 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('000'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('000'));
 
         $canvas->draw()
-            ->chord(new Point(200, 200), new Box(200, 150), 0, 180, new Color('fff'), false)
-            ->ellipse(new Point(125, 100), new Box(50, 50), new Color('fff'))
-            ->ellipse(new Point(275, 100), new Box(50, 50), new Color('fff'), true);
+            ->chord(new Point(200, 200), new Box(200, 150), 0, 180, $this->getColor('fff'), false)
+            ->ellipse(new Point(125, 100), new Box(50, 50), $this->getColor('fff'))
+            ->ellipse(new Point(275, 100), new Box(50, 50), $this->getColor('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/smiley.png', array('quality' => 100));
 
@@ -43,10 +43,10 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('000'));
+        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
 
         $canvas->draw()
-            ->ellipse(new Center($canvas->getSize()), new Box(300, 200), new Color('fff'), true);
+            ->ellipse(new Center($canvas->getSize()), new Box(300, 200), $this->getColor('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/ellipse.png', array('quality' => 100));
 
@@ -59,10 +59,10 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('000'));
+        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
 
         $canvas->draw()
-            ->pieSlice(new Point(200, 150), new Box(100, 200), 45, 135, new Color('fff'), true);
+            ->pieSlice(new Point(200, 150), new Box(100, 200), 45, 135, $this->getColor('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/pie.png');
 
@@ -75,10 +75,10 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('000'));
+        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
 
         $canvas->draw()
-            ->chord(new Point(200, 150), new Box(100, 200), 45, 135, new Color('fff'), true);
+            ->chord(new Point(200, 150), new Box(100, 200), 45, 135, $this->getColor('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/chord.png');
 
@@ -91,11 +91,11 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('000'));
+        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
 
         $canvas->draw()
-            ->line(new Point(50, 50), new Point(350, 250), new Color('fff'))
-            ->line(new Point(50, 250), new Point(350, 50), new Color('fff'));
+            ->line(new Point(50, 50), new Point(350, 250), $this->getColor('fff'))
+            ->line(new Point(50, 250), new Point(350, 50), $this->getColor('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/lines.png', array(
             'quality' => 100
@@ -110,7 +110,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('000'));
+        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
 
         $canvas->draw()
             ->polygon(array(
@@ -118,7 +118,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
                 new Point(350, 20),
                 new Point(350, 280),
                 new Point(50, 280),
-            ), new Color('fff'), true);
+            ), $this->getColor('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/polygon.png', array(
             'quality' => 100
@@ -133,13 +133,13 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('000'));
+        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
 
         $canvas->draw()
-            ->dot(new Point(200, 150), new Color('fff'))
-            ->dot(new Point(200, 151), new Color('fff'))
-            ->dot(new Point(200, 152), new Color('fff'))
-            ->dot(new Point(200, 153), new Color('fff'));
+            ->dot(new Point(200, 150), $this->getColor('fff'))
+            ->dot(new Point(200, 151), $this->getColor('fff'))
+            ->dot(new Point(200, 152), $this->getColor('fff'))
+            ->dot(new Point(200, 153), $this->getColor('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/dot.png', array(
             'quality' => 100
@@ -154,11 +154,11 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('000'));
+        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
         $size   = $canvas->getSize();
 
         $canvas->draw()
-            ->arc(new Center($size), $size->scale(0.5), 0, 180, new Color('fff'));
+            ->arc(new Center($size), $size->scale(0.5), 0, 180, $this->getColor('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/arc.png', array(
             'quality' => 100
@@ -176,14 +176,14 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         }
 
         $path   = 'tests/Imagine/Fixtures/font/Arial.ttf';
-        $black  = new Color('000');
+        $black  =  $this->getColor('000');
         $file36 = 'tests/Imagine/Fixtures/bulat36.png';
         $file24 = 'tests/Imagine/Fixtures/bulat24.png';
         $file18 = 'tests/Imagine/Fixtures/bulat18.png';
         $file12 = 'tests/Imagine/Fixtures/bulat12.png';
 
         $imagine = $this->getImagine();
-        $canvas  = $imagine->create(new Box(400, 300), new Color('fff'));
+        $canvas  = $imagine->create(new Box(400, 300), $this->getColor('fff'));
         $font    = $imagine->font($path, 36, $black);
 
         $canvas->draw()
@@ -197,7 +197,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         unlink($file36);
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('fff'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
         $font   = $imagine->font($path, 24, $black);
 
         $canvas->draw()
@@ -211,7 +211,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         unlink($file24);
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('fff'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
         $font   = $imagine->font($path, 18, $black);
 
         $canvas->draw()
@@ -225,7 +225,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         unlink($file18);
 
-        $canvas = $imagine->create(new Box(400, 300), new Color('fff'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
         $font   = $imagine->font($path, 12, $black);
 
         $canvas->draw()
@@ -238,6 +238,17 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertTrue(file_exists($file12));
 
         unlink($file12);
+    }
+
+    private function getColor($color)
+    {
+        static $palette;
+
+        if (!$palette) {
+            $palette = new RGB();
+        }
+
+        return $palette->color($color);
     }
 
     /**
