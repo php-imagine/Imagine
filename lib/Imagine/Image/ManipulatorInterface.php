@@ -14,7 +14,7 @@ namespace Imagine\Image;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\PointInterface;
 use Imagine\Image\Fill\FillInterface;
@@ -67,14 +67,14 @@ interface ManipulatorInterface
      * Optional $background can be used to specify the fill color of the empty
      * area of rotated image.
      *
-     * @param integer $angle
-     * @param Color   $background
+     * @param integer        $angle
+     * @param ColorInterface $background
      *
      * @throws RuntimeException
      *
      * @return ManipulatorInterface
      */
-    public function rotate($angle, Color $background = null);
+    public function rotate($angle, ColorInterface $background = null);
 
     /**
      * Pastes an image into a parent image

@@ -17,3 +17,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+This software embeds Adobe ICC Profiles, see license at
+http://www.adobe.com/support/downloads/iccprofiles/icc_eula_mac_dist.html .
+
+This sofwtare also embeds ICC Profile from colormanagement.org. Please
+find information about their license at http://colormanagement.org/ .

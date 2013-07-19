@@ -16,6 +16,7 @@ use Imagine\Imagick\Image;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Image\Palette\PaletteInterface;
 
 class Layers extends AbstractLayers
 {
@@ -36,10 +37,13 @@ class Layers extends AbstractLayers
      */
     private $layers = array();
 
-    public function __construct(Image $image, \Imagick $resource)
+    private $palette;
+
+    public function __construct(Image $image, PaletteInterface $palette, \Imagick $resource)
     {
         $this->image = $image;
         $this->resource = $resource;
+        $this->palette = $palette;
     }
 
     /**
@@ -106,7 +110,7 @@ class Layers extends AbstractLayers
         for ($offset = 0; $offset < $count; $offset++) {
             try {
                 $coalescedResource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($coalescedResource->getImage());
+                $this->layers[$offset] = new Image($coalescedResource->getImage(), $this->palette);
             } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     'Failed to retrieve layer', $e->getCode(), $e
@@ -135,7 +139,7 @@ class Layers extends AbstractLayers
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($this->resource->getImage());
+                $this->layers[$offset] = new Image($this->resource->getImage(), $this->palette);
             } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     sprintf('Failed to extract layer %d', $offset),

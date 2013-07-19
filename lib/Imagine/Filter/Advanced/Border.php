@@ -13,7 +13,7 @@ namespace Imagine\Filter\Advanced;
 
 use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Point;
 
 /**
@@ -22,7 +22,7 @@ use Imagine\Image\Point;
 class Border implements FilterInterface
 {
     /**
-     * @var Color
+     * @var ColorInterface
      */
     private $color;
 
@@ -39,11 +39,11 @@ class Border implements FilterInterface
     /**
      * Constructs Border filter with given color, width and height
      *
-     * @param Color   $color
-     * @param integer $width  Width of the border on the left and right sides of the image
-     * @param integer $height Height of the border on the top and bottom sides of the image
+     * @param ColorInterface $color
+     * @param integer        $width  Width of the border on the left and right sides of the image
+     * @param integer        $height Height of the border on the top and bottom sides of the image
      */
-    public function __construct(Color $color, $width = 1, $height = 1)
+    public function __construct(ColorInterface $color, $width = 1, $height = 1)
     {
         $this->color = $color;
         $this->width = $width;

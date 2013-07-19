@@ -13,7 +13,8 @@ namespace Imagine\Gd;
 
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
 
 /**
  * Effects implementation using the GD library
@@ -66,8 +67,14 @@ class Effects implements EffectsInterface
     /**
      * {@inheritdoc}
      */
-    public function colorize(Color $color)
+    public function colorize(ColorInterface $color)
     {
+        if (!$color instanceof RGBColor) {
+            throw new RuntimeException(
+                'Colorize effects only accepts RGB color in GD context'
+            );
+        }
+
         if (false === imagefilter($this->resource, IMG_FILTER_COLORIZE, $color->getRed(), $color->getGreen(), $color->getBlue())) {
             throw new RuntimeException('Failed to colorize the image');
         }

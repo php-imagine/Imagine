@@ -14,10 +14,10 @@ Imagine is a fluent API to use Imagick, Gmagick or GD driver. These drivers
 do not handle all multi-layers formats equally. For example :
 
  * PSD format should be flatten before being saved. (libraries would split it
- into different files),
+   into different files),
  * animated gif must not be flatten otherwise the animation would be lost.
  * Tiff files should be split in multiple files or the result might be a pile
- of HD and thumbnail
+   of HD and thumbnail
  * GD does not support layers.
 
 You have to run tests against the formats you are using and their support by
@@ -150,7 +150,7 @@ This one adds some text on frames :
     $i = 0;
     foreach ($image->layers() as $layer) {
         $layer->draw()
-              ->text($i, new Font('coolfont.ttf', 12, new Color('white')), new Point(10, 10));
+              ->text($i, new Font('coolfont.ttf', 12, $imagine->palette()->color('white')), new Point(10, 10));
         $i++;
     }
 

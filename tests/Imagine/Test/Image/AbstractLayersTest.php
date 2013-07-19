@@ -12,8 +12,8 @@
 namespace Imagine\Test\Image;
 
 use Imagine\Image\Box;
-use Imagine\Image\Color;
 use Imagine\Image\Point;
+use Imagine\Image\Palette\RGB;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 
@@ -21,12 +21,13 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 {
     public function testMerge()
     {
-        $image = $this->getImagine()->create(new Box(20, 20), new Color('#FFFFFF'));
+        $palette = new RGB();
+        $image = $this->getImagine()->create(new Box(20, 20), $palette->color('#FFFFFF'));
         foreach ($image->layers() as $layer) {
             $layer->draw()
                 ->polygon(
                 array(new Point(0, 0),new Point(0, 20),new Point(20, 20),new Point(20, 0)),
-                new Color('#FF0000'),
+                $palette->color('#FF0000'),
                 true
             );
         }

@@ -12,7 +12,7 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Filter\FilterInterface;
 
 /**
@@ -26,17 +26,17 @@ class Rotate implements FilterInterface
     private $angle;
 
     /**
-     * @var Color
+     * @var ColorInterface
      */
     private $background;
 
     /**
      * Constructs Rotate filter with given angle and background color
      *
-     * @param integer $angle
-     * @param Color   $background
+     * @param integer        $angle
+     * @param ColorInterface $background
      */
-    public function __construct($angle, Color $background = null)
+    public function __construct($angle, ColorInterface $background = null)
     {
         $this->angle      = $angle;
         $this->background = $background;

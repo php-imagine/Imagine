@@ -16,6 +16,7 @@ use Imagine\Imagick\Layers;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractLayersTest;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Palette\RGB;
 
 class LayersTest extends AbstractLayersTest
 {
@@ -30,6 +31,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testCount()
     {
+        $palette = new RGB();
         $resource = $this->getMockBuilder('\Imagick')
             ->disableOriginalConstructor()
             ->getMock();
@@ -38,13 +40,14 @@ class LayersTest extends AbstractLayersTest
             ->method('getNumberImages')
             ->will($this->returnValue(42));
 
-        $layers = new Layers(new Image($resource), $resource);
+        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
 
         $this->assertCount(42, $layers);
     }
 
     public function testGetLayer()
     {
+        $palette = new RGB();
         $resource = $this->getMockBuilder('\Imagick')
             ->disableOriginalConstructor()
             ->getMock();
@@ -61,7 +64,7 @@ class LayersTest extends AbstractLayersTest
             ->method('getImage')
             ->will($this->returnValue($layer));
 
-        $layers = new Layers(new Image($resource), $resource);
+        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
 
         foreach ($layers as $layer) {
             $this->assertInstanceOf('Imagine\Image\ImageInterface', $layer);
@@ -74,10 +77,11 @@ class LayersTest extends AbstractLayersTest
         $height = null;
 
         $resource = new \Imagick;
+        $palette = new RGB();
         $resource->newImage(20, 10, new \ImagickPixel("black"));
         $resource->newImage(10, 10, new \ImagickPixel("black"));
 
-        $layers = new Layers(new Image($resource), $resource);
+        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
         $layers->coalesce();
 
         foreach ($layers as $layer) {
@@ -100,9 +104,9 @@ class LayersTest extends AbstractLayersTest
     public function getImage($path = null)
     {
         if ($path) {
-            return new Image(new \Imagick($path));
+            return new Image(new \Imagick($path), new RGB());
         } else {
-            return new Image(new \Imagick());
+            return new Image(new \Imagick(), new RGB());
         }
     }
 

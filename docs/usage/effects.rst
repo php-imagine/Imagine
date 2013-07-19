@@ -83,7 +83,7 @@ Create a grayscale version of the image.
 Colorize
 ++++++++++++++++
 
-Colorize the image. It takes one ``Imagine\Image\Color`` argument, which represents the color applied on top of the image.
+Colorize the image. It takes one ``Imagine\Image\Palette\Color\ColorInterface`` argument, which represents the color applied on top of the image.
 
 This feature only works with the Gd and Imagick drivers.
 
@@ -93,7 +93,7 @@ This feature only works with the Gd and Imagick drivers.
 
     $image = $imagine->open('portrait.jpeg');
 
-    $pink = new Imagine\Image\Color('#FF00D0');
+    $pink = $image->palette()->color('#FF00D0');
 
     $image->effects()
         ->colorize($pink);

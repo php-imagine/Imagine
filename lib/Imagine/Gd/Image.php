@@ -14,10 +14,14 @@ namespace Imagine\Gd;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
+use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
+use Imagine\Image\ProfileInterface;
+use Imagine\Image\Palette\RGB;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -34,13 +38,20 @@ final class Image implements ImageInterface
     private $layers;
 
     /**
+     *
+     * @var PaletteInterface
+     */
+    private $palette;
+
+    /**
      * Constructs a new Image instance using the result of
      * imagecreatetruecolor()
      *
      * @param resource $resource
      */
-    public function __construct($resource)
+    public function __construct($resource, PaletteInterface $palette)
     {
+        $this->palette = $palette;
         $this->resource = $resource;
     }
 
@@ -78,7 +89,7 @@ final class Image implements ImageInterface
             throw new RuntimeException('Image copy operation failed');
         }
 
-        return new Image($copy);
+        return new Image($copy, $this->palette);
     }
 
     /**
@@ -181,9 +192,9 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    final public function rotate($angle, Color $background = null)
+    final public function rotate($angle, ColorInterface $background = null)
     {
-        $color = $background ? $background : new Color('fff');
+        $color = $background ? $background : $this->palette->color('fff');
 
         $resource = imagerotate($this->resource, -1 * $angle, $this->getColor($color));
 
@@ -409,6 +420,7 @@ final class Image implements ImageInterface
                 $position  = new Point($x, $y);
                 $color     = $this->getColorAt($position);
                 $maskColor = $mask->getColorAt($position);
+
                 $round     = (int) round(max($color->getAlpha(), (100 - $color->getAlpha()) * $maskColor->getRed() / 255));
 
                 if (false === imagesetpixel(
@@ -491,7 +503,7 @@ final class Image implements ImageInterface
         $index = imagecolorat($this->resource, $point->getX(), $point->getY());
         $info  = imagecolorsforindex($this->resource, $index);
 
-        return new Color(array(
+        return $this->palette->color(array(
                 $info['red'],
                 $info['green'],
                 $info['blue'],
@@ -506,7 +518,7 @@ final class Image implements ImageInterface
     public function layers()
     {
         if (null === $this->layers) {
-            $this->layers = new Layers($this, $this->resource);
+            $this->layers = new Layers($this, $this->palette, $this->resource);
         }
 
         return $this->layers;
@@ -529,6 +541,36 @@ final class Image implements ImageInterface
         }
 
         imageinterlace($this->resource, $supportedInterlaceSchemes[$scheme]);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function palette()
+    {
+        return $this->palette;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function profile(ProfileInterface $profile)
+    {
+        throw new RuntimeException('GD driver does not support color profiles');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function usePalette(PaletteInterface $palette)
+    {
+        if (!$palette instanceof RGB) {
+            throw new RuntimeException('GD driver only supports RGB palette');
+        }
+
+        $this->palette = $palette;
 
         return $this;
     }
@@ -636,8 +678,14 @@ final class Image implements ImageInterface
      *
      * @throws RuntimeException
      */
-    private function getColor(Color $color)
+    private function getColor(ColorInterface $color)
     {
+        if (!$color instanceof RGBColor) {
+            throw new InvalidArgumentException(
+                'GD driver only supports RGB colors'
+            );
+        }
+
         $index = imagecolorallocatealpha(
             $this->resource, $color->getRed(), $color->getGreen(),
             $color->getBlue(), round(127 * $color->getAlpha() / 100)

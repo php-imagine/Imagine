@@ -16,6 +16,7 @@ use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractLayersTest;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Palette\RGB;
 
 class LayersTest extends AbstractLayersTest
 {
@@ -31,7 +32,8 @@ class LayersTest extends AbstractLayersTest
     public function testCount()
     {
         $resource = imagecreate(20, 20);
-        $layers = new Layers(new Image($resource), $resource);
+        $palette = $this->getMock('Imagine\Image\Palette\PaletteInterface');
+        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
 
         $this->assertCount(1, $layers);
     }
@@ -39,7 +41,8 @@ class LayersTest extends AbstractLayersTest
     public function testGetLayer()
     {
         $resource = imagecreate(20, 20);
-        $layers = new Layers(new Image($resource), $resource);
+        $palette = $this->getMock('Imagine\Image\Palette\PaletteInterface');
+        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
 
         foreach ($layers as $layer) {
             $this->assertInstanceOf('Imagine\Image\ImageInterface', $layer);
@@ -102,7 +105,7 @@ class LayersTest extends AbstractLayersTest
 
     public function getImage($path = null)
     {
-        return new Image(imagecreatetruecolor(10, 10));
+        return new Image(imagecreatetruecolor(10, 10), new RGB());
     }
 
     public function getLayers(ImageInterface $image, $resource)
