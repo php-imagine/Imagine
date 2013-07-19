@@ -14,30 +14,51 @@ namespace Imagine\Gmagick;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Gmagick\Imagine;
+use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
+use Imagine\Image\ProfileInterface;
 
-class Image implements ImageInterface
+/**
+ * Image implementation using the Gmagick PHP extension
+ */
+final class Image implements ImageInterface
 {
     /**
-     * @var Gmagick
+     * @var \Gmagick
      */
     private $gmagick;
+    /**
+     * @var Layers
+     */
+    private $layers;
+
+    /**
+     * @var PaletteInterface
+     */
+    private $palette;
+
+    private static $colorspaceMapping = array(
+        PaletteInterface::PALETTE_CMYK      => \Gmagick::COLORSPACE_CMYK,
+        PaletteInterface::PALETTE_RGB       => \Gmagick::COLORSPACE_RGB,
+    );
 
     /**
      * Constructs Image with Gmagick and Imagine instances
      *
-     * @param Gmagick $gmagick
+     * @param \Gmagick         $gmagick
+     * @param PaletteInterface $palette
      */
-    public function __construct(\Gmagick $gmagick)
+    public function __construct(\Gmagick $gmagick, PaletteInterface $palette)
     {
         $this->gmagick = $gmagick;
+        $this->setColorspace($palette);
+        $this->layers = new Layers($this, $this->palette, $this->gmagick);
     }
 
     /**
@@ -52,17 +73,25 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::copy()
+     * Returns gmagick instance
+     *
+     * @return Gmagick
      */
-    public function copy()
+    public function getGmagick()
     {
-        return new self(clone $this->gmagick);
+        return $this->gmagick;
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::crop()
+     * {@inheritdoc}
+     */
+    public function copy()
+    {
+        return new self(clone $this->gmagick, $this->palette);
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -91,8 +120,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
+     * {@inheritdoc}
      */
     public function flipHorizontally()
     {
@@ -108,8 +136,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipVertically()
+     * {@inheritdoc}
      */
     public function flipVertically()
     {
@@ -125,12 +152,12 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::strip()
+     * {@inheritdoc}
      */
     public function strip()
     {
         try {
+            $this->profile($this->palette->profile());
             $this->gmagick->stripimage();
         } catch (\GmagickException $e) {
             throw new RuntimeException(
@@ -142,8 +169,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::paste()
+     * {@inheritdoc}
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -174,22 +200,42 @@ class Image implements ImageInterface
             );
         }
 
-        $this->flatten();
-
         return $this;
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::resize()
+     * {@inheritdoc}
      */
-    public function resize(BoxInterface $size)
+    public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
+        static $supportedFilters = array(
+            ImageInterface::FILTER_UNDEFINED => \Gmagick::FILTER_UNDEFINED,
+            ImageInterface::FILTER_BESSEL    => \Gmagick::FILTER_BESSEL,
+            ImageInterface::FILTER_BLACKMAN  => \Gmagick::FILTER_BLACKMAN,
+            ImageInterface::FILTER_BOX       => \Gmagick::FILTER_BOX,
+            ImageInterface::FILTER_CATROM    => \Gmagick::FILTER_CATROM,
+            ImageInterface::FILTER_CUBIC     => \Gmagick::FILTER_CUBIC,
+            ImageInterface::FILTER_GAUSSIAN  => \Gmagick::FILTER_GAUSSIAN,
+            ImageInterface::FILTER_HANNING   => \Gmagick::FILTER_HANNING,
+            ImageInterface::FILTER_HAMMING   => \Gmagick::FILTER_HAMMING,
+            ImageInterface::FILTER_HERMITE   => \Gmagick::FILTER_HERMITE,
+            ImageInterface::FILTER_LANCZOS   => \Gmagick::FILTER_LANCZOS,
+            ImageInterface::FILTER_MITCHELL  => \Gmagick::FILTER_MITCHELL,
+            ImageInterface::FILTER_POINT     => \Gmagick::FILTER_POINT,
+            ImageInterface::FILTER_QUADRATIC => \Gmagick::FILTER_QUADRATIC,
+            ImageInterface::FILTER_SINC      => \Gmagick::FILTER_SINC,
+            ImageInterface::FILTER_TRIANGLE  => \Gmagick::FILTER_TRIANGLE
+        );
+
+        if (!array_key_exists($filter, $supportedFilters)) {
+            throw new InvalidArgumentException('Unsupported filter type');
+        }
+
         try {
             $this->gmagick->resizeimage(
                 $size->getWidth(),
                 $size->getHeight(),
-                \Gmagick::FILTER_UNDEFINED,
+                $supportedFilters[$filter],
                 1
             );
         } catch (\GmagickException $e) {
@@ -202,18 +248,17 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::rotate()
+     * {@inheritdoc}
      */
-    public function rotate($angle, Color $background = null)
+    public function rotate($angle, ColorInterface $background = null)
     {
         try {
-            $background = $background ?: new Color('fff');
+            $background = $background ?: $this->palette->color('fff');
             $pixel = $this->getColor($background);
 
             $this->gmagick->rotateimage($pixel, $angle);
 
-            $pixel = null;
+            unset($pixel);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Rotate operation failed', $e->getCode(), $e
@@ -229,10 +274,14 @@ class Image implements ImageInterface
      * Applies options before save or output
      *
      * @param \Gmagick $image
-     * @param array $options
+     * @param array    $options
      */
     private function applyImageOptions(\Gmagick $image, array $options)
     {
+        if (isset($options['quality'])) {
+            $image->setCompressionQuality($options['quality']);
+        }
+
         if(isset($options['resolution-units']) && isset($options['resolution-x'])
           && isset($options['resolution-y'])) {
 
@@ -249,19 +298,14 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::save()
+     * {@inheritdoc}
      */
     public function save($path, array $options = array())
     {
         try {
-            if (isset($options['format'])) {
-                $this->gmagick->setimageformat($options['format']);
-            }
-
-            $this->applyImageOptions($this->gmagick, $options);
-            $this->flatten();
-            $this->gmagick->writeimage($path);
+            $this->prepareOutput($options);
+            $allFrames = !isset($options['animated']) || false === $options['animated'];
+            $this->gmagick->writeimage($path, $allFrames);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Save operation failed', $e->getCode(), $e
@@ -272,8 +316,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::show()
+     * {@inheritdoc}
      */
     public function show($format, array $options = array())
     {
@@ -284,25 +327,54 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::get()
+     * {@inheritdoc}
      */
     public function get($format, array $options = array())
     {
         try {
-            $this->gmagick->setimageformat($format);
+            $options["format"] = $format;
+            $this->prepareOutput($options);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
-                'Show operation failed', $e->getCode(), $e
+                'Get operation failed', $e->getCode(), $e
             );
         }
 
-        return (string) $this->gmagick;
+        return $this->gmagick->getimagesblob();
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::__toString()
+     * @param array $options
+     */
+    private function prepareOutput(array $options)
+    {
+        if (isset($options['format'])) {
+            $this->gmagick->setimageformat($options['format']);
+        }
+
+        if (isset($options['animated']) && true === $options['animated']) {
+
+            $format = isset($options['format']) ? $options['format'] : 'gif';
+            $delay = isset($options['animated.delay']) ? $options['animated.delay'] : 800;
+            $loops = isset($options['animated.loops']) ? $options['animated.loops'] : 0;
+
+            $options['flatten'] = false;
+
+            $this->layers->animate($format, $delay, $loops);
+        } else {
+            $this->layers->merge();
+        }
+        $this->applyImageOptions($this->gmagick, $options);
+
+        // flatten only if image has multiple layers
+        if ((!isset($options['flatten']) || $options['flatten'] === true)
+            && count($this->layers) > 1) {
+            $this->flatten();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -310,8 +382,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::thumbnail()
+     * {@inheritdoc}
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -320,7 +391,23 @@ class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
+        $imageSize = $this->getSize();
         $thumbnail = $this->copy();
+
+        // if target width is larger than image width
+        // AND target height is longer than image height
+        if ($size->contains($imageSize)) {
+            return $thumbnail;
+        }
+
+        // if target width is larger than image width
+        // OR target height is longer than image height
+        if (!$imageSize->contains($size)) {
+            $size = new Box(
+                min($imageSize->getWidth(), $size->getWidth()),
+                min($imageSize->getHeight(), $size->getHeight())
+            );
+        }
 
         try {
             if ($mode === ImageInterface::THUMBNAIL_INSET) {
@@ -345,8 +432,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::draw()
+     * {@inheritdoc}
      */
     public function draw()
     {
@@ -354,8 +440,15 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::getSize()
+     * {@inheritdoc}
+     */
+    public function effects()
+    {
+        return new Effects($this->gmagick);
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getSize()
     {
@@ -367,12 +460,12 @@ class Image implements ImageInterface
                 'Get size operation failed', $e->getCode(), $e
             );
         }
+
         return new Box($width, $height);
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::applyMask()
+     * {@inheritdoc}
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -411,8 +504,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::mask()
+     * {@inheritdoc}
      */
     public function mask()
     {
@@ -430,8 +522,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::fill()
+     * {@inheritdoc}
      */
     public function fill(FillInterface $fill)
     {
@@ -463,48 +554,196 @@ class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::histogram()
+     * {@inheritdoc}
      */
     public function histogram()
     {
-        $pixels = $this->gmagick->getimagehistogram();
+        try {
+            $pixels = $this->gmagick->getimagehistogram();
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Error while fetching histogram', $e->getCode(), $e
+            );
+        }
+
+        $image = $this;
 
         return array_map(
-            function(\GmagickPixel $pixel)
-            {
-                $info = $pixel->getColor(true);
-                $opacity = isset($infos['a']) ? $info['a'] : 0;
-                return new Color(
-                    array(
-                        $info['r'],
-                        $info['g'],
-                        $info['b'],
-                    ),
-                    (int) round($opacity * 100)
-                );
+            function(\GmagickPixel $pixel) use ($image) {
+                return $image->pixelToColor($pixel);
             },
             $pixels
         );
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::getColorAt()
+     * {@inheritdoc}
      */
-    public function getColorAt(PointInterface $point) {
-        if(!$point->in($this->getSize())) {
+    public function getColorAt(PointInterface $point)
+    {
+        if (!$point->in($this->getSize())) {
             throw new RuntimeException(sprintf(
                 'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
             ));
         }
-        throw new RuntimeException('Not Implemented!');
+
+        try {
+            $cropped   = clone $this->gmagick;
+            $histogram = $cropped->cropImage(1, 1, $point->getX(), $point->getY())
+                ->getImageHistogram();
+        } catch (\GmagickException $e) {
+            throw new RuntimeException('Unable to get the pixel');
+        }
+
+        $pixel = array_shift($histogram);
+
+        unset($histogram, $cropped);
+
+        return $this->pixelToColor($pixel);
+    }
+
+    /**
+     * Returns a color given a pixel, depending the Palette context
+     *
+     * Note : this method is public for PHP 5.3 compatibility
+     *
+     * @param \ImagickPixel $pixel
+     *
+     * @return ColorInterface
+     *
+     * @throws InvalidArgumentException In case a unknown color is requested
+     */
+    public function pixelToColor(\GmagickPixel $pixel)
+    {
+        static $colorMapping = array(
+            ColorInterface::COLOR_RED     => \Gmagick::COLOR_RED,
+            ColorInterface::COLOR_GREEN   => \Gmagick::COLOR_GREEN,
+            ColorInterface::COLOR_BLUE    => \Gmagick::COLOR_BLUE,
+            ColorInterface::COLOR_CYAN    => \Gmagick::COLOR_CYAN,
+            ColorInterface::COLOR_MAGENTA => \Gmagick::COLOR_MAGENTA,
+            ColorInterface::COLOR_YELLOW  => \Gmagick::COLOR_YELLOW,
+            ColorInterface::COLOR_KEYLINE => \Gmagick::COLOR_BLACK,
+        );
+
+        if ($this->palette->supportsAlpha()) {
+            try {
+                $alpha = (int) round($pixel->getcolorvalue(\Gmagick::COLOR_ALPHA) * 100);
+            } catch (\GmagickPixelException $e) {
+                $alpha = null;
+            }
+        } else {
+            $alpha = null;
+        }
+
+        return $this->palette->color(
+            array_map(function ($color) use ($pixel, $colorMapping) {
+                if (!isset($colorMapping[$color])) {
+                    throw new InvalidArgumentException(
+                        'Color %s is not mapped in Imagick'
+                    );
+                }
+
+                return $pixel->getcolorvalue($colorMapping[$color]) * 255;
+            }, $this->palette->pixelDefinition()),
+            $alpha
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function layers()
+    {
+        return $this->layers;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function interlace($scheme)
+    {
+        static $supportedInterlaceSchemes = array(
+            ImageInterface::INTERLACE_NONE      => \Gmagick::INTERLACE_NO,
+            ImageInterface::INTERLACE_LINE      => \Gmagick::INTERLACE_LINE,
+            ImageInterface::INTERLACE_PLANE     => \Gmagick::INTERLACE_PLANE,
+            ImageInterface::INTERLACE_PARTITION => \Gmagick::INTERLACE_PARTITION,
+        );
+
+        if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
+            throw new InvalidArgumentException('Unsupported interlace type');
+        }
+
+        $this->gmagick->setInterlaceScheme($supportedInterlaceSchemes[$scheme]);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function usePalette(PaletteInterface $palette)
+    {
+        if (!isset(static::$colorspaceMapping[$palette->name()])) {
+            throw new InvalidArgumentException(sprintf(
+                'The palette %s is not supported by Gmagick driver',
+                $palette->name()
+            ));
+        }
+
+        if ($this->palette->name() === $palette->name()) {
+            return $this;
+        }
+
+        try {
+            try {
+                $hasICCProfile = (Boolean) $this->gmagick->getimageprofile('ICM');
+            } catch (\GmagickException $e) {
+                $hasICCProfile = false;
+            }
+
+            if (!$hasICCProfile) {
+                $this->profile($this->palette->profile());
+            }
+
+            $this->profile($palette->profile());
+
+            $this->setColorspace($palette);
+            $this->palette = $palette;
+        } catch (\GmagickException $e) {
+            throw new RuntimeException('Failed to set colorspace', $e->getCode(), $e);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function palette()
+    {
+        return $this->palette;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function profile(ProfileInterface $profile)
+    {
+        try {
+            $this->gmagick->profileimage('ICM', $profile->data());
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(sprintf(
+                'Unable to add profile %s to image', $profile->name()
+            ), $e->getCode(), $e);
+        }
+
+        return $this;
     }
 
     /**
      * Internal
-     * 
+     *
      * Flatten the image.
      */
     private function flatten()
@@ -526,11 +765,11 @@ class Image implements ImageInterface
     /**
      * Gets specifically formatted color string from Color instance
      *
-     * @param Imagine\Image\Color $color
+     * @param ColorInterface $color
      *
      * @return string
      */
-    private function getColor(Color $color)
+    private function getColor(ColorInterface $color)
     {
         if (!$color->isOpaque()) {
             throw new InvalidArgumentException('Gmagick doesn\'t support transparency');
@@ -557,7 +796,8 @@ class Image implements ImageInterface
      *
      * @throws RuntimeException
      */
-    private function getMimeType($format) {
+    private function getMimeType($format)
+    {
         static $mimeTypes = array(
             'jpeg' => 'image/jpeg',
             'jpg'  => 'image/jpeg',
@@ -575,5 +815,25 @@ class Image implements ImageInterface
         }
 
         return $mimeTypes[$format];
+    }
+
+    /**
+     * Sets colorspace and image type, assigns the palette.
+     *
+     * @param PaletteInterface $palette
+     *
+     * @throws InvalidArgumentException
+     */
+    private function setColorspace(PaletteInterface $palette)
+    {
+        if (!isset(static::$colorspaceMapping[$palette->name()])) {
+            throw new InvalidArgumentException(sprintf(
+                'The palette %s is not supported by Gmagick driver',
+                $palette->name()
+            ));
+        }
+
+        $this->gmagick->setimagecolorspace(static::$colorspaceMapping[$palette->name()]);
+        $this->palette = $palette;
     }
 }

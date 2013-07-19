@@ -13,13 +13,16 @@ namespace Imagine\Gd;
 
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\PointInterface;
 
+/**
+ * Drawer implementation using the GD library
+ */
 final class Drawer implements DrawerInterface
 {
     /**
@@ -44,10 +47,9 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::arc()
+     * {@inheritdoc}
      */
-    public function arc(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $thickness = 1)
+    public function arc(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if (false === imagearc(
@@ -64,10 +66,9 @@ final class Drawer implements DrawerInterface
     /**
      * This function doesn't work properly because of a bug in GD
      *
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::chord()
+     * {@inheritdoc}
      */
-    public function chord(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
+    public function chord(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if ($fill) {
@@ -88,10 +89,9 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::ellipse()
+     * {@inheritdoc}
      */
-    public function ellipse(PointInterface $center, BoxInterface $size, Color $color, $fill = false, $thickness = 1)
+    public function ellipse(PointInterface $center, BoxInterface $size, ColorInterface $color, $fill = false, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if ($fill) {
@@ -111,10 +111,9 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::line()
+     * {@inheritdoc}
      */
-    public function line(PointInterface $start, PointInterface $end, Color $color, $thickness = 1)
+    public function line(PointInterface $start, PointInterface $end, ColorInterface $color, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if (false === imageline(
@@ -128,10 +127,9 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::pieSlice()
+     * {@inheritdoc}
      */
-    public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, Color $color, $fill = false, $thickness = 1)
+    public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if ($fill) {
@@ -152,10 +150,9 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::dot()
+     * {@inheritdoc}
      */
-    public function dot(PointInterface $position, Color $color)
+    public function dot(PointInterface $position, ColorInterface $color)
     {
         if (false === imagesetpixel(
             $this->resource, $position->getX(), $position->getY(),
@@ -168,10 +165,9 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::polygon()
+     * {@inheritdoc}
      */
-    public function polygon(array $coordinates, Color $color, $fill = false, $thickness = 1)
+    public function polygon(array $coordinates, ColorInterface $color, $fill = false, $thickness = 1)
     {
         imagesetthickness($this->resource, max(1, (int) $thickness));
         if (count($coordinates) < 3) {
@@ -181,19 +177,9 @@ final class Drawer implements DrawerInterface
             ));
         }
 
-        $points = array();
-
-        foreach ($coordinates as $coordinate) {
-            if (!$coordinate instanceof PointInterface) {
-                throw new InvalidArgumentException(sprintf(
-                    'Each entry in coordinates array must be instance of '.
-                    'Imagine\Image\PointInterface, %s given', var_export($coordinate)
-                ));
-            }
-
-            $points[] = $coordinate->getX();
-            $points[] = $coordinate->getY();
-        }
+        $points = call_user_func_array('array_merge', array_map(function(PointInterface $p) {
+            return array($p->getX(), $p->getY());
+        }, $coordinates));
 
         if ($fill) {
             $callback = 'imagefilledpolygon';
@@ -212,39 +198,26 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Draw\DrawerInterface::text()
+     * {@inheritdoc}
      */
     public function text($string, AbstractFont $font, PointInterface $position, $angle = 0)
     {
         if (!$this->info['FreeType Support']) {
             throw new RuntimeException('GD is not compiled with FreeType support');
         }
-        
+
         $angle    = -1 * $angle;
         $fontsize = $font->getSize();
         $fontfile = $font->getFile();
-        $info     = imageftbbox($fontsize, $angle, $fontfile, $string);
-        $xs       = array($info[0], $info[2], $info[4], $info[6]);
-        $ys       = array($info[1], $info[3], $info[5], $info[7]);
-
-        $xdiff = 0 - min($xs) + $position->getX();
-        $ydiff = 0 - min($ys) + $position->getY();
-
-        foreach ($xs as &$x) {
-            $x += $xdiff;
-        }
-
-        foreach ($ys as &$y) {
-            $y += $ydiff;
-        }
+        $x        = $position->getX();
+        $y        = $position->getY() + $fontsize;
 
         if (false === imagealphablending($this->resource, true)) {
             throw new RuntimeException('Font mask operation failed');
         }
 
         if (false === imagefttext(
-                $this->resource, $fontsize, $angle, $xs[0], $ys[0],
+                $this->resource, $fontsize, $angle, $x, $y,
                 $this->getColor($font->getColor()), $fontfile, $string
             )) {
             throw new RuntimeException('Font mask operation failed');
@@ -262,20 +235,26 @@ final class Drawer implements DrawerInterface
      *
      * Generates a GD color from Color instance
      *
-     * @param  Imagine\Image\Color $color
+     * @param ColorInterface $color
      *
      * @return resource
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      */
-    private function getColor(Color $color)
+    private function getColor(ColorInterface $color)
     {
-        $color = imagecolorallocatealpha(
+        if (!$color instanceof RGBColor) {
+            throw new InvalidArgumentException(
+                'GD driver only supports RGB colors'
+            );
+        }
+
+        $gdColor = imagecolorallocatealpha(
             $this->resource,
             $color->getRed(), $color->getGreen(), $color->getBlue(),
             round(127 * $color->getAlpha() / 100)
         );
-        if (false === $color) {
+        if (false === $gdColor) {
             throw new RuntimeException(sprintf(
                 'Unable to allocate color "RGB(%s, %s, %s)" with '.
                 'transparency of %d percent', $color->getRed(),
@@ -283,7 +262,7 @@ final class Drawer implements DrawerInterface
             ));
         }
 
-        return $color;
+        return $gdColor;
     }
 
     private function loadGdInfo()

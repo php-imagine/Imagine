@@ -11,16 +11,20 @@
 
 namespace Imagine\Image\Fill;
 
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\PointInterface;
 
+/**
+ * Interface for the fill
+ */
 interface FillInterface
 {
     /**
      * Gets color of the fill for the given position
      *
-     * @param Imagine\Image\PointInterface $position
+     * @param PointInterface $position
      *
-     * @return Imagine\Image\Color
+     * @return ColorInterface
      */
-    function getColor(PointInterface $position);
+    public function getColor(PointInterface $position);
 }

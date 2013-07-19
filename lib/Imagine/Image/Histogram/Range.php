@@ -13,6 +13,9 @@ namespace Imagine\Image\Histogram;
 
 use Imagine\Exception\OutOfBoundsException;
 
+/**
+ * Range histogram
+ */
 final class Range
 {
     /**
@@ -29,7 +32,7 @@ final class Range
      * @param integer $start
      * @param integer $end
      *
-     * @throws Imagine\Exception\OutOfBoundsException
+     * @throws OutOfBoundsException
      */
     public function __construct($start, $end)
     {

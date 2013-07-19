@@ -15,17 +15,20 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\Point as OriginalPoint;
 use Imagine\Image\PointInterface;
 
+/**
+ * Point center
+ */
 final class Center implements PointInterface
 {
     /**
-     * @var Imagine\Image\BoxInterface
+     * @var BoxInterface
      */
     private $box;
 
     /**
      * Constructs coordinate with size instance, it needs to be relative to
      *
-     * @param Imagine\Image\BoxInterface $size
+     * @param BoxInterface $box
      */
     public function __construct(BoxInterface $box)
     {
@@ -33,8 +36,7 @@ final class Center implements PointInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\PointInterface::getX()
+     * {@inheritdoc}
      */
     public function getX()
     {
@@ -42,8 +44,7 @@ final class Center implements PointInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\PointInterface::getY()
+     * {@inheritdoc}
      */
     public function getY()
     {
@@ -51,8 +52,7 @@ final class Center implements PointInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\PointInterface::in()
+     * {@inheritdoc}
      */
     public function in(BoxInterface $box)
     {
@@ -60,8 +60,7 @@ final class Center implements PointInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\PointInterface::move()
+     * {@inheritdoc}
      */
     public function move($amount)
     {
@@ -69,8 +68,7 @@ final class Center implements PointInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\PointInterface::__toString()
+     * {@inheritdoc}
      */
     public function __toString()
     {

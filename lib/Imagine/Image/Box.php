@@ -13,6 +13,9 @@ namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
 
+/**
+ * A box implementation
+ */
 final class Box implements BoxInterface
 {
     /**
@@ -47,8 +50,7 @@ final class Box implements BoxInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\BoxInterface::getWidth()
+     * {@inheritdoc}
      */
     public function getWidth()
     {
@@ -56,8 +58,7 @@ final class Box implements BoxInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\BoxInterface::getHeight()
+     * {@inheritdoc}
      */
     public function getHeight()
     {
@@ -65,8 +66,7 @@ final class Box implements BoxInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\BoxInterface::scale()
+     * {@inheritdoc}
      */
     public function scale($ratio)
     {
@@ -74,8 +74,7 @@ final class Box implements BoxInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\BoxInterface::increase()
+     * {@inheritdoc}
      */
     public function increase($size)
     {
@@ -83,8 +82,7 @@ final class Box implements BoxInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\BoxInterface::contains()
+     * {@inheritdoc}
      */
     public function contains(BoxInterface $box, PointInterface $start = null)
     {
@@ -96,8 +94,7 @@ final class Box implements BoxInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\BoxInterface::square()
+     * {@inheritdoc}
      */
     public function square()
     {
@@ -105,8 +102,7 @@ final class Box implements BoxInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\BoxInterface::__toString()
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -114,8 +110,7 @@ final class Box implements BoxInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\BoxInterface::widen()
+     * {@inheritdoc}
      */
     public function widen($width)
     {
@@ -123,8 +118,7 @@ final class Box implements BoxInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\BoxInterface::heighten()
+     * {@inheritdoc}
      */
     public function heighten($height)
     {

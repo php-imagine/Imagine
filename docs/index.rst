@@ -23,7 +23,7 @@ Imagine is a OOP library for image manipulation built in PHP 5.3 using the lates
     $mode    = Imagine\Image\ImageInterface::THUMBNAIL_INSET;
     // or
     $mode    = Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND;
-    
+
     $imagine->open('/path/to/large_image.jpg')
         ->thumbnail($size, $mode)
         ->save('/path/to/thumbnail.png')
@@ -31,6 +31,32 @@ Imagine is a OOP library for image manipulation built in PHP 5.3 using the lates
 
 
 Enjoy!
+
+
+Contribute:
+-----------
+
+Your contributions are more than welcome !
+
+Start by `forking Imagine repository <https://github.com/avalanche123/Imagine>`_, write your feature, fix bugs, and send a `pull request <https://help.github.com/articles/using-pull-requests>`_.
+If you modify Imagine API, please update the API documentation by running at the root of Imagine project:
+
+.. code-block:: bash
+
+    curl -s http://getcomposer.org/installer | php
+    php composer.phar install --dev
+    bin/sami.php update docs/sami_configuration.php -v
+
+and commit the updated files in the *docs/API/* folder.
+
+If you're a beginner, you will find some guidelines about code contributions at `Symfony <http://symfony.com/doc/current/contributing/code/patches.html>`_
+
+
+Ask a question:
+---------------
+
+We're on IRC: ``#php-imagine`` on Freenode
+
 
 Usage:
 ---------
@@ -41,13 +67,17 @@ Usage:
    usage/introduction
    usage/coordinates
    usage/drawing
+   usage/colors
+   usage/effects
+   usage/layers
    usage/filters
    usage/exceptions
 
 Api docs:
 ---------
 
-Find them in the :ref:`genindex`
+Find them in the `API browser <_static/API>`_
+
 
 A couple of words in defense
 ----------------------------
@@ -67,4 +97,5 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`search`
+
 

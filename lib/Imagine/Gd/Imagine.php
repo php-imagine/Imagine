@@ -11,34 +11,27 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\RGB;
+use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\ImagineInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * Imagine implementation using the GD library
+ */
 final class Imagine implements ImagineInterface
 {
-    /**
-     * @var array
-     */
-    private $types = array(
-        IMAGETYPE_GIF      => 'gif',
-        IMAGETYPE_JPEG     => 'jpeg',
-        IMAGETYPE_JPEG2000 => 'jpeg',
-        IMAGETYPE_PNG      => 'png',
-        IMAGETYPE_UNKNOWN  => 'unknown',
-        IMAGETYPE_WBMP     => 'wbmp',
-        IMAGETYPE_XBM      => 'xbm'
-    );
-
     /**
      * @var array
      */
     private $info;
 
     /**
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function __construct()
     {
@@ -58,15 +51,14 @@ final class Imagine implements ImagineInterface
     private function requireGdVersion($version)
     {
         if (version_compare(GD_VERSION, $version, '<')) {
-            throw new RuntimeException('GD2 version 2.0.1 or higher is required');
+            throw new RuntimeException(sprintf('GD2 version %s or higher is required', $version));
         }
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::create()
+     * {@inheritdoc}
      */
-    public function create(BoxInterface $size, Color $color = null)
+    public function create(BoxInterface $size, ColorInterface $color = null)
     {
         $width  = $size->getWidth();
         $height = $size->getHeight();
@@ -77,7 +69,15 @@ final class Imagine implements ImagineInterface
             throw new RuntimeException('Create operation failed');
         }
 
-        $color = $color ? $color : new Color('fff');
+        $palette = null !== $color ? $color->getPalette() : new RGB();
+        $color = $color ? $color : $palette->color('fff');
+
+        if (!$color instanceof RGBColor) {
+            throw new InvalidArgumentException(
+                'GD driver only supports RGB colors'
+            );
+        }
+
         $index = imagecolorallocatealpha(
             $resource, $color->getRed(), $color->getGreen(), $color->getBlue(),
             round(127 * $color->getAlpha() / 100)
@@ -95,12 +95,11 @@ final class Imagine implements ImagineInterface
             imagecolortransparent($resource, $index);
         }
 
-        return $this->wrap($resource);
+        return $this->wrap($resource, $palette);
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::open()
+     * {@inheritdoc}
      */
     public function open($path)
     {
@@ -114,17 +113,16 @@ final class Imagine implements ImagineInterface
 
         try {
             $image = $this->read($handle);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             fclose($handle);
-            throw $e;
+            throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
         }
 
         return $image;
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::load()
+     * {@inheritdoc}
      */
     public function load($string)
     {
@@ -134,12 +132,11 @@ final class Imagine implements ImagineInterface
             throw new InvalidArgumentException('An image could not be created from the given input');
         }
 
-        return $this->wrap($resource);
+        return $this->wrap($resource, new RGB());
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::read()
+     * {@inheritdoc}
      */
     public function read($resource)
     {
@@ -157,10 +154,9 @@ final class Imagine implements ImagineInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImagineInterface::font()
+     * {@inheritdoc}
      */
-    public function font($file, $size, Color $color)
+    public function font($file, $size, ColorInterface $color)
     {
         if (!$this->info['FreeType Support']) {
             throw new RuntimeException('GD is not compiled with FreeType support');
@@ -169,9 +165,8 @@ final class Imagine implements ImagineInterface
         return new Font($file, $size, $color);
     }
 
-    private function wrap($resource)
+    private function wrap($resource, PaletteInterface $palette)
     {
-
         if (!imageistruecolor($resource)) {
             list($width, $height) = array(imagesx($resource), imagesy($resource));
 
@@ -199,6 +194,6 @@ final class Imagine implements ImagineInterface
             imageantialias($resource, true);
         }
 
-        return new Image($resource);
+        return new Image($resource, $palette);
     }
 }

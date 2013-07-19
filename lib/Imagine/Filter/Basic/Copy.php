@@ -14,11 +14,13 @@ namespace Imagine\Filter\Basic;
 use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
 
+/**
+ * A copy filter
+ */
 class Copy implements FilterInterface
 {
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {

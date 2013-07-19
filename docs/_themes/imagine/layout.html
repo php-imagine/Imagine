@@ -113,6 +113,7 @@
     {%- block htmltitle %}
     <title>{{ title|striptags|e }}{{ titlesuffix }}</title>
     {%- endblock %}
+    <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/bootstrap.min.css', 1) }}"/>
     {{ css() }}
     {%- if not embedded %}
     {{ script() }}
@@ -152,6 +153,45 @@
 {%- block extrahead %} {% endblock %}
   </head>
   <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li {% if pagename == "index" %}class="active"{% endif %}>
+                  <a href="{{ pathto(master_doc) }}">Home</a>
+              </li>
+              <li {% if pagename == "usage/introduction" %}class="active"{% endif %}>
+                  <a href="{{ pathto('usage/introduction') }}">Introduction</a>
+              </li>
+              <li {% if pagename == "usage/coordinates" %}class="active"{% endif %}>
+                  <a href="{{ pathto('usage/coordinates') }}">Coordinates</a>
+              </li>
+              <li {% if pagename == "usage/drawing" %}class="active"{% endif %}>
+                  <a href="{{ pathto('usage/drawing') }}">Drawings</a>
+              </li>
+              <li {% if pagename == "usage/drawing" %}class="active"{% endif %}>
+                  <a href="{{ pathto('usage/colors') }}">Colors</a>
+              </li>
+              <li {% if pagename == "usage/effects" %}class="active"{% endif %}>
+                  <a href="{{ pathto('usage/effects') }}">Effects</a>
+              </li>
+              <li {% if pagename == "usage/filters" %}class="active"{% endif %}>
+                  <a href="{{ pathto('usage/filters') }}">Filters</a>
+              </li>
+              <li {% if pagename == "usage/exceptions" %}class="active"{% endif %}>
+                  <a href="{{ pathto('usage/exceptions') }}">Exceptions</a>
+              </li>
+            </ul>
+            <ul class="nav nav-api">
+              <li>
+                  <a href="{{ pathto('_static/API/', 1) }}" target="_blank">API</a>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
 {%- block content %}
   {%- block sidebar1 %} {# possible location for sidebar #} {% endblock %}
 
@@ -164,8 +204,9 @@
               </a></p>
             {%- endif %}
             {% if theme_github_fork %}
-              <a href="http://github.com/{{ theme_github_fork }}"><img style="position: fixed; top: 0; right: 0; border: 0;"
-              src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+              <a class="github_ribbon" href="http://github.com/{{ theme_github_fork }}">
+                <img src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" />
+              </a>
             {% endif %}
           </header>
       {% endblock %}

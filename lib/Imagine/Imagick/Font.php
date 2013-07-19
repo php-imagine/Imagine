@@ -13,22 +13,25 @@ namespace Imagine\Imagick;
 
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 
+/**
+ * Font implementation using the Imagick PHP extension
+ */
 final class Font extends AbstractFont
 {
     /**
-     * @var Imagick
+     * @var \Imagick
      */
     private $imagick;
 
     /**
-     * @param Imagick             $imagick
-     * @param string              $file
-     * @param integer             $size
-     * @param Imagine\Image\Color $color
+     * @param \Imagick       $imagick
+     * @param string         $file
+     * @param integer        $size
+     * @param ColorInterface $color
      */
-    public function __construct(\Imagick $imagick, $file, $size, Color $color)
+    public function __construct(\Imagick $imagick, $file, $size, ColorInterface $color)
     {
         $this->imagick = $imagick;
 
@@ -36,8 +39,7 @@ final class Font extends AbstractFont
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\FontInterface::box()
+     * {@inheritdoc}
      */
     public function box($string, $angle = 0)
     {

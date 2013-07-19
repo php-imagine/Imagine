@@ -14,11 +14,13 @@ namespace Imagine\Gd;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
 
+/**
+ * Font implementation using the GD library
+ */
 final class Font extends AbstractFont
 {
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\FontInterface::box()
+     * {@inheritdoc}
      */
     public function box($string, $angle = 0)
     {

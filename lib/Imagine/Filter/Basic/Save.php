@@ -14,6 +14,9 @@ namespace Imagine\Filter\Basic;
 use Imagine\Image\ImageInterface;
 use Imagine\Filter\FilterInterface;
 
+/**
+ * A save filter
+ */
 class Save implements FilterInterface
 {
     /**
@@ -39,8 +42,7 @@ class Save implements FilterInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {

@@ -15,29 +15,34 @@ use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\BoxInterface;
 
+/**
+ * A resize filter
+ */
 class Resize implements FilterInterface
 {
     /**
-     * @var Imagine\Image\BoxInterface
+     * @var BoxInterface
      */
     private $size;
+    private $filter;
 
     /**
      * Constructs Resize filter with given width and height
      *
-     * @param Imagine\Image\BoxInterface $size
+     * @param BoxInterface $size
+     * @param string       $filter
      */
-    public function __construct(BoxInterface $size)
+    public function __construct(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
         $this->size = $size;
+        $this->filter = $filter;
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {
-        return $image->resize($this->size);
+        return $image->resize($this->size, $this->filter);
     }
 }

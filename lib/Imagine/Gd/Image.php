@@ -14,31 +14,45 @@ namespace Imagine\Gd;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
-use Imagine\Image\Point\Center;
+use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
+use Imagine\Image\ProfileInterface;
+use Imagine\Image\Palette\RGB;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Gd\Imagine;
 
+/**
+ * Image implementation using the GD library
+ */
 final class Image implements ImageInterface
 {
     /**
      * @var resource
      */
     private $resource;
+    private $layers;
+
+    /**
+     *
+     * @var PaletteInterface
+     */
+    private $palette;
 
     /**
      * Constructs a new Image instance using the result of
      * imagecreatetruecolor()
      *
-     * @param resource $resource
+     * @param resource         $resource
+     * @param PaletteInterface $palette
      */
-    public function __construct($resource)
+    public function __construct($resource, PaletteInterface $palette)
     {
+        $this->palette = $palette;
         $this->resource = $resource;
     }
 
@@ -47,12 +61,23 @@ final class Image implements ImageInterface
      */
     public function __destruct()
     {
-        imagedestroy($this->resource);
+        if (is_resource($this->resource) && 'gd' === get_resource_type($this->resource)) {
+            imagedestroy($this->resource);
+        }
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::copy()
+     * Returns Gd resource
+     *
+     * @return resource
+     */
+    public function getGdResource()
+    {
+        return $this->resource;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     final public function copy()
     {
@@ -65,12 +90,11 @@ final class Image implements ImageInterface
             throw new RuntimeException('Image copy operation failed');
         }
 
-        return new Image($copy);
+        return new Image($copy, $this->palette);
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::crop()
+     * {@inheritdoc}
      */
     final public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -100,8 +124,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::paste()
+     * {@inheritdoc}
      */
     final public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -135,11 +158,14 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::resize()
+     * {@inheritdoc}
      */
-    final public function resize(BoxInterface $size)
+    final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
+        if (ImageInterface::FILTER_UNDEFINED !== $filter) {
+            throw new InvalidArgumentException('Unsupported filter type, GD only supports ImageInterface::FILTER_UNDEFINED filter');
+        }
+
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
@@ -165,12 +191,11 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::rotate()
+     * {@inheritdoc}
      */
-    final public function rotate($angle, Color $background = null)
+    final public function rotate($angle, ColorInterface $background = null)
     {
-        $color = $background ? $background : new Color('fff');
+        $color = $background ? $background : $this->palette->color('fff');
 
         $resource = imagerotate($this->resource, -1 * $angle, $this->getColor($color));
 
@@ -186,8 +211,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::save()
+     * {@inheritdoc}
      */
     final public function save($path, array $options = array())
     {
@@ -201,8 +225,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::show()
+     * {@inheritdoc}
      */
     public function show($format, array $options = array())
     {
@@ -214,19 +237,18 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::get()
+     * {@inheritdoc}
      */
     public function get($format, array $options = array())
     {
         ob_start();
         $this->saveOrOutput($format, $options);
+
         return ob_get_clean();
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::__toString()
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -234,8 +256,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
+     * {@inheritdoc}
      */
     final public function flipHorizontally()
     {
@@ -259,8 +280,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipVertically()
+     * {@inheritdoc}
      */
     final public function flipVertically()
     {
@@ -284,20 +304,19 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::strip()
+     * {@inheritdoc}
      */
     final public function strip()
     {
         /**
          * GD strips profiles and comment, so there's nothing to do here
          */
+
         return $this;
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::thumbnail()
+     * {@inheritdoc}
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -306,15 +325,19 @@ final class Image implements ImageInterface
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-
         $ratios = array(
-            $width / imagesx($this->resource),
-            $height / imagesy($this->resource)
+            $size->getWidth() / imagesx($this->resource),
+            $size->getHeight() / imagesy($this->resource)
         );
 
+        $imageSize = $this->getSize();
         $thumbnail = $this->copy();
+
+        // if target width is larger than image width
+        // AND target height is longer than image height
+        if ($size->contains($imageSize)) {
+            return $thumbnail;
+        }
 
         if ($mode === ImageInterface::THUMBNAIL_INSET) {
             $ratio = min($ratios);
@@ -322,22 +345,35 @@ final class Image implements ImageInterface
             $ratio = max($ratios);
         }
 
-        $thumbnailSize = $thumbnail->getSize()->scale($ratio);
-        $thumbnail->resize($thumbnailSize);
-
         if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+            if (!$imageSize->contains($size)) {
+                $size = new Box(
+                    min($imageSize->getWidth(), $size->getWidth()),
+                    min($imageSize->getHeight(), $size->getHeight())
+                );
+            } else {
+                $imageSize = $thumbnail->getSize()->scale($ratio);
+                $thumbnail->resize($imageSize);
+            }
             $thumbnail->crop(new Point(
-                max(0, round(($thumbnailSize->getWidth() - $width) / 2)),
-                max(0, round(($thumbnailSize->getHeight() - $height) / 2))
+                max(0, round(($imageSize->getWidth() - $size->getWidth()) / 2)),
+                max(0, round(($imageSize->getHeight() - $size->getHeight()) / 2))
             ), $size);
+        } else {
+            if (!$imageSize->contains($size)) {
+                $imageSize = $imageSize->scale($ratio);
+                $thumbnail->resize($imageSize);
+            } else {
+                $imageSize = $thumbnail->getSize()->scale($ratio);
+                $thumbnail->resize($imageSize);
+            }
         }
 
         return $thumbnail;
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::draw()
+     * {@inheritdoc}
      */
     public function draw()
     {
@@ -345,8 +381,15 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::getSize()
+     * {@inheritdoc}
+     */
+    public function effects()
+    {
+        return new Effects($this->resource);
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getSize()
     {
@@ -354,8 +397,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::applyMask()
+     * {@inheritdoc}
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -379,6 +421,7 @@ final class Image implements ImageInterface
                 $position  = new Point($x, $y);
                 $color     = $this->getColorAt($position);
                 $maskColor = $mask->getColorAt($position);
+
                 $round     = (int) round(max($color->getAlpha(), (100 - $color->getAlpha()) * $maskColor->getRed() / 255));
 
                 if (false === imagesetpixel(
@@ -395,8 +438,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::fill()
+     * {@inheritdoc}
      */
     public function fill(FillInterface $fill)
     {
@@ -418,8 +460,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::mask()
+     * {@inheritdoc}
      */
     public function mask()
     {
@@ -433,8 +474,7 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::histogram()
+     * {@inheritdoc}
      */
     public function histogram()
     {
@@ -451,11 +491,11 @@ final class Image implements ImageInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ImageInterface::getColorAt()
+     * {@inheritdoc}
      */
-    public function getColorAt(PointInterface $point) {
-        if(!$point->in($this->getSize())) {
+    public function getColorAt(PointInterface $point)
+    {
+        if (!$point->in($this->getSize())) {
             throw new RuntimeException(sprintf(
                 'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
@@ -463,13 +503,77 @@ final class Image implements ImageInterface
         }
         $index = imagecolorat($this->resource, $point->getX(), $point->getY());
         $info  = imagecolorsforindex($this->resource, $index);
-        return new Color(array(
+
+        return $this->palette->color(array(
                 $info['red'],
                 $info['green'],
                 $info['blue'],
             ),
             (int) round($info['alpha'] / 127 * 100)
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function layers()
+    {
+        if (null === $this->layers) {
+            $this->layers = new Layers($this, $this->palette, $this->resource);
+        }
+
+        return $this->layers;
+    }
+
+    /**
+     * {@inheritdoc}
+     **/
+    public function interlace($scheme)
+    {
+        static $supportedInterlaceSchemes = array(
+            ImageInterface::INTERLACE_NONE      => 0,
+            ImageInterface::INTERLACE_LINE      => 1,
+            ImageInterface::INTERLACE_PLANE     => 1,
+            ImageInterface::INTERLACE_PARTITION => 1,
+        );
+
+        if (!array_key_exists($scheme, $supportedInterlaceSchemes)) {
+            throw new InvalidArgumentException('Unsupported interlace type');
+        }
+
+        imageinterlace($this->resource, $supportedInterlaceSchemes[$scheme]);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function palette()
+    {
+        return $this->palette;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function profile(ProfileInterface $profile)
+    {
+        throw new RuntimeException('GD driver does not support color profiles');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function usePalette(PaletteInterface $palette)
+    {
+        if (!$palette instanceof RGB) {
+            throw new RuntimeException('GD driver only supports RGB palette');
+        }
+
+        $this->palette = $palette;
+
+        return $this;
     }
 
     /**
@@ -532,7 +636,7 @@ final class Image implements ImageInterface
      *
      * Generates a GD image
      *
-     * @param  Imagine\Image\BoxInterface $size
+     * @param BoxInterface $size
      * @param  string the operation initiating the creation
      *
      * @return resource
@@ -569,14 +673,20 @@ final class Image implements ImageInterface
      *
      * Generates a GD color from Color instance
      *
-     * @param  Imagine\Image\Color $color
+     * @param Color $color
      *
      * @return resource
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      */
-    private function getColor(Color $color)
+    private function getColor(ColorInterface $color)
     {
+        if (!$color instanceof RGBColor) {
+            throw new InvalidArgumentException(
+                'GD driver only supports RGB colors'
+            );
+        }
+
         $index = imagecolorallocatealpha(
             $this->resource, $color->getRed(), $color->getGreen(),
             $color->getBlue(), round(127 * $color->getAlpha() / 100)
@@ -621,7 +731,7 @@ final class Image implements ImageInterface
 
     private function setExceptionHandler()
     {
-        set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+        set_error_handler(function($errno, $errstr, $errfile, $errline) {
 
             if (0 === error_reporting()) {
                 return;
@@ -650,7 +760,8 @@ final class Image implements ImageInterface
      *
      * @throws RuntimeException
      */
-    private function getMimeType($format) {
+    private function getMimeType($format)
+    {
         if (!$this->supported($format)) {
             throw new RuntimeException('Invalid format');
         }

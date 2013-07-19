@@ -11,9 +11,16 @@
 
 namespace Imagine\Image;
 
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\FontInterface;
+use Imagine\Image\ImageInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * The imagine interface
+ */
 interface ImagineInterface
 {
     const VERSION = '0.3.0';
@@ -21,59 +28,60 @@ interface ImagineInterface
     /**
      * Creates a new empty image with an optional background color
      *
-     * @param Imagine\Image\BoxInterface $size
-     * @param Imagine\Image\Color        $color
+     * @param BoxInterface   $size
+     * @param ColorInterface $color
      *
-     * @throws Imagine\Exception\InvalidArgumentException
-     * @throws Imagine\Exception\RuntimeException
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
-    function create(BoxInterface $size, Color $color = null);
+    public function create(BoxInterface $size, ColorInterface $color = null);
 
     /**
      * Opens an existing image from $path
      *
      * @param string $path
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
-    function open($path);
+    public function open($path);
 
     /**
      * Loads an image from a binary $string
      *
      * @param string $string
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
+     * @return ImageInterface
      */
-    function load($string);
+    public function load($string);
 
     /**
      * Loads an image from a resource $resource
      *
      * @param resource $resource
      *
-     * @throws Imagine\Exception\RuntimeException
+     * @throws RuntimeException
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
-    function read($resource);
+    public function read($resource);
 
     /**
      * Constructs a font with specified $file, $size and $color
      *
      * The font size is to be specified in points (e.g. 10pt means 10)
      *
-     * @param string              $file
-     * @param integer             $size
-     * @param Imagine\Image\Color $color
+     * @param string         $file
+     * @param integer        $size
+     * @param ColorInterface $color
      *
-     * @return Imagine\Image\AbstractFont
+     * @return FontInterface
      */
-    function font($file, $size, Color $color);
+    public function font($file, $size, ColorInterface $color);
 }

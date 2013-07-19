@@ -28,12 +28,14 @@ use Imagine\Filter\Basic\Thumbnail;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\ManipulatorInterface;
-use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
+/**
+ * A transformation filter
+ */
 final class Transformation implements FilterInterface, ManipulatorInterface
 {
     /**
@@ -62,11 +64,11 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * Applies a given FilterInterface onto given ImageInterface and returns
      * modified ImageInterface
      *
-     * @param Imagine\Filter\FilterInterface $filter
-     * @param Imagine\Image\ImageInterface   $image
+     * @param ImageInterface  $image
+     * @param FilterInterface $filter
      *
-     * @return Imagine\Image\ImageInterface
-     * @throws Imagine\Exception\InvalidArgumentException
+     * @return ImageInterface
+     * @throws InvalidArgumentException
      */
     public function applyFilter(ImageInterface $image, FilterInterface $filter)
     {
@@ -79,12 +81,12 @@ final class Transformation implements FilterInterface, ManipulatorInterface
             }
             $filter->setImagine($this->imagine);
         }
+
         return $filter->apply($image);
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Filter\FilterInterface::apply()
+     * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {
@@ -96,8 +98,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::copy()
+     * {@inheritdoc}
      */
     public function copy()
     {
@@ -105,8 +106,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::crop()
+     * {@inheritdoc}
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -114,8 +114,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipHorizontally()
+     * {@inheritdoc}
      */
     public function flipHorizontally()
     {
@@ -123,8 +122,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::flipVertically()
+     * {@inheritdoc}
      */
     public function flipVertically()
     {
@@ -132,8 +130,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::strip()
+     * {@inheritdoc}
      */
     public function strip()
     {
@@ -141,8 +138,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::paste()
+     * {@inheritdoc}
      */
     public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -150,8 +146,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::applyMask()
+     * {@inheritdoc}
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -159,8 +154,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::fill()
+     * {@inheritdoc}
      */
     public function fill(FillInterface $fill)
     {
@@ -168,26 +162,23 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::resize()
+     * {@inheritdoc}
      */
-    public function resize(BoxInterface $size)
+    public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-        return $this->add(new Resize($size));
+        return $this->add(new Resize($size, $filter));
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::rotate()
+     * {@inheritdoc}
      */
-    public function rotate($angle, Color $background = null)
+    public function rotate($angle, ColorInterface $background = null)
     {
         return $this->add(new Rotate($angle, $background));
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::save()
+     * {@inheritdoc}
      */
     public function save($path, array $options = array())
     {
@@ -195,8 +186,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::show()
+     * {@inheritdoc}
      */
     public function show($format, array $options = array())
     {
@@ -204,8 +194,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Imagine\Image\ManipulatorInterface::thumbnail()
+     * {@inheritdoc}
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
     {
@@ -216,9 +205,9 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * Registers a given FilterInterface in an internal array of filters for
      * later application to an instance of ImageInterface
      *
-     * @param Imagine\Filter\FilterInterface $filter
+     * @param FilterInterface $filter
      *
-     * @return Imagine\Filter\Transformation
+     * @return Transformation
      */
     public function add(FilterInterface $filter)
     {
