@@ -46,10 +46,13 @@ class CorrectExifRotation implements FilterInterface
             switch($orientation) {
                 case 8:
                     $rotateVal = -90;
+		    break;
                 case 3:
                     $rotateVal = 180;
+                    break;
                 case 6:
                     $rotateVal = 90;
+                    break;
             }
             $image->rotate($rotateVal, $this->color);
         }
