@@ -8,18 +8,26 @@ use Imagine\Image\Color;
 /**
  * A filter to rotate the image according to its
  * given exif information
+ *
+ * @example
+ * $imagine = new \Imagine\Imagick\Imagine();
+ * $image = $imagine->open($fullPath);
+ *
+ * $exifData = exif_read_data($fullPath);
+ * $filter = new CorrectExifRotation($exifData);
+ * $image = $filter->apply($image);
  */
 class CorrectExifRotation implements FilterInterface
 {
     /**
      * @var Color
      */
-    private $color;
+    private $color = null;
 
     /**
      * @var Array
      */
-    private $exifData;
+    private $exifData = array();
 
     /**
      * Requires an array of exifData to be handed over
@@ -46,7 +54,7 @@ class CorrectExifRotation implements FilterInterface
             switch($orientation) {
                 case 8:
                     $rotateVal = -90;
-		    break;
+                    break;
                 case 3:
                     $rotateVal = 180;
                     break;
@@ -60,4 +68,3 @@ class CorrectExifRotation implements FilterInterface
         return $image;
     }
 }
-

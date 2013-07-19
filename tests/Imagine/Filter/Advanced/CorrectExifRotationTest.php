@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Filter\Advanced;
+namespace Imagine\Test\Filter\Advanced;
 
-use Imagine\Image\Point;
+
 use Imagine\Image\Color;
-use Imagine\Filter\FilterTestCase;
+use Imagine\Test\Filter\FilterTestCase;
 
 class CorrectExifRotationTest extends FilterTestCase
 {
