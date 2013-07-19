@@ -59,16 +59,26 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
 
         $pixel = $image->getColorAt(new Point(10, 10));
 
-        $this->assertEquals('#565656', (string) $pixel);
+        $this->assertEquals($this->getGrayValue(), (string) $pixel);
 
         $greyR = (int) $pixel->getRed();
         $greyG = (int) $pixel->getGreen();
         $greyB = (int) $pixel->getBlue();
 
-        $this->assertEquals($greyR, (int) 86);
+        $this->assertEquals($greyR, $this->getComponentGrayValue());
         $this->assertEquals($greyR, $greyG);
         $this->assertEquals($greyR, $greyB);
         $this->assertEquals($greyG, $greyB);
+    }
+
+    protected function getGrayValue()
+    {
+        return '#565656';
+    }
+
+    protected function getComponentGrayValue()
+    {
+        return 86;
     }
 
     public function testColorize()
