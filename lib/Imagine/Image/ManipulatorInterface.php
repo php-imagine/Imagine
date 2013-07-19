@@ -106,7 +106,7 @@ interface ManipulatorInterface
      *
      * @return ManipulatorInterface
      */
-    public function save($path, array $options = array());
+    public function save($path = null, array $options = array());
 
     /**
      * Outputs the image content

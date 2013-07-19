@@ -44,16 +44,24 @@ final class Image implements ImageInterface
     private $palette;
 
     /**
+     * Path to original source file
+     *
+     * @var null|string
+     */
+    private $path;
+
+    /**
      * Constructs a new Image instance using the result of
      * imagecreatetruecolor()
      *
      * @param resource         $resource
      * @param PaletteInterface $palette
      */
-    public function __construct($resource, PaletteInterface $palette)
+    public function __construct($resource, PaletteInterface $palette, $path = null)
     {
         $this->palette = $palette;
         $this->resource = $resource;
+        $this->path = $path;
     }
 
     /**
@@ -213,8 +221,16 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    final public function save($path, array $options = array())
+    final public function save($path = null, array $options = array())
     {
+        $path = null === $path ? $this->path : $path;
+
+        if (null === $path) {
+            throw new RuntimeException(
+                'You can ommit save path only if image has been open from a file'
+            );
+        }
+
         $format = isset($options['format'])
             ? $options['format']
             : pathinfo($path, \PATHINFO_EXTENSION);
