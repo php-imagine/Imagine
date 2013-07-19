@@ -29,7 +29,7 @@ interface ColorInterface
     /**
      * Return the value of one of the component.
      *
-     * @param string $value One of the ColorInterface::COLOR_* component
+     * @param string $component One of the ColorInterface::COLOR_* component
      *
      * @return Integer
      */

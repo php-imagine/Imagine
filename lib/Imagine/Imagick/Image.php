@@ -54,7 +54,8 @@ final class Image implements ImageInterface
     /**
      * Constructs Image with Imagick and Imagine instances
      *
-     * @param \Imagick $imagick
+     * @param \Imagick         $imagick
+     * @param PaletteInterface $palette
      */
     public function __construct(\Imagick $imagick, PaletteInterface $palette)
     {

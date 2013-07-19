@@ -41,7 +41,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(<abbr title="Imagine\Gmagick\Gmagick">Gmagick</abbr> $gmagick)
+                    <a href="#method___construct">__construct</a>(<abbr title="Imagine\Gmagick\Gmagick">Gmagick</abbr> $gmagick, <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette)
                     <p>Constructs Image with Gmagick and Imagine instances</p>
                 </td>
                 <td></td>
@@ -141,7 +141,7 @@
                     <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_rotate">rotate</a>(integer $angle, <a href="../../Imagine/Image/Color.html"><abbr title="Imagine\Image\Color">Color</abbr></a> $background = null)
+                    <a href="#method_rotate">rotate</a>(integer $angle, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $background = null)
                     <p>Rotates an image at the given angle.</p>
                 </td>
                 <td></td>
@@ -263,17 +263,27 @@
                 </td>
                 <td class="last">
                     <a href="#method_histogram">histogram</a>()
-                    <p>Returns array of image colors as Imagine\Image\Color instances</p>
+                    <p>Returns array of image colors as Imagine\Image\Palette\Color\ColorInterface instances</p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    <a href="../../Imagine/Image/Color.html"><abbr title="Imagine\Image\Color">Color</abbr></a>
+                    <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
                 </td>
                 <td class="last">
                     <a href="#method_getColorAt">getColorAt</a>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $point)
                     <p>Returns color at specified positions of current image</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_pixelToColor">pixelToColor</a>(<abbr title="Imagine\Gmagick\GmagickPixel">GmagickPixel</abbr> $pixel)
+                    <p>Returns a color given a pixel, depending the Palette context</p>
                 </td>
                 <td></td>
             </tr>
@@ -297,15 +307,45 @@
                 </td>
                 <td></td>
             </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_usePalette">usePalette</a>(<a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette)
+                    <p>Set a palette for the image.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_palette">palette</a>()
+                    <p>Return the current color palette</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_profile">profile</a>(<a href="../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)
+                    <p>Applies a color profile on the Image</p>
+                </td>
+                <td></td>
+            </tr>
             </table>
 
 
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 44</div>
+        <div class="location">at line 57</div>
         <code>            public            
-    <strong>__construct</strong>(<abbr title="Imagine\Gmagick\Gmagick">Gmagick</abbr> $gmagick)</code>
+    <strong>__construct</strong>(<abbr title="Imagine\Gmagick\Gmagick">Gmagick</abbr> $gmagick, <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette)</code>
     </h3>
     <div class="details">
         <p>Constructs Image with Gmagick and Imagine instances</p>
@@ -321,6 +361,12 @@
                 <td>
 </td>
             </tr>
+                    <tr>
+                <td><a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a></td>
+                <td>$palette</td>
+                <td>
+</td>
+            </tr>
             </table>
 
             
@@ -330,7 +376,7 @@
     </div>
 
                 <h3 id="method___destruct">
-        <div class="location">at line 53</div>
+        <div class="location">at line 67</div>
         <code>            public            
     <strong>__destruct</strong>()</code>
     </h3>
@@ -346,7 +392,7 @@
     </div>
 
                 <h3 id="method_getGmagick">
-        <div class="location">at line 66</div>
+        <div class="location">at line 80</div>
         <code>            public            <abbr title="Imagine\Gmagick\Gmagick">Gmagick</abbr>
     <strong>getGmagick</strong>()</code>
     </h3>
@@ -372,7 +418,7 @@
     </div>
 
                 <h3 id="method_copy">
-        <div class="location">at line 74</div>
+        <div class="location">at line 88</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>copy</strong>()</code>
     </h3>
@@ -408,7 +454,7 @@
     </div>
 
                 <h3 id="method_crop">
-        <div class="location">at line 82</div>
+        <div class="location">at line 96</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>crop</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size)</code>
     </h3>
@@ -466,7 +512,7 @@
     </div>
 
                 <h3 id="method_flipHorizontally">
-        <div class="location">at line 111</div>
+        <div class="location">at line 125</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipHorizontally</strong>()</code>
     </h3>
@@ -502,7 +548,7 @@
     </div>
 
                 <h3 id="method_flipVertically">
-        <div class="location">at line 127</div>
+        <div class="location">at line 141</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipVertically</strong>()</code>
     </h3>
@@ -538,7 +584,7 @@
     </div>
 
                 <h3 id="method_strip">
-        <div class="location">at line 143</div>
+        <div class="location">at line 157</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>strip</strong>()</code>
     </h3>
@@ -574,7 +620,7 @@
     </div>
 
                 <h3 id="method_paste">
-        <div class="location">at line 159</div>
+        <div class="location">at line 174</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>paste</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start)</code>
     </h3>
@@ -636,7 +682,7 @@
     </div>
 
                 <h3 id="method_resize">
-        <div class="location">at line 194</div>
+        <div class="location">at line 209</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>resize</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $filter = ImageInterface::FILTER_UNDEFINED)</code>
     </h3>
@@ -689,9 +735,9 @@
     </div>
 
                 <h3 id="method_rotate">
-        <div class="location">at line 238</div>
+        <div class="location">at line 253</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
-    <strong>rotate</strong>(integer $angle, <a href="../../Imagine/Image/Color.html"><abbr title="Imagine\Image\Color">Color</abbr></a> $background = null)</code>
+    <strong>rotate</strong>(integer $angle, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $background = null)</code>
     </h3>
     <div class="details">
         <p>Rotates an image at the given angle.</p>
@@ -708,7 +754,7 @@ area of rotated image.</p>
 </td>
             </tr>
                     <tr>
-                <td><a href="../../Imagine/Image/Color.html"><abbr title="Imagine\Image\Color">Color</abbr></a></td>
+                <td><a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a></td>
                 <td>$background</td>
                 <td>
 </td>
@@ -742,7 +788,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_save">
-        <div class="location">at line 288</div>
+        <div class="location">at line 303</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>save</strong>(string $path, array $options = array())</code>
     </h3>
@@ -795,7 +841,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_show">
-        <div class="location">at line 306</div>
+        <div class="location">at line 321</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>show</strong>(string $format, array $options = array())</code>
     </h3>
@@ -848,7 +894,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_get">
-        <div class="location">at line 317</div>
+        <div class="location">at line 332</div>
         <code>            public            string
     <strong>get</strong>(string $format, array $options = array())</code>
     </h3>
@@ -900,7 +946,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method___toString">
-        <div class="location">at line 364</div>
+        <div class="location">at line 379</div>
         <code>            public            string
     <strong>__toString</strong>()</code>
     </h3>
@@ -935,7 +981,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_thumbnail">
-        <div class="location">at line 372</div>
+        <div class="location">at line 387</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET)</code>
     </h3>
@@ -988,7 +1034,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_draw">
-        <div class="location">at line 422</div>
+        <div class="location">at line 437</div>
         <code>            public            <a href="../../Imagine/Draw/DrawerInterface.html"><abbr title="Imagine\Draw\DrawerInterface">DrawerInterface</abbr></a>
     <strong>draw</strong>()</code>
     </h3>
@@ -1014,7 +1060,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_effects">
-        <div class="location">at line 430</div>
+        <div class="location">at line 445</div>
         <code>            public            <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>effects</strong>()</code>
     </h3>
@@ -1041,7 +1087,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_getSize">
-        <div class="location">at line 438</div>
+        <div class="location">at line 453</div>
         <code>            public            <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a>
     <strong>getSize</strong>()</code>
     </h3>
@@ -1067,7 +1113,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_applyMask">
-        <div class="location">at line 455</div>
+        <div class="location">at line 470</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>applyMask</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $mask)</code>
     </h3>
@@ -1104,7 +1150,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_mask">
-        <div class="location">at line 494</div>
+        <div class="location">at line 509</div>
         <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>mask</strong>()</code>
     </h3>
@@ -1130,7 +1176,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_fill">
-        <div class="location">at line 512</div>
+        <div class="location">at line 527</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>fill</strong>(<a href="../../Imagine/Image/Fill/FillInterface.html"><abbr title="Imagine\Image\Fill\FillInterface">FillInterface</abbr></a> $fill)</code>
     </h3>
@@ -1167,12 +1213,12 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_histogram">
-        <div class="location">at line 544</div>
+        <div class="location">at line 559</div>
         <code>            public            array
     <strong>histogram</strong>()</code>
     </h3>
     <div class="details">
-        <p>Returns array of image colors as Imagine\Image\Color instances</p>
+        <p>Returns array of image colors as Imagine\Image\Palette\Color\ColorInterface instances</p>
         <p>
 </p>
         <div class="tags">
@@ -1193,8 +1239,8 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_getColorAt">
-        <div class="location">at line 569</div>
-        <code>            public            <a href="../../Imagine/Image/Color.html"><abbr title="Imagine\Image\Color">Color</abbr></a>
+        <div class="location">at line 582</div>
+        <code>            public            <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
     <strong>getColorAt</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $point)</code>
     </h3>
     <div class="details">
@@ -1218,7 +1264,7 @@ area of rotated image.</p>
 
                     <table>
         <tr>
-            <td><a href="../../Imagine/Image/Color.html"><abbr title="Imagine\Image\Color">Color</abbr></a></td>
+            <td><a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a></td>
             <td>
 </td>
         </tr>
@@ -1239,8 +1285,53 @@ area of rotated image.</p>
                     </div>
     </div>
 
+                <h3 id="method_pixelToColor">
+        <div class="location">at line 617</div>
+        <code>            public            <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
+    <strong>pixelToColor</strong>(<abbr title="Imagine\Gmagick\GmagickPixel">GmagickPixel</abbr> $pixel)</code>
+    </h3>
+    <div class="details">
+        <p>Returns a color given a pixel, depending the Palette context</p>
+        <p>Note : this method is public for PHP 5.3 compatibility</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Imagine\Gmagick\GmagickPixel">GmagickPixel</abbr></td>
+                <td>$pixel</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/InvalidArgumentException"><abbr title="InvalidArgumentException">InvalidArgumentException</abbr></a></td>
+                <td>In case a unknown color is requested</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
                 <h3 id="method_layers">
-        <div class="location">at line 601</div>
+        <div class="location">at line 656</div>
         <code>            public            <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
     <strong>layers</strong>()</code>
     </h3>
@@ -1279,7 +1370,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_interlace">
-        <div class="location">at line 609</div>
+        <div class="location">at line 664</div>
         <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>interlace</strong>(string $scheme)</code>
     </h3>
@@ -1317,6 +1408,125 @@ area of rotated image.</p>
                     <tr>
                 <td><a href="http://php.net/InvalidArgumentException"><abbr title="InvalidArgumentException">InvalidArgumentException</abbr></a></td>
                 <td>When an unsupported Interface type is supplied</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_usePalette">
+        <div class="location">at line 685</div>
+        <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
+    <strong>usePalette</strong>(<a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette)</code>
+    </h3>
+    <div class="details">
+        <p>Set a palette for the image.</p>
+        <p>Useful to change colorspace.</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a></td>
+                <td>$palette</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/RuntimeException"><abbr title="RuntimeException">RuntimeException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_palette">
+        <div class="location">at line 723</div>
+        <code>            public            <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
+    <strong>palette</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Return the current color palette</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_profile">
+        <div class="location">at line 731</div>
+        <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
+    <strong>profile</strong>(<a href="../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)</code>
+    </h3>
+    <div class="details">
+        <p>Applies a color profile on the Image</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a></td>
+                <td>$profile</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/RuntimeException"><abbr title="RuntimeException">RuntimeException</abbr></a></td>
+                <td>
+</td>
             </tr>
             </table>
 

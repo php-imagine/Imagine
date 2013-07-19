@@ -47,7 +47,8 @@ final class Image implements ImageInterface
      * Constructs a new Image instance using the result of
      * imagecreatetruecolor()
      *
-     * @param resource $resource
+     * @param resource         $resource
+     * @param PaletteInterface $palette
      */
     public function __construct($resource, PaletteInterface $palette)
     {
