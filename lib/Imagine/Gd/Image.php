@@ -231,9 +231,15 @@ final class Image implements ImageInterface
             );
         }
 
-        $format = isset($options['format'])
-            ? $options['format']
-            : pathinfo($path, \PATHINFO_EXTENSION);
+        if (isset($options['format'])) {
+            $format = $options['format'];
+        } else {
+            if ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
+                $format = $extension;
+            } else {
+                $format = pathinfo($this->path, \PATHINFO_EXTENSION);
+            }
+        }
 
         $this->saveOrOutput($format, $options, $path);
 

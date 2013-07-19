@@ -93,6 +93,20 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink(__DIR__ . '/tmp.jpg');
     }
 
+    public function testSaveWithoutFormatShouldSaveInOriginalFormat()
+    {
+        $tmpFile = __DIR__ . '/tmpfile';
+
+        $this
+            ->getImagine()
+            ->open(__DIR__ . '/../../Fixtures/large.jpg')
+            ->save($tmpFile);
+
+        $data = exif_read_data($tmpFile);
+        $this->assertEquals('image/jpeg', $data['MimeType']);
+        unlink($tmpFile);
+    }
+
     public function testSaveWithoutPathFileFromImageLoadShouldBeOkay()
     {
         $source = __DIR__ . '/../../Fixtures/google.png';
