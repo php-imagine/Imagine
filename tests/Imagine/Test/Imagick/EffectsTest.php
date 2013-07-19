@@ -29,4 +29,14 @@ class EffectsTest extends AbstractEffectsTest
     {
         return new Imagine();
     }
+
+    protected function getGrayValue()
+    {
+        return '#555555';
+    }
+
+    protected function getComponentGrayValue()
+    {
+        return 85;
+    }
 }
