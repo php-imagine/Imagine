@@ -27,7 +27,7 @@ class WebOptimization implements FilterInterface
     public function __construct($path = null, array $options = array())
     {
         $this->path = $path;
-        $this->options = array_merge(array(
+        $this->options = array_replace(array(
             'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
             'resolution-y'     => 72,
             'resolution-x'     => 72,
