@@ -3,7 +3,7 @@ namespace Imagine\Filter\Advanced;
 
 use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Color;
+use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
  * A filter to rotate the image according to its
@@ -35,7 +35,7 @@ class CorrectExifRotation implements FilterInterface
      * @param Array   $exifData
      * @param Color   $color
      */
-    public function __construct(Array $exifData, Color $color = null)
+    public function __construct(Array $exifData, ColorInterface $color = null)
     {
         $this->exifData = $exifData;
         $this->color = $color;
