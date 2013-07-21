@@ -15,10 +15,9 @@ use Imagine\Image\Palette\Color\ColorInterface;
  *
  * @example
  * $imagine = new \Imagine\Imagick\Imagine();
- * $image = $imagine->open($fullPath);
+ * $image = $imagine->open('/path/to/image.ext');
  *
- * $exifData = exif_read_data($fullPath);
- * $filter = new CorrectExifRotation($exifData);
+ * $filter = new CorrectExifRotation();
  * $image = $filter->apply($image);
  */
 class CorrectExifRotation implements FilterInterface
