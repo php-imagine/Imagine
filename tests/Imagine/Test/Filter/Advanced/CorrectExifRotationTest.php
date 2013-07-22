@@ -12,7 +12,6 @@ use Imagine\Filter\Advanced\CorrectExifRotation;
 class CorrectExifRotationTest extends FilterTestCase
 {
 
-
     public function testCorrectExifRotationWith90Deg()
     {
 
@@ -127,15 +126,15 @@ class CorrectExifRotationTest extends FilterTestCase
 
     }
 
-    private function getImageStreamForRotation($rotation, $extension='jpg') {
+    private function getImageStreamForRotation($rotation, $extension='jpg')
+    {
         $rotation = str_replace('-', 'minus', $rotation);
         $rotation = preg_replace('/[^[:alnum:]]/i', '', $rotation);
-        $filename = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
-                    '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR .
-                     'exifOrientation' . DIRECTORY_SEPARATOR . $rotation . '.' . $extension;
-        if(!file_exists($filename)) {
+        $filename = __DIR__ . '/../../../Fixtures/exifOrientation/' .$rotation . '.' . $extension;
+        if (!file_exists($filename)) {
             return '';
         }
+
         return file_get_contents($filename);
     }
 }

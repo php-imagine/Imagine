@@ -37,7 +37,7 @@ class CorrectExifRotation implements FilterInterface
      * Takes optionally a ColorInterface instance, which will be used
      * as background to rotate on
      *
-     * @param Color   $color
+     * @param Color $color
      */
     public function __construct(ColorInterface $color = null)
     {
@@ -56,7 +56,7 @@ class CorrectExifRotation implements FilterInterface
             $orientation = (int) $exifData['Orientation'];
 
             $rotateVal = 0;
-            switch($orientation) {
+            switch ($orientation) {
                 case 8:
                     $rotateVal = -90;
                     break;
@@ -77,11 +77,13 @@ class CorrectExifRotation implements FilterInterface
      *
      * @param ImageInterface $image
      */
-    private function getExifFromImage(ImageInterface $image) {
+    private function getExifFromImage(ImageInterface $image)
+    {
         $exifData = exif_read_data("data://image/jpeg;base64," . base64_encode($image->get('jpg')));
-        if(!is_array($exifData)) {
+        if (!is_array($exifData)) {
             return array();
         }
+
         return $exifData;
     }
 }
