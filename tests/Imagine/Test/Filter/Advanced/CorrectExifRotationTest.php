@@ -14,7 +14,6 @@ class CorrectExifRotationTest extends FilterTestCase
 
     public function testCorrectExifRotationWith90Deg()
     {
-
          $imageStream = $this->getImageStreamForRotation(90);
          $image       = $this->getImage();
 
@@ -28,12 +27,10 @@ class CorrectExifRotationTest extends FilterTestCase
 
          $filter = new CorrectExifRotation();
          $this->assertSame($image, $filter->apply($image));
-
     }
 
     public function testCorrectExifRotationWith180Deg()
     {
-
         $imageStream = $this->getImageStreamForRotation(180);
         $image       = $this->getImage();
 
@@ -47,12 +44,10 @@ class CorrectExifRotationTest extends FilterTestCase
 
         $filter = new CorrectExifRotation();
         $this->assertSame($image, $filter->apply($image));
-
     }
 
     public function testCorrectExifRotationWithMinus90Deg()
     {
-
         $imageStream = $this->getImageStreamForRotation(-90);
         $image       = $this->getImage();
 
@@ -66,12 +61,10 @@ class CorrectExifRotationTest extends FilterTestCase
 
         $filter = new CorrectExifRotation();
         $this->assertSame($image, $filter->apply($image));
-
     }
 
     public function testNoRotationWithUnknownValue()
     {
-
         $imageStream = $this->getImageStreamForRotation("unknown");
         $image       = $this->getImage();
 
@@ -85,12 +78,10 @@ class CorrectExifRotationTest extends FilterTestCase
 
         $filter = new CorrectExifRotation();
         $this->assertSame($image, $filter->apply($image));
-
     }
 
     public function testNoRotationWithMissingOrientation()
     {
-
         $imageStream = $this->getImageStreamForRotation("noOrientation");
         $image       = $this->getImage();
 
@@ -103,12 +94,10 @@ class CorrectExifRotationTest extends FilterTestCase
 
         $filter = new CorrectExifRotation();
         $this->assertSame($image, $filter->apply($image));
-
     }
 
     public function testCorrectExifRotationWith90DegAndColor()
     {
-
         $imageStream = $this->getImageStreamForRotation(90);
         $image = $this->getImage();
         $color = $this->getColor();
@@ -123,7 +112,6 @@ class CorrectExifRotationTest extends FilterTestCase
 
         $filter = new CorrectExifRotation($color);
         $this->assertSame($image, $filter->apply($image));
-
     }
 
     private function getImageStreamForRotation($rotation, $extension='jpg')

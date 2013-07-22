@@ -49,7 +49,6 @@ class CorrectExifRotation implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-
         $exifData = $this->getExifFromImage($image);
 
         if (isset($exifData['Orientation'])) {
