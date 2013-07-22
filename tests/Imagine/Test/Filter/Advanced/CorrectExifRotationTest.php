@@ -68,9 +68,8 @@ class CorrectExifRotationTest extends FilterTestCase
         $imageStream = $this->getImageStreamForRotation("unknown");
         $image       = $this->getImage();
 
-        $image->expects($this->once())
-        ->method('rotate')
-        ->with(0);
+        $image->expects($this->never())
+        ->method('rotate');
 
         $image->expects($this->once())
         ->method('get')

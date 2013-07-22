@@ -66,7 +66,10 @@ class CorrectExifRotation implements FilterInterface
                     $rotateVal = 90;
                     break;
             }
-            $image->rotate($rotateVal, $this->color);
+
+            if ($rotateVal !== 0) {
+                $image->rotate($rotateVal, $this->color);
+            }
         }
 
         return $image;
