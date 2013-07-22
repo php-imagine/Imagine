@@ -33,9 +33,10 @@ class CorrectExifRotation implements FilterInterface
     private $exifData = array();
 
     /**
-     * Requires an array of exifData to be handed over
+     * Constructs the rotation class
+     * Takes optionally a ColorInterface instance, which will be used
+     * as background to rotate on
      *
-     * @param Array   $exifData
      * @param Color   $color
      */
     public function __construct(ColorInterface $color = null)
