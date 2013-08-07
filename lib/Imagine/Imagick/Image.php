@@ -402,10 +402,16 @@ final class Image implements ImageInterface
 
         $imageSize = $this->getSize();
         $thumbnail = $this->copy();
+        // forces profile usage, it will merge current profile in the picture
+        // required as the next methods will strip the thumbnail and remove
+        // profiles.
+        $thumbnail->usePalette($this->palette);
 
         // if target width is larger than image width
         // AND target height is longer than image height
         if ($size->contains($imageSize)) {
+            $thumbnail->strip();
+
             return $thumbnail;
         }
 
