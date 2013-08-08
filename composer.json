@@ -23,7 +23,8 @@
         "php": ">=5.3.2"
     },
     "require-dev": {
-        "sami/sami": "dev-master"
+        "sami/sami": "dev-master",
+		"phpunit/phpunit": "~3.7"
     },
     "suggest": {
         "ext-gd": "to use the GD implementation",
