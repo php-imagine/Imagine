@@ -60,7 +60,7 @@ class BorderDetection extends Neighborhood implements FilterInterface
         }
 
         if (null === $matrix) {
-            throw new InvalidArgumentException('Variant ' . $variant . ' unknown');
+            throw new InvalidArgumentException('Unknown variant ' . $variant);
         }
 
         parent::__construct($matrix);
