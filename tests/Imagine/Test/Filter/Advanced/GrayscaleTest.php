@@ -28,20 +28,20 @@ class GrayscaleTest extends FilterTestCase
      * @param ColorInterface $color
      * @param ColorInterface $filteredColor
      */
-    public function testGrayscaling(BoxInterface $size, ColorInterface $color, ColorInterface $filteredColor)
+    public function testCallback(BoxInterface $size, ColorInterface $color, ColorInterface $filteredColor)
     {
         $image       = $this->getImage();
         $imageWidth  = $size->getWidth();
         $imageHeight = $size->getHeight();
 
         $size = $this->getMock('Imagine\\Image\\BoxInterface');
-        $size->expects($this->exactly($imageWidth+1))
-             ->method('getWidth')
-             ->will($this->returnValue($imageWidth));
+        $size->expects($this->any())
+            ->method('getWidth')
+            ->will($this->returnValue($imageWidth));
 
-        $size->expects($this->exactly($imageWidth * ($imageHeight+1)))
-             ->method('getHeight')
-             ->will($this->returnValue($imageHeight));
+        $size->expects($this->any())
+            ->method('getHeight')
+            ->will($this->returnValue($imageHeight));
 
         $image->expects($this->any())
             ->method('getSize')
