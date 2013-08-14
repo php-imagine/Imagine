@@ -47,3 +47,7 @@ Some of the ideas for upcoming filters:
 ## Articles ##
 
  - [Image Processing with Imagine](http://www.phparch.com/2011/03/image-processing-with-imagine)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/avalanche123/imagine/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
