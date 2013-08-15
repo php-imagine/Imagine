@@ -101,7 +101,7 @@ class RGB implements PaletteInterface
         }
 
         $color = $this->parser->parseToRGB($color);
-        $index = sprintf('#%02x%02x%02x', $color[0], $color[1], $color[2]);
+        $index = sprintf('#%02x%02x%02x-%d', $color[0], $color[1], $color[2], $alpha);
 
         if (false === array_key_exists($index, static::$colors)) {
             static::$colors[$index] = new RGBColor($this, $color, $alpha);
