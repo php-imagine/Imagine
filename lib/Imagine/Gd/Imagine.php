@@ -103,22 +103,21 @@ final class Imagine implements ImagineInterface
      */
     public function open($path)
     {
-        $handle = @fopen($path, 'r');
+        $data = @file_get_contents($path);
 
-        if (false === $handle) {
+        if (false === $data) {
             throw new InvalidArgumentException(sprintf(
                 'File %s doesn\'t exist', $path
             ));
         }
 
-        try {
-            $image = $this->read($handle);
-        } catch (\Exception $e) {
-            fclose($handle);
-            throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
+        $resource = @imagecreatefromstring($data);
+
+        if (!is_resource($resource)) {
+            throw new InvalidArgumentException(sprintf('Unable to open image %s', $path));
         }
 
-        return $image;
+        return $this->wrap($resource, new RGB(), $path);
     }
 
     /**
@@ -165,7 +164,7 @@ final class Imagine implements ImagineInterface
         return new Font($file, $size, $color);
     }
 
-    private function wrap($resource, PaletteInterface $palette)
+    private function wrap($resource, PaletteInterface $palette, $path = null)
     {
         if (!imageistruecolor($resource)) {
             list($width, $height) = array(imagesx($resource), imagesy($resource));
@@ -194,6 +193,6 @@ final class Imagine implements ImagineInterface
             imageantialias($resource, true);
         }
 
-        return new Image($resource, $palette);
+        return new Image($resource, $palette, $path);
     }
 }

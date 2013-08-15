@@ -180,7 +180,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function save($path, array $options = array())
+    public function save($path = null, array $options = array())
     {
         return $this->add(new Save($path, $options));
     }
