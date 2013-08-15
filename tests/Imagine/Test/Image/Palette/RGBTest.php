@@ -30,6 +30,13 @@ class RGBTest extends AbstractPaletteTest
         );
     }
 
+    public function provideColorAndAlpha()
+    {
+        return array(
+            array(array(23, 24, 0), 0.5),
+        );
+    }
+
     public function provideColorsForBlending()
     {
         $palette = $this->getPalette();

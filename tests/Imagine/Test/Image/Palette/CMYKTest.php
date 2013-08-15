@@ -29,6 +29,18 @@ class CMYKTest extends AbstractPaletteTest
         );
     }
 
+    public function provideColorAndAlpha()
+    {
+        return array(
+            array(array(4, 3, 2, 1), null)
+        );
+    }
+
+    public function testColorWithDifferentAlphasAreNotSame($color = null)
+    {
+        $this->markTestSkipped('CMYK does not support alpha');
+    }
+
     public function provideColorsForBlending()
     {
         $palette = $this->getPalette();

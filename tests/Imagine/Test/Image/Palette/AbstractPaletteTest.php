@@ -27,6 +27,22 @@ abstract class AbstractPaletteTest extends ImagineTestCase
     }
 
     /**
+     * @dataProvider provideColorAndAlpha
+     */
+    public function testColorIsCached($color, $alpha)
+    {
+        $this->assertSame($this->getPalette()->color($color, $alpha), $this->getPalette()->color($color, $alpha));
+    }
+
+    /**
+     * @dataProvider provideColorAndAlpha
+     */
+    public function testColorWithDifferentAlphasAreNotSame($color, $alpha)
+    {
+        $this->assertNotSame($this->getPalette()->color($color, 2), $this->getPalette()->color($color, 0));
+    }
+
+    /**
      * @dataProvider provideColorsForBlending
      */
     public function testBlend($expected, $color1, $color2, $amount)
