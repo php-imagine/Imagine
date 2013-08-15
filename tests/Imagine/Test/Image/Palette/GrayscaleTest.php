@@ -30,6 +30,13 @@ class GrayscaleTest extends AbstractPaletteTest
         );
     }
 
+    public function provideColorAndAlpha()
+    {
+        return array(
+            array(array(23, 23, 23), 0.5),
+        );
+    }
+
     public function provideColorsForBlending()
     {
         $palette = $this->getPalette();
