@@ -227,18 +227,16 @@ final class Image implements ImageInterface
 
         if (null === $path) {
             throw new RuntimeException(
-                'You can ommit save path only if image has been open from a file'
+                'You can omit save path only if image has been open from a file'
             );
         }
 
         if (isset($options['format'])) {
             $format = $options['format'];
+        } elseif ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
+            $format = $extension;
         } else {
-            if ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
-                $format = $extension;
-            } else {
-                $format = pathinfo($this->path, \PATHINFO_EXTENSION);
-            }
+            $format = pathinfo($this->path, \PATHINFO_EXTENSION);
         }
 
         $this->saveOrOutput($format, $options, $path);
