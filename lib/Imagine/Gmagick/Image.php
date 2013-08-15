@@ -300,8 +300,16 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function save($path, array $options = array())
+    public function save($path = null, array $options = array())
     {
+        $path = null === $path ? $this->gmagick->getImageFilename() : $path;
+
+        if ('' === trim($path)) {
+            throw new RuntimeException(
+                'You can omit save path only if image has been open from a file'
+            );
+        }
+
         try {
             $this->prepareOutput($options);
             $allFrames = !isset($options['animated']) || false === $options['animated'];

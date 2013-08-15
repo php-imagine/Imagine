@@ -93,6 +93,50 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink(__DIR__ . '/tmp.jpg');
     }
 
+    public function testSaveWithoutFormatShouldSaveInOriginalFormat()
+    {
+        $tmpFile = __DIR__ . '/tmpfile';
+
+        $this
+            ->getImagine()
+            ->open(__DIR__ . '/../../Fixtures/large.jpg')
+            ->save($tmpFile);
+
+        $data = exif_read_data($tmpFile);
+        $this->assertEquals('image/jpeg', $data['MimeType']);
+        unlink($tmpFile);
+    }
+
+    public function testSaveWithoutPathFileFromImageLoadShouldBeOkay()
+    {
+        $source = __DIR__ . '/../../Fixtures/google.png';
+        $tmpFile = __DIR__ . '/../../Fixtures/google.tmp.png';
+
+        if (file_exists($tmpFile)) {
+            unlink($tmpFile);
+        }
+
+        copy($source, $tmpFile);
+
+        $this->assertEquals(md5_file($source), md5_file($tmpFile));
+
+        $this
+            ->getImagine()
+            ->open($tmpFile)
+            ->resize(new Box(20, 20))
+            ->save();
+
+        $this->assertNotEquals(md5_file($source), md5_file($tmpFile));
+        unlink($tmpFile);
+    }
+
+    public function testSaveWithoutPathFileFromImageCreationShouldFail()
+    {
+        $image = $this->getImagine()->create(new Box(20, 20));
+        $this->setExpectedException('Imagine\Exception\RuntimeException');
+        $image->save();
+    }
+
     public function provideFromAndToPalettes()
     {
         return array(

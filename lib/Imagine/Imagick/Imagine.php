@@ -59,6 +59,7 @@ final class Imagine implements ImagineInterface
 
         try {
             $image = $this->read($handle);
+            $image->getImagick()->setImageFilename($path);
         } catch (\Exception $e) {
             fclose($handle);
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
