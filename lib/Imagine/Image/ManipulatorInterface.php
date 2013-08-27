@@ -153,12 +153,13 @@ interface ManipulatorInterface
      *
      * @param BoxInterface $size
      * @param string       $mode
+     * @param string       $filter The filter to use for resizing, one of ImageInterface::FILTER_*
      *
      * @throws RuntimeException
      *
      * @return ManipulatorInterface
      */
-    public function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET);
+    public function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED);
 
     /**
      * Applies a given mask to current image's alpha channel

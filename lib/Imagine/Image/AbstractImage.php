@@ -18,7 +18,7 @@ abstract class AbstractImage implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
@@ -55,7 +55,7 @@ abstract class AbstractImage implements ImageInterface
                 );
             } else {
                 $imageSize = $thumbnail->getSize()->scale($ratio);
-                $thumbnail->resize($imageSize);
+                $thumbnail->resize($imageSize, $filter);
             }
             $thumbnail->crop(new Point(
                 max(0, round(($imageSize->getWidth() - $size->getWidth()) / 2)),
@@ -64,10 +64,10 @@ abstract class AbstractImage implements ImageInterface
         } else {
             if (!$imageSize->contains($size)) {
                 $imageSize = $imageSize->scale($ratio);
-                $thumbnail->resize($imageSize);
+                $thumbnail->resize($imageSize, $filter);
             } else {
                 $imageSize = $thumbnail->getSize()->scale($ratio);
-                $thumbnail->resize($imageSize);
+                $thumbnail->resize($imageSize, $filter);
             }
         }
 
