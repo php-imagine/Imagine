@@ -196,9 +196,9 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
+    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-        return $this->add(new Thumbnail($size, $mode));
+        return $this->add(new Thumbnail($size, $mode, $filter));
     }
 
     /**

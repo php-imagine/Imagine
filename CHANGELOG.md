@@ -8,6 +8,7 @@
     colors.
   * Add support for ICC profiles
   * Add support for CMYK and grayscale colorspace images.
+  * Add filter argument to ImageInterface::thumbnail method.
 
 ### 0.5.0 (2013-07-10)
 
