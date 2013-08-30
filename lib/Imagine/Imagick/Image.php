@@ -14,6 +14,7 @@ namespace Imagine\Imagick;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\AbstractImage;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
@@ -29,7 +30,7 @@ use Imagine\Image\Palette\PaletteInterface;
 /**
  * Image implementation using the Imagick PHP extension
  */
-final class Image implements ImageInterface
+final class Image extends AbstractImage
 {
     /**
      * @var \Imagick
@@ -395,62 +396,6 @@ final class Image implements ImageInterface
     public function __toString()
     {
         return $this->get('png');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
-    {
-        if ($mode !== ImageInterface::THUMBNAIL_INSET &&
-            $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
-            throw new InvalidArgumentException('Invalid mode specified');
-        }
-
-        $imageSize = $this->getSize();
-        $thumbnail = $this->copy();
-        // forces profile usage, it will merge current profile in the picture
-        // required as the next methods will strip the thumbnail and remove
-        // profiles.
-        $thumbnail->usePalette($this->palette);
-
-        // if target width is larger than image width
-        // AND target height is longer than image height
-        if ($size->contains($imageSize)) {
-            $thumbnail->strip();
-
-            return $thumbnail;
-        }
-
-        // if target width is larger than image width
-        // OR target height is longer than image height
-        if (!$imageSize->contains($size)) {
-            $size = new Box(
-                min($imageSize->getWidth(), $size->getWidth()),
-                min($imageSize->getHeight(), $size->getHeight())
-            );
-        }
-
-        try {
-            if ($mode === ImageInterface::THUMBNAIL_INSET) {
-                $thumbnail->imagick->thumbnailImage(
-                    $size->getWidth(),
-                    $size->getHeight(),
-                    true
-                );
-            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->imagick->cropThumbnailImage(
-                    $size->getWidth(),
-                    $size->getHeight()
-                );
-            }
-        } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Thumbnail operation failed', $e->getCode(), $e
-            );
-        }
-
-        return $thumbnail;
     }
 
     /**
