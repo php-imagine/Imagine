@@ -850,9 +850,10 @@ final class Image extends AbstractImage
     private function setColorspace(PaletteInterface $palette)
     {
         static $typeMapping = array(
-            PaletteInterface::PALETTE_CMYK      => \Imagick::IMGTYPE_TRUECOLOR,
-            PaletteInterface::PALETTE_RGB       => \Imagick::IMGTYPE_TRUECOLOR,
-            PaletteInterface::PALETTE_GRAYSCALE => \Imagick::IMGTYPE_GRAYSCALE,
+            // We use Matte variants to preserve alpha
+            PaletteInterface::PALETTE_CMYK      => \Imagick::IMGTYPE_TRUECOLORMATTE,
+            PaletteInterface::PALETTE_RGB       => \Imagick::IMGTYPE_TRUECOLORMATTE,
+            PaletteInterface::PALETTE_GRAYSCALE => \Imagick::IMGTYPE_GRAYSCALEMATTE,
         );
 
         if (!isset(static::$colorspaceMapping[$palette->name()])) {
