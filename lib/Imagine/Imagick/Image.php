@@ -336,7 +336,7 @@ final class Image extends AbstractImage
             );
         }
 
-        return $this->imagick->getImagesBlob();
+        return $this->imagick->optimizeImageLayers()->getImagesBlob();
     }
 
     /**
