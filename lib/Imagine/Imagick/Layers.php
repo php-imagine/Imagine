@@ -82,7 +82,9 @@ class Layers extends AbstractLayers
             foreach ($this as $offset => $layer) {
                 $this->resource->setIteratorIndex($offset);
                 $this->resource->setFormat($format);
-                $this->resource->setImageDelay($delay / 10);
+                if($delay > 0){
+                    $this->resource->setImageDelay($delay / 10);
+                }
                 $this->resource->setImageTicksPerSecond(100);
                 $this->resource->setImageIterations($loops);
             }
