@@ -16,7 +16,6 @@ use Imagine\Imagick\Image;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Image\Palette\PaletteInterface;
 
 class Layers extends AbstractLayers
 {
@@ -37,13 +36,10 @@ class Layers extends AbstractLayers
      */
     private $layers = array();
 
-    private $palette;
-
-    public function __construct(Image $image, PaletteInterface $palette, \Imagick $resource)
+    public function __construct(Image $image, \Imagick $resource)
     {
         $this->image = $image;
         $this->resource = $resource;
-        $this->palette = $palette;
     }
 
     /**
@@ -72,18 +68,23 @@ class Layers extends AbstractLayers
             throw new InvalidArgumentException('Animated picture is currently only supported on gif');
         }
 
-        foreach (array('Loops' => $loops, 'Delay' => $delay) as $name => $value) {
+        foreach (array('Loops' => $loops) as $name => $value) {
             if (!is_int($value) || $value < 0) {
                 throw new InvalidArgumentException(sprintf('%s must be a positive integer.', $name));
             }
         }
 
+
         try {
             foreach ($this as $offset => $layer) {
                 $this->resource->setIteratorIndex($offset);
                 $this->resource->setFormat($format);
-                $this->resource->setImageDelay($delay / 10);
-                $this->resource->setImageTicksPerSecond(100);
+
+                if(isset($delay) && !is_null($delay) && $delay > 0){
+                    $this->resource->setImageDelay($delay / 10);
+                    $this->resource->setImageTicksPerSecond(100);
+                }
+
                 $this->resource->setImageIterations($loops);
             }
         } catch (\ImagickException $e) {
@@ -110,7 +111,13 @@ class Layers extends AbstractLayers
         for ($offset = 0; $offset < $count; $offset++) {
             try {
                 $coalescedResource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($coalescedResource->getImage(), $this->palette);
+
+                $image = new Image($coalescedResource->getImage());
+
+                $width = $image->getSize()->getWidth();
+
+                $this->layers[$offset] = $image;
+
             } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     'Failed to retrieve layer', $e->getCode(), $e
@@ -139,7 +146,7 @@ class Layers extends AbstractLayers
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($this->resource->getImage(), $this->palette);
+                $this->layers[$offset] = new Image($this->resource->getImage());
             } catch (\ImagickException $e) {
                 throw new RuntimeException(
                     sprintf('Failed to extract layer %d', $offset),
