@@ -24,8 +24,12 @@ version 0.4.
         }
     }
 
-Update the dependencies using composer.phar and use Imagine :
+Install the dependencies using composer.phar and use Imagine :
 
+.. code-block:: none
+
+    php composer.phar install
+    
 .. code-block:: php
 
     <?php
