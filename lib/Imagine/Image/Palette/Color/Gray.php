@@ -158,6 +158,9 @@ final class Gray implements ColorInterface
             throw new InvalidArgumentException('Color argument must look like array(gray), where gray is the integer value between 0 and 255 for the grayscale');
         }
 
-        list($this->gray) = array_values($color);
+        $color = array_values($color);
+        $color[0] = max(0, min(255, $color[0]));
+
+        list($this->gray) = $color;
     }
 }

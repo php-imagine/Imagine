@@ -208,6 +208,11 @@ final class RGB implements ColorInterface
             throw new InvalidArgumentException('Color argument must look like array(R, G, B), where R, G, B are the integer values between 0 and 255 for red, green and blue color indexes accordingly');
         }
 
-        list($this->r, $this->g, $this->b) = array_values($color);
+        $colors = array_values($color);
+        array_walk($colors, function ($color) {
+            return max(0, min(255, $color));
+        });
+
+        list($this->r, $this->g, $this->b) = $colors;
     }
 }
