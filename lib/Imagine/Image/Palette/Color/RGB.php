@@ -219,6 +219,11 @@ final class RGB implements ColorInterface
             );
         }
 
-        list($this->r, $this->g, $this->b) = array_values($color);
+        $colors = array_values($color);
+        array_walk($colors, function ($color) {
+            return max(0, min(255, $color));
+        });
+
+        list($this->r, $this->g, $this->b) = $colors;
     }
 }
