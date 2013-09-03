@@ -42,6 +42,11 @@ class NeighborhoodTest extends FilterTestCase
             ));
 
             $image = $this->getImage();
+            $image
+                ->expects($this->any())
+                ->method('palette')
+                ->will($this->returnValue($rgb))
+            ;
 
             $drawer = $this->getDrawer();
             $expectedDraw = new Matrix(3, 3, array(
@@ -93,7 +98,7 @@ class NeighborhoodTest extends FilterTestCase
             ->will($this->returnValue(new Box(5, 5)))
         ;
 
-        $i = 2;
+        $i = 4;
         for ($y = 0; $y < 5; $y++) {
             for ($x = 0; $x < 5; $x++) {
                 $element = $tmpMatrix->getElementAt($x, $y);
