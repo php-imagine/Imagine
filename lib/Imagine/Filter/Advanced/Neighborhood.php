@@ -14,7 +14,7 @@ namespace Imagine\Filter\Advanced;
 use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Palette\RGB;
+use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Point;
 use Imagine\Utils\Matrix;
 
@@ -53,7 +53,38 @@ class Neighborhood implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        $rgb = new RGB();
+        // first, prepare a $baseColor, which represents the channels of a given palette
+        // and a callback, which sums up the values
+        if (PaletteInterface::PALETTE_CMYK === $image->palette()->name()) {
+            $baseColor = array(0,0,0,0);
+            $sumCallback = function (ColorInterface $color, $amount)
+            {
+                return array(
+                    $amount * $color->getValue(ColorInterface::COLOR_CYAN),
+                    $amount * $color->getValue(ColorInterface::COLOR_MAGENTA),
+                    $amount * $color->getValue(ColorInterface::COLOR_YELLOW),
+                    $amount * $color->getValue(ColorInterface::COLOR_KEYLINE)
+                );
+            };
+        } else if (PaletteInterface::PALETTE_RGB === $image->palette()->name()) {
+            $baseColor = array(0,0,0);
+            $sumCallback = function(ColorInterface $color, $amount)
+            {
+                return array(
+                    $amount * $color->getValue(ColorInterface::COLOR_RED),
+                    $amount * $color->getValue(ColorInterface::COLOR_GREEN),
+                    $amount * $color->getValue(ColorInterface::COLOR_BLUE)
+                );
+            };
+        } else if (PaletteInterface::PALETTE_GRAYSCALE === $image->palette()->name()) {
+            $baseColor = array(0);
+            $sumCallback = function(ColorInterface $color, $amount)
+            {
+                return array(
+                    $amount * $color->getValue(ColorInterface::COLOR_GRAY)
+                );
+            };
+        }
 
         // We reduce the usage of methods on the image to dramatically increase the performance of this algorithm.
         // Really... We need that performance...
@@ -74,35 +105,23 @@ class Neighborhood implements FilterInterface
         // foreach point, which has a big enough neighborhood
         for ($y = $dHeight; $y < $height - $dHeight; $y++) {
             for ($x = $dWidth; $x < $width - $dWidth; $x++) {
-                $sumRed   = 0;
-                $sumGreen = 0;
-                $sumBlue  = 0;
+                $currentColor = $baseColor;
 
                 // calculate the new color based on the neighborhood
                 for ($boxY = $y - $dHeight, $matrixY = 0; $boxY <= $y + $dHeight; $boxY++, $matrixY++) {
                     for ($boxX = $x - $dWidth, $matrixX = 0; $boxX <= $x + $dWidth; $boxX++, $matrixX++) {
-                        $sumRed +=
-                            $this->matrix->getElementAt($matrixX, $matrixY) * $byteData->getElementAt($boxX, $boxY)->getValue(
-                                ColorInterface::COLOR_RED
-                            );
+                        $calculatedValues = $sumCallback(
+                            $byteData->getElementAt($boxX, $boxY),
+                            $this->matrix->getElementAt($matrixX, $matrixY)
+                        );
 
-                        $sumGreen +=
-                            $this->matrix->getElementAt($matrixX, $matrixY) * $byteData->getElementAt($boxX, $boxY)->getValue(
-                                ColorInterface::COLOR_GREEN
-                            );
-
-                        $sumBlue +=
-                            $this->matrix->getElementAt($matrixX, $matrixY) * $byteData->getElementAt($boxX, $boxY)->getValue(
-                                ColorInterface::COLOR_BLUE
-                            );
+                        foreach ($calculatedValues as $index => $stream) {
+                            $currentColor[$index] += $stream;
+                        }
                     }
                 }
 
-                $image->draw()->dot(new Point($x, $y), $rgb->color(array(
-                    max(0, min(255, $sumRed)),
-                    max(0, min(255, $sumGreen)),
-                    max(0, min(255, $sumBlue))
-                )));
+                $image->draw()->dot(new Point($x, $y), $image->palette()->color($currentColor));
             }
         }
 
