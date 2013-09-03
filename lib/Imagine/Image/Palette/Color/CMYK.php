@@ -210,7 +210,7 @@ final class CMYK implements ColorInterface
         if (count($color) !== 4) {
             throw new InvalidArgumentException(
                 'Color argument must look like array(C, M, Y, K), ' .
-                'where C, M, Y, K are the integer values between 0 and 255 for ' .
+                'where C, M, Y, K are the integer values between 0 and 100 for ' .
                 'cyan, magenta, yellow and black color indexes accordingly'
             );
         }
