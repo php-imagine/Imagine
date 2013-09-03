@@ -20,20 +20,25 @@ use Imagine\Image\Point;
 
 /**
  * This filter calculates for each pixel of an image, whether it is more white or black and so makes it white or black.
- * Therefore each pixel is grayscaled and and the resulting value is compared with $border. Is the value smaller than
- * the border, the pixel will be white, Otherwise it will be black. Result is an image with only black and white pixels.
+ * Therefore each pixel is grayscaled and and the resulting value is compared with $threshold. Is the value smaller than
+ * the threshold, the pixel will be white, Otherwise it will be black. Result is an image with only black and white
+ * pixels.
  */
 class BlackWhite extends OnPixelBased implements FilterInterface
 {
-    public function __construct($border)
+    protected $grayScaleFilter;
+
+    public function __construct($threshold)
     {
-        if (!(0 <= $border && $border <= 255)) {
-            throw new InvalidArgumentException('$border has to be between 0 and 255');
+        if (!(0 <= $threshold && $threshold <= 255)) {
+            throw new InvalidArgumentException('$threshold has to be between 0 and 255');
         }
 
+        $this->grayScaleFilter = new Grayscale();
+
         $rgb = new RGB();
-        parent::__construct(function(ImageInterface $image, Point $point) use ($border, $rgb) {
-            $newRedValue = $image->getColorAt($point)->getValue(ColorInterface::COLOR_RED) < $border ? 255 : 0;
+        parent::__construct(function(ImageInterface $image, Point $point) use ($threshold, $rgb) {
+            $newRedValue = $image->getColorAt($point)->getValue(ColorInterface::COLOR_RED) < $threshold ? 255 : 0;
 
             $image->draw()->dot($point, $rgb->color(array($newRedValue, $newRedValue, $newRedValue)));
         });
@@ -41,9 +46,7 @@ class BlackWhite extends OnPixelBased implements FilterInterface
 
     public function apply(ImageInterface $image)
     {
-        $grayScaleFilter = new Grayscale();
-
-        $grayScaledImage = $grayScaleFilter->apply($image);
+        $grayScaledImage = $this->grayScaleFilter->apply($image);
 
         return parent::apply($grayScaledImage);
     }
