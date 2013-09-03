@@ -209,8 +209,8 @@ final class CMYK implements ColorInterface
         }
 
         $colors = array_values($color);
-        array_walk($colors, function ($color) {
-            return max(0, min(100, $color));
+        array_walk($colors, function (&$color) {
+            $color = max(0, min(100, $color));
         });
 
         list($this->c, $this->m, $this->y, $this->k) = $colors;
