@@ -13,7 +13,6 @@ namespace Imagine\Filter\Advanced;
 
 use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Point;
 
 /**
  * This filter negates every color of every pixel of an image.
