@@ -53,39 +53,6 @@ class Neighborhood implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        // first, prepare a $baseColor, which represents the channels of a given palette
-        // and a callback, which sums up the values
-        if (PaletteInterface::PALETTE_CMYK === $image->palette()->name()) {
-            $baseColor = array(0,0,0,0);
-            $sumCallback = function (ColorInterface $color, $amount)
-            {
-                return array(
-                    $amount * $color->getValue(ColorInterface::COLOR_CYAN),
-                    $amount * $color->getValue(ColorInterface::COLOR_MAGENTA),
-                    $amount * $color->getValue(ColorInterface::COLOR_YELLOW),
-                    $amount * $color->getValue(ColorInterface::COLOR_KEYLINE)
-                );
-            };
-        } else if (PaletteInterface::PALETTE_RGB === $image->palette()->name()) {
-            $baseColor = array(0,0,0);
-            $sumCallback = function(ColorInterface $color, $amount)
-            {
-                return array(
-                    $amount * $color->getValue(ColorInterface::COLOR_RED),
-                    $amount * $color->getValue(ColorInterface::COLOR_GREEN),
-                    $amount * $color->getValue(ColorInterface::COLOR_BLUE)
-                );
-            };
-        } else if (PaletteInterface::PALETTE_GRAYSCALE === $image->palette()->name()) {
-            $baseColor = array(0);
-            $sumCallback = function(ColorInterface $color, $amount)
-            {
-                return array(
-                    $amount * $color->getValue(ColorInterface::COLOR_GRAY)
-                );
-            };
-        }
-
         // We reduce the usage of methods on the image to dramatically increase the performance of this algorithm.
         // Really... We need that performance...
         // Therefore we first build a matrix, that holds the colors of the image.
@@ -105,18 +72,16 @@ class Neighborhood implements FilterInterface
         // foreach point, which has a big enough neighborhood
         for ($y = $dHeight; $y < $height - $dHeight; $y++) {
             for ($x = $dWidth; $x < $width - $dWidth; $x++) {
-                $currentColor = $baseColor;
+                $currentColor = array_fill(0, count($image->palette()->pixelDefinition()), 0);
 
                 // calculate the new color based on the neighborhood
                 for ($boxY = $y - $dHeight, $matrixY = 0; $boxY <= $y + $dHeight; $boxY++, $matrixY++) {
                     for ($boxX = $x - $dWidth, $matrixX = 0; $boxX <= $x + $dWidth; $boxX++, $matrixX++) {
-                        $calculatedValues = $sumCallback(
-                            $byteData->getElementAt($boxX, $boxY),
-                            $this->matrix->getElementAt($matrixX, $matrixY)
-                        );
-
-                        foreach ($calculatedValues as $index => $stream) {
-                            $currentColor[$index] += $stream;
+                        foreach ($image->palette()->pixelDefinition() as $index => $stream) {
+                            $currentColor[$index] +=
+                                $byteData->getElementAt($boxX, $boxY)->getValue($stream) *
+                                $this->matrix->getElementAt($matrixX, $matrixY)
+                            ;
                         }
                     }
                 }
