@@ -124,12 +124,12 @@ final class Image implements ImageInterface
         }
 
         $size = $image->getSize();
-        if (!$this->getSize()->contains($size, $start)) {
-            throw new OutOfBoundsException(
-                'Cannot paste image of the given size at the specified '.
-                'position, as it moves outside of the current image\'s box'
-            );
-        }
+        //if (!$this->getSize()->contains($size, $start)) {
+        //    throw new OutOfBoundsException(
+        //        'Cannot paste image of the given size at the specified '.
+        //        'position, as it moves outside of the current image\'s box'
+        //    );
+        //}
 
         imagealphablending($this->resource, true);
         imagealphablending($image->resource, true);
