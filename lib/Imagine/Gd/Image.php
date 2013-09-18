@@ -67,10 +67,11 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    final public function copy()
+    final public function copy(BoxInterface $size = null)
     {
-        $size = $this->getSize();
-
+        if(!$size) {
+            $size = $this->getSize();
+        }
         $copy = $this->createImage($size, 'copy');
 
         if (false === imagecopy($copy, $this->resource, 0, 0, 0,

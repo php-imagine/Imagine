@@ -30,11 +30,12 @@ interface ManipulatorInterface
     /**
      * Copies current source image into a new ImageInterface instance
      *
+     * @param BoxInterface   $size
      * @throws RuntimeException
      *
      * @return ManipulatorInterface
      */
-    public function copy();
+    public function copy(BoxInterface $size = null);
 
     /**
      * Crops a specified box out of the source image (modifies the source image)

@@ -71,7 +71,7 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function copy()
+    public function copy(BoxInterface $size = null)
     {
         return new self(clone $this->gmagick);
     }
