@@ -548,7 +548,7 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->strip()
             ->getColorAt(new Point(0, 0));
 
-        $this->assertEquals('#30819f', (string) $color);
+        $this->assertEquals('#0082a2', (string) $color);
     }
 
     public function testStripGBRImageHasGoodColors()
@@ -559,7 +559,7 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->strip()
             ->getColorAt(new Point(0, 0));
 
-        $this->assertEquals('#bb7461', (string) $color);
+        $this->assertEquals('#d07560', (string) $color);
     }
 
     private function getMonoLayeredImage()
