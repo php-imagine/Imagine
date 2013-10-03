@@ -84,7 +84,7 @@ class RGB implements PaletteInterface
     {
         if (!$this->profile) {
             $this->profile = Profile::fromPath(
-                __DIR__ . '/../../resources/Adobe/RGB/AdobeRGB1998.icc'
+                __DIR__ . '/../../resources/color.org/sRGB_IEC61966-2-1_black_scaled.icc'
             );
         }
 
