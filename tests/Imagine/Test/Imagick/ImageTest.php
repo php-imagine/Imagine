@@ -12,6 +12,9 @@
 namespace Imagine\Test\Imagick;
 
 use Imagine\Imagick\Imagine;
+use Imagine\Imagick\Image;
+use Imagine\Image\Palette\CMYK;
+use Imagine\Image\Palette\RGB;
 use Imagine\Test\Image\AbstractImageTest;
 use Imagine\Image\Box;
 
@@ -24,6 +27,17 @@ class ImageTest extends AbstractImageTest
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not installed');
         }
+    }
+
+    protected function tearDown()
+    {
+        if (class_exists('Imagick')) {
+            $prop = new \ReflectionProperty('Imagine\Imagick\Image', 'supportsColorspaceConversion');
+            $prop->setAccessible(true);
+            $prop->setValue(null);
+        }
+
+        parent::tearDown();
     }
 
     protected function getImagine()
@@ -49,6 +63,34 @@ class ImageTest extends AbstractImageTest
 
         unlink('tests/Imagine/Fixtures/resize/large.png');
         unlink('tests/Imagine/Fixtures/resize/small.png');
+    }
+
+    // Older imagemagick versions does not support colorspace conversion
+    public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
+    {
+        $palette = new CMYK();
+        $imagick = $this->getMockBuilder('\Imagick')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $imagick->expects($this->any())
+            ->method('setColorspace')
+            ->will($this->throwException(new \RuntimeException('Method not supported')));
+
+        $prop = new \ReflectionProperty('Imagine\Imagick\Image', 'supportsColorspaceConversion');
+        $prop->setAccessible(true);
+        $prop->setValue(false);
+
+        return new Image($imagick, $palette);
+    }
+
+    /**
+     * @depends testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct
+     * @expectedException Imagine\Exception\RuntimeException
+     * @expectedExceptionMessage Your version of Imagick does not support colorspace conversions.
+     */
+    public function testOlderImageMagickDoesNotAffectColorspaceUsageOnPaletteChange($image)
+    {
+        $image->usePalette(new RGB());
     }
 
     protected function supportMultipleLayers()
