@@ -41,10 +41,14 @@ final class Image extends AbstractImage
      */
     private $layers;
     /**
-     *
      * @var PaletteInterface
      */
     private $palette;
+
+    /**
+     * @var Boolean
+     */
+    private static $supportsColorspaceConversion;
 
     private static $colorspaceMapping = array(
         PaletteInterface::PALETTE_CMYK      => \Imagick::COLORSPACE_CMYK,
@@ -60,8 +64,12 @@ final class Image extends AbstractImage
      */
     public function __construct(\Imagick $imagick, PaletteInterface $palette)
     {
+        $this->detectColorspaceConversionSupport();
         $this->imagick = $imagick;
-        $this->setColorspace($palette);
+        if (static::$supportsColorspaceConversion) {
+            $this->setColorspace($palette);
+        }
+        $this->palette = $palette;
         $this->layers = new Layers($this, $this->palette, $this->imagick);
     }
 
@@ -644,6 +652,10 @@ final class Image extends AbstractImage
             return $this;
         }
 
+        if (!static::$supportsColorspaceConversion) {
+            throw new RuntimeException('Your version of Imagick does not support colorspace conversions.');
+        }
+
         try {
             try {
                 $hasICCProfile = (Boolean) $this->imagick->getImageProfile('icc');
@@ -866,5 +878,20 @@ final class Image extends AbstractImage
         $this->imagick->setType($typeMapping[$palette->name()]);
         $this->imagick->setColorspace(static::$colorspaceMapping[$palette->name()]);
         $this->palette = $palette;
+    }
+
+    /**
+     * Older imagemagick versions does not support colorspace conversions.
+     * Let's detect if it is supported.
+     *
+     * @return Boolean
+     */
+    private function detectColorspaceConversionSupport()
+    {
+        if (null !== static::$supportsColorspaceConversion) {
+            return static::$supportsColorspaceConversion;
+        }
+
+        return static::$supportsColorspaceConversion = method_exists('Imagick', 'setColorspace');
     }
 }
