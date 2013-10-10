@@ -102,7 +102,7 @@ class Effects implements EffectsInterface
      */
     public function blur($sigma = NULL)
     {
-        if(false === imagefilter($this->resource,IMG_FILTER_GAUSSIAN_BLUR)){
+        if (false === imagefilter($this->resource, IMG_FILTER_GAUSSIAN_BLUR)) {
             throw new RuntimeException('Failed to blur the image');
         }
 
