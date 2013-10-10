@@ -66,4 +66,15 @@ interface EffectsInterface
      * @throws RuntimeException
      */
     public function sharpen();
+
+    /**
+     * Blur the image
+     *
+     * @param float $sigma
+     *
+     * @return EffectsInterface
+     *
+     * @throws RuntimeException
+     */
+    public function blur($sigma);
 }

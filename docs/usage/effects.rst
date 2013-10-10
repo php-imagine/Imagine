@@ -99,3 +99,22 @@ This feature only works with the Gd and Imagick drivers.
         ->colorize($pink);
 
     $image->save('pink-portrait.png');
+
+
+Blur
+++++++++++++++++
+
+Blur the image. It takes a string argument, which represent the sigma used for Imagick and Gmagick functions (defaults to 1). GD has no sigma parameter so just IMG_FILTER_GAUSSIAN_BLUR is applied.
+
+This feature works well with Imagick and Gmagick drivers. GD just applies IMG_FILTER_GAUSSIAN_BLUR and sigma value is not used.
+
+.. code-block:: php
+
+    <?php
+
+    $image = $imagine->open('portrait.jpeg');
+
+    $image->effects()
+        ->blur(3);
+
+    $image->save('blurred-portrait.png');

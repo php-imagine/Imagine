@@ -96,4 +96,16 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function blur($sigma = NULL)
+    {
+        if(false === imagefilter($this->resource,IMG_FILTER_GAUSSIAN_BLUR)){
+            throw new RuntimeException('Failed to blur the image');
+        }
+
+        return $this;
+    }
 }

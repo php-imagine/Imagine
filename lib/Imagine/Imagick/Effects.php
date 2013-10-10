@@ -96,4 +96,18 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function blur($sigma = 1)
+    {
+        try {
+            $this->imagick->gaussianBlurImage(0,$sigma);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to blur the image');
+        }
+
+        return $this;
+    }
 }

@@ -89,4 +89,18 @@ class Effects implements EffectsInterface
     {
         throw new RuntimeException('Gmagick does not support sharpen yet');
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function blur($sigma = 1)
+    {
+        try {
+            $this->gmagick->blurImage(0,$sigma);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to blur the image');
+        }
+
+        return $this;
+    }
 }
