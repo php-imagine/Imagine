@@ -166,4 +166,11 @@ interface ImageInterface extends ManipulatorInterface
      * @throws RuntimeException
      */
     public function profile(ProfileInterface $profile);
+
+    /**
+     * Returns the Image's meta data
+     *
+     * @return Metadata\MetadataInterface
+     */
+    public function metadata();
 }
