@@ -98,7 +98,7 @@ class Effects implements EffectsInterface
         try {
             $this->gmagick->blurImage(0, $sigma);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Failed to blur the image');
+            throw new RuntimeException('Failed to blur the image', $e->getCode(), $e);
         }
 
         return $this;
