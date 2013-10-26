@@ -65,7 +65,7 @@ Apply a gamma correction. It takes one float argument, the correction parameter.
     $image->save('negative-portrait.png');
 
 Grayscale
-++++++++++++++++
++++++++++
 
 Create a grayscale version of the image.
 
@@ -81,7 +81,7 @@ Create a grayscale version of the image.
     $image->save('grayscale-portrait.png');
 
 Colorize
-++++++++++++++++
+++++++++
 
 Colorize the image. It takes one ``Imagine\Image\Palette\Color\ColorInterface`` argument, which represents the color applied on top of the image.
 
@@ -101,7 +101,7 @@ This feature only works with the Gd and Imagick drivers.
     $image->save('pink-portrait.png');
 
 Blur
-++++++++++++++++
+++++
 
 Blur the image. It takes a string argument, which represent the sigma used for 
 Imagick and Gmagick functions (defaults to 1).
