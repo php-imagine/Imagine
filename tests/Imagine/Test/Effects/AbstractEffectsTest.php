@@ -113,6 +113,26 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($blue->getBlue(), $pixel->getBlue());
     }
 
+    public function testBlur()
+    {
+        $palette = new RGB();
+        $imagine = $this->getImagine();
+
+        $image = $imagine->create(new Box(20, 20), $palette->color('#fff'));
+
+        $image->draw()
+            ->line(new Point(10, 0), new Point(10, 20), $palette->color('#000'), 1);
+
+        $image->effects()
+            ->blur();
+
+        $pixel = $image->getColorAt(new Point(9, 10));
+
+        $this->assertNotEquals(255, $pixel->getRed());
+        $this->assertNotEquals(255, $pixel->getGreen());
+        $this->assertNotEquals(255, $pixel->getBlue());
+    }
+
     /**
      * @return ImagineInterface
      */
