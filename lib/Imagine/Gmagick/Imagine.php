@@ -11,9 +11,10 @@
 
 namespace Imagine\Gmagick;
 
+use Imagine\Image\AbstractImagine;
 use Imagine\Image\BoxInterface;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\Grayscale;
 use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
@@ -24,7 +25,7 @@ use Imagine\Exception\RuntimeException;
 /**
  * Imagine implementation using the Gmagick PHP extension
  */
-class Imagine implements ImagineInterface
+class Imagine extends AbstractImagine
 {
     /**
      * @throws RuntimeException
@@ -51,7 +52,7 @@ class Imagine implements ImagineInterface
         try {
             $gmagick = new \Gmagick($path);
 
-            $image = new Image($gmagick, $this->createPalette($gmagick));
+            $image = new Image($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readFile($path));
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 sprintf('Could not open image %s', $path), $e->getCode(), $e
@@ -96,7 +97,7 @@ class Imagine implements ImagineInterface
             // this is needed to propagate transparency
             $gmagick->setimagebackgroundcolor($pixel);
 
-            $image = new Image($gmagick, $palette);
+            $image = new Image($gmagick, $palette, new MetadataBag());
 
             if ($switchPalette) {
                 $image->usePalette($switchPalette);
@@ -124,7 +125,7 @@ class Imagine implements ImagineInterface
             );
         }
 
-        return new Image($gmagick, $this->createPalette($gmagick));
+        return new Image($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readData($string));
     }
 
     /**

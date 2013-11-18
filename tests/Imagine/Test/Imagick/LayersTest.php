@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Imagick\Image;
 use Imagine\Imagick\Layers;
 use Imagine\Imagick\Imagine;
@@ -40,7 +41,7 @@ class LayersTest extends AbstractLayersTest
             ->method('getNumberImages')
             ->will($this->returnValue(42));
 
-        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
+        $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
 
         $this->assertCount(42, $layers);
     }
@@ -64,7 +65,7 @@ class LayersTest extends AbstractLayersTest
             ->method('getImage')
             ->will($this->returnValue($layer));
 
-        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
+        $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
 
         foreach ($layers as $layer) {
             $this->assertInstanceOf('Imagine\Image\ImageInterface', $layer);
@@ -81,7 +82,7 @@ class LayersTest extends AbstractLayersTest
         $resource->newImage(20, 10, new \ImagickPixel("black"));
         $resource->newImage(10, 10, new \ImagickPixel("black"));
 
-        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
+        $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
         $layers->coalesce();
 
         foreach ($layers as $layer) {
@@ -104,9 +105,9 @@ class LayersTest extends AbstractLayersTest
     public function getImage($path = null)
     {
         if ($path) {
-            return new Image(new \Imagick($path), new RGB());
+            return new Image(new \Imagick($path), new RGB(), new MetadataBag());
         } else {
-            return new Image(new \Imagick(), new RGB());
+            return new Image(new \Imagick(), new RGB(), new MetadataBag());
         }
     }
 

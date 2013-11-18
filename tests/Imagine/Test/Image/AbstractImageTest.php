@@ -607,7 +607,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testMetadataReturnsMetadataInstance()
     {
-        $this->assertInstanceOf('Imagine\Image\Metadata\MetadataInterface', $this->getMonoLayeredImage()->metadata());
+        $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $this->getMonoLayeredImage()->metadata());
     }
 
     public function testCloningImageResultsInNewMetadataInstance()

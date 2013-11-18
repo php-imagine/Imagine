@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Imagick\Imagine;
 use Imagine\Imagick\Image;
 use Imagine\Image\Palette\CMYK;
@@ -80,7 +81,7 @@ class ImageTest extends AbstractImageTest
         $prop->setAccessible(true);
         $prop->setValue(false);
 
-        return new Image($imagick, $palette);
+        return new Image($imagick, $palette, new MetadataBag());
     }
 
     /**
