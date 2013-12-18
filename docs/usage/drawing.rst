@@ -10,11 +10,12 @@ Example
 .. code-block:: php
 
     <?php
+    $palette = new Imagine\Image\Palette\RGB();
 
-    $image = $imagine->create(new Box(400, 300), $imagine->palette()->color('#000'));
+    $image = $imagine->create(new Box(400, 300), $palette->color('#000'));
 
     $image->draw()
-        ->ellipse(new Point(200, 150), new Box(300, 225), $imagine->palette()->color('fff'));
+        ->ellipse(new Point(200, 150), new Box(300, 225), $image->palette()->color('fff'));
 
     $image->save('/path/to/ellipse.png');
 
