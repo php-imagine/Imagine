@@ -15,6 +15,26 @@ use Imagine\Exception\InvalidArgumentException;
 
 abstract class AbstractImage implements ImageInterface
 {
+    private $boxFactory;
+    
+    /**
+     * @return BoxFactoryInterface
+     */
+    final protected function getBoxFactory()
+    {
+        if ($this->boxFactory === null)
+        {
+            $this->boxFactory = BoxFactory::instance();
+        }
+        
+        return $this->boxFactory;
+    }
+    
+    final protected function setBoxFactory(BoxFactoryInterface $boxFactory = null)
+    {
+        $this->boxFactory = $boxFactory;
+    }
+    
     /**
      * {@inheritdoc}
      */

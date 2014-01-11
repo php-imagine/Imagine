@@ -13,6 +13,7 @@ namespace Imagine\Gd;
 
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
+use Imagine\Image\BoxFactoryInterface;
 
 /**
  * Font implementation using the GD library
@@ -31,6 +32,6 @@ final class Font extends AbstractFont
         $width    = abs(max($xs) - min($xs));
         $height   = abs(max($ys) - min($ys));
 
-        return new Box($width, $height);
+        return $this->getBoxFactory()->create($width, $height);
     }
 }

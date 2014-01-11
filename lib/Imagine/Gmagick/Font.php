@@ -14,6 +14,7 @@ namespace Imagine\Gmagick;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\BoxFactoryInterface;
 
 /**
  * Font implementation using the Gmagick PHP extension
@@ -31,11 +32,12 @@ final class Font extends AbstractFont
      * @param integer        $size
      * @param ColorInterface $color
      */
-    public function __construct(\Gmagick $gmagick, $file, $size, ColorInterface $color)
+    public function __construct(\Gmagick $gmagick, $file, $size, ColorInterface $color, 
+            BoxFactoryInterface $boxFactory = null)
     {
         $this->gmagick = $gmagick;
 
-        parent::__construct($file, $size, $color);
+        parent::__construct($file, $size, $color, $boxFactory);
     }
 
     /**
@@ -56,7 +58,7 @@ final class Font extends AbstractFont
 
         $info = $this->gmagick->queryfontmetrics($text, $string);
 
-        $box = new Box($info['textWidth'], $info['textHeight']);
+        $box = $this->getBoxFactory()->create($info['textWidth'], $info['textHeight']);
 
         return $box;
     }

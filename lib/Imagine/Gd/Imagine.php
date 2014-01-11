@@ -19,6 +19,8 @@ use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\BoxFactoryInterface;
+use Imagine\Image\BoxFactory;
 
 /**
  * Imagine implementation using the GD library
@@ -29,14 +31,21 @@ final class Imagine implements ImagineInterface
      * @var array
      */
     private $info;
+    
+    /**
+     * @var BoxFactoryInterface
+     */
+    private $boxFactory;
 
     /**
      * @throws RuntimeException
      */
-    public function __construct()
+    public function __construct(BoxFactoryInterface $boxFactory = null)
     {
         $this->loadGdInfo();
         $this->requireGdVersion('2.0.1');
+        
+        $this->boxFactory = $boxFactory ?: BoxFactory::instance();
     }
 
     private function loadGdInfo()
@@ -161,7 +170,7 @@ final class Imagine implements ImagineInterface
             throw new RuntimeException('GD is not compiled with FreeType support');
         }
 
-        return new Font($file, $size, $color);
+        return new Font($file, $size, $color, $this->boxFactory);
     }
 
     private function wrap($resource, PaletteInterface $palette, $path = null)
@@ -193,6 +202,6 @@ final class Imagine implements ImagineInterface
             imageantialias($resource, true);
         }
 
-        return new Image($resource, $palette, $path);
+        return new Image($resource, $palette, $path, $this->boxFactory);
     }
 }

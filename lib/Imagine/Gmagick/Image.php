@@ -24,6 +24,7 @@ use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
+use Imagine\Image\BoxFactoryInterface;
 
 /**
  * Image implementation using the Gmagick PHP extension
@@ -55,11 +56,14 @@ final class Image extends AbstractImage
      * @param \Gmagick         $gmagick
      * @param PaletteInterface $palette
      */
-    public function __construct(\Gmagick $gmagick, PaletteInterface $palette)
+    public function __construct(\Gmagick $gmagick, PaletteInterface $palette, 
+            BoxFactoryInterface $boxFactory = null)
     {
         $this->gmagick = $gmagick;
         $this->setColorspace($palette);
         $this->layers = new Layers($this, $this->palette, $this->gmagick);
+        
+        $this->setBoxFactory($boxFactory);
     }
 
     /**
@@ -420,7 +424,7 @@ final class Image extends AbstractImage
             );
         }
 
-        return new Box($width, $height);
+        return $this->getBoxFactory()->create($width, $height);
     }
 
     /**

@@ -20,6 +20,8 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Color\CMYK as CMYKColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\BoxFactoryInterface;
+use Imagine\Image\BoxFactory;
 
 /**
  * Imagine implementation using the Gmagick PHP extension
@@ -27,13 +29,20 @@ use Imagine\Exception\RuntimeException;
 class Imagine implements ImagineInterface
 {
     /**
+     * @var BoxFactoryInterface
+     */
+    private $boxFactory;
+    
+    /**
      * @throws RuntimeException
      */
-    public function __construct()
+    public function __construct(BoxFactoryInterface $boxFactory = null)
     {
         if (!class_exists('Gmagick')) {
             throw new RuntimeException('Gmagick not installed');
         }
+        
+        $this->boxFactory = $boxFactory ?: BoxFactory::instance();
     }
 
     /**
@@ -52,7 +61,7 @@ class Imagine implements ImagineInterface
         try {
             $gmagick = new \Gmagick($path);
 
-            $image = new Image($gmagick, $this->createPalette($gmagick));
+            $image = new Image($gmagick, $this->createPalette($gmagick), $this->boxFactory);
             fclose($handle);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
@@ -98,7 +107,7 @@ class Imagine implements ImagineInterface
             // this is needed to propagate transparency
             $gmagick->setimagebackgroundcolor($pixel);
 
-            $image = new Image($gmagick, $palette);
+            $image = new Image($gmagick, $palette, $this->boxFactory);
 
             if ($switchPalette) {
                 $image->usePalette($switchPalette);
@@ -126,7 +135,7 @@ class Imagine implements ImagineInterface
             );
         }
 
-        return new Image($gmagick, $this->createPalette($gmagick));
+        return new Image($gmagick, $this->createPalette($gmagick), $this->boxFactory);
     }
 
     /**
@@ -156,7 +165,7 @@ class Imagine implements ImagineInterface
 
         $gmagick->newimage(1, 1, 'transparent');
 
-        return new Font($gmagick, $file, $size, $color);
+        return new Font($gmagick, $file, $size, $color, $this->boxFactory);
     }
 
     private function createPalette(\Gmagick $gmagick)

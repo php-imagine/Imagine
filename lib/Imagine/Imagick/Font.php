@@ -14,6 +14,7 @@ namespace Imagine\Imagick;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\BoxFactoryInterface;
 
 /**
  * Font implementation using the Imagick PHP extension
@@ -26,16 +27,18 @@ final class Font extends AbstractFont
     private $imagick;
 
     /**
-     * @param \Imagick       $imagick
-     * @param string         $file
-     * @param integer        $size
-     * @param ColorInterface $color
+     * @param \Imagick            $imagick
+     * @param string              $file
+     * @param integer             $size
+     * @param ColorInterface      $color
+     * @param BoxFactoryInterface $boxFactory
      */
-    public function __construct(\Imagick $imagick, $file, $size, ColorInterface $color)
+    public function __construct(\Imagick $imagick, $file, $size, ColorInterface $color, 
+            BoxFactoryInterface $boxFactory = null)
     {
         $this->imagick = $imagick;
 
-        parent::__construct($file, $size, $color);
+        parent::__construct($file, $size, $color, $boxFactory);
     }
 
     /**
@@ -61,7 +64,7 @@ final class Font extends AbstractFont
 
         $info = $this->imagick->queryFontMetrics($text, $string);
 
-        $box = new Box($info['textWidth'], $info['textHeight']);
+        $box = $this->getBoxFactory()->create($info['textWidth'], $info['textHeight']);
 
         return $box;
     }

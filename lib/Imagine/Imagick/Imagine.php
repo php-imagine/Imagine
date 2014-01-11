@@ -19,6 +19,8 @@ use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Grayscale;
+use Imagine\Image\BoxFactoryInterface;
+use Imagine\Image\BoxFactory;
 
 /**
  * Imagine implementation using the Imagick PHP extension
@@ -26,9 +28,14 @@ use Imagine\Image\Palette\Grayscale;
 final class Imagine implements ImagineInterface
 {
     /**
+     * @var BoxFactoryInterface
+     */
+    private $boxFactory;
+    
+    /**
      * @throws RuntimeException
      */
-    public function __construct()
+    public function __construct(BoxFactoryInterface $boxFactory = null)
     {
         if (!class_exists('Imagick')) {
             throw new RuntimeException('Imagick not installed');
@@ -42,6 +49,8 @@ final class Imagine implements ImagineInterface
         if (version_compare('6.2.9', $version) > 0) {
             throw new RuntimeException('Imagick version 6.2.9 or higher is required');
         }
+
+        $this->boxFactory = $boxFactory ?: BoxFactory::instance();
     }
 
     /**
@@ -94,7 +103,7 @@ final class Imagine implements ImagineInterface
             $pixel->clear();
             $pixel->destroy();
 
-            return new Image($imagick, $palette);
+            return new Image($imagick, $palette, $this->boxFactory);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Could not create empty image', $e->getCode(), $e
@@ -113,7 +122,7 @@ final class Imagine implements ImagineInterface
             $imagick->readImageBlob($string);
             $imagick->setImageMatte(true);
 
-            return new Image($imagick, $this->createPalette($imagick));
+            return new Image($imagick, $this->createPalette($imagick), $this->boxFactory);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Could not load image from string', $e->getCode(), $e
@@ -139,7 +148,7 @@ final class Imagine implements ImagineInterface
             );
         }
 
-        return new Image($imagick, $this->createPalette($imagick));
+        return new Image($imagick, $this->createPalette($imagick), $this->boxFactory);
     }
 
     /**
@@ -147,7 +156,7 @@ final class Imagine implements ImagineInterface
      */
     public function font($file, $size, ColorInterface $color)
     {
-        return new Font(new \Imagick(), $file, $size, $color);
+        return new Font(new \Imagick(), $file, $size, $color, $this->boxFactory);
     }
 
     private function createPalette(\Imagick $imagick)
