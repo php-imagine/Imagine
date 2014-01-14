@@ -441,7 +441,7 @@ final class Image extends AbstractImage
             );
         }
 
-        return $this->getBoxFactory()->create($width, $height);
+        return $this->getBoxFactory()->createBox($width, $height);
     }
 
     /**

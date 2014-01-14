@@ -58,7 +58,7 @@ final class Font extends AbstractFont
 
         $info = $this->gmagick->queryfontmetrics($text, $string);
 
-        $box = $this->getBoxFactory()->create($info['textWidth'], $info['textHeight']);
+        $box = $this->getBoxFactory()->createBox($info['textWidth'], $info['textHeight']);
 
         return $box;
     }

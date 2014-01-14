@@ -361,7 +361,7 @@ final class Image extends AbstractImage
      */
     public function getSize()
     {
-        return $this->getBoxFactory()->create(imagesx($this->resource), imagesy($this->resource));
+        return $this->getBoxFactory()->createBox(imagesx($this->resource), imagesy($this->resource));
     }
 
     /**

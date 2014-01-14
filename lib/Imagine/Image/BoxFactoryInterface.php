@@ -25,5 +25,5 @@ interface BoxFactoryInterface
      * @return BoxInterface
      * @throws InvalidArgumentException
      */
-    public function create($width, $height);
+    public function createBox($width, $height);
 }

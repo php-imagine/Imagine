@@ -32,6 +32,6 @@ final class Font extends AbstractFont
         $width    = abs(max($xs) - min($xs));
         $height   = abs(max($ys) - min($ys));
 
-        return $this->getBoxFactory()->create($width, $height);
+        return $this->getBoxFactory()->createBox($width, $height);
     }
 }

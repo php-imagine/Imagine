@@ -34,7 +34,7 @@ final class BoxFactory implements BoxFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create($width, $height)
+    public function createBox($width, $height)
     {
         return new Box($width, $height);
     }
