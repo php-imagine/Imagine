@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Simon Erhardt <me@rootlogin.ch>
+ * @author Simon Erhardt <simon.erhardt@liip.ch>
  * @license MIT (http://opensource.org/licenses/MIT)
  */
 
@@ -21,14 +21,16 @@ use Imagine\Image\Point;
  * Let's circle an image
  *
  * @package Imagine\Filter\Advanced
- * @author Simon Erhardt <me@rootlogin.ch>
+ * @author Simon Erhardt <simon.erhardt@liip.ch>
  */
 class CircleImage implements FilterInterface {
     private $radius;
     private $imagine;
 
     /**
-     * Adds a circle to an image
+     * Creates a round picture, set the radius and we will calculate
+     * which pixels are inside the circle and copy them to a new image
+     * with transparent background.
      *
      * @param int|boolean $radius Sets the radius, if false it
      * uses half of size
