@@ -24,22 +24,24 @@ use Imagine\Image\Point;
  * @author Simon Erhardt <simon.erhardt@liip.ch>
  */
 class CircleImage implements FilterInterface {
-    private $radius;
+    private $radius = false;
     private $imagine;
 
     /**
      * Creates a round picture, set the radius and we will calculate
      * which pixels are inside the circle and copy them to a new image
      * with transparent background.
+     * If you set the radius bigger then the half size of the
+     * image it let you create round corners.
      *
-     * @param int|boolean $radius Sets the radius, if false it
+     * @param int|boolean $radius Sets the radius, if false it will use half of the smaller side
      * uses half of size
      */
     public function __construct($radius = false)
     {
-        if($radius)
+        if($radius && gettype($radius) == 'integer')
         {
-            $this->radius = $radius * $radius;
+            $this->radius = pow($radius,2);
         }
         $this->imagine = new Imagine();
     }
@@ -49,16 +51,12 @@ class CircleImage implements FilterInterface {
      */
     public function apply(ImageInterface $image)
     {
-        if(gettype($this->radius) != 'integer' && $this->radius != false)
-        {
-            throw(new InvalidArgumentException("Radius must be an integer or false!"));
-        }
-        else if($this->radius == false)
+        if($this->radius == false)
         {
             if($image->getSize()->getHeight() >= $image->getSize()->getWidth()) {
-                $this->radius = floor($image->getSize()->getWidth() / 2);
+                $this->radius = pow(floor($image->getSize()->getWidth() / 2),2);
             } else {
-                $this->radius = floor($image->getSize()->getHeight() / 2);
+                $this->radius = pow(floor($image->getSize()->getHeight() / 2),2);
             }
         }
 
