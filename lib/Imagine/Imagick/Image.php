@@ -908,7 +908,10 @@ final class Image extends AbstractImage
         );
 
         if (!array_key_exists($filter, $supportedFilters)) {
-            throw new InvalidArgumentException('Unsupported filter type');
+            throw new InvalidArgumentException(sprintf(
+                'The resampling filter "%s" is not supported by Imagick driver.',
+                $filter
+            ));
         }
 
         return $supportedFilters[$filter];
