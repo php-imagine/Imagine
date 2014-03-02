@@ -250,7 +250,7 @@ Here is a simple way to add a watermark to an image :
     $size      = $image->getSize();
     $wSize     = $watermark->getSize();
 
-    $bottomRight = new Imagine\Image\Point($size->getX() - $wSize->getX(), $size->getY() - $wSize->getY());
+    $bottomRight = new Imagine\Image\Point($size->getWidth() - $wSize->getWidth(), $size->getHeight() - $wSize->getHeight());
 
     $image->paste($watermark, $bottomRight);
 
