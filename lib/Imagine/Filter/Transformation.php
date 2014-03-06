@@ -91,7 +91,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * Returns a sorted list of filters
+     * Returns a list of filters sorted by their priority. Filters with same priority will be returned in the order they were added.
      *
      * @return array
      */
