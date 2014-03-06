@@ -380,7 +380,7 @@ final class Image extends AbstractImage
         if (isset($options['animated']) && true === $options['animated']) {
 
             $format = isset($options['format']) ? $options['format'] : 'gif';
-            $delay = isset($options['animated.delay']) ? $options['animated.delay'] : 800;
+            $delay = isset($options['animated.delay']) ? $options['animated.delay'] : null;
             $loops = isset($options['animated.loops']) ? $options['animated.loops'] : 0;
 
             $options['flatten'] = false;
