@@ -45,6 +45,26 @@ The result of ``apply()`` is the modified image instance itself, so if we wanted
 
 The ``Filter\Transformation`` class itself is simply a very specific implementation of ``FilterInterface``, which is a more generic interface, that let's you pre-define certain operations and variable calculations and apply them to an ``ImageInterface`` instance later.
 
+Filter Application Order
+------------------------
+
+Normally filters are applied in the order that they are added to the transformation. However, sometimes we want certain filters to always apply first, and others to always apply last, for example always apply a crop before applying a border.
+You can do this by specifying a priority when passing a filter to the ``add()`` method:
+
+.. code-block:: php
+
+    <?php
+
+    $transformation = new Imagine\Filter\Transformation();
+
+    $transformation->add(new Filter\Basic\Crop($point, $size), -10); //this filter has priority -10 and applies early
+    $transformation->add(new Filter\Advanced\Border($color), 10); //this filter has priority 10 and applies late
+    $transformation->add(new Filter\Basic\Rotate($angle)); //this filter has default priority 0 and applies in between
+
+    //filters with equal priority will still be applied in the order they were added
+
+This is especially useful when you add filters based on user-input.
+
 Filters
 -------
 
