@@ -40,6 +40,7 @@ class Thumbnail implements FilterInterface
      *
      * @param BoxInterface $size
      * @param string       $mode
+     * @param string       $filter
      */
     public function __construct(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {

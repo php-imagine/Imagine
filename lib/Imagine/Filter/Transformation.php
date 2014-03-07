@@ -225,8 +225,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * Registers a given FilterInterface in an internal array of filters for
      * later application to an instance of ImageInterface
      *
-     * @param FilterInterface $filter
-     * @param int $priority
+     * @param  FilterInterface $filter
+     * @param  int             $priority
      * @return Transformation
      */
     public function add(FilterInterface $filter, $priority = 0)

@@ -275,7 +275,7 @@ final class Drawer implements DrawerInterface
             ));
         }
 
-        $points = array_map(function(PointInterface $p) {
+        $points = array_map(function (PointInterface $p) {
             return array('x' => $p->getX(), 'y' => $p->getY());
         }, $coordinates);
 

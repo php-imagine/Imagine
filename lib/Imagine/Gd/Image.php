@@ -57,6 +57,7 @@ final class Image extends AbstractImage
      *
      * @param resource         $resource
      * @param PaletteInterface $palette
+     * @param null|string      $path
      */
     public function __construct($resource, PaletteInterface $palette, $path = null)
     {
@@ -710,7 +711,7 @@ final class Image extends AbstractImage
 
     private function setExceptionHandler()
     {
-        set_error_handler(function($errno, $errstr, $errfile, $errline) {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 
             if (0 === error_reporting()) {
                 return;

@@ -528,7 +528,7 @@ final class Image extends AbstractImage
         $image = $this;
 
         return array_map(
-            function(\GmagickPixel $pixel) use ($image) {
+            function (\GmagickPixel $pixel) use ($image) {
                 return $image->pixelToColor($pixel);
             },
             $pixels

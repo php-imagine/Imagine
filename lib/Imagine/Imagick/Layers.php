@@ -12,7 +12,6 @@
 namespace Imagine\Imagick;
 
 use Imagine\Image\AbstractLayers;
-use Imagine\Imagick\Image;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;

@@ -13,10 +13,7 @@ namespace Imagine\Image;
 
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\ImageInterface;
-use Imagine\Image\PointInterface;
 use Imagine\Image\Fill\FillInterface;
 
 /**
