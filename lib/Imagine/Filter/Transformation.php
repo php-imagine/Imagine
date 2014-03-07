@@ -44,6 +44,11 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     private $filters = array();
 
     /**
+     * @var array
+     */
+    private $sorted;
+
+    /**
      * An ImagineInterface instance.
      *
      * @var ImagineInterface
@@ -86,12 +91,27 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
+     * Returns a list of filters sorted by their priority. Filters with same priority will be returned in the order they were added.
+     *
+     * @return array
+     */
+    public function getFilters()
+    {
+        if (null === $this->sorted) {
+            ksort($this->filters);
+            $this->sorted = call_user_func_array('array_merge', $this->filters);
+        }
+
+        return $this->sorted;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function apply(ImageInterface $image)
     {
         return array_reduce(
-            $this->filters,
+            $this->getFilters(),
             array($this, 'applyFilter'),
             $image
         );
@@ -206,12 +226,13 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * later application to an instance of ImageInterface
      *
      * @param FilterInterface $filter
-     *
+     * @param int $priority
      * @return Transformation
      */
-    public function add(FilterInterface $filter)
+    public function add(FilterInterface $filter, $priority = 0)
     {
-        $this->filters[] = $filter;
+        $this->filters[$priority][] = $filter;
+        $this->sorted = null;
 
         return $this;
     }
