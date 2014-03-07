@@ -294,7 +294,7 @@
                     <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_save">save</a>(string $path, array $options = array())
+                    <a href="#method_save">save</a>(string $path = null, array $options = array())
                     <p>Saves the image at a specified path, the target file extension is used to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are supported</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../Imagine/Image/ManipulatorInterface.html#method_save"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a></small></td>
@@ -344,7 +344,7 @@
                     <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = self::THUMBNAIL_INSET)
+                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = self::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
                     <p>Generates a thumbnail from a current image Returns it as a new image, doesn't modify the current image</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../Imagine/Image/ManipulatorInterface.html#method_thumbnail"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a></small></td>
@@ -506,7 +506,7 @@
         <h2>Details</h2>
 
                         <h3 id="method_copy">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_copy"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 37</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_copy"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 34</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>copy</strong>()</code>
     </h3>
@@ -542,7 +542,7 @@
     </div>
 
                 <h3 id="method_crop">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_crop"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 51</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_crop"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 48</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>crop</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size)</code>
     </h3>
@@ -600,7 +600,7 @@
     </div>
 
                 <h3 id="method_resize">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_resize"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 63</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_resize"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 60</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>resize</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $filter = ImageInterface::FILTER_UNDEFINED)</code>
     </h3>
@@ -653,7 +653,7 @@
     </div>
 
                 <h3 id="method_rotate">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_rotate"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 77</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_rotate"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 74</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>rotate</strong>(integer $angle, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $background = null)</code>
     </h3>
@@ -706,7 +706,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_paste">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_paste"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 95</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_paste"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 92</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>paste</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start)</code>
     </h3>
@@ -768,9 +768,9 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_save">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_save"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 109</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_save"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 106</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
-    <strong>save</strong>(string $path, array $options = array())</code>
+    <strong>save</strong>(string $path = null, array $options = array())</code>
     </h3>
     <div class="details">
         <p>Saves the image at a specified path, the target file extension is used to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are supported</p>
@@ -821,7 +821,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_show">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_show"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 121</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_show"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 118</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>show</strong>(string $format, array $options = array())</code>
     </h3>
@@ -874,7 +874,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_flipHorizontally">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_flipHorizontally"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 130</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_flipHorizontally"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 127</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipHorizontally</strong>()</code>
     </h3>
@@ -910,7 +910,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_flipVertically">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_flipVertically"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 139</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_flipVertically"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 136</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipVertically</strong>()</code>
     </h3>
@@ -946,7 +946,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_strip">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_strip"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 148</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_strip"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 145</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>strip</strong>()</code>
     </h3>
@@ -982,9 +982,9 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_thumbnail">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_thumbnail"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 161</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_thumbnail"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 159</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
-    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = self::THUMBNAIL_INSET)</code>
+    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = self::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)</code>
     </h3>
     <div class="details">
         <p>Generates a thumbnail from a current image Returns it as a new image, doesn't modify the current image</p>
@@ -1005,6 +1005,11 @@ area of rotated image.</p>
                 <td>$mode</td>
                 <td>
 </td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$filter</td>
+                <td>The filter to use for resizing, one of ImageInterface::FILTER_*</td>
             </tr>
             </table>
 
@@ -1035,7 +1040,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_applyMask">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_applyMask"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 170</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_applyMask"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 168</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>applyMask</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $mask)</code>
     </h3>
@@ -1072,7 +1077,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_fill">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_fill"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 181</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_fill"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at line 179</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>fill</strong>(<a href="../../Imagine/Image/Fill/FillInterface.html"><abbr title="Imagine\Image\Fill\FillInterface">FillInterface</abbr></a> $fill)</code>
     </h3>
@@ -1109,7 +1114,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_get">
-        <div class="location">at line 64</div>
+        <div class="location">at line 61</div>
         <code>            public            string
     <strong>get</strong>(string $format, array $options = array())</code>
     </h3>
@@ -1161,7 +1166,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method___toString">
-        <div class="location">at line 73</div>
+        <div class="location">at line 70</div>
         <code>            public            string
     <strong>__toString</strong>()</code>
     </h3>
@@ -1196,7 +1201,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_draw">
-        <div class="location">at line 80</div>
+        <div class="location">at line 77</div>
         <code>            public            <a href="../../Imagine/Draw/DrawerInterface.html"><abbr title="Imagine\Draw\DrawerInterface">DrawerInterface</abbr></a>
     <strong>draw</strong>()</code>
     </h3>
@@ -1222,7 +1227,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_effects">
-        <div class="location">at line 85</div>
+        <div class="location">at line 82</div>
         <code>            public            <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>effects</strong>()</code>
     </h3>
@@ -1249,7 +1254,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_getSize">
-        <div class="location">at line 92</div>
+        <div class="location">at line 89</div>
         <code>            public            <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a>
     <strong>getSize</strong>()</code>
     </h3>
@@ -1275,7 +1280,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_mask">
-        <div class="location">at line 100</div>
+        <div class="location">at line 97</div>
         <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>mask</strong>()</code>
     </h3>
@@ -1301,7 +1306,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_histogram">
-        <div class="location">at line 107</div>
+        <div class="location">at line 104</div>
         <code>            public            array
     <strong>histogram</strong>()</code>
     </h3>
@@ -1327,7 +1332,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_getColorAt">
-        <div class="location">at line 118</div>
+        <div class="location">at line 115</div>
         <code>            public            <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
     <strong>getColorAt</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $point)</code>
     </h3>
@@ -1374,7 +1379,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_layers">
-        <div class="location">at line 128</div>
+        <div class="location">at line 125</div>
         <code>            public            <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
     <strong>layers</strong>()</code>
     </h3>
@@ -1413,7 +1418,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_interlace">
-        <div class="location">at line 139</div>
+        <div class="location">at line 136</div>
         <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>interlace</strong>(string $scheme)</code>
     </h3>
@@ -1459,7 +1464,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_palette">
-        <div class="location">at line 146</div>
+        <div class="location">at line 143</div>
         <code>            public            <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
     <strong>palette</strong>()</code>
     </h3>
@@ -1485,7 +1490,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_usePalette">
-        <div class="location">at line 157</div>
+        <div class="location">at line 154</div>
         <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>usePalette</strong>(<a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette)</code>
     </h3>
@@ -1531,7 +1536,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_profile">
-        <div class="location">at line 168</div>
+        <div class="location">at line 165</div>
         <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>profile</strong>(<a href="../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)</code>
     </h3>

@@ -58,6 +58,16 @@
             </tr>
                     <tr>
                 <td class="type">
+                    array
+                </td>
+                <td class="last">
+                    <a href="#method_getFilters">getFilters</a>()
+                    <p>Returns a list of filters sorted by their priority.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
                     <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
                 </td>
                 <td class="last">
@@ -171,7 +181,7 @@
                     <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_save">save</a>(string $path, array $options = array())
+                    <a href="#method_save">save</a>(string $path = null, array $options = array())
                     <p>Saves the image at a specified path, the target file extension is used to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are supported</p>
                 </td>
                 <td></td>
@@ -191,7 +201,7 @@
                     <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET)
+                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
                     <p>Generates a thumbnail from a current image Returns it as a new image, doesn't modify the current image</p>
                 </td>
                 <td></td>
@@ -201,7 +211,7 @@
                     <a href="../../Imagine/Filter/Transformation.html"><abbr title="Imagine\Filter\Transformation">Transformation</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_add">add</a>(<a href="../../Imagine/Filter/FilterInterface.html"><abbr title="Imagine\Filter\FilterInterface">FilterInterface</abbr></a> $filter)
+                    <a href="#method_add">add</a>(<a href="../../Imagine/Filter/FilterInterface.html"><abbr title="Imagine\Filter\FilterInterface">FilterInterface</abbr></a> $filter, int $priority)
                     <p>Registers a given FilterInterface in an internal array of filters for later application to an instance of ImageInterface</p>
                 </td>
                 <td></td>
@@ -212,7 +222,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 58</div>
+        <div class="location">at line 63</div>
         <code>            public            
     <strong>__construct</strong>(<a href="../../Imagine/Image/ImagineInterface.html"><abbr title="Imagine\Image\ImagineInterface">ImagineInterface</abbr></a> $imagine = null)</code>
     </h3>
@@ -238,7 +248,7 @@
     </div>
 
                 <h3 id="method_applyFilter">
-        <div class="location">at line 73</div>
+        <div class="location">at line 78</div>
         <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>applyFilter</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Filter/FilterInterface.html"><abbr title="Imagine\Filter\FilterInterface">FilterInterface</abbr></a> $filter)</code>
     </h3>
@@ -290,8 +300,33 @@
                     </div>
     </div>
 
+                <h3 id="method_getFilters">
+        <div class="location">at line 98</div>
+        <code>            public            array
+    <strong>getFilters</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Returns a list of filters sorted by their priority.</p>
+        <p>Filters with same priority will be returned in the order they were added.</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_apply">
-        <div class="location">at line 91</div>
+        <div class="location">at line 111</div>
         <code>            public            <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>apply</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)</code>
     </h3>
@@ -328,7 +363,7 @@
     </div>
 
                 <h3 id="method_copy">
-        <div class="location">at line 103</div>
+        <div class="location">at line 123</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>copy</strong>()</code>
     </h3>
@@ -364,7 +399,7 @@
     </div>
 
                 <h3 id="method_crop">
-        <div class="location">at line 111</div>
+        <div class="location">at line 131</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>crop</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size)</code>
     </h3>
@@ -422,7 +457,7 @@
     </div>
 
                 <h3 id="method_flipHorizontally">
-        <div class="location">at line 119</div>
+        <div class="location">at line 139</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipHorizontally</strong>()</code>
     </h3>
@@ -458,7 +493,7 @@
     </div>
 
                 <h3 id="method_flipVertically">
-        <div class="location">at line 127</div>
+        <div class="location">at line 147</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipVertically</strong>()</code>
     </h3>
@@ -494,7 +529,7 @@
     </div>
 
                 <h3 id="method_strip">
-        <div class="location">at line 135</div>
+        <div class="location">at line 155</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>strip</strong>()</code>
     </h3>
@@ -530,7 +565,7 @@
     </div>
 
                 <h3 id="method_paste">
-        <div class="location">at line 143</div>
+        <div class="location">at line 163</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>paste</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start)</code>
     </h3>
@@ -592,7 +627,7 @@
     </div>
 
                 <h3 id="method_applyMask">
-        <div class="location">at line 151</div>
+        <div class="location">at line 171</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>applyMask</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $mask)</code>
     </h3>
@@ -629,7 +664,7 @@
     </div>
 
                 <h3 id="method_fill">
-        <div class="location">at line 159</div>
+        <div class="location">at line 179</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>fill</strong>(<a href="../../Imagine/Image/Fill/FillInterface.html"><abbr title="Imagine\Image\Fill\FillInterface">FillInterface</abbr></a> $fill)</code>
     </h3>
@@ -666,7 +701,7 @@
     </div>
 
                 <h3 id="method_resize">
-        <div class="location">at line 167</div>
+        <div class="location">at line 187</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>resize</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $filter = ImageInterface::FILTER_UNDEFINED)</code>
     </h3>
@@ -719,7 +754,7 @@
     </div>
 
                 <h3 id="method_rotate">
-        <div class="location">at line 175</div>
+        <div class="location">at line 195</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>rotate</strong>(integer $angle, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $background = null)</code>
     </h3>
@@ -772,9 +807,9 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_save">
-        <div class="location">at line 183</div>
+        <div class="location">at line 203</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
-    <strong>save</strong>(string $path, array $options = array())</code>
+    <strong>save</strong>(string $path = null, array $options = array())</code>
     </h3>
     <div class="details">
         <p>Saves the image at a specified path, the target file extension is used to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are supported</p>
@@ -825,7 +860,7 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_show">
-        <div class="location">at line 191</div>
+        <div class="location">at line 211</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>show</strong>(string $format, array $options = array())</code>
     </h3>
@@ -878,9 +913,9 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_thumbnail">
-        <div class="location">at line 199</div>
+        <div class="location">at line 219</div>
         <code>            public            <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
-    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET)</code>
+    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)</code>
     </h3>
     <div class="details">
         <p>Generates a thumbnail from a current image Returns it as a new image, doesn't modify the current image</p>
@@ -901,6 +936,11 @@ area of rotated image.</p>
                 <td>$mode</td>
                 <td>
 </td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$filter</td>
+                <td>The filter to use for resizing, one of ImageInterface::FILTER_*</td>
             </tr>
             </table>
 
@@ -931,9 +971,9 @@ area of rotated image.</p>
     </div>
 
                 <h3 id="method_add">
-        <div class="location">at line 212</div>
+        <div class="location">at line 232</div>
         <code>            public            <a href="../../Imagine/Filter/Transformation.html"><abbr title="Imagine\Filter\Transformation">Transformation</abbr></a>
-    <strong>add</strong>(<a href="../../Imagine/Filter/FilterInterface.html"><abbr title="Imagine\Filter\FilterInterface">FilterInterface</abbr></a> $filter)</code>
+    <strong>add</strong>(<a href="../../Imagine/Filter/FilterInterface.html"><abbr title="Imagine\Filter\FilterInterface">FilterInterface</abbr></a> $filter, int $priority)</code>
     </h3>
     <div class="details">
         <p>Registers a given FilterInterface in an internal array of filters for later application to an instance of ImageInterface</p>
@@ -946,6 +986,12 @@ area of rotated image.</p>
                     <tr>
                 <td><a href="../../Imagine/Filter/FilterInterface.html"><abbr title="Imagine\Filter\FilterInterface">FilterInterface</abbr></a></td>
                 <td>$filter</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$priority</td>
                 <td>
 </td>
             </tr>
