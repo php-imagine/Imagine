@@ -294,8 +294,8 @@ final class Image extends AbstractImage
             $image->setCompressionQuality($options['quality']);
         }
 
-        if (isset($options['png_compression']) && $format === 'png') {
-            $compression = $options['png_compression'] * 10; // first digit: compression level
+        if (isset($options['png_compression_level']) && $format === 'png') {
+            $compression = $options['png_compression_level'] * 10; // first digit: compression level
             $compression += 5; // second digit: compression filter (5 is the default value)
             $image->setCompressionQuality($compression);
         }

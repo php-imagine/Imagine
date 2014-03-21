@@ -573,12 +573,17 @@ final class Image extends AbstractImage
         }
 
         if ($format === 'png') {
-            $args[] = isset($options['png_compression'])
-                ? $options['png_compression']
-                : -1; // default compression level
+            $args[] = isset($options['png_compression_level'])
+                ? $options['png_compression_level']
+                : -1; // use default level
 
-            if (isset($options['filters'])) {
-                $args[] = $options['filters'];
+            // backward compatibility
+            if (isset($options['filters']) && !isset($options['png_compression_filter'])) {
+                $options['png_compression_filter'] = $options['filters'];
+            }
+
+            if (isset($options['png_compression_filter'])) {
+                $args[] = $options['png_compression_filter'];
             }
         }
 
