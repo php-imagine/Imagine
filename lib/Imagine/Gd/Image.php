@@ -583,6 +583,9 @@ final class Image extends AbstractImage
             }
 
             if (isset($options['png_compression_filter'])) {
+                if (~PNG_ALL_FILTERS & $options['png_compression_filter']) {
+                    throw new InvalidArgumentException('png_compression_filter option should be a combination of the PNG_FILTER_XXX constants');
+                }
                 $args[] = $options['png_compression_filter'];
             }
         }

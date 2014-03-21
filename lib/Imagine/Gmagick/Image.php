@@ -302,9 +302,14 @@ final class Image extends AbstractImage
                 : 70;
 
             // second digit: compression filter (default: 5)
-            $compression += isset($options['png_compression_filter'])
-                ? $options['png_compression_filter']
-                : 5;
+            if (isset($options['png_compression_filter'])) {
+                if ($options['png_compression_filter'] < 0 || $options['png_compression_filter'] > 9) {
+                    throw new InvalidArgumentException('png_compression_filter option should be an integer from 0 to 9');
+                }
+                $compression += $options['png_compression_filter'];
+            } else {
+                $compression += 5;
+            }
 
             $image->setCompressionQuality($compression);
         }
