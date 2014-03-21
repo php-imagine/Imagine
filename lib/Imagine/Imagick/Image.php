@@ -308,7 +308,7 @@ final class Image extends AbstractImage
         }
 
         try {
-            $this->prepareOutput($options);
+            $this->prepareOutput($options, $path);
             $this->imagick->writeImages($path, true);
         } catch (\ImagickException $e) {
             throw new RuntimeException(
@@ -369,9 +369,10 @@ final class Image extends AbstractImage
     }
 
     /**
-     * @param array $options
+     * @param array  $options
+     * @param string $path
      */
-    private function prepareOutput(array $options)
+    private function prepareOutput(array $options, $path = null)
     {
         if (isset($options['format'])) {
             $this->imagick->setImageFormat($options['format']);
@@ -389,7 +390,7 @@ final class Image extends AbstractImage
         } else {
             $this->layers->merge();
         }
-        $this->applyImageOptions($this->imagick, $options);
+        $this->applyImageOptions($this->imagick, $options, $path);
 
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true)
@@ -723,11 +724,23 @@ final class Image extends AbstractImage
      *
      * @param \Imagick $image
      * @param array    $options
+     * @param string   $path
      */
-    private function applyImageOptions(\Imagick $image, array $options)
+    private function applyImageOptions(\Imagick $image, array $options, $path)
     {
         if (isset($options['quality'])) {
-            $image->setImageCompressionQuality($options['quality']);
+
+            if (isset($options['format'])) {
+                $format = $options['format'];
+            } elseif ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
+                $format = $extension;
+            } else {
+                $format = pathinfo($image->getImageFilename(), \PATHINFO_EXTENSION);
+            }
+
+            if (in_array(strtolower($format), array('jpeg', 'jpg', 'pjpeg'))) {
+                $image->setImageCompressionQuality($options['quality']);
+            }
         }
 
         if (isset($options['resolution-units']) && isset($options['resolution-x'])

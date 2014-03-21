@@ -276,11 +276,23 @@ final class Image extends AbstractImage
      *
      * @param \Gmagick $image
      * @param array    $options
+     * @param string   $path
      */
-    private function applyImageOptions(\Gmagick $image, array $options)
+    private function applyImageOptions(\Gmagick $image, array $options, $path)
     {
         if (isset($options['quality'])) {
-            $image->setCompressionQuality($options['quality']);
+
+            if (isset($options['format'])) {
+                $format = $options['format'];
+            } elseif ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
+                $format = $extension;
+            } else {
+                $format = pathinfo($image->getImageFilename(), \PATHINFO_EXTENSION);
+            }
+
+            if (in_array(strtolower($format), array('jpeg', 'jpg', 'pjpeg'))) {
+                $image->setCompressionQuality($options['quality']);
+            }
         }
 
         if (isset($options['resolution-units']) && isset($options['resolution-x'])
@@ -312,7 +324,7 @@ final class Image extends AbstractImage
         }
 
         try {
-            $this->prepareOutput($options);
+            $this->prepareOutput($options, $path);
             $allFrames = !isset($options['animated']) || false === $options['animated'];
             $this->gmagick->writeimage($path, $allFrames);
         } catch (\GmagickException $e) {
@@ -353,9 +365,10 @@ final class Image extends AbstractImage
     }
 
     /**
-     * @param array $options
+     * @param array  $options
+     * @param string $path
      */
-    private function prepareOutput(array $options)
+    private function prepareOutput(array $options, $path = null)
     {
         if (isset($options['format'])) {
             $this->gmagick->setimageformat($options['format']);
@@ -373,7 +386,7 @@ final class Image extends AbstractImage
         } else {
             $this->layers->merge();
         }
-        $this->applyImageOptions($this->gmagick, $options);
+        $this->applyImageOptions($this->gmagick, $options, $path);
 
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true)

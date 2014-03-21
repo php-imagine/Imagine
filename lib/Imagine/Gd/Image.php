@@ -568,18 +568,12 @@ final class Image extends AbstractImage
         $save = 'image'.$format;
         $args = array(&$this->resource, $filename);
 
-        if (($format === 'jpeg' || $format === 'png') &&
-            isset($options['quality'])) {
-            // Png compression quality is 0-9, so here we get the value from percent.
-            // Beaware that compression level for png works the other way around.
-            // For PNG 0 means no compression and 9 means highest compression level.
-            if ($format === 'png') {
-                $options['quality'] = round((100 - $options['quality']) * 9 / 100);
-            }
+        if ($format === 'jpeg' && isset($options['quality'])) {
             $args[] = $options['quality'];
         }
 
         if ($format === 'png' && isset($options['filters'])) {
+            $args[] = -1; // default compression level
             $args[] = $options['filters'];
         }
 
