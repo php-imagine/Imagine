@@ -745,7 +745,9 @@ final class Image extends AbstractImage
             }
 
             if (isset($options['png_compression']) && $format === 'png') {
-                $image->setImageCompressionQuality($options['png_compression']);
+                $compression = $options['png_compression'] * 10; // first digit: compression level
+                $compression += 5; // second digit: compression filter (5 is the default value)
+                $image->setImageCompressionQuality($compression);
             }
         }
 
