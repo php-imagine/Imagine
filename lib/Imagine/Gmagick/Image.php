@@ -283,7 +283,7 @@ final class Image extends AbstractImage
             $image->setCompressionQuality($options['quality']);
         }
 
-        if(isset($options['resolution-units']) && isset($options['resolution-x'])
+        if (isset($options['resolution-units']) && isset($options['resolution-x'])
           && isset($options['resolution-y'])) {
 
             if ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
@@ -341,7 +341,7 @@ final class Image extends AbstractImage
     public function get($format, array $options = array())
     {
         try {
-            $options["format"] = $format;
+            $options['format'] = $format;
             $this->prepareOutput($options);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
