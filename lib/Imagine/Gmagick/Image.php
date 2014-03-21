@@ -280,27 +280,24 @@ final class Image extends AbstractImage
      */
     private function applyImageOptions(\Gmagick $image, array $options, $path)
     {
-        if (isset($options['quality']) || isset($options['png_compression'])) {
+        if (isset($options['format'])) {
+            $format = $options['format'];
+        } elseif ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
+            $format = $extension;
+        } else {
+            $format = pathinfo($image->getImageFilename(), \PATHINFO_EXTENSION);
+        }
 
-            if (isset($options['format'])) {
-                $format = $options['format'];
-            } elseif ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
-                $format = $extension;
-            } else {
-                $format = pathinfo($image->getImageFilename(), \PATHINFO_EXTENSION);
-            }
+        $format = strtolower($format);
 
-            $format = strtolower($format);
+        if (isset($options['quality']) && in_array($format, array('jpeg', 'jpg', 'pjpeg'))) {
+            $image->setCompressionQuality($options['quality']);
+        }
 
-            if (isset($options['quality']) && in_array($format, array('jpeg', 'jpg', 'pjpeg'))) {
-                $image->setCompressionQuality($options['quality']);
-            }
-
-            if (isset($options['png_compression']) && $format === 'png') {
-                $compression = $options['png_compression'] * 10; // first digit: compression level
-                $compression += 5; // second digit: compression filter (5 is the default value)
-                $image->setCompressionQuality($compression);
-            }
+        if (isset($options['png_compression']) && $format === 'png') {
+            $compression = $options['png_compression'] * 10; // first digit: compression level
+            $compression += 5; // second digit: compression filter (5 is the default value)
+            $image->setCompressionQuality($compression);
         }
 
         if (isset($options['resolution-units']) && isset($options['resolution-x'])
