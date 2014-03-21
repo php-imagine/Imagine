@@ -32,7 +32,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
             ->ellipse(new Point(125, 100), new Box(50, 50), $this->getColor('fff'))
             ->ellipse(new Point(275, 100), new Box(50, 50), $this->getColor('fff'), true);
 
-        $canvas->save('tests/Imagine/Fixtures/smiley.png', array('quality' => 100));
+        $canvas->save('tests/Imagine/Fixtures/smiley.png');
 
         $this->assertTrue(file_exists('tests/Imagine/Fixtures/smiley.png'));
 
@@ -48,7 +48,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $canvas->draw()
             ->ellipse(new Center($canvas->getSize()), new Box(300, 200), $this->getColor('fff'), true);
 
-        $canvas->save('tests/Imagine/Fixtures/ellipse.png', array('quality' => 100));
+        $canvas->save('tests/Imagine/Fixtures/ellipse.png');
 
         $this->assertTrue(file_exists('tests/Imagine/Fixtures/ellipse.png'));
 
@@ -97,9 +97,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
             ->line(new Point(50, 50), new Point(350, 250), $this->getColor('fff'))
             ->line(new Point(50, 250), new Point(350, 50), $this->getColor('fff'));
 
-        $canvas->save('tests/Imagine/Fixtures/lines.png', array(
-            'quality' => 100
-        ));
+        $canvas->save('tests/Imagine/Fixtures/lines.png');
 
         $this->assertTrue(file_exists('tests/Imagine/Fixtures/lines.png'));
 
@@ -120,9 +118,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
                 new Point(50, 280),
             ), $this->getColor('fff'), true);
 
-        $canvas->save('tests/Imagine/Fixtures/polygon.png', array(
-            'quality' => 100
-        ));
+        $canvas->save('tests/Imagine/Fixtures/polygon.png');
 
         $this->assertTrue(file_exists('tests/Imagine/Fixtures/polygon.png'));
 
@@ -141,9 +137,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
             ->dot(new Point(200, 152), $this->getColor('fff'))
             ->dot(new Point(200, 153), $this->getColor('fff'));
 
-        $canvas->save('tests/Imagine/Fixtures/dot.png', array(
-            'quality' => 100
-        ));
+        $canvas->save('tests/Imagine/Fixtures/dot.png');
 
         $this->assertTrue(file_exists('tests/Imagine/Fixtures/dot.png'));
 
@@ -160,9 +154,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $canvas->draw()
             ->arc(new Center($size), $size->scale(0.5), 0, 180, $this->getColor('fff'));
 
-        $canvas->save('tests/Imagine/Fixtures/arc.png', array(
-            'quality' => 100
-        ));
+        $canvas->save('tests/Imagine/Fixtures/arc.png');
 
         $this->assertTrue(file_exists('tests/Imagine/Fixtures/arc.png'));
 
