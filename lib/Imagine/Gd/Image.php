@@ -572,9 +572,14 @@ final class Image extends AbstractImage
             $args[] = $options['quality'];
         }
 
-        if ($format === 'png' && isset($options['filters'])) {
-            $args[] = -1; // default compression level
-            $args[] = $options['filters'];
+        if ($format === 'png') {
+            $args[] = isset($options['png_compression'])
+                ? $options['png_compression']
+                : -1; // default compression level
+
+            if (isset($options['filters'])) {
+                $args[] = $options['filters'];
+            }
         }
 
         if (($format === 'wbmp' || $format === 'xbm') &&

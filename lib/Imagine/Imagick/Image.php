@@ -728,7 +728,7 @@ final class Image extends AbstractImage
      */
     private function applyImageOptions(\Imagick $image, array $options, $path)
     {
-        if (isset($options['quality'])) {
+        if (isset($options['quality']) || isset($options['png_compression'])) {
 
             if (isset($options['format'])) {
                 $format = $options['format'];
@@ -738,8 +738,14 @@ final class Image extends AbstractImage
                 $format = pathinfo($image->getImageFilename(), \PATHINFO_EXTENSION);
             }
 
-            if (in_array(strtolower($format), array('jpeg', 'jpg', 'pjpeg'))) {
+            $format = strtolower($format);
+
+            if (isset($options['quality']) && in_array($format, array('jpeg', 'jpg', 'pjpeg'))) {
                 $image->setImageCompressionQuality($options['quality']);
+            }
+
+            if (isset($options['png_compression']) && $format === 'png') {
+                $image->setImageCompressionQuality($options['png_compression']);
             }
         }
 
