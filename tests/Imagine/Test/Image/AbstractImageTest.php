@@ -93,6 +93,50 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink(__DIR__ . '/tmp.jpg');
     }
 
+    public function testSaveWithoutFormatShouldSaveInOriginalFormat()
+    {
+        $tmpFile = __DIR__ . '/tmpfile';
+
+        $this
+            ->getImagine()
+            ->open(__DIR__ . '/../../Fixtures/large.jpg')
+            ->save($tmpFile);
+
+        $data = exif_read_data($tmpFile);
+        $this->assertEquals('image/jpeg', $data['MimeType']);
+        unlink($tmpFile);
+    }
+
+    public function testSaveWithoutPathFileFromImageLoadShouldBeOkay()
+    {
+        $source = __DIR__ . '/../../Fixtures/google.png';
+        $tmpFile = __DIR__ . '/../../Fixtures/google.tmp.png';
+
+        if (file_exists($tmpFile)) {
+            unlink($tmpFile);
+        }
+
+        copy($source, $tmpFile);
+
+        $this->assertEquals(md5_file($source), md5_file($tmpFile));
+
+        $this
+            ->getImagine()
+            ->open($tmpFile)
+            ->resize(new Box(20, 20))
+            ->save();
+
+        $this->assertNotEquals(md5_file($source), md5_file($tmpFile));
+        unlink($tmpFile);
+    }
+
+    public function testSaveWithoutPathFileFromImageCreationShouldFail()
+    {
+        $image = $this->getImagine()->create(new Box(20, 20));
+        $this->setExpectedException('Imagine\Exception\RuntimeException');
+        $image->save();
+    }
+
     public function provideFromAndToPalettes()
     {
         return array(
@@ -215,6 +259,14 @@ abstract class AbstractImageTest extends ImagineTestCase
         $thumbnail = $image->thumbnail(new Box(20, 20));
 
         $this->assertNotSame($image, $thumbnail);
+    }
+
+    public function testThumbnailWithInvalidModeShouldThrowAnException()
+    {
+        $factory = $this->getImagine();
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', 'Invalid mode specified');
+        $image->thumbnail(new Box(20, 20), "boumboum");
     }
 
     public function testResizeShouldReturnTheImage()
@@ -496,7 +548,7 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->strip()
             ->getColorAt(new Point(0, 0));
 
-        $this->assertEquals('#30819f', (string) $color);
+        $this->assertEquals('#0082a2', (string) $color);
     }
 
     public function testStripGBRImageHasGoodColors()
@@ -507,7 +559,7 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->strip()
             ->getColorAt(new Point(0, 0));
 
-        $this->assertEquals('#bb7461', (string) $color);
+        $this->assertEquals('#d07560', (string) $color);
     }
 
     private function getMonoLayeredImage()

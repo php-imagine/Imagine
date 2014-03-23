@@ -11,6 +11,7 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\AbstractImage;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
@@ -29,7 +30,7 @@ use Imagine\Exception\RuntimeException;
 /**
  * Image implementation using the GD library
  */
-final class Image implements ImageInterface
+final class Image extends AbstractImage
 {
     /**
      * @var resource
@@ -44,16 +45,25 @@ final class Image implements ImageInterface
     private $palette;
 
     /**
+     * Path to original source file
+     *
+     * @var null|string
+     */
+    private $path;
+
+    /**
      * Constructs a new Image instance using the result of
      * imagecreatetruecolor()
      *
      * @param resource         $resource
      * @param PaletteInterface $palette
+     * @param null|string      $path
      */
-    public function __construct($resource, PaletteInterface $palette)
+    public function __construct($resource, PaletteInterface $palette, $path = null)
     {
         $this->palette = $palette;
         $this->resource = $resource;
+        $this->path = $path;
     }
 
     /**
@@ -213,11 +223,23 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    final public function save($path, array $options = array())
+    final public function save($path = null, array $options = array())
     {
-        $format = isset($options['format'])
-            ? $options['format']
-            : pathinfo($path, \PATHINFO_EXTENSION);
+        $path = null === $path ? $this->path : $path;
+
+        if (null === $path) {
+            throw new RuntimeException(
+                'You can omit save path only if image has been open from a file'
+            );
+        }
+
+        if (isset($options['format'])) {
+            $format = $options['format'];
+        } elseif ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
+            $format = $extension;
+        } else {
+            $format = pathinfo($this->path, \PATHINFO_EXTENSION);
+        }
 
         $this->saveOrOutput($format, $options, $path);
 
@@ -313,63 +335,6 @@ final class Image implements ImageInterface
          */
 
         return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
-    {
-        if ($mode !== ImageInterface::THUMBNAIL_INSET &&
-            $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
-            throw new InvalidArgumentException('Invalid mode specified');
-        }
-
-        $ratios = array(
-            $size->getWidth() / imagesx($this->resource),
-            $size->getHeight() / imagesy($this->resource)
-        );
-
-        $imageSize = $this->getSize();
-        $thumbnail = $this->copy();
-
-        // if target width is larger than image width
-        // AND target height is longer than image height
-        if ($size->contains($imageSize)) {
-            return $thumbnail;
-        }
-
-        if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            $ratio = min($ratios);
-        } else {
-            $ratio = max($ratios);
-        }
-
-        if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            if (!$imageSize->contains($size)) {
-                $size = new Box(
-                    min($imageSize->getWidth(), $size->getWidth()),
-                    min($imageSize->getHeight(), $size->getHeight())
-                );
-            } else {
-                $imageSize = $thumbnail->getSize()->scale($ratio);
-                $thumbnail->resize($imageSize);
-            }
-            $thumbnail->crop(new Point(
-                max(0, round(($imageSize->getWidth() - $size->getWidth()) / 2)),
-                max(0, round(($imageSize->getHeight() - $size->getHeight()) / 2))
-            ), $size);
-        } else {
-            if (!$imageSize->contains($size)) {
-                $imageSize = $imageSize->scale($ratio);
-                $thumbnail->resize($imageSize);
-            } else {
-                $imageSize = $thumbnail->getSize()->scale($ratio);
-                $thumbnail->resize($imageSize);
-            }
-        }
-
-        return $thumbnail;
     }
 
     /**
@@ -590,11 +555,12 @@ final class Image implements ImageInterface
      */
     private function saveOrOutput($format, array $options, $filename = null)
     {
+        $format = $this->normalizeFormat($format);
 
         if (!$this->supported($format)) {
             throw new InvalidArgumentException(sprintf(
                 'Saving image in "%s" format is not supported, please use one '.
-                'of the following extension: "%s"', $format,
+                'of the following extensions: "%s"', $format,
                 implode('", "', $this->supported())
             ));
         }
@@ -706,13 +672,33 @@ final class Image implements ImageInterface
     /**
      * Internal
      *
+     * Normalizes a given format name
+     *
+     * @param string $format
+     *
+     * @return string
+     */
+    private function normalizeFormat($format)
+    {
+        $format = strtolower($format);
+
+        if ('jpg' === $format || 'pjpeg' === $format) {
+            $format = 'jpeg';
+        }
+
+        return $format;
+    }
+
+    /**
+     * Internal
+     *
      * Checks whether a given format is supported by GD library
      *
      * @param string $format
      *
      * @return Boolean
      */
-    private function supported(&$format = null)
+    private function supported($format = null)
     {
         $formats = array('gif', 'jpeg', 'png', 'wbmp', 'xbm');
 
@@ -720,18 +706,12 @@ final class Image implements ImageInterface
             return $formats;
         }
 
-        $format  = strtolower($format);
-
-        if ('jpg' === $format || 'pjpeg' === $format) {
-            $format = 'jpeg';
-        }
-
         return in_array($format, $formats);
     }
 
     private function setExceptionHandler()
     {
-        set_error_handler(function($errno, $errstr, $errfile, $errline) {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 
             if (0 === error_reporting()) {
                 return;
@@ -762,13 +742,14 @@ final class Image implements ImageInterface
      */
     private function getMimeType($format)
     {
+        $format = $this->normalizeFormat($format);
+
         if (!$this->supported($format)) {
             throw new RuntimeException('Invalid format');
         }
 
         static $mimeTypes = array(
             'jpeg' => 'image/jpeg',
-            'jpg'  => 'image/jpeg',
             'gif'  => 'image/gif',
             'png'  => 'image/png',
             'wbmp' => 'image/vnd.wap.wbmp',

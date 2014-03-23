@@ -11,10 +11,7 @@
 
 namespace Imagine\Image;
 
-use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\FontInterface;
-use Imagine\Image\ImageInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 

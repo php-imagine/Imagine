@@ -13,11 +13,8 @@ namespace Imagine\Image;
 
 use Imagine\Draw\DrawerInterface;
 use Imagine\Effects\EffectsInterface;
-use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\PointInterface;
-use Imagine\Image\ProfileInterface;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\OutOfBoundsException;
 

@@ -24,8 +24,12 @@ version 0.4.
         }
     }
 
-Update the dependencies using composer.phar and use Imagine :
+Install the dependencies using composer.phar and use Imagine :
 
+.. code-block:: none
+
+    php composer.phar install
+    
 .. code-block:: php
 
     <?php
@@ -233,6 +237,22 @@ Of course, you can combine options :
 
 Advanced Examples
 -----------------
+
+Image Watermarking
+++++++++++++++++++
+
+Here is a simple way to add a watermark to an image :
+
+.. code-block:: php
+
+    $watermark = $imagine->open('/my/watermark.png');
+    $image     = $imagine->open('/path/to/image.jpg');
+    $size      = $image->getSize();
+    $wSize     = $watermark->getSize();
+
+    $bottomRight = new Imagine\Image\Point($size->getWidth() - $wSize->getWidth(), $size->getHeight() - $wSize->getHeight());
+
+    $image->paste($watermark, $bottomRight);
 
 An Image Collage
 ++++++++++++++++

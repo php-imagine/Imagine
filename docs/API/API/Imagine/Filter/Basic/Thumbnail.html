@@ -41,7 +41,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(<a href="../../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET)
+                    <a href="#method___construct">__construct</a>(<a href="../../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
                     <p>Constructs the Thumbnail filter with given width, height and mode</p>
                 </td>
                 <td></td>
@@ -62,9 +62,9 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 39</div>
+        <div class="location">at line 45</div>
         <code>            public            
-    <strong>__construct</strong>(<a href="../../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET)</code>
+    <strong>__construct</strong>(<a href="../../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)</code>
     </h3>
     <div class="details">
         <p>Constructs the Thumbnail filter with given width, height and mode</p>
@@ -86,6 +86,12 @@
                 <td>
 </td>
             </tr>
+                    <tr>
+                <td>string</td>
+                <td>$filter</td>
+                <td>
+</td>
+            </tr>
             </table>
 
             
@@ -95,7 +101,7 @@
     </div>
 
                 <h3 id="method_apply">
-        <div class="location">at line 48</div>
+        <div class="location">at line 55</div>
         <code>            public            <a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>apply</strong>(<a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)</code>
     </h3>

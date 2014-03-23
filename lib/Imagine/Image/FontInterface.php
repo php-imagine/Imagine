@@ -11,7 +11,6 @@
 
 namespace Imagine\Image;
 
-use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**

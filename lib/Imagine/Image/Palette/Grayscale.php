@@ -99,7 +99,7 @@ class Grayscale implements PaletteInterface
         }
 
         $color = $this->parser->parseToGrayscale($color);
-        $index = sprintf('#%02x%02x%02x', $color[0], $color[0], $color[0]);
+        $index = sprintf('#%02x%02x%02x-%d', $color[0], $color[0], $color[0], $alpha);
 
         if (false === array_key_exists($index, static::$colors)) {
             static::$colors[$index] = new GrayColor($this, $color, $alpha);

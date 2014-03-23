@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 0.6.0 (2013-xx-xx)
+### 0.6.0 (2014-xx-xx)
 
   * BC break : Colors are now provided through the PaletteInterface. Any call
     to previous Imagine\Image\Color constructor must be removed and use the
@@ -8,6 +8,9 @@
     colors.
   * Add support for ICC profiles
   * Add support for CMYK and grayscale colorspace images.
+  * Add filter argument to ImageInterface::thumbnail method.
+  * Add priority to filters (@Richtermeister).
+  * Add blur effect (@Nokrosis).
 
 ### 0.5.0 (2013-07-10)
 

@@ -14,6 +14,7 @@ namespace Imagine\Gmagick;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\AbstractImage;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
@@ -27,7 +28,7 @@ use Imagine\Image\ProfileInterface;
 /**
  * Image implementation using the Gmagick PHP extension
  */
-final class Image implements ImageInterface
+final class Image extends AbstractImage
 {
     /**
      * @var \Gmagick
@@ -300,8 +301,16 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function save($path, array $options = array())
+    public function save($path = null, array $options = array())
     {
+        $path = null === $path ? $this->gmagick->getImageFilename() : $path;
+
+        if ('' === trim($path)) {
+            throw new RuntimeException(
+                'You can omit save path only if image has been open from a file'
+            );
+        }
+
         try {
             $this->prepareOutput($options);
             $allFrames = !isset($options['animated']) || false === $options['animated'];
@@ -379,56 +388,6 @@ final class Image implements ImageInterface
     public function __toString()
     {
         return $this->get('png');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
-    {
-        if ($mode !== ImageInterface::THUMBNAIL_INSET &&
-            $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
-            throw new InvalidArgumentException('Invalid mode specified');
-        }
-
-        $imageSize = $this->getSize();
-        $thumbnail = $this->copy();
-
-        // if target width is larger than image width
-        // AND target height is longer than image height
-        if ($size->contains($imageSize)) {
-            return $thumbnail;
-        }
-
-        // if target width is larger than image width
-        // OR target height is longer than image height
-        if (!$imageSize->contains($size)) {
-            $size = new Box(
-                min($imageSize->getWidth(), $size->getWidth()),
-                min($imageSize->getHeight(), $size->getHeight())
-            );
-        }
-
-        try {
-            if ($mode === ImageInterface::THUMBNAIL_INSET) {
-                $thumbnail->gmagick->thumbnailimage(
-                    $size->getWidth(),
-                    $size->getHeight(),
-                    true
-                );
-            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->gmagick->cropthumbnailimage(
-                    $size->getWidth(),
-                    $size->getHeight()
-                );
-            }
-        } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Thumbnail operation failed', $e->getCode(), $e
-            );
-        }
-
-        return $thumbnail;
     }
 
     /**
@@ -569,7 +528,7 @@ final class Image implements ImageInterface
         $image = $this;
 
         return array_map(
-            function(\GmagickPixel $pixel) use ($image) {
+            function (\GmagickPixel $pixel) use ($image) {
                 return $image->pixelToColor($pixel);
             },
             $pixels

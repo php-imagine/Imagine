@@ -13,10 +13,7 @@ namespace Imagine\Image;
 
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\ImageInterface;
-use Imagine\Image\PointInterface;
 use Imagine\Image\Fill\FillInterface;
 
 /**
@@ -106,7 +103,7 @@ interface ManipulatorInterface
      *
      * @return ManipulatorInterface
      */
-    public function save($path, array $options = array());
+    public function save($path = null, array $options = array());
 
     /**
      * Outputs the image content
@@ -153,12 +150,13 @@ interface ManipulatorInterface
      *
      * @param BoxInterface $size
      * @param string       $mode
+     * @param string       $filter The filter to use for resizing, one of ImageInterface::FILTER_*
      *
      * @throws RuntimeException
      *
      * @return ManipulatorInterface
      */
-    public function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET);
+    public function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED);
 
     /**
      * Applies a given mask to current image's alpha channel

@@ -12,7 +12,6 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Image\AbstractLayers;
-use Imagine\Gmagick\Image;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;

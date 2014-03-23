@@ -14,6 +14,7 @@ namespace Imagine\Imagick;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\AbstractImage;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
@@ -29,7 +30,7 @@ use Imagine\Image\Palette\PaletteInterface;
 /**
  * Image implementation using the Imagick PHP extension
  */
-final class Image implements ImageInterface
+final class Image extends AbstractImage
 {
     /**
      * @var \Imagick
@@ -40,10 +41,14 @@ final class Image implements ImageInterface
      */
     private $layers;
     /**
-     *
      * @var PaletteInterface
      */
     private $palette;
+
+    /**
+     * @var Boolean
+     */
+    private static $supportsColorspaceConversion;
 
     private static $colorspaceMapping = array(
         PaletteInterface::PALETTE_CMYK      => \Imagick::COLORSPACE_CMYK,
@@ -59,8 +64,12 @@ final class Image implements ImageInterface
      */
     public function __construct(\Imagick $imagick, PaletteInterface $palette)
     {
+        $this->detectColorspaceConversionSupport();
         $this->imagick = $imagick;
-        $this->setColorspace($palette);
+        if (static::$supportsColorspaceConversion) {
+            $this->setColorspace($palette);
+        }
+        $this->palette = $palette;
         $this->layers = new Layers($this, $this->palette, $this->imagick);
     }
 
@@ -289,8 +298,15 @@ final class Image implements ImageInterface
     /**
      * {@inheritdoc}
      */
-    public function save($path, array $options = array())
+    public function save($path = null, array $options = array())
     {
+        $path = null === $path ? $this->imagick->getImageFilename() : $path;
+        if (null === $path) {
+            throw new RuntimeException(
+                'You can omit save path only if image has been open from a file'
+            );
+        }
+
         try {
             $this->prepareOutput($options);
             $this->imagick->writeImages($path, true);
@@ -388,56 +404,6 @@ final class Image implements ImageInterface
     public function __toString()
     {
         return $this->get('png');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET)
-    {
-        if ($mode !== ImageInterface::THUMBNAIL_INSET &&
-            $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
-            throw new InvalidArgumentException('Invalid mode specified');
-        }
-
-        $imageSize = $this->getSize();
-        $thumbnail = $this->copy();
-
-        // if target width is larger than image width
-        // AND target height is longer than image height
-        if ($size->contains($imageSize)) {
-            return $thumbnail;
-        }
-
-        // if target width is larger than image width
-        // OR target height is longer than image height
-        if (!$imageSize->contains($size)) {
-            $size = new Box(
-                min($imageSize->getWidth(), $size->getWidth()),
-                min($imageSize->getHeight(), $size->getHeight())
-            );
-        }
-
-        try {
-            if ($mode === ImageInterface::THUMBNAIL_INSET) {
-                $thumbnail->imagick->thumbnailImage(
-                    $size->getWidth(),
-                    $size->getHeight(),
-                    true
-                );
-            } elseif ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-                $thumbnail->imagick->cropThumbnailImage(
-                    $size->getWidth(),
-                    $size->getHeight()
-                );
-            }
-        } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Thumbnail operation failed', $e->getCode(), $e
-            );
-        }
-
-        return $thumbnail;
     }
 
     /**
@@ -593,7 +559,7 @@ final class Image implements ImageInterface
         $image = $this;
 
         return array_map(
-            function(\ImagickPixel $pixel) use ($image) {
+            function (\ImagickPixel $pixel) use ($image) {
                 return $image->pixelToColor($pixel);
             },
             $pixels
@@ -684,6 +650,10 @@ final class Image implements ImageInterface
 
         if ($this->palette->name() === $palette->name()) {
             return $this;
+        }
+
+        if (!static::$supportsColorspaceConversion) {
+            throw new RuntimeException('Your version of Imagick does not support colorspace conversions.');
         }
 
         try {
@@ -892,9 +862,10 @@ final class Image implements ImageInterface
     private function setColorspace(PaletteInterface $palette)
     {
         static $typeMapping = array(
-            PaletteInterface::PALETTE_CMYK      => \Imagick::IMGTYPE_TRUECOLOR,
-            PaletteInterface::PALETTE_RGB       => \Imagick::IMGTYPE_TRUECOLOR,
-            PaletteInterface::PALETTE_GRAYSCALE => \Imagick::IMGTYPE_GRAYSCALE,
+            // We use Matte variants to preserve alpha
+            PaletteInterface::PALETTE_CMYK      => \Imagick::IMGTYPE_TRUECOLORMATTE,
+            PaletteInterface::PALETTE_RGB       => \Imagick::IMGTYPE_TRUECOLORMATTE,
+            PaletteInterface::PALETTE_GRAYSCALE => \Imagick::IMGTYPE_GRAYSCALEMATTE,
         );
 
         if (!isset(static::$colorspaceMapping[$palette->name()])) {
@@ -907,5 +878,20 @@ final class Image implements ImageInterface
         $this->imagick->setType($typeMapping[$palette->name()]);
         $this->imagick->setColorspace(static::$colorspaceMapping[$palette->name()]);
         $this->palette = $palette;
+    }
+
+    /**
+     * Older imagemagick versions does not support colorspace conversions.
+     * Let's detect if it is supported.
+     *
+     * @return Boolean
+     */
+    private function detectColorspaceConversionSupport()
+    {
+        if (null !== static::$supportsColorspaceConversion) {
+            return static::$supportsColorspaceConversion;
+        }
+
+        return static::$supportsColorspaceConversion = method_exists('Imagick', 'setColorspace');
     }
 }
