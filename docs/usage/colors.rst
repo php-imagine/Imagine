@@ -100,6 +100,6 @@ You can apply ICC profile on any Image class with the ``profile`` method :
 
    <?php
 
-   $profile = Image\Image\Profile::fromPath('your-ICC-profile.icc');
+   $profile = Imagine\Image\Profile::fromPath('your-ICC-profile.icc');
    $image->profile($profile)
          ->save('my-rgb-jpg-profiled.jpg');
