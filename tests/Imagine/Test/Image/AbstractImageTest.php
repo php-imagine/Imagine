@@ -576,20 +576,26 @@ abstract class AbstractImageTest extends ImagineTestCase
 
         $imagine = $this->getImagine();
 
-        /** @var Image $image */
         $image = $imagine->open('tests/Imagine/Fixtures/anima.gif');
 
-        $image->layers()->coalesce();
+        // Imagick requires the images to be coalesced first!
+        if ($image instanceof \Imagine\Imagick\Image) {
+            $image->layers()->coalesce();
+        }
+
         foreach ($image->layers() as $frame) {
             $frame->resize(new Box(121, 124));
         }
 
         $image->save('tests/Imagine/Fixtures/results/anima-half-size.gif', array('animated' => true));
 
-        /** @var Image $image */
         $image = $imagine->open('tests/Imagine/Fixtures/anima2.gif');
 
-        $image->layers()->coalesce();
+        // Imagick requires the images to be coalesced first!
+        if ($image instanceof \Imagine\Imagick\Image) {
+            $image->layers()->coalesce();
+        }
+
         foreach ($image->layers() as $frame) {
             $frame->resize(new Box(200, 144));
         }
