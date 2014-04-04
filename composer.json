@@ -27,7 +27,6 @@
     },
     "suggest": {
         "ext-gd": "to use the GD implementation",
-        "ext-exif": "to use the EXIF functionality",
         "ext-imagick": "to use the Imagick implementation",
         "ext-gmagick": "to use the Gmagick implementation"
     },
