@@ -380,7 +380,7 @@ final class Image extends AbstractImage
         if (isset($options['animated']) && true === $options['animated']) {
 
             $format = isset($options['format']) ? $options['format'] : 'gif';
-            $delay = isset($options['animated.delay']) ? $options['animated.delay'] : 800;
+            $delay = isset($options['animated.delay']) ? $options['animated.delay'] : null;
             $loops = isset($options['animated.loops']) ? $options['animated.loops'] : 0;
 
             $options['flatten'] = false;
@@ -392,8 +392,7 @@ final class Image extends AbstractImage
         $this->applyImageOptions($this->imagick, $options);
 
         // flatten only if image has multiple layers
-        if ((!isset($options['flatten']) || $options['flatten'] === true)
-            && count($this->layers) > 1) {
+        if ((!isset($options['flatten']) || $options['flatten'] === true) && count($this->layers) > 1) {
             $this->flatten();
         }
     }
