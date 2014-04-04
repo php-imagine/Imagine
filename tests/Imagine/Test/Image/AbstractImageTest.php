@@ -566,6 +566,37 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals('#d07560', (string) $color);
     }
 
+    // Test whether a simple action such as resizing a GIF works
+    // Using the original animated GIF and a slightly more complex one as reference
+    // anima2.gif courtesy of Cyndi Norrie (http://cyndipop.tumblr.com/) via 15 Folds (http://15folds.com)
+    public function testResizeAnimatedGifResizeResult() {
+        if (!$this->supportMultipleLayers()) {
+            $this->markTestSkipped('This driver does not support multiple layers');
+        }
+
+        $imagine = $this->getImagine();
+
+        /** @var Image $image */
+        $image = $imagine->open('tests/Imagine/Fixtures/anima.gif');
+
+        $image->layers()->coalesce();
+        foreach ($image->layers() as $frame) {
+            $frame->resize(new Box(121, 124));
+        }
+
+        $image->save('tests/Imagine/Fixtures/results/anima-half-size.gif', array('animated' => true));
+
+        /** @var Image $image */
+        $image = $imagine->open('tests/Imagine/Fixtures/anima2.gif');
+
+        $image->layers()->coalesce();
+        foreach ($image->layers() as $frame) {
+            $frame->resize(new Box(200, 144));
+        }
+
+        $image->save('tests/Imagine/Fixtures/results/anima2-half-size.gif', array('animated' => true));
+    }
+
     private function getMonoLayeredImage()
     {
         return $this->getImagine()->open('tests/Imagine/Fixtures/google.png');
