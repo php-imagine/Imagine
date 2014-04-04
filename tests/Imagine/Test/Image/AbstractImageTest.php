@@ -96,7 +96,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testSaveWithoutFormatShouldSaveInOriginalFormat()
     {
         if (!extension_loaded('exif')) {
-            $this->markTestSkipped('This install does not support font tests');
+            $this->markTestSkipped('The EXIF extension is required for this test');
         }
 
         $tmpFile = __DIR__ . '/tmpfile';
