@@ -79,17 +79,23 @@ class Layers extends AbstractLayers
             throw new InvalidArgumentException('Animated picture is currently only supported on gif');
         }
 
-        foreach (array('Loops' => $loops, 'Delay' => $delay) as $name => $value) {
-            if (!is_int($value) || $value < 0) {
-                throw new InvalidArgumentException(sprintf('%s must be a positive integer.', $name));
-            }
+        if (!is_int($loops) || $loops < 0) {
+            throw new InvalidArgumentException('Loops must be a positive integer.');
+        }
+
+        if (null !== $delay && (!is_int($delay) || $delay < 0)) {
+            throw new InvalidArgumentException('Delay must be either null or a positive integer.');
         }
 
         try {
             foreach ($this as $offset => $layer) {
                 $this->resource->setimageindex($offset);
                 $this->resource->setimageformat($format);
-                $this->resource->setimagedelay($delay / 10);
+
+                if (null !== $delay) {
+                    $this->resource->setimagedelay($delay / 10);
+                }
+
                 $this->resource->setimageiterations($loops);
             }
         } catch (\GmagickException $e) {
