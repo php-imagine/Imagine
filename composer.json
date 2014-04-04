@@ -23,14 +23,11 @@
         "php": ">=5.3.2"
     },
     "require-dev": {
-        "sami/sami": "dev-master",
-        "ext-mbstring": "*",
-        "ext-exif": "*"
+        "sami/sami": "dev-master"
     },
     "suggest": {
         "ext-gd": "to use the GD implementation",
-        "ext-mbstring": "pre-requisite for exif_*()",
-        "ext-exif": "provides the exif_*() functions, which are not present on all PHP builds",
+        "ext-exif": "to use the EXIF functionality",
         "ext-imagick": "to use the Imagick implementation",
         "ext-gmagick": "to use the Gmagick implementation"
     },
