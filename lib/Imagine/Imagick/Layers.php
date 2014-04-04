@@ -11,10 +11,10 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Image\AbstractLayers;
-use Imagine\Exception\RuntimeException;
-use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\OutOfBoundsException;
+use Imagine\Exception\RuntimeException;
+use Imagine\Image\AbstractLayers;
 use Imagine\Image\Palette\PaletteInterface;
 
 class Layers extends AbstractLayers
@@ -71,19 +71,26 @@ class Layers extends AbstractLayers
             throw new InvalidArgumentException('Animated picture is currently only supported on gif');
         }
 
-        foreach (array('Loops' => $loops, 'Delay' => $delay) as $name => $value) {
-            if (!is_int($value) || $value < 0) {
-                throw new InvalidArgumentException(sprintf('%s must be a positive integer.', $name));
-            }
+        if (!is_int($loops) || $loops < 0) {
+            throw new InvalidArgumentException('Loops must be a positive integer.');
+        }
+
+        if (null !== $delay && (!is_int($delay) || $delay < 0)) {
+            throw new InvalidArgumentException('Delay must be either null or a positive integer.');
         }
 
         try {
             foreach ($this as $offset => $layer) {
                 $this->resource->setIteratorIndex($offset);
                 $this->resource->setFormat($format);
-                $this->resource->setImageDelay($delay / 10);
-                $this->resource->setImageTicksPerSecond(100);
+
+                if (null !== $delay && $delay > 0) {
+                    $this->resource->setImageDelay($delay / 10);
+                    $this->resource->setImageTicksPerSecond(100);
+                }
                 $this->resource->setImageIterations($loops);
+
+                $this->resource->setImage($layer->getImagick());
             }
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to animate layers', $e->getCode(), $e);
@@ -129,7 +136,8 @@ class Layers extends AbstractLayers
     /**
      * Tries to extract layer at given offset
      *
-     * @param  integer          $offset
+     * @param  integer $offset
+     *
      * @return Image
      * @throws RuntimeException
      */

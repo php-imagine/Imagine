@@ -70,11 +70,10 @@ interface EffectsInterface
     /**
      * Blur the image
      *
-     * @param float $sigma
+     * @param float|int $sigma
      *
      * @return EffectsInterface
      *
-     * @throws RuntimeException
      */
-    public function blur($sigma);
+    public function blur($sigma = 1);
 }
