@@ -84,7 +84,7 @@ class Layers extends AbstractLayers
                 $this->resource->setIteratorIndex($offset);
                 $this->resource->setFormat($format);
 
-                if (null !== $delay && $delay > 0) {
+                if (null !== $delay) {
                     $this->resource->setImageDelay($delay / 10);
                     $this->resource->setImageTicksPerSecond(100);
                 }
