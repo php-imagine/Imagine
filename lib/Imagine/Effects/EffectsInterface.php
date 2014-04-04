@@ -75,5 +75,5 @@ interface EffectsInterface
      * @return EffectsInterface
      *
      */
-    public function blur($sigma = 1);
+    public function blur($sigma);
 }
