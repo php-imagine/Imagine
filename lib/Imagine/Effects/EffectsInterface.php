@@ -74,6 +74,7 @@ interface EffectsInterface
      *
      * @return EffectsInterface
      *
+     * @throws RuntimeException
      */
     public function blur($sigma);
 }
