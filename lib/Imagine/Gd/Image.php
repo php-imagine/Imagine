@@ -555,11 +555,6 @@ final class Image extends AbstractImage
      */
     private function saveOrOutput($format, array $options, $filename = null)
     {
-        // backward compatibility
-        if (isset($options['quality']) && !isset($options['jpeg_quality'])) {
-            $options['jpeg_quality'] = $options['quality'];
-        }
-
         $format = $this->normalizeFormat($format);
 
         if (!$this->supported($format)) {
@@ -572,6 +567,8 @@ final class Image extends AbstractImage
 
         $save = 'image'.$format;
         $args = array(&$this->resource, $filename);
+
+        $options = $this->updateSaveOptions($options);
 
         if ($format === 'jpeg' && isset($options['jpeg_quality'])) {
             $args[] = $options['jpeg_quality'];
@@ -586,11 +583,6 @@ final class Image extends AbstractImage
                 $args[] = $options['png_compression_level'];
             } else {
                 $args[] = -1; // use default level
-            }
-
-            // backward compatibility
-            if (isset($options['filters']) && !isset($options['png_compression_filter'])) {
-                $options['png_compression_filter'] = $options['filters'];
             }
 
             if (isset($options['png_compression_filter'])) {

@@ -280,11 +280,6 @@ final class Image extends AbstractImage
      */
     private function applyImageOptions(\Gmagick $image, array $options, $path)
     {
-        // backward compatibility
-        if (isset($options['quality']) && !isset($options['jpeg_quality'])) {
-            $options['jpeg_quality'] = $options['quality'];
-        }
-
         if (isset($options['format'])) {
             $format = $options['format'];
         } elseif ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
@@ -294,6 +289,8 @@ final class Image extends AbstractImage
         }
 
         $format = strtolower($format);
+
+        $options = $this->updateSaveOptions($options);
 
         if (isset($options['jpeg_quality']) && in_array($format, array('jpeg', 'jpg', 'pjpeg'))) {
             $image->setCompressionQuality($options['jpeg_quality']);
