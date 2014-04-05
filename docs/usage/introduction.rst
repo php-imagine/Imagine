@@ -172,7 +172,7 @@ The following example demonstrates the basic quality settings.
    $imagine = new Imagine\Imagick\Imagine();
 
    $imagine->open('/path/to/image.jpg')
-      ->save('/path/to/image.jpg', array('quality' => 50)) // from 0 to 100
+      ->save('/path/to/image.jpg', array('jpeg_quality' => 50)) // from 0 to 100
       ->save('/path/to/image.png', array('png_compression_level' => 9)); // from 0 to 9
 
 The following example opens a Jpg image and saves it with it with 150 dpi horizontal resolution and 120 dpi vertical resolution.
@@ -232,7 +232,7 @@ Of course, you can combine options :
        'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
        'resolution-x' => 300,
        'resolution-y' => 300,
-       'quality' => 100,
+       'jpeg_quality' => 100,
    );
 
    $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', $options);

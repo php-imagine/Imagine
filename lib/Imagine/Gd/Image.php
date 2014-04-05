@@ -555,6 +555,11 @@ final class Image extends AbstractImage
      */
     private function saveOrOutput($format, array $options, $filename = null)
     {
+        // backward compatibility
+        if (isset($options['quality']) && !isset($options['jpeg_quality'])) {
+            $options['jpeg_quality'] = $options['quality'];
+        }
+
         $format = $this->normalizeFormat($format);
 
         if (!$this->supported($format)) {
@@ -568,8 +573,8 @@ final class Image extends AbstractImage
         $save = 'image'.$format;
         $args = array(&$this->resource, $filename);
 
-        if ($format === 'jpeg' && isset($options['quality'])) {
-            $args[] = $options['quality'];
+        if ($format === 'jpeg' && isset($options['jpeg_quality'])) {
+            $args[] = $options['jpeg_quality'];
         }
 
         if ($format === 'png') {

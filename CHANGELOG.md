@@ -11,7 +11,7 @@
   * Add filter argument to ImageInterface::thumbnail method.
   * Add priority to filters (@Richtermeister).
   * Add blur effect (@Nokrosis).
-  * Apply "quality" option only to JPEG files.
+  * Rename "quality" option to "jpeg_quality" and apply it only to JPEG files.
   * Add "png_compression_level" option.
   * Rename "filters" option to "png_compression_filter".
 
