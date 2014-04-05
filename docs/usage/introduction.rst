@@ -158,12 +158,12 @@ The following example opens a Jpg image and saves it as Png format :
 Three options groups are currently supported : quality, resolution and flatten.
 
 .. TIP::
-   Default values are 75 for Jpeg quality and 72 dpi for x/y-resolution.
+   Default values are 75 for Jpeg quality, 7 for Png compression level and 72 dpi for x/y-resolution.
 
 .. NOTE::
    GD does not support resolution options group
 
-The following example opens a Jpg image and saves it with its quality set to 50.
+The following example demonstrates the basic quality settings.
 
 .. code-block:: php
 
@@ -171,7 +171,9 @@ The following example opens a Jpg image and saves it with its quality set to 50.
 
    $imagine = new Imagine\Imagick\Imagine();
 
-   $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', array('quality' => 50));
+   $imagine->open('/path/to/image.jpg')
+      ->save('/path/to/image.jpg', array('quality' => 50)) // from 0 to 100
+      ->save('/path/to/image.png', array('png_compression_level' => 9)); // from 0 to 9
 
 The following example opens a Jpg image and saves it with it with 150 dpi horizontal resolution and 120 dpi vertical resolution.
 
