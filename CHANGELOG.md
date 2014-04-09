@@ -20,6 +20,8 @@
     `jpeg_quality`, `png_compression_level` and `png_compression_filter` instead.
   * Add support for alpha blending in GD drawer (@salem).
   * Add width parameter to Drawer::text (@salemgolemugoo).
+  * Add NotSupportedException when a driver does not support an operation (@rouffj).
+  * Add support for metadata.
 
 ### 0.5.0 (2013-07-10)
 
