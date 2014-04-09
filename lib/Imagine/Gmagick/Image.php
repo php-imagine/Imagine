@@ -172,7 +172,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      */
-    public function paste(ImageInterface $image, PointInterface $start)
+    public function paste(ImageInterface $image, PointInterface $start, $alpha = 100, $blendCallback = null)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf(
@@ -189,6 +189,11 @@ final class Image extends AbstractImage
         }
 
         try {
+
+            if(null !== $blendCallback && true === is_callable($blendCallback)){
+                call_user_func($blendCallback, $image, $this);
+            }
+
             $this->gmagick->compositeimage(
                 $image->gmagick,
                 \Gmagick::COMPOSITE_DEFAULT,

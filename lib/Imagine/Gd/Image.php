@@ -136,7 +136,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      */
-    final public function paste(ImageInterface $image, PointInterface $start)
+    final public function paste(ImageInterface $image, PointInterface $start, $alpha = 100, $blendCallback = null)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf(
@@ -153,16 +153,28 @@ final class Image extends AbstractImage
             );
         }
 
-        imagealphablending($this->resource, true);
-        imagealphablending($image->resource, true);
-
-        if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(),
-            0, 0, $size->getWidth(), $size->getHeight())) {
-            throw new RuntimeException('Image paste operation failed');
+        if (null !== $blendCallback && true === is_callable($blendCallback)){
+            call_user_func($blendCallback, $image, $this);
         }
 
-        imagealphablending($this->resource, false);
-        imagealphablending($image->resource, false);
+        if ($alpha === 100) {
+            imagealphablending($this->resource, true);
+            imagealphablending($image->resource, true);
+
+            //use imagecopy to handle 32bit transparent PNG issue 
+            if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(),
+                0, 0, $size->getWidth(), $size->getHeight())) {
+                throw new RuntimeException('Image paste operation failed');
+            }
+
+            imagealphablending($this->resource, false);
+            imagealphablending($image->resource, false);
+        } else {
+            if (false === imagecopymerge($this->resource, $image->resource, $start->getX(), $start->getY(),
+                0, 0, $size->getWidth(), $size->getHeight(), $alpha)) {
+                throw new RuntimeException('Image paste operation failed');
+            }
+        }
 
         return $this;
     }
