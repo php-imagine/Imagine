@@ -124,7 +124,7 @@
                     <a href="../../Imagine/Draw/DrawerInterface.html"><abbr title="Imagine\Draw\DrawerInterface">DrawerInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_text">text</a>(string $string, <a href="../../Imagine/Image/AbstractFont.html"><abbr title="Imagine\Image\AbstractFont">AbstractFont</abbr></a> $font, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $position, integer $angle)
+                    <a href="#method_text">text</a>(string $string, <a href="../../Imagine/Image/AbstractFont.html"><abbr title="Imagine\Image\AbstractFont">AbstractFont</abbr></a> $font, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $position, integer $angle, integer $width = null)
                     <p>Annotates image with specified text at a given position starting on the top left of the final text box</p>
                 </td>
                 <td></td>
@@ -652,7 +652,7 @@ three coordinates</p>
                 <h3 id="method_text">
         <div class="location">at line 336</div>
         <code>            public            <a href="../../Imagine/Draw/DrawerInterface.html"><abbr title="Imagine\Draw\DrawerInterface">DrawerInterface</abbr></a>
-    <strong>text</strong>(string $string, <a href="../../Imagine/Image/AbstractFont.html"><abbr title="Imagine\Image\AbstractFont">AbstractFont</abbr></a> $font, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $position, integer $angle)</code>
+    <strong>text</strong>(string $string, <a href="../../Imagine/Image/AbstractFont.html"><abbr title="Imagine\Image\AbstractFont">AbstractFont</abbr></a> $font, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $position, integer $angle, integer $width = null)</code>
     </h3>
     <div class="details">
         <p>Annotates image with specified text at a given position starting on the top left of the final text box</p>
@@ -682,6 +682,12 @@ three coordinates</p>
                     <tr>
                 <td>integer</td>
                 <td>$angle</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>integer</td>
+                <td>$width</td>
                 <td>
 </td>
             </tr>
