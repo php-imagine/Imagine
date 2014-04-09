@@ -19,6 +19,7 @@
   * Deprecate `quality` and `filters` ManipulatorInterface::save options, use
     `jpeg_quality`, `png_compression_level` and `png_compression_filter` instead.
   * Add support for alpha blending in GD drawer (@salem).
+  * Add width parameter to Drawer::text (@salemgolemugoo).
 
 ### 0.5.0 (2013-07-10)
 
