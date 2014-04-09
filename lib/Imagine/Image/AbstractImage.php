@@ -83,14 +83,9 @@ abstract class AbstractImage implements ImageInterface
      */
     protected function updateSaveOptions(array $options)
     {
+        // Preserve BC until version 1.0
         if (isset($options['quality']) && !isset($options['jpeg_quality'])) {
             $options['jpeg_quality'] = $options['quality'];
-        }
-
-        if (isset($options['filters']) && !isset($options['png_compression_filter'])
-            && get_called_class() === 'Imagine\Gd\Image') {
-
-            $options['png_compression_filter'] = $options['filters'];
         }
 
         return $options;

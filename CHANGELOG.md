@@ -16,6 +16,8 @@
   * Rename "quality" option to "jpeg_quality" and apply it only to JPEG files.
   * Add "png_compression_level" option.
   * Rename "filters" option to "png_compression_filter".
+  * Deprecate `quality` and `filters` ManipulatorInterface::save options, use
+    `jpeg_quality`, `png_compression_level` and `png_compression_filter` instead.
 
 ### 0.5.0 (2013-07-10)
 

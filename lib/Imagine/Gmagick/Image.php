@@ -297,7 +297,6 @@ final class Image extends AbstractImage
         }
 
         if ((isset($options['png_compression_level']) || isset($options['png_compression_filter'])) && $format === 'png') {
-
             // first digit: compression level (default: 7)
             if (isset($options['png_compression_level'])) {
                 if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {

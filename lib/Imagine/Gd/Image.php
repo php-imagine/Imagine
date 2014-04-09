@@ -568,6 +568,14 @@ final class Image extends AbstractImage
         $save = 'image'.$format;
         $args = array(&$this->resource, $filename);
 
+        // Preserve BC until version 1.0
+        if (isset($options['quality']) && !isset($options['png_compression_level'])) {
+            $options['png_compression_level'] = round((100 - $options['quality']) * 9 / 100);
+        }
+        if (isset($options['filters']) && !isset($options['png_compression_filter'])) {
+            $options['png_compression_filter'] = $options['filters'];
+        }
+
         $options = $this->updateSaveOptions($options);
 
         if ($format === 'jpeg' && isset($options['jpeg_quality'])) {
@@ -575,7 +583,6 @@ final class Image extends AbstractImage
         }
 
         if ($format === 'png') {
-
             if (isset($options['png_compression_level'])) {
                 if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
                     throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
