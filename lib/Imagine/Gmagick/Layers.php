@@ -71,7 +71,7 @@ class Layers extends AbstractLayers
      */
     public function coalesce()
     {
-        throw new NotSupportedException("Gmagick does not support coalescing");
+        throw new NotSupportedException('Gmagick does not support coalescing');
     }
 
     /**

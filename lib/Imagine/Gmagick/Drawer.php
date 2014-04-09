@@ -338,7 +338,7 @@ final class Drawer implements DrawerInterface
             $ydiff = 0 - min($y1, $y2);
 
             if ($width !== null) {
-                throw new RuntimeException("Gmagick doesn't support queryfontmetrics function for multiline text", 1);
+                throw new RuntimeException('Gmagick doesn\'t support queryfontmetrics function for multiline text', 1);
             }
 
             $this->gmagick->annotateimage(
