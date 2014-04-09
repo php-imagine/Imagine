@@ -16,6 +16,11 @@ use Imagine\Exception\InvalidArgumentException;
 abstract class AbstractImage implements ImageInterface
 {
     /**
+     * @var Metadata\MetadataInterface
+     */
+    protected $metadata;
+
+    /**
      * {@inheritdoc}
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
@@ -73,4 +78,26 @@ abstract class AbstractImage implements ImageInterface
 
         return $thumbnail;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function metadata()
+    {
+        if ($this->metadata === null) {
+            $this->metadata = new Metadata\ExifMetadata($this);
+        }
+        return $this->metadata;
+    }
+
+    /**
+     * Assures the metadata instance will be cloned, too
+     */
+    function __clone()
+    {
+        if ($this->metadata !== null) {
+            $this->metadata = clone $this->metadata;
+        }
+    }
+
 }
