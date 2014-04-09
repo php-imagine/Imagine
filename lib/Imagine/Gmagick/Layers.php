@@ -13,6 +13,7 @@ namespace Imagine\Gmagick;
 
 use Imagine\Image\AbstractLayers;
 use Imagine\Exception\RuntimeException;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Palette\PaletteInterface;
@@ -23,14 +24,17 @@ class Layers extends AbstractLayers
      * @var Image
      */
     private $image;
+
     /**
      * @var \Gmagick
      */
     private $resource;
+
     /**
      * @var integer
      */
     private $offset = 0;
+
     /**
      * @var array
      */
@@ -67,7 +71,7 @@ class Layers extends AbstractLayers
      */
     public function coalesce()
     {
-        throw new RuntimeException("Gmagick does not support coalescing");
+        throw new NotSupportedException("Gmagick does not support coalescing");
     }
 
     /**
@@ -76,7 +80,7 @@ class Layers extends AbstractLayers
     public function animate($format, $delay, $loops)
     {
         if ('gif' !== strtolower($format)) {
-            throw new InvalidArgumentException('Animated picture is currently only supported on gif');
+            throw new NotSupportedException('Animated picture is currently only supported on gif');
         }
 
         if (!is_int($loops) || $loops < 0) {

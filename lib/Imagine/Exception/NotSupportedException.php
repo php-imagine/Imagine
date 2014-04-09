@@ -12,8 +12,8 @@
 namespace Imagine\Exception;
 
 /**
- * Imagine-specific runtime exception
+ * Should be used when a driver does not support an operation.
  */
-class RuntimeException extends \RuntimeException implements Exception
+class NotSupportedException extends RuntimeException implements Exception
 {
 }
