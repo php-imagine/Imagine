@@ -11,11 +11,12 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Image\AbstractImagine;
 use Imagine\Image\BoxInterface;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Grayscale;
@@ -23,7 +24,7 @@ use Imagine\Image\Palette\Grayscale;
 /**
  * Imagine implementation using the Imagick PHP extension
  */
-final class Imagine implements ImagineInterface
+final class Imagine extends AbstractImagine
 {
     /**
      * @throws RuntimeException
@@ -94,7 +95,7 @@ final class Imagine implements ImagineInterface
             $pixel->clear();
             $pixel->destroy();
 
-            return new Image($imagick, $palette);
+            return new Image($imagick, $palette, new MetadataBag());
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Could not create empty image', $e->getCode(), $e
@@ -113,7 +114,7 @@ final class Imagine implements ImagineInterface
             $imagick->readImageBlob($string);
             $imagick->setImageMatte(true);
 
-            return new Image($imagick, $this->createPalette($imagick));
+            return new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readData($string));
         } catch (\ImagickException $e) {
             throw new RuntimeException(
                 'Could not load image from string', $e->getCode(), $e
@@ -139,7 +140,7 @@ final class Imagine implements ImagineInterface
             );
         }
 
-        return new Image($imagick, $this->createPalette($imagick));
+        return new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readStream($resource));
     }
 
     /**

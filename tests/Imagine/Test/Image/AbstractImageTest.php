@@ -605,6 +605,19 @@ abstract class AbstractImageTest extends ImagineTestCase
         @unlink('tests/Imagine/Fixtures/results/anima2-half-size.gif');
     }
 
+    public function testMetadataReturnsMetadataInstance()
+    {
+        $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $this->getMonoLayeredImage()->metadata());
+    }
+
+    public function testCloningImageResultsInNewMetadataInstance()
+    {
+        $image = $this->getMonoLayeredImage();
+        $originalMetadata = $image->metadata();
+        $clone = clone $image;
+        $this->assertNotSame($originalMetadata, $clone->metadata(), 'The image\'s metadata is the same after cloning the image, but must be a new instance.');
+    }
+
     private function getMonoLayeredImage()
     {
         return $this->getImagine()->open('tests/Imagine/Fixtures/google.png');
@@ -633,6 +646,13 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     }
 
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
     abstract protected function getImagine();
+
+    /**
+     * @return boolean
+     */
     abstract protected function supportMultipleLayers();
 }

@@ -15,6 +15,7 @@ use Imagine\Image\AbstractImage;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Point;
@@ -45,13 +46,6 @@ final class Image extends AbstractImage
     private $palette;
 
     /**
-     * Path to original source file
-     *
-     * @var null|string
-     */
-    private $path;
-
-    /**
      * Constructs a new Image instance using the result of
      * imagecreatetruecolor()
      *
@@ -59,11 +53,11 @@ final class Image extends AbstractImage
      * @param PaletteInterface $palette
      * @param null|string      $path
      */
-    public function __construct($resource, PaletteInterface $palette, $path = null)
+    public function __construct($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
+        $this->metadata = $metadata;
         $this->palette = $palette;
         $this->resource = $resource;
-        $this->path = $path;
     }
 
     /**
@@ -100,7 +94,7 @@ final class Image extends AbstractImage
             throw new RuntimeException('Image copy operation failed');
         }
 
-        return new Image($copy, $this->palette);
+        return new Image($copy, $this->palette, $this->metadata);
     }
 
     /**
@@ -225,7 +219,7 @@ final class Image extends AbstractImage
      */
     final public function save($path = null, array $options = array())
     {
-        $path = null === $path ? $this->path : $path;
+        $path = null === $path ? (isset($this->metadata['filepath']) ? $this->metadata['filepath'] : $path) : $path;
 
         if (null === $path) {
             throw new RuntimeException(
@@ -238,7 +232,8 @@ final class Image extends AbstractImage
         } elseif ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
             $format = $extension;
         } else {
-            $format = pathinfo($this->path, \PATHINFO_EXTENSION);
+            $originalPath = isset($this->metadata['filepath']) ? $this->metadata['filepath'] : null;
+            $format = pathinfo($originalPath, \PATHINFO_EXTENSION);
         }
 
         $this->saveOrOutput($format, $options, $path);

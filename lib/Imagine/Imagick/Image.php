@@ -17,6 +17,7 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractImage;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Fill\Gradient\Horizontal;
@@ -62,8 +63,9 @@ final class Image extends AbstractImage
      * @param \Imagick         $imagick
      * @param PaletteInterface $palette
      */
-    public function __construct(\Imagick $imagick, PaletteInterface $palette)
+    public function __construct(\Imagick $imagick, PaletteInterface $palette, MetadataBag $metadata)
     {
+        $this->metadata = $metadata;
         $this->detectColorspaceConversionSupport();
         $this->imagick = $imagick;
         if (static::$supportsColorspaceConversion) {
@@ -111,7 +113,7 @@ final class Image extends AbstractImage
             );
         }
 
-        return new self($clone, $this->palette);
+        return new self($clone, $this->palette, clone $this->metadata);
     }
 
     /**

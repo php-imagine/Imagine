@@ -14,6 +14,7 @@ namespace Imagine\Test\Gd;
 use Imagine\Gd\Layers;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Test\Image\AbstractLayersTest;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\RGB;
@@ -33,7 +34,7 @@ class LayersTest extends AbstractLayersTest
     {
         $resource = imagecreate(20, 20);
         $palette = $this->getMock('Imagine\Image\Palette\PaletteInterface');
-        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
+        $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
 
         $this->assertCount(1, $layers);
     }
@@ -42,7 +43,7 @@ class LayersTest extends AbstractLayersTest
     {
         $resource = imagecreate(20, 20);
         $palette = $this->getMock('Imagine\Image\Palette\PaletteInterface');
-        $layers = new Layers(new Image($resource, $palette), $palette, $resource);
+        $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
 
         foreach ($layers as $layer) {
             $this->assertInstanceOf('Imagine\Image\ImageInterface', $layer);
@@ -105,12 +106,12 @@ class LayersTest extends AbstractLayersTest
 
     public function getImage($path = null)
     {
-        return new Image(imagecreatetruecolor(10, 10), new RGB());
+        return new Image(imagecreatetruecolor(10, 10), new RGB(), new MetadataBag());
     }
 
     public function getLayers(ImageInterface $image, $resource)
     {
-        return new Layers($image, $resource);
+        return new Layers($image, new RGB(), $resource);
     }
 
     public function getImagine()

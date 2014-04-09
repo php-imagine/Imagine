@@ -12,9 +12,15 @@
 namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Image\Metadata\MetadataBag;
 
 abstract class AbstractImage implements ImageInterface
 {
+    /**
+     * @var MetadataBag
+     */
+    protected $metadata;
+
     /**
      * {@inheritdoc}
      */
@@ -90,4 +96,23 @@ abstract class AbstractImage implements ImageInterface
 
         return $options;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function metadata()
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * Assures the metadata instance will be cloned, too
+     */
+    public function __clone()
+    {
+        if ($this->metadata !== null) {
+            $this->metadata = clone $this->metadata;
+        }
+    }
+
 }

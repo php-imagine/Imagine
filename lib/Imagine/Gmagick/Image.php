@@ -15,6 +15,7 @@ use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractImage;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
@@ -55,8 +56,9 @@ final class Image extends AbstractImage
      * @param \Gmagick         $gmagick
      * @param PaletteInterface $palette
      */
-    public function __construct(\Gmagick $gmagick, PaletteInterface $palette)
+    public function __construct(\Gmagick $gmagick, PaletteInterface $palette, MetadataBag $metadata)
     {
+        $this->metadata = $metadata;
         $this->gmagick = $gmagick;
         $this->setColorspace($palette);
         $this->layers = new Layers($this, $this->palette, $this->gmagick);
@@ -88,7 +90,7 @@ final class Image extends AbstractImage
      */
     public function copy()
     {
-        return new self(clone $this->gmagick, $this->palette);
+        return new self(clone $this->gmagick, $this->palette, clone $this->metadata);
     }
 
     /**

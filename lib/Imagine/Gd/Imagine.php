@@ -11,11 +11,12 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Image\AbstractImagine;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -23,7 +24,7 @@ use Imagine\Exception\RuntimeException;
 /**
  * Imagine implementation using the GD library
  */
-final class Imagine implements ImagineInterface
+final class Imagine extends AbstractImagine
 {
     /**
      * @var array
@@ -95,7 +96,7 @@ final class Imagine implements ImagineInterface
             imagecolortransparent($resource, $index);
         }
 
-        return $this->wrap($resource, $palette);
+        return $this->wrap($resource, $palette, new MetadataBag());
     }
 
     /**
@@ -117,7 +118,7 @@ final class Imagine implements ImagineInterface
             throw new InvalidArgumentException(sprintf('Unable to open image %s', $path));
         }
 
-        return $this->wrap($resource, new RGB(), $path);
+        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readFile($path));
     }
 
     /**
@@ -131,7 +132,7 @@ final class Imagine implements ImagineInterface
             throw new InvalidArgumentException('An image could not be created from the given input');
         }
 
-        return $this->wrap($resource, new RGB());
+        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readData($string));
     }
 
     /**
@@ -164,7 +165,7 @@ final class Imagine implements ImagineInterface
         return new Font($file, $size, $color);
     }
 
-    private function wrap($resource, PaletteInterface $palette, $path = null)
+    private function wrap($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
         if (!imageistruecolor($resource)) {
             list($width, $height) = array(imagesx($resource), imagesy($resource));
@@ -193,6 +194,6 @@ final class Imagine implements ImagineInterface
             imageantialias($resource, true);
         }
 
-        return new Image($resource, $palette, $path);
+        return new Image($resource, $palette, $metadata);
     }
 }

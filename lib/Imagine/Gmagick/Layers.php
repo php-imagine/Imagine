@@ -16,6 +16,7 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
 
 class Layers extends AbstractLayers
@@ -129,7 +130,7 @@ class Layers extends AbstractLayers
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setimageindex($offset);
-                $this->layers[$offset] = new Image($this->resource->getimage(), $this->palette);
+                $this->layers[$offset] = new Image($this->resource->getimage(), $this->palette, new MetadataBag());
             } catch (\GmagickException $e) {
                 throw new RuntimeException(
                     sprintf('Failed to extract layer %d', $offset),
