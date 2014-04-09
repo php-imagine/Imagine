@@ -95,6 +95,10 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testSaveWithoutFormatShouldSaveInOriginalFormat()
     {
+        if (!extension_loaded('exif')) {
+            $this->markTestSkipped('The EXIF extension is required for this test');
+        }
+
         $tmpFile = __DIR__ . '/tmpfile';
 
         $this
@@ -560,6 +564,43 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->getColorAt(new Point(0, 0));
 
         $this->assertEquals('#d07560', (string) $color);
+    }
+
+    // Test whether a simple action such as resizing a GIF works
+    // Using the original animated GIF and a slightly more complex one as reference
+    // anima2.gif courtesy of Cyndi Norrie (http://cyndipop.tumblr.com/) via 15 Folds (http://15folds.com)
+    public function testResizeAnimatedGifResizeResult() {
+        if (!$this->supportMultipleLayers()) {
+            $this->markTestSkipped('This driver does not support multiple layers');
+        }
+
+        $imagine = $this->getImagine();
+
+        $image = $imagine->open('tests/Imagine/Fixtures/anima.gif');
+
+        // Imagick requires the images to be coalesced first!
+        if ($image instanceof \Imagine\Imagick\Image) {
+            $image->layers()->coalesce();
+        }
+
+        foreach ($image->layers() as $frame) {
+            $frame->resize(new Box(121, 124));
+        }
+
+        $image->save('tests/Imagine/Fixtures/results/anima-half-size.gif', array('animated' => true));
+
+        $image = $imagine->open('tests/Imagine/Fixtures/anima2.gif');
+
+        // Imagick requires the images to be coalesced first!
+        if ($image instanceof \Imagine\Imagick\Image) {
+            $image->layers()->coalesce();
+        }
+
+        foreach ($image->layers() as $frame) {
+            $frame->resize(new Box(200, 144));
+        }
+
+        $image->save('tests/Imagine/Fixtures/results/anima2-half-size.gif', array('animated' => true));
     }
 
     private function getMonoLayeredImage()

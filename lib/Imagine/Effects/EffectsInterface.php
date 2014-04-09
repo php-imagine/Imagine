@@ -70,7 +70,7 @@ interface EffectsInterface
     /**
      * Blur the image
      *
-     * @param float $sigma
+     * @param float|int $sigma
      *
      * @return EffectsInterface
      *

@@ -128,6 +128,26 @@ example :
 Animated gif frame manipulation
 -------------------------------
 
+Resizing an animated cats.gif file :
+
+.. code-block:: php
+
+    <?php
+    $image = $imagine->open('cats.gif');
+
+    $image->layers()->coalesce();
+    foreach ($image->layers() as $frame) {
+        $frame->resize(new Box(100, 100));
+    }
+
+    $image->save('resized-cats.gif', array('animated' => true));
+
+The layers (frames) should be coalesced so that they are all in line with each other.
+Otherwise you may end up with strange artifacts due to how animated GIFs *can* work.
+Without going into too much detail, think of it as each frame being a patch to the previous one.
+Also note that not the image, but each frame is resized. This again has to do with
+how animated GIFs work. Not every frame has to be the full image.
+
 The following example extract all frames of the cats.gif file :
 
 .. code-block:: php
