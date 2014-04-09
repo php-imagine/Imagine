@@ -85,7 +85,7 @@ class Imagine extends AbstractImagine
                 $pixel   = new \GmagickPixel((string) $color);
             }
 
-            if ($color->getAlpha() > 0) {
+            if ($color->getPalette()->supportsAlpha() && $color->getAlpha() < 100) {
                 throw new NotSupportedException('alpha transparency is not supported');
             }
 

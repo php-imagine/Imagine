@@ -426,7 +426,7 @@ final class Image extends AbstractImage
         $index = imagecolorat($this->resource, $point->getX(), $point->getY());
         $info  = imagecolorsforindex($this->resource, $index);
 
-        return $this->palette->color(array($info['red'], $info['green'], $info['blue']), (int) round($info['alpha'] / 127 * 100));
+        return $this->palette->color(array($info['red'], $info['green'], $info['blue']), max(min(100 - (int) round($info['alpha'] / 127 * 100), 100), 0));
     }
 
     /**

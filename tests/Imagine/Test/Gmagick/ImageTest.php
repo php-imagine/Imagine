@@ -12,6 +12,7 @@
 namespace Imagine\Test\Gmagick;
 
 use Imagine\Gmagick\Imagine;
+use Imagine\Image\Point;
 use Imagine\Test\Image\AbstractImageTest;
 
 class ImageTest extends AbstractImageTest
@@ -27,6 +28,19 @@ class ImageTest extends AbstractImageTest
         if (!class_exists('Gmagick')) {
             $this->markTestSkipped('Gmagick is not installed');
         }
+    }
+
+    // We redeclare this test because Gmagick does not support alpha
+    public function testGetColorAt()
+    {
+        $color = $this
+            ->getImagine()
+            ->open('tests/Imagine/Fixtures/65-percent-black.png')
+            ->getColorAt(new Point(0, 0));
+
+        $this->assertEquals('#000000', (string) $color);
+        // Gmagick does not supports alpha
+        $this->assertTrue($color->isOpaque());
     }
 
     public function provideFromAndToPalettes()

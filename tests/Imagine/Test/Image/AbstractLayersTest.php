@@ -16,6 +16,7 @@ use Imagine\Image\Point;
 use Imagine\Image\Palette\RGB;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
+use Imagine\Image\ImagineInterface;
 
 abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,12 +25,9 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         $palette = new RGB();
         $image = $this->getImagine()->create(new Box(20, 20), $palette->color('#FFFFFF'));
         foreach ($image->layers() as $layer) {
-            $layer->draw()
-                ->polygon(
-                array(new Point(0, 0),new Point(0, 20),new Point(20, 20),new Point(20, 0)),
-                $palette->color('#FF0000'),
-                true
-            );
+            $layer
+                ->draw()
+                ->polygon(array(new Point(0, 0),new Point(0, 20),new Point(20, 20),new Point(20, 0)), $palette->color('#FF0000'), true);
         }
         $image->layers()->merge();
 
@@ -262,6 +260,10 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
     }
 
     abstract protected function getImage($path = null);
+
+    /**
+     * @return ImagineInterface
+     */
     abstract protected function getImagine();
     abstract protected function assertLayersEquals($expected, $actual);
 }

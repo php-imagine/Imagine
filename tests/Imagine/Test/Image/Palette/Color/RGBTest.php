@@ -20,9 +20,9 @@ class RGBTest extends AbstractColorTest
     public function provideOpaqueColors()
     {
         return array(
-            array(new RGB(new RGBPalette(), array(12, 123, 245), 0)),
-            array(new RGB(new RGBPalette(), array(0, 0, 0), 0)),
-            array(new RGB(new RGBPalette(), array(255, 255, 255), 0)),
+            array(new RGB(new RGBPalette(), array(12, 123, 245), 100)),
+            array(new RGB(new RGBPalette(), array(0, 0, 0), 100)),
+            array(new RGB(new RGBPalette(), array(255, 255, 255), 100)),
         );
     }
     public function provideNotOpaqueColors()
@@ -31,7 +31,7 @@ class RGBTest extends AbstractColorTest
             array($this->getColor()),
             array(new RGB(new RGBPalette(), array(12, 123, 245), 23)),
             array(new RGB(new RGBPalette(), array(0, 0, 0), 45)),
-            array(new RGB(new RGBPalette(), array(255, 255, 255), 100)),
+            array(new RGB(new RGBPalette(), array(255, 255, 255), 0)),
         );
     }
 

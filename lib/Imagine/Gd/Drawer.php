@@ -292,7 +292,7 @@ final class Drawer implements DrawerInterface
             throw new InvalidArgumentException('GD driver only supports RGB colors');
         }
 
-        $gdColor = imagecolorallocatealpha($this->resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round(127 * $color->getAlpha() / 100));
+        $gdColor = imagecolorallocatealpha($this->resource, $color->getRed(), $color->getGreen(), $color->getBlue(), (100 - $color->getAlpha()) * 127 / 100);
         if (false === $gdColor) {
             throw new RuntimeException(sprintf('Unable to allocate color "RGB(%s, %s, %s)" with transparency of %d percent', $color->getRed(), $color->getGreen(), $color->getBlue(), $color->getAlpha()));
         }
