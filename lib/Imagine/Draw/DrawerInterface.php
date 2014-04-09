@@ -135,14 +135,15 @@ interface DrawerInterface
      *
      * The rotation is done CW
      *
-     * @param string         $string
+     * @param string                       $string
      * @param AbstractFont   $font
      * @param PointInterface $position
-     * @param integer        $angle
+     * @param integer                      $angle
+     * @param integer                      $width
      *
      * @throws RuntimeException
      *
      * @return DrawerInterface
      */
-    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0);
+    public function text($string, AbstractFont $font, PointInterface $position, $angle = 0, $width = null);
 }
