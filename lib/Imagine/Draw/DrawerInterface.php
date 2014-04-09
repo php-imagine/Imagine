@@ -135,11 +135,11 @@ interface DrawerInterface
      *
      * The rotation is done CW
      *
-     * @param string                       $string
+     * @param string         $string
      * @param AbstractFont   $font
      * @param PointInterface $position
-     * @param integer                      $angle
-     * @param integer                      $width
+     * @param integer        $angle
+     * @param integer        $width
      *
      * @throws RuntimeException
      *

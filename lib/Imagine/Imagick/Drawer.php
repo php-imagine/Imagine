@@ -413,7 +413,7 @@ final class Drawer implements DrawerInterface
 
     /**
      * Internal
-     * 
+     *
      * Fits a string into box with given width
      */
     private function wrapText($string, $text, $angle, $width)
@@ -423,7 +423,7 @@ final class Drawer implements DrawerInterface
         foreach ($words as $word) {
             $teststring = $result . ' ' . $word;
             $testbox = $this->imagick->queryFontMetrics($text, $teststring, true);
-            if ($testbox['textWidth'] > $width){
+            if ($testbox['textWidth'] > $width) {
                 $result .= ($result == '' ? '' : "\n") . $word;
             } else {
                 $result .= ($result == '' ? '' : ' ') . $word;

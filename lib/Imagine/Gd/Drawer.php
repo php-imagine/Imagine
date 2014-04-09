@@ -280,7 +280,7 @@ final class Drawer implements DrawerInterface
 
     /**
      * Internal
-     * 
+     *
      * Fits a string into box with given width
      */
     private function wrapText($string, AbstractFont $font, $angle, $width)
@@ -290,7 +290,7 @@ final class Drawer implements DrawerInterface
         foreach ($words as $word) {
             $teststring = $result . ' ' . $word;
             $testbox = imagettfbbox($font->getSize(), $angle, $font->getFile(), $teststring);
-            if ($testbox[2] > $width){
+            if ($testbox[2] > $width) {
                 $result .= ($result == '' ? '' : "\n") . $word;
             } else {
                 $result .= ($result == '' ? '' : ' ') . $word;
