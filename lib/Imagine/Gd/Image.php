@@ -37,6 +37,10 @@ final class Image extends AbstractImage
      * @var resource
      */
     private $resource;
+
+    /**
+     * @var Layers|null
+     */
     private $layers;
 
     /**
@@ -46,12 +50,11 @@ final class Image extends AbstractImage
     private $palette;
 
     /**
-     * Constructs a new Image instance using the result of
-     * imagecreatetruecolor()
+     * Constructs a new Image instance
      *
      * @param resource         $resource
      * @param PaletteInterface $palette
-     * @param null|string      $path
+     * @param MetadataBag      $metadata
      */
     public function __construct($resource, PaletteInterface $palette, MetadataBag $metadata)
     {

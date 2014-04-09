@@ -58,10 +58,11 @@ final class Image extends AbstractImage
     );
 
     /**
-     * Constructs Image with Imagick and Imagine instances
+     * Constructs a new Image instance
      *
      * @param \Imagick         $imagick
      * @param PaletteInterface $palette
+     * @param MetadataBag      $metadata
      */
     public function __construct(\Imagick $imagick, PaletteInterface $palette, MetadataBag $metadata)
     {
@@ -87,7 +88,7 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Returns imagick instance
+     * Returns the underlying \Imagick instance
      *
      * @return Imagick
      */

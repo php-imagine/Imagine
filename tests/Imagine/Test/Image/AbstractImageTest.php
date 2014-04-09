@@ -569,7 +569,8 @@ abstract class AbstractImageTest extends ImagineTestCase
     // Test whether a simple action such as resizing a GIF works
     // Using the original animated GIF and a slightly more complex one as reference
     // anima2.gif courtesy of Cyndi Norrie (http://cyndipop.tumblr.com/) via 15 Folds (http://15folds.com)
-    public function testResizeAnimatedGifResizeResult() {
+    public function testResizeAnimatedGifResizeResult()
+    {
         if (!$this->supportMultipleLayers()) {
             $this->markTestSkipped('This driver does not support multiple layers');
         }

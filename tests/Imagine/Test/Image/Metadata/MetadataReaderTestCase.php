@@ -11,8 +11,6 @@
 
 namespace Imagine\Test\Image\Metadata;
 
-use Imagine\Image\Metadata\ExifMetadata;
-use Imagine\Image\Metadata\MetadataInterface;
 use Imagine\Image\Metadata\MetadataReaderInterface;
 
 /**

@@ -11,10 +11,7 @@
 
 namespace Imagine\Test\Image\Metadata;
 
-use Imagine\Image\Metadata\ExifMetadata;
 use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Image\Metadata\MetadataInterface;
-use Imagine\Image\Metadata\MetadataReaderInterface;
 
 class MetadataBagTest extends \PHPUnit_Framework_TestCase
 {

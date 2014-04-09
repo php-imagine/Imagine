@@ -11,7 +11,6 @@
 
 namespace Imagine\Test\Filter;
 
-use Imagine\Test\Filter\DummyImagineAwareFilter;
 use Imagine\Filter\Transformation;
 
 /**

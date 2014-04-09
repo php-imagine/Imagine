@@ -46,15 +46,16 @@ final class Image extends AbstractImage
     private $palette;
 
     private static $colorspaceMapping = array(
-        PaletteInterface::PALETTE_CMYK      => \Gmagick::COLORSPACE_CMYK,
-        PaletteInterface::PALETTE_RGB       => \Gmagick::COLORSPACE_RGB,
+        PaletteInterface::PALETTE_CMYK => \Gmagick::COLORSPACE_CMYK,
+        PaletteInterface::PALETTE_RGB  => \Gmagick::COLORSPACE_RGB,
     );
 
     /**
-     * Constructs Image with Gmagick and Imagine instances
+     * Constructs a new Image instance
      *
      * @param \Gmagick         $gmagick
      * @param PaletteInterface $palette
+     * @param MetadataBag      $metadata
      */
     public function __construct(\Gmagick $gmagick, PaletteInterface $palette, MetadataBag $metadata)
     {
