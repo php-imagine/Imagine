@@ -588,6 +588,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         }
 
         $image->save('tests/Imagine/Fixtures/results/anima-half-size.gif', array('animated' => true));
+        @unlink('tests/Imagine/Fixtures/results/anima-half-size.gif');
 
         $image = $imagine->open('tests/Imagine/Fixtures/anima2.gif');
 
@@ -601,6 +602,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         }
 
         $image->save('tests/Imagine/Fixtures/results/anima2-half-size.gif', array('animated' => true));
+        @unlink('tests/Imagine/Fixtures/results/anima2-half-size.gif');
     }
 
     private function getMonoLayeredImage()
