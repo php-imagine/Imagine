@@ -568,19 +568,29 @@ final class Image extends AbstractImage
         $save = 'image'.$format;
         $args = array(&$this->resource, $filename);
 
-        if (($format === 'jpeg' || $format === 'png') &&
-            isset($options['quality'])) {
-            // Png compression quality is 0-9, so here we get the value from percent.
-            // Beaware that compression level for png works the other way around.
-            // For PNG 0 means no compression and 9 means highest compression level.
-            if ($format === 'png') {
-                $options['quality'] = round((100 - $options['quality']) * 9 / 100);
-            }
-            $args[] = $options['quality'];
+        $options = $this->updateSaveOptions($options);
+
+        if ($format === 'jpeg' && isset($options['jpeg_quality'])) {
+            $args[] = $options['jpeg_quality'];
         }
 
-        if ($format === 'png' && isset($options['filters'])) {
-            $args[] = $options['filters'];
+        if ($format === 'png') {
+
+            if (isset($options['png_compression_level'])) {
+                if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
+                    throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
+                }
+                $args[] = $options['png_compression_level'];
+            } else {
+                $args[] = -1; // use default level
+            }
+
+            if (isset($options['png_compression_filter'])) {
+                if (~PNG_ALL_FILTERS & $options['png_compression_filter']) {
+                    throw new InvalidArgumentException('png_compression_filter option should be a combination of the PNG_FILTER_XXX constants');
+                }
+                $args[] = $options['png_compression_filter'];
+            }
         }
 
         if (($format === 'wbmp' || $format === 'xbm') &&
