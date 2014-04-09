@@ -624,6 +624,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         $class = preg_replace('/\\\\/', "_", get_called_class());
         $image = $factory->open('tests/Imagine/Fixtures/'.$file.'.'.$in);
         $thumb = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
+        if (!is_dir('tests/Imagine/Fixtures/results/in_out')) {
+            mkdir('tests/Imagine/Fixtures/results/in_out', 0777, true);
+        }
         $thumb->save("tests/Imagine/Fixtures/results/in_out/{$class}_{$file}_from_{$in}_to.{$out}");
 
     }
