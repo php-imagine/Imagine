@@ -14,6 +14,7 @@ namespace Imagine\Gmagick;
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Exception\NotSupportedException;
 
 /**
  * Effects implementation using the Gmagick PHP extension
@@ -47,7 +48,7 @@ class Effects implements EffectsInterface
     public function negative()
     {
         if (!method_exists($this->gmagick, 'negateimage')) {
-            throw new RuntimeException('Gmagick version 1.1.0 RC3 is required'
+            throw new NotSupportedException('Gmagick version 1.1.0 RC3 is required'
                 . ' for negative effect');
         }
 
@@ -79,7 +80,7 @@ class Effects implements EffectsInterface
      */
     public function colorize(ColorInterface $color)
     {
-        throw new RuntimeException('Gmagick does not support colorize');
+        throw new NotSupportedException('Gmagick does not support colorize');
     }
 
     /**
@@ -87,7 +88,7 @@ class Effects implements EffectsInterface
      */
     public function sharpen()
     {
-        throw new RuntimeException('Gmagick does not support sharpen yet');
+        throw new NotSupportedException('Gmagick does not support sharpen yet');
     }
 
     /**

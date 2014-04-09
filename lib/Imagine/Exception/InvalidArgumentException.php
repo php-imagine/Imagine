@@ -11,11 +11,9 @@
 
 namespace Imagine\Exception;
 
-use InvalidArgumentException as BaseInvalidArgumentException;
-
 /**
  * Imagine-specific invalid argument exception
  */
-class InvalidArgumentException extends BaseInvalidArgumentException implements Exception
+class InvalidArgumentException extends \InvalidArgumentException implements Exception
 {
 }

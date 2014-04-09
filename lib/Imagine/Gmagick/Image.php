@@ -328,7 +328,7 @@ final class Image extends AbstractImage
             } elseif ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERINCH) {
                 $image->setimageunits(\Gmagick::RESOLUTION_PIXELSPERINCH);
             } else {
-                throw new RuntimeException('Unsupported image unit format');
+                throw new InvalidArgumentException('Unsupported image unit format');
             }
 
             $image->setimageresolution($options['resolution-x'], $options['resolution-y']);
@@ -491,7 +491,7 @@ final class Image extends AbstractImage
                 \Gmagick::COMPOSITE_DEFAULT,
                 0, 0
             );
-        } catch (\Exception $e) {
+        } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Apply mask operation failed', $e->getCode(), $e
             );
@@ -579,7 +579,7 @@ final class Image extends AbstractImage
     public function getColorAt(PointInterface $point)
     {
         if (!$point->in($this->getSize())) {
-            throw new RuntimeException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
                 $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
             ));
@@ -805,7 +805,7 @@ final class Image extends AbstractImage
         );
 
         if (!isset($mimeTypes[$format])) {
-            throw new RuntimeException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Unsupported format given. Only %s are supported, %s given',
                 implode(", ", array_keys($mimeTypes)), $format
             ));

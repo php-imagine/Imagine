@@ -14,6 +14,7 @@ namespace Imagine\Gd;
 use Imagine\Image\AbstractLayers;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Exception\NotSupportedException;
 
 class Layers extends AbstractLayers
 {
@@ -129,7 +130,7 @@ class Layers extends AbstractLayers
      */
     public function offsetSet($offset, $value)
     {
-        throw new RuntimeException('GD does not support layer set');
+        throw new NotSupportedException('GD does not support layer set');
     }
 
     /**
@@ -137,6 +138,6 @@ class Layers extends AbstractLayers
      */
     public function offsetUnset($offset)
     {
-        throw new RuntimeException('GD does not support layer unset');
+        throw new NotSupportedException('GD does not support layer unset');
     }
 }
