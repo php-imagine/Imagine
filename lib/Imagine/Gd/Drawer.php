@@ -44,6 +44,7 @@ final class Drawer implements DrawerInterface
     {
         $this->loadGdInfo();
         $this->resource = $resource;
+        $this->setAlphaBlending(true);
     }
 
     /**
@@ -272,5 +273,23 @@ final class Drawer implements DrawerInterface
         }
 
         $this->info = gd_info();
+    }
+
+    /**
+     * Internal
+     * 
+     * Set the alphablending for image
+     * 
+     * @param boolean $bool
+     * 
+     * return boolean
+     */
+    private function setAlphaBlending($bool)
+    {
+        if (false === imagealphablending($this->resource, $bool)) {
+            throw new RuntimeException('Setting of alphablending failed');
+        } 
+
+        return true;       
     }
 }
