@@ -136,7 +136,7 @@ class Layers extends AbstractLayers
     /**
      * Tries to extract layer at given offset
      *
-     * @param  integer $offset
+     * @param integer $offset
      *
      * @return Image
      * @throws RuntimeException
