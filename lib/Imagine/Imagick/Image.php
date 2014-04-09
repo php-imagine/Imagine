@@ -26,6 +26,7 @@ use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Image\BoxFactoryInterface;
 
 /**
  * Image implementation using the Imagick PHP extension
@@ -59,10 +60,12 @@ final class Image extends AbstractImage
     /**
      * Constructs Image with Imagick and Imagine instances
      *
-     * @param \Imagick         $imagick
-     * @param PaletteInterface $palette
+     * @param \Imagick            $imagick
+     * @param PaletteInterface    $palette
+     * @param BoxFactoryInterface $boxFactory
      */
-    public function __construct(\Imagick $imagick, PaletteInterface $palette)
+    public function __construct(\Imagick $imagick, PaletteInterface $palette, 
+            BoxFactoryInterface $boxFactory = null)
     {
         $this->detectColorspaceConversionSupport();
         $this->imagick = $imagick;
@@ -71,6 +74,8 @@ final class Image extends AbstractImage
         }
         $this->palette = $palette;
         $this->layers = new Layers($this, $this->palette, $this->imagick);
+        
+        $this->setBoxFactory($boxFactory);
     }
 
     /**
@@ -436,7 +441,7 @@ final class Image extends AbstractImage
             );
         }
 
-        return new Box($width, $height);
+        return $this->getBoxFactory()->createBox($width, $height);
     }
 
     /**

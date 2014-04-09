@@ -26,6 +26,7 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\BoxFactoryInterface;
 
 /**
  * Image implementation using the GD library
@@ -59,11 +60,14 @@ final class Image extends AbstractImage
      * @param PaletteInterface $palette
      * @param null|string      $path
      */
-    public function __construct($resource, PaletteInterface $palette, $path = null)
+    public function __construct($resource, PaletteInterface $palette, $path = null, 
+            BoxFactoryInterface $boxFactory = null)
     {
         $this->palette = $palette;
         $this->resource = $resource;
         $this->path = $path;
+
+        $this->setBoxFactory($boxFactory);
     }
 
     /**
@@ -358,7 +362,7 @@ final class Image extends AbstractImage
      */
     public function getSize()
     {
-        return new Box(imagesx($this->resource), imagesy($this->resource));
+        return $this->getBoxFactory()->createBox(imagesx($this->resource), imagesy($this->resource));
     }
 
     /**

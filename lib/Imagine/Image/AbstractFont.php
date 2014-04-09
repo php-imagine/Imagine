@@ -32,6 +32,8 @@ abstract class AbstractFont implements FontInterface
      * @var ColorInterface
      */
     protected $color;
+    
+    private $boxFactory;
 
     /**
      * Constructs a font with specified $file, $size and $color
@@ -42,11 +44,13 @@ abstract class AbstractFont implements FontInterface
      * @param integer        $size
      * @param ColorInterface $color
      */
-    public function __construct($file, $size, ColorInterface $color)
+    public function __construct($file, $size, ColorInterface $color, 
+            BoxFactoryInterface $boxFactory = null)
     {
         $this->file  = $file;
         $this->size  = $size;
         $this->color = $color;
+        $this->boxFactory = $boxFactory;
     }
 
     /**
@@ -71,5 +75,18 @@ abstract class AbstractFont implements FontInterface
     final public function getColor()
     {
         return $this->color;
+    }
+        
+    /**
+     * @return BoxFactoryInterface
+     */
+    final protected function getBoxFactory()
+    {
+        if ($this->boxFactory === null)
+        {
+            $this->boxFactory = BoxFactory::instance();
+        }
+        
+        return $this->boxFactory;
     }
 }
