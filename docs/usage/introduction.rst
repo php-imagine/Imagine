@@ -111,10 +111,10 @@ You can also specify the filter you want as second argument :
    // resize with lanczos filter
    $image->resize(new Box(15, 25), ImageInterface::FILTER_LANCZOS);
 
-Available filters are ImageInterface::FILTER_* constants.
+Available filters are ``ImageInterface::FILTER_*`` constants.
 
 .. NOTE::
-   GD only supports ImageInterface::RESIZE_UNDEFINED filter.
+   GD only supports ``ImageInterface::RESIZE_UNDEFINED`` filter.
 
 Create New Images
 +++++++++++++++++
@@ -142,7 +142,7 @@ You can optionally specify the fill color for the new image, which defaults to o
 Save Images
 +++++++++++
 
-Images are saved given a path and options.
+Images are saved given a path and optionally options.
 
 The following example opens a Jpg image and saves it as Png format :
 
@@ -157,10 +157,13 @@ The following example opens a Jpg image and saves it as Png format :
 
 Three options groups are currently supported : quality, resolution and flatten.
 
+.. TIP::
+   Default values are 75 for Jpeg quality, 7 for Png compression level and 72 dpi for x/y-resolution.
+
 .. NOTE::
    GD does not support resolution options group
 
-The following example opens a Jpg image and saves it with its quality set to 50.
+The following example demonstrates the basic quality settings.
 
 .. code-block:: php
 
@@ -168,10 +171,9 @@ The following example opens a Jpg image and saves it with its quality set to 50.
 
    $imagine = new Imagine\Imagick\Imagine();
 
-   $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', array('quality' => 50));
-
-.. TIP::
-   Default values are 75 for Jpeg quality and 72 dpi for x/y-resolution.
+   $imagine->open('/path/to/image.jpg')
+      ->save('/path/to/image.jpg', array('jpeg_quality' => 50)) // from 0 to 100
+      ->save('/path/to/image.png', array('png_compression_level' => 9)); // from 0 to 9
 
 The following example opens a Jpg image and saves it with it with 150 dpi horizontal resolution and 120 dpi vertical resolution.
 
@@ -191,7 +193,7 @@ The following example opens a Jpg image and saves it with it with 150 dpi horizo
 
    $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', $options);
 
-.. TIP::
+.. NOTE::
    You **MUST** provide a unit system when setting resolution values.
    There are two available unit systems for resolution : ``ImageInterface::RESOLUTION_PIXELSPERINCH`` and ``ImageInterface::RESOLUTION_PIXELSPERCENTIMETER``.
 
@@ -230,7 +232,7 @@ Of course, you can combine options :
        'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
        'resolution-x' => 300,
        'resolution-y' => 300,
-       'quality' => 100,
+       'jpeg_quality' => 100,
    );
 
    $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', $options);

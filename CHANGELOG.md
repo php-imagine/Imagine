@@ -2,7 +2,7 @@
 
 ### 0.6.0 (2014-xx-xx)
 
-  * BC break : Colors are now provided through the PaletteInterface. Any call
+  * BC break: Colors are now provided through the PaletteInterface. Any call
     to previous Imagine\Image\Color constructor must be removed and use the
     palette provided by Imagine\Image\ImageInterface::getPalette to create
     colors.
@@ -13,6 +13,11 @@
   * Add filter argument to ImageInterface::thumbnail method.
   * Add priority to filters (@Richtermeister).
   * Add blur effect (@Nokrosis).
+  * Rename "quality" option to "jpeg_quality" and apply it only to JPEG files.
+  * Add "png_compression_level" option.
+  * Rename "filters" option to "png_compression_filter".
+  * Deprecate `quality` and `filters` ManipulatorInterface::save options, use
+    `jpeg_quality`, `png_compression_level` and `png_compression_filter` instead.
 
 ### 0.5.0 (2013-07-10)
 

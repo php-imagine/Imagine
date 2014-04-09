@@ -276,14 +276,51 @@ final class Image extends AbstractImage
      *
      * @param \Gmagick $image
      * @param array    $options
+     * @param string   $path
      */
-    private function applyImageOptions(\Gmagick $image, array $options)
+    private function applyImageOptions(\Gmagick $image, array $options, $path)
     {
-        if (isset($options['quality'])) {
-            $image->setCompressionQuality($options['quality']);
+        if (isset($options['format'])) {
+            $format = $options['format'];
+        } elseif ('' !== $extension = pathinfo($path, \PATHINFO_EXTENSION)) {
+            $format = $extension;
+        } else {
+            $format = pathinfo($image->getImageFilename(), \PATHINFO_EXTENSION);
         }
 
-        if(isset($options['resolution-units']) && isset($options['resolution-x'])
+        $format = strtolower($format);
+
+        $options = $this->updateSaveOptions($options);
+
+        if (isset($options['jpeg_quality']) && in_array($format, array('jpeg', 'jpg', 'pjpeg'))) {
+            $image->setCompressionQuality($options['jpeg_quality']);
+        }
+
+        if ((isset($options['png_compression_level']) || isset($options['png_compression_filter'])) && $format === 'png') {
+            // first digit: compression level (default: 7)
+            if (isset($options['png_compression_level'])) {
+                if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
+                    throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
+                }
+                $compression = $options['png_compression_level'] * 10;
+            } else {
+                $compression = 70;
+            }
+
+            // second digit: compression filter (default: 5)
+            if (isset($options['png_compression_filter'])) {
+                if ($options['png_compression_filter'] < 0 || $options['png_compression_filter'] > 9) {
+                    throw new InvalidArgumentException('png_compression_filter option should be an integer from 0 to 9');
+                }
+                $compression += $options['png_compression_filter'];
+            } else {
+                $compression += 5;
+            }
+
+            $image->setCompressionQuality($compression);
+        }
+
+        if (isset($options['resolution-units']) && isset($options['resolution-x'])
           && isset($options['resolution-y'])) {
 
             if ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
@@ -312,7 +349,7 @@ final class Image extends AbstractImage
         }
 
         try {
-            $this->prepareOutput($options);
+            $this->prepareOutput($options, $path);
             $allFrames = !isset($options['animated']) || false === $options['animated'];
             $this->gmagick->writeimage($path, $allFrames);
         } catch (\GmagickException $e) {
@@ -341,7 +378,7 @@ final class Image extends AbstractImage
     public function get($format, array $options = array())
     {
         try {
-            $options["format"] = $format;
+            $options['format'] = $format;
             $this->prepareOutput($options);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
@@ -353,9 +390,10 @@ final class Image extends AbstractImage
     }
 
     /**
-     * @param array $options
+     * @param array  $options
+     * @param string $path
      */
-    private function prepareOutput(array $options)
+    private function prepareOutput(array $options, $path = null)
     {
         if (isset($options['format'])) {
             $this->gmagick->setimageformat($options['format']);
@@ -373,7 +411,7 @@ final class Image extends AbstractImage
         } else {
             $this->layers->merge();
         }
-        $this->applyImageOptions($this->gmagick, $options);
+        $this->applyImageOptions($this->gmagick, $options, $path);
 
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true)

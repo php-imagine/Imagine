@@ -73,4 +73,21 @@ abstract class AbstractImage implements ImageInterface
 
         return $thumbnail;
     }
+
+    /**
+     * Updates a given array of save options for backward compatibility with legacy names
+     *
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function updateSaveOptions(array $options)
+    {
+        // Preserve BC until version 1.0
+        if (isset($options['quality']) && !isset($options['jpeg_quality'])) {
+            $options['jpeg_quality'] = $options['quality'];
+        }
+
+        return $options;
+    }
 }
