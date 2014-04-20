@@ -65,9 +65,7 @@ final class Drawer implements DrawerInterface
             $arc->clear();
             $arc->destroy();
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Draw arc operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw arc operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -94,14 +92,8 @@ final class Drawer implements DrawerInterface
                 $chord->setFillColor($pixel);
             } else {
                 $this->line(
-                    new Point(
-                        round($x + $width / 2 * cos(deg2rad($start))),
-                        round($y + $height / 2 * sin(deg2rad($start)))
-                    ),
-                    new Point(
-                        round($x + $width / 2 * cos(deg2rad($end))),
-                        round($y + $height / 2 * sin(deg2rad($end)))
-                    ),
+                    new Point(round($x + $width / 2 * cos(deg2rad($start))), round($y + $height / 2 * sin(deg2rad($start)))),
+                    new Point(round($x + $width / 2 * cos(deg2rad($end))), round($y + $height / 2 * sin(deg2rad($end)))),
                     $color
                 );
 
@@ -125,9 +117,7 @@ final class Drawer implements DrawerInterface
             $chord->clear();
             $chord->destroy();
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Draw chord operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw chord operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -172,9 +162,7 @@ final class Drawer implements DrawerInterface
             $ellipse->clear();
             $ellipse->destroy();
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Draw ellipse operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw ellipse operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -207,9 +195,7 @@ final class Drawer implements DrawerInterface
             $line->clear();
             $line->destroy();
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Draw line operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw line operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -272,9 +258,7 @@ final class Drawer implements DrawerInterface
             $point->clear();
             $point->destroy();
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Draw point operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw point operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -286,18 +270,12 @@ final class Drawer implements DrawerInterface
     public function polygon(array $coordinates, ColorInterface $color, $fill = false, $thickness = 1)
     {
         if (count($coordinates) < 3) {
-            throw new InvalidArgumentException(sprintf(
-                'Polygon must consist of at least 3 coordinates, %d given',
-                count($coordinates)
-            ));
+            throw new InvalidArgumentException(sprintf('Polygon must consist of at least 3 coordinates, %d given', count($coordinates)));
         }
 
-        $points = array_map(
-            function (PointInterface $p) {
-                return array('x' => $p->getX(), 'y' => $p->getY());
-            },
-            $coordinates
-        );
+        $points = array_map(function (PointInterface $p) {
+            return array('x' => $p->getX(), 'y' => $p->getY());
+        }, $coordinates);
 
         try {
             $pixel   = $this->getColor($color);
@@ -313,7 +291,6 @@ final class Drawer implements DrawerInterface
             }
 
             $polygon->polygon($points);
-
             $this->imagick->drawImage($polygon);
 
             $pixel->clear();
@@ -322,9 +299,7 @@ final class Drawer implements DrawerInterface
             $polygon->clear();
             $polygon->destroy();
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Draw polygon operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw polygon operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -384,9 +359,7 @@ final class Drawer implements DrawerInterface
             $text->clear();
             $text->destroy();
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Draw text operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw text operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -402,11 +375,7 @@ final class Drawer implements DrawerInterface
     private function getColor(ColorInterface $color)
     {
         $pixel = new \ImagickPixel((string) $color);
-
-        $pixel->setColorValue(
-            \Imagick::COLOR_OPACITY,
-            number_format(abs(round($color->getAlpha() / 100, 1)), 1)
-        );
+        $pixel->setColorValue(\Imagick::COLOR_OPACITY, number_format(abs(round($color->getAlpha() / 100, 1)), 1));
 
         return $pixel;
     }

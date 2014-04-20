@@ -48,8 +48,7 @@ class Effects implements EffectsInterface
     public function negative()
     {
         if (!method_exists($this->gmagick, 'negateimage')) {
-            throw new NotSupportedException('Gmagick version 1.1.0 RC3 is required'
-                . ' for negative effect');
+            throw new NotSupportedException('Gmagick version 1.1.0 RC3 is required for negative effect');
         }
 
         try {

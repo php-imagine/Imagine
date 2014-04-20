@@ -40,22 +40,6 @@ final class Imagine extends AbstractImagine
         $this->requireGdVersion('2.0.1');
     }
 
-    private function loadGdInfo()
-    {
-        if (!function_exists('gd_info')) {
-            throw new RuntimeException('Gd not installed');
-        }
-
-        $this->info = gd_info();
-    }
-
-    private function requireGdVersion($version)
-    {
-        if (version_compare(GD_VERSION, $version, '<')) {
-            throw new RuntimeException(sprintf('GD2 version %s or higher is required', $version));
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -74,15 +58,10 @@ final class Imagine extends AbstractImagine
         $color = $color ? $color : $palette->color('fff');
 
         if (!$color instanceof RGBColor) {
-            throw new InvalidArgumentException(
-                'GD driver only supports RGB colors'
-            );
+            throw new InvalidArgumentException('GD driver only supports RGB colors');
         }
 
-        $index = imagecolorallocatealpha(
-            $resource, $color->getRed(), $color->getGreen(), $color->getBlue(),
-            round(127 * $color->getAlpha() / 100)
-        );
+        $index = imagecolorallocatealpha($resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round(127 * $color->getAlpha() / 100));
 
         if (false === $index) {
             throw new RuntimeException('Unable to allocate color');
@@ -107,9 +86,7 @@ final class Imagine extends AbstractImagine
         $data = @file_get_contents($path);
 
         if (false === $data) {
-            throw new InvalidArgumentException(sprintf(
-                'File %s doesn\'t exist', $path
-            ));
+            throw new InvalidArgumentException(sprintf('File %s doesn\'t exist', $path));
         }
 
         $resource = @imagecreatefromstring($data);
@@ -183,11 +160,8 @@ final class Imagine extends AbstractImagine
             $resource = $truecolor;
         }
 
-        if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
-            throw new RuntimeException(
-                'Could not set alphablending, savealpha and antialias values'
-            );
+        if (false === imagealphablending($resource, false) || false === imagesavealpha($resource, true)) {
+            throw new RuntimeException('Could not set alphablending, savealpha and antialias values');
         }
 
         if (function_exists('imageantialias')) {
@@ -195,5 +169,21 @@ final class Imagine extends AbstractImagine
         }
 
         return new Image($resource, $palette, $metadata);
+    }
+
+    private function loadGdInfo()
+    {
+        if (!function_exists('gd_info')) {
+            throw new RuntimeException('Gd not installed');
+        }
+
+        $this->info = gd_info();
+    }
+
+    private function requireGdVersion($version)
+    {
+        if (version_compare(GD_VERSION, $version, '<')) {
+            throw new RuntimeException(sprintf('GD2 version %s or higher is required', $version));
+        }
     }
 }

@@ -71,9 +71,7 @@ final class Drawer implements DrawerInterface
 
             $arc = null;
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Draw arc operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw arc operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -117,9 +115,7 @@ final class Drawer implements DrawerInterface
 
             $chord = null;
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Draw chord operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw chord operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -160,9 +156,7 @@ final class Drawer implements DrawerInterface
 
             $ellipse = null;
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Draw ellipse operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw ellipse operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -193,9 +187,7 @@ final class Drawer implements DrawerInterface
 
             $line = null;
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Draw line operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw line operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -253,12 +245,9 @@ final class Drawer implements DrawerInterface
             $this->gmagick->drawimage($point);
 
             $pixel = null;
-
             $point = null;
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Draw point operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw point operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -270,10 +259,7 @@ final class Drawer implements DrawerInterface
     public function polygon(array $coordinates, ColorInterface $color, $fill = false, $thickness = 1)
     {
         if (count($coordinates) < 3) {
-            throw new InvalidArgumentException(sprintf(
-                'Polygon must consist of at least 3 coordinates, %d given',
-                count($coordinates)
-            ));
+            throw new InvalidArgumentException(sprintf('Polygon must consist of at least 3 coordinates, %d given', count($coordinates)));
         }
 
         $points = array_map(function (PointInterface $p) {
@@ -299,9 +285,7 @@ final class Drawer implements DrawerInterface
 
             unset($pixel, $polygon);
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Draw polygon operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw polygon operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -342,16 +326,11 @@ final class Drawer implements DrawerInterface
                 throw new NotSupportedException('Gmagick doesn\'t support queryfontmetrics function for multiline text', 1);
             }
 
-            $this->gmagick->annotateimage(
-                $text, $position->getX() + $x1 + $xdiff,
-                $position->getY() + $y2 + $ydiff, $angle, $string
-            );
+            $this->gmagick->annotateimage($text, $position->getX() + $x1 + $xdiff, $position->getY() + $y2 + $ydiff, $angle, $string);
 
             unset($pixel, $text);
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Draw text operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Draw text operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -371,11 +350,7 @@ final class Drawer implements DrawerInterface
         }
 
         $pixel = new \GmagickPixel((string) $color);
-
-        $pixel->setColorValue(
-            \Gmagick::COLOR_OPACITY,
-            number_format(abs(round($color->getAlpha() / 100, 1)), 1)
-        );
+        $pixel->setColorValue(\Gmagick::COLOR_OPACITY, number_format(abs(round($color->getAlpha() / 100, 1)), 1));
 
         return $pixel;
     }

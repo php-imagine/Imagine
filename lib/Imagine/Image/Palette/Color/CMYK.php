@@ -64,9 +64,7 @@ final class CMYK implements ColorInterface
             case ColorInterface::COLOR_KEYLINE:
                 return $this->getKeyline();
             default:
-                throw new InvalidArgumentException(sprintf(
-                    'Color component %s is not valid', $component
-                ));
+                throw new InvalidArgumentException(sprintf('Color component %s is not valid', $component));
         }
     }
 
@@ -208,11 +206,7 @@ final class CMYK implements ColorInterface
     private function setColor(array $color)
     {
         if (count($color) !== 4) {
-            throw new InvalidArgumentException(
-                'Color argument must look like array(C, M, Y, K), ' .
-                'where C, M, Y, K are the integer values between 0 and 255 for ' .
-                'cyan, magenta, yellow and black color indexes accordingly'
-            );
+            throw new InvalidArgumentException('Color argument must look like array(C, M, Y, K), where C, M, Y, K are the integer values between 0 and 255 for cyan, magenta, yellow and black color indexes accordingly');
         }
 
         $colors = array_values($color);

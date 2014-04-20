@@ -44,7 +44,6 @@ final class Image extends AbstractImage
     private $layers;
 
     /**
-     *
      * @var PaletteInterface
      */
     private $palette;
@@ -89,11 +88,9 @@ final class Image extends AbstractImage
     final public function copy()
     {
         $size = $this->getSize();
-
         $copy = $this->createImage($size, 'copy');
 
-        if (false === imagecopy($copy, $this->resource, 0, 0, 0,
-            0, $size->getWidth(), $size->getHeight())) {
+        if (false === imagecopy($copy, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight())) {
             throw new RuntimeException('Image copy operation failed');
         }
 
@@ -106,11 +103,7 @@ final class Image extends AbstractImage
     final public function crop(PointInterface $start, BoxInterface $size)
     {
         if (!$start->in($this->getSize())) {
-            throw new OutOfBoundsException(
-                'Crop coordinates must start at minimum 0, 0 position from '.
-                'top  left corner, crop height and width must be positive '.
-                'integers and must not exceed the current image borders'
-            );
+            throw new OutOfBoundsException('Crop coordinates must start at minimum 0, 0 position from top  left corner, crop height and width must be positive integers and must not exceed the current image borders');
         }
 
         $width  = $size->getWidth();
@@ -118,8 +111,7 @@ final class Image extends AbstractImage
 
         $dest = $this->createImage($size, 'crop');
 
-        if (false === imagecopy($dest, $this->resource, 0, 0,
-            $start->getX(), $start->getY(), $width, $height)) {
+        if (false === imagecopy($dest, $this->resource, 0, 0, $start->getX(), $start->getY(), $width, $height)) {
             throw new RuntimeException('Image crop operation failed');
         }
 
@@ -136,25 +128,18 @@ final class Image extends AbstractImage
     final public function paste(ImageInterface $image, PointInterface $start)
     {
         if (!$image instanceof self) {
-            throw new InvalidArgumentException(sprintf(
-                'Gd\Image can only paste() Gd\Image instances, %s given',
-                get_class($image)
-            ));
+            throw new InvalidArgumentException(sprintf('Gd\Image can only paste() Gd\Image instances, %s given', get_class($image)));
         }
 
         $size = $image->getSize();
         if (!$this->getSize()->contains($size, $start)) {
-            throw new OutOfBoundsException(
-                'Cannot paste image of the given size at the specified '.
-                'position, as it moves outside of the current image\'s box'
-            );
+            throw new OutOfBoundsException('Cannot paste image of the given size at the specified position, as it moves outside of the current image\'s box');
         }
 
         imagealphablending($this->resource, true);
         imagealphablending($image->resource, true);
 
-        if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(),
-            0, 0, $size->getWidth(), $size->getHeight())) {
+        if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(), 0, 0, $size->getWidth(), $size->getHeight())) {
             throw new RuntimeException('Image paste operation failed');
         }
 
@@ -181,9 +166,7 @@ final class Image extends AbstractImage
         imagealphablending($this->resource, true);
         imagealphablending($dest, true);
 
-        if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0,
-            $width, $height, imagesx($this->resource), imagesy($this->resource)
-        )) {
+        if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0, $width, $height, imagesx($this->resource), imagesy($this->resource))) {
             throw new RuntimeException('Image resize operation failed');
         }
 
@@ -203,7 +186,6 @@ final class Image extends AbstractImage
     final public function rotate($angle, ColorInterface $background = null)
     {
         $color = $background ? $background : $this->palette->color('fff');
-
         $resource = imagerotate($this->resource, -1 * $angle, $this->getColor($color));
 
         if (false === $resource) {
@@ -211,7 +193,6 @@ final class Image extends AbstractImage
         }
 
         imagedestroy($this->resource);
-
         $this->resource = $resource;
 
         return $this;
@@ -225,9 +206,7 @@ final class Image extends AbstractImage
         $path = null === $path ? (isset($this->metadata['filepath']) ? $this->metadata['filepath'] : $path) : $path;
 
         if (null === $path) {
-            throw new RuntimeException(
-                'You can omit save path only if image has been open from a file'
-            );
+            throw new RuntimeException('You can omit save path only if image has been open from a file');
         }
 
         if (isset($options['format'])) {
@@ -286,8 +265,7 @@ final class Image extends AbstractImage
         $dest   = $this->createImage($size, 'flip');
 
         for ($i = 0; $i < $width; $i++) {
-            if (false === imagecopy($dest, $this->resource, $i, 0,
-                ($width - 1) - $i, 0, 1, $height)) {
+            if (false === imagecopy($dest, $this->resource, $i, 0, ($width - 1) - $i, 0, 1, $height)) {
                 throw new RuntimeException('Horizontal flip operation failed');
             }
         }
@@ -310,8 +288,7 @@ final class Image extends AbstractImage
         $dest   = $this->createImage($size, 'flip');
 
         for ($i = 0; $i < $height; $i++) {
-            if (false === imagecopy($dest, $this->resource, 0, $i,
-                0, ($height - 1) - $i, $width, 1)) {
+            if (false === imagecopy($dest, $this->resource, 0, $i, 0, ($height - 1) - $i, $width, 1)) {
                 throw new RuntimeException('Vertical flip operation failed');
             }
         }
@@ -328,10 +305,7 @@ final class Image extends AbstractImage
      */
     final public function strip()
     {
-        /**
-         * GD strips profiles and comment, so there's nothing to do here
-         */
-
+        // GD strips profiles and comment, so there's nothing to do here
         return $this;
     }
 
@@ -372,11 +346,7 @@ final class Image extends AbstractImage
         $maskSize = $mask->getSize();
 
         if ($size != $maskSize) {
-            throw new InvalidArgumentException(sprintf(
-                'The given mask doesn\'t match current image\'s size, Current '.
-                'mask\'s dimensions are %s, while image\'s dimensions are %s',
-                $maskSize, $size
-            ));
+            throw new InvalidArgumentException(sprintf('The given mask doesn\'t match current image\'s size, Current mask\'s dimensions are %s, while image\'s dimensions are %s', $maskSize, $size));
         }
 
         for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
@@ -384,14 +354,9 @@ final class Image extends AbstractImage
                 $position  = new Point($x, $y);
                 $color     = $this->getColorAt($position);
                 $maskColor = $mask->getColorAt($position);
-
                 $round     = (int) round(max($color->getAlpha(), (100 - $color->getAlpha()) * $maskColor->getRed() / 255));
 
-                if (false === imagesetpixel(
-                    $this->resource,
-                    $x, $y,
-                    $this->getColor($color->dissolve($round - $color->getAlpha()))
-                )) {
+                if (false === imagesetpixel($this->resource, $x, $y, $this->getColor($color->dissolve($round - $color->getAlpha())))) {
                     throw new RuntimeException('Apply mask operation failed');
                 }
             }
@@ -409,11 +374,7 @@ final class Image extends AbstractImage
 
         for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
             for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
-                if (false === imagesetpixel(
-                    $this->resource,
-                    $x, $y,
-                    $this->getColor($fill->getColor(new Point($x, $y))))
-                ) {
+                if (false === imagesetpixel($this->resource, $x, $y, $this->getColor($fill->getColor(new Point($x, $y))))) {
                     throw new RuntimeException('Fill operation failed');
                 }
             }
@@ -459,21 +420,13 @@ final class Image extends AbstractImage
     public function getColorAt(PointInterface $point)
     {
         if (!$point->in($this->getSize())) {
-            throw new RuntimeException(sprintf(
-                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
-                $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
-            ));
+            throw new RuntimeException(sprintf('Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]', $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()));
         }
+
         $index = imagecolorat($this->resource, $point->getX(), $point->getY());
         $info  = imagecolorsforindex($this->resource, $index);
 
-        return $this->palette->color(array(
-                $info['red'],
-                $info['green'],
-                $info['blue'],
-            ),
-            (int) round($info['alpha'] / 127 * 100)
-        );
+        return $this->palette->color(array($info['red'], $info['green'], $info['blue']), (int) round($info['alpha'] / 127 * 100));
     }
 
     /**
@@ -556,11 +509,7 @@ final class Image extends AbstractImage
         $format = $this->normalizeFormat($format);
 
         if (!$this->supported($format)) {
-            throw new InvalidArgumentException(sprintf(
-                'Saving image in "%s" format is not supported, please use one '.
-                'of the following extensions: "%s"', $format,
-                implode('", "', $this->supported())
-            ));
+            throw new InvalidArgumentException(sprintf('Saving image in "%s" format is not supported, please use one of the following extensions: "%s"', $format, implode('", "', $this->supported())));
         }
 
         $save = 'image'.$format;
@@ -598,8 +547,7 @@ final class Image extends AbstractImage
             }
         }
 
-        if (($format === 'wbmp' || $format === 'xbm') &&
-            isset($options['foreground'])) {
+        if (($format === 'wbmp' || $format === 'xbm') && isset($options['foreground'])) {
             $args[] = $options['foreground'];
         }
 
@@ -633,8 +581,7 @@ final class Image extends AbstractImage
             throw new RuntimeException('Image '.$operation.' failed');
         }
 
-        if (false === imagealphablending($resource, false) ||
-            false === imagesavealpha($resource, true)) {
+        if (false === imagealphablending($resource, false) || false === imagesavealpha($resource, true)) {
             throw new RuntimeException('Image '.$operation.' failed');
         }
 
@@ -654,31 +601,23 @@ final class Image extends AbstractImage
      *
      * Generates a GD color from Color instance
      *
-     * @param Color $color
+     * @param ColorInterface $color
      *
-     * @return resource
+     * @return integer A color identifier
      *
      * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     private function getColor(ColorInterface $color)
     {
         if (!$color instanceof RGBColor) {
-            throw new InvalidArgumentException(
-                'GD driver only supports RGB colors'
-            );
+            throw new InvalidArgumentException('GD driver only supports RGB colors');
         }
 
-        $index = imagecolorallocatealpha(
-            $this->resource, $color->getRed(), $color->getGreen(),
-            $color->getBlue(), round(127 * $color->getAlpha() / 100)
-        );
+        $index = imagecolorallocatealpha($this->resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round(127 * $color->getAlpha() / 100));
 
         if (false === $index) {
-            throw new RuntimeException(sprintf(
-                'Unable to allocate color "RGB(%s, %s, %s)" with transparency '.
-                'of %d percent', $color->getRed(), $color->getGreen(),
-                $color->getBlue(), $color->getAlpha()
-            ));
+            throw new RuntimeException(sprintf('Unable to allocate color "RGB(%s, %s, %s)" with transparency of %d percent', $color->getRed(), $color->getGreen(), $color->getBlue(), $color->getAlpha()));
         }
 
         return $index;
@@ -727,15 +666,11 @@ final class Image extends AbstractImage
     private function setExceptionHandler()
     {
         set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-
             if (0 === error_reporting()) {
                 return;
             }
 
-            throw new RuntimeException(
-                $errstr, $errno,
-                new \ErrorException($errstr, 0, $errno, $errfile, $errline)
-            );
+            throw new RuntimeException($errstr, $errno, new \ErrorException($errstr, 0, $errno, $errfile, $errline));
         }, E_WARNING | E_NOTICE);
     }
 

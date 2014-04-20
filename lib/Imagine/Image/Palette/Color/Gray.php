@@ -48,9 +48,7 @@ final class Gray implements ColorInterface
             case ColorInterface::COLOR_GRAY:
                 return $this->getGray();
             default:
-                throw new InvalidArgumentException(sprintf(
-                    'Color component %s is not valid', $component
-                ));
+                throw new InvalidArgumentException(sprintf('Color component %s is not valid', $component));
         }
     }
 
@@ -95,11 +93,7 @@ final class Gray implements ColorInterface
      */
     public function lighten($shade)
     {
-        return $this->palette->color(
-            array(
-                min(255, $this->gray + $shade),
-            ), $this->alpha
-        );
+        return $this->palette->color(array(min(255, $this->gray + $shade)), $this->alpha);
     }
 
     /**
@@ -107,11 +101,7 @@ final class Gray implements ColorInterface
      */
     public function darken($shade)
     {
-        return $this->palette->color(
-            array(
-                max(0, $this->gray - $shade),
-            ), $this->alpha
-        );
+        return $this->palette->color(array(max(0, $this->gray - $shade)), $this->alpha);
     }
 
     /**
@@ -150,9 +140,7 @@ final class Gray implements ColorInterface
     private function setAlpha($alpha)
     {
         if (!is_int($alpha) || $alpha < 0 || $alpha > 100) {
-            throw new InvalidArgumentException(sprintf(
-                'Alpha must be an integer between 0 and 100, %s given', $alpha
-            ));
+            throw new InvalidArgumentException(sprintf('Alpha must be an integer between 0 and 100, %s given', $alpha));
         }
 
         $this->alpha = $alpha;
@@ -168,11 +156,7 @@ final class Gray implements ColorInterface
     private function setColor(array $color)
     {
         if (count($color) !== 1) {
-            throw new InvalidArgumentException(
-                'Color argument must look like array(gray), ' .
-                'where gray is the integer value between 0 and 255 for ' .
-                'the grayscale'
-            );
+            throw new InvalidArgumentException('Color argument must look like array(gray), where gray is the integer value between 0 and 255 for the grayscale');
         }
 
         list($this->gray) = array_values($color);
