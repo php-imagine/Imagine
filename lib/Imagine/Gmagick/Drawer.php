@@ -13,6 +13,7 @@ namespace Imagine\Gmagick;
 
 use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\BoxInterface;
@@ -338,7 +339,7 @@ final class Drawer implements DrawerInterface
             $ydiff = 0 - min($y1, $y2);
 
             if ($width !== null) {
-                throw new RuntimeException('Gmagick doesn\'t support queryfontmetrics function for multiline text', 1);
+                throw new NotSupportedException('Gmagick doesn\'t support queryfontmetrics function for multiline text', 1);
             }
 
             $this->gmagick->annotateimage(
