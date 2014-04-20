@@ -1,5 +1,4 @@
 <?php
-namespace Imagine\Image\Metadata;
 
 /*
  * This file is part of the Imagine package.
@@ -10,23 +9,41 @@ namespace Imagine\Image\Metadata;
  * file that was distributed with this source code.
  */
 
+namespace Imagine\Image\Metadata;
+
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\NotSupportedException;
 
 /**
  * Metadata driven by Exif information
  */
-class ExifMetadataReader implements MetadataReaderInterface
+class ExifMetadataReader extends AbstractMetadataReader
 {
+    public function __construct()
+    {
+        if (!function_exists('exif_read_data')) {
+            throw new NotSupportedException('PHP exif extension is required to use the ExifMetadataReader');
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
     public function readFile($file)
     {
-        if (!is_file($file)) {
-            throw new InvalidArgumentException(sprintf('File %s does not exist.', $file));
+        if (stream_is_local($file)) {
+            if (!is_file($file)) {
+                throw new InvalidArgumentException(sprintf('File %s does not exist.', $file));
+            }
+
+            return $this->extract($file, array('filepath' => realpath($file), 'uri' => $file));
         }
 
-        return $this->extract($file, array('filepath' => realpath($file)));
+        if (false === $data = @file_get_contents($file)) {
+            throw new InvalidArgumentException(sprintf('File %s is not readable.', $file));
+        }
+
+        return $this->doReadData($data, array('uri' => $file));
     }
 
     /**
@@ -34,24 +51,40 @@ class ExifMetadataReader implements MetadataReaderInterface
      */
     public function readData($data)
     {
-        if (substr($data, 0, 2) === 'II') {
-            $mime = 'image/tiff';
-        } else {
-            $mime = 'image/jpeg';
-        }
-
-        return $this->extract('data://' . $mime . ';base64,' . base64_encode($data));
+        return $this->doReadData($data, array());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function readStream($resource)
     {
         if (!is_resource($resource)) {
             throw new InvalidArgumentException('Invalid resource provided.');
         }
 
-        $data = stream_get_contents($resource);
+        $metadata = $this->getStreamMetadata($resource);
 
-        return $this->readData($data);
+        return $this->doReadData(stream_get_contents($resource), $metadata);
+    }
+
+    /**
+     * Extracts metadata from raw data, merges with existing metadata
+     *
+     * @param string $data
+     * @param array  $metadata
+     *
+     * @return MetadataBag
+     */
+    private function doReadData($data, array $metadata)
+    {
+        if (substr($data, 0, 2) === 'II') {
+            $mime = 'image/tiff';
+        } else {
+            $mime = 'image/jpeg';
+        }
+
+        return $this->extract('data://' . $mime . ';base64,' . base64_encode($data), $metadata);
     }
 
     /**

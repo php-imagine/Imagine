@@ -15,6 +15,7 @@ use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Test\ImagineTestCase;
 use Imagine\Image\Palette\RGB;
+use Imagine\Image\ImagineInterface;
 
 abstract class AbstractImagineTest extends ImagineTestCase
 {
@@ -31,13 +32,35 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldOpenAnImage()
     {
+        $source = 'tests/Imagine/Fixtures/google.png';
         $factory = $this->getImagine();
-        $image   = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image   = $factory->open($source);
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
+
+        $metadata = $image->metadata();
+
+        $this->assertEquals($source, $metadata['uri']);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+    }
+
+    public function testShouldOpenAnHttpImage()
+    {
+        $factory = $this->getImagine();
+        $image   = $factory->open(self::HTTP_IMAGE);
+        $size    = $image->getSize();
+
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertEquals(280, $size->getWidth());
+        $this->assertEquals(140, $size->getHeight());
+
+        $metadata = $image->metadata();
+
+        $this->assertEquals(self::HTTP_IMAGE, $metadata['uri']);
+        $this->assertArrayNotHasKey('filepath', $metadata);
     }
 
     public function testShouldCreateImageFromString()
@@ -49,18 +72,46 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
+
+        $metadata = $image->metadata();
+
+        $this->assertArrayNotHasKey('uri', $metadata);
+        $this->assertArrayNotHasKey('filepath', $metadata);
     }
 
     public function testShouldCreateImageFromResource()
     {
+        $source = 'tests/Imagine/Fixtures/google.png';
         $factory = $this->getImagine();
-        $resource = fopen('tests/Imagine/Fixtures/google.png', 'r');
+        $resource = fopen($source, 'r');
         $image   = $factory->read($resource);
         $size    = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
+
+        $metadata = $image->metadata();
+
+        $this->assertEquals($source, $metadata['uri']);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+    }
+
+    public function testShouldCreateImageFromHttpResource()
+    {
+        $factory = $this->getImagine();
+        $resource = fopen(self::HTTP_IMAGE, 'r');
+        $image   = $factory->read($resource);
+        $size    = $image->getSize();
+
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertEquals(280, $size->getWidth());
+        $this->assertEquals(140, $size->getHeight());
+
+        $metadata = $image->metadata();
+
+        $this->assertEquals(self::HTTP_IMAGE, $metadata['uri']);
+        $this->assertArrayNotHasKey('filepath', $metadata);
     }
 
     public function testShouldDetermineFontSize()
@@ -79,6 +130,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     abstract protected function getEstimatedFontBox();
 
+    /**
+     * @return ImagineInterface
+     */
     abstract protected function getImagine();
 
     abstract protected function isFontTestSupported();

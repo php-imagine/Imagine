@@ -103,13 +103,7 @@ final class Imagine extends AbstractImagine
      */
     public function load($string)
     {
-        $resource = @imagecreatefromstring($string);
-
-        if (!is_resource($resource)) {
-            throw new InvalidArgumentException('An image could not be created from the given input');
-        }
-
-        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readData($string));
+        return $this->doLoad($string, $this->getMetadataReader()->readData($string));
     }
 
     /**
@@ -127,7 +121,7 @@ final class Imagine extends AbstractImagine
             throw new InvalidArgumentException('Cannot read resource content');
         }
 
-        return $this->load($content);
+        return $this->doLoad($content, $this->getMetadataReader()->readStream($resource));
     }
 
     /**
@@ -185,5 +179,16 @@ final class Imagine extends AbstractImagine
         if (version_compare(GD_VERSION, $version, '<')) {
             throw new RuntimeException(sprintf('GD2 version %s or higher is required', $version));
         }
+    }
+
+    private function doLoad($string, MetadataBag $metadata)
+    {
+        $resource = @imagecreatefromstring($string);
+
+        if (!is_resource($resource)) {
+            throw new InvalidArgumentException('An image could not be created from the given input');
+        }
+
+        return $this->wrap($resource, new RGB(), $metadata);
     }
 }

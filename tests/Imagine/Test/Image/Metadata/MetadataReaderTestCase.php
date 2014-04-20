@@ -12,10 +12,11 @@
 namespace Imagine\Test\Image\Metadata;
 
 use Imagine\Image\Metadata\MetadataReaderInterface;
+use Imagine\Test\ImagineTestCase;
 
 /**
  */
-abstract class MetadataReaderTestCase extends \PHPUnit_Framework_TestCase
+abstract class MetadataReaderTestCase extends ImagineTestCase
 {
     /**
      * @return MetadataReaderInterface
@@ -28,10 +29,20 @@ abstract class MetadataReaderTestCase extends \PHPUnit_Framework_TestCase
         $metadata = $this->getReader()->readFile($source);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
         $this->assertEquals(realpath($source), $metadata['filepath']);
+        $this->assertEquals($source, $metadata['uri']);
+    }
+
+    public function testReadFromHttpFile()
+    {
+        $source = self::HTTP_IMAGE;
+        $metadata = $this->getReader()->readFile($source);
+        $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
+        $this->assertFalse(isset($metadata['filepath']));
+        $this->assertEquals($source, $metadata['uri']);
     }
 
     /**
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      * @expectedExceptionMessage File /path/to/no/file does not exist.
      */
     public function testReadFromInvalidFileThrowsAnException()
@@ -54,13 +65,16 @@ abstract class MetadataReaderTestCase extends \PHPUnit_Framework_TestCase
 
     public function testReadFromStream()
     {
-        $source = fopen(__DIR__ . '/../../../Fixtures/pixel-CMYK.jpg', 'r');
-        $metadata = $this->getReader()->readStream($source);
+        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $resource = fopen($source, 'r');
+        $metadata = $this->getReader()->readStream($resource);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+        $this->assertEquals($source, $metadata['uri']);
     }
 
     /**
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      * @expectedExceptionMessage Invalid resource provided.
      */
     public function testReadFromInvalidStreamThrowsAnException()
