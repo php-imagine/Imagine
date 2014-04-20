@@ -79,10 +79,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     {
         if ($filter instanceof ImagineAware) {
             if ($this->imagine === null) {
-                throw new InvalidArgumentException(sprintf(
-                    'In order to use %s pass an Imagine\Image\ImagineInterface instance '.
-                    'to Transformation constructor', get_class($filter)
-                ));
+                throw new InvalidArgumentException(sprintf('In order to use %s pass an Imagine\Image\ImagineInterface instance to Transformation constructor', get_class($filter)));
             }
             $filter->setImagine($this->imagine);
         }

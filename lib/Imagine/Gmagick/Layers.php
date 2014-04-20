@@ -41,6 +41,9 @@ class Layers extends AbstractLayers
      */
     private $layers = array();
 
+    /**
+     * @var PaletteInterface
+     */
     private $palette;
 
     public function __construct(Image $image, PaletteInterface $palette, \Gmagick $resource)
@@ -60,9 +63,7 @@ class Layers extends AbstractLayers
                 $this->resource->setimageindex($offset);
                 $this->resource->setimage($image->getGmagick());
             } catch (\GmagickException $e) {
-                throw new RuntimeException(
-                    'Failed to substitute layer', $e->getCode(), $e
-                );
+                throw new RuntimeException('Failed to substitute layer', $e->getCode(), $e);
             }
         }
     }
@@ -132,10 +133,7 @@ class Layers extends AbstractLayers
                 $this->resource->setimageindex($offset);
                 $this->layers[$offset] = new Image($this->resource->getimage(), $this->palette, new MetadataBag());
             } catch (\GmagickException $e) {
-                throw new RuntimeException(
-                    sprintf('Failed to extract layer %d', $offset),
-                    $e->getCode(), $e
-                );
+                throw new RuntimeException(sprintf('Failed to extract layer %d', $offset), $e->getCode(), $e);
             }
         }
 
@@ -182,9 +180,7 @@ class Layers extends AbstractLayers
         try {
             return $this->resource->getnumberimages();
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Failed to count the number of layers', $e->getCode(), $e
-            );
+            throw new RuntimeException('Failed to count the number of layers', $e->getCode(), $e);
         }
     }
 
@@ -217,16 +213,11 @@ class Layers extends AbstractLayers
             $offset = count($this) - 1;
         } else {
             if (!is_int($offset)) {
-                throw new InvalidArgumentException(
-                    'Invalid offset for layer, it must be an integer'
-                );
+                throw new InvalidArgumentException('Invalid offset for layer, it must be an integer');
             }
 
             if (count($this) < $offset || 0 > $offset) {
-                throw new OutOfBoundsException(sprintf(
-                    'Invalid offset for layer, it must be a value between 0 and %d, %d given',
-                    count($this), $offset
-                ));
+                throw new OutOfBoundsException(sprintf('Invalid offset for layer, it must be a value between 0 and %d, %d given', count($this), $offset));
             }
 
             if (isset($this[$offset])) {

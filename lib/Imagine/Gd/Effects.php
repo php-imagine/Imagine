@@ -70,9 +70,7 @@ class Effects implements EffectsInterface
     public function colorize(ColorInterface $color)
     {
         if (!$color instanceof RGBColor) {
-            throw new RuntimeException(
-                'Colorize effects only accepts RGB color in GD context'
-            );
+            throw new RuntimeException('Colorize effects only accepts RGB color in GD context');
         }
 
         if (false === imagefilter($this->resource, IMG_FILTER_COLORIZE, $color->getRed(), $color->getGreen(), $color->getBlue())) {

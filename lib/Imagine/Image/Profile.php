@@ -52,10 +52,7 @@ class Profile implements ProfileInterface
     public static function fromPath($path)
     {
         if (!file_exists($path) || !is_file($path) || !is_readable($path)) {
-            throw new InvalidArgumentException(sprintf(
-                'Path %s is an invalid profile file or is not readable',
-                $path
-            ));
+            throw new InvalidArgumentException(sprintf('Path %s is an invalid profile file or is not readable', $path));
         }
 
         return new static(basename($path), file_get_contents($path));

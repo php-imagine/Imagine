@@ -100,24 +100,13 @@ final class Image extends AbstractImage
     public function crop(PointInterface $start, BoxInterface $size)
     {
         if (!$start->in($this->getSize())) {
-            throw new OutOfBoundsException(
-                'Crop coordinates must start at minimum 0, 0 position from '.
-                'top left corner, crop height and width must be positive '.
-                'integers and must not exceed the current image borders'
-            );
+            throw new OutOfBoundsException('Crop coordinates must start at minimum 0, 0 position from top left corner, crop height and width must be positive integers and must not exceed the current image borders');
         }
 
         try {
-            $this->gmagick->cropimage(
-                $size->getWidth(),
-                $size->getHeight(),
-                $start->getX(),
-                $start->getY()
-            );
+            $this->gmagick->cropimage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Crop operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Crop operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -131,9 +120,7 @@ final class Image extends AbstractImage
         try {
             $this->gmagick->flopimage();
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Horizontal flip operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Horizontal flip operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -147,9 +134,7 @@ final class Image extends AbstractImage
         try {
             $this->gmagick->flipimage();
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Vertical flip operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Vertical flip operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -164,9 +149,7 @@ final class Image extends AbstractImage
             $this->profile($this->palette->profile());
             $this->gmagick->stripimage();
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Strip operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Strip operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -178,30 +161,17 @@ final class Image extends AbstractImage
     public function paste(ImageInterface $image, PointInterface $start)
     {
         if (!$image instanceof self) {
-            throw new InvalidArgumentException(sprintf(
-                'Gmagick\Image can only paste() Gmagick\Image instances, '.
-                '%s given', get_class($image)
-            ));
+            throw new InvalidArgumentException(sprintf('Gmagick\Image can only paste() Gmagick\Image instances, %s given', get_class($image)));
         }
 
         if (!$this->getSize()->contains($image->getSize(), $start)) {
-            throw new OutOfBoundsException(
-                'Cannot paste image of the given size at the specified '.
-                'position, as it moves outside of the current image\'s box'
-            );
+            throw new OutOfBoundsException('Cannot paste image of the given size at the specified position, as it moves outside of the current image\'s box');
         }
 
         try {
-            $this->gmagick->compositeimage(
-                $image->gmagick,
-                \Gmagick::COMPOSITE_DEFAULT,
-                $start->getX(),
-                $start->getY()
-            );
+            $this->gmagick->compositeimage($image->gmagick, \Gmagick::COMPOSITE_DEFAULT, $start->getX(), $start->getY());
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Paste operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Paste operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -236,16 +206,9 @@ final class Image extends AbstractImage
         }
 
         try {
-            $this->gmagick->resizeimage(
-                $size->getWidth(),
-                $size->getHeight(),
-                $supportedFilters[$filter],
-                1
-            );
+            $this->gmagick->resizeimage($size->getWidth(), $size->getHeight(), $supportedFilters[$filter], 1);
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Resize operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Resize operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -264,9 +227,7 @@ final class Image extends AbstractImage
 
             unset($pixel);
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Rotate operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Rotate operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -280,6 +241,8 @@ final class Image extends AbstractImage
      * @param \Gmagick $image
      * @param array    $options
      * @param string   $path
+     *
+     * @throws InvalidArgumentException
      */
     private function applyImageOptions(\Gmagick $image, array $options, $path)
     {
@@ -323,9 +286,7 @@ final class Image extends AbstractImage
             $image->setCompressionQuality($compression);
         }
 
-        if (isset($options['resolution-units']) && isset($options['resolution-x'])
-          && isset($options['resolution-y'])) {
-
+        if (isset($options['resolution-units']) && isset($options['resolution-x']) && isset($options['resolution-y'])) {
             if ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
                 $image->setimageunits(\Gmagick::RESOLUTION_PIXELSPERCENTIMETER);
             } elseif ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERINCH) {
@@ -346,9 +307,7 @@ final class Image extends AbstractImage
         $path = null === $path ? $this->gmagick->getImageFilename() : $path;
 
         if ('' === trim($path)) {
-            throw new RuntimeException(
-                'You can omit save path only if image has been open from a file'
-            );
+            throw new RuntimeException('You can omit save path only if image has been open from a file');
         }
 
         try {
@@ -356,9 +315,7 @@ final class Image extends AbstractImage
             $allFrames = !isset($options['animated']) || false === $options['animated'];
             $this->gmagick->writeimage($path, $allFrames);
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Save operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Save operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -384,9 +341,7 @@ final class Image extends AbstractImage
             $options['format'] = $format;
             $this->prepareOutput($options);
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Get operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Get operation failed', $e->getCode(), $e);
         }
 
         return $this->gmagick->getimagesblob();
@@ -403,7 +358,6 @@ final class Image extends AbstractImage
         }
 
         if (isset($options['animated']) && true === $options['animated']) {
-
             $format = isset($options['format']) ? $options['format'] : 'gif';
             $delay = isset($options['animated.delay']) ? $options['animated.delay'] : null;
             $loops = isset($options['animated.loops']) ? $options['animated.loops'] : 0;
@@ -417,8 +371,7 @@ final class Image extends AbstractImage
         $this->applyImageOptions($this->gmagick, $options, $path);
 
         // flatten only if image has multiple layers
-        if ((!isset($options['flatten']) || $options['flatten'] === true)
-            && count($this->layers) > 1) {
+        if ((!isset($options['flatten']) || $options['flatten'] === true) && count($this->layers) > 1) {
             $this->flatten();
         }
     }
@@ -456,9 +409,7 @@ final class Image extends AbstractImage
             $width  = $this->gmagick->getimagewidth();
             $height = $this->gmagick->getimageheight();
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Get size operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Get size operation failed', $e->getCode(), $e);
         }
 
         return new Box($width, $height);
@@ -470,34 +421,21 @@ final class Image extends AbstractImage
     public function applyMask(ImageInterface $mask)
     {
         if (!$mask instanceof self) {
-            throw new InvalidArgumentException(
-                'Can only apply instances of Imagine\Gmagick\Image as masks'
-            );
+            throw new InvalidArgumentException('Can only apply instances of Imagine\Gmagick\Image as masks');
         }
 
         $size = $this->getSize();
         $maskSize = $mask->getSize();
 
         if ($size != $maskSize) {
-            throw new InvalidArgumentException(sprintf(
-                'The given mask doesn\'t match current image\'s size, current '.
-                'mask\'s dimensions are %s, while image\'s dimensions are %s',
-                $maskSize, $size
-            ));
+            throw new InvalidArgumentException(sprintf('The given mask doesn\'t match current image\'s size, current mask\'s dimensions are %s, while image\'s dimensions are %s', $maskSize, $size));
         }
 
         try {
             $mask = $mask->copy();
-
-            $this->gmagick->compositeimage(
-                $mask->gmagick,
-                \Gmagick::COMPOSITE_DEFAULT,
-                0, 0
-            );
+            $this->gmagick->compositeimage($mask->gmagick, \Gmagick::COMPOSITE_DEFAULT, 0, 0);
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Apply mask operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Apply mask operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -513,9 +451,7 @@ final class Image extends AbstractImage
         try {
             $mask->gmagick->modulateimage(100, 0, 100);
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Mask operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Mask operation failed', $e->getCode(), $e);
         }
 
         return $mask;
@@ -545,9 +481,7 @@ final class Image extends AbstractImage
 
             $draw = null;
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Fill operation failed', $e->getCode(), $e
-            );
+            throw new RuntimeException('Fill operation failed', $e->getCode(), $e);
         }
 
         return $this;
@@ -561,19 +495,14 @@ final class Image extends AbstractImage
         try {
             $pixels = $this->gmagick->getimagehistogram();
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Error while fetching histogram', $e->getCode(), $e
-            );
+            throw new RuntimeException('Error while fetching histogram', $e->getCode(), $e);
         }
 
         $image = $this;
 
-        return array_map(
-            function (\GmagickPixel $pixel) use ($image) {
-                return $image->pixelToColor($pixel);
-            },
-            $pixels
-        );
+        return array_map(function (\GmagickPixel $pixel) use ($image) {
+            return $image->pixelToColor($pixel);
+        }, $pixels);
     }
 
     /**
@@ -582,15 +511,13 @@ final class Image extends AbstractImage
     public function getColorAt(PointInterface $point)
     {
         if (!$point->in($this->getSize())) {
-            throw new InvalidArgumentException(sprintf(
-                'Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]',
-                $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()
-            ));
+            throw new InvalidArgumentException(sprintf('Error getting color at point [%s,%s]. The point must be inside the image of size [%s,%s]', $point->getX(), $point->getY(), $this->getSize()->getWidth(), $this->getSize()->getHeight()));
         }
 
         try {
             $cropped   = clone $this->gmagick;
-            $histogram = $cropped->cropImage(1, 1, $point->getX(), $point->getY())
+            $histogram = $cropped
+                ->cropImage(1, 1, $point->getX(), $point->getY())
                 ->getImageHistogram();
         } catch (\GmagickException $e) {
             throw new RuntimeException('Unable to get the pixel');
@@ -608,7 +535,7 @@ final class Image extends AbstractImage
      *
      * Note : this method is public for PHP 5.3 compatibility
      *
-     * @param \ImagickPixel $pixel
+     * @param \GmagickPixel $pixel
      *
      * @return ColorInterface
      *
@@ -639,9 +566,7 @@ final class Image extends AbstractImage
         return $this->palette->color(
             array_map(function ($color) use ($pixel, $colorMapping) {
                 if (!isset($colorMapping[$color])) {
-                    throw new InvalidArgumentException(
-                        'Color %s is not mapped in Imagick'
-                    );
+                    throw new InvalidArgumentException(sprintf('Color %s is not mapped in Gmagick', $color));
                 }
 
                 return $pixel->getcolorvalue($colorMapping[$color]) * 255;
@@ -685,10 +610,7 @@ final class Image extends AbstractImage
     public function usePalette(PaletteInterface $palette)
     {
         if (!isset(static::$colorspaceMapping[$palette->name()])) {
-            throw new InvalidArgumentException(sprintf(
-                'The palette %s is not supported by Gmagick driver',
-                $palette->name()
-            ));
+            throw new InvalidArgumentException(sprintf('The palette %s is not supported by Gmagick driver',$palette->name()));
         }
 
         if ($this->palette->name() === $palette->name()) {
@@ -733,9 +655,7 @@ final class Image extends AbstractImage
         try {
             $this->gmagick->profileimage('ICM', $profile->data());
         } catch (\GmagickException $e) {
-            throw new RuntimeException(sprintf(
-                'Unable to add profile %s to image', $profile->name()
-            ), $e->getCode(), $e);
+            throw new RuntimeException(sprintf('Unable to add profile %s to image', $profile->name()), $e->getCode(), $e);
         }
 
         return $this;
@@ -755,9 +675,7 @@ final class Image extends AbstractImage
             try {
                 $this->gmagick = $this->gmagick->flattenImages();
             } catch (\GmagickException $e) {
-                throw new RuntimeException(
-                    'Flatten operation failed', $e->getCode(), $e
-                );
+                throw new RuntimeException('Flatten operation failed', $e->getCode(), $e);
             }
         }
     }
@@ -767,7 +685,9 @@ final class Image extends AbstractImage
      *
      * @param ColorInterface $color
      *
-     * @return string
+     * @return \GmagickPixel
+     *
+     * @throws InvalidArgumentException
      */
     private function getColor(ColorInterface $color)
     {
@@ -776,11 +696,7 @@ final class Image extends AbstractImage
         }
 
         $pixel = new \GmagickPixel((string) $color);
-
-        $pixel->setColorValue(
-            \Gmagick::COLOR_OPACITY,
-            number_format(abs(round($color->getAlpha() / 100, 1)), 1)
-        );
+        $pixel->setColorValue(\Gmagick::COLOR_OPACITY, number_format(abs(round($color->getAlpha() / 100, 1)), 1));
 
         return $pixel;
     }
@@ -794,7 +710,7 @@ final class Image extends AbstractImage
      *
      * @return string mime-type
      *
-     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     private function getMimeType($format)
     {
@@ -808,10 +724,7 @@ final class Image extends AbstractImage
         );
 
         if (!isset($mimeTypes[$format])) {
-            throw new InvalidArgumentException(sprintf(
-                'Unsupported format given. Only %s are supported, %s given',
-                implode(", ", array_keys($mimeTypes)), $format
-            ));
+            throw new InvalidArgumentException(sprintf('Unsupported format given. Only %s are supported, %s given', implode(", ", array_keys($mimeTypes)), $format));
         }
 
         return $mimeTypes[$format];
@@ -827,10 +740,7 @@ final class Image extends AbstractImage
     private function setColorspace(PaletteInterface $palette)
     {
         if (!isset(static::$colorspaceMapping[$palette->name()])) {
-            throw new InvalidArgumentException(sprintf(
-                'The palette %s is not supported by Gmagick driver',
-                $palette->name()
-            ));
+            throw new InvalidArgumentException(sprintf('The palette %s is not supported by Gmagick driver', $palette->name()));
         }
 
         $this->gmagick->setimagecolorspace(static::$colorspaceMapping[$palette->name()]);

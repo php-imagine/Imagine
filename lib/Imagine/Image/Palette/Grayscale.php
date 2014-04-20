@@ -52,9 +52,7 @@ class Grayscale implements PaletteInterface
      */
     public function pixelDefinition()
     {
-        return array(
-            ColorInterface::COLOR_GRAY,
-        );
+        return array(ColorInterface::COLOR_GRAY);
     }
 
     /**
@@ -81,9 +79,7 @@ class Grayscale implements PaletteInterface
     public function profile()
     {
         if (!$this->profile) {
-            $this->profile = Profile::fromPath(
-                __DIR__ . '/../../resources/colormanagement.org/ISOcoated_v2_grey1c_bas.ICC'
-            );
+            $this->profile = Profile::fromPath(__DIR__ . '/../../resources/colormanagement.org/ISOcoated_v2_grey1c_bas.ICC');
         }
 
         return $this->profile;

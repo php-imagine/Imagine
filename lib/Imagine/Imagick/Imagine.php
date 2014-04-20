@@ -11,6 +11,7 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Exception\NotSupportedException;
 use Imagine\Image\AbstractImagine;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Metadata\MetadataBag;
@@ -39,7 +40,6 @@ final class Imagine extends AbstractImagine
         $v = $imagick->getVersion();
         list($version, $year, $month, $day, $q, $website) = sscanf($v['versionString'], 'ImageMagick %s %04d-%02d-%02d %s %s');
 
-        // imagick.setiteratorindex.php
         if (version_compare('6.2.9', $version) > 0) {
             throw new RuntimeException('Imagick version 6.2.9 or higher is required');
         }
@@ -53,9 +53,7 @@ final class Imagine extends AbstractImagine
         $handle = @fopen($path, 'r');
 
         if (false === $handle) {
-            throw new InvalidArgumentException(sprintf(
-                'File %s doesn\'t exist', $path
-            ));
+            throw new InvalidArgumentException(sprintf('File %s doesn\'t exist', $path));
         }
 
         try {
@@ -82,10 +80,7 @@ final class Imagine extends AbstractImagine
 
         try {
             $pixel = new \ImagickPixel((string) $color);
-            $pixel->setColorValue(
-                \Imagick::COLOR_OPACITY,
-                number_format(abs(round($color->getAlpha() / 100, 1)), 1)
-            );
+            $pixel->setColorValue(\Imagick::COLOR_OPACITY, number_format(abs(round($color->getAlpha() / 100, 1)), 1));
 
             $imagick = new \Imagick();
             $imagick->newImage($width, $height, $pixel);
@@ -97,9 +92,7 @@ final class Imagine extends AbstractImagine
 
             return new Image($imagick, $palette, new MetadataBag());
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Could not create empty image', $e->getCode(), $e
-            );
+            throw new RuntimeException('Could not create empty image', $e->getCode(), $e);
         }
     }
 
@@ -116,9 +109,7 @@ final class Imagine extends AbstractImagine
 
             return new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readData($string));
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Could not load image from string', $e->getCode(), $e
-            );
+            throw new RuntimeException('Could not load image from string', $e->getCode(), $e);
         }
     }
 
@@ -135,9 +126,7 @@ final class Imagine extends AbstractImagine
             $imagick = new \Imagick();
             $imagick->readImageFile($resource);
         } catch (\ImagickException $e) {
-            throw new RuntimeException(
-                'Could not read image from resource', $e->getCode(), $e
-            );
+            throw new RuntimeException('Could not read image from resource', $e->getCode(), $e);
         }
 
         return new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readStream($resource));
@@ -157,18 +146,12 @@ final class Imagine extends AbstractImagine
             case \Imagick::COLORSPACE_RGB:
             case \Imagick::COLORSPACE_SRGB:
                 return new RGB();
-                break;
             case \Imagick::COLORSPACE_CMYK:
                 return new CMYK();
-                break;
             case \Imagick::COLORSPACE_GRAY:
                 return new Grayscale();
-                break;
             default:
-                throw new RuntimeException(
-                    'Only RGB and CMYK colorspace are curently supported'
-                );
-                break;
+                throw new NotSupportedException('Only RGB and CMYK colorspace are curently supported');
         }
     }
 }

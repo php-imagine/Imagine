@@ -62,9 +62,7 @@ final class RGB implements ColorInterface
             case ColorInterface::COLOR_BLUE:
                 return $this->getBlue();
             default:
-                throw new InvalidArgumentException(sprintf(
-                    'Color component %s is not valid', $component
-                ));
+                throw new InvalidArgumentException(sprintf('Color component %s is not valid', $component));
         }
     }
 
@@ -119,9 +117,7 @@ final class RGB implements ColorInterface
      */
     public function dissolve($alpha)
     {
-        return $this->palette->color(
-            array($this->r, $this->g, $this->b), $this->alpha + $alpha
-        );
+        return $this->palette->color(array($this->r, $this->g, $this->b), $this->alpha + $alpha);
     }
 
     /**
@@ -192,9 +188,7 @@ final class RGB implements ColorInterface
     private function setAlpha($alpha)
     {
         if (!is_int($alpha) || $alpha < 0 || $alpha > 100) {
-            throw new InvalidArgumentException(sprintf(
-                'Alpha must be an integer between 0 and 100, %s given', $alpha
-            ));
+            throw new InvalidArgumentException(sprintf('Alpha must be an integer between 0 and 100, %s given', $alpha));
         }
 
         $this->alpha = $alpha;
@@ -212,11 +206,7 @@ final class RGB implements ColorInterface
     private function setColor(array $color)
     {
         if (count($color) !== 3) {
-            throw new InvalidArgumentException(
-                'Color argument must look like array(R, G, B), ' .
-                'where R, G, B are the integer values between 0 and 255 for ' .
-                'red, green and blue color indexes accordingly'
-            );
+            throw new InvalidArgumentException('Color argument must look like array(R, G, B), where R, G, B are the integer values between 0 and 255 for red, green and blue color indexes accordingly');
         }
 
         list($this->r, $this->g, $this->b) = array_values($color);

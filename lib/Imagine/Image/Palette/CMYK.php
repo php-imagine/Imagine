@@ -64,9 +64,7 @@ class CMYK implements PaletteInterface
     public function color($color, $alpha = null)
     {
         if (null !== $alpha) {
-            throw new InvalidArgumentException(
-                'CMYK palette does not support alpha'
-            );
+            throw new InvalidArgumentException('CMYK palette does not support alpha');
         }
 
         $color = $this->parser->parseToCMYK($color);
@@ -112,9 +110,7 @@ class CMYK implements PaletteInterface
     public function profile()
     {
         if (!$this->profile) {
-            $this->profile = Profile::fromPath(
-                __DIR__ . '/../../resources/Adobe/CMYK/USWebUncoated.icc'
-            );
+            $this->profile = Profile::fromPath(__DIR__ . '/../../resources/Adobe/CMYK/USWebUncoated.icc');
         }
 
         return $this->profile;

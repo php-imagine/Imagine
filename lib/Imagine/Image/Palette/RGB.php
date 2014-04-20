@@ -83,9 +83,7 @@ class RGB implements PaletteInterface
     public function profile()
     {
         if (!$this->profile) {
-            $this->profile = Profile::fromPath(
-                __DIR__ . '/../../resources/color.org/sRGB_IEC61966-2-1_black_scaled.icc'
-            );
+            $this->profile = Profile::fromPath(__DIR__ . '/../../resources/color.org/sRGB_IEC61966-2-1_black_scaled.icc');
         }
 
         return $this->profile;

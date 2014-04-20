@@ -88,11 +88,7 @@ class ColorParser
         $color = array_unique($this->parse($color));
 
         if (1 !== count($color)) {
-            throw new InvalidArgumentException(
-                'The provided color has different values of red, green and ' .
-                'blue components. Grayscale colors must have the same values ' .
-                'for these.'
-            );
+            throw new InvalidArgumentException('The provided color has different values of red, green and blue components. Grayscale colors must have the same values for these.');
         }
 
         return $color;
@@ -110,22 +106,14 @@ class ColorParser
     private function parse($color)
     {
         if (!is_string($color) && !is_array($color) && !is_int($color)) {
-            throw new InvalidArgumentException(sprintf(
-                'Color must be specified as a hexadecimal string, array ' .
-                'or integer, %s given', gettype($color)
-            ));
+            throw new InvalidArgumentException(sprintf('Color must be specified as a hexadecimal string, array or integer, %s given', gettype($color)));
         }
 
         if (is_array($color)) {
             if (3 === count($color) || 4 === count($color)) {
                 return array_values($color);
             }
-            throw new InvalidArgumentException(
-                'Color argument if array, must look like array(R, G, B), ' .
-                'or array(C, M, Y, K) where R, G, B are the integer values ' .
-                'between 0 and 255 for red, green and blue or cyan, magenta, '.
-                'yellow and black color indexes accordingly'
-            );
+            throw new InvalidArgumentException('Color argument if array, must look like array(R, G, B), or array(C, M, Y, K) where R, G, B are the integer values between 0 and 255 for red, green and blue or cyan, magenta, yellow and black color indexes accordingly');
         }
 
         if (is_string($color)) {
@@ -137,9 +125,7 @@ class ColorParser
                 }, explode(',', $substrColor));
 
                 if (count($components) !== 4) {
-                    throw new InvalidArgumentException(sprintf(
-                        'Unable to parse color %s', $color
-                    ));
+                    throw new InvalidArgumentException(sprintf('Unable to parse color %s', $color));
                 }
 
                 return $components;
@@ -147,16 +133,11 @@ class ColorParser
                 $color = ltrim($color, '#');
 
                 if (strlen($color) !== 3 && strlen($color) !== 6) {
-                    throw new InvalidArgumentException(sprintf(
-                        'Color must be a hex value in regular (6 characters) or ' .
-                        'short (3 characters) notation, "%s" given', $color
-                    ));
+                    throw new InvalidArgumentException(sprintf('Color must be a hex value in regular (6 characters) or short (3 characters) notation, "%s" given', $color));
                 }
 
                 if (strlen($color) === 3) {
-                    $color = $color[0] . $color[0] .
-                        $color[1] . $color[1] .
-                        $color[2] . $color[2];
+                    $color = $color[0] . $color[0] . $color[1] . $color[1] . $color[2] . $color[2];
                 }
 
                 $color = array_map('hexdec', str_split($color, 2));
@@ -164,11 +145,7 @@ class ColorParser
         }
 
         if (is_int($color)) {
-            $color = array(
-                255 & ($color >> 16),
-                255 & ($color >> 8),
-                255 & $color
-            );
+            $color = array(255 & ($color >> 16), 255 & ($color >> 8), 255 & $color);
         }
 
         return $color;
