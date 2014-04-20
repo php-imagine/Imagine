@@ -1,5 +1,4 @@
 <?php
-namespace Imagine\Image\Metadata;
 
 /*
  * This file is part of the Imagine package.
@@ -9,6 +8,8 @@ namespace Imagine\Image\Metadata;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+namespace Imagine\Image\Metadata;
 
 use Imagine\Exception\InvalidArgumentException;
 

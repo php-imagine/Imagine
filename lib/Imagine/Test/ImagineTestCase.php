@@ -15,14 +15,16 @@ use Imagine\Test\Constraint\IsImageEqual;
 
 class ImagineTestCase extends \PHPUnit_Framework_TestCase
 {
+    const HTTP_IMAGE = 'http://imagine.readthedocs.org/en/latest/_static/logo.png';
+
     /**
      * Asserts that two images are equal using color histogram comparison method
      *
-     * @param Imagine\Image\ImageInterface $expected
-     * @param Imagine\Image\ImageInterface $actual
-     * @param string                       $message
-     * @param float                        $delta
-     * @param integer                      $buckets
+     * @param ImageInterface $expected
+     * @param ImageInterface $actual
+     * @param string         $message
+     * @param float          $delta
+     * @param integer        $buckets
      */
     public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, $buckets = 4)
     {

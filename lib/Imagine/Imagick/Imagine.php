@@ -56,11 +56,12 @@ final class Imagine extends AbstractImagine
             throw new InvalidArgumentException(sprintf('File %s doesn\'t exist', $path));
         }
 
+        fclose($handle);
+
         try {
-            $image = $this->read($handle);
-            $image->getImagick()->setImageFilename($path);
+            $imagick = new \Imagick($path);
+            $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readFile($path));
         } catch (\Exception $e) {
-            fclose($handle);
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
         }
 

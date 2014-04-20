@@ -43,12 +43,13 @@ class Imagine extends AbstractImagine
      */
     public function open($path)
     {
-        if (!is_file($path)) {
+        $handle = @fopen($path, 'r');
+
+        if (false === $handle) {
             throw new InvalidArgumentException(sprintf('File %s doesn\'t exist', $path));
         }
-        if (!is_readable($path)) {
-            throw new InvalidArgumentException(sprintf('File %s is not readable', $path));
-        }
+
+        fclose($handle);
 
         try {
             $gmagick = new \Gmagick($path);
@@ -109,14 +110,7 @@ class Imagine extends AbstractImagine
      */
     public function load($string)
     {
-        try {
-            $gmagick = new \Gmagick();
-            $gmagick->readimageblob($string);
-        } catch (\GmagickException $e) {
-            throw new RuntimeException('Could not load image from string', $e->getCode(), $e);
-        }
-
-        return new Image($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readData($string));
+        return $this->doLoad($string, $this->getMetadataReader()->readData($string));
     }
 
     /**
@@ -134,7 +128,7 @@ class Imagine extends AbstractImagine
             throw new InvalidArgumentException('Couldn\'t read given resource');
         }
 
-        return $this->load($content);
+        return $this->doLoad($content, $this->getMetadataReader()->readStream($resource));
     }
 
     /**
@@ -161,5 +155,19 @@ class Imagine extends AbstractImagine
             default:
                 throw new NotSupportedException('Only RGB and CMYK colorspace are curently supported');
         }
+    }
+
+    private function doLoad($content, MetadataBag $metadata)
+    {
+        try {
+            $gmagick = new \Gmagick();
+            $gmagick->readimageblob($content);
+        } catch (\GmagickException $e) {
+            throw new RuntimeException(
+                'Could not load image from string', $e->getCode(), $e
+            );
+        }
+
+        return new Image($gmagick, $this->createPalette($gmagick), $metadata);
     }
 }
