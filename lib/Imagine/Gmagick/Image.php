@@ -695,10 +695,7 @@ final class Image extends AbstractImage
             throw new InvalidArgumentException('Gmagick doesn\'t support transparency');
         }
 
-        $pixel = new \GmagickPixel((string) $color);
-        $pixel->setColorValue(\Gmagick::COLOR_OPACITY, number_format(abs(round($color->getAlpha() / 100, 1)), 1));
-
-        return $pixel;
+        return new \GmagickPixel((string) $color);
     }
 
     /**

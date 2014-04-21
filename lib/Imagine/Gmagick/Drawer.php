@@ -341,7 +341,9 @@ final class Drawer implements DrawerInterface
      *
      * @param ColorInterface $color
      *
-     * @return string
+     * @return \GmagickPixel
+     *
+     * @throws InvalidArgumentException In case a non-opaque color is passed
      */
     private function getColor(ColorInterface $color)
     {
@@ -349,10 +351,6 @@ final class Drawer implements DrawerInterface
             throw new InvalidArgumentException('Gmagick doesn\'t support transparency');
         }
 
-        $pixel = new \GmagickPixel((string) $color);
-        $pixel->setColorValue(\Gmagick::COLOR_OPACITY, number_format(abs(round($color->getAlpha() / 100, 1)), 1));
-
-        return $pixel;
+        return new \GmagickPixel((string) $color);
     }
-
 }

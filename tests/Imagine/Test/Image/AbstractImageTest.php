@@ -19,6 +19,7 @@ use Imagine\Image\Point\Center;
 use Imagine\Test\ImagineTestCase;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Profile;
+use Imagine\Image\ImagineInterface;
 
 abstract class AbstractImageTest extends ImagineTestCase
 {
@@ -553,6 +554,33 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->getColorAt(new Point(0, 0));
 
         $this->assertEquals('#0082a2', (string) $color);
+    }
+
+    public function testGetColorAt()
+    {
+        $color = $this
+            ->getImagine()
+            ->open('tests/Imagine/Fixtures/65-percent-black.png')
+            ->getColorAt(new Point(0, 0));
+
+        $this->assertEquals('#000000', (string) $color);
+        $this->assertFalse($color->isOpaque());
+        $this->assertEquals('65', $color->getAlpha());
+    }
+
+    public function testGetColorAtOpaque()
+    {
+        $color = $this
+            ->getImagine()
+            ->open('tests/Imagine/Fixtures/100-percent-black.png')
+            ->getColorAt(new Point(0, 0));
+
+        $this->assertEquals('#000000', (string) $color);
+        $this->assertTrue($color->isOpaque());
+
+        $this->assertSame(0, $color->getRed());
+        $this->assertSame(0, $color->getGreen());
+        $this->assertSame(0, $color->getBlue());
     }
 
     public function testStripGBRImageHasGoodColors()

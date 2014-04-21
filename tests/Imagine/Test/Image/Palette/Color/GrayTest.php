@@ -20,9 +20,9 @@ class GrayTest extends AbstractColorTest
     public function provideOpaqueColors()
     {
         return array(
-            array(new Gray(new Grayscale(), array(12), 0)),
-            array(new Gray(new Grayscale(), array(0), 0)),
-            array(new Gray(new Grayscale(), array(255), 0)),
+            array(new Gray(new Grayscale(), array(12), 100)),
+            array(new Gray(new Grayscale(), array(0), 100)),
+            array(new Gray(new Grayscale(), array(255), 100)),
         );
     }
     public function provideNotOpaqueColors()
@@ -31,7 +31,7 @@ class GrayTest extends AbstractColorTest
             array($this->getColor()),
             array(new Gray(new Grayscale(), array(12), 23)),
             array(new Gray(new Grayscale(), array(0), 45)),
-            array(new Gray(new Grayscale(), array(255), 100)),
+            array(new Gray(new Grayscale(), array(255), 0)),
         );
     }
 

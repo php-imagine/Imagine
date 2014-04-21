@@ -95,7 +95,7 @@ class RGB implements PaletteInterface
     public function color($color, $alpha = null)
     {
         if (null === $alpha) {
-            $alpha = 0;
+            $alpha = 100;
         }
 
         $color = $this->parser->parseToRGB($color);
