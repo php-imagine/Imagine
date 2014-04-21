@@ -189,6 +189,7 @@ The following example opens a Jpg image and saves it with it with 150 dpi horizo
        'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
        'resolution-x' => 150,
        'resolution-y' => 120,
+       'resampling-filter' => ImageInterface::FILTER_LANCZOS,
    );
 
    $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', $options);

@@ -12,6 +12,7 @@
 namespace Imagine\Test\Gmagick;
 
 use Imagine\Gmagick\Imagine;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
 use Imagine\Test\Image\AbstractImageTest;
 
@@ -80,5 +81,10 @@ class ImageTest extends AbstractImageTest
     protected function supportMultipleLayers()
     {
         return true;
+    }
+
+    protected function getImageResolution(ImageInterface $image)
+    {
+        return $image->getGmagick()->getimageresolution();
     }
 }

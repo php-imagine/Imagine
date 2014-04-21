@@ -106,4 +106,16 @@ class ImageTest extends AbstractImageTest
 
         parent::testRotateWithNoBackgroundColor();
     }
+
+    /**
+     * @dataProvider provideVariousSources
+     */
+    public function testResolutionOnSave($source)
+    {
+        $this->markTestSkipped('Gd only supports 72 dpi resolution');
+    }
+
+    protected function getImageResolution(ImageInterface $image)
+    {
+    }
 }
