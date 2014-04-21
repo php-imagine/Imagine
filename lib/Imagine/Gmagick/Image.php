@@ -466,8 +466,11 @@ final class Image extends AbstractImage
             $draw = new \GmagickDraw();
             $size = $this->getSize();
 
-            for ($x = 0; $x <= $size->getWidth(); $x++) {
-                for ($y = 0; $y <= $size->getHeight(); $y++) {
+            $w = $size->getWidth();
+            $h = $size->getHeight();
+
+            for ($x = 0; $x <= $w; $x++) {
+                for ($y = 0; $y <= $h; $y++) {
                     $pixel = $this->getColor($fill->getColor(new Point($x, $y)));
 
                     $draw->setfillcolor($pixel);
