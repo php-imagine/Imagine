@@ -11,8 +11,46 @@
 
 namespace Imagine\Image\Metadata;
 
+use Imagine\Exception\InvalidArgumentException;
+
 abstract class AbstractMetadataReader implements MetadataReaderInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function readFile($file)
+    {
+        if (stream_is_local($file)) {
+            if (!is_file($file)) {
+                throw new InvalidArgumentException(sprintf('File %s does not exist.', $file));
+            }
+
+            return new MetadataBag(array_merge(array('filepath' => realpath($file), 'uri' => $file), $this->extractFromFile($file)));
+        }
+
+        return new MetadataBag(array_merge(array('uri' => $file)), $this->extractFromFile($file));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function readData($data)
+    {
+        return new MetadataBag($this->extractFromData($data));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function readStream($resource)
+    {
+        if (!is_resource($resource)) {
+            throw new InvalidArgumentException('Invalid resource provided.');
+        }
+
+        return new MetadataBag(array_merge($this->getStreamMetadata($resource), $this->extractFromStream($resource)));
+    }
+
     /**
      * Gets the URI from a stream resource
      *
@@ -20,7 +58,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
      *
      * @return string|null The URI f ava
      */
-    protected function getStreamMetadata($resource)
+    private function getStreamMetadata($resource)
     {
         $metadata = array();
 
@@ -33,4 +71,31 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
 
         return $metadata;
     }
+
+    /**
+     * Extracts metadata from a file
+     *
+     * @param $file
+     *
+     * @return array An associative array of metadata
+     */
+    abstract protected function extractFromFile($file);
+
+    /**
+     * Extracts metadata from raw data
+     *
+     * @param $data
+     *
+     * @return array An associative array of metadata
+     */
+    abstract protected function extractFromData($data);
+
+    /**
+     * Extracts metadata from a stream
+     *
+     * @param $resource
+     *
+     * @return array An associative array of metadata
+     */
+    abstract protected function extractFromStream($resource);
 }

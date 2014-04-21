@@ -11,8 +11,6 @@
 
 namespace Imagine\Image\Metadata;
 
-use Imagine\Exception\InvalidArgumentException;
-
 /**
  * Default metadata reader
  */
@@ -21,36 +19,24 @@ class DefaultMetadataReader extends AbstractMetadataReader
     /**
      * {@inheritdoc}
      */
-    public function readFile($file)
+    protected function extractFromFile($file)
     {
-        if (stream_is_local($file)) {
-            if (!is_file($file)) {
-                throw new InvalidArgumentException(sprintf('File %s does not exist.', $file));
-            }
-
-            return new MetadataBag(array('filepath' => realpath($file), 'uri' => $file));
-        }
-
-        return new MetadataBag(array('uri' => $file));
+        return array();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function readData($data)
+    protected function extractFromData($data)
     {
-        return new MetadataBag();
+        return array();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function readStream($resource)
+    protected function extractFromStream($resource)
     {
-        if (!is_resource($resource)) {
-            throw new InvalidArgumentException('Invalid resource provided.');
-        }
-
-        return new MetadataBag($this->getStreamMetadata($resource));
+        return array();
     }
 }

@@ -63,4 +63,14 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate
     {
         return array_key_exists($offset, $this->data) ? $this->data[$offset] : null;
     }
+
+    /**
+     * Returns metadata as an array
+     *
+     * @return array An associative array
+     */
+    public function toArray()
+    {
+        return $this->data;
+    }
 }

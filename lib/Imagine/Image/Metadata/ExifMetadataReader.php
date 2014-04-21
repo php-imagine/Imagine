@@ -29,54 +29,39 @@ class ExifMetadataReader extends AbstractMetadataReader
     /**
      * {@inheritdoc}
      */
-    public function readFile($file)
+    protected function extractFromFile($file)
     {
-        if (stream_is_local($file)) {
-            if (!is_file($file)) {
-                throw new InvalidArgumentException(sprintf('File %s does not exist.', $file));
-            }
-
-            return $this->extract($file, array('filepath' => realpath($file), 'uri' => $file));
-        }
-
         if (false === $data = @file_get_contents($file)) {
             throw new InvalidArgumentException(sprintf('File %s is not readable.', $file));
         }
 
-        return $this->doReadData($data, array('uri' => $file));
+        return $this->doReadData($data);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function readData($data)
+    protected function extractFromData($data)
     {
-        return $this->doReadData($data, array());
+        return $this->doReadData($data);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function readStream($resource)
+    protected function extractFromStream($resource)
     {
-        if (!is_resource($resource)) {
-            throw new InvalidArgumentException('Invalid resource provided.');
-        }
-
-        $metadata = $this->getStreamMetadata($resource);
-
-        return $this->doReadData(stream_get_contents($resource), $metadata);
+        return $this->doReadData(stream_get_contents($resource));
     }
 
     /**
      * Extracts metadata from raw data, merges with existing metadata
      *
      * @param string $data
-     * @param array  $metadata
      *
      * @return MetadataBag
      */
-    private function doReadData($data, array $metadata)
+    private function doReadData($data)
     {
         if (substr($data, 0, 2) === 'II') {
             $mime = 'image/tiff';
@@ -84,21 +69,20 @@ class ExifMetadataReader extends AbstractMetadataReader
             $mime = 'image/jpeg';
         }
 
-        return $this->extract('data://' . $mime . ';base64,' . base64_encode($data), $metadata);
+        return $this->extract('data://' . $mime . ';base64,' . base64_encode($data));
     }
 
     /**
      * Performs the exif data extraction given a path or data-URI representation.
      *
      * @param string $path The path to the file or the data-URI representation.
-     * @param array  $data An array of extra-metadata to consider
      *
      * @return MetadataBag
      */
-    private function extract($path, array $data = array())
+    private function extract($path)
     {
         if (false === $exifData = @exif_read_data($path, null, true, false)) {
-            return new MetadataBag($data);
+            return array();
         }
 
         $metadata = array();
@@ -113,6 +97,6 @@ class ExifMetadataReader extends AbstractMetadataReader
             }
         }
 
-        return new MetadataBag(array_merge($data, $metadata));
+        return $metadata;
     }
 }
