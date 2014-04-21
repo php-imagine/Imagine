@@ -44,7 +44,7 @@ method.
 Default Metadata Reader
 +++++++++++++++++++++++
 
-The default metadata reader is a basic reader that stores original informations
+The default metadata reader is a basic reader that stores original information
 about the resource.
 
 .. code-block:: php
@@ -74,8 +74,8 @@ The previous code might produce such output:
 Exif Metadata Reader
 ++++++++++++++++++++
 
-Exif Metadata Reader give the same informations as the default metadata reader
-and adds informations provided by the Exif extension.
+Exif Metadata Reader gives the same base information as the default metadata reader
+and adds exif data provided by the Exif extension.
 
 .. note::
 
@@ -94,7 +94,7 @@ and adds informations provided by the Exif extension.
 
     var_dump($metadata->toArray());
 
-The previous code might produce such output:
+The previous code should produce this output:
 
 .. code-block:: none
 
@@ -180,8 +180,8 @@ Any metadata reader must implement ``Imagine\Image\Metadata\MetadataReaderInterf
 However it's easier to extend ``Imagine\Image\Metadata\AbstractMetadataReader``
 to avoid missing things and focus on the purpose of the reader.
 
-Here's an example of an metadata reader that retrieve posix access information about
-an original file:
+Here's an example of a metadata reader that retrieves posix access information from
+a file:
 
 .. code-block:: php
 
