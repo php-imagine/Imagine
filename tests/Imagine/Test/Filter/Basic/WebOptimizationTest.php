@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Imagine\Filter\Basic;
+namespace Imagine\Test\Filter\Basic;
 
+use Imagine\Filter\Basic\WebOptimization;
 use Imagine\Image\ImageInterface;
 use Imagine\Test\Filter\FilterTestCase;
 
