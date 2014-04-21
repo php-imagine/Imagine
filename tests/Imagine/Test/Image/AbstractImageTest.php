@@ -647,6 +647,36 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertNotSame($originalMetadata, $clone->metadata(), 'The image\'s metadata is the same after cloning the image, but must be a new instance.');
     }
 
+    /**
+     * @dataProvider provideVariousSources
+     */
+    public function testResolutionOnSave($source)
+    {
+        $file = __DIR__ . '/test-resolution.jpg';
+
+        $image = $this->getImagine()->open($source);
+        $image->save($file, array(
+            'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
+            'resolution-x' => 150,
+            'resolution-y' => 120,
+            'resampling-filter' => ImageInterface::FILTER_LANCZOS,
+        ));
+
+        $saved = $this->getImagine()->open($file);
+        $this->assertEquals(array('x' => 150, 'y' => 120), $this->getImageResolution($saved));
+        unlink($file);
+    }
+
+    public function provideVariousSources()
+    {
+        return array(
+            array(__DIR__.'/../../Fixtures/example.svg'),
+            array(__DIR__.'/../../Fixtures/100-percent-black.png'),
+        );
+    }
+
+    abstract protected function getImageResolution(ImageInterface $image);
+
     private function getMonoLayeredImage()
     {
         return $this->getImagine()->open('tests/Imagine/Fixtures/google.png');

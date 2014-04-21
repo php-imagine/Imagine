@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Imagick\Imagine;
 use Imagine\Imagick\Image;
@@ -97,5 +98,10 @@ class ImageTest extends AbstractImageTest
     protected function supportMultipleLayers()
     {
         return true;
+    }
+
+    protected function getImageResolution(ImageInterface $image)
+    {
+        return $image->getImagick()->getImageResolution();
     }
 }
