@@ -554,6 +554,8 @@ final class Image extends AbstractImage
             ColorInterface::COLOR_MAGENTA => \Gmagick::COLOR_MAGENTA,
             ColorInterface::COLOR_YELLOW  => \Gmagick::COLOR_YELLOW,
             ColorInterface::COLOR_KEYLINE => \Gmagick::COLOR_BLACK,
+            // There is no gray component in \Gmagick, let's use one of the RGB comp
+            ColorInterface::COLOR_GRAY    => \Gmagick::COLOR_RED,
         );
 
         if ($this->palette->supportsAlpha()) {
@@ -566,16 +568,17 @@ final class Image extends AbstractImage
             $alpha = null;
         }
 
-        return $this->palette->color(
-            array_map(function ($color) use ($pixel, $colorMapping) {
-                if (!isset($colorMapping[$color])) {
-                    throw new InvalidArgumentException(sprintf('Color %s is not mapped in Gmagick', $color));
-                }
+        return $this->palette->color(array_map(function ($color) use ($pixel, $colorMapping) {
+            if (!isset($colorMapping[$color])) {
+                throw new InvalidArgumentException(sprintf('Color %s is not mapped in Gmagick', $color));
+            }
+            $multiplier = 100;
+            if ($this->palette->name() === PaletteInterface::PALETTE_RGB) {
+                $multiplier = 255;
+            }
 
-                return $pixel->getcolorvalue($colorMapping[$color]) * 255;
-            }, $this->palette->pixelDefinition()),
-            $alpha
-        );
+            return $pixel->getcolorvalue($colorMapping[$color]) * $multiplier;
+        }, $this->palette->pixelDefinition()), $alpha);
     }
 
     /**
