@@ -9,8 +9,9 @@ before_script:
   - composer install --prefer-source
   - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
   - sudo apt-get install -y libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config
-  - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
-  - sh -c " if [ '$IMAGINE_DRIVER' = 'imagick' ]; then
+  - php --version
+  - (php --version | grep -i HipHop > /dev/null) || echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+  - sh -e -c " if [ '$IMAGINE_DRIVER' = 'imagick' ] && ! (php --version | grep -i HipHop > /dev/null); then
               wget http://www.imagemagick.org/download/legacy/ImageMagick-6.8.5-10.tar.gz;
               tar xzf ImageMagick-6.8.5-10.tar.gz;
               cd ImageMagick-6.8.5-10;
@@ -30,7 +31,7 @@ before_script:
               echo \"extension=imagick.so\" >> `php --ini | grep \"Loaded Configuration\" | sed -e \"s|.*:\s*||\"`;
               php --ri imagick;
             fi"
-  - sh -c " if [ '$IMAGINE_DRIVER' = 'gmagick' ]; then
+  - sh -e -c " if [ '$IMAGINE_DRIVER' = 'gmagick' ] && ! (php --version | grep -i HipHop > /dev/null); then
               sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev;
               wget http://pecl.php.net/get/gmagick-1.1.0RC3.tgz;
               tar -xzf gmagick-1.1.0RC3.tgz;
@@ -48,3 +49,17 @@ php:
   - 5.3
   - 5.4
   - 5.5
+  - 5.6
+  - hhvm
+  - hhvm-nightly
+
+
+# run build against PHP 5.6 and hhvm but allow them to fail
+# http://docs.travis-ci.com/user/build-configuration/#Rows-That-are-Allowed-To-Fail
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: 5.6
+    - php: hhvm
+    - php: hhvm-nightly
+
