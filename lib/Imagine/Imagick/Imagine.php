@@ -87,6 +87,11 @@ final class Imagine extends AbstractImagine
             $imagick->newImage($width, $height, $pixel);
             $imagick->setImageMatte(true);
             $imagick->setImageBackgroundColor($pixel);
+            $v = $imagick->getVersion();
+            list($version) = sscanf($v['versionString'], 'ImageMagick %s %04d-%02d-%02d %s %s');
+            if (version_compare('6.3.1', $version) < 0) {
+                $imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
+            }
 
             $pixel->clear();
             $pixel->destroy();
