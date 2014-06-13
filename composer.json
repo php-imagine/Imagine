@@ -34,5 +34,10 @@
     "psr-0": {
       "Imagine": "lib/"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "0.5-dev"
+    }
   }
 }
