@@ -73,6 +73,11 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('Gmagick does not support Gray colorspace, because of the lack omg image type support');
     }
 
+    public function testGetColorAtCMYK()
+    {
+        $this->markTestSkipped('Gmagick fails to read CMYK colors properly, see https://bugs.php.net/bug.php?id=67435');
+    }
+
     protected function getImagine()
     {
         return new Imagine();

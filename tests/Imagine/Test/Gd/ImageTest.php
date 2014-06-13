@@ -77,6 +77,11 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('GD driver does not recognize CMYK images properly');
     }
 
+    public function testGetColorAtCMYK()
+    {
+        $this->markTestSkipped('GD driver does not recognize CMYK images properly');
+    }
+
     public function testChangeColorSpaceAndStripImage()
     {
         $this->markTestSkipped('GD driver does not support ICC profiles');

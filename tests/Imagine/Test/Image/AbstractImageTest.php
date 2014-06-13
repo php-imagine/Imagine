@@ -568,6 +568,28 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals('65', $color->getAlpha());
     }
 
+    public function testGetColorAtGrayScale()
+    {
+        $color = $this
+            ->getImagine()
+            ->open('tests/Imagine/Fixtures/pixel-grayscale.jpg')
+            ->getColorAt(new Point(0, 0));
+
+        $this->assertEquals('#4d4d4d', (string) $color);
+        $this->assertTrue($color->isOpaque());
+    }
+
+    public function testGetColorAtCMYK()
+    {
+        $color = $this
+            ->getImagine()
+            ->open('tests/Imagine/Fixtures/pixel-CMYK.jpg')
+            ->getColorAt(new Point(0, 0));
+
+        $this->assertEquals('cmyk(98%, 0%, 30%, 23%)', (string) $color);
+        $this->assertTrue($color->isOpaque());
+    }
+
     public function testGetColorAtOpaque()
     {
         $color = $this
