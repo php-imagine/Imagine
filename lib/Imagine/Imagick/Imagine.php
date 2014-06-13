@@ -36,11 +36,7 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException('Imagick not installed');
         }
 
-        $imagick = new \Imagick();
-        $v = $imagick->getVersion();
-        list($version) = sscanf($v['versionString'], 'ImageMagick %s %04d-%02d-%02d %s %s');
-
-        if (version_compare('6.2.9', $version) > 0) {
+        if (version_compare('6.2.9', $this->getVersion(new \Imagick())) > 0) {
             throw new RuntimeException('ImageMagick version 6.2.9 or higher is required');
         }
     }
@@ -87,9 +83,8 @@ final class Imagine extends AbstractImagine
             $imagick->newImage($width, $height, $pixel);
             $imagick->setImageMatte(true);
             $imagick->setImageBackgroundColor($pixel);
-            $v = $imagick->getVersion();
-            list($version) = sscanf($v['versionString'], 'ImageMagick %s %04d-%02d-%02d %s %s');
-            if (version_compare('6.3.1', $version) < 0) {
+
+            if (version_compare('6.3.1', $this->getVersion($imagick)) < 0) {
                 $imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
             }
 
@@ -159,5 +154,20 @@ final class Imagine extends AbstractImagine
             default:
                 throw new NotSupportedException('Only RGB and CMYK colorspace are curently supported');
         }
+    }
+
+    /**
+     * Returns ImageMagick version
+     *
+     * @param \Imagick $imagick
+     *
+     * @return string
+     */
+    private function getVersion(\Imagick $imagick)
+    {
+        $v = $imagick->getVersion();
+        list($version) = sscanf($v['versionString'], 'ImageMagick %s %04d-%02d-%02d %s %s');
+
+        return $version;
     }
 }
