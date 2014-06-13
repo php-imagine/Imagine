@@ -23,6 +23,7 @@
   * Add NotSupportedException when a driver does not support an operation (@rouffj).
   * Add support for metadata.
   * Fix #158: GD alpha detection + Color::isOpaque are broken.
+  * Fix color extraction for non-RGB palettes.
 
 ### 0.5.0 (2013-07-10)
 
