@@ -83,6 +83,7 @@ final class Imagine extends AbstractImagine
      */
     public function open($path)
     {
+        $path = $this->checkPath($path);
         $data = @file_get_contents($path);
 
         if (false === $data) {

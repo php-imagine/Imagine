@@ -47,6 +47,24 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertEquals(realpath($source), $metadata['filepath']);
     }
 
+    public function testShouldOpenAnSplFileResource()
+    {
+        $source = 'tests/Imagine/Fixtures/google.png';
+        $resource = new \SplFileInfo($source);
+        $factory = $this->getImagine();
+        $image   = $factory->open($resource);
+        $size    = $image->getSize();
+
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertEquals(364, $size->getWidth());
+        $this->assertEquals(126, $size->getHeight());
+
+        $metadata = $image->metadata();
+
+        $this->assertEquals($source, $metadata['uri']);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+    }
+
     public function testShouldOpenAnHttpImage()
     {
         $factory = $this->getImagine();

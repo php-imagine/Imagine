@@ -42,4 +42,32 @@ abstract class AbstractImagine implements ImagineInterface
 
         return $this->metadataReader;
     }
+
+    /**
+     * Checks a path that could be used with ImagineInterface::open and returns
+     * a proper string.
+     *
+     * @param string|object $path
+     *
+     * @return string
+     *
+     * @throws InvalidArgumentException In case the given path is invalid.
+     */
+    protected function checkPath($path)
+    {
+        // provide compatibility with objects such as \SplFileInfo
+        if (is_object($path) && method_exists($path, '__toString')) {
+            $path = (string) $path;
+        }
+
+        $handle = @fopen($path, 'r');
+
+        if (false === $handle) {
+            throw new InvalidArgumentException(sprintf('File %s doesn\'t exist', $path));
+        }
+
+        fclose($handle);
+
+        return $path;
+    }
 }

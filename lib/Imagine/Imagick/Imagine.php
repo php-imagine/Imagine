@@ -46,13 +46,7 @@ final class Imagine extends AbstractImagine
      */
     public function open($path)
     {
-        $handle = @fopen($path, 'r');
-
-        if (false === $handle) {
-            throw new InvalidArgumentException(sprintf('File %s doesn\'t exist', $path));
-        }
-
-        fclose($handle);
+        $path = $this->checkPath($path);
 
         try {
             $imagick = new \Imagick($path);
