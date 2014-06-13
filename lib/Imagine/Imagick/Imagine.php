@@ -141,6 +141,15 @@ final class Imagine extends AbstractImagine
         return new Font(new \Imagick(), $file, $size, $color);
     }
 
+    /**
+     * Returns the palette corresponding to an \Imagick resource colorspace
+     *
+     * @param \Imagick $imagick
+     *
+     * @return CMYK|Grayscale|RGB
+     *
+     * @throws NotSupportedException
+     */
     private function createPalette(\Imagick $imagick)
     {
         switch ($imagick->getImageColorspace()) {
