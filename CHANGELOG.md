@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 0.6.0 (2014-xx-xx)
+### 0.6.0 (2014-06-13)
 
   * BC break: Colors are now provided through the PaletteInterface. Any call
     to previous Imagine\Image\Color constructor must be removed and use the
