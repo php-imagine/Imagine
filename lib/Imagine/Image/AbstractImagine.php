@@ -13,6 +13,7 @@ namespace Imagine\Image;
 
 use Imagine\Image\Metadata\DefaultMetadataReader;
 use Imagine\Image\Metadata\MetadataReaderInterface;
+use Imagine\Exception\InvalidArgumentException;
 
 abstract class AbstractImagine implements ImagineInterface
 {
