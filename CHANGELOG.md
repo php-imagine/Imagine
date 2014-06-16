@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 0.6.0 (2014-06-16)
+  * Fix invalid namespace usage (#336 @csanquer).
+
 ### 0.6.0 (2014-06-13)
 
   * BC break: Colors are now provided through the PaletteInterface. Any call
