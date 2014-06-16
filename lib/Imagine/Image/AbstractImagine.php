@@ -64,7 +64,7 @@ abstract class AbstractImagine implements ImagineInterface
         $handle = @fopen($path, 'r');
 
         if (false === $handle) {
-            throw new InvalidArgumentException(sprintf('File %s doesn\'t exist', $path));
+            throw new InvalidArgumentException(sprintf('File %s does not exist.', $path));
         }
 
         fclose($handle);

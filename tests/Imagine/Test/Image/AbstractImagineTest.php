@@ -65,6 +65,14 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertEquals(realpath($source), $metadata['filepath']);
     }
 
+    public function testShouldFailOnUnknownImage()
+    {
+        $invalidResource = __DIR__.'/path/that/does/not/exist';
+
+        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', sprintf('File %s does not exist.', $invalidResource));
+        $this->getImagine()->open($invalidResource);
+    }
+
     public function testShouldOpenAnHttpImage()
     {
         $factory = $this->getImagine();
