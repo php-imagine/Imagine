@@ -71,9 +71,7 @@ class ImageTest extends AbstractImageTest
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
     {
         $palette = new CMYK();
-        $imagick = $this->getMockBuilder('\Imagick')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $imagick = $this->getMock('\Imagick');
         $imagick->expects($this->any())
             ->method('setColorspace')
             ->will($this->throwException(new \RuntimeException('Method not supported')));
