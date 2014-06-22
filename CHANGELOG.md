@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 0.6.2 (2014-xx-xx)
+  * Fix exception on invalid file using GD driver (@vlakoff).
+
 ### 0.6.1 (2014-06-16)
   * Fix invalid namespace usage (#336 @csanquer).
 
