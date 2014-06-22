@@ -49,7 +49,7 @@ class Imagine extends AbstractImagine
             $gmagick = new \Gmagick($path);
             $image = new Image($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readFile($path));
         } catch (\GmagickException $e) {
-            throw new RuntimeException(sprintf('Could not open image %s', $path), $e->getCode(), $e);
+            throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
         }
 
         return $image;
