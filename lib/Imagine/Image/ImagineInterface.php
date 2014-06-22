@@ -20,7 +20,7 @@ use Imagine\Exception\RuntimeException;
  */
 interface ImagineInterface
 {
-    const VERSION = '0.3.0';
+    const VERSION = '0.6.1-dev';
 
     /**
      * Creates a new empty image with an optional background color
