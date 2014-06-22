@@ -14,7 +14,7 @@ namespace Imagine\Image\Palette\Color;
 use Imagine\Image\Palette\Grayscale;
 use Imagine\Exception\InvalidArgumentException;
 
-final class Gray implements ColorInterface
+class Gray implements ColorInterface
 {
     /**
      * @var integer

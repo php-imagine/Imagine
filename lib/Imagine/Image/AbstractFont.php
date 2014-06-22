@@ -52,7 +52,7 @@ abstract class AbstractFont implements FontInterface
     /**
      * {@inheritdoc}
      */
-    final public function getFile()
+    public function getFile()
     {
         return $this->file;
     }
@@ -60,7 +60,7 @@ abstract class AbstractFont implements FontInterface
     /**
      * {@inheritdoc}
      */
-    final public function getSize()
+    public function getSize()
     {
         return $this->size;
     }
@@ -68,7 +68,7 @@ abstract class AbstractFont implements FontInterface
     /**
      * {@inheritdoc}
      */
-    final public function getColor()
+    public function getColor()
     {
         return $this->color;
     }

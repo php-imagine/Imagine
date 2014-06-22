@@ -14,7 +14,7 @@ namespace Imagine\Image\Histogram;
 /**
  * Bucket histogram
  */
-final class Bucket implements \Countable
+class Bucket implements \Countable
 {
     /**
      * @var Range

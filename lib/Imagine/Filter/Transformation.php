@@ -36,7 +36,7 @@ use Imagine\Image\PointInterface;
 /**
  * A transformation filter
  */
-final class Transformation implements FilterInterface, ManipulatorInterface
+class Transformation implements FilterInterface, ManipulatorInterface
 {
     /**
      * @var array

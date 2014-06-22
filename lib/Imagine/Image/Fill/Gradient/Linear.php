@@ -43,7 +43,7 @@ abstract class Linear implements FillInterface
      * @param ColorInterface $start
      * @param ColorInterface $end
      */
-    final public function __construct($length, ColorInterface $start, ColorInterface $end)
+    public function __construct($length, ColorInterface $start, ColorInterface $end)
     {
         $this->length = $length;
         $this->start  = $start;
@@ -53,7 +53,7 @@ abstract class Linear implements FillInterface
     /**
      * {@inheritdoc}
      */
-    final public function getColor(PointInterface $position)
+    public function getColor(PointInterface $position)
     {
         $l = $this->getDistance($position);
 
@@ -71,7 +71,7 @@ abstract class Linear implements FillInterface
     /**
      * @return ColorInterface
      */
-    final public function getStart()
+    public function getStart()
     {
         return $this->start;
     }
@@ -79,7 +79,7 @@ abstract class Linear implements FillInterface
     /**
      * @return ColorInterface
      */
-    final public function getEnd()
+    public function getEnd()
     {
         return $this->end;
     }

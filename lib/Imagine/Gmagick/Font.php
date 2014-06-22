@@ -18,7 +18,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
 /**
  * Font implementation using the Gmagick PHP extension
  */
-final class Font extends AbstractFont
+class Font extends AbstractFont
 {
     /**
      * @var \Gmagick

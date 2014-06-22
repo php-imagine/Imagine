@@ -24,7 +24,7 @@ use Imagine\Exception\RuntimeException;
 /**
  * Imagine implementation using the GD library
  */
-final class Imagine extends AbstractImagine
+class Imagine extends AbstractImagine
 {
     /**
      * @var array

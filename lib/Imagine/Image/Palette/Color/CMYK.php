@@ -15,7 +15,7 @@ use Imagine\Image\Palette\CMYK as CMYKPalette;
 use Imagine\Exception\RuntimeException;
 use Imagine\Exception\InvalidArgumentException;
 
-final class CMYK implements ColorInterface
+class CMYK implements ColorInterface
 {
     /**
      * @var integer

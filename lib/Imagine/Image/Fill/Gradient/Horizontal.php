@@ -16,7 +16,7 @@ use Imagine\Image\PointInterface;
 /**
  * Horizontal gradient fill
  */
-final class Horizontal extends Linear
+class Horizontal extends Linear
 {
     /**
      * {@inheritdoc}

@@ -25,7 +25,7 @@ use Imagine\Image\Palette\Grayscale;
 /**
  * Imagine implementation using the Imagick PHP extension
  */
-final class Imagine extends AbstractImagine
+class Imagine extends AbstractImagine
 {
     /**
      * @throws RuntimeException
