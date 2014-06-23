@@ -406,8 +406,11 @@ final class Image extends AbstractImage
     public function getSize()
     {
         try {
+            $i = $this->gmagick->getimageindex();
+            $this->gmagick->setimageindex(0); //rewind
             $width  = $this->gmagick->getimagewidth();
             $height = $this->gmagick->getimageheight();
+            $this->gmagick->setimageindex($i);
         } catch (\GmagickException $e) {
             throw new RuntimeException('Get size operation failed', $e->getCode(), $e);
         }
