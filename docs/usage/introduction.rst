@@ -248,6 +248,8 @@ Here is a simple way to add a watermark to an image :
 
 .. code-block:: php
 
+    <?php
+
     $watermark = $imagine->open('/my/watermark.png');
     $image     = $imagine->open('/path/to/image.jpg');
     $size      = $image->getSize();
