@@ -102,4 +102,9 @@ class ImageTest extends AbstractImageTest
     {
         return $image->getImagick()->getImageResolution();
     }
+
+    protected function supportMatteChannel()
+    {
+        return true;
+    }
 }

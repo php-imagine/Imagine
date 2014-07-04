@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 0.6.3 (201x-xx-xx)
+  * Add 'disable-alpha' option.
+  
 ### 0.6.2 (2014-11-11)
   * Stripping image containing an invalid ICC profile fails
   * MetadataBag now implements \Countable

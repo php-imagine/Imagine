@@ -128,4 +128,9 @@ class ImageTest extends AbstractImageTest
     protected function getImageResolution(ImageInterface $image)
     {
     }
+
+    protected function supportMatteChannel()
+    {
+        return false;
+    }
 }
