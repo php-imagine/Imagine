@@ -181,14 +181,16 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      */
-    public function paste(ImageInterface $image, PointInterface $start)
+    public function paste(ImageInterface $image, PointInterface $start, $canPasteOutOfBound = false)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Imagick\Image can only paste() Imagick\Image instances, %s given', get_class($image)));
         }
 
-        if (!$this->getSize()->contains($image->getSize(), $start)) {
-            throw new OutOfBoundsException('Cannot paste image of the given size at the specified position, as it moves outside of the current image\'s box');
+        if ($canPasteOutOfBound === false) {
+            if (!$this->getSize()->contains($image->getSize(), $start)) {
+                throw new OutOfBoundsException('Cannot paste image of the given size at the specified position, as it moves outside of the current image\'s box');
+            }
         }
 
         try {
