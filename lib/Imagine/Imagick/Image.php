@@ -361,8 +361,11 @@ final class Image extends AbstractImage
     public function getSize()
     {
         try {
+            $i = $this->imagick->getIteratorIndex();
+            $this->imagick->rewind();
             $width  = $this->imagick->getImageWidth();
             $height = $this->imagick->getImageHeight();
+            $this->imagick->setIteratorIndex($i);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Could not get size', $e->getCode(), $e);
         }

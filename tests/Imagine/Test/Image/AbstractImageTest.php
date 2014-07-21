@@ -669,6 +669,18 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertNotSame($originalMetadata, $clone->metadata(), 'The image\'s metadata is the same after cloning the image, but must be a new instance.');
     }
 
+    public function testImageSizeOnAnimatedGif()
+    {
+        $imagine = $this->getImagine();
+
+        $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+
+        $size = $image->getSize();
+
+        $this->assertEquals(300, $size->getWidth());
+        $this->assertEquals(200, $size->getHeight());
+    }
+
     /**
      * @dataProvider provideVariousSources
      */
