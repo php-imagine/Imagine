@@ -73,6 +73,8 @@ final class Image extends AbstractImage
         if ($this->gmagick instanceof \Gmagick) {
             $this->gmagick->clear();
             $this->gmagick->destroy();
+            unset($this->layers);
+            unset($this->gmagick);
         }
     }
 
