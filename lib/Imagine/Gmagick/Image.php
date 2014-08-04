@@ -70,7 +70,7 @@ final class Image extends AbstractImage
      */
     public function __destruct()
     {
-        if (null !== $this->gmagick && $this->gmagick instanceof \Gmagick) {
+        if ($this->gmagick instanceof \Gmagick) {
             $this->gmagick->clear();
             $this->gmagick->destroy();
         }
