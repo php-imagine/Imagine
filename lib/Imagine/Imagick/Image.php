@@ -81,7 +81,7 @@ final class Image extends AbstractImage
      */
     public function __destruct()
     {
-        if (null !== $this->imagick && $this->imagick instanceof \Imagick) {
+        if ($this->imagick instanceof \Imagick) {
             $this->imagick->clear();
             $this->imagick->destroy();
         }
