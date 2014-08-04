@@ -66,16 +66,26 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Destroys allocated gmagick resources
+     * Destroys gmagick instance
      */
     public function __destruct()
     {
-        if ($this->gmagick instanceof \Gmagick) {
-            $this->gmagick->clear();
-            $this->gmagick->destroy();
-            $this->layers = null;
-            $this->gmagick = null;
-        }
+        $this->gmagick = null;
+        $this->layers = null; // layers contains gmagick instance
+    }
+
+    /**
+     * Destroys allocated gmagick resources
+     *
+     * These lines inside destructor cause segmentation fault
+     * @see https://github.com/avalanche123/Imagine/issues/347
+     *
+     * So if you need, you can clear resources manually by calling this method
+     */
+    public function destroyGmagick()
+    {
+        $this->gmagick->clear();
+        $this->gmagick->destroy();
     }
 
     /**
