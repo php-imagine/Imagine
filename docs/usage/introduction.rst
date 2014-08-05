@@ -238,6 +238,45 @@ Of course, you can combine options :
 
    $imagine->open('/path/to/image.jpg')->save('/path/to/image.jpg', $options);
 
+Show Images
++++++++++++
+
+Images are shown (i.e. outputs the image content) given a format and optionally options.
+
+The following example shows a Jpg image:
+
+.. code-block:: php
+
+   <?php
+
+   $imagine = new Imagine\Imagick\Imagine();
+
+   $imagine->open('/path/to/image.jpg')
+      ->show('jpg');
+
+.. NOTE::
+   This will send a "Content-type" header.
+
+It supports the same options groups as for the save method.
+
+For example:
+
+.. code-block:: php
+
+   <?php
+
+   $imagine = new Imagine\Imagick\Imagine();
+
+   $options = array(
+      'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
+      'resolution-x' => 300,
+      'resolution-y' => 300,
+      'jpeg_quality' => 100,
+   );
+
+   $imagine->open('/path/to/image.jpg')
+      ->show('jpg', $options);
+
 Advanced Examples
 -----------------
 
