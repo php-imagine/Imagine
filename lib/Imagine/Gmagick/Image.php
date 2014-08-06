@@ -79,6 +79,7 @@ final class Image extends AbstractImage
      *
      * These lines inside destructor cause segmentation fault
      * @see https://github.com/avalanche123/Imagine/issues/347
+     * @see https://bugs.php.net/bug.php?id=63677
      *
      * So if you need, you can clear resources manually by calling this method
      */
