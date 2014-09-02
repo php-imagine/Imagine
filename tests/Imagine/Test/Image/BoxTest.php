@@ -72,6 +72,9 @@ class BoxTest extends \PHPUnit_Framework_TestCase
     public function getInvalidSizes()
     {
         return array(
+            array(null, null),
+            array(15, null),
+            array(null, 25),
             array(0, 0),
             array(15, 0),
             array(0, 25),

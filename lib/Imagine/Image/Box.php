@@ -38,6 +38,14 @@ final class Box implements BoxInterface
      */
     public function __construct($width, $height)
     {
+        if (null === $width) {
+            throw new InvalidArgumentException('Length of either side cannot be null, but current width is null');
+        }
+
+        if (null === $height) {
+            throw new InvalidArgumentException('Length of either side cannot be null, but current height is null');
+        }
+
         if ($height < 1 || $width < 1) {
             throw new InvalidArgumentException(sprintf('Length of either side cannot be 0 or negative, current size is %sx%s', $width, $height));
         }
