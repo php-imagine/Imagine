@@ -603,8 +603,15 @@ final class Image extends AbstractImage
      */
     private function flatten()
     {
+        /**
+         * @see https://github.com/mkoppanen/imagick/issues/45
+         */
         try {
-            $this->imagick = $this->imagick->flattenImages();
+            if (method_exists($this->imagick, 'mergeImageLayers') && defined('Imagick::LAYERMETHOD_UNDEFINED')) {
+                $this->imagick = $this->imagick->mergeImageLayers(\Imagick::LAYERMETHOD_UNDEFINED);
+            } elseif (method_exists($this->imagick, 'flattenImages')) {
+                $this->imagick = $this->imagick->flattenImages();
+            }
         } catch (\ImagickException $e) {
             throw new RuntimeException('Flatten operation failed', $e->getCode(), $e);
         }
