@@ -439,7 +439,7 @@ final class Image extends AbstractImage
                         $color = $fill->getColor(new Point($x, $y));
 
                         $pixel->setColor((string) $color);
-                        $pixel->setColorValue(\Imagick::COLOR_ALPHA, number_format(round($color->getAlpha() / 100, 2), 1));
+                        $pixel->setColorValue(\Imagick::COLOR_ALPHA, $color->getAlpha() / 100);
                     }
 
                     $iterator->syncIterator();
@@ -693,7 +693,7 @@ final class Image extends AbstractImage
     private function getColor(ColorInterface $color)
     {
         $pixel = new \ImagickPixel((string) $color);
-        $pixel->setColorValue(\Imagick::COLOR_ALPHA, number_format(round($color->getAlpha() / 100, 2), 1));
+        $pixel->setColorValue(\Imagick::COLOR_ALPHA, $color->getAlpha() / 100);
 
         return $pixel;
     }

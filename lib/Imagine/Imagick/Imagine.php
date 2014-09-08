@@ -71,7 +71,7 @@ final class Imagine extends AbstractImagine
 
         try {
             $pixel = new \ImagickPixel((string) $color);
-            $pixel->setColorValue(\Imagick::COLOR_ALPHA, number_format(round($color->getAlpha() / 100, 2), 1));
+            $pixel->setColorValue(\Imagick::COLOR_ALPHA, $color->getAlpha() / 100);
 
             $imagick = new \Imagick();
             $imagick->newImage($width, $height, $pixel);
