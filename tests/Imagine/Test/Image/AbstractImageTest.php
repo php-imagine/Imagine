@@ -709,6 +709,18 @@ abstract class AbstractImageTest extends ImagineTestCase
         );
     }
 
+    public function testFillAlphaPrecision()
+    {
+        $imagine = $this->getImagine();
+        $palette = new RGB();
+        $image   = $imagine->create(new Box(1, 1), $palette->color("#f00"));
+        $fill = new Horizontal(100, $palette->color("#f00", 17), $palette->color("#f00", 73));
+        $image->fill($fill);
+
+        $actualColor = $image->getColorAt(new Point(0, 0));
+        $this->assertEquals(17, $actualColor->getAlpha());
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()
