@@ -709,6 +709,16 @@ abstract class AbstractImageTest extends ImagineTestCase
         );
     }
 
+    public function testImageCreatedAlpha()
+    {
+        $palette = new RGB();
+        $image = $this->getImagine()->create(new Box(1, 1), $palette->color("#7f7f7f", 10));
+        $actualColor = $image->getColorAt(new Point(0, 0));
+
+        $this->assertEquals("#7f7f7f", (string) $actualColor);
+        $this->assertEquals(10, $actualColor->getAlpha());
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()
