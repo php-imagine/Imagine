@@ -61,7 +61,7 @@ final class Imagine extends AbstractImagine
             throw new InvalidArgumentException('GD driver only supports RGB colors');
         }
 
-        $index = imagecolorallocatealpha($resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round(127 * $color->getAlpha() / 100));
+        $index = imagecolorallocatealpha($resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round(127 * (100 - $color->getAlpha()) / 100));
 
         if (false === $index) {
             throw new RuntimeException('Unable to allocate color');

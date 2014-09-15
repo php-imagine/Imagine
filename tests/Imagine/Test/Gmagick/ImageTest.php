@@ -78,6 +78,12 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('Gmagick fails to read CMYK colors properly, see https://bugs.php.net/bug.php?id=67435');
     }
 
+    public function testImageCreatedAlpha()
+    {
+        $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
+    }
+
+
     protected function getImagine()
     {
         return new Imagine();
