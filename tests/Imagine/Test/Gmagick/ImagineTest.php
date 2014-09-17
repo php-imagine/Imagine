@@ -26,6 +26,11 @@ class ImagineTest extends AbstractImagineTest
         }
     }
 
+    public function testCreateAlphaPrecision()
+    {
+        $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
+    }
+
     protected function getEstimatedFontBox()
     {
         return new Box(117, 55);
