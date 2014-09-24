@@ -20,9 +20,9 @@ use Imagine\Filter\FilterInterface;
  */
 class WebOptimization implements FilterInterface
 {
-    private $palette;
-    private $path;
-    private $options;
+    protected $palette;
+    protected $path;
+    protected $options;
 
     public function __construct($path = null, array $options = array())
     {

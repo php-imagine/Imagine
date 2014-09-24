@@ -23,17 +23,17 @@ class Thumbnail implements FilterInterface
     /**
      * @var BoxInterface
      */
-    private $size;
+    protected $size;
 
     /**
      * @var string
      */
-    private $mode;
+    protected $mode;
 
     /**
      * @var string
      */
-    private $filter;
+    protected $filter;
 
     /**
      * Constructs the Thumbnail filter with given width, height and mode

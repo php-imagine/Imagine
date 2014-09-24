@@ -22,7 +22,7 @@ class ApplyMask implements FilterInterface
     /**
      * @var ImageInterface
      */
-    private $mask;
+    protected $mask;
 
     /**
      * @param ImageInterface $mask

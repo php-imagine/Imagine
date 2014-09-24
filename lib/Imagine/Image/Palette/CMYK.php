@@ -20,7 +20,7 @@ use Imagine\Image\ProfileInterface;
 
 class CMYK implements PaletteInterface
 {
-    private $parser;
+    protected $parser;
     protected $profile;
     private static $colors = array();
 

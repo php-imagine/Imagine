@@ -18,7 +18,7 @@ use Imagine\Exception\InvalidArgumentException;
 abstract class AbstractImagine implements ImagineInterface
 {
     /** @var MetadataReaderInterface */
-    private $metadataReader;
+    protected $metadataReader;
 
     /**
      * @param MetadataReaderInterface $metadataReader

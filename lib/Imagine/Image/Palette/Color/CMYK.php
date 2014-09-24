@@ -20,28 +20,28 @@ final class CMYK implements ColorInterface
     /**
      * @var integer
      */
-    private $c;
+    protected $c;
 
     /**
      * @var integer
      */
-    private $m;
+    protected $m;
 
     /**
      * @var integer
      */
-    private $y;
+    protected $y;
 
     /**
      * @var integer
      */
-    private $k;
+    protected $k;
 
     /**
      *
      * @var CMYK
      */
-    private $palette;
+    protected $palette;
 
     public function __construct(CMYKPalette $palette, array $color)
     {

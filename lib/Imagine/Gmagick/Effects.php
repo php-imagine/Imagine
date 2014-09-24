@@ -21,7 +21,7 @@ use Imagine\Exception\NotSupportedException;
  */
 class Effects implements EffectsInterface
 {
-    private $gmagick;
+    protected $gmagick;
 
     public function __construct(\Gmagick $gmagick)
     {

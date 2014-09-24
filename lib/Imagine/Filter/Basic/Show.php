@@ -22,12 +22,12 @@ class Show implements FilterInterface
     /**
      * @var string
      */
-    private $format;
+    protected $format;
 
     /**
      * @var array
      */
-    private $options;
+    protected $options;
 
     /**
      * Constructs the Show filter with given format and options

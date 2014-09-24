@@ -21,12 +21,12 @@ final class Box implements BoxInterface
     /**
      * @var integer
      */
-    private $width;
+    protected $width;
 
     /**
      * @var integer
      */
-    private $height;
+    protected $height;
 
     /**
      * Constructs the Size with given width and height

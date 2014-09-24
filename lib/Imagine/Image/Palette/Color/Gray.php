@@ -19,18 +19,18 @@ final class Gray implements ColorInterface
     /**
      * @var integer
      */
-    private $gray;
+    protected $gray;
 
     /**
      * @var integer
      */
-    private $alpha;
+    protected $alpha;
 
     /**
      *
      * @var Grayscale
      */
-    private $palette;
+    protected $palette;
 
     public function __construct(Grayscale $palette, array $color, $alpha)
     {

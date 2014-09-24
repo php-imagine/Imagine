@@ -23,12 +23,12 @@ class Paste implements FilterInterface
     /**
      * @var ImageInterface
      */
-    private $image;
+    protected $image;
 
     /**
      * @var PointInterface
      */
-    private $start;
+    protected $start;
 
     /**
      * Constructs a Paste filter with given ImageInterface to paste and x, y

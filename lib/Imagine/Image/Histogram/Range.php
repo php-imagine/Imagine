@@ -21,12 +21,12 @@ final class Range
     /**
      * @var integer
      */
-    private $start;
+    protected $start;
 
     /**
      * @var integer
      */
-    private $end;
+    protected $end;
 
     /**
      * @param integer $start

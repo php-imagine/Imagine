@@ -20,17 +20,17 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     /**
      * @var Imagine\Image\ImageInterface
      */
-    private $value;
+    protected $value;
 
     /**
      * @var float
      */
-    private $delta;
+    protected $delta;
 
     /**
      * @var integer
      */
-    private $buckets;
+    protected $buckets;
 
     /**
      * @param Imagine\Image\ImageInterface $value

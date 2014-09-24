@@ -21,12 +21,12 @@ final class Point implements PointInterface
     /**
      * @var integer
      */
-    private $x;
+    protected $x;
 
     /**
      * @var integer
      */
-    private $y;
+    protected $y;
 
     /**
      * Constructs a point of coordinates

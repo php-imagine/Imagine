@@ -27,22 +27,22 @@ class Canvas implements FilterInterface
     /**
      * @var BoxInterface
      */
-    private $size;
+    protected $size;
 
     /**
      * @var PointInterface
      */
-    private $placement;
+    protected $placement;
 
     /**
      * @var ColorInterface
      */
-    private $background;
+    protected $background;
 
     /**
      * @var ImagineInterface
      */
-    private $imagine;
+    protected $imagine;
 
     /**
      * Constructs Canvas filter with given width and height and the placement of the current image

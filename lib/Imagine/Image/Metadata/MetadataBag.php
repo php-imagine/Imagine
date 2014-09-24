@@ -17,7 +17,7 @@ namespace Imagine\Image\Metadata;
 class MetadataBag implements \ArrayAccess, \IteratorAggregate
 {
     /** @var array */
-    private $data;
+    protected $data;
 
     public function __construct(array $data = array())
     {

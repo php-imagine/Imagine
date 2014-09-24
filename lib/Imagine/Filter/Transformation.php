@@ -41,19 +41,19 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     /**
      * @var array
      */
-    private $filters = array();
+    protected $filters = array();
 
     /**
      * @var array
      */
-    private $sorted;
+    protected $sorted;
 
     /**
      * An ImagineInterface instance.
      *
      * @var ImagineInterface
      */
-    private $imagine;
+    protected $imagine;
 
     /**
      * Class constructor.

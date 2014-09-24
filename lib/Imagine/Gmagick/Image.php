@@ -34,16 +34,16 @@ final class Image extends AbstractImage
     /**
      * @var \Gmagick
      */
-    private $gmagick;
+    protected $gmagick;
     /**
      * @var Layers
      */
-    private $layers;
+    protected $layers;
 
     /**
      * @var PaletteInterface
      */
-    private $palette;
+    protected $palette;
 
     private static $colorspaceMapping = array(
         PaletteInterface::PALETTE_CMYK => \Gmagick::COLORSPACE_CMYK,

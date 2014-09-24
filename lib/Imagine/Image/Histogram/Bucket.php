@@ -19,12 +19,12 @@ final class Bucket implements \Countable
     /**
      * @var Range
      */
-    private $range;
+    protected $range;
 
     /**
      * @var integer
      */
-    private $count;
+    protected $count;
 
     /**
      * @param Range   $range

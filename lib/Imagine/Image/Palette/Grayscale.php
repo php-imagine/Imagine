@@ -22,7 +22,7 @@ class Grayscale implements PaletteInterface
     /**
      * @var ColorParser
      */
-    private $parser;
+    protected $parser;
 
     /**
      * @var ProfileInterface

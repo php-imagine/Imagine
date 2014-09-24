@@ -19,10 +19,10 @@ use Imagine\Exception\NotSupportedException;
 
 class Layers extends AbstractLayers
 {
-    private $image;
-    private $offset;
-    private $resource;
-    private $palette;
+    protected $image;
+    protected $offset;
+    protected $resource;
+    protected $palette;
 
     public function __construct(Image $image, PaletteInterface $palette, $resource)
     {
