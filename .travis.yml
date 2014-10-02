@@ -11,7 +11,7 @@ before_script:
   - sudo apt-get install -y libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config
   - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   - sh -c " if [ '$IMAGINE_DRIVER' = 'imagick' ]; then
-              wget http://www.imagemagick.org/download/ImageMagick-6.8.9-7.tar.gz;
+              wget http://www.imagemagick.org/download/ImageMagick-6.8.9-8.tar.gz;
               tar xzf ImageMagick-6.8.9-7.tar.gz;
               cd ImageMagick-6.8.9-7;
               ./configure --prefix=/opt/imagemagick;
