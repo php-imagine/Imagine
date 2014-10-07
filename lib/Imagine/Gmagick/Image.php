@@ -677,7 +677,7 @@ final class Image extends AbstractImage
     public function profile(ProfileInterface $profile)
     {
         try {
-            $this->gmagick->profileimage('ICM', $profile->data());
+            $this->gmagick->profileimage('ICC', $profile->data());
         } catch (\GmagickException $e) {
             throw new RuntimeException(sprintf('Unable to add profile %s to image', $profile->name()), $e->getCode(), $e);
         }
