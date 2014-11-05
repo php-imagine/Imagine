@@ -29,11 +29,11 @@ final class Font extends AbstractFont
             throw new RuntimeException('GD must have been compiled with `--with-freetype-dir` option to use the Font feature.');
         }
 
-				/**
+        /**
          * @see https://github.com/avalanche123/Imagine/issues/364
-				 * Add a wrapText() method from Drawer using Reflection-API
+         * Add a wrapText() method from Drawer using Reflection-API
          */
-				if ($width !== null) {
+        if ($width !== null) {
             $string = $this->wrapText($string, $this, $angle, $width);
         }
 
@@ -47,7 +47,7 @@ final class Font extends AbstractFont
         return new Box($width, $height);
     }
 
-		/**
+    /**
      * Internal
      *
      * Fits a string into box with given width
@@ -55,19 +55,16 @@ final class Font extends AbstractFont
     private function wrapText($string, AbstractFont $font, $angle, $width)
     {
         //Use Reflection
-				$class_name = '\\Drawer'; //escaped slash
-				$ref_class = new \ReflectionClass( __NAMESPACE__ . $class_name );
-				if ( !$ref_class->hasMethod(__FUNCTION__) )
-				{
-						throw new \ReflectionException(sprintf("Method %s::%s does not exist!", $ref_class->getName() , __FUNCTION__));
-				}
-				$new_ref_obj = $ref_class->newInstanceWithoutConstructor();
-				$ref_method_to_call = new \ReflectionMethod($new_ref_obj, __FUNCTION__);
-				if( $ref_method_to_call->isPrivate() )
-				{
-						$ref_method_to_call->setAccessible(true);
-				}
-
-				return $ref_method_to_call->invoke($new_ref_obj, $string, $font, $angle, $width);
+        $class_name = '\\Drawer'; //escaped slash
+        $ref_class = new \ReflectionClass( __NAMESPACE__ . $class_name );
+        if ( !$ref_class->hasMethod(__FUNCTION__) ) {
+            throw new \ReflectionException(sprintf("Method %s::%s does not exist!", $ref_class->getName() , __FUNCTION__));
+        }
+        $new_ref_obj = $ref_class->newInstanceWithoutConstructor();
+        $ref_method_to_call = new \ReflectionMethod($new_ref_obj, __FUNCTION__);
+        if( $ref_method_to_call->isPrivate() ) {
+            $ref_method_to_call->setAccessible(true);
+        }
+        return $ref_method_to_call->invoke($new_ref_obj, $string, $font, $angle, $width);
     }
 }
