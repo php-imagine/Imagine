@@ -36,7 +36,7 @@ final class Font extends AbstractFont
 				if ($width !== null) {
             $string = $this->wrapText($string, $this, $angle, $width);
         }
-				
+
         $angle    = -1 * $angle;
         $info     = imageftbbox($this->size, $angle, $this->file, $string);
         $xs       = array($info[0], $info[2], $info[4], $info[6]);
@@ -46,7 +46,7 @@ final class Font extends AbstractFont
 
         return new Box($width, $height);
     }
-		
+
 		/**
      * Internal
      *
