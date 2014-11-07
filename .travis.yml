@@ -10,7 +10,7 @@ before_script:
   - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
   - sudo apt-get install -y libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config
   - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
-  - sh -c " if [ '$IMAGINE_DRIVER' = 'imagick' ]; then
+  - sh -e -c " if [ '$IMAGINE_DRIVER' = 'imagick' ]; then
               wget http://www.imagemagick.org/download/ImageMagick-6.8.9-10.tar.gz;
               tar xzf ImageMagick-6.8.9-10.tar.gz;
               cd ImageMagick-6.8.9-10;
@@ -30,7 +30,7 @@ before_script:
               echo \"extension=imagick.so\" >> `php --ini | grep \"Loaded Configuration\" | sed -e \"s|.*:\s*||\"`;
               php --ri imagick;
             fi"
-  - sh -c " if [ '$IMAGINE_DRIVER' = 'gmagick' ]; then
+  - sh -e -c " if [ '$IMAGINE_DRIVER' = 'gmagick' ]; then
               sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev;
               wget http://pecl.php.net/get/gmagick-1.1.7RC2.tgz;
               tar -xzf gmagick-1.1.7RC2.tgz;
