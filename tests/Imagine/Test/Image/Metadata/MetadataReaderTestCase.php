@@ -32,6 +32,15 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
         $this->assertEquals($source, $metadata['uri']);
     }
 
+    public function testReadFromExifUncompatibleFile()
+    {
+        $source = __DIR__ . '/../../../Fixtures/trans.png';
+        $metadata = $this->getReader()->readFile($source);
+        $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+        $this->assertEquals($source, $metadata['uri']);
+    }
+
     public function testReadFromHttpFile()
     {
         $source = self::HTTP_IMAGE;
