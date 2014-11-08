@@ -27,6 +27,14 @@ class ExifMetadataReaderTest extends MetadataReaderTestCase
         $this->assertEquals(6, $metadata['ifd0.Orientation']);
     }
 
+    public function testExifDataAreReadWithReadHttpFile()
+    {
+        $source = self::HTTP_IMAGE;
+
+        $metadata = $this->getReader()->readFile($source);
+        $this->assertEquals(1, $metadata['ifd0.Orientation']);
+    }
+
     public function testExifDataAreReadWithReadData()
     {
         $metadata = $this->getReader()->readData(file_get_contents(__DIR__ . '/../../../Fixtures/exifOrientation/90.jpg'));
