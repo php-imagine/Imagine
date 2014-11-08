@@ -84,6 +84,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     final public function copy()
     {
@@ -99,6 +101,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     final public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -124,6 +128,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     final public function paste(ImageInterface $image, PointInterface $start)
     {
@@ -151,6 +157,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
@@ -182,6 +190,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     final public function rotate($angle, ColorInterface $background = null)
     {
@@ -200,6 +210,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     final public function save($path = null, array $options = array())
     {
@@ -225,6 +237,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     public function show($format, array $options = array())
     {
@@ -256,6 +270,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     final public function flipHorizontally()
     {
@@ -279,6 +295,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     final public function flipVertically()
     {
@@ -302,6 +320,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     final public function strip()
     {
@@ -335,6 +355,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -367,6 +389,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     public function fill(FillInterface $fill)
     {
