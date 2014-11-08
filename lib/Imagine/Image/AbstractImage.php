@@ -23,6 +23,8 @@ abstract class AbstractImage implements ImageInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
