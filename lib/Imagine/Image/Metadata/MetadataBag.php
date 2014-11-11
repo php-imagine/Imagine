@@ -14,7 +14,7 @@ namespace Imagine\Image\Metadata;
 /**
  * An interface for Image Metadata
  */
-class MetadataBag implements \ArrayAccess, \IteratorAggregate
+class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     /** @var array */
     private $data;
@@ -22,6 +22,14 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate
     public function __construct(array $data = array())
     {
         $this->data = $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->data);
     }
 
     /**
