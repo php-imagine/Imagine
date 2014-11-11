@@ -87,6 +87,11 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('GD driver does not support ICC profiles');
     }
 
+    public function testStripImageWithInvalidProfile()
+    {
+        $this->markTestSkipped('GD driver does not support ICC profiles');
+    }
+
     public function testStripGBRImageHasGoodColors()
     {
         $this->markTestSkipped('GD driver does not support ICC profiles');
