@@ -556,6 +556,19 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals('#0082a2', (string) $color);
     }
 
+    public function testStripImageWithInvalidProfile()
+    {
+        $image = $this
+            ->getImagine()
+            ->open('tests/Imagine/Fixtures/invalid-icc-profile.jpg');
+
+        $color = $image->getColorAt(new Point(0, 0));
+        $image->strip();
+        $afterColor = $image->getColorAt(new Point(0, 0));
+
+        $this->assertEquals((string) $color, (string) $afterColor);
+    }
+
     public function testGetColorAt()
     {
         $color = $this

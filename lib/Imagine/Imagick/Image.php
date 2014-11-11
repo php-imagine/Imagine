@@ -179,7 +179,12 @@ final class Image extends AbstractImage
     public function strip()
     {
         try {
-            $this->profile($this->palette->profile());
+            try {
+                $this->profile($this->palette->profile());
+            } catch (\Exception $e) {
+                // here we discard setting the profile as the previous incorporated profile
+                // is corrupted, let's now strip the image
+            }
             $this->imagick->stripImage();
         } catch (\ImagickException $e) {
             throw new RuntimeException('Strip operation failed', $e->getCode(), $e);
