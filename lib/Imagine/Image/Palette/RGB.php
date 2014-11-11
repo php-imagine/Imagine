@@ -27,7 +27,7 @@ class RGB implements PaletteInterface
     /**
      * @var ProfileInterface
      */
-    protected $profile;
+    private $profile;
 
     /**
      * @var array
