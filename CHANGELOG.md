@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ### 0.6.2 (2014-xx-xx)
+  * Stripping image containing an invalid ICC profile fails
   * MetadataBag now implements \Countable
   * Fix wrong array_merge in MetadataBag giving invalid results with HTTP resources (@javaguirre)
   * Fix Imagick merge strategy (@GrahamCampbell)
