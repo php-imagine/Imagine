@@ -180,6 +180,11 @@ final class Image extends AbstractImage
     {
         try {
             $this->profile($this->palette->profile());
+        } catch (RuntimeException $e) {
+            trigger_error($e->getMessage(), E_USER_NOTICE);
+        }
+
+        try {
             $this->imagick->stripImage();
         } catch (\ImagickException $e) {
             throw new RuntimeException('Strip operation failed', $e->getCode(), $e);
