@@ -106,4 +106,21 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * Changes the brightness of the image
+     * @param integer $brightness The level of brightness (-100 (black) to 100 (white))
+     *
+     * @return EffectsInterface
+     *
+     * @throws RuntimeException
+     */
+    public function brightness($brightness)
+    {
+        if (false === imagefilter($this->resource, IMG_FILTER_BRIGHTNESS, $brightness)) {
+            throw new RuntimeException('Failed to brightness the image');
+        }
+
+        return $this;
+    }
 }
