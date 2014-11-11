@@ -22,12 +22,12 @@ class Save implements FilterInterface
     /**
      * @var string
      */
-    private $path;
+    protected $path;
 
     /**
      * @var array
      */
-    private $options;
+    protected $options;
 
     /**
      * Constructs Save filter with given path and options

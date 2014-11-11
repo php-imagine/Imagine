@@ -15,8 +15,8 @@ use Imagine\Exception\InvalidArgumentException;
 
 class Profile implements ProfileInterface
 {
-    private $data;
-    private $name;
+    protected $data;
+    protected $name;
 
     public function __construct($name, $data)
     {

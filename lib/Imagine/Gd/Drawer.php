@@ -28,12 +28,12 @@ final class Drawer implements DrawerInterface
     /**
      * @var resource
      */
-    private $resource;
+    protected $resource;
 
     /**
      * @var array
      */
-    private $info;
+    protected $info;
 
     /**
      * Constructs Drawer with a given gd image resource

@@ -23,7 +23,7 @@ final class Center implements PointInterface
     /**
      * @var BoxInterface
      */
-    private $box;
+    protected $box;
 
     /**
      * Constructs coordinate with size instance, it needs to be relative to

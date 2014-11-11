@@ -19,28 +19,28 @@ final class RGB implements ColorInterface
     /**
      * @var integer
      */
-    private $r;
+    protected $r;
 
     /**
      * @var integer
      */
-    private $g;
+    protected $g;
 
     /**
      * @var integer
      */
-    private $b;
+    protected $b;
 
     /**
      * @var integer
      */
-    private $alpha;
+    protected $alpha;
 
     /**
      *
      * @var RGBPalette
      */
-    private $palette;
+    protected $palette;
 
     public function __construct(RGBPalette $palette, array $color, $alpha)
     {

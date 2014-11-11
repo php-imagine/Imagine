@@ -29,7 +29,7 @@ final class Imagine extends AbstractImagine
     /**
      * @var array
      */
-    private $info;
+    protected $info;
 
     /**
      * @throws RuntimeException

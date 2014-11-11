@@ -23,7 +23,7 @@ final class Font extends AbstractFont
     /**
      * @var \Imagick
      */
-    private $imagick;
+    protected $imagick;
 
     /**
      * @param \Imagick       $imagick

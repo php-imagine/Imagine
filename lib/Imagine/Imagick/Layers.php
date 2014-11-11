@@ -23,21 +23,21 @@ class Layers extends AbstractLayers
     /**
      * @var Image
      */
-    private $image;
+    protected $image;
     /**
      * @var \Imagick
      */
-    private $resource;
+    protected $resource;
     /**
      * @var integer
      */
-    private $offset = 0;
+    protected $offset = 0;
     /**
      * @var array
      */
-    private $layers = array();
+    protected $layers = array();
 
-    private $palette;
+    protected $palette;
 
     public function __construct(Image $image, PaletteInterface $palette, \Imagick $resource)
     {

@@ -28,7 +28,7 @@ final class Drawer implements DrawerInterface
     /**
      * @var Imagick
      */
-    private $imagick;
+    protected $imagick;
 
     /**
      * @param \Imagick $imagick

@@ -24,7 +24,7 @@ abstract class ImagineAware implements FilterInterface
      *
      * @var ImagineInterface
      */
-    private $imagine;
+    protected $imagine;
 
     /**
      * Set ImagineInterface instance.

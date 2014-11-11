@@ -36,15 +36,15 @@ final class Image extends AbstractImage
     /**
      * @var \Imagick
      */
-    private $imagick;
+    protected $imagick;
     /**
      * @var Layers
      */
-    private $layers;
+    protected $layers;
     /**
      * @var PaletteInterface
      */
-    private $palette;
+    protected $palette;
 
     /**
      * @var Boolean

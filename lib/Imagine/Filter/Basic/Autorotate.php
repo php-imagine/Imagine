@@ -25,7 +25,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
  */
 class Autorotate implements FilterInterface
 {
-    private $color;
+    protected $color;
 
     /**
      * @param string|array|ColorInterface $color A color

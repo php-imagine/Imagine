@@ -23,7 +23,7 @@ final class Font extends AbstractFont
     /**
      * @var \Gmagick
      */
-    private $gmagick;
+    protected $gmagick;
 
     /**
      * @param \Gmagick       $gmagick

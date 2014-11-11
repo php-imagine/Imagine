@@ -36,17 +36,17 @@ final class Image extends AbstractImage
     /**
      * @var resource
      */
-    private $resource;
+    protected $resource;
 
     /**
      * @var Layers|null
      */
-    private $layers;
+    protected $layers;
 
     /**
      * @var PaletteInterface
      */
-    private $palette;
+    protected $palette;
 
     /**
      * Constructs a new Image instance

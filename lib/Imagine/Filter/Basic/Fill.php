@@ -23,7 +23,7 @@ class Fill implements FilterInterface
     /**
      * @var FillInterface
      */
-    private $fill;
+    protected $fill;
 
     /**
      * @param FillInterface $fill

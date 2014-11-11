@@ -24,17 +24,17 @@ class Border implements FilterInterface
     /**
      * @var ColorInterface
      */
-    private $color;
+    protected $color;
 
     /**
      * @var integer
      */
-    private $width;
+    protected $width;
 
     /**
      * @var integer
      */
-    private $height;
+    protected $height;
 
     /**
      * Constructs Border filter with given color, width and height

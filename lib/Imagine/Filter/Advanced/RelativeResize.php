@@ -21,8 +21,8 @@ use Imagine\Image\ImageInterface;
  */
 class RelativeResize implements FilterInterface
 {
-    private $method;
-    private $parameter;
+    protected $method;
+    protected $parameter;
 
     /**
      * Constructs a RelativeResize filter with the given method and argument.

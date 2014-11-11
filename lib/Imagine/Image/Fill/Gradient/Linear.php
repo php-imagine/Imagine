@@ -23,17 +23,17 @@ abstract class Linear implements FillInterface
     /**
      * @var integer
      */
-    private $length;
+    protected $length;
 
     /**
      * @var ColorInterface
      */
-    private $start;
+    protected $start;
 
     /**
      * @var ColorInterface
      */
-    private $end;
+    protected $end;
 
     /**
      * Constructs a linear gradient with overall gradient length, and start and

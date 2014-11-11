@@ -23,12 +23,12 @@ class Rotate implements FilterInterface
     /**
      * @var integer
      */
-    private $angle;
+    protected $angle;
 
     /**
      * @var ColorInterface
      */
-    private $background;
+    protected $background;
 
     /**
      * Constructs Rotate filter with given angle and background color

@@ -29,7 +29,7 @@ final class Drawer implements DrawerInterface
     /**
      * @var \Gmagick
      */
-    private $gmagick;
+    protected $gmagick;
 
     /**
      * @param \Gmagick $gmagick

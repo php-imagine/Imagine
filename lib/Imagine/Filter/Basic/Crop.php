@@ -24,12 +24,12 @@ class Crop implements FilterInterface
     /**
      * @var PointInterface
      */
-    private $start;
+    protected $start;
 
     /**
      * @var BoxInterface
      */
-    private $size;
+    protected $size;
 
     /**
      * Constructs a Crop filter with given x, y, coordinates and crop width and

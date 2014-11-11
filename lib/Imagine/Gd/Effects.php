@@ -21,7 +21,7 @@ use Imagine\Image\Palette\Color\RGB as RGBColor;
  */
 class Effects implements EffectsInterface
 {
-    private $resource;
+    protected $resource;
 
     public function __construct($resource)
     {

@@ -20,7 +20,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
  */
 class Effects implements EffectsInterface
 {
-    private $imagick;
+    protected $imagick;
 
     public function __construct(\Imagick $imagick)
     {
