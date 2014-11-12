@@ -83,6 +83,34 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($greyG, $greyB);
     }
 
+    public function testBrightness()
+    {
+        $palette = new RGB();
+        $imagine = $this->getImagine();
+
+        $r = 20;
+        $g = 90;
+        $b = 240;
+
+        $image = $imagine->create(new Box(20, 20), $palette->color(array($r, $g, $b)));
+
+        //A brightness value of -100 will change the image into a black one
+        $image->effects()
+            ->brightness(-100);
+
+        $pixel = $image->getColorAt(new Point(10, 10));
+
+        $this->assertEquals('#000000', (string) $pixel);
+
+        //A brightness value of 100 will change the image into a white one
+        $image->effects()
+            ->brightness(100);
+
+        $pixel = $image->getColorAt(new Point(10, 10));
+
+        $this->assertEquals('#ffffff', (string) $pixel);
+    }
+
     protected function getGrayValue()
     {
         return '#565656';

@@ -119,3 +119,20 @@ Imagick and Gmagick functions (defaults to 1).
 
 .. NOTE::
     Sigma value has no effect on GD driver. Only GD's IMG_FILTER_GAUSSIAN_BLUR filter is applied instead.
+
+Brightness
+++++
+
+Bright or darken the image. It takes an integer argument, which represent the light to add or remove
+Give a value from -100 to 100, from black to white
+
+.. code-block:: php
+
+    <?php
+
+    $image = $imagine->open('portrait.jpeg');
+
+    $image->effects()
+        ->brightness(20); //Will bright the image
+
+    $image->save('bright-portrait.png');
