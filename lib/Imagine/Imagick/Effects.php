@@ -110,4 +110,18 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function brightness($brightness)
+    {
+        try {
+            $this->imagick->modulateImage($brightness, 1, 100);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to brightness the image');
+        }
+
+        return $this;
+    }
 }
