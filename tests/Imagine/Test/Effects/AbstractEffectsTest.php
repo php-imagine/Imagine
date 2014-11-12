@@ -110,7 +110,7 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
 
         $pixel = $image->getColorAt(new Point(10, 10));
 
-        $this->assertEquals('#72BBFF', (string) $pixel);
+        $this->assertEquals('#78beff', (string) $pixel);
     }
 
     protected function getGrayValue()
