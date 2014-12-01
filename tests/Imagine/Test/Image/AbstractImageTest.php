@@ -292,6 +292,14 @@ abstract class AbstractImageTest extends ImagineTestCase
         $image->thumbnail(new Box(20, 20), 'boumboum');
     }
 
+    public function testThumbnailWithInvalidModeShouldThrowAnException()
+    {
+        $factory = $this->getImagine();
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', 'Invalid mode specified');
+        $image->thumbnail(new Box(20, 20), ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
+    }
+
     public function testResizeShouldReturnTheImage()
     {
         $factory = $this->getImagine();
