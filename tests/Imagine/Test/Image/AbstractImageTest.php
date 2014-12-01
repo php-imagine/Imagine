@@ -316,10 +316,8 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testThumbnailGeneration($sourceW, $sourceH, $thumbW, $thumbH, $mode, $expectedW, $expectedH)
     {
         $factory = $this->getImagine();
-        $image = $factory->create(new Box($sourceW, $sourceH));
-        $inset = $image->thumbnail(new Box($thumbW, $thumbH), $mode);
-
-        $size = $inset->getSize();
+        $image = $factory->create(new Box($sourceW, $sourceH));        $thumb = $image->thumbnail(new Box($thumbW, $thumbH), $mode);
+        $size = $thumb->getSize();
 
         $this->assertEquals($expectedW, $size->getWidth());
         $this->assertEquals($expectedH, $size->getHeight());
@@ -335,10 +333,10 @@ abstract class AbstractImageTest extends ImagineTestCase
             array(320, 240, 32, 16, ImageInterface::THUMBNAIL_INSET, round(16 * 320 / 240), 16),
             array(320, 240, 32, 16, ImageInterface::THUMBNAIL_OUTBOUND, 32, 16),
 
-            // portait with smaller portrait
+            // portrait with smaller portrait
             array(240, 320, 24, 48, ImageInterface::THUMBNAIL_INSET, 24, round(24 * 320 / 240)),
             array(240, 320, 24, 48, ImageInterface::THUMBNAIL_OUTBOUND, 24, 48),
-            // portait with smaller landscape
+            // portrait with smaller landscape
             array(240, 320, 24, 16, ImageInterface::THUMBNAIL_INSET, round(16 * 240 / 320), 16),
             array(240, 320, 24, 16, ImageInterface::THUMBNAIL_OUTBOUND, 24, 16),
 
@@ -349,10 +347,10 @@ abstract class AbstractImageTest extends ImagineTestCase
             array(32, 24, 320, 200, ImageInterface::THUMBNAIL_INSET, 32, 24),
             array(32, 24, 320, 200, ImageInterface::THUMBNAIL_OUTBOUND, 32, 24),
 
-            // portait with larger portrait
+            // portrait with larger portrait
             array(24, 32, 240, 300, ImageInterface::THUMBNAIL_INSET, 24, 32),
             array(24, 32, 240, 300, ImageInterface::THUMBNAIL_OUTBOUND, 24, 32),
-            // portait with larger landscape
+            // portrait with larger landscape
             array(24, 32, 240, 400, ImageInterface::THUMBNAIL_INSET, 24, 32),
             array(24, 32, 240, 400, ImageInterface::THUMBNAIL_OUTBOUND, 24, 32),
 
@@ -365,7 +363,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         );
     }
 
-    public function testThumbnailGenerationToDimensionsLergestThanSource()
+    public function testThumbnailGenerationToDimensionsLargestThanSource()
     {
         $test_image = 'tests/Imagine/Fixtures/google.png';
         $test_image_width = 364;
