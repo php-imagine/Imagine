@@ -55,7 +55,10 @@ abstract class AbstractImage implements ImageInterface
             $ratio = max($ratios);
         }
 
-        if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+        if ($mode === ImageInterface::THUMBNAIL_INSET) {
+            $imageSize = $imageSize->scale($ratio);
+            $thumbnail->resize($imageSize, $filter);
+        } else {
             if (!$imageSize->contains($size)) {
                 $size = new Box(
                     min($imageSize->getWidth(), $size->getWidth()),
@@ -69,9 +72,6 @@ abstract class AbstractImage implements ImageInterface
                 max(0, round(($imageSize->getWidth() - $size->getWidth()) / 2)),
                 max(0, round(($imageSize->getHeight() - $size->getHeight()) / 2))
             ), $size);
-        } else {
-            $imageSize = $imageSize->scale($ratio);
-            $thumbnail->resize($imageSize, $filter);
         }
 
         return $thumbnail;
