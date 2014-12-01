@@ -26,8 +26,16 @@ abstract class AbstractImage implements ImageInterface
      *
      * @return ImageInterface
      */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
+    public function thumbnail(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
+        $allSettings = ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE;
+
+        if ($settings & ~$allSettings) {
+            throw new InvalidArgumentException('Invalid setting specified');
+        }
+
+        $mode = $settings & (ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
+
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
             throw new InvalidArgumentException('Invalid mode specified');
