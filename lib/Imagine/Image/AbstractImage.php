@@ -44,6 +44,10 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
 
         $mode = $settings & (ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
 
+        if (!$mode) {
+            $mode = ImageInterface::THUMBNAIL_INSET;
+        }
+
         if ($mode !== ImageInterface::THUMBNAIL_INSET &&
             $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
             throw new InvalidArgumentException('Invalid mode specified');
