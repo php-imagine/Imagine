@@ -296,7 +296,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
-        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', 'Invalid mode specified');
+        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', 'Only one mode should be specified');
         $image->thumbnail(new Box(20, 20), ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
     }
 

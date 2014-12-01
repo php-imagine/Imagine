@@ -49,15 +49,15 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
             throw new InvalidArgumentException('Invalid setting specified');
         }
 
+        if ($settings & ImageInterface::THUMBNAIL_INSET &&
+            $settings & ImageInterface::THUMBNAIL_OUTBOUND) {
+            throw new InvalidArgumentException('Only one mode should be specified');
+        }
+
         $mode = $settings & (ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
 
         if (!$mode) {
             $mode = ImageInterface::THUMBNAIL_INSET;
-        }
-
-        if ($mode !== ImageInterface::THUMBNAIL_INSET &&
-            $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
-            throw new InvalidArgumentException('Invalid mode specified');
         }
 
         $allowUpscale = (bool) ($settings & ImageInterface::THUMBNAIL_UPSCALE);
