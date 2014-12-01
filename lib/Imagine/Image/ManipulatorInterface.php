@@ -22,8 +22,9 @@ use Imagine\Image\Palette\Color\ColorInterface;
  */
 interface ManipulatorInterface
 {
-    const THUMBNAIL_INSET = 'inset';
-    const THUMBNAIL_OUTBOUND = 'outbound';
+    const THUMBNAIL_INSET = 1;
+    const THUMBNAIL_OUTBOUND = 2;
+    const THUMBNAIL_UPSCALE = 4;
 
     /**
      * Copies current source image into a new ImageInterface instance.
@@ -152,14 +153,14 @@ interface ManipulatorInterface
      * Returns it as a new image, doesn't modify the current image.
      *
      * @param BoxInterface $size
-     * @param string $mode
+     * @param int $settings
      * @param string $filter The filter to use for resizing, one of ImageInterface::FILTER_*
      *
      * @throws RuntimeException
      *
      * @return static
      */
-    public function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED);
+    public function thumbnail(BoxInterface $size, $settings = self::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED);
 
     /**
      * Applies a given mask to current image's alpha channel.
