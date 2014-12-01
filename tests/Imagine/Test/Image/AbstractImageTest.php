@@ -310,6 +310,10 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function provideDimensionsAndModesForThumbnailGeneration()
     {
         return array(
+            // support previous values of mode constants
+            array(320, 240, 32, 48, 'inset', 32, round(32 * 240 / 320)),
+            array(320, 240, 32, 48, 'outbound', 32, 48),
+
             // landscape with smaller portrait
             array(320, 240, 32, 48, ImageInterface::THUMBNAIL_INSET, 32, round(32 * 240 / 320)),
             array(320, 240, 32, 48, ImageInterface::THUMBNAIL_OUTBOUND, 32, 48),
