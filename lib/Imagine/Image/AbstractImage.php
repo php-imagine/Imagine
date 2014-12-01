@@ -49,6 +49,8 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
+        $allowUpscale = (bool) ($settings & ImageInterface::THUMBNAIL_UPSCALE);
+
         $imageSize = $this->getSize();
         $ratios = array(
             $size->getWidth() / $imageSize->getWidth(),
@@ -61,7 +63,7 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
         $thumbnail->strip();
         // if target width is larger than image width
         // AND target height is longer than image height
-        if ($size->contains($imageSize)) {
+        if ($size->contains($imageSize) && !$allowUpscale) {
             return $thumbnail;
         }
 
@@ -76,6 +78,10 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
             $thumbnail->resize($imageSize, $filter);
         } else {
             if (!$imageSize->contains($size)) {
+                if ($allowUpscale) {
+                    $imageSize = $imageSize->scale($ratio);
+                    $thumbnail->resize($imageSize, $filter);
+                }
                 $size = new Box(
                     min($imageSize->getWidth(), $size->getWidth()),
                     min($imageSize->getHeight(), $size->getHeight())
