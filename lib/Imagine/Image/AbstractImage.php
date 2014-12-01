@@ -38,7 +38,7 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
     {
         $allSettings = ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE;
 
-        if ($settings & ~$allSettings) {
+        if (!is_int($settings) || ($settings & ~$allSettings)) {
             throw new InvalidArgumentException('Invalid setting specified');
         }
 

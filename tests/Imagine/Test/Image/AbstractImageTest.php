@@ -284,7 +284,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertNotSame($image, $thumbnail);
     }
 
-    public function testThumbnailWithInvalidModeShouldThrowAnException()
+    public function testThumbnailWithInvalidSettingShouldThrowAnException()
     {
         $factory = $this->getImagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
