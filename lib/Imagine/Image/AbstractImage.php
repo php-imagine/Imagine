@@ -36,23 +36,7 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
      */
     public function thumbnail(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-        // Preserve BC until version 1.0
-        if ($settings === 'inset') {
-            $settings = ImageInterface::THUMBNAIL_INSET;
-        } elseif ($settings === 'outbound') {
-            $settings = ImageInterface::THUMBNAIL_OUTBOUND;
-        }
-
-        $allSettings = ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE;
-
-        if (!is_int($settings) || ($settings & ~$allSettings)) {
-            throw new InvalidArgumentException('Invalid setting specified');
-        }
-
-        if ($settings & ImageInterface::THUMBNAIL_INSET &&
-            $settings & ImageInterface::THUMBNAIL_OUTBOUND) {
-            throw new InvalidArgumentException('Only one mode should be specified');
-        }
+        $settings = $this->checkThumbnailSettings($settings);
 
         $mode = $settings & (ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
 
@@ -108,6 +92,32 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
         }
 
         return $thumbnail;
+    }
+
+    /**
+     * Check the settings argument in thumbnail() method
+     */
+    private function checkThumbnailSettings($settings)
+    {
+        // Preserve BC until version 1.0
+        if ($settings === 'inset') {
+            $settings = ImageInterface::THUMBNAIL_INSET;
+        } elseif ($settings === 'outbound') {
+            $settings = ImageInterface::THUMBNAIL_OUTBOUND;
+        }
+
+        $allSettings = ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE;
+
+        if (!is_int($settings) || ($settings & ~$allSettings)) {
+            throw new InvalidArgumentException('Invalid setting specified');
+        }
+
+        if ($settings & ImageInterface::THUMBNAIL_INSET &&
+            $settings & ImageInterface::THUMBNAIL_OUTBOUND) {
+            throw new InvalidArgumentException('Only one mode should be specified');
+        }
+
+        return $settings;
     }
 
     /**
