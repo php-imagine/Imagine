@@ -62,7 +62,7 @@ abstract class AbstractImage implements ImageInterface
                     min($imageSize->getHeight(), $size->getHeight())
                 );
             } else {
-                $imageSize = $thumbnail->getSize()->scale($ratio);
+                $imageSize = $imageSize->scale($ratio);
                 $thumbnail->resize($imageSize, $filter);
             }
             $thumbnail->crop(new Point(
@@ -70,13 +70,8 @@ abstract class AbstractImage implements ImageInterface
                 max(0, round(($imageSize->getHeight() - $size->getHeight()) / 2))
             ), $size);
         } else {
-            if (!$imageSize->contains($size)) {
-                $imageSize = $imageSize->scale($ratio);
-                $thumbnail->resize($imageSize, $filter);
-            } else {
-                $imageSize = $thumbnail->getSize()->scale($ratio);
-                $thumbnail->resize($imageSize, $filter);
-            }
+            $imageSize = $imageSize->scale($ratio);
+            $thumbnail->resize($imageSize, $filter);
         }
 
         return $thumbnail;
