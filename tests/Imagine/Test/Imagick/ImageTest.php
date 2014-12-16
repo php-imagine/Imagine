@@ -67,6 +67,23 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/resize/small.png');
     }
 
+    public function testAnimatedGifResize()
+    {
+        $imagine = $this->getImagine();
+
+        $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+
+        $image
+            ->resize(new Box(150, 100))
+            ->save('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif', array('animated' => true))
+        ;
+        $this->assertImageEquals(
+            $imagine->open('tests/Imagine/Fixtures/resize/anima3-150x100.gif'),
+            $imagine->open('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif')
+        );
+        unlink('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif');
+    }
+
     // Older imagemagick versions does not support colorspace conversion
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
     {
