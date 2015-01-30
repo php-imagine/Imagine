@@ -13,6 +13,7 @@ namespace Imagine\Imagick;
 
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Effects\ConvolutionMatrixInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
@@ -108,6 +109,19 @@ class Effects implements EffectsInterface
             throw new RuntimeException('Failed to blur the image', $e->getCode(), $e);
         }
 
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function convolve(ConvolutionMatrixInterface $matrix)
+    {
+        try {
+            $this->imagick->convolveImage($matrix->getKernel());
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to convolve the image');
+        }
         return $this;
     }
 }
