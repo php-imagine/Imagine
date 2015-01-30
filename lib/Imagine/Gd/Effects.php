@@ -14,6 +14,7 @@ namespace Imagine\Gd;
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Effects\ConvolutionMatrixInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 
@@ -121,6 +122,17 @@ class Effects implements EffectsInterface
             throw new RuntimeException('Failed to brightness the image');
         }
 
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function convolve(ConvolutionMatrixInterface $matrix)
+    {
+        if (false === imageconvolution($this->resource, $matrix->getMatrix(), 1, 0)) {
+            throw new RuntimeException('Failed to convolve the image');
+        }
         return $this;
     }
 }
