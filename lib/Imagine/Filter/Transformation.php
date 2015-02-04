@@ -96,7 +96,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     {
         if (null === $this->sorted) {
             ksort($this->filters);
-            $this->sorted = call_user_func_array('array_merge', $this->filters);
+            $this->sorted = array_merge($this->filters);
         }
 
         return $this->sorted;
