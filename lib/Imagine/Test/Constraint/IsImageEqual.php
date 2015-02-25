@@ -61,7 +61,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     /**
      * {@inheritdoc}
      */
-    public function evaluate($other)
+    public function evaluate($other, $description = '', $returnResult = false)
     {
         if (!$other instanceof ImageInterface) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
