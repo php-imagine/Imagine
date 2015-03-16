@@ -232,6 +232,22 @@ final class Image extends AbstractImage
 
         return $this;
     }
+    
+    /**
+     * {@inheritdoc}
+     *
+     * @return ImageInterface
+     */
+    public function trim($fuzz = 0)
+    {
+        try {
+            $this->imagick->trimImage($fuzz);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('TrimImage operation failed', $e->getCode(), $e);
+        }
+
+        return $this;
+    }    
 
     /**
      * {@inheritdoc}
