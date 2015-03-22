@@ -549,7 +549,7 @@ final class Image extends AbstractImage
 
         $options = $this->updateSaveOptions($options);
 
-        if ($format === 'jpeg' && isset($options['jpeg_quality'])) {
+        if (($format === 'jpeg' || $format === 'jpg') && isset($options['jpeg_quality'])) {
             $args[] = $options['jpeg_quality'];
         }
 
