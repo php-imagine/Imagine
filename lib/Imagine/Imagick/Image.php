@@ -90,7 +90,7 @@ final class Image extends AbstractImage
     /**
      * Returns the underlying \Imagick instance
      *
-     * @return Imagick
+     * @return \Imagick
      */
     public function getImagick()
     {
