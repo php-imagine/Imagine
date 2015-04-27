@@ -714,6 +714,31 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink($file);
     }
 
+    public function testDisableAlphaOptionOnSave()
+    {
+        if (!$this->supportMatteChannel()) {
+            $this->markTestSkipped('This driver does not handle matte channel');
+        }
+
+        $outFile = __DIR__ . '/test-disable-alpha.jpg';
+
+        $image = $this->getImagine()->open(__DIR__ . '/../../Fixtures/grayscalematte.pdf');
+
+        $box = new Box(200, 200);
+        $image = $image->resize($box)->save($outFile, array('disable-alpha' => true));
+
+        if ($image instanceof \Imagine\Imagick\Image) {
+            $imagick = new \Imagick($outFile);
+            $this->assertEquals(array(
+                'r' => 255,
+                'g' => 255,
+                'b' => 255,
+                'a' => 1,
+            ),$imagick->getImagePixelColor(10, 10)->getColor());
+        }
+        unlink($outFile);
+    }
+
     public function provideVariousSources()
     {
         return array(
@@ -783,4 +808,9 @@ abstract class AbstractImageTest extends ImagineTestCase
      * @return boolean
      */
     abstract protected function supportMultipleLayers();
+
+    /**
+     * @return boolean
+     */
+    abstract protected function supportMatteChannel();
 }
