@@ -129,9 +129,20 @@ final class Image extends AbstractImage
         }
 
         try {
-            $this->imagick->cropImage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
-            // Reset canvas for gif format
-            $this->imagick->setImagePage(0, 0, 0, 0);
+            if ($this->layers()->count() > 1) {
+                // Crop each layer separately
+                $this->imagick = $this->imagick->coalesceimages();
+                foreach ($this->imagick as $frame) {
+                    $frame->cropImage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
+                    // Reset canvas for gif format
+                    $frame->setImagePage(0, 0, 0, 0);
+                }
+                $this->imagick = $this->imagick->deconstructimages();
+            } else {
+                $this->imagick->cropImage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
+                // Reset canvas for gif format
+                $this->imagick->setImagePage(0, 0, 0, 0);
+            }
         } catch (\ImagickException $e) {
             throw new RuntimeException('Crop operation failed', $e->getCode(), $e);
         }
