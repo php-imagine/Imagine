@@ -29,7 +29,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function copy();
 
@@ -43,7 +43,7 @@ interface ManipulatorInterface
      * @throws OutOfBoundsException
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function crop(PointInterface $start, BoxInterface $size);
 
@@ -55,7 +55,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED);
 
@@ -69,7 +69,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function rotate($angle, ColorInterface $background = null);
 
@@ -87,7 +87,7 @@ interface ManipulatorInterface
      * @throws OutOfBoundsException
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function paste(ImageInterface $image, PointInterface $start);
 
@@ -101,7 +101,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function save($path = null, array $options = array());
 
@@ -113,7 +113,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function show($format, array $options = array());
 
@@ -122,7 +122,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function flipHorizontally();
 
@@ -131,7 +131,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function flipVertically();
 
@@ -140,7 +140,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function strip();
 
@@ -154,7 +154,7 @@ interface ManipulatorInterface
      *
      * @throws RuntimeException
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED);
 
@@ -163,7 +163,7 @@ interface ManipulatorInterface
      *
      * @param ImageInterface $mask
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function applyMask(ImageInterface $mask);
 
@@ -174,7 +174,7 @@ interface ManipulatorInterface
      *
      * @param FillInterface $fill
      *
-     * @return ManipulatorInterface
+     * @return static
      */
     public function fill(FillInterface $fill);
 }
