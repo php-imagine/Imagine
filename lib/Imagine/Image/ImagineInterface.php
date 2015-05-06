@@ -54,7 +54,6 @@ interface ImagineInterface
      * @throws RuntimeException
      *
      * @return ImageInterface
-     * @return ImageInterface
      */
     public function load($string);
 
