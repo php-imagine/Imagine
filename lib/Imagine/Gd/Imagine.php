@@ -187,7 +187,7 @@ final class Imagine extends AbstractImagine
         $resource = @imagecreatefromstring($string);
 
         if (!is_resource($resource)) {
-            throw new InvalidArgumentException('An image could not be created from the given input');
+            throw new RuntimeException('An image could not be created from the given input');
         }
 
         return $this->wrap($resource, new RGB(), $metadata);
