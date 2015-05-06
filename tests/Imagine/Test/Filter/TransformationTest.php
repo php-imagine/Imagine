@@ -163,6 +163,12 @@ class TransformationTest extends FilterTestCase
         $this->assertSame($expected1, $transformation1->getFilters());
         $this->assertSame($expected2, $transformation2->getFilters());
     }
+
+    public function testGetEmptyFilters()
+    {
+        $transformation = new Transformation();
+        $this->assertSame(array(), $transformation->getFilters());
+    }
 }
 
 class TestFilter implements FilterInterface
