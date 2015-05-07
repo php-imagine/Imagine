@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 0.6.3 (2015-xx-xx)
+  * Fix wrong array_merge when calling Transformation::getFilters without filters
+  * Add export-ignore git attribute (@Benoth)
+  * Fix docblocks (@Sm0ke0ut)
+  * Fix animated gif loop length options (@jygaulier)
+
 ### 0.6.2 (2014-11-11)
   * Stripping image containing an invalid ICC profile fails
   * MetadataBag now implements \Countable
