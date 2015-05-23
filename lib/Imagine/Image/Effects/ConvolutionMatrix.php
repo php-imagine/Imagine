@@ -80,7 +80,9 @@ class ConvolutionMatrix implements ConvolutionMatrixInterface
         foreach ($this->getKernel() as $val) {
             $normalizedMatrix[] = $val / $divisor;
         }
-        return call_user_func(get_class($this), $this->getKernel());
+        $clone = clone $this;
+        $clone->setKernel($normalizedMatrix);
+        return $clone;
     }
 
     /**
