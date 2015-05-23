@@ -64,8 +64,7 @@ class ConvolutionMatrix implements ConvolutionMatrixInterface
      */
     public function getDivisor()
     {
-        // Assume that divisor should never be less than 1?
-        return max(1, array_sum($this->getKernel()));
+        return array_sum($this->getKernel());
     }
 
     /**
