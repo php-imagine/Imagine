@@ -12,6 +12,7 @@
 namespace Imagine\Test\Effects;
 
 use Imagine\Image\Box;
+use Imagine\Image\Effects\ConvolutionMatrix;
 use Imagine\Image\Point;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
@@ -131,6 +132,27 @@ abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals(255, $pixel->getRed());
         $this->assertNotEquals(255, $pixel->getGreen());
         $this->assertNotEquals(255, $pixel->getBlue());
+    }
+
+
+    public function testConvolution()
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->open('tests/Imagine/Fixtures/convolution/organized-desk.jpg');
+        $matrix = new ConvolutionMatrix(
+            0, 0.5, 0,
+            0.5, 1, 0.5,
+            0, 0.5, 0
+        );
+        $image->effects()->convolve($matrix->normalize());
+
+        $image->save('tests/Imagine/Fixtures/convolution/organized-desk-blur-test.jpg');
+
+        $this->assertFileEquals(
+            'tests/Imagine/Fixtures/convolution/organized-desk-blur.jpg',
+            'tests/Imagine/Fixtures/convolution/organized-desk-blur-test.jpg'
+        );
+        unlink('tests/Imagine/Fixtures/convolution/organized-desk-blur-test.jpg');
     }
 
     /**
