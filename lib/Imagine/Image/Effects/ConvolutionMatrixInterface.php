@@ -25,14 +25,15 @@ interface ConvolutionMatrixInterface
     public function normalize();
 
     /**
-     * Returns convolution as a matrix (array of array of floats)
+     * Returns convolution as a matrix (array of array of floats),
+     * as used by `imageconvolution()`.
      *
      * @return array|array[]
      */
     public function getMatrix();
 
     /**
-     * Returns convolution as a kernel.
+     * Returns convolution as a kernel, as used by `Imagick::convolveImage`.
      *
      * @return array|float[]
      */
