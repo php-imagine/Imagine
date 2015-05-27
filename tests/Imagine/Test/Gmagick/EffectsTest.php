@@ -44,4 +44,10 @@ class EffectsTest extends AbstractEffectsTest
     {
         return new Imagine();
     }
+
+    public function testConvolution()
+    {
+        $this->setExpectedException('RuntimeException');
+        parent::testConvolution();
+    }
 }
