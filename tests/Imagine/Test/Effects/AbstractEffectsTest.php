@@ -16,8 +16,9 @@ use Imagine\Image\Effects\ConvolutionMatrix;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
+use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractEffectsTest extends \PHPUnit\Framework\TestCase
+abstract class AbstractEffectsTest extends ImagineTestCase
 {
     public function testNegate()
     {
@@ -165,7 +166,7 @@ abstract class AbstractEffectsTest extends \PHPUnit\Framework\TestCase
     public function testConvolution()
     {
         $imagine = $this->getImagine();
-        $image = $imagine->open('tests/Imagine/Fixtures/convolution/organized-desk.jpg');
+        $image = $imagine->open('tests/Imagine/Fixtures/trans.gif');
         $matrix = new ConvolutionMatrix(
             0, 0.5, 0,
             0.5, 1, 0.5,
@@ -173,13 +174,10 @@ abstract class AbstractEffectsTest extends \PHPUnit\Framework\TestCase
         );
         $image->effects()->convolve($matrix->normalize());
 
-        $image->save('tests/Imagine/Fixtures/convolution/organized-desk-blur-test.jpg');
-
-        $this->assertFileEquals(
-            'tests/Imagine/Fixtures/convolution/organized-desk-blur.jpg',
-            'tests/Imagine/Fixtures/convolution/organized-desk-blur-test.jpg'
+        $this->assertImageEquals(
+            $image,
+            $imagine->open('tests/Imagine/Fixtures/convolution/trans-blur.gif')
         );
-        unlink('tests/Imagine/Fixtures/convolution/organized-desk-blur-test.jpg');
     }
 
     /**
