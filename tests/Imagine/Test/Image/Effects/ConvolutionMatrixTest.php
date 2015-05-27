@@ -23,27 +23,27 @@ class ConvolutionMatrixTest extends \PHPUnit_Framework_TestCase
         );
         $normalizedMatrix = $matrix->normalize();
         $this->assertEquals(
-            [-.125, -.125, -.125, -.125, 2, -.125, -.125, -.125, -.125],
+            array(-.125, -.125, -.125, -.125, 2, -.125, -.125, -.125, -.125),
             $normalizedMatrix->getKernel()
         );
         $this->assertEquals(
-            [
-                [-.125, -.125, -.125],
-                [-.125, 2, -.125],
-                [-.125, -.125, -.125]
-            ],
+            array(
+                array(-.125, -.125, -.125),
+                array(-.125, 2, -.125),
+                array(-.125, -.125, -.125)
+            ),
             $normalizedMatrix->getMatrix()
         );
         $this->assertEquals(
-            [-1, -1, -1, -1, 16, -1, -1, -1, -1],
+            array(-1, -1, -1, -1, 16, -1, -1, -1, -1),
             $matrix->getKernel()
         );
         $this->assertEquals(
-            [
-                [-1, -1, -1],
-                [-1, 16, -1],
-                [-1, -1, -1]
-            ],
+            array(
+                array(-1, -1, -1),
+                array(-1, 16, -1),
+                array(-1, -1, -1)
+            ),
             $matrix->getMatrix()
         );
     }
