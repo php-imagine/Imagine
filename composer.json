@@ -39,5 +39,17 @@
         "branch-alias": {
             "dev-develop": "0.7-dev"
         }
+    },
+    "archive": {
+        "exclude": [
+            "/.*",
+            "/tests",
+            "/vendor",
+            "/bin",
+            "docs/_build",
+            "Imagine-*.tgz",
+            "imagine-*.phar",
+            "composer.phar"
+        ]
     }
 }
