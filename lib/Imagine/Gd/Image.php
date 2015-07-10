@@ -376,7 +376,8 @@ final class Image extends AbstractImage
                 $position  = new Point($x, $y);
                 $color     = $this->getColorAt($position);
                 $maskColor = $mask->getColorAt($position);
-                $round     = (int) round(max($color->getAlpha(), (100 - $color->getAlpha()) * $maskColor->getRed() / 255));
+                $blackAmount = 1 - ($maskColor->getValue(ColorInterface::COLOR_RED) + $maskColor->getValue(ColorInterface::COLOR_GREEN) + $maskColor->getValue(ColorInterface::COLOR_BLUE)) / 3 / 255;
+                $round     = (int) round($color->getAlpha() * $blackAmount);
 
                 if (false === imagesetpixel($this->resource, $x, $y, $this->getColor($color->dissolve($round - $color->getAlpha())))) {
                     throw new RuntimeException('Apply mask operation failed');
