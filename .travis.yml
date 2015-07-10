@@ -7,7 +7,7 @@ env:
 before_install:
   - composer self-update
 
-before_script:
+install:
   - composer install --prefer-source
   - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
   - sudo apt-get install -y libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config
