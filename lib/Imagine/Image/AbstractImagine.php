@@ -61,6 +61,13 @@ abstract class AbstractImagine implements ImagineInterface
             $path = (string) $path;
         }
 
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+        if(preg_match('/pdf\[[0-9]+\]/', $ext)){
+            $path = substr($path, 0, -strlen($ext));
+            $path = $path."pdf";
+        }
+
         $handle = @fopen($path, 'r');
 
         if (false === $handle) {
