@@ -56,6 +56,7 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     protected function extractFromStream($resource)
     {
+        rewind($resource);
         return $this->doReadData(stream_get_contents($resource));
     }
 
