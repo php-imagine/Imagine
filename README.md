@@ -19,6 +19,9 @@ Depending on the chosen Image implementation, you may need one of the following:
  - Imagick
  - Gmagick
 
+### Installation using composer
+`php composer.phar require imagine/imagine`
+
 ##Basic Principles##
 
 The main purpose of Imagine is to provide all the necessary functionality to bring all native low level image processing libraries in PHP to the same simple and intuitive OO API.
