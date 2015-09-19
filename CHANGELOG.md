@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 0.6.3 (2015-xx-xx)
+### 0.6.3 (2015-09-19)
   * Fix wrong array_merge when calling Transformation::getFilters without filters
   * Add export-ignore git attribute (@Benoth)
   * Fix docblocks (@Sm0ke0ut and @norkunas)
