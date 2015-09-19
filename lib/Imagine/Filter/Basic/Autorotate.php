@@ -43,16 +43,33 @@ class Autorotate implements FilterInterface
         $metadata = $image->metadata();
 
         switch (isset($metadata['ifd0.Orientation']) ? $metadata['ifd0.Orientation'] : null) {
-            case 3:
+            case 1: // top-left
+                break;
+            case 2: // top-right
+                $image->flipHorizontally();
+                break;
+            case 3: // bottom-right
                 $image->rotate(180, $this->getColor($image));
                 break;
-            case 6:
-                $image->rotate(90, $this->getColor($image));
+            case 4: // bottom-left
+                $image->flipHorizontally();
+                $image->rotate(180, $this->getColor($image));
                 break;
-            case 8:
+            case 5: // left-top
+                $image->flipHorizontally();
                 $image->rotate(-90, $this->getColor($image));
                 break;
-            default:
+            case 6: // right-top
+                $image->rotate(90, $this->getColor($image));
+                break;
+            case 7: // right-bottom
+                $image->flipHorizontally();
+                $image->rotate(90, $this->getColor($image));
+                break;
+            case 8: // left-bottom
+                $image->rotate(-90, $this->getColor($image));
+                break;
+            default: // Invalid orientation
                 break;
         }
 
