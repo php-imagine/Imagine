@@ -56,7 +56,13 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     protected function extractFromStream($resource)
     {
-        rewind($resource);
+        if (0 < ftell($resource)) {
+            $metadata = stream_get_meta_data($resource);
+            if ($metadata['seekable']) {
+                rewind($resource);
+            }
+        }
+
         return $this->doReadData(stream_get_contents($resource));
     }
 
