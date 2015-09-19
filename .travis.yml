@@ -4,8 +4,10 @@ env:
   - IMAGINE_DRIVER=imagick
   - IMAGINE_DRIVER=gmagick
 
-before_script:
+before_install:
   - composer self-update
+
+install:
   - composer install --prefer-source
   - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
   - sudo apt-get install -y libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config
