@@ -1,6 +1,6 @@
 #Imagine
 [![project status](http://stillmaintained.com/avalanche123/Imagine.png)](http://stillmaintained.com/avalanche123/Imagine)
-[![Build Status](https://secure.travis-ci.org/avalanche123/Imagine.png?branch=develop)](http://travis-ci.org/avalanche123/Imagine)
+[![Build Status](https://travis-ci.org/avalanche123/Imagine.svg?branch=develop)](https://travis-ci.org/avalanche123/Imagine)
 
 Tweet about it using the [#php_imagine](https://twitter.com/search?q=%23php_imagine) hashtag.
 
