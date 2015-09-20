@@ -178,7 +178,7 @@ final class Imagine extends AbstractImagine
     private function requireGdVersion($version)
     {
         if (version_compare(GD_VERSION, $version, '<')) {
-            throw new RuntimeException(sprintf('GD2 version %s or higher is required', $version));
+            throw new RuntimeException(sprintf('GD2 version %s or higher is required, %s provided', $version, GD_VERSION));
         }
     }
 
