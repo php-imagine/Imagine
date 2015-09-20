@@ -122,7 +122,7 @@ class Imagine extends AbstractImagine
             throw new InvalidArgumentException('Couldn\'t read given resource');
         }
 
-        return $this->doLoad($content, $this->getMetadataReader()->readStream($resource));
+        return $this->doLoad($content, $this->getMetadataReader()->readData($content, $resource));
     }
 
     /**

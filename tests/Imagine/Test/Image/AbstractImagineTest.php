@@ -114,6 +114,26 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertArrayNotHasKey('filepath', $metadata);
     }
 
+    public function testShouldCreateImageFromStreamWithMetadata()
+    {
+        $source = 'http://imagine.readthedocs.org/en/latest/_static/exit-90-test.jpg';
+        $resource = fopen($source, 'r');
+
+        $factory = $this->getImagine();
+        $image   = $factory->read($resource);
+        $size    = $image->getSize();
+
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertEquals(50, $size->getWidth());
+        $this->assertEquals(50, $size->getHeight());
+
+        $metadata = $image->metadata();
+
+        $this->assertEquals($source, $metadata['uri']);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+        $this->assertEquals(6, $metadata['ifd0.Orientation']);
+    }
+
     public function testShouldCreateImageFromResource()
     {
         $source = 'tests/Imagine/Fixtures/google.png';
