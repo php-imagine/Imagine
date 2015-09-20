@@ -36,8 +36,10 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException('Imagick not installed');
         }
 
-        if (version_compare('6.2.9', $this->getVersion(new \Imagick())) > 0) {
-            throw new RuntimeException('ImageMagick version 6.2.9 or higher is required');
+        $version = $this->getVersion(new \Imagick());
+
+        if (version_compare('6.2.9', $version) > 0) {
+            throw new RuntimeException(sprintf('ImageMagick version 6.2.9 or higher is required, %s provided', $version));
         }
     }
 
