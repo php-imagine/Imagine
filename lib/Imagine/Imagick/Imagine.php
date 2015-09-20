@@ -117,14 +117,16 @@ final class Imagine extends AbstractImagine
             throw new InvalidArgumentException('Variable does not contain a stream resource');
         }
 
+        $content = stream_get_contents($resource);
+
         try {
             $imagick = new \Imagick();
-            $imagick->readImageFile($resource);
+            $imagick->readImageBlob($content);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Could not read image from resource', $e->getCode(), $e);
         }
 
-        return new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readStream($resource));
+        return new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readData($content, $resource));
     }
 
     /**
