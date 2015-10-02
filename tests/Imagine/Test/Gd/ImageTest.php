@@ -132,25 +132,33 @@ class ImageTest extends AbstractImageTest
 
     public function testCropBalanced()
     {
-        $crop = new Imagine();
-        $size = new Box(100, 100);
-        $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
-        $imageCrop = $image->cropBalanced($size);
+        if (version_compare('5.5', PHP_VERSION, '<=')) {
+            $crop = new Imagine();
+            $size = new Box(100, 100);
+            $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
+            $imageCrop = $image->cropBalanced($size);
 
-        $imageCrop->save(__DIR__.'/../../Fixtures/GD_Balance.jpg');
-        $this->assertEquals(100, $imageCrop->getSize()->getHeight());
-        $this->assertEquals(100, $imageCrop->getSize()->getWidth());
+            $imageCrop->save(__DIR__.'/../../Fixtures/GD_Balance.jpg');
+            $this->assertEquals(100, $imageCrop->getSize()->getHeight());
+            $this->assertEquals(100, $imageCrop->getSize()->getWidth());
+        } else {
+            $this->markTestSkipped('Gd function imagecrop only supports PHP version >= 5.5');
+        }
     }
 
     public function testCropEntropy()
     {
-        $crop = new Imagine();
-        $size = new Box(100, 100);
-        $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
-        $imageCrop = $image->cropEntropy($size);
+        if (version_compare('5.5', PHP_VERSION, '<=')) {
+            $crop = new Imagine();
+            $size = new Box(100, 100);
+            $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
+            $imageCrop = $image->cropEntropy($size);
 
-        $imageCrop->save(__DIR__.'/../../Fixtures/GD_Entropy.jpg');
-        $this->assertEquals(100, $imageCrop->getSize()->getHeight());
-        $this->assertEquals(100, $imageCrop->getSize()->getWidth());
+            $imageCrop->save(__DIR__.'/../../Fixtures/GD_Entropy.jpg');
+            $this->assertEquals(100, $imageCrop->getSize()->getHeight());
+            $this->assertEquals(100, $imageCrop->getSize()->getWidth());
+        } else {
+            $this->markTestSkipped('Gd function imagecrop only supports PHP version >= 5.5');
+        }
     }
 }

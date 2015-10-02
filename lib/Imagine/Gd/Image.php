@@ -133,13 +133,17 @@ final class Image extends AbstractImage
      */
     final public function cropBalanced(BoxInterface $size)
     {
-        $start = new Balanced();
-        $cropImage = $this->resize($this->getSafeResizeOffset($size));
-        $startP = $start->getSpecialOffset($cropImage, $size->getWidth(), $size->getHeight());
+        if (version_compare('5.5', PHP_VERSION, '<=')) {
+            $start = new Balanced();
+            $cropImage = $this->resize($this->getSafeResizeOffset($size));
+            $startP = $start->getSpecialOffset($cropImage, $size->getWidth(), $size->getHeight());
 
-        $startPoint = new Point($startP['x'], $startP['y']);
+            $startPoint = new Point($startP['x'], $startP['y']);
 
-        return $this->crop($startPoint, $size);
+            return $this->crop($startPoint, $size);
+        } else {
+            throw new RuntimeException ('PHP version is to old');
+        }
     }
 
     /**
@@ -149,14 +153,17 @@ final class Image extends AbstractImage
      */
     final public function cropEntropy(BoxInterface $size)
     {
+        if (version_compare('5.5', PHP_VERSION, '<=')) {
+            $start = new Entropy();
+            $cropImage = $this->resize($this->getSafeResizeOffset($size));
+            $startP = $start->getSpecialOffset($cropImage, $size->getWidth(), $size->getHeight());
 
-        $start = new Entropy();
-        $cropImage = $this->resize($this->getSafeResizeOffset($size));
-        $startP = $start->getSpecialOffset($cropImage, $size->getWidth(), $size->getHeight());
+            $startPoint = new Point($startP['x'], $startP['y']);
 
-        $startPoint = new Point($startP['x'], $startP['y']);
-
-        return $this->crop($startPoint, $size);
+            return $this->crop($startPoint, $size);
+        } else {
+            throw new RuntimeException ('PHP version is to old');
+        }
     }
 
     /**
