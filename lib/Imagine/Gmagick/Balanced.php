@@ -44,7 +44,6 @@ class Balanced
     protected function getOffsetBalanced(\Gmagick $originalImage, $targetWidth, $targetHeight)
     {
         $size = array('width' => $originalImage->getImageWidth(), 'height' =>$originalImage->getImageHeight());
-        var_dump($size);
         $points = array();
         $halfWidth = ceil($size['width']/2);
         $halfHeight = ceil($size['height']/2);
