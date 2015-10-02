@@ -62,7 +62,7 @@ class Entropy
         // The entropy works better on a blured image
         $image = clone($originalImage);
         $image->blurImage(3, 2);
-        $size = ['width' => $originalImage->getImageWidth(), 'height' =>$originalImage->getImageHeight()];
+        $size = array('width' => $originalImage->getImageWidth(), 'height' =>$originalImage->getImageHeight());
         $originalWidth = $size['width'];
         $originalHeight = $size['height'];
         $leftX = $this->slice($image, $originalWidth, $targetWidth, 'h');
@@ -250,7 +250,7 @@ class Entropy
      */
     protected function area(\Gmagick $image)
     {
-        $size = ['width' => $image->getImageWidth(), 'height' =>$image->getImageHeight()];
+        $size = array('width' => $image->getImageWidth(), 'height' =>$image->getImageHeight());
         return $size['height'] * $size['width'];
     }
 
