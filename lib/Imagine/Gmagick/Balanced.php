@@ -43,7 +43,7 @@ class Balanced
      */
     protected function getOffsetBalanced(\Gmagick $originalImage, $targetWidth, $targetHeight)
     {
-        $size = ['width' => $originalImage->getImageWidth(), 'height' =>$originalImage->getImageHeight()];
+        $size[] = array('width' => $originalImage->getImageWidth(), 'height' =>$originalImage->getImageHeight());
         $points = array();
         $halfWidth = ceil($size['width']/2);
         $halfHeight = ceil($size['height']/2);
@@ -116,7 +116,7 @@ class Balanced
 
     protected function getHighestEnergyPoint(\Gmagick $image)
     {
-        $size = ['width' => $image->getImageWidth(), 'height' =>$image->getImageHeight()];
+        $size[] = array('width' => $image->getImageWidth(), 'height' =>$image->getImageHeight());
         // It's more performant doing random pixel uplook via GD
         $im = imagecreatefromstring($image->getImageBlob());
         if ($im === false) {
