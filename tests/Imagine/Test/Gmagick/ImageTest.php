@@ -109,7 +109,7 @@ class ImageTest extends AbstractImageTest
     {
         $crop = new Imagine();
         $size = new Box(100, 100);
-        $image = $crop->open(__DIR__.'/../../Fixtures/simple.jpg');
+        $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
         $imageCrop = $image->cropBalanced($size);
 
         $imageCrop->save(__DIR__.'/../../Fixtures/GM_Balance.jpg');
@@ -121,7 +121,7 @@ class ImageTest extends AbstractImageTest
     {
         $crop = new Imagine();
         $size = new Box(100, 100);
-        $image = $crop->open(__DIR__.'/../../Fixtures/simple.jpg');
+        $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
         $imageCrop = $image->cropEntropy($size);
 
         $imageCrop->save(__DIR__.'/../../Fixtures/GM_Entropy.jpg');
