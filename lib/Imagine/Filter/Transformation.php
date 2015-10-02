@@ -11,6 +11,7 @@
 
 namespace Imagine\Filter;
 
+use CropBalanced;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Filter\Basic\ApplyMask;
 use Imagine\Filter\Basic\Copy;
@@ -132,6 +133,27 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     public function crop(PointInterface $start, BoxInterface $size)
     {
         return $this->add(new Crop($start, $size));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function cropBalanced(BoxInterface $size)
+    {
+        return $this->add(new CropBalanced($size));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function cropEntropy(BoxInterface $size)
+    {
+        return $this->add(new CropEntropy($size));
+    }
+
+    public function getSafeResizeOffset(BoxInterface $size)
+    {
+        return $this->add(new getSafeResizeOffset($size));
     }
 
     /**

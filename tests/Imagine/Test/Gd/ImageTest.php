@@ -14,6 +14,7 @@ namespace Imagine\Test\Gd;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractImageTest;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Box;
 use Imagine\Exception\RuntimeException;
 
 class ImageTest extends AbstractImageTest
@@ -127,5 +128,29 @@ class ImageTest extends AbstractImageTest
 
     protected function getImageResolution(ImageInterface $image)
     {
+    }
+
+    public function testCropBalanced()
+    {
+        $crop = new Imagine();
+        $size = new Box(100, 100);
+        $image = $crop->open(__DIR__.'/../../Fixtures/simple.jpg');
+        $imageCrop = $image->cropBalanced($size);
+
+        $imageCrop->save(__DIR__.'/../../Fixtures/GD_Balance.jpg');
+        $this->assertEquals(100, $imageCrop->getSize()->getHeight());
+        $this->assertEquals(100, $imageCrop->getSize()->getWidth());
+    }
+
+    public function testCropEntropy()
+    {
+        $crop = new Imagine();
+        $size = new Box(100, 100);
+        $image = $crop->open(__DIR__.'/../../Fixtures/simple.jpg');
+        $imageCrop = $image->cropEntropy($size);
+
+        $imageCrop->save(__DIR__.'/../../Fixtures/GD_Entropy.jpg');
+        $this->assertEquals(100, $imageCrop->getSize()->getHeight());
+        $this->assertEquals(100, $imageCrop->getSize()->getWidth());
     }
 }

@@ -121,6 +121,65 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
+    public function cropBalanced(BoxInterface $size)
+    {
+        $start = new Balanced();
+
+        $cropSize = $this->getSafeResizeOffset($size);
+        $this->gmagick->resizeImage($cropSize->getWidth(), $cropSize->getHeight(), \Gmagick::FILTER_UNDEFINED, 1);
+
+        $startP = $start->getSpecialOffset($this->gmagick, $size->getWidth(), $size->getHeight());
+
+        $startPoint = new Point($startP['x'], $startP['y']);
+
+        return $this->crop($startPoint, $size);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return ImageInterface
+     */
+    public function cropEntropy(BoxInterface $size)
+    {
+        $start = new Entropy();
+
+        $cropSize = $this->getSafeResizeOffset($size);
+        $this->gmagick->resizeImage($cropSize->getWidth(), $cropSize->getHeight(), \Gmagick::FILTER_UNDEFINED, 1);
+
+        $startP = $start->getSpecialOffset($this->gmagick, $size->getWidth(), $size->getHeight());
+
+        $startPoint = new Point($startP['x'], $startP['y']);
+
+        return $this->crop($startPoint, $size);
+    }
+
+    /**
+     * Returns width and height for resizing the image, keeping the aspect ratio
+     * and allow the image to be larger than either the width or height
+     *
+     * @param BoxInterface $size
+     * @return BoxInterface
+     */
+    public function getSafeResizeOffset(BoxInterface $size)
+    {
+        $source = $this->getSize();
+
+        if (0 == $size->getHeight() || ($source->getWidth() / $source->getHeight()) < ($size->getWidth() / $size->getHeight())) {
+            $scale = $source->getWidth() / $size->getWidth();
+        } else {
+            $scale = $source->getHeight() / $size->getHeight();
+        }
+
+        $sizeScale = new Box((int) ($source->getWidth() / $scale), (int) ($source->getHeight() / $scale));
+        return $sizeScale;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return ImageInterface
+     */
     public function flipHorizontally()
     {
         try {

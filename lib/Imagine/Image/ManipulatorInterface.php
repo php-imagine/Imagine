@@ -49,6 +49,41 @@ interface ManipulatorInterface
     public function crop(PointInterface $start, BoxInterface $size);
 
     /**
+     * Crops a box define by balanced mode the out of the source image (modifies the source image)
+     * Returns cropped self
+     *
+     * @param BoxInterface   $size
+     *
+     * @throws OutOfBoundsException
+     * @throws RuntimeException
+     *
+     * @return static
+     */
+    public function cropBalanced(BoxInterface $size);
+
+    /**
+     * Crops a box define by entropy mode the out of the source image (modifies the source image)
+     * Returns cropped self
+     *
+     * @param BoxInterface   $size
+     *
+     * @throws OutOfBoundsException
+     * @throws RuntimeException
+     *
+     * @return static
+     */
+    public function cropEntropy(BoxInterface $size);
+
+    /**
+     * Returns width and height for resizing the image, keeping the aspect ratio
+     * and allow the image to be larger than either the width or height
+     *
+     * @param BoxInterface $size
+     * @return BoxInterface
+     */
+    public function getSafeResizeOffset(BoxInterface $size);
+
+    /**
      * Resizes current image and returns self
      *
      * @param BoxInterface $size
