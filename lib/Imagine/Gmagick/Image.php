@@ -119,20 +119,13 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return PointInterface
      */
-    public function cropBalanced(BoxInterface $size)
-    {
+    final public function getPointBalanced($image, BoxInterface $size) {
         $start = new Balanced();
+        $startP = $start->getSpecialOffset($image, $size->getWidth(), $size->getHeight());
 
-        $cropSize = $this->getSafeResizeOffset($size);
-        $this->gmagick->resizeImage($cropSize->getWidth(), $cropSize->getHeight(), \Gmagick::FILTER_UNDEFINED, 1);
-
-        $startP = $start->getSpecialOffset($this->gmagick, $size->getWidth(), $size->getHeight());
-
-        $startPoint = new Point($startP['x'], $startP['y']);
-
-        return $this->crop($startPoint, $size);
+        return new Point($startP['x'], $startP['y']);
     }
 
     /**
@@ -140,16 +133,38 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    public function cropEntropy(BoxInterface $size)
+    public function resizeAndCropBalanced(BoxInterface $size)
     {
-        $start = new Entropy();
-
         $cropSize = $this->getSafeResizeOffset($size);
         $this->gmagick->resizeImage($cropSize->getWidth(), $cropSize->getHeight(), \Gmagick::FILTER_UNDEFINED, 1);
 
-        $startP = $start->getSpecialOffset($this->gmagick, $size->getWidth(), $size->getHeight());
+        $startPoint = $this->getPointBalanced($this->gmagick, $size);
 
-        $startPoint = new Point($startP['x'], $startP['y']);
+        return $this->crop($startPoint, $size);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return PointInterface
+     */
+    final public function getPointEntropy($image, BoxInterface $size) {
+        $start = new Entropy();
+        $startP = $start->getSpecialOffset($image, $size->getWidth(), $size->getHeight());
+
+        return new Point($startP['x'], $startP['y']);
+    }
+    /**
+     * {@inheritdoc}
+     *
+     * @return ImageInterface
+     */
+    public function resizeAndCropEntropy(BoxInterface $size)
+    {
+        $cropSize = $this->getSafeResizeOffset($size);
+        $this->gmagick->resizeImage($cropSize->getWidth(), $cropSize->getHeight(), \Gmagick::FILTER_UNDEFINED, 1);
+
+        $startPoint = $this->getPointEntropy($this->gmagick, $size);
 
         return $this->crop($startPoint, $size);
     }

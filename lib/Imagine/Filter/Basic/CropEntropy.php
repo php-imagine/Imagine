@@ -27,6 +27,6 @@ class CropEntropy implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->cropEntropy($this->size);
+        return $image->resizeAndCropEntropy($this->size);
     }
 }

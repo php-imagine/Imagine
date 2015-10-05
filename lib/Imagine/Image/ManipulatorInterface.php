@@ -49,6 +49,26 @@ interface ManipulatorInterface
     public function crop(PointInterface $start, BoxInterface $size);
 
     /**
+     * Return the starting point for a crop Balanced
+     *
+     * @param $image
+     * @param BoxInterface $size
+     *
+     * @return mixed
+     */
+    public function getPointBalanced($image, BoxInterface $size);
+
+    /**
+     * Return the starting point for a crop Entropy
+     *
+     * @param $image
+     * @param BoxInterface $size
+     *
+     * @return mixed
+     */
+    public function getPointEntropy($image, BoxInterface $size);
+
+    /**
      * Crops a box define by balanced mode the out of the source image (modifies the source image)
      * Returns cropped self
      *
@@ -59,7 +79,7 @@ interface ManipulatorInterface
      *
      * @return static
      */
-    public function cropBalanced(BoxInterface $size);
+    public function resizeAndCropBalanced(BoxInterface $size);
 
     /**
      * Crops a box define by entropy mode the out of the source image (modifies the source image)
@@ -72,7 +92,7 @@ interface ManipulatorInterface
      *
      * @return static
      */
-    public function cropEntropy(BoxInterface $size);
+    public function resizeAndCropEntropy(BoxInterface $size);
 
     /**
      * Resizes current image and returns self

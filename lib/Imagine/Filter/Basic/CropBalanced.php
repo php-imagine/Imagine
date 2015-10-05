@@ -27,6 +27,6 @@ class CropBalanced implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->cropBalanced($this->size);
+        return $image->resizeAndCropBalanced($this->size);
     }
 }

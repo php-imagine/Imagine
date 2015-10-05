@@ -129,21 +129,13 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return PointInterface
      */
-    final public function cropBalanced(BoxInterface $size)
-    {
-        if (version_compare('5.5', PHP_VERSION, '<=')) {
-            $start = new Balanced();
-            $cropImage = $this->resize($this->getSafeResizeOffset($size));
-            $startP = $start->getSpecialOffset($cropImage, $size->getWidth(), $size->getHeight());
+    final public function getPointBalanced($image, BoxInterface $size) {
+        $start = new Balanced();
+        $startP = $start->getSpecialOffset($image, $size->getWidth(), $size->getHeight());
 
-            $startPoint = new Point($startP['x'], $startP['y']);
-
-            return $this->crop($startPoint, $size);
-        } else {
-            throw new RuntimeException ('PHP version is to old');
-        }
+        return new Point($startP['x'], $startP['y']);
     }
 
     /**
@@ -151,14 +143,43 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function cropEntropy(BoxInterface $size)
+    final public function resizeAndCropBalanced(BoxInterface $size)
     {
         if (version_compare('5.5', PHP_VERSION, '<=')) {
-            $start = new Entropy();
             $cropImage = $this->resize($this->getSafeResizeOffset($size));
-            $startP = $start->getSpecialOffset($cropImage, $size->getWidth(), $size->getHeight());
 
-            $startPoint = new Point($startP['x'], $startP['y']);
+            $startPoint = $this->getPointBalanced($cropImage, $size);
+
+            return $this->crop($startPoint, $size);
+        } else {
+            throw new RuntimeException ('PHP version is to old');
+        }
+    }
+
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return PointInterface
+     */
+    final public function getPointEntropy($image, BoxInterface $size) {
+        $start = new Entropy();
+        $startP = $start->getSpecialOffset($image, $size->getWidth(), $size->getHeight());
+
+        return new Point($startP['x'], $startP['y']);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return ImageInterface
+     */
+    final public function resizeAndCropEntropy(BoxInterface $size)
+    {
+        if (version_compare('5.5', PHP_VERSION, '<=')) {
+            $cropImage = $this->resize($this->getSafeResizeOffset($size));
+
+            $startPoint = $this->getPointEntropy($cropImage, $size);
 
             return $this->crop($startPoint, $size);
         } else {

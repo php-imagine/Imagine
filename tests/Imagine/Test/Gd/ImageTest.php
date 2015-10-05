@@ -136,7 +136,7 @@ class ImageTest extends AbstractImageTest
             $crop = new Imagine();
             $size = new Box(100, 100);
             $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
-            $imageCrop = $image->cropBalanced($size);
+            $imageCrop = $image->resizeAndCropBalanced($size);
 
             $this->assertEquals(100, $imageCrop->getSize()->getHeight());
             $this->assertEquals(100, $imageCrop->getSize()->getWidth());
@@ -151,7 +151,7 @@ class ImageTest extends AbstractImageTest
             $crop = new Imagine();
             $size = new Box(100, 100);
             $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
-            $imageCrop = $image->cropEntropy($size);
+            $imageCrop = $image->resizeAndCropEntropy($size);
 
             $this->assertEquals(100, $imageCrop->getSize()->getHeight());
             $this->assertEquals(100, $imageCrop->getSize()->getWidth());
