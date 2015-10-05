@@ -131,6 +131,68 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
+    final public function cropBalanced(BoxInterface $size)
+    {
+        if (version_compare('5.5', PHP_VERSION, '<=')) {
+            $start = new Balanced();
+            $cropImage = $this->resize($this->getSafeResizeOffset($size));
+            $startP = $start->getSpecialOffset($cropImage, $size->getWidth(), $size->getHeight());
+
+            $startPoint = new Point($startP['x'], $startP['y']);
+
+            return $this->crop($startPoint, $size);
+        } else {
+            throw new RuntimeException ('PHP version is to old');
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return ImageInterface
+     */
+    final public function cropEntropy(BoxInterface $size)
+    {
+        if (version_compare('5.5', PHP_VERSION, '<=')) {
+            $start = new Entropy();
+            $cropImage = $this->resize($this->getSafeResizeOffset($size));
+            $startP = $start->getSpecialOffset($cropImage, $size->getWidth(), $size->getHeight());
+
+            $startPoint = new Point($startP['x'], $startP['y']);
+
+            return $this->crop($startPoint, $size);
+        } else {
+            throw new RuntimeException ('PHP version is to old');
+        }
+    }
+
+    /**
+     * Returns width and height for resizing the image, keeping the aspect ratio
+     * and allow the image to be larger than either the width or height
+     *
+     * @param BoxInterface $size
+     * @return BoxInterface
+     */
+    public function getSafeResizeOffset(BoxInterface $size)
+    {
+        $sourceWidth = imagesx($this->getGdResource());
+        $sourceHeight = imagesy($this->getGdResource());
+
+        if (0 == $size->getHeight() || ($sourceWidth / $sourceHeight) < ($size->getWidth() / $size->getHeight())) {
+            $scale = $sourceWidth / $size->getWidth();
+        } else {
+            $scale = $sourceHeight / $size->getHeight();
+        }
+
+        $sizeScale = new Box((int) ($sourceWidth / $scale), (int) ($sourceHeight / $scale));
+        return $sizeScale;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return ImageInterface
+     */
     final public function paste(ImageInterface $image, PointInterface $start)
     {
         if (!$image instanceof self) {
@@ -158,7 +220,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return Image
      */
     final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {

@@ -110,4 +110,18 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function edge($radius = 0)
+    {
+        try {
+            $this->imagick->edgeImage($radius);
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to edge the image', $e->getCode(), $e);
+        }
+
+        return $this;
+    }
 }
