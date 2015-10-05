@@ -75,15 +75,6 @@ interface ManipulatorInterface
     public function cropEntropy(BoxInterface $size);
 
     /**
-     * Returns width and height for resizing the image, keeping the aspect ratio
-     * and allow the image to be larger than either the width or height
-     *
-     * @param BoxInterface $size
-     * @return BoxInterface
-     */
-    public function getSafeResizeOffset(BoxInterface $size);
-
-    /**
      * Resizes current image and returns self
      *
      * @param BoxInterface $size

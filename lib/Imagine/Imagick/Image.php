@@ -184,7 +184,7 @@ final class Image extends AbstractImage
      * @param BoxInterface $size
      * @return BoxInterface
      */
-    public function getSafeResizeOffset(BoxInterface $size)
+    protected function getSafeResizeOffset(BoxInterface $size)
     {
         $source = $this->getSize();
 
