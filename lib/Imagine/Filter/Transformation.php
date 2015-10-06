@@ -141,9 +141,9 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getPointBalanced($image, BoxInterface $size)
+    public function getPointBalanced(BoxInterface $size)
     {
-        return $this->add(new GetPointBalanced($image, $size));
+        return $this->add(new GetPointBalanced($size));
     }
 
     /**
@@ -157,9 +157,9 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getPointEntropy($image, BoxInterface $size)
+    public function getPointEntropy(BoxInterface $size)
     {
-        return $this->add(new GetPointEntropy($image, $size));
+        return $this->add(new GetPointEntropy($size));
     }
 
     /**

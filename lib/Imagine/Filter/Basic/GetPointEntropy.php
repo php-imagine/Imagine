@@ -8,10 +8,6 @@ use Imagine\Image\ImageInterface;
 class GetPointEntropy implements FilterInterface
 {
     /**
-     * @var mixed
-     */
-    private $image;
-    /**
      * @var BoxInterface
      */
     private $size;
@@ -19,12 +15,10 @@ class GetPointEntropy implements FilterInterface
     /**
      * Constructs a GetPointEntropy filter
      *
-     * @param $image
      * @param BoxInterface $size
      */
-    public function __construct($image, BoxInterface $size)
+    public function __construct(BoxInterface $size)
     {
-        $this->image = $image;
         $this->size = $size;
     }
 
@@ -33,6 +27,6 @@ class GetPointEntropy implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->getPointEntropy($this->image, $this->size);
+        return $image->getPointEntropy($this->size);
     }
 }

@@ -131,9 +131,9 @@ final class Image extends AbstractImage
      *
      * @return PointInterface
      */
-    final public function getPointBalanced($image, BoxInterface $size) {
+    final public function getPointBalanced(BoxInterface $size) {
         $start = new Balanced();
-        $startP = $start->getSpecialOffset($image, $size->getWidth(), $size->getHeight());
+        $startP = $start->getSpecialOffset($this, $size->getWidth(), $size->getHeight());
 
         return new Point($startP['x'], $startP['y']);
     }
@@ -148,7 +148,7 @@ final class Image extends AbstractImage
         if (version_compare('5.5', PHP_VERSION, '<=')) {
             $cropImage = $this->resize($this->getSafeResizeOffset($size));
 
-            $startPoint = $this->getPointBalanced($cropImage, $size);
+            $startPoint = $cropImage->getPointBalanced($size);
 
             return $this->crop($startPoint, $size);
         } else {
@@ -162,9 +162,9 @@ final class Image extends AbstractImage
      *
      * @return PointInterface
      */
-    final public function getPointEntropy($image, BoxInterface $size) {
+    final public function getPointEntropy(BoxInterface $size) {
         $start = new Entropy();
-        $startP = $start->getSpecialOffset($image, $size->getWidth(), $size->getHeight());
+        $startP = $start->getSpecialOffset($this, $size->getWidth(), $size->getHeight());
 
         return new Point($startP['x'], $startP['y']);
     }
@@ -179,7 +179,7 @@ final class Image extends AbstractImage
         if (version_compare('5.5', PHP_VERSION, '<=')) {
             $cropImage = $this->resize($this->getSafeResizeOffset($size));
 
-            $startPoint = $this->getPointEntropy($cropImage, $size);
+            $startPoint = $cropImage->getPointEntropy($size);
 
             return $this->crop($startPoint, $size);
         } else {

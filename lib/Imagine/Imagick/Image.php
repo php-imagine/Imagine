@@ -144,9 +144,9 @@ final class Image extends AbstractImage
      *
      * @return PointInterface
      */
-    final public function getPointBalanced($image, BoxInterface $size) {
+    final public function getPointBalanced(BoxInterface $size) {
         $start = new Balanced();
-        $startP = $start->getSpecialOffset($image, $size->getWidth(), $size->getHeight());
+        $startP = $start->getSpecialOffset($this->imagick, $size->getWidth(), $size->getHeight());
 
         return new Point($startP['x'], $startP['y']);
     }
@@ -161,7 +161,7 @@ final class Image extends AbstractImage
         $cropSize = $this->getSafeResizeOffset($size);
         $this->imagick->resizeImage($cropSize->getWidth(), $cropSize->getHeight(), $this->getFilter(ImageInterface::FILTER_UNDEFINED), 1);
 
-        $startPoint = $this->getPointBalanced($this->imagick, $size);
+        $startPoint = $this->getPointBalanced($size);
 
         return $this->crop($startPoint, $size);
     }
@@ -171,9 +171,9 @@ final class Image extends AbstractImage
      *
      * @return PointInterface
      */
-    final public function getPointEntropy($image, BoxInterface $size) {
+    final public function getPointEntropy(BoxInterface $size) {
         $start = new Entropy();
-        $startP = $start->getSpecialOffset($image, $size->getWidth(), $size->getHeight());
+        $startP = $start->getSpecialOffset($this->imagick, $size->getWidth(), $size->getHeight());
 
         return new Point($startP['x'], $startP['y']);
     }
@@ -188,7 +188,7 @@ final class Image extends AbstractImage
         $cropSize = $this->getSafeResizeOffset($size);
         $this->imagick->resizeImage($cropSize->getWidth(), $cropSize->getHeight(), $this->getFilter(ImageInterface::FILTER_UNDEFINED), 1);
 
-        $startPoint = $this->getPointEntropy($this->imagick, $size);
+        $startPoint = $this->getPointEntropy($size);
 
         return $this->crop($startPoint, $size);
     }
