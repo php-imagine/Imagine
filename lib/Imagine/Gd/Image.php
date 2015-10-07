@@ -241,7 +241,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return Image
+     * @return ImageInterface
      */
     final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
