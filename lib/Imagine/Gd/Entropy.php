@@ -1,18 +1,5 @@
 <?php
 
-/**
- * SlyCropEntropy
- *
- * This class finds the a position in the picture with the most energy in it.
- *
- * Energy is in this case calculated by this
- *
- * 1. Take the image and turn it into black and white
- * 2. Run a edge filter so that we're left with only edges.
- * 3. Find a piece in the picture that has the highest entropy (i.e. most edges)
- * 4. Return coordinates that makes sure that this piece of the picture is not cropped 'away'
- */
-
 namespace Imagine\Gd;
 
 use Imagine\Image\AbstractEntropy;

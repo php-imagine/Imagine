@@ -1,15 +1,5 @@
 <?php
 
-/**
- * CropBalanced
- *
- * This class calculates the most interesting point in the image by:
- *
- * 1. Dividing the image into four equally squares
- * 2. Find the most energetic point per square
- * 3. Finding the images weighted mean interest point
- */
-
 namespace Imagine\Imagick;
 
 use Imagine\Image\AbstractBalanced;
