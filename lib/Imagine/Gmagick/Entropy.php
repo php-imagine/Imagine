@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SlyCropEntropy
  *
@@ -19,7 +20,7 @@ class Entropy
 {
     const POTENTIAL_RATIO = 1.5;
     /**
-     * get special offset for class
+     * Get special offset for class
      *
      * @param  \Gmagick $original
      * @param  int      $targetWidth
@@ -30,13 +31,14 @@ class Entropy
     {
         return $this->getEntropyOffsets($original, $targetWidth, $targetHeight);
     }
+
     /**
      * Get the topleftX and topleftY that will can be passed to a cropping method.
      *
      * @param  \Gmagick $original
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     protected function getEntropyOffsets(\Gmagick $original, $targetWidth, $targetHeight)
     {
@@ -55,20 +57,20 @@ class Entropy
      * @param  \Gmagick $originalImage
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     protected function getOffsetFromEntropy(\Gmagick $originalImage, $targetWidth, $targetHeight)
     {
         // The entropy works better on a blured image
         $image = clone($originalImage);
         $image->blurImage(3, 2);
-        $size = array('width' => $originalImage->getImageWidth(), 'height' =>$originalImage->getImageHeight());
+        $size = array('width' => $originalImage->getImageWidth(), 'height' => $originalImage->getImageHeight());
         $originalWidth = $size['width'];
         $originalHeight = $size['height'];
         $leftX = $this->slice($image, $originalWidth, $targetWidth, 'h');
         $topY = $this->slice($image, $originalHeight, $targetHeight, 'v');
 
-        $cropPoint = array('x'=>$leftX, 'y'=>$topY);
+        $cropPoint = array('x' => $leftX, 'y' => $topY);
         if ($cropPoint['x'] < 0) {
             $cropPoint['x'] = 0;
         } elseif ($cropPoint['y'] < 0) {
@@ -78,12 +80,12 @@ class Entropy
     }
 
     /**
-     * slice
+     * Slice Image to find the most entropic point for the crop method
      *
-     * @param mixed $image
-     * @param mixed $originalSize
-     * @param mixed $targetSize
-     * @param mixed $axis         h=horizontal, v = vertical
+     * @param mixed     $image
+     * @param mixed     $originalSize
+     * @param mixed     $targetSize
+     * @param mixed     $axis         h = horizontal, v = vertical
      * @access protected
      * @return int|mixed
      */
@@ -152,16 +154,6 @@ class Entropy
         }
         return $aTop;
     }
-    /**
-     * getSafeZoneList
-     *
-     * @access protected
-     * @return array
-     */
-    protected function getSafeZoneList()
-    {
-        return array();
-    }
 
     /**
      * getPotential
@@ -174,7 +166,7 @@ class Entropy
      */
     protected function getPotential($position, $top, $sliceSize)
     {
-        $safeZoneList = $this->getSafeZoneList();
+        $safeZoneList = array();
         $safeRatio = 0;
         if ($position == 'top' || $position == 'left') {
             $start = $top;
@@ -198,9 +190,9 @@ class Entropy
         }
         return $safeRatio;
     }
+
     /**
      * Calculate the entropy for this image.
-     *
      * A higher value of entropy means more noise / liveliness / color / business
      *
      * @param  \Gmagick $image
@@ -215,6 +207,7 @@ class Entropy
         $histogram = $image->getImageHistogram();
         return $this->getEntropy($histogram, $this->area($image));
     }
+
     /**
      * Find out the entropy for a color image
      *
@@ -250,7 +243,7 @@ class Entropy
      */
     protected function area(\Gmagick $image)
     {
-        $size = array('width' => $image->getImageWidth(), 'height' =>$image->getImageHeight());
+        $size = array('width' => $image->getImageWidth(), 'height' => $image->getImageHeight());
         return $size['height'] * $size['width'];
     }
 
@@ -265,7 +258,7 @@ class Entropy
      */
     protected function rgb2bw($r, $g, $b)
     {
-        return ($r*0.299)+($g*0.587)+($b*0.114);
+        return ($r * 0.299) + ($g * 0.587) + ($b * 0.114);
     }
 
     /**

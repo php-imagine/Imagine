@@ -5,23 +5,25 @@ namespace Imagine\Imagick;
 class Balanced
 {
     /**
-     * get special offset for class
+     * Get special offset for class
      *
      * @param  \Imagick $original
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     public function getSpecialOffset(\Imagick $original, $targetWidth, $targetHeight)
     {
         return $this->getRandomEdgeOffset($original, $targetWidth, $targetHeight);
     }
+
     /**
+     * Apply image filter and return the crop point
      *
      * @param  \Imagick $original
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     protected function getRandomEdgeOffset(\Imagick $original, $targetWidth, $targetHeight)
     {
@@ -37,18 +39,21 @@ class Balanced
     }
 
     /**
-     * @param \Imagick $originalImage
-     * @param $targetWidth
-     * @param $targetHeight
-     * @return array
+     * Crop image in four to return four energetic points
+     *
+     * @param \Imagick  $originalImage
+     * @param int       $targetWidth
+     * @param int       $targetHeight
+     * @return array    The crop point coordinate
      * @throws \Exception
      */
     protected function getOffsetBalanced(\Imagick $originalImage, $targetWidth, $targetHeight)
     {
         $size = $originalImage->getImageGeometry();
         $points = array();
-        $halfWidth = ceil($size['width']/2);
-        $halfHeight = ceil($size['height']/2);
+        $halfWidth = ceil($size['width'] / 2);
+        $halfHeight = ceil($size['height'] / 2);
+
         // First quadrant
         $clone = clone($originalImage);
         $clone->cropImage($halfWidth, $halfHeight, 0, 0);
@@ -58,17 +63,18 @@ class Balanced
         $clone = clone($originalImage);
         $clone->cropImage($halfWidth, $halfHeight, $halfWidth, 0);
         $point = $this->getHighestEnergyPoint($clone);
-        $points[] = array('x' => $point['x']+$halfWidth, 'y' => $point['y'], 'sum' => $point['sum']);
+        $points[] = array('x' => $point['x'] + $halfWidth, 'y' => $point['y'], 'sum' => $point['sum']);
         // Third quadrant
         $clone = clone($originalImage);
         $clone->cropImage($halfWidth, $halfHeight, 0, $halfHeight);
         $point = $this->getHighestEnergyPoint($clone);
-        $points[] = array('x' => $point['x'], 'y' => $point['y']+$halfHeight, 'sum' => $point['sum']);
+        $points[] = array('x' => $point['x'], 'y' => $point['y'] + $halfHeight, 'sum' => $point['sum']);
         // Fourth quadrant
         $clone = clone($originalImage);
         $clone->cropImage($halfWidth, $halfHeight, $halfWidth, $halfHeight);
         $point = $point = $this->getHighestEnergyPoint($clone);
-        $points[] = array('x' => $point['x']+$halfWidth, 'y' => $point['y']+$halfHeight, 'sum' => $point['sum']);
+        $points[] = array('x' => $point['x'] + $halfWidth, 'y' => $point['y'] + $halfHeight, 'sum' => $point['sum']);
+
         // get the totalt sum value so we can find out a mean center point
         $totalWeight = array_reduce(
             $points,
@@ -94,11 +100,11 @@ class Balanced
         }
         // If we don't have enough height for the crop, back up $topleftY until
         // we can make the image meet $targetHeight
-        if ($topleftY+$targetHeight > $size['height']) {
-            $topleftY -= ($topleftY+$targetHeight) - $size['height'];
+        if ($topleftY + $targetHeight > $size['height']) {
+            $topleftY -= ($topleftY + $targetHeight) - $size['height'];
         }
 
-        $cropPoint = array('x'=>$topleftX, 'y'=>$topleftY);
+        $cropPoint = array('x' => $topleftX, 'y' => $topleftY);
         if ($cropPoint['x'] < 0) {
             $cropPoint['x'] = 0;
         } elseif ($cropPoint['y'] < 0) {
@@ -111,8 +117,8 @@ class Balanced
      * By doing random sampling from the image, find the most energetic point on the passed in
      * image
      *
-     * @param \Imagick $image
-     * @return array
+     * @param \Imagick  $image
+     * @return array    The coordinate of the most energetic point
      * @throws \Exception
      */
 
@@ -129,24 +135,24 @@ class Balanced
         $ycenter = 0;
         $sum = 0;
         // Only sample 1/50 of all the pixels in the image
-        $sampleSize = round($size['height']*$size['width'])/50;
-        for ($k=0; $k<$sampleSize; $k++) {
-            $i = mt_rand(0, $size['width']-1);
-            $j = mt_rand(0, $size['height']-1);
+        $sampleSize = round($size['height'] * $size['width']) / 50;
+        for ($k = 0; $k < $sampleSize; $k++) {
+            $i = mt_rand(0, $size['width'] - 1);
+            $j = mt_rand(0, $size['height'] - 1);
             $rgb = imagecolorat($im, $i, $j);
             $r = ($rgb >> 16) & 0xFF;
             $g = ($rgb >> 8) & 0xFF;
             $b = $rgb & 0xFF;
             $val =  $this->rgb2bw($r, $g, $b);
             $sum += $val;
-            $xcenter += ($i+1)*$val;
-            $ycenter += ($j+1)*$val;
+            $xcenter += ($i + 1) * $val;
+            $ycenter += ($j + 1) * $val;
         }
         if ($sum) {
             $xcenter /= $sum;
             $ycenter /= $sum;
         }
-        $point = array('x' => $xcenter, 'y' => $ycenter, 'sum' => $sum/round($size['height']*$size['width']));
+        $point = array('x' => $xcenter, 'y' => $ycenter, 'sum' => $sum / round($size['height'] * $size['width']));
         return $point;
     }
 
@@ -161,6 +167,6 @@ class Balanced
      */
     protected function rgb2bw($r, $g, $b)
     {
-        return ($r*0.299)+($g*0.587)+($b*0.114);
+        return ($r * 0.299) + ($g * 0.587) + ($b * 0.114);
     }
 }

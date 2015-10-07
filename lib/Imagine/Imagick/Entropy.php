@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SlyCropEntropy
  *
@@ -24,19 +25,20 @@ class Entropy
      * @param  \Imagick $original
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     public function getSpecialOffset(\Imagick $original, $targetWidth, $targetHeight)
     {
         return $this->getEntropyOffsets($original, $targetWidth, $targetHeight);
     }
+
     /**
      * Get the topleftX and topleftY that will can be passed to a cropping method.
      *
      * @param  \Imagick $original
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     protected function getEntropyOffsets(\Imagick $original, $targetWidth, $targetHeight)
     {
@@ -57,7 +59,7 @@ class Entropy
      * @param  \Imagick $originalImage
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     protected function getOffsetFromEntropy(\Imagick $originalImage, $targetWidth, $targetHeight)
     {
@@ -70,7 +72,7 @@ class Entropy
         $leftX = $this->slice($image, $originalWidth, $targetWidth, 'h');
         $topY = $this->slice($image, $originalHeight, $targetHeight, 'v');
 
-        $cropPoint = array('x'=>$leftX, 'y'=>$topY);
+        $cropPoint = array('x' => $leftX, 'y' => $topY);
         if ($cropPoint['x'] < 0) {
             $cropPoint['x'] = 0;
         } elseif ($cropPoint['y'] < 0) {
@@ -80,12 +82,12 @@ class Entropy
     }
 
     /**
-     * slice
+     * Slice Image to find the most entropic point for the crop method
      *
-     * @param mixed $image
-     * @param mixed $originalSize
-     * @param mixed $targetSize
-     * @param mixed $axis         h=horizontal, v = vertical
+     * @param mixed     $image
+     * @param mixed     $originalSize
+     * @param mixed     $targetSize
+     * @param mixed     $axis         h = horizontal, v = vertical
      * @access protected
      * @return int|mixed
      */
@@ -154,20 +156,8 @@ class Entropy
         }
         return $aTop;
     }
-    /**
-     * getSafeZoneList
-     *
-     * @access protected
-     * @return array
-     */
-    protected function getSafeZoneList()
-    {
-        return array();
-    }
 
     /**
-     * getPotential
-     *
      * @param mixed $position
      * @param mixed $top
      * @param mixed $sliceSize
@@ -176,7 +166,7 @@ class Entropy
      */
     protected function getPotential($position, $top, $sliceSize)
     {
-        $safeZoneList = $this->getSafeZoneList();
+        $safeZoneList = array();
         $safeRatio = 0;
         if ($position == 'top' || $position == 'left') {
             $start = $top;
@@ -200,9 +190,9 @@ class Entropy
         }
         return $safeRatio;
     }
+
     /**
      * Calculate the entropy for this image.
-     *
      * A higher value of entropy means more noise / liveliness / color / business
      *
      * @param  \Imagick $image
@@ -241,11 +231,10 @@ class Entropy
      */
     protected function rgb2bw($r, $g, $b)
     {
-        return ($r*0.299)+($g*0.587)+($b*0.114);
+        return ($r * 0.299) + ($g * 0.587) + ($b * 0.114);
     }
 
     /**
-     *
      * @param  array $histogram - a value[count] array
      * @param  int   $area
      * @return float

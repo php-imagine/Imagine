@@ -7,23 +7,25 @@ use Imagine\Image\Point;
 class Balanced
 {
     /**
-     * get special offset for class
+     * Get special offset for class
      *
      * @param  Image    $original
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     public function getSpecialOffset($original, $targetWidth, $targetHeight)
     {
         return $this->getRandomEdgeOffset($original, $targetWidth, $targetHeight);
     }
+
     /**
+     * Apply image filter and return the crop point
      *
      * @param  Image    $original
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     protected function getRandomEdgeOffset($original, $targetWidth, $targetHeight)
     {
@@ -39,10 +41,12 @@ class Balanced
 
 
     /**
-     * @param resource $originalImage
-     * @param $targetWidth
-     * @param $targetHeight
-     * @return array
+     * Crop image in four to return four energetic points
+     *
+     * @param resource  $originalImage
+     * @param int       $targetWidth
+     * @param int       $targetHeight
+     * @return array    The crop point coordinate
      * @throws \Exception
      */
     protected function getOffsetBalanced($originalImage, $targetWidth, $targetHeight)
@@ -50,8 +54,9 @@ class Balanced
         $width = imagesx($originalImage);
         $height = imagesy($originalImage);
         $points = array();
-        $halfWidth = ceil($width/2);
-        $halfHeight = ceil($height/2);
+        $halfWidth = ceil($width / 2);
+        $halfHeight = ceil($height / 2);
+
         // First quadrant
         $clone = $this->cloneResource($originalImage);
         $rect = array('x' => 0 , 'y' => 0, 'width' => $halfWidth, 'height'=> $halfHeight);
@@ -63,19 +68,20 @@ class Balanced
         $rect = array('x' => $halfWidth , 'y' => 0, 'width' => $halfWidth, 'height'=> $halfHeight);
         $clone2 = imagecrop($clone, $rect);
         $point = $this->getHighestEnergyPoint($clone2);
-        $points[] = array('x' => $point['x'], 'y' => $point['y'], 'sum' => $point['sum']);
+        $points[] = array('x' => $point['x'] + $halfWidth, 'y' => $point['y'], 'sum' => $point['sum']);
         // Third quadrant
         $clone = $this->cloneResource($originalImage);
         $rect = array('x' => 0 , 'y' => $halfHeight, 'width' => $halfWidth, 'height'=> $halfHeight);
         $clone3 = imagecrop($clone, $rect);
         $point = $this->getHighestEnergyPoint($clone3);
-        $points[] = array('x' => $point['x'], 'y' => $point['y'], 'sum' => $point['sum']);
+        $points[] = array('x' => $point['x'], 'y' => $point['y'] + $halfHeight, 'sum' => $point['sum']);
         // Fourth quadrant
         $clone = $this->cloneResource($originalImage);
         $rect = array('x' => $halfWidth , 'y' => $halfHeight, 'width' => $halfWidth, 'height'=> $halfHeight);
         $clone4 = imagecrop($clone, $rect);
         $point = $this->getHighestEnergyPoint($clone4);
-        $points[] = array('x' => $point['x'], 'y' => $point['y'], 'sum' => $point['sum']);
+        $points[] = array('x' => $point['x'] + $halfWidth, 'y' => $point['y'] + $halfHeight, 'sum' => $point['sum']);
+
         // get the totalt sum value so we can find out a mean center point
         $totalWeight = array_reduce(
             $points,
@@ -97,15 +103,15 @@ class Balanced
         // If we don't have enough width for the crop, back up $topleftX until
         // we can make the image meet $targetWidth
         if ($topleftX + $targetWidth > $width) {
-            $topleftX -= ($topleftX+$targetWidth) - $width;
+            $topleftX -= ($topleftX + $targetWidth) - $width;
         }
         // If we don't have enough height for the crop, back up $topleftY until
         // we can make the image meet $targetHeight
-        if ($topleftY+$targetHeight > $height) {
-            $topleftY -= ($topleftY+$targetHeight) - $height;
+        if ($topleftY + $targetHeight > $height) {
+            $topleftY -= ($topleftY + $targetHeight) - $height;
         }
 
-        $cropPoint = array('x'=>$topleftX, 'y'=>$topleftY);
+        $cropPoint = array('x' => $topleftX, 'y' => $topleftY);
         if ($cropPoint['x'] < 0) {
             $cropPoint['x'] = 0;
         } elseif ($cropPoint['y'] < 0) {
@@ -118,8 +124,8 @@ class Balanced
      * By doing random sampling from the image, find the most energetic point on the passed in
      * image
      *
-     * @param resource $image
-     * @return array
+     * @param resource  $image
+     * @return array    The coordinate of the most energetic point
      * @throws \Exception
      */
     protected function getHighestEnergyPoint($image)
@@ -131,24 +137,24 @@ class Balanced
         $ycenter = 0;
         $sum = 0;
         // Only sample 1/50 of all the pixels in the image
-        $sampleSize = round($width*$height)/50;
-        for ($k=0; $k<$sampleSize; $k++) {
-            $i = mt_rand(0, $width-1);
-            $j = mt_rand(0, $height-1);
+        $sampleSize = round($width * $height) / 50;
+        for ($k = 0; $k < $sampleSize; $k++) {
+            $i = mt_rand(0, $width - 1);
+            $j = mt_rand(0, $height - 1);
             $rgb = imagecolorat($image, $i, $j);
             $r = ($rgb >> 16) & 0xFF;
             $g = ($rgb >> 8) & 0xFF;
             $b = $rgb & 0xFF;
             $val =  $this->rgb2bw($r, $g, $b);
             $sum += $val;
-            $xcenter += ($i+1)*$val;
-            $ycenter += ($j+1)*$val;
+            $xcenter += ($i + 1) * $val;
+            $ycenter += ($j + 1) * $val;
         }
         if ($sum) {
             $xcenter /= $sum;
             $ycenter /= $sum;
         }
-        $point = array('x' => $xcenter, 'y' => $ycenter, 'sum' => $sum/round($width*$height));
+        $point = array('x' => $xcenter, 'y' => $ycenter, 'sum' => $sum / round($width * $height));
         return $point;
     }
 
@@ -163,10 +169,12 @@ class Balanced
      */
     protected function rgb2bw($r, $g, $b)
     {
-        return ($r*0.299)+($g*0.587)+($b*0.114);
+        return ($r * 0.299) + ($g * 0.587) + ($b * 0.114);
     }
 
     /**
+     * Clone and return an image
+     *
      * @param resource $image
      * @return resource
      */
