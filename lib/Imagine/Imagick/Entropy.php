@@ -221,20 +221,6 @@ class Entropy
     }
 
     /**
-     * Returns a YUV weighted greyscale value
-     *
-     * @param  int $r
-     * @param  int $g
-     * @param  int $b
-     * @return int
-     * @see http://en.wikipedia.org/wiki/YUV
-     */
-    protected function rgb2bw($r, $g, $b)
-    {
-        return ($r * 0.299) + ($g * 0.587) + ($b * 0.114);
-    }
-
-    /**
      * @param  array $histogram - a value[count] array
      * @param  int   $area
      * @return float

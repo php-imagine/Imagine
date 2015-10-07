@@ -209,33 +209,6 @@ class Entropy
     }
 
     /**
-     * Find out the entropy for a color image
-     *
-     * If the source image is in color we need to transform RGB into a grayscale image
-     * so we can calculate the entropy more performant.
-     *
-     * @param  \Gmagick $image
-     * @return float
-     */
-    protected function colorEntropy(\Gmagick $image)
-    {
-        $histogram = $image->getImageHistogram();
-        $newHistogram = array();
-        // Translates a color histogram into a bw histogram
-        $colors = count($histogram);
-        for ($idx = 0; $idx < $colors; $idx++) {
-            $colors = $histogram[$idx]->getColor();
-            $grey = $this->rgb2bw($colors['r'], $colors['g'], $colors['b']);
-            if (!isset($newHistogram[$grey])) {
-                $newHistogram[$grey] = $histogram[$idx]->getColorCount();
-            } else {
-                $newHistogram[$grey] += $histogram[$idx]->getColorCount();
-            }
-        }
-        return $this->getEntropy($newHistogram, $this->area($image));
-    }
-
-    /**
      * Get the area in pixels for this image
      *
      * @param  \Gmagick $image
@@ -245,20 +218,6 @@ class Entropy
     {
         $size = array('width' => $image->getImageWidth(), 'height' => $image->getImageHeight());
         return $size['height'] * $size['width'];
-    }
-
-    /**
-     * Returns a YUV weighted greyscale value
-     *
-     * @param  int $r
-     * @param  int $g
-     * @param  int $b
-     * @return int
-     * @see http://en.wikipedia.org/wiki/YUV
-     */
-    protected function rgb2bw($r, $g, $b)
-    {
-        return ($r * 0.299) + ($g * 0.587) + ($b * 0.114);
     }
 
     /**
