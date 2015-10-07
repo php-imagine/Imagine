@@ -16,11 +16,17 @@ use Imagine\Image\AbstractBalanced;
 
 class Balanced extends AbstractBalanced
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getSpecialOffset($original, $targetWidth, $targetHeight)
     {
         return $this->getRandomEdgeOffset($original, $targetWidth, $targetHeight);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getRandomEdgeOffset($original, $targetWidth, $targetHeight)
     {
         $measureImage = clone($original);
@@ -32,6 +38,9 @@ class Balanced extends AbstractBalanced
         return $this->getOffsetBalanced($measureImage, $targetWidth, $targetHeight);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getOffsetBalanced($originalImage, $targetWidth, $targetHeight)
     {
         $size = array('width' => $originalImage->getImageWidth(), 'height' => $originalImage->getImageHeight());
@@ -98,6 +107,9 @@ class Balanced extends AbstractBalanced
         return $cropPoint;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getHighestEnergyPoint($image)
     {
         $size = array('width' => $image->getImageWidth(), 'height' => $image->getImageHeight());

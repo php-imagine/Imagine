@@ -75,7 +75,7 @@ Abstract class AbstractEntropy
      * @param  mixed $image
      * @return int
      */
-    abstract function area(\Imagick $image);
+    abstract function area($image);
 
     /**
      * @param  array $histogram - a value[count] array

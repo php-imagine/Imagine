@@ -20,11 +20,17 @@ use Imagine\Image\AbstractEntropy;
 
 class Entropy extends AbstractEntropy
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getSpecialOffset($original, $targetWidth, $targetHeight)
     {
         return $this->getEntropyOffsets($original, $targetWidth, $targetHeight);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getEntropyOffsets($original, $targetWidth, $targetHeight)
     {
         $measureImage = clone($original);
@@ -38,6 +44,9 @@ class Entropy extends AbstractEntropy
         return $this->getOffsetFromEntropy($measureImage, $targetWidth, $targetHeight);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getOffsetFromEntropy($originalImage, $targetWidth, $targetHeight)
     {
         // The entropy works better on a blured image
@@ -58,6 +67,9 @@ class Entropy extends AbstractEntropy
         return $cropPoint;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function slice($image, $originalSize, $targetSize, $axis)
     {
         $aSlice = null;
@@ -124,6 +136,9 @@ class Entropy extends AbstractEntropy
         return $aTop;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getPotential($position, $top, $sliceSize)
     {
         $safeZoneList = array();
@@ -151,6 +166,9 @@ class Entropy extends AbstractEntropy
         return $safeRatio;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function grayscaleEntropy($image)
     {
         // The histogram consists of a list of 0-254 and the number of pixels that has that value
@@ -158,12 +176,18 @@ class Entropy extends AbstractEntropy
         return $this->getEntropy($histogram, $this->area($image));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function area(\Imagick $image)
     {
         $size = $image->getImageGeometry();
         return $size['height'] * $size['width'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getEntropy($histogram, $area)
     {
         $value = 0.0;
