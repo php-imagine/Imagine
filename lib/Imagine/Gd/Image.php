@@ -131,7 +131,8 @@ final class Image extends AbstractImage
      *
      * @return PointInterface
      */
-    final public function getPointBalanced(BoxInterface $size) {
+    final public function getPointBalanced(BoxInterface $size)
+    {
         $start = new Balanced();
         $startP = $start->getSpecialOffset($this, $size->getWidth(), $size->getHeight());
 
@@ -162,7 +163,8 @@ final class Image extends AbstractImage
      *
      * @return PointInterface
      */
-    final public function getPointEntropy(BoxInterface $size) {
+    final public function getPointEntropy(BoxInterface $size)
+    {
         $start = new Entropy();
         $startP = $start->getSpecialOffset($this, $size->getWidth(), $size->getHeight());
 
