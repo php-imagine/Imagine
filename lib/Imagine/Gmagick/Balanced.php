@@ -12,30 +12,16 @@
 
 namespace Imagine\Gmagick;
 
-class Balanced
+use Imagine\Image\AbstractBalanced;
+
+class Balanced extends AbstractBalanced
 {
-    /**
-     * get special offset for class
-     *
-     * @param  \Gmagick $original
-     * @param  int      $targetWidth
-     * @param  int      $targetHeight
-     * @return array    The crop point coordinate
-     */
-    public function getSpecialOffset(\Gmagick $original, $targetWidth, $targetHeight)
+    public function getSpecialOffset($original, $targetWidth, $targetHeight)
     {
         return $this->getRandomEdgeOffset($original, $targetWidth, $targetHeight);
     }
 
-    /**
-     * Apply image filter and return the crop point
-     *
-     * @param  \Gmagick $original
-     * @param  int      $targetWidth
-     * @param  int      $targetHeight
-     * @return array    The crop point coordinate
-     */
-    protected function getRandomEdgeOffset(\Gmagick $original, $targetWidth, $targetHeight)
+    public function getRandomEdgeOffset($original, $targetWidth, $targetHeight)
     {
         $measureImage = clone($original);
         // Enhance edges with radius 1
@@ -46,16 +32,7 @@ class Balanced
         return $this->getOffsetBalanced($measureImage, $targetWidth, $targetHeight);
     }
 
-    /**
-     * Crop image in four to return four energetic points
-     *
-     * @param \Gmagick  $originalImage
-     * @param int       $targetWidth
-     * @param int       $targetHeight
-     * @return array    The crop point coordinate
-     * @throws \Exception
-     */
-    protected function getOffsetBalanced(\Gmagick $originalImage, $targetWidth, $targetHeight)
+    public function getOffsetBalanced($originalImage, $targetWidth, $targetHeight)
     {
         $size = array('width' => $originalImage->getImageWidth(), 'height' => $originalImage->getImageHeight());
         $points = array();
@@ -121,16 +98,7 @@ class Balanced
         return $cropPoint;
     }
 
-    /**
-     * By doing random sampling from the image, find the most energetic point on the passed in
-     * image
-     *
-     * @param \Gmagick  $image
-     * @return array    The coordinate of the most energetic point
-     * @throws \Exception
-     */
-
-    protected function getHighestEnergyPoint(\Gmagick $image)
+    public function getHighestEnergyPoint($image)
     {
         $size = array('width' => $image->getImageWidth(), 'height' => $image->getImageHeight());
         // It's more performant doing random pixel uplook via GD
@@ -151,7 +119,7 @@ class Balanced
             $r = ($rgb >> 16) & 0xFF;
             $g = ($rgb >> 8) & 0xFF;
             $b = $rgb & 0xFF;
-            $val =  $this->rgb2bw($r, $g, $b);
+            $val =  $this->getLuminanceFromRGB($r, $g, $b);
             $sum += $val;
             $xcenter += ($i + 1) * $val;
             $ycenter += ($j + 1) * $val;
@@ -162,20 +130,5 @@ class Balanced
         }
         $point = array('x' => $xcenter, 'y' => $ycenter, 'sum' => $sum / round($size['height'] * $size['width']));
         return $point;
-    }
-
-    /**
-     * Returns a YUV weighted greyscale value
-     *
-     * @param  int $r
-     * @param  int $g
-     * @param  int $b
-     * @return int
-     * @see http://en.wikipedia.org/wiki/YUV
-     */
-
-    protected function rgb2bw($r, $g, $b)
-    {
-        return ($r * 0.299) + ($g * 0.587) + ($b * 0.114);
     }
 }
