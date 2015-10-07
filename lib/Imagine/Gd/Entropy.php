@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SlyCropEntropy
  *
@@ -10,7 +11,6 @@
  * 2. Run a edge filter so that we're left with only edges.
  * 3. Find a piece in the picture that has the highest entropy (i.e. most edges)
  * 4. Return coordinates that makes sure that this piece of the picture is not cropped 'away'
- *
  */
 
 namespace Imagine\Gd;
@@ -21,24 +21,25 @@ class Entropy
 {
     const POTENTIAL_RATIO = 1.5;
     /**
-     * get special offset for class
+     * Get special offset for class
      *
-     * @param  Image $original
+     * @param  Image    $original
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     public function getSpecialOffset($original, $targetWidth, $targetHeight)
     {
         return $this->getEntropyOffsets($original, $targetWidth, $targetHeight);
     }
+
     /**
      * Get the topleftX and topleftY that will can be passed to a cropping method.
      *
      * @param  Image    $original
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     protected function getEntropyOffsets($original, $targetWidth, $targetHeight)
     {
@@ -47,7 +48,6 @@ class Entropy
         imagefilter($measureImage, IMG_FILTER_EDGEDETECT);
         // Turn image into a grayscale
         imagefilter($measureImage, IMG_FILTER_GRAYSCALE);
-        // Turn everything darker than this to pitch black
         imagefilter($measureImage, IMG_FILTER_EMBOSS);
         // Get the calculated offset for cropping
         return $this->getOffsetFromEntropy($measureImage, $targetWidth, $targetHeight);
@@ -59,7 +59,7 @@ class Entropy
      * @param  resource $originalImage
      * @param  int      $targetWidth
      * @param  int      $targetHeight
-     * @return array
+     * @return array    The crop point coordinate
      */
     protected function getOffsetFromEntropy($originalImage, $targetWidth, $targetHeight)
     {
@@ -72,7 +72,7 @@ class Entropy
         $leftX = $this->slice($image, $originalWidth, $targetWidth, 'h');
         $topY = $this->slice($image, $originalHeight, $targetHeight, 'v');
 
-        $cropPoint = array('x'=>$leftX, 'y'=>$topY);
+        $cropPoint = array('x' => $leftX, 'y' => $topY);
         if ($cropPoint['x'] < 0) {
             $cropPoint['x'] = 0;
         } elseif ($cropPoint['y'] < 0) {
@@ -82,12 +82,12 @@ class Entropy
     }
 
     /**
-     * slice
+     * Slice Image to find the most entropic point for the crop method
      *
-     * @param resource $image
-     * @param mixed $originalSize
-     * @param mixed $targetSize
-     * @param mixed $axis         h=horizontal, v = vertical
+     * @param resource  $image
+     * @param mixed     $originalSize
+     * @param mixed     $targetSize
+     * @param mixed     $axis         h = horizontal, v = vertical
      * @access protected
      * @return int|mixed
      */
@@ -107,10 +107,10 @@ class Entropy
             if (!$aSlice) {
                 $aSlice = $this->cloneResource($image);
                 if ($axis === 'h') {
-                    $rect = array('x' => $aTop , 'y' => 0, 'width' => $sliceSize, 'height'=> $originalSize);
+                    $rect = array('x' => $aTop , 'y' => 0, 'width' => $sliceSize, 'height' => $originalSize);
                     $aSlice = imagecrop($aSlice , $rect);
                 } else {
-                    $rect = array('x' => 0 , 'y' => $aTop, 'width' => $originalSize, 'height'=> $sliceSize);
+                    $rect = array('x' => 0 , 'y' => $aTop, 'width' => $originalSize, 'height' => $sliceSize);
                     $aSlice = imagecrop($aSlice, $rect);
                 }
             }
@@ -118,10 +118,10 @@ class Entropy
             if (!$bSlice) {
                 $bSlice = $this->cloneResource($image);
                 if ($axis === 'h') {
-                    $rect = array('x' => $aBottom - $sliceSize , 'y' => 0, 'width' => $sliceSize, 'height'=> $originalSize);
+                    $rect = array('x' => $aBottom - $sliceSize , 'y' => 0, 'width' => $sliceSize, 'height' => $originalSize);
                     $bSlice = imagecrop($bSlice, $rect);
                 } else {
-                    $rect = array('x' => 0 , 'y' => $aBottom - $sliceSize, 'width' => $originalSize, 'height'=> $sliceSize);
+                    $rect = array('x' => 0 , 'y' => $aBottom - $sliceSize, 'width' => $originalSize, 'height' => $sliceSize);
                     $bSlice = imagecrop($bSlice, $rect);
                 }
             }
@@ -161,20 +161,8 @@ class Entropy
         }
         return $aTop;
     }
-    /**
-     * getSafeZoneList
-     *
-     * @access protected
-     * @return array
-     */
-    protected function getSafeZoneList()
-    {
-        return array();
-    }
 
     /**
-     * getPotential
-     *
      * @param mixed $position
      * @param mixed $top
      * @param mixed $sliceSize
@@ -183,7 +171,7 @@ class Entropy
      */
     protected function getPotential($position, $top, $sliceSize)
     {
-        $safeZoneList = $this->getSafeZoneList();
+        $safeZoneList = array();
         $safeRatio = 0;
         if ($position == 'top' || $position == 'left') {
             $start = $top;
@@ -207,9 +195,9 @@ class Entropy
         }
         return $safeRatio;
     }
+
     /**
      * Calculate the entropy for this image.
-     *
      * A higher value of entropy means more noise / liveliness / color / business
      *
      * @param  resource $image
@@ -226,6 +214,8 @@ class Entropy
     }
 
     /**
+     * Return an histogram of color pixel
+     *
      * @param resource $image
      * @return array
      */
@@ -234,9 +224,7 @@ class Entropy
         $colors = array();
         for ($i = 0; $i < imagesx($image); $i++) {
             for ($j = 0; $j < imagesy($image); $j++) {
-
                 $color = imagecolorat($image, $i, $j);
-
                 $colors[] = $color;
             }
         }
@@ -256,21 +244,6 @@ class Entropy
     }
 
     /**
-     * Returns a YUV weighted greyscale value
-     *
-     * @param  int $r
-     * @param  int $g
-     * @param  int $b
-     * @return int
-     * @see http://en.wikipedia.org/wiki/YUV
-     */
-    protected function rgb2bw($r, $g, $b)
-    {
-        return ($r*0.299)+($g*0.587)+($b*0.114);
-    }
-
-    /**
-     *
      * @param  array $histogram - a value[count] array
      * @param  int   $area
      * @return float
