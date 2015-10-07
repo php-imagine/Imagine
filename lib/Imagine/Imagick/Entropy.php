@@ -16,31 +16,16 @@
 
 namespace Imagine\Imagick;
 
-class Entropy
+use Imagine\Image\AbstractEntropy;
+
+class Entropy extends AbstractEntropy
 {
-    const POTENTIAL_RATIO = 1.5;
-    /**
-     * get special offset for class
-     *
-     * @param  \Imagick $original
-     * @param  int      $targetWidth
-     * @param  int      $targetHeight
-     * @return array    The crop point coordinate
-     */
-    public function getSpecialOffset(\Imagick $original, $targetWidth, $targetHeight)
+    public function getSpecialOffset($original, $targetWidth, $targetHeight)
     {
         return $this->getEntropyOffsets($original, $targetWidth, $targetHeight);
     }
 
-    /**
-     * Get the topleftX and topleftY that will can be passed to a cropping method.
-     *
-     * @param  \Imagick $original
-     * @param  int      $targetWidth
-     * @param  int      $targetHeight
-     * @return array    The crop point coordinate
-     */
-    protected function getEntropyOffsets(\Imagick $original, $targetWidth, $targetHeight)
+    public function getEntropyOffsets($original, $targetWidth, $targetHeight)
     {
         $measureImage = clone($original);
         // Enhance edges
@@ -53,15 +38,7 @@ class Entropy
         return $this->getOffsetFromEntropy($measureImage, $targetWidth, $targetHeight);
     }
 
-    /**
-     * Get the offset of where the crop should start
-     *
-     * @param  \Imagick $originalImage
-     * @param  int      $targetWidth
-     * @param  int      $targetHeight
-     * @return array    The crop point coordinate
-     */
-    protected function getOffsetFromEntropy(\Imagick $originalImage, $targetWidth, $targetHeight)
+    public function getOffsetFromEntropy($originalImage, $targetWidth, $targetHeight)
     {
         // The entropy works better on a blured image
         $image = clone($originalImage);
@@ -81,17 +58,7 @@ class Entropy
         return $cropPoint;
     }
 
-    /**
-     * Slice Image to find the most entropic point for the crop method
-     *
-     * @param mixed     $image
-     * @param mixed     $originalSize
-     * @param mixed     $targetSize
-     * @param mixed     $axis         h = horizontal, v = vertical
-     * @access protected
-     * @return int|mixed
-     */
-    protected function slice($image, $originalSize, $targetSize, $axis)
+    public function slice($image, $originalSize, $targetSize, $axis)
     {
         $aSlice = null;
         $bSlice = null;
@@ -157,14 +124,7 @@ class Entropy
         return $aTop;
     }
 
-    /**
-     * @param mixed $position
-     * @param mixed $top
-     * @param mixed $sliceSize
-     * @access protected
-     * @return int|mixed
-     */
-    protected function getPotential($position, $top, $sliceSize)
+    public function getPotential($position, $top, $sliceSize)
     {
         $safeZoneList = array();
         $safeRatio = 0;
@@ -191,41 +151,20 @@ class Entropy
         return $safeRatio;
     }
 
-    /**
-     * Calculate the entropy for this image.
-     * A higher value of entropy means more noise / liveliness / color / business
-     *
-     * @param  \Imagick $image
-     * @return float
-     *
-     * @see http://brainacle.com/calculating-image-entropy-with-python-how-and-why.html
-     * @see http://www.mathworks.com/help/toolbox/images/ref/entropy.html
-     */
-    protected function grayscaleEntropy(\Imagick $image)
+    public function grayscaleEntropy($image)
     {
         // The histogram consists of a list of 0-254 and the number of pixels that has that value
         $histogram = $image->getImageHistogram();
         return $this->getEntropy($histogram, $this->area($image));
     }
 
-    /**
-     * Get the area in pixels for this image
-     *
-     * @param  \Imagick $image
-     * @return int
-     */
-    protected function area(\Imagick $image)
+    public function area(\Imagick $image)
     {
         $size = $image->getImageGeometry();
         return $size['height'] * $size['width'];
     }
 
-    /**
-     * @param  array $histogram - a value[count] array
-     * @param  int   $area
-     * @return float
-     */
-    protected function getEntropy($histogram, $area)
+    public function getEntropy($histogram, $area)
     {
         $value = 0.0;
         $colors = count($histogram);
