@@ -179,7 +179,7 @@ class Entropy extends AbstractEntropy
     /**
      * {@inheritdoc}
      */
-    public function area(\Imagick $image)
+    public function area($image)
     {
         $size = $image->getImageGeometry();
         return $size['height'] * $size['width'];

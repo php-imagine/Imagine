@@ -16,6 +16,8 @@
 
 namespace Imagine\Gmagick;
 
+use Imagine\Image\AbstractEntropy;
+
 class Entropy extends AbstractEntropy
 {
     /**
