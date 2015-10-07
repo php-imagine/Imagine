@@ -13,7 +13,7 @@ class GetPointBalanced implements FilterInterface
     private $size;
 
     /**
-     * Constructs a GetPointBalanced filter
+     * Constructs a GetPointEntropy filter
      *
      * @param BoxInterface $size
      */
