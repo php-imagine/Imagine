@@ -131,7 +131,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function paste(ImageInterface $image, PointInterface $start)
+    final public function paste(ImageInterface $image, PointInterface $start,$alpha=100)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Gd\Image can only paste() Gd\Image instances, %s given', get_class($image)));
@@ -145,7 +145,7 @@ final class Image extends AbstractImage
         imagealphablending($this->resource, true);
         imagealphablending($image->resource, true);
 
-        if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(), 0, 0, $size->getWidth(), $size->getHeight())) {
+        if (false === imagecopymerge($this->resource, $image->resource, $start->getX(), $start->getY(), 0, 0, $size->getWidth(), $size->getHeight(),$alpha)) {
             throw new RuntimeException('Image paste operation failed');
         }
 
