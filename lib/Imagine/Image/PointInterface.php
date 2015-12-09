@@ -31,7 +31,7 @@ interface PointInterface
     public function getY();
 
     /**
-     * Checks if current coordinate is inside a given bo
+     * Checks if current coordinate is inside a given box
      *
      * @param BoxInterface $box
      *
