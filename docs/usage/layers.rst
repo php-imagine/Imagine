@@ -39,7 +39,7 @@ Count Layers
     <?php
     $image = $imagine->open('image.jpg');
 
-    echo "Image contains " . count($image->layers) . " layers";
+    echo "Image contains " . count($image->layers()) . " layers";
 
 Layers Iterations
 +++++++++++++++++
