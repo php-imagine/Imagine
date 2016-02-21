@@ -147,6 +147,33 @@ final class Image implements ImageInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
+     */
+    final public function merge(ImageInterface $image, PointInterface $start, $alpha = 100)
+    {
+        if (!$image instanceof self) {
+            throw new InvalidArgumentException(sprintf('Gd\Image can only paste() Gd\Image instances, %s given', get_class($image)));
+        }
+        $size = $image->getSize();
+        if (!$this->getSize()->contains($size, $start)) {
+            throw new OutOfBoundsException('Cannot paste image of the given size at the specified position, as it moves outside of the current image\'s box');
+        }
+ 
+        imagealphablending($this->resource, true);
+        imagealphablending($image->resource, true);
+        
+        if (false === imagecopymerge($this->resource, $image->resource, $start->getX(), $start->getY(), 0, 0, $size->getWidth(), $size->getHeight(), $alpha)) {
+            throw new RuntimeException('Image paste operation failed');
+        }
+        imagealphablending($this->resource, false);
+        imagealphablending($image->resource, false);
+        
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
