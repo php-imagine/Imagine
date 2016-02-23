@@ -13,6 +13,7 @@ namespace Imagine\Test\Imagick;
 
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Metadata\MetadataBag;
+use Imagine\Image\Point;
 use Imagine\Imagick\Imagine;
 use Imagine\Imagick\Image;
 use Imagine\Image\Palette\CMYK;
@@ -67,6 +68,21 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/resize/small.png');
     }
 
+    public function testAnimatedGifResize()
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+        $image
+            ->resize(new Box(150, 100))
+            ->save('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif', array('animated' => true))
+        ;
+        $this->assertImageEquals(
+            $imagine->open('tests/Imagine/Fixtures/resize/anima3-150x100.gif'),
+            $imagine->open('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif')
+        );
+        unlink('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif');
+    }
+
     // Older imagemagick versions does not support colorspace conversion
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
     {
@@ -92,6 +108,25 @@ class ImageTest extends AbstractImageTest
     {
         $image->usePalette(new RGB());
     }
+
+    public function testAnimatedGifCrop()
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+        $image
+            ->crop(
+                new Point(0, 0),
+                new Box(150, 100)
+            )
+            ->save('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif', array('animated' => true))
+        ;
+        $this->assertImageEquals(
+            $imagine->open('tests/Imagine/Fixtures/crop/anima3-topleft.gif'),
+            $imagine->open('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif')
+        );
+        unlink('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif');
+    }
+
 
     protected function supportMultipleLayers()
     {

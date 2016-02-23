@@ -127,15 +127,24 @@ final class Image extends AbstractImage
         if (!$start->in($this->getSize())) {
             throw new OutOfBoundsException('Crop coordinates must start at minimum 0, 0 position from top left corner, crop height and width must be positive integers and must not exceed the current image borders');
         }
-
         try {
-            $this->imagick->cropImage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
-            // Reset canvas for gif format
-            $this->imagick->setImagePage(0, 0, 0, 0);
+            if ($this->layers()->count() > 1) {
+                // Crop each layer separately
+                $this->imagick = $this->imagick->coalesceImages();
+                foreach ($this->imagick as $frame) {
+                    $frame->cropImage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
+                    // Reset canvas for gif format
+                    $frame->setImagePage(0, 0, 0, 0);
+                }
+                $this->imagick = $this->imagick->deconstructImages();
+            } else {
+                $this->imagick->cropImage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
+                // Reset canvas for gif format
+                $this->imagick->setImagePage(0, 0, 0, 0);
+            }
         } catch (\ImagickException $e) {
             throw new RuntimeException('Crop operation failed', $e->getCode(), $e);
         }
-
         return $this;
     }
 
@@ -219,17 +228,22 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
-     *
-     * @return ImageInterface
      */
     public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
         try {
-            $this->imagick->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
+            if ($this->layers->count() > 1) {
+                $this->imagick = $this->imagick->coalesceImages();
+                foreach ($this->imagick as $frame) {
+                    $frame->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
+                }
+                $this->imagick = $this->imagick->deconstructImages();
+            } else {
+                $this->imagick->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
+            }
         } catch (\ImagickException $e) {
             throw new RuntimeException('Resize operation failed', $e->getCode(), $e);
         }
-
         return $this;
     }
 
