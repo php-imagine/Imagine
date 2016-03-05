@@ -25,7 +25,7 @@
         <div class="content">
                 <p>    class
     <strong>MetadataBag</strong>        implements
-        <a href="http://php.net/ArrayAccess"><abbr title="ArrayAccess">ArrayAccess</abbr></a>, <a href="http://php.net/IteratorAggregate"><abbr title="IteratorAggregate">IteratorAggregate</abbr></a></p>
+        <a href="http://php.net/ArrayAccess"><abbr title="ArrayAccess">ArrayAccess</abbr></a>, <a href="http://php.net/IteratorAggregate"><abbr title="IteratorAggregate">IteratorAggregate</abbr></a>, <a href="http://php.net/Countable"><abbr title="Countable">Countable</abbr></a></p>
 
             <div class="description">
             <p>An interface for Image Metadata</p>
@@ -46,6 +46,26 @@
                     <a href="#method___construct">__construct</a>(array $data = array())
                     <p>
 </p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_get">get</a>(string $key, mixed|null $default = null)
+                    <p>Returns the metadata key, default value if it does not exist</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_count">count</a>()
+                    <p>{@inheritdoc}</p>
                 </td>
                 <td></td>
             </tr>
@@ -142,8 +162,67 @@
                     </div>
     </div>
 
+                <h3 id="method_get">
+        <div class="location">at line 35</div>
+        <code>            public            mixed
+    <strong>get</strong>(string $key, mixed|null $default = null)</code>
+    </h3>
+    <div class="details">
+        <p>Returns the metadata key, default value if it does not exist</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$key</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>mixed|null</td>
+                <td>$default</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_count">
+        <div class="location">at line 43</div>
+        <code>            public            
+    <strong>count</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>{@inheritdoc}</p>
+        <p>
+</p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_getIterator">
-        <div class="location">at line 30</div>
+        <div class="location">at line 51</div>
         <code>            public            
     <strong>getIterator</strong>()</code>
     </h3>
@@ -159,7 +238,7 @@
     </div>
 
                 <h3 id="method_offsetExists">
-        <div class="location">at line 38</div>
+        <div class="location">at line 59</div>
         <code>            public            
     <strong>offsetExists</strong>($offset)</code>
     </h3>
@@ -186,7 +265,7 @@
     </div>
 
                 <h3 id="method_offsetSet">
-        <div class="location">at line 46</div>
+        <div class="location">at line 67</div>
         <code>            public            
     <strong>offsetSet</strong>($offset, $value)</code>
     </h3>
@@ -219,7 +298,7 @@
     </div>
 
                 <h3 id="method_offsetUnset">
-        <div class="location">at line 54</div>
+        <div class="location">at line 75</div>
         <code>            public            
     <strong>offsetUnset</strong>($offset)</code>
     </h3>
@@ -246,7 +325,7 @@
     </div>
 
                 <h3 id="method_offsetGet">
-        <div class="location">at line 62</div>
+        <div class="location">at line 83</div>
         <code>            public            
     <strong>offsetGet</strong>($offset)</code>
     </h3>
@@ -273,7 +352,7 @@
     </div>
 
                 <h3 id="method_toArray">
-        <div class="location">at line 72</div>
+        <div class="location">at line 93</div>
         <code>            public            array
     <strong>toArray</strong>()</code>
     </h3>
