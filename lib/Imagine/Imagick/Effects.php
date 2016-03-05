@@ -12,8 +12,10 @@
 namespace Imagine\Imagick;
 
 use Imagine\Effects\EffectsInterface;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\RGB;
 
 /**
  * Effects implementation using the Imagick PHP extension
@@ -74,8 +76,12 @@ class Effects implements EffectsInterface
      */
     public function colorize(ColorInterface $color)
     {
+        if (!$color instanceof RGB) {
+            throw new NotSupportedException('Colorize with non-rgb color is not supported');
+        }
+
         try {
-            $this->imagick->colorizeImage((string) $color, 1);
+            $this->imagick->colorizeImage((string) $color, new \ImagickPixel(sprintf('rgba(%d, %d, %d, 1)', $color->getRed(), $color->getGreen(), $color->getBlue())));
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to colorize the image');
         }
