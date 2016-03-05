@@ -36,6 +36,14 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     protected function extractFromFile($file)
     {
+        if (stream_is_local($file)) {
+            if (false === is_readable($file)) {
+                throw new InvalidArgumentException(sprintf('File %s is not readable.', $file));
+            }
+
+            return $this->extract($file);
+        }
+
         if (false === $data = @file_get_contents($file)) {
             throw new InvalidArgumentException(sprintf('File %s is not readable.', $file));
         }
