@@ -695,6 +695,10 @@ final class Image extends AbstractImage
         try {
             $this->gmagick->profileimage('ICM', $profile->data());
         } catch (\GmagickException $e) {
+            if (false !== strpos($e->getMessage(), 'LCMS encoding not enabled')) {
+                throw new RuntimeException(sprintf('Unable to add profile %s to image, be sue to compile graphicsmagick with `--with-lcms2` option', $profile->name()), $e->getCode(), $e);
+            }
+
             throw new RuntimeException(sprintf('Unable to add profile %s to image', $profile->name()), $e->getCode(), $e);
         }
 
