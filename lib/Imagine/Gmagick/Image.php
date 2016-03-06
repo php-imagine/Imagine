@@ -555,7 +555,7 @@ final class Image extends AbstractImage
                 ->cropImage(1, 1, $point->getX(), $point->getY())
                 ->getImageHistogram();
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Unable to get the pixel');
+            throw new RuntimeException('Unable to get the pixel', $e->getCode(), $e);
         }
 
         $pixel = array_shift($histogram);

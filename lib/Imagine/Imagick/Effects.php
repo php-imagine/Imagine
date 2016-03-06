@@ -35,7 +35,7 @@ class Effects implements EffectsInterface
         try {
             $this->imagick->gammaImage($correction, \Imagick::CHANNEL_ALL);
         } catch (\ImagickException $e) {
-            throw new RuntimeException('Failed to apply gamma correction to the image');
+            throw new RuntimeException('Failed to apply gamma correction to the image', $e->getCode(), $e);
         }
 
         return $this;
@@ -49,7 +49,7 @@ class Effects implements EffectsInterface
         try {
             $this->imagick->negateImage(false, \Imagick::CHANNEL_ALL);
         } catch (\ImagickException $e) {
-            throw new RuntimeException('Failed to negate the image');
+            throw new RuntimeException('Failed to negate the image', $e->getCode(), $e);
         }
 
         return $this;
@@ -63,7 +63,7 @@ class Effects implements EffectsInterface
         try {
             $this->imagick->setImageType(\Imagick::IMGTYPE_GRAYSCALE);
         } catch (\ImagickException $e) {
-            throw new RuntimeException('Failed to grayscale the image');
+            throw new RuntimeException('Failed to grayscale the image', $e->getCode(), $e);
         }
 
         return $this;
@@ -77,7 +77,7 @@ class Effects implements EffectsInterface
         try {
             $this->imagick->colorizeImage((string) $color, 1);
         } catch (\ImagickException $e) {
-            throw new RuntimeException('Failed to colorize the image');
+            throw new RuntimeException('Failed to colorize the image', $e->getCode(), $e);
         }
 
         return $this;
@@ -91,7 +91,7 @@ class Effects implements EffectsInterface
         try {
             $this->imagick->sharpenImage(2, 1);
         } catch (\ImagickException $e) {
-            throw new RuntimeException('Failed to sharpen the image');
+            throw new RuntimeException('Failed to sharpen the image', $e->getCode(), $e);
         }
 
         return $this;

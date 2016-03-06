@@ -157,9 +157,7 @@ class Imagine extends AbstractImagine
             $gmagick = new \Gmagick();
             $gmagick->readimageblob($content);
         } catch (\GmagickException $e) {
-            throw new RuntimeException(
-                'Could not load image from string', $e->getCode(), $e
-            );
+            throw new RuntimeException('Could not load image from string', $e->getCode(), $e);
         }
 
         return new Image($gmagick, $this->createPalette($gmagick), $metadata);
