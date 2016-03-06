@@ -5,13 +5,12 @@ env:
   - IMAGINE_DRIVER=gmagick
 
 before_install:
+  - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   - composer self-update
 
 install:
-  - composer install --prefer-source
   - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
-  - sudo apt-get install -y libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config
-  - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+  - sudo apt-get install -y libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev
   - sh -e -c " if [ '$IMAGINE_DRIVER' = 'imagick' ]; then
               wget http://www.imagemagick.org/download/releases/ImageMagick-6.8.9-10.tar.xz;
               tar -xf ImageMagick-6.8.9-10.tar.xz;
@@ -22,9 +21,9 @@ install:
               export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/imagemagick/lib/pkgconfig;
               sudo ln -s /opt/imagemagick/include/ImageMagick-6 /opt/imagemagick/include/ImageMagick;
               cd ..;
-              wget http://pecl.php.net/get/imagick-3.2.0RC1.tgz;
-              tar -xzf imagick-3.2.0RC1.tgz;
-              cd imagick-3.2.0RC1;
+              wget https://pecl.php.net/get/imagick-3.4.0.tgz;
+              tar -xzf imagick-3.4.0.tgz;
+              cd imagick-3.4.0;
               phpize;
               ./configure --with-imagick=/opt/imagemagick;
               make -j;
@@ -33,17 +32,30 @@ install:
               php --ri imagick;
             fi"
   - sh -e -c " if [ '$IMAGINE_DRIVER' = 'gmagick' ]; then
-              sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev;
-              wget http://pecl.php.net/get/gmagick-1.1.7RC2.tgz;
-              tar -xzf gmagick-1.1.7RC2.tgz;
-              cd gmagick-1.1.7RC2;
+              wget http://78.108.103.11/MIRROR/ftp/GraphicsMagick/1.3/GraphicsMagick-1.3.23.tar.xz;
+              tar -xf GraphicsMagick-1.3.23.tar.xz;
+              cd GraphicsMagick-1.3.23;
+              ./configure --prefix=/opt/gmagick --enable-shared --with-lcms2;
+              make -j;
+              sudo make install;
+              cd ..;
+              if [ '$TRAVIS_PHP_VERSION' = '7.0' ]; then
+                  wget https://pecl.php.net/get/gmagick-2.0.2RC1.tgz;
+                  tar -xzf gmagick-2.0.2RC1.tgz;
+                  cd gmagick-2.0.2RC1;
+              else
+                  wget http://pecl.php.net/get/gmagick-1.1.7RC2.tgz;
+                  tar -xzf gmagick-1.1.7RC2.tgz;
+                  cd gmagick-1.1.7RC2;
+              fi;
               phpize;
-              ./configure --with-gmagick=/usr/local;
+              ./configure --with-gmagick=/opt/gmagick;
               make -j;
               sudo make install;
               echo \"extension=gmagick.so\" >> `php --ini | grep \"Loaded Configuration\" | sed -e \"s|.*:\s*||\"`;
               php --ri gmagick;
             fi"
+  - composer install --prefer-source
 
 php:
   - 5.3
@@ -51,7 +63,3 @@ php:
   - 5.5
   - 5.6
   - 7.0
-
-matrix:
-    allow_failures:
-        - php: 7.0
