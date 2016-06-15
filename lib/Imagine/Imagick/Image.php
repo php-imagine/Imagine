@@ -809,9 +809,15 @@ final class Image extends AbstractImage
     {
         static $typeMapping = array(
             // We use Matte variants to preserve alpha
-            PaletteInterface::PALETTE_CMYK      => \Imagick::IMGTYPE_TRUECOLORMATTE,
-            PaletteInterface::PALETTE_RGB       => \Imagick::IMGTYPE_TRUECOLORMATTE,
-            PaletteInterface::PALETTE_GRAYSCALE => \Imagick::IMGTYPE_GRAYSCALEMATTE,
+            //
+            // (the constants \Imagick::IMGTYPE_TRUECOLORMATTE and \Imagick::IMGTYPE_GRAYSCALEMATTE do not exist anymore in Imagick 7,
+            // to fix this the former values are hard coded here, the documentation under http://php.net/manual/en/imagick.settype.php
+            // doesn't tell us which constants to use and the alternative constants listed under
+            // https://pecl.php.net/package/imagick/3.4.3RC1 do not exist either, so we found no other way to fix it as to hard code
+            // the values here)
+            PaletteInterface::PALETTE_CMYK      => defined('\Imagick::IMGTYPE_TRUECOLORMATTE') ? \Imagick::IMGTYPE_TRUECOLORMATTE : 7,
+            PaletteInterface::PALETTE_RGB       => defined('\Imagick::IMGTYPE_TRUECOLORMATTE') ? \Imagick::IMGTYPE_TRUECOLORMATTE : 7,
+            PaletteInterface::PALETTE_GRAYSCALE => defined('\Imagick::IMGTYPE_GRAYSCALEMATTE') ? \Imagick::IMGTYPE_GRAYSCALEMATTE : 3,
         );
 
         if (!isset(static::$colorspaceMapping[$palette->name()])) {
