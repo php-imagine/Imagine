@@ -43,7 +43,7 @@ The result of ``apply()`` is the modified image instance itself, so if we wanted
             ->save('/path/to/resized/'.md5($path).'.jpg');
     }
 
-The ``Filter\Transformation`` class itself is simply a very specific implementation of ``FilterInterface``, which is a more generic interface, that let's you pre-define certain operations and variable calculations and apply them to an ``ImageInterface`` instance later.
+The ``Filter\Transformation`` class itself is simply a very specific implementation of ``FilterInterface``, which is a more generic interface, that lets you pre-define certain operations and variable calculations and apply them to an ``ImageInterface`` instance later.
 
 Filter Application Order
 ------------------------
