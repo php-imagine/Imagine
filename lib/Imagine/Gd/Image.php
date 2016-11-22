@@ -539,14 +539,6 @@ final class Image extends AbstractImage
         $save = 'image'.$format;
         $args = array(&$this->resource, $filename);
 
-        // Preserve BC until version 1.0
-        if (isset($options['quality']) && !isset($options['png_compression_level'])) {
-            $options['png_compression_level'] = round((100 - $options['quality']) * 9 / 100);
-        }
-        if (isset($options['filters']) && !isset($options['png_compression_filter'])) {
-            $options['png_compression_filter'] = $options['filters'];
-        }
-
         $options = $this->updateSaveOptions($options);
 
         if ($format === 'jpeg' && isset($options['jpeg_quality'])) {
