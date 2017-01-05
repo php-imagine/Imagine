@@ -225,7 +225,17 @@ final class Image extends AbstractImage
     public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
         try {
-            $this->imagick->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
+            if ($this->layers->count() > 1) {
+                $this->imagick = $this->imagick->coalesceimages();
+
+                foreach ($this->imagick as $frame) {
+                    $frame->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
+                }
+
+                $this->imagick = $this->imagick->deconstructimages();
+            } else {
+                $this->imagick->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
+            }
         } catch (\ImagickException $e) {
             throw new RuntimeException('Resize operation failed', $e->getCode(), $e);
         }
