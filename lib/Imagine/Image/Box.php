@@ -36,8 +36,12 @@ final class Box implements BoxInterface
      *
      * @throws InvalidArgumentException
      */
-    public function __construct($width, $height)
+    public function __construct($width, $height = null)
     {
+        if ($height === null) {
+            $height = $width;
+        }
+
         if ($height < 1 || $width < 1) {
             throw new InvalidArgumentException(sprintf('Length of either side cannot be 0 or negative, current size is %sx%s', $width, $height));
         }
