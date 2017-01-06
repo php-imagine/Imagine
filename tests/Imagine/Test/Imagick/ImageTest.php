@@ -137,4 +137,26 @@ class ImageTest extends AbstractImageTest
     {
         return $image->getImagick()->getImageResolution();
     }
+
+    public function testCropBalanced()
+    {
+        $crop = new Imagine();
+        $size = new Box(100, 100);
+        $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
+        $imageCrop = $image->resizeAndCropBalanced($size);
+
+        $this->assertEquals(100, $imageCrop->getSize()->getHeight());
+        $this->assertEquals(100, $imageCrop->getSize()->getWidth());
+    }
+
+    public function testCropEntropy()
+    {
+        $crop = new Imagine();
+        $size = new Box(100, 100);
+        $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
+        $imageCrop = $image->resizeAndCropEntropy($size);
+
+        $this->assertEquals(100, $imageCrop->getSize()->getHeight());
+        $this->assertEquals(100, $imageCrop->getSize()->getWidth());
+    }
 }

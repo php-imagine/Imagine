@@ -14,6 +14,7 @@ namespace Imagine\Test\Gd;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractImageTest;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Box;
 use Imagine\Exception\RuntimeException;
 
 class ImageTest extends AbstractImageTest
@@ -127,5 +128,35 @@ class ImageTest extends AbstractImageTest
 
     protected function getImageResolution(ImageInterface $image)
     {
+    }
+
+    public function testCropBalanced()
+    {
+        if (version_compare('5.5', PHP_VERSION, '<=')) {
+            $crop = new Imagine();
+            $size = new Box(100, 100);
+            $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
+            $imageCrop = $image->resizeAndCropBalanced($size);
+
+            $this->assertEquals(100, $imageCrop->getSize()->getHeight());
+            $this->assertEquals(100, $imageCrop->getSize()->getWidth());
+        } else {
+            $this->markTestSkipped('Gd function imagecrop only supports PHP version >= 5.5');
+        }
+    }
+
+    public function testCropEntropy()
+    {
+        if (version_compare('5.5', PHP_VERSION, '<=')) {
+            $crop = new Imagine();
+            $size = new Box(100, 100);
+            $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
+            $imageCrop = $image->resizeAndCropEntropy($size);
+
+            $this->assertEquals(100, $imageCrop->getSize()->getHeight());
+            $this->assertEquals(100, $imageCrop->getSize()->getWidth());
+        } else {
+            $this->markTestSkipped('Gd function imagecrop only supports PHP version >= 5.5');
+        }
     }
 }

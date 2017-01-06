@@ -11,6 +11,10 @@
 
 namespace Imagine\Filter;
 
+use CropBalanced;
+use CropEntropy;
+use GetPointBalanced;
+use GetPointEntropy;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Filter\Basic\ApplyMask;
 use Imagine\Filter\Basic\Copy;
@@ -132,6 +136,38 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     public function crop(PointInterface $start, BoxInterface $size)
     {
         return $this->add(new Crop($start, $size));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPointBalanced(BoxInterface $size)
+    {
+        return $this->add(new GetPointBalanced($size));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resizeAndCropBalanced(BoxInterface $size)
+    {
+        return $this->add(new CropBalanced($size));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPointEntropy(BoxInterface $size)
+    {
+        return $this->add(new GetPointEntropy($size));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resizeAndCropEntropy(BoxInterface $size)
+    {
+        return $this->add(new CropEntropy($size));
     }
 
     /**
