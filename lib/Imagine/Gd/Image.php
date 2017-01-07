@@ -571,6 +571,10 @@ final class Image extends AbstractImage
             }
         }
 
+        if (($format === 'webp') && isset($options['webp_quality'])) {
+            $args[] = $options['webp_quality'];
+        }
+
         if (($format === 'wbmp' || $format === 'xbm') && isset($options['foreground'])) {
             $args[] = $options['foreground'];
         }
@@ -678,7 +682,7 @@ final class Image extends AbstractImage
      */
     private function supported($format = null)
     {
-        $formats = array('gif', 'jpeg', 'png', 'wbmp', 'xbm');
+        $formats = array('gif', 'jpeg', 'png', 'wbmp', 'webp', 'xbm');
 
         if (null === $format) {
             return $formats;
@@ -727,6 +731,7 @@ final class Image extends AbstractImage
             'gif'  => 'image/gif',
             'png'  => 'image/png',
             'wbmp' => 'image/vnd.wap.wbmp',
+            'webp' => 'image/webp',
             'xbm'  => 'image/xbm',
         );
 
