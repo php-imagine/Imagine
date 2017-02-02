@@ -24,7 +24,8 @@
     },
     "require-dev": {
         "sami/sami": "~3.3",
-        "phpunit/phpunit": "5.3.*"
+        "phpunit/phpunit": "5.3.*",
+        "hirak/prestissimo": "^0.3"
     },
     "suggest": {
         "ext-gd": "to use the GD implementation",
