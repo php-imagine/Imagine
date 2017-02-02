@@ -36,7 +36,7 @@ class Effects implements EffectsInterface
         try {
             $this->gmagick->gammaimage($correction);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Failed to apply gamma correction to the image');
+            throw new RuntimeException('Failed to apply gamma correction to the image', $e->getCode(), $e);
         }
 
         return $this;
@@ -54,7 +54,7 @@ class Effects implements EffectsInterface
         try {
             $this->gmagick->negateimage(false, \Gmagick::CHANNEL_ALL);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Failed to negate the image');
+            throw new RuntimeException('Failed to negate the image', $e->getCode(), $e);
         }
 
         return $this;
@@ -68,7 +68,7 @@ class Effects implements EffectsInterface
         try {
             $this->gmagick->setImageType(2);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Failed to grayscale the image');
+            throw new RuntimeException('Failed to grayscale the image', $e->getCode(), $e);
         }
 
         return $this;
