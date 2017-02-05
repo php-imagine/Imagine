@@ -1,13 +1,15 @@
 language: php
 
+php:
+  - 5.6
+  - 7.0
+
 env:
   - IMAGINE_DRIVER=imagick
   - IMAGINE_DRIVER=gmagick
 
 before_install:
   - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
-  - composer self-update
-  - composer global require phpunit/phpunit 5.3.*
 
 install:
   - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
@@ -58,6 +60,5 @@ install:
             fi"
   - composer install --prefer-source
 
-php:
-  - 5.6
-  - 7.0
+script:
+  - ./bin/phpunit -vvv
