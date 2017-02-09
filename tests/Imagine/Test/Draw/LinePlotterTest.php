@@ -27,7 +27,7 @@ class LinePlotterTest extends \PHPUnit_Framework_TestCase
         $expectedDrawerFunction,
         $expectedCallCount
     ) {
-        $mockDrawer = $this->getMock('Imagine\\Draw\\DrawerInterface');
+        $mockDrawer = $this->getMockBuilder('Imagine\\Draw\\DrawerInterface')->getMock();
 
         $plotter = new LinePlotter($mockDrawer);
 
@@ -76,7 +76,7 @@ class LinePlotterTest extends \PHPUnit_Framework_TestCase
         $expectedDrawerFunction,
         $expectedCallCount
     ) {
-        $mockDrawer = $this->getMock('Imagine\\Draw\\DrawerInterface');
+        $mockDrawer = $this->getMockBuilder('Imagine\\Draw\\DrawerInterface')->getMock();
 
         $plotter = new LinePlotter($mockDrawer);
 
@@ -104,7 +104,7 @@ class LinePlotterTest extends \PHPUnit_Framework_TestCase
      */
     public function testLabel(PointInterface $point, $text)
     {
-        $mockDrawer = $this->getMock('Imagine\\Draw\\DrawerInterface');
+        $mockDrawer = $this->getMockBuilder('Imagine\\Draw\\DrawerInterface')->getMock();
         $mockFont = $this->getMockBuilder('Imagine\\Image\\AbstractFont')->disableOriginalConstructor()->getMock();
 
         $plotter = new LinePlotter($mockDrawer);

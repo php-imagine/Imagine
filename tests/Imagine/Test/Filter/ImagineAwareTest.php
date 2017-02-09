@@ -74,7 +74,7 @@ class ImagineAwareTest extends FilterTestCase
 
     protected function getImagineMock()
     {
-        $imagineMock = $this->getMock('Imagine\\Image\\ImagineInterface');
+        $imagineMock = $this->getMockBuilder('Imagine\\Image\\ImagineInterface')->getMock();
         $imagineMock->expects($this->once())
             ->method('create')
             ->will($this->returnValue($this->getImage()));

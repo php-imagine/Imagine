@@ -15,26 +15,26 @@ abstract class FilterTestCase extends \PHPUnit_Framework_TestCase
 {
     protected function getImage()
     {
-        return $this->getMock('Imagine\\Image\\ImageInterface');
+        return $this->getMockBuilder('Imagine\\Image\\ImageInterface')->getMock();
     }
 
     protected function getImagine()
     {
-        return $this->getMock('Imagine\\Image\\ImagineInterface');
+        return $this->getMockBuilder('Imagine\\Image\\ImagineInterface')->getMock();
     }
 
     protected function getDrawer()
     {
-        return $this->getMock('Imagine\\Draw\\DrawerInterface');
+        return $this->getMockBuilder('Imagine\\Draw\\DrawerInterface')->getMock();
     }
 
     protected function getPalette()
     {
-        return $this->getMock('Imagine\\Image\\Palette\\PaletteInterface');
+        return $this->getMockBuilder('Imagine\\Image\\Palette\\PaletteInterface')->getMock();
     }
 
     protected function getColor()
     {
-        return $this->getMock('Imagine\\Image\\Palette\\Color\\ColorInterface');
+        return $this->getMockBuilder('Imagine\\Image\\Palette\\Color\\ColorInterface')->getMock();
     }
 }

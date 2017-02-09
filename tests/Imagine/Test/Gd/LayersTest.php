@@ -33,7 +33,7 @@ class LayersTest extends AbstractLayersTest
     public function testCount()
     {
         $resource = imagecreate(20, 20);
-        $palette = $this->getMock('Imagine\Image\Palette\PaletteInterface');
+        $palette = $this->getMockBuilder('Imagine\Image\Palette\PaletteInterface')->getMock();
         $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
 
         $this->assertCount(1, $layers);
@@ -42,7 +42,7 @@ class LayersTest extends AbstractLayersTest
     public function testGetLayer()
     {
         $resource = imagecreate(20, 20);
-        $palette = $this->getMock('Imagine\Image\Palette\PaletteInterface');
+        $palette = $this->getMockBuilder('Imagine\Image\Palette\PaletteInterface')->getMock();
         $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
 
         foreach ($layers as $layer) {

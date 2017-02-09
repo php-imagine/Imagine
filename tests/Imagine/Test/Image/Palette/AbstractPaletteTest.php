@@ -54,11 +54,11 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     public function testUseProfile()
     {
-        $this->getMock('Imagine\Image\ProfileInterface');
+        $this->getMockBuilder('Imagine\Image\ProfileInterface')->getMock();
 
         $palette = $this->getPalette();
 
-        $new = $this->getMock('Imagine\Image\ProfileInterface');
+        $new = $this->getMockBuilder('Imagine\Image\ProfileInterface')->getMock();
         $palette->useProfile($new);
 
         $this->assertEquals($new, $palette->profile());

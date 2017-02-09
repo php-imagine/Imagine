@@ -18,14 +18,12 @@ class BorderTest extends FilterTestCase
 {
     public function testBorderImage()
     {
-        $color       = $this->getMock('Imagine\\Image\\Palette\\Color\\ColorInterface');
+        $color       = $this->getMockBuilder('Imagine\\Image\\Palette\\Color\\ColorInterface')->getMock();
         $width       = 2;
         $height      = 4;
         $image       = $this->getImage();
-        $imageWidth  = 200;
-        $imageHeight = 100;
 
-        $size = $this->getMock('Imagine\\Image\\BoxInterface');
+        $size = $this->getMockBuilder('Imagine\\Image\\BoxInterface')->getMock();
         $size->expects($this->once())
              ->method('getWidth')
              ->will($this->returnValue($width));
