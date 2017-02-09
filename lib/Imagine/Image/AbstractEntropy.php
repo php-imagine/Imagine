@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Imagine\Image;
+
 /**
  * SlyCropEntropy.
  *
@@ -12,9 +23,6 @@
  * 3. Find a piece in the picture that has the highest entropy (i.e. most edges)
  * 4. Return coordinates that makes sure that this piece of the picture is not cropped 'away'
  */
-
-namespace Imagine\Image;
-
 abstract class AbstractEntropy
 {
     const POTENTIAL_RATIO = 1.5;
