@@ -3,7 +3,7 @@
 set -xe
 
 IMAGEMAGICK_VERSION="6.8.9-10"
-IMAGICK_VERSION="3.4.0"
+IMAGICK_VERSION="3.4.3"
 
 mkdir -p cache
 cd cache
