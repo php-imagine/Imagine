@@ -34,7 +34,7 @@ class GrayscaleTest extends FilterTestCase
         $imageWidth  = $size->getWidth();
         $imageHeight = $size->getHeight();
 
-        $size = $this->getMock('Imagine\\Image\\BoxInterface');
+        $size = $this->getMockBuilder('Imagine\\Image\\BoxInterface')->getMock();
         $size->expects($this->once())
              ->method('getWidth')
              ->will($this->returnValue($imageWidth));

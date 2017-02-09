@@ -36,7 +36,7 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
         $expectedScaleFactorY,
         $expectedOrigin
     ) {
-        $imageMock = $this->getMock('Imagine\\Image\\ImageInterface');
+        $imageMock = $this->getMockBuilder('Imagine\\Image\\ImageInterface')->getMock();
         $imageMock->expects($this->any())->method('getSize')->willReturn(new Box(100,100));
 
         $fontMock = $this->getMockBuilder('Imagine\\Image\\FontInterface')->disableOriginalConstructor()->getMock();
