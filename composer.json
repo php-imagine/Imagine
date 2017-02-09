@@ -23,7 +23,7 @@
         "php": ">=5.3.2"
     },
     "require-dev": {
-        "sami/sami": "dev-master"
+        "sami/sami": "^3.3"
     },
     "suggest": {
         "ext-gd": "to use the GD implementation",
