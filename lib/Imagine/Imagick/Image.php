@@ -907,7 +907,7 @@ final class Image extends AbstractImage
      */
     private function setColorspace(PaletteInterface $palette)
     {
-        static $typeMapping = array(
+        $typeMapping = array(
             // We use Matte variants to preserve alpha
             //
             // (the constants \Imagick::IMGTYPE_TRUECOLORMATTE and \Imagick::IMGTYPE_GRAYSCALEMATTE do not exist anymore in Imagick 7,
