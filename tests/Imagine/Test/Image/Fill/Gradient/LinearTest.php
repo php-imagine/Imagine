@@ -36,14 +36,14 @@ abstract class LinearTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->start = $this->getStart();
-        $this->end   = $this->getEnd();
-        $this->fill  = $this->getFill($this->start, $this->end);
+        $this->end = $this->getEnd();
+        $this->fill = $this->getFill($this->start, $this->end);
     }
 
     /**
      * @dataProvider getPointsAndColors
      *
-     * @param integer                      $shade
+     * @param int                          $shade
      * @param Imagine\Image\PointInterface $position
      */
     public function testShouldProvideCorrectColorsValues(ColorInterface $color, PointInterface $position)

@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Test\Draw;
 
 use Imagine\Draw\LineStyle;
@@ -7,7 +8,6 @@ use Imagine\Image\Palette\RGB as RGBPalette;
 
 class LineStyleTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testDefaultValues()
     {
         $color = new RGB(new RGBPalette(), array(0, 128, 0), 100);

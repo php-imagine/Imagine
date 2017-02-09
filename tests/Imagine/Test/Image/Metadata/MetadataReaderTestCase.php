@@ -14,8 +14,6 @@ namespace Imagine\Test\Image\Metadata;
 use Imagine\Image\Metadata\MetadataReaderInterface;
 use Imagine\Test\ImagineTestCase;
 
-/**
- */
 abstract class MetadataReaderTestCase extends ImagineTestCase
 {
     /**
@@ -25,7 +23,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromFile()
     {
-        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $source = __DIR__.'/../../../Fixtures/pixel-CMYK.jpg';
         $metadata = $this->getReader()->readFile($source);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
         $this->assertEquals(realpath($source), $metadata['filepath']);
@@ -34,7 +32,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromExifUncompatibleFile()
     {
-        $source = __DIR__ . '/../../../Fixtures/trans.png';
+        $source = __DIR__.'/../../../Fixtures/trans.png';
         $metadata = $this->getReader()->readFile($source);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
         $this->assertEquals(realpath($source), $metadata['filepath']);
@@ -61,7 +59,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromData()
     {
-        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $source = __DIR__.'/../../../Fixtures/pixel-CMYK.jpg';
         $metadata = $this->getReader()->readData(file_get_contents($source));
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
     }
@@ -74,7 +72,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromStream()
     {
-        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $source = __DIR__.'/../../../Fixtures/pixel-CMYK.jpg';
         $resource = fopen($source, 'r');
         $metadata = $this->getReader()->readStream($resource);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);

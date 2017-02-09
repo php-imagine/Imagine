@@ -19,8 +19,8 @@ class Issue67Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
-    * @expectedException Imagine\Exception\RuntimeException
-    */
+     * @expectedException Imagine\Exception\RuntimeException
+     */
     public function testShouldThrowExceptionNotError()
     {
         $invalidPath = '/thispathdoesnotexist';
@@ -28,6 +28,6 @@ class Issue67Test extends \PHPUnit_Framework_TestCase
         $imagine = $this->getImagine();
 
         $imagine->open('tests/Imagine/Fixtures/large.jpg')
-            ->save($invalidPath . '/myfile.jpg');
+            ->save($invalidPath.'/myfile.jpg');
     }
 }

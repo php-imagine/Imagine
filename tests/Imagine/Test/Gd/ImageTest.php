@@ -64,7 +64,6 @@ class ImageTest extends AbstractImageTest
             parent::testProfile();
             $this->fail('A RuntimeException should have been raised');
         } catch (RuntimeException $e) {
-
         }
     }
 

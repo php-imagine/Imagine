@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Test\Imagick;
 
 use Imagine\Imagick\Imagine;

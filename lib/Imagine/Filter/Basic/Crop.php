@@ -17,7 +17,7 @@ use Imagine\Image\PointInterface;
 use Imagine\Filter\FilterInterface;
 
 /**
- * A crop filter
+ * A crop filter.
  */
 class Crop implements FilterInterface
 {
@@ -33,7 +33,7 @@ class Crop implements FilterInterface
 
     /**
      * Constructs a Crop filter with given x, y, coordinates and crop width and
-     * height values
+     * height values.
      *
      * @param PointInterface $start
      * @param BoxInterface   $size
@@ -41,7 +41,7 @@ class Crop implements FilterInterface
     public function __construct(PointInterface $start, BoxInterface $size)
     {
         $this->start = $start;
-        $this->size  = $size;
+        $this->size = $size;
     }
 
     /**

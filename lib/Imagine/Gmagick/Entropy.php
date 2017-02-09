@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Gmagick;
 
 use Imagine\Image\AbstractEntropy;
@@ -19,7 +28,7 @@ class Entropy extends AbstractEntropy
      */
     public function getEntropyOffsets($original, $targetWidth, $targetHeight)
     {
-        $measureImage = clone($original);
+        $measureImage = clone $original;
         // Enhance edges
         $measureImage->edgeimage(1);
         // Turn image into a grayscale
@@ -34,7 +43,7 @@ class Entropy extends AbstractEntropy
     public function getOffsetFromEntropy($originalImage, $targetWidth, $targetHeight)
     {
         // The entropy works better on a blured image
-        $image = clone($originalImage);
+        $image = clone $originalImage;
         $image->blurImage(3, 2);
         $size = array('width' => $originalImage->getImageWidth(), 'height' => $originalImage->getImageHeight());
         $originalWidth = $size['width'];
@@ -48,6 +57,7 @@ class Entropy extends AbstractEntropy
         } elseif ($cropPoint['y'] < 0) {
             $cropPoint['y'] = 0;
         }
+
         return $cropPoint;
     }
 
@@ -68,7 +78,7 @@ class Entropy extends AbstractEntropy
             $sliceSize = min($aBottom - $aTop - $targetSize, $sliceSize);
             // Make a top slice image
             if (!$aSlice) {
-                $aSlice = clone($image);
+                $aSlice = clone $image;
                 if ($axis === 'h') {
                     $aSlice->cropImage($sliceSize, $originalSize, $aTop, 0);
                 } else {
@@ -77,7 +87,7 @@ class Entropy extends AbstractEntropy
             }
             // Make a bottom slice image
             if (!$bSlice) {
-                $bSlice = clone($image);
+                $bSlice = clone $image;
                 if ($axis === 'h') {
                     $bSlice->cropImage($sliceSize, $originalSize, $aBottom - $sliceSize, 0);
                 } else {
@@ -117,6 +127,7 @@ class Entropy extends AbstractEntropy
                 $bSlice = null;
             }
         }
+
         return $aTop;
     }
 
@@ -134,7 +145,7 @@ class Entropy extends AbstractEntropy
             $start = $top - $sliceSize;
             $end = $top;
         }
-        for ($i = $start; $i < $end; $i++) {
+        for ($i = $start; $i < $end; ++$i) {
             foreach ($safeZoneList as $safeZone) {
                 if ($position == 'top' || $position == 'bottom') {
                     if ($safeZone['top'] <= $i && $safeZone['bottom'] >= $i) {
@@ -147,6 +158,7 @@ class Entropy extends AbstractEntropy
                 }
             }
         }
+
         return $safeRatio;
     }
 
@@ -157,6 +169,7 @@ class Entropy extends AbstractEntropy
     {
         // The histogram consists of a list of 0-254 and the number of pixels that has that value
         $histogram = $image->getImageHistogram();
+
         return $this->getEntropy($histogram, $this->area($image));
     }
 
@@ -166,6 +179,7 @@ class Entropy extends AbstractEntropy
     public function area($image)
     {
         $size = array('width' => $image->getImageWidth(), 'height' => $image->getImageHeight());
+
         return $size['height'] * $size['width'];
     }
 
@@ -176,7 +190,7 @@ class Entropy extends AbstractEntropy
     {
         $value = 0.0;
         $colors = count($histogram);
-        for ($idx = 0; $idx < $colors; $idx++) {
+        for ($idx = 0; $idx < $colors; ++$idx) {
             // calculates the percentage of pixels having this color value
             $p = $histogram[$idx]->getColorCount() / $area;
             // A common way of representing entropy in scalar

@@ -21,7 +21,7 @@ use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\PointInterface;
 
 /**
- * Drawer implementation using the GD library
+ * Drawer implementation using the GD library.
  */
 final class Drawer implements DrawerInterface
 {
@@ -36,7 +36,7 @@ final class Drawer implements DrawerInterface
     private $info;
 
     /**
-     * Constructs Drawer with a given gd image resource
+     * Constructs Drawer with a given gd image resource.
      *
      * @param resource $resource
      */
@@ -70,7 +70,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * This function does not work properly because of a bug in GD
+     * This function does not work properly because of a bug in GD.
      *
      * {@inheritdoc}
      */
@@ -248,11 +248,11 @@ final class Drawer implements DrawerInterface
             throw new RuntimeException('GD is not compiled with FreeType support');
         }
 
-        $angle    = -1 * $angle;
+        $angle = -1 * $angle;
         $fontsize = $font->getSize();
         $fontfile = $font->getFile();
-        $x        = $position->getX();
-        $y        = $position->getY() + $fontsize;
+        $x = $position->getX();
+        $y = $position->getY() + $fontsize;
 
         if ($width !== null) {
             $string = $this->wrapText($string, $font, $angle, $width);
@@ -275,7 +275,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Generates a GD color from Color instance
      *
@@ -310,7 +310,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Fits a string into box with given width
      */
@@ -319,12 +319,12 @@ final class Drawer implements DrawerInterface
         $result = '';
         $words = explode(' ', $string);
         foreach ($words as $word) {
-            $teststring = $result . ' ' . $word;
+            $teststring = $result.' '.$word;
             $testbox = imagettfbbox($font->getSize(), $angle, $font->getFile(), $teststring);
             if ($testbox[2] > $width) {
-                $result .= ($result == '' ? '' : "\n") . $word;
+                $result .= ($result == '' ? '' : "\n").$word;
             } else {
-                $result .= ($result == '' ? '' : ' ') . $word;
+                $result .= ($result == '' ? '' : ' ').$word;
             }
         }
 

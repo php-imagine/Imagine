@@ -14,7 +14,8 @@ class DummyImagineAwareFilter extends ImagineAware
     /**
      * Apply filter.
      *
-     * @param  ImageInterface $image An ImageInterface instance
+     * @param ImageInterface $image An ImageInterface instance
+     *
      * @return ImageInterface
      */
     public function apply(ImageInterface $image)

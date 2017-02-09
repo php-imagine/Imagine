@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Gd;
 
 use Imagine\Image\AbstractEntropy;
@@ -49,6 +58,7 @@ class Entropy extends AbstractEntropy
         } elseif ($cropPoint['y'] < 0) {
             $cropPoint['y'] = 0;
         }
+
         return $cropPoint;
     }
 
@@ -71,10 +81,10 @@ class Entropy extends AbstractEntropy
             if (!$aSlice) {
                 $aSlice = $this->cloneResource($image);
                 if ($axis === 'h') {
-                    $rect = array('x' => $aTop , 'y' => 0, 'width' => $sliceSize, 'height' => $originalSize);
-                    $aSlice = imagecrop($aSlice , $rect);
+                    $rect = array('x' => $aTop, 'y' => 0, 'width' => $sliceSize, 'height' => $originalSize);
+                    $aSlice = imagecrop($aSlice, $rect);
                 } else {
-                    $rect = array('x' => 0 , 'y' => $aTop, 'width' => $originalSize, 'height' => $sliceSize);
+                    $rect = array('x' => 0, 'y' => $aTop, 'width' => $originalSize, 'height' => $sliceSize);
                     $aSlice = imagecrop($aSlice, $rect);
                 }
             }
@@ -82,10 +92,10 @@ class Entropy extends AbstractEntropy
             if (!$bSlice) {
                 $bSlice = $this->cloneResource($image);
                 if ($axis === 'h') {
-                    $rect = array('x' => $aBottom - $sliceSize , 'y' => 0, 'width' => $sliceSize, 'height' => $originalSize);
+                    $rect = array('x' => $aBottom - $sliceSize, 'y' => 0, 'width' => $sliceSize, 'height' => $originalSize);
                     $bSlice = imagecrop($bSlice, $rect);
                 } else {
-                    $rect = array('x' => 0 , 'y' => $aBottom - $sliceSize, 'width' => $originalSize, 'height' => $sliceSize);
+                    $rect = array('x' => 0, 'y' => $aBottom - $sliceSize, 'width' => $originalSize, 'height' => $sliceSize);
                     $bSlice = imagecrop($bSlice, $rect);
                 }
             }
@@ -123,6 +133,7 @@ class Entropy extends AbstractEntropy
                 $bSlice = null;
             }
         }
+
         return $aTop;
     }
 
@@ -140,7 +151,7 @@ class Entropy extends AbstractEntropy
             $start = $top - $sliceSize;
             $end = $top;
         }
-        for ($i = $start; $i < $end; $i++) {
+        for ($i = $start; $i < $end; ++$i) {
             foreach ($safeZoneList as $safeZone) {
                 if ($position == 'top' || $position == 'bottom') {
                     if ($safeZone['top'] <= $i && $safeZone['bottom'] >= $i) {
@@ -153,6 +164,7 @@ class Entropy extends AbstractEntropy
                 }
             }
         }
+
         return $safeRatio;
     }
 
@@ -163,6 +175,7 @@ class Entropy extends AbstractEntropy
     {
         // The histogram consists of a list of 0-254 and the number of pixels that has that value
         $histogram = $this->ImageHistogram($image);
+
         return $this->getEntropy($histogram, $this->area($image));
     }
 
@@ -191,29 +204,33 @@ class Entropy extends AbstractEntropy
     }
 
     /**
-     * Return an histogram of color pixel
+     * Return an histogram of color pixel.
      *
      * @param resource $image
+     *
      * @return array
      */
     protected function ImageHistogram($image)
     {
         $colors = array();
-        for ($i = 0; $i < imagesx($image); $i++) {
-            for ($j = 0; $j < imagesy($image); $j++) {
+        for ($i = 0; $i < imagesx($image); ++$i) {
+            for ($j = 0; $j < imagesy($image); ++$j) {
                 $color = imagecolorat($image, $i, $j);
                 $colors[] = $color;
             }
         }
         $colorsOccur = array_count_values($colors);
+
         return $colorsOccur;
     }
 
     /**
      * @param resource $image
+     *
      * @return resource
      */
-    protected function cloneResource($image) {
+    protected function cloneResource($image)
+    {
         $width = imagesx($image);
         $height = imagesy($image);
 

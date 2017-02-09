@@ -16,7 +16,7 @@ use Imagine\Image\PointInterface;
 use Imagine\Filter\FilterInterface;
 
 /**
- * A paste filter
+ * A paste filter.
  */
 class Paste implements FilterInterface
 {
@@ -32,7 +32,7 @@ class Paste implements FilterInterface
 
     /**
      * Constructs a Paste filter with given ImageInterface to paste and x, y
-     * coordinates of target position
+     * coordinates of target position.
      *
      * @param ImageInterface $image
      * @param PointInterface $start

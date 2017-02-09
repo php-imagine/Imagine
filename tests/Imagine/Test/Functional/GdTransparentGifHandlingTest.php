@@ -31,10 +31,10 @@ class GdTransparentGifHandlingTest extends \PHPUnit_Framework_TestCase
     public function testShouldResize()
     {
         $imagine = $this->getImagine();
-        $new     = sys_get_temp_dir()."/sample.jpeg";
+        $new = sys_get_temp_dir().'/sample.jpeg';
 
         $image = $imagine->open('tests/Imagine/Fixtures/xparent.gif');
-        $size  = $image->getSize()->scale(0.5);
+        $size = $image->getSize()->scale(0.5);
 
         $image
             ->resize($size)

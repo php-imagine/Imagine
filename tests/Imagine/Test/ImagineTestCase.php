@@ -18,13 +18,13 @@ class ImagineTestCase extends \PHPUnit_Framework_TestCase
     const HTTP_IMAGE = 'http://imagine.readthedocs.org/en/latest/_static/logo.jpg';
 
     /**
-     * Asserts that two images are equal using color histogram comparison method
+     * Asserts that two images are equal using color histogram comparison method.
      *
      * @param ImageInterface $expected
      * @param ImageInterface $actual
      * @param string         $message
      * @param float          $delta
-     * @param integer        $buckets
+     * @param int            $buckets
      */
     public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, $buckets = 4)
     {

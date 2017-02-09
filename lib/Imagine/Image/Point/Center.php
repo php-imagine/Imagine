@@ -16,7 +16,7 @@ use Imagine\Image\Point as OriginalPoint;
 use Imagine\Image\PointInterface;
 
 /**
- * Point center
+ * Point center.
  */
 final class Center implements PointInterface
 {
@@ -26,7 +26,7 @@ final class Center implements PointInterface
     private $box;
 
     /**
-     * Constructs coordinate with size instance, it needs to be relative to
+     * Constructs coordinate with size instance, it needs to be relative to.
      *
      * @param BoxInterface $box
      */

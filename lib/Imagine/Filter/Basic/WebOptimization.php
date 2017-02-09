@@ -16,7 +16,7 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Filter\FilterInterface;
 
 /**
- * A filter to render web-optimized images
+ * A filter to render web-optimized images.
  */
 class WebOptimization implements FilterInterface
 {
@@ -29,8 +29,8 @@ class WebOptimization implements FilterInterface
         $this->path = $path;
         $this->options = array_replace(array(
             'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
-            'resolution-y'     => 72,
-            'resolution-x'     => 72,
+            'resolution-y' => 72,
+            'resolution-x' => 72,
         ), $options);
         $this->palette = new RGB();
     }

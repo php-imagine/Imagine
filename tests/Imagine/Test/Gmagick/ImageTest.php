@@ -89,7 +89,6 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
     }
 
-
     protected function getImagine()
     {
         return new Imagine();

@@ -28,14 +28,14 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     private $delta;
 
     /**
-     * @var integer
+     * @var int
      */
     private $buckets;
 
     /**
      * @param Imagine\Image\ImageInterface $value
      * @param float                        $delta
-     * @param integer                      $buckets
+     * @param int                          $buckets
      *
      * @throws InvalidArgumentException
      */
@@ -53,8 +53,8 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(3, 'integer');
         }
 
-        $this->value   = $value;
-        $this->delta   = $delta;
+        $this->value = $value;
+        $this->delta = $delta;
         $this->buckets = $buckets;
     }
 
@@ -68,7 +68,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
         }
 
         list($currentRed, $currentGreen, $currentBlue, $currentAlpha) = $this->normalize($this->value);
-        list($otherRed, $otherGreen, $otherBlue, $otherAlpha)         = $this->normalize($other);
+        list($otherRed, $otherGreen, $otherBlue, $otherAlpha) = $this->normalize($other);
 
         $total = 0;
 
@@ -106,18 +106,18 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
      */
     private function normalize(ImageInterface $image)
     {
-        $step    = (int) round(255 / $this->buckets);
+        $step = (int) round(255 / $this->buckets);
 
         $red =
         $green =
         $blue =
         $alpha = array();
 
-        for ($i = 1; $i <= $this->buckets; $i++) {
-            $range   = new Range(($i - 1) * $step, $i * $step);
-            $red[]   = new Bucket($range);
+        for ($i = 1; $i <= $this->buckets; ++$i) {
+            $range = new Range(($i - 1) * $step, $i * $step);
+            $red[] = new Bucket($range);
             $green[] = new Bucket($range);
-            $blue[]  = new Bucket($range);
+            $blue[] = new Bucket($range);
             $alpha[] = new Bucket($range);
         }
 

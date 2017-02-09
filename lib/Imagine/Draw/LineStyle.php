@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Draw;
 
 use Imagine\Image\Palette\Color\ColorInterface;
@@ -31,18 +41,18 @@ class LineStyle
 
     /**
      * LineStyle constructor.
+     *
      * @param ColorInterface $color
-     * @param string $style
-     * @param int $thickness
-     * @param float $spacing
+     * @param string         $style
+     * @param int            $thickness
+     * @param float          $spacing
      */
     public function __construct(
         ColorInterface $color,
         $style = self::LINE_SOLID,
         $thickness = 1,
         $spacing = 1.0
-    )
-    {
+    ) {
         $this->style = $style;
         $this->thickness = $thickness;
         $this->spacing = $spacing;

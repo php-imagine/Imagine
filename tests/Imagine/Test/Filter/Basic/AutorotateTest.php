@@ -11,7 +11,7 @@
 
 namespace Imagine\Test\Filter\Basic;
 
-USE Imagine\Filter\Basic\Autorotate;
+use Imagine\Filter\Basic\Autorotate;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Test\Filter\FilterTestCase;
 

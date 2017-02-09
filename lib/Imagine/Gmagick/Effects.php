@@ -17,7 +17,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Exception\NotSupportedException;
 
 /**
- * Effects implementation using the Gmagick PHP extension
+ * Effects implementation using the Gmagick PHP extension.
  */
 class Effects implements EffectsInterface
 {

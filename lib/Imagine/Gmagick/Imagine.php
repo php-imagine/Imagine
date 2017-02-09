@@ -24,7 +24,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 
 /**
- * Imagine implementation using the Gmagick PHP extension
+ * Imagine implementation using the Gmagick PHP extension.
  */
 class Imagine extends AbstractImagine
 {
@@ -73,10 +73,10 @@ class Imagine extends AbstractImagine
             if ($color instanceof CMYKColor) {
                 $switchPalette = $palette;
                 $palette = new RGB();
-                $pixel   = new \GmagickPixel($palette->color((string) $color));
+                $pixel = new \GmagickPixel($palette->color((string) $color));
             } else {
                 $switchPalette = null;
-                $pixel   = new \GmagickPixel((string) $color);
+                $pixel = new \GmagickPixel((string) $color);
             }
 
             if ($color->getPalette()->supportsAlpha() && $color->getAlpha() < 100) {

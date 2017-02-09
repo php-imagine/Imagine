@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Gmagick;
 
 use Imagine\Image\AbstractBalanced;
@@ -19,7 +28,7 @@ class Balanced extends AbstractBalanced
      */
     public function getRandomEdgeOffset($original, $targetWidth, $targetHeight)
     {
-        $measureImage = clone($original);
+        $measureImage = clone $original;
         // Enhance edges with radius 1
         $measureImage->edgeimage(1);
         // Turn image into a grayscale
@@ -39,22 +48,22 @@ class Balanced extends AbstractBalanced
         $halfHeight = ceil($size['height'] / 2);
 
         // First quadrant
-        $clone = clone($originalImage);
+        $clone = clone $originalImage;
         $clone->cropImage($halfWidth, $halfHeight, 0, 0);
         $point = $this->getHighestEnergyPoint($clone);
         $points[] = array('x' => $point['x'], 'y' => $point['y'], 'sum' => $point['sum']);
         // Second quadrant
-        $clone = clone($originalImage);
+        $clone = clone $originalImage;
         $clone->cropImage($halfWidth, $halfHeight, $halfWidth, 0);
         $point = $this->getHighestEnergyPoint($clone);
         $points[] = array('x' => $point['x'] + $halfWidth, 'y' => $point['y'], 'sum' => $point['sum']);
         // Third quadrant
-        $clone = clone($originalImage);
+        $clone = clone $originalImage;
         $clone->cropImage($halfWidth, $halfHeight, 0, $halfHeight);
         $point = $this->getHighestEnergyPoint($clone);
         $points[] = array('x' => $point['x'], 'y' => $point['y'] + $halfHeight, 'sum' => $point['sum']);
         // Fourth quadrant
-        $clone = clone($originalImage);
+        $clone = clone $originalImage;
         $clone->cropImage($halfWidth, $halfHeight, $halfWidth, $halfHeight);
         $point = $point = $this->getHighestEnergyPoint($clone);
         $points[] = array('x' => $point['x'] + $halfWidth, 'y' => $point['y'] + $halfHeight, 'sum' => $point['sum']);
@@ -70,7 +79,7 @@ class Balanced extends AbstractBalanced
         $centerY = 0;
         // Calulate the mean weighted center x and y
         $totalPoints = count($points);
-        for ($idx=0; $idx < $totalPoints; $idx++) {
+        for ($idx = 0; $idx < $totalPoints; ++$idx) {
             $centerX += $points[$idx]['x'] * ($points[$idx]['sum'] / $totalWeight);
             $centerY += $points[$idx]['y'] * ($points[$idx]['sum'] / $totalWeight);
         }
@@ -94,6 +103,7 @@ class Balanced extends AbstractBalanced
         } elseif ($cropPoint['y'] < 0) {
             $cropPoint['y'] = 0;
         }
+
         return $cropPoint;
     }
 
@@ -114,14 +124,14 @@ class Balanced extends AbstractBalanced
         $sum = 0;
         // Only sample 1/50 of all the pixels in the image
         $sampleSize = round($size['height'] * $size['width']) / 50;
-        for ($k = 0; $k < $sampleSize; $k++) {
+        for ($k = 0; $k < $sampleSize; ++$k) {
             $i = mt_rand(0, $size['width'] - 1);
             $j = mt_rand(0, $size['height'] - 1);
             $rgb = imagecolorat($im, $i, $j);
             $r = ($rgb >> 16) & 0xFF;
             $g = ($rgb >> 8) & 0xFF;
             $b = $rgb & 0xFF;
-            $val =  $this->getLuminanceFromRGB($r, $g, $b);
+            $val = $this->getLuminanceFromRGB($r, $g, $b);
             $sum += $val;
             $xcenter += ($i + 1) * $val;
             $ycenter += ($j + 1) * $val;
@@ -131,6 +141,7 @@ class Balanced extends AbstractBalanced
             $ycenter /= $sum;
         }
         $point = array('x' => $xcenter, 'y' => $ycenter, 'sum' => $sum / round($size['height'] * $size['width']));
+
         return $point;
     }
 }

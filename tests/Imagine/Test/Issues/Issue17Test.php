@@ -22,7 +22,7 @@ class Issue17Test extends \PHPUnit_Framework_TestCase
 
     public function testShouldResize()
     {
-        $size    = new Box(100, 10);
+        $size = new Box(100, 10);
         $imagine = $this->getImagine();
 
         $imagine->open('tests/Imagine/Fixtures/large.jpg')

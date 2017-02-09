@@ -1,24 +1,24 @@
 <?php
+
 namespace Imagine\Filter\Chart\Data;
 
 class DataPoint
 {
     /**
-     * @var integer
+     * @var int
      */
     private $x;
 
     /**
-     * @var integer
+     * @var int
      */
     private $y;
 
     /**
-     * Constructs a point of coordinates
+     * Constructs a point of coordinates.
      *
-     * @param integer $x
-     * @param integer $y
-     *
+     * @param int $x
+     * @param int $y
      */
     public function __construct($x, $y)
     {

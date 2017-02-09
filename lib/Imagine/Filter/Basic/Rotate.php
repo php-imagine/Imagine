@@ -16,12 +16,12 @@ use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Filter\FilterInterface;
 
 /**
- * A rotate filter
+ * A rotate filter.
  */
 class Rotate implements FilterInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     private $angle;
 
@@ -31,14 +31,14 @@ class Rotate implements FilterInterface
     private $background;
 
     /**
-     * Constructs Rotate filter with given angle and background color
+     * Constructs Rotate filter with given angle and background color.
      *
-     * @param integer        $angle
+     * @param int            $angle
      * @param ColorInterface $background
      */
     public function __construct($angle, ColorInterface $background = null)
     {
-        $this->angle      = $angle;
+        $this->angle = $angle;
         $this->background = $background;
     }
 

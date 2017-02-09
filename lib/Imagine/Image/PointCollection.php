@@ -1,11 +1,21 @@
 <?php
+
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
 
 class PointCollection
 {
-    /** @var  PointInterface[] */
+    /** @var PointInterface[] */
     private $points;
 
     private $iterator = 0;
@@ -15,7 +25,7 @@ class PointCollection
      */
     public function __construct(array $points)
     {
-        foreach($points as $point) {
+        foreach ($points as $point) {
             if (false === $point instanceof PointInterface) {
                 throw new InvalidArgumentException('All elements in collection must be instance of PointInterface.');
             }
@@ -24,14 +34,16 @@ class PointCollection
         }
     }
 
-    public function reset() {
+    public function reset()
+    {
         $this->iterator = 0;
     }
 
     /**
      * @return bool
      */
-    public function isFinished() {
+    public function isFinished()
+    {
         return !array_key_exists($this->iterator + 1, $this->points);
     }
 
@@ -40,13 +52,13 @@ class PointCollection
      */
     public function getNextPair()
     {
-       if (false === $this->isFinished()) {
-           $pair = array($this->points[$this->iterator], $this->points[$this->iterator + 1]);
-           $this->iterator++;
-           return $pair;
-       }
+        if (false === $this->isFinished()) {
+            $pair = array($this->points[$this->iterator], $this->points[$this->iterator + 1]);
+            ++$this->iterator;
 
-       return false;
+            return $pair;
+        }
+
+        return false;
     }
-
 }

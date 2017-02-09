@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Filter\Basic;
 
 use Imagine\Filter\FilterInterface;
@@ -14,9 +23,9 @@ class CropBalanced implements FilterInterface
     private $size;
 
     /**
-     * Constructs a CropBalanced filter
+     * Constructs a CropBalanced filter.
      *
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      */
     public function __construct(BoxInterface $size)
     {

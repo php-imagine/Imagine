@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Imagine package.
+ *
+ * (c) Bulat Shakirzyanov <mallluhuct@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Imagine\Gd;
 
 use Imagine\Image\AbstractBalanced;
@@ -42,25 +51,25 @@ class Balanced extends AbstractBalanced
 
         // First quadrant
         $clone = $this->cloneResource($originalImage);
-        $rect = array('x' => 0 , 'y' => 0, 'width' => $halfWidth, 'height'=> $halfHeight);
+        $rect = array('x' => 0, 'y' => 0, 'width' => $halfWidth, 'height' => $halfHeight);
         $clone1 = imagecrop($clone, $rect);
         $point = $this->getHighestEnergyPoint($clone1);
         $points[] = array('x' => $point['x'], 'y' => $point['y'], 'sum' => $point['sum']);
         // Second quadrant
         $clone = $this->cloneResource($originalImage);
-        $rect = array('x' => $halfWidth , 'y' => 0, 'width' => $halfWidth, 'height'=> $halfHeight);
+        $rect = array('x' => $halfWidth, 'y' => 0, 'width' => $halfWidth, 'height' => $halfHeight);
         $clone2 = imagecrop($clone, $rect);
         $point = $this->getHighestEnergyPoint($clone2);
         $points[] = array('x' => $point['x'] + $halfWidth, 'y' => $point['y'], 'sum' => $point['sum']);
         // Third quadrant
         $clone = $this->cloneResource($originalImage);
-        $rect = array('x' => 0 , 'y' => $halfHeight, 'width' => $halfWidth, 'height'=> $halfHeight);
+        $rect = array('x' => 0, 'y' => $halfHeight, 'width' => $halfWidth, 'height' => $halfHeight);
         $clone3 = imagecrop($clone, $rect);
         $point = $this->getHighestEnergyPoint($clone3);
         $points[] = array('x' => $point['x'], 'y' => $point['y'] + $halfHeight, 'sum' => $point['sum']);
         // Fourth quadrant
         $clone = $this->cloneResource($originalImage);
-        $rect = array('x' => $halfWidth , 'y' => $halfHeight, 'width' => $halfWidth, 'height'=> $halfHeight);
+        $rect = array('x' => $halfWidth, 'y' => $halfHeight, 'width' => $halfWidth, 'height' => $halfHeight);
         $clone4 = imagecrop($clone, $rect);
         $point = $this->getHighestEnergyPoint($clone4);
         $points[] = array('x' => $point['x'] + $halfWidth, 'y' => $point['y'] + $halfHeight, 'sum' => $point['sum']);
@@ -76,7 +85,7 @@ class Balanced extends AbstractBalanced
         $centerY = 0;
         // Calulate the mean weighted center x and y
         $totalPoints = count($points);
-        for ($idx=0; $idx < $totalPoints; $idx++) {
+        for ($idx = 0; $idx < $totalPoints; ++$idx) {
             $centerX += $points[$idx]['x'] * ($points[$idx]['sum'] / $totalWeight);
             $centerY += $points[$idx]['y'] * ($points[$idx]['sum'] / $totalWeight);
         }
@@ -100,6 +109,7 @@ class Balanced extends AbstractBalanced
         } elseif ($cropPoint['y'] < 0) {
             $cropPoint['y'] = 0;
         }
+
         return $cropPoint;
     }
 
@@ -116,14 +126,14 @@ class Balanced extends AbstractBalanced
         $sum = 0;
         // Only sample 1/50 of all the pixels in the image
         $sampleSize = round($width * $height) / 50;
-        for ($k = 0; $k < $sampleSize; $k++) {
+        for ($k = 0; $k < $sampleSize; ++$k) {
             $i = mt_rand(0, $width - 1);
             $j = mt_rand(0, $height - 1);
             $rgb = imagecolorat($image, $i, $j);
             $r = ($rgb >> 16) & 0xFF;
             $g = ($rgb >> 8) & 0xFF;
             $b = $rgb & 0xFF;
-            $val =  $this->getLuminanceFromRGB($r, $g, $b);
+            $val = $this->getLuminanceFromRGB($r, $g, $b);
             $sum += $val;
             $xcenter += ($i + 1) * $val;
             $ycenter += ($j + 1) * $val;
@@ -133,16 +143,19 @@ class Balanced extends AbstractBalanced
             $ycenter /= $sum;
         }
         $point = array('x' => $xcenter, 'y' => $ycenter, 'sum' => $sum / round($width * $height));
+
         return $point;
     }
 
     /**
-     * Clone and return an image
+     * Clone and return an image.
      *
      * @param resource $image
+     *
      * @return resource
      */
-    protected function cloneResource($image) {
+    protected function cloneResource($image)
+    {
         $width = imagesx($image);
         $height = imagesy($image);
 

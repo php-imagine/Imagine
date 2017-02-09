@@ -15,7 +15,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Filter\FilterInterface;
 
 /**
- * A "flip horizontally" filter
+ * A "flip horizontally" filter.
  */
 class FlipHorizontally implements FilterInterface
 {
