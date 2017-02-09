@@ -22,8 +22,6 @@ class BorderTest extends FilterTestCase
         $width       = 2;
         $height      = 4;
         $image       = $this->getImage();
-        $imageWidth  = 200;
-        $imageHeight = 100;
 
         $size = $this->getMockBuilder('Imagine\\Image\\BoxInterface')->getMock();
         $size->expects($this->once())
