@@ -12,7 +12,6 @@
 namespace Imagine\Test\Gmagick;
 
 use Imagine\Gmagick\Imagine;
-use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
 use Imagine\Test\Image\AbstractImageTest;
@@ -103,27 +102,5 @@ class ImageTest extends AbstractImageTest
     protected function getImageResolution(ImageInterface $image)
     {
         return $image->getGmagick()->getimageresolution();
-    }
-
-    public function testCropBalanced()
-    {
-        $crop = new Imagine();
-        $size = new Box(100, 100);
-        $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
-        $imageCrop = $image->resizeAndCropBalanced($size);
-
-        $this->assertEquals(100, $imageCrop->getSize()->getHeight());
-        $this->assertEquals(100, $imageCrop->getSize()->getWidth());
-    }
-
-    public function testCropEntropy()
-    {
-        $crop = new Imagine();
-        $size = new Box(100, 100);
-        $image = $crop->open(__DIR__.'/../../Fixtures/large.jpg');
-        $imageCrop = $image->resizeAndCropEntropy($size);
-
-        $this->assertEquals(100, $imageCrop->getSize()->getHeight());
-        $this->assertEquals(100, $imageCrop->getSize()->getWidth());
     }
 }
