@@ -1,10 +1,6 @@
 tests/Imagine/Fixtures/results/in_out
 !tests/Imagine/Fixtures/results/in_out/.placeholder
 docs/_build
-Imagine-*.tgz
-imagine-*.phar
 composer.lock
-composer.phar
 vendor/
 bin/
-.idea/
