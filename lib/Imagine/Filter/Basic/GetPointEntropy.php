@@ -14,7 +14,7 @@ class GetPointEntropy implements FilterInterface
     private $size;
 
     /**
-     * Constructs a GetPointEntropy filter
+     * Constructs a GetPointEntropy filter.
      *
      * @param BoxInterface $size
      */

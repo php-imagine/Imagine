@@ -14,9 +14,9 @@ class CropBalanced implements FilterInterface
     private $size;
 
     /**
-     * Constructs a CropBalanced filter
+     * Constructs a CropBalanced filter.
      *
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      */
     public function __construct(BoxInterface $size)
     {

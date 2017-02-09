@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Test\Filter\Chart;
 
 use Imagine\Draw\LinePlotter;
@@ -38,20 +39,24 @@ abstract class AbstractChartTest extends ImagineTestCase
         $chart->setFontSize(10);
 
         $data = array();
-        for($x=-6; $x <= 6; $x+=0.5) {$data[] = array($x, $x*$x);}
+        for ($x = -6; $x <= 6; $x += 0.5) {
+            $data[] = array($x, $x * $x);
+        }
         $chart->addDataSet(
             new DataSet(
                 $data,
                 new LineStyle(
                     new RGB(new RGBPalette(), array(0, 128, 0), 100),
                     LineStyle::LINE_SOLID,
-                    2,4
+                    2, 4
                 )
             )
         );
 
         $data = array();
-        for($x=-6; $x <= 6; $x+=0.5) {$data[] = array($x, - $x*$x);}
+        for ($x = -6; $x <= 6; $x += 0.5) {
+            $data[] = array($x, -$x * $x);
+        }
         $chart->addDataSet(
             new DataSet(
                 $data,
@@ -64,14 +69,16 @@ abstract class AbstractChartTest extends ImagineTestCase
         );
 
         $data = array();
-        for($x=-6; $x <= 6; $x+=0.25) {$data[] = array($x, 5 * sin($x));}
+        for ($x = -6; $x <= 6; $x += 0.25) {
+            $data[] = array($x, 5 * sin($x));
+        }
         $chart->addDataSet(
             new DataSet(
                 $data,
                 new LineStyle(
                     new RGB(new RGBPalette(), array(0, 0, 128), 100),
                     LineStyle::LINE_DOTTED,
-                    2,5
+                    2, 5
                 )
             )
         );

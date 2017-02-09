@@ -127,7 +127,6 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif');
     }
 
-
     protected function supportMultipleLayers()
     {
         return true;

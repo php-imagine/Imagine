@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Draw;
 
 use Imagine\Image\FontInterface;
@@ -26,7 +27,7 @@ interface PlotterInterface
 
     /**
      * @param PointCollection $collection
-     * @param LineStyle|null $style
+     * @param LineStyle|null  $style
      */
     public function plotCollection(PointCollection $collection, LineStyle $style = null);
 

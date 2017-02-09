@@ -36,7 +36,7 @@ abstract class AbstractImage implements ImageInterface
         $imageSize = $this->getSize();
         $ratios = array(
             $size->getWidth() / $imageSize->getWidth(),
-            $size->getHeight() / $imageSize->getHeight()
+            $size->getHeight() / $imageSize->getHeight(),
         );
 
         $thumbnail = $this->copy();
@@ -83,7 +83,7 @@ abstract class AbstractImage implements ImageInterface
     }
 
     /**
-     * Updates a given array of save options for backward compatibility with legacy names
+     * Updates a given array of save options for backward compatibility with legacy names.
      *
      * @param array $options
      *
@@ -108,7 +108,7 @@ abstract class AbstractImage implements ImageInterface
     }
 
     /**
-     * Assures the metadata instance will be cloned, too
+     * Assures the metadata instance will be cloned, too.
      */
     public function __clone()
     {
@@ -116,5 +116,4 @@ abstract class AbstractImage implements ImageInterface
             $this->metadata = clone $this->metadata;
         }
     }
-
 }

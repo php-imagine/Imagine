@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Test\Draw;
 
 use Imagine\Draw\LinePlotter;
@@ -14,7 +15,7 @@ class LinePlotterTest extends \PHPUnit_Framework_TestCase
     /**
      * @param PointInterface $point1
      * @param PointInterface $point2
-     * @param LineStyle $lineStyle
+     * @param LineStyle      $lineStyle
      * @param $expectedDrawerFunction
      * @param $expectedCallCount
      *
@@ -39,32 +40,32 @@ class LinePlotterTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'default style' => array(
-                'point1' => new Point(0,0),
-                'point2' => new Point(10,10),
+                'point1' => new Point(0, 0),
+                'point2' => new Point(10, 10),
                 'lineStyle' => null,
                 'expectedDrawerFunction' => 'line',
-                'expectedCallCount' => 1
+                'expectedCallCount' => 1,
             ),
             'dashed style' => array(
-                'point1' => new Point(0,0),
-                'point2' => new Point(0,20),
+                'point1' => new Point(0, 0),
+                'point2' => new Point(0, 20),
                 'lineStyle' => new LineStyle(new RGB(new RGBPalette(), array(0, 0, 0), 100), LineStyle::LINE_DASHED, 1, 2),
                 'expectedDrawerFunction' => 'line',
-                'expectedCallCount' => 5
+                'expectedCallCount' => 5,
             ),
             'dotted style' => array(
-                'point1' => new Point(0,0),
-                'point2' => new Point(0,20),
+                'point1' => new Point(0, 0),
+                'point2' => new Point(0, 20),
                 'lineStyle' => new LineStyle(new RGB(new RGBPalette(), array(0, 0, 0), 100), LineStyle::LINE_DOTTED, 1, 2),
                 'expectedDrawerFunction' => 'ellipse',
-                'expectedCallCount' => 11
-            )
+                'expectedCallCount' => 11,
+            ),
         );
     }
 
     /**
      * @param PointCollection $collection
-     * @param LineStyle $lineStyle
+     * @param LineStyle       $lineStyle
      * @param $expectedDrawerFunction
      * @param $expectedCallCount
      *
@@ -88,11 +89,11 @@ class LinePlotterTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'default style' => array(
-                'collection' => new PointCollection(array(new Point(0,0), new Point(1,1), new Point(2,2), new Point(3,3), new Point(4,4))),
+                'collection' => new PointCollection(array(new Point(0, 0), new Point(1, 1), new Point(2, 2), new Point(3, 3), new Point(4, 4))),
                 'lineStyle' => null,
                 'expectedDrawerFunction' => 'line',
-                'expectedCallCount' => 4
-            )
+                'expectedCallCount' => 4,
+            ),
         );
     }
 
@@ -119,10 +120,10 @@ class LinePlotterTest extends \PHPUnit_Framework_TestCase
     public function providerLabel()
     {
         return array(
-            array('point' => new Point(0,0), 'text' => 'ABCDEFG'),
-            array('point' => new Point(0,1), 'text' => 'IJKLMNO'),
-            array('point' => new Point(0,2), 'text' => 'PQRSTUV'),
-            array('point' => new Point(0,3), 'text' => 'WXYZ123'),
+            array('point' => new Point(0, 0), 'text' => 'ABCDEFG'),
+            array('point' => new Point(0, 1), 'text' => 'IJKLMNO'),
+            array('point' => new Point(0, 2), 'text' => 'PQRSTUV'),
+            array('point' => new Point(0, 3), 'text' => 'WXYZ123'),
         );
     }
 }

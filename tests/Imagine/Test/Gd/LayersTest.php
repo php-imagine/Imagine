@@ -52,7 +52,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testLayerArrayAccess()
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
         $layers = $image->layers();
 
         $this->assertLayersEquals($image, $layers[0]);
@@ -61,7 +61,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testLayerAddGetSetRemove()
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
         $layers = $image->layers();
 
         $this->assertLayersEquals($image, $layers->get(0));

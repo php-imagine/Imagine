@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Test\Filter\Chart;
 
 use Imagine\Filter\Chart\ChartConfig;
@@ -10,15 +11,15 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param array $dataSets
-     * @param bool $fitView
+     * @param bool  $fitView
      * @param float $marginPercent
      * @param float $paddingPercent
-     * @param bool $labelAxes
-     * @param int $fontSize
+     * @param bool  $labelAxes
+     * @param int   $fontSize
      * @param array $expectedXRange
      * @param array $expectedYRange
      * @param float $expectedScaleFactorX
-     * @param float  $expectedScaleFactorY
+     * @param float $expectedScaleFactorY
      * @param Point $expectedOrigin
      *
      * @dataProvider providerChartConfig
@@ -37,7 +38,7 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
         $expectedOrigin
     ) {
         $imageMock = $this->getMockBuilder('Imagine\\Image\\ImageInterface')->getMock();
-        $imageMock->expects($this->any())->method('getSize')->willReturn(new Box(100,100));
+        $imageMock->expects($this->any())->method('getSize')->willReturn(new Box(100, 100));
 
         $fontMock = $this->getMockBuilder('Imagine\\Image\\FontInterface')->disableOriginalConstructor()->getMock();
         $fontMock->expects($this->any())->method('getSize')->with()->willReturn($fontSize);
@@ -61,7 +62,6 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedScaleFactorY, $config->getScaleFactorY());
 
         $this->assertEquals($expectedOrigin, $config->getOrigin());
-
     }
 
     public function providerChartConfig()
@@ -70,11 +70,11 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
             'centered view no margin no padding no label' => array(
                 'datasets' => array(
                     new DataSet(array(
-                        array(0,-1),
-                        array(1,-2),
-                        array(2,-3),
-                        array(3,-4),
-                        array(5,-10),
+                        array(0, -1),
+                        array(1, -2),
+                        array(2, -3),
+                        array(3, -4),
+                        array(5, -10),
                     )),
                     new DataSet(array(
                         array(0, 10),
@@ -82,7 +82,7 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                         array(-2, 3),
                         array(-3, 4),
                         array(-10, 6),
-                    ))
+                    )),
                 ),
                 'fitView' => false,
                 'marginPercent' => 0.0,
@@ -93,17 +93,17 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                 'expectedYRange' => array(-10, 10),
                 'expectedScaleFactorX' => 5.0,
                 'expectedScaleFactorY' => 5.0,
-                'expectedOrigin' => new Point(50,50)
+                'expectedOrigin' => new Point(50, 50),
             ),
 
             'fit view no margin no padding no label' => array(
                 'datasets' => array(
                     new DataSet(array(
-                        array(0,-1),
-                        array(1,-2),
-                        array(2,-3),
-                        array(3,-4),
-                        array(5,-10),
+                        array(0, -1),
+                        array(1, -2),
+                        array(2, -3),
+                        array(3, -4),
+                        array(5, -10),
                     )),
                     new DataSet(array(
                         array(0, 10),
@@ -111,7 +111,7 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                         array(-2, 3),
                         array(-3, 4),
                         array(-10, 6),
-                    ))
+                    )),
                 ),
                 'fitView' => true,
                 'marginPercent' => 0.0,
@@ -122,17 +122,17 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                 'expectedYRange' => array(-10, 10),
                 'expectedScaleFactorX' => 6.666666666666667,
                 'expectedScaleFactorY' => 5.0,
-                'expectedOrigin' => new Point(66.666666666666671,50)
+                'expectedOrigin' => new Point(66.666666666666671, 50),
             ),
 
             'centered view with margin no padding no label' => array(
                 'datasets' => array(
                     new DataSet(array(
-                        array(0,-1),
-                        array(1,-2),
-                        array(2,-3),
-                        array(3,-4),
-                        array(5,-10),
+                        array(0, -1),
+                        array(1, -2),
+                        array(2, -3),
+                        array(3, -4),
+                        array(5, -10),
                     )),
                     new DataSet(array(
                         array(0, 10),
@@ -140,7 +140,7 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                         array(-2, 3),
                         array(-3, 4),
                         array(-10, 6),
-                    ))
+                    )),
                 ),
                 'fitView' => false,
                 'marginPercent' => 10.0,
@@ -151,17 +151,17 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                 'expectedYRange' => array(-10, 10),
                 'expectedScaleFactorX' => 4.5,
                 'expectedScaleFactorY' => 4.5,
-                'expectedOrigin' => new Point(50,50)
+                'expectedOrigin' => new Point(50, 50),
             ),
 
             'centered view no margin with padding no label' => array(
                 'datasets' => array(
                     new DataSet(array(
-                        array(0,-1),
-                        array(1,-2),
-                        array(2,-3),
-                        array(3,-4),
-                        array(5,-10),
+                        array(0, -1),
+                        array(1, -2),
+                        array(2, -3),
+                        array(3, -4),
+                        array(5, -10),
                     )),
                     new DataSet(array(
                         array(0, 10),
@@ -169,7 +169,7 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                         array(-2, 3),
                         array(-3, 4),
                         array(-10, 6),
-                    ))
+                    )),
                 ),
                 'fitView' => false,
                 'marginPercent' => 0.0,
@@ -180,17 +180,17 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                 'expectedYRange' => array(-11.111111111111111, 11.111111111111111),
                 'expectedScaleFactorX' => 4.5,
                 'expectedScaleFactorY' => 4.5,
-                'expectedOrigin' => new Point(50,50)
+                'expectedOrigin' => new Point(50, 50),
             ),
 
             'centered view no margin no padding with label' => array(
                 'datasets' => array(
                     new DataSet(array(
-                        array(0,-1),
-                        array(1,-2),
-                        array(2,-3),
-                        array(3,-4),
-                        array(5,-10),
+                        array(0, -1),
+                        array(1, -2),
+                        array(2, -3),
+                        array(3, -4),
+                        array(5, -10),
                     )),
                     new DataSet(array(
                         array(0, 10),
@@ -198,7 +198,7 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                         array(-2, 3),
                         array(-3, 4),
                         array(-10, 6),
-                    ))
+                    )),
                 ),
                 'fitView' => false,
                 'marginPercent' => 0.0,
@@ -209,8 +209,8 @@ class ChartConfigTest extends \PHPUnit_Framework_TestCase
                 'expectedYRange' => array(-10, 10),
                 'expectedScaleFactorX' => 2.75,
                 'expectedScaleFactorY' => 2.75,
-                'expectedOrigin' => new Point(50,50)
-            )
+                'expectedOrigin' => new Point(50, 50),
+            ),
         );
     }
 }

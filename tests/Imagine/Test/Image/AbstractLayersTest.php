@@ -27,18 +27,18 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         foreach ($image->layers() as $layer) {
             $layer
                 ->draw()
-                ->polygon(array(new Point(0, 0),new Point(0, 20),new Point(20, 20),new Point(20, 0)), $palette->color('#FF0000'), true);
+                ->polygon(array(new Point(0, 0), new Point(0, 20), new Point(20, 20), new Point(20, 0)), $palette->color('#FF0000'), true);
         }
         $image->layers()->merge();
 
-        $this->assertEquals('#ff0000', (string) $image->getColorAt(new Point(5,5)));
+        $this->assertEquals('#ff0000', (string) $image->getColorAt(new Point(5, 5)));
     }
 
     public function testLayerArrayAccess()
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $thirdImage = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $firstImage = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
+        $secondImage = $this->getImage(__DIR__.'/../../Fixtures/yellow.gif');
+        $thirdImage = $this->getImage(__DIR__.'/../../Fixtures/blue.gif');
 
         $layers = $firstImage->layers();
 
@@ -80,9 +80,9 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
     public function testLayerAddGetSetRemove()
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $thirdImage = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $firstImage = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
+        $secondImage = $this->getImage(__DIR__.'/../../Fixtures/yellow.gif');
+        $thirdImage = $this->getImage(__DIR__.'/../../Fixtures/blue.gif');
 
         $layers = $firstImage->layers();
 
@@ -127,8 +127,8 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testLayerArrayAccessInvalidArgumentExceptions($offset)
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $firstImage = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
+        $secondImage = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
 
         $layers = $firstImage->layers();
 
@@ -136,7 +136,6 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
             $layers[$offset] = $secondImage;
             $this->fail('An exception should have been raised');
         } catch (InvalidArgumentException $e) {
-
         }
     }
 
@@ -145,8 +144,8 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testLayerArrayAccessOutOfBoundsExceptions($offset)
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $firstImage = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
+        $secondImage = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
 
         $layers = $firstImage->layers();
 
@@ -154,7 +153,6 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
             $layers[$offset] = $secondImage;
             $this->fail('An exception should have been raised');
         } catch (OutOfBoundsException $e) {
-
         }
     }
 
@@ -163,11 +161,11 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         $image = $this->getImage();
         $layers = $image->layers();
 
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $layers[] = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
+        $layers[] = $this->getImage(__DIR__.'/../../Fixtures/yellow.gif');
+        $layers[] = $this->getImage(__DIR__.'/../../Fixtures/blue.gif');
 
-        $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
+        $target = __DIR__.'/../../Fixtures/temporary-gif.gif';
 
         $image->save($target, array(
             'animated' => true,
@@ -181,13 +179,13 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testAnimateWithParameters($delay, $loops)
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
         $layers = $image->layers();
 
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $layers[] = $this->getImage(__DIR__.'/../../Fixtures/yellow.gif');
+        $layers[] = $this->getImage(__DIR__.'/../../Fixtures/blue.gif');
 
-        $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
+        $target = __DIR__.'/../../Fixtures/temporary-gif.gif';
 
         $image->save($target, array(
             'animated' => true,
@@ -214,13 +212,13 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testAnimateWithWrongParameters($delay, $loops)
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__.'/../../Fixtures/pink.gif');
         $layers = $image->layers();
 
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $layers[] = $this->getImage(__DIR__.'/../../Fixtures/yellow.gif');
+        $layers[] = $this->getImage(__DIR__.'/../../Fixtures/blue.gif');
 
-        $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
+        $target = __DIR__.'/../../Fixtures/temporary-gif.gif';
 
         $image->save($target, array(
             'animated' => true,

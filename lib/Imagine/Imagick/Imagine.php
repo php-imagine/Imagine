@@ -23,7 +23,7 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Grayscale;
 
 /**
- * Imagine implementation using the Imagick PHP extension
+ * Imagine implementation using the Imagick PHP extension.
  */
 final class Imagine extends AbstractImagine
 {
@@ -65,7 +65,7 @@ final class Imagine extends AbstractImagine
      */
     public function create(BoxInterface $size, ColorInterface $color = null)
     {
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         $palette = null !== $color ? $color->getPalette() : new RGB();
@@ -140,7 +140,7 @@ final class Imagine extends AbstractImagine
     }
 
     /**
-     * Returns the palette corresponding to an \Imagick resource colorspace
+     * Returns the palette corresponding to an \Imagick resource colorspace.
      *
      * @param \Imagick $imagick
      *
@@ -164,7 +164,7 @@ final class Imagine extends AbstractImagine
     }
 
     /**
-     * Returns ImageMagick version
+     * Returns ImageMagick version.
      *
      * @param \Imagick $imagick
      *

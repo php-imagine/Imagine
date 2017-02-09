@@ -149,7 +149,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $imagine = $this->getImagine();
 
         $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
-        $size   = $canvas->getSize();
+        $size = $canvas->getSize();
 
         $canvas->draw()
             ->arc(new Center($size), $size->scale(0.5), 0, 180, $this->getColor('fff'));
@@ -167,16 +167,16 @@ abstract class AbstractDrawerTest extends ImagineTestCase
             $this->markTestSkipped('This install does not support font tests');
         }
 
-        $path   = 'tests/Imagine/Fixtures/font/Arial.ttf';
-        $black  =  $this->getColor('000');
+        $path = 'tests/Imagine/Fixtures/font/Arial.ttf';
+        $black = $this->getColor('000');
         $file36 = 'tests/Imagine/Fixtures/bulat36.png';
         $file24 = 'tests/Imagine/Fixtures/bulat24.png';
         $file18 = 'tests/Imagine/Fixtures/bulat18.png';
         $file12 = 'tests/Imagine/Fixtures/bulat12.png';
 
         $imagine = $this->getImagine();
-        $canvas  = $imagine->create(new Box(400, 300), $this->getColor('fff'));
-        $font    = $imagine->font($path, 36, $black);
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
+        $font = $imagine->font($path, 36, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(0, 0), 135);
@@ -190,7 +190,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         unlink($file36);
 
         $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
-        $font   = $imagine->font($path, 24, $black);
+        $font = $imagine->font($path, 24, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(24, 24));
@@ -204,7 +204,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         unlink($file24);
 
         $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
-        $font   = $imagine->font($path, 18, $black);
+        $font = $imagine->font($path, 18, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(18, 18));
@@ -218,7 +218,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         unlink($file18);
 
         $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
-        $font   = $imagine->font($path, 12, $black);
+        $font = $imagine->font($path, 12, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(12, 12));

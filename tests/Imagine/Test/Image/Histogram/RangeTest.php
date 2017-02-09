@@ -16,13 +16,13 @@ use Imagine\Image\Histogram\Range;
 class RangeTest extends \PHPUnit_Framework_TestCase
 {
     private $start = 0;
-    private $end   = 63;
+    private $end = 63;
 
     /**
      * @dataProvider getExpectedResultsAndValues
      *
-     * @param Boolean $contains
-     * @param integer $value
+     * @param bool $contains
+     * @param int  $value
      */
     public function testShouldDetermineIfContainsValue($contains, $value)
     {

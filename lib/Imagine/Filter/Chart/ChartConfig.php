@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Filter\Chart;
 
 use Imagine\Exception\InvalidArgumentException;
@@ -10,28 +11,28 @@ use Imagine\Image\Point;
 
 class ChartConfig
 {
-    /** @var  float */
+    /** @var float */
     protected $xMin;
 
-    /** @var  float */
+    /** @var float */
     protected $xMax;
 
-    /** @var  float */
+    /** @var float */
     protected $yMax;
 
-    /** @var  float */
+    /** @var float */
     protected $yMin;
 
-    /** @var  float */
+    /** @var float */
     protected $scaleFactorX;
 
-    /** @var  float */
+    /** @var float */
     protected $scaleFactorY;
 
-    /** @var  float */
+    /** @var float */
     protected $originY;
 
-    /** @var  float */
+    /** @var float */
     protected $originX;
 
     /** @var int */
@@ -40,16 +41,16 @@ class ChartConfig
     /** @var int */
     protected $imageHeight;
 
-    /** @var  float */
+    /** @var float */
     protected $negativeXRange;
 
-    /** @var  float */
+    /** @var float */
     protected $positiveXRange;
 
-    /** @var  float */
+    /** @var float */
     protected $negativeYRange;
 
-    /** @var  float */
+    /** @var float */
     protected $positiveYRange;
 
     /** @var float */
@@ -61,7 +62,7 @@ class ChartConfig
     /** @var float */
     private $paddingPercent;
 
-    /** @var  bool */
+    /** @var bool */
     private $labelAxes;
 
     /** @var FontInterface */
@@ -69,12 +70,12 @@ class ChartConfig
 
     /**
      * @param ImageInterface $image
-     * @param array $dataSets
-     * @param bool $fitViewToData
-     * @param float $marginPercent
-     * @param float $paddingPercent
-     * @param bool $labelAxes
-     * @param FontInterface $font
+     * @param array          $dataSets
+     * @param bool           $fitViewToData
+     * @param float          $marginPercent
+     * @param float          $paddingPercent
+     * @param bool           $labelAxes
+     * @param FontInterface  $font
      */
     public function __construct(
         ImageInterface $image,
@@ -84,8 +85,7 @@ class ChartConfig
         $paddingPercent = 0.0,
         $labelAxes = false,
         FontInterface $font = null
-    )
-    {
+    ) {
         $this->font = $font;
         $this->labelAxes = $labelAxes;
 
@@ -288,6 +288,7 @@ class ChartConfig
 
     /**
      * @param DataPoint $point
+     *
      * @return Point|bool
      */
     public function scale(DataPoint $point)
@@ -345,10 +346,18 @@ class ChartConfig
         $negativeYRange = ($this->yMin < 0) ? $this->yMin : 0;
 
         if (false === $fitViewToRange) {
-            if ($positiveXRange > abs($negativeXRange)) {$negativeXRange = -$positiveXRange;}
-            if (abs($negativeXRange) > $positiveXRange) {$positiveXRange =  abs($negativeXRange);}
-            if ($positiveYRange > abs($negativeYRange)) {$negativeYRange = -$positiveYRange;}
-            if (abs($negativeYRange) > $positiveYRange) {$positiveYRange =  abs($negativeYRange);}
+            if ($positiveXRange > abs($negativeXRange)) {
+                $negativeXRange = -$positiveXRange;
+            }
+            if (abs($negativeXRange) > $positiveXRange) {
+                $positiveXRange = abs($negativeXRange);
+            }
+            if ($positiveYRange > abs($negativeYRange)) {
+                $negativeYRange = -$positiveYRange;
+            }
+            if (abs($negativeYRange) > $positiveYRange) {
+                $positiveYRange = abs($negativeYRange);
+            }
         }
 
         $xRange = $positiveXRange + abs($negativeXRange);
@@ -373,4 +382,3 @@ class ChartConfig
         $this->positiveYRange = $positiveYRange + $leftoverY;
     }
 }
-

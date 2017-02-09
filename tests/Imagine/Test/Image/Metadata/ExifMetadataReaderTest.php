@@ -22,7 +22,7 @@ class ExifMetadataReaderTest extends MetadataReaderTestCase
 
     public function testExifDataAreReadWithReadFile()
     {
-        $metadata = $this->getReader()->readFile(__DIR__ . '/../../../Fixtures/exifOrientation/90.jpg');
+        $metadata = $this->getReader()->readFile(__DIR__.'/../../../Fixtures/exifOrientation/90.jpg');
         $this->assertTrue(isset($metadata['ifd0.Orientation']));
         $this->assertEquals(6, $metadata['ifd0.Orientation']);
     }
@@ -37,14 +37,14 @@ class ExifMetadataReaderTest extends MetadataReaderTestCase
 
     public function testExifDataAreReadWithReadData()
     {
-        $metadata = $this->getReader()->readData(file_get_contents(__DIR__ . '/../../../Fixtures/exifOrientation/90.jpg'));
+        $metadata = $this->getReader()->readData(file_get_contents(__DIR__.'/../../../Fixtures/exifOrientation/90.jpg'));
         $this->assertTrue(isset($metadata['ifd0.Orientation']));
         $this->assertEquals(6, $metadata['ifd0.Orientation']);
     }
 
     public function testExifDataAreReadWithReadStream()
     {
-        $metadata = $this->getReader()->readStream(fopen(__DIR__ . '/../../../Fixtures/exifOrientation/90.jpg', 'r'));
+        $metadata = $this->getReader()->readStream(fopen(__DIR__.'/../../../Fixtures/exifOrientation/90.jpg', 'r'));
         $this->assertTrue(isset($metadata['ifd0.Orientation']));
         $this->assertEquals(6, $metadata['ifd0.Orientation']);
     }

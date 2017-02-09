@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Filter\Chart;
 
 use Imagine\Draw\LineStyle;
@@ -20,10 +21,10 @@ class GridDrawer implements GridDrawerInterface
     /** @var ChartConfig */
     private $config;
 
-    /** @var  LineStyle */
+    /** @var LineStyle */
     private $axesStyle;
 
-    /** @var  LineStyle */
+    /** @var LineStyle */
     private $gridStyle;
 
     /** @var float */
@@ -33,7 +34,7 @@ class GridDrawer implements GridDrawerInterface
     private $scaleStepX;
 
     /**
-     * @param ChartConfig $config
+     * @param ChartConfig      $config
      * @param PlotterInterface $plotter
      */
     public function __construct(ChartConfig $config = null, PlotterInterface $plotter = null)
@@ -138,7 +139,7 @@ class GridDrawer implements GridDrawerInterface
                     new Point($this->config->getImageWidth() - $this->config->getMarginX(), $this->config->getMarginY()),
                     new Point($this->config->getImageWidth() - $this->config->getMarginX(), $this->config->getImageHeight() - $this->config->getMarginY()),
                     new Point($this->config->getMarginX(), $this->config->getImageHeight() - $this->config->getMarginY()),
-                    new Point($this->config->getMarginX(), $this->config->getMarginY())
+                    new Point($this->config->getMarginX(), $this->config->getMarginY()),
                 )),
                 $this->axesStyle
             );
@@ -196,7 +197,6 @@ class GridDrawer implements GridDrawerInterface
             );
         }
 
-
         for ($y = $this->scaleStepY; $y <= $this->config->getPositiveYRange(); $y += $this->scaleStepY) {
             $markerPoint = $this->config->scale(new DataPoint(0, $y));
             $this->plotter->plot(
@@ -205,7 +205,6 @@ class GridDrawer implements GridDrawerInterface
                 $this->gridStyle
             );
         }
-
 
         for ($y = 0; $y >= $this->config->getNegativeYRange(); $y -= $this->scaleStepY) {
             $markerPoint = $this->config->scale(new DataPoint(0, $y));
@@ -226,8 +225,8 @@ class GridDrawer implements GridDrawerInterface
         for ($x = -$this->scaleStepX; $x >= $this->config->getNegativeXRange(); $x -= $this->scaleStepX) {
             $markerPoint = $this->config->scale(new DataPoint($x, 0));
             $this->plotter->label(
-                new Point($markerPoint->getX() - $this->config->getFont()->getSize(), $this->config->getImageHeight() - $this->config->getMarginY() + $this->config->getFont()->getSize()/2),
-                (string)str_pad($x, 3, ' ', STR_PAD_LEFT),
+                new Point($markerPoint->getX() - $this->config->getFont()->getSize(), $this->config->getImageHeight() - $this->config->getMarginY() + $this->config->getFont()->getSize() / 2),
+                (string) str_pad($x, 3, ' ', STR_PAD_LEFT),
                 $this->config->getFont()
             );
         }
@@ -235,8 +234,8 @@ class GridDrawer implements GridDrawerInterface
         for ($x = 0; $x <= $this->config->getPositiveXRange(); $x += $this->scaleStepX) {
             $markerPoint = $this->config->scale(new DataPoint($x, 0));
             $this->plotter->label(
-                new Point($markerPoint->getX() - $this->config->getFont()->getSize(), $this->config->getImageHeight() - $this->config->getMarginY() + $this->config->getFont()->getSize()/2),
-                (string)str_pad($x, 3, ' ', STR_PAD_LEFT),
+                new Point($markerPoint->getX() - $this->config->getFont()->getSize(), $this->config->getImageHeight() - $this->config->getMarginY() + $this->config->getFont()->getSize() / 2),
+                (string) str_pad($x, 3, ' ', STR_PAD_LEFT),
                 $this->config->getFont()
             );
         }
@@ -245,7 +244,7 @@ class GridDrawer implements GridDrawerInterface
             $markerPoint = $this->config->scale(new DataPoint(0, $y));
             $this->plotter->label(
                 new Point($this->config->getMarginX() - $this->config->getLabelMargin(), $markerPoint->getY() - $this->config->getFont()->getSize()),
-                (string)str_pad($y, 3, ' ', STR_PAD_LEFT),
+                (string) str_pad($y, 3, ' ', STR_PAD_LEFT),
                 $this->config->getFont()
             );
         }
@@ -254,7 +253,7 @@ class GridDrawer implements GridDrawerInterface
             $markerPoint = $this->config->scale(new DataPoint(0, $y));
             $this->plotter->label(
                 new Point($this->config->getMarginX() - $this->config->getLabelMargin(), $markerPoint->getY() - $this->config->getFont()->getSize()),
-                (string)str_pad($y, 3, ' ', STR_PAD_LEFT),
+                (string) str_pad($y, 3, ' ', STR_PAD_LEFT),
                 $this->config->getFont()
             );
         }

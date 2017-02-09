@@ -16,7 +16,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\BoxInterface;
 
 /**
- * A resize filter
+ * A resize filter.
  */
 class Resize implements FilterInterface
 {
@@ -27,7 +27,7 @@ class Resize implements FilterInterface
     private $filter;
 
     /**
-     * Constructs Resize filter with given width and height
+     * Constructs Resize filter with given width and height.
      *
      * @param BoxInterface $size
      * @param string       $filter

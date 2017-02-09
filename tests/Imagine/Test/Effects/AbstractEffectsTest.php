@@ -18,7 +18,6 @@ use Imagine\Image\Palette\RGB;
 
 abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testNegate()
     {
         $palette = new RGB();

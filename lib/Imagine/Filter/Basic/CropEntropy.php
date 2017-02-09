@@ -14,9 +14,9 @@ class CropEntropy implements FilterInterface
     private $size;
 
     /**
-     * Constructs a CropEntropy filter
+     * Constructs a CropEntropy filter.
      *
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      */
     public function __construct(BoxInterface $size)
     {

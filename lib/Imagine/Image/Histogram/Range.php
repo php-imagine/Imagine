@@ -14,23 +14,23 @@ namespace Imagine\Image\Histogram;
 use Imagine\Exception\OutOfBoundsException;
 
 /**
- * Range histogram
+ * Range histogram.
  */
 final class Range
 {
     /**
-     * @var integer
+     * @var int
      */
     private $start;
 
     /**
-     * @var integer
+     * @var int
      */
     private $end;
 
     /**
-     * @param integer $start
-     * @param integer $end
+     * @param int $start
+     * @param int $end
      *
      * @throws OutOfBoundsException
      */
@@ -41,13 +41,13 @@ final class Range
         }
 
         $this->start = $start;
-        $this->end   = $end;
+        $this->end = $end;
     }
 
     /**
-     * @param integer $value
+     * @param int $value
      *
-     * @return Boolean
+     * @return bool
      */
     public function contains($value)
     {

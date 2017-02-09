@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Filter\Chart\Data;
 
 use Imagine\Exception\InvalidArgumentException;
@@ -8,16 +9,16 @@ class DataSet
     /** @var array */
     private $dataByX = array();
 
-    /** @var  float|int */
+    /** @var float|int */
     private $minX;
 
-    /** @var  float|int */
+    /** @var float|int */
     private $maxY;
 
-    /** @var  float|int */
+    /** @var float|int */
     private $minY;
 
-    /** @var  float|int */
+    /** @var float|int */
     private $maxX;
 
     private $lineStyle;
@@ -91,7 +92,7 @@ class DataSet
         $minX = $minY = INF;
         $maxX = $maxY = -INF;
 
-        foreach($data as $pair) {
+        foreach ($data as $pair) {
             if (count($pair) < 2) {
                 continue;
             }
@@ -107,25 +108,37 @@ class DataSet
 
             $this->dataByX[] = new DataPoint($x, $y);
 
-            if ($x <= $minX) { $minX = $x;}
-            if ($y <= $minY) { $minY = $y;}
-            if ($x >= $maxX) { $maxX = $x;}
-            if ($y >= $maxY) { $maxY = $y;}
+            if ($x <= $minX) {
+                $minX = $x;
+            }
+            if ($y <= $minY) {
+                $minY = $y;
+            }
+            if ($x >= $maxX) {
+                $maxX = $x;
+            }
+            if ($y >= $maxY) {
+                $maxY = $y;
+            }
         }
 
-        if (count($this->dataByX) > 0 ) {
+        if (count($this->dataByX) > 0) {
             $this->minX = $minX;
             $this->minY = $minY;
             $this->maxX = $maxX;
             $this->maxY = $maxY;
 
             usort($this->dataByX, function (DataPoint $p1, DataPoint $p2) {
-                if ($p1->getX() === $p2->getX()) { return 0; } elseif ($p1->getX() > $p2->getX()) { return 1;}
+                if ($p1->getX() === $p2->getX()) {
+                    return 0;
+                } elseif ($p1->getX() > $p2->getX()) {
+                    return 1;
+                }
+
                 return -1;
             });
         } else {
-            throw new InvalidArgumentException("No valid data pair in set");
+            throw new InvalidArgumentException('No valid data pair in set');
         }
     }
-
 }

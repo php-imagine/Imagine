@@ -30,7 +30,7 @@ class ProfileTest extends ImagineTestCase
 
     public function testFromPath()
     {
-        $file = __DIR__ . '/../../../../lib/Imagine/resources/Adobe/CMYK/JapanColor2001Uncoated.icc';
+        $file = __DIR__.'/../../../../lib/Imagine/resources/Adobe/CMYK/JapanColor2001Uncoated.icc';
         $profile = Profile::fromPath($file);
 
         $this->assertEquals(basename($file), $profile->name());
@@ -42,7 +42,7 @@ class ProfileTest extends ImagineTestCase
      */
     public function testFromInvalidPath()
     {
-        $file = __DIR__ . '/non-existent-profile.icc';
+        $file = __DIR__.'/non-existent-profile.icc';
         Profile::fromPath($file);
     }
 }

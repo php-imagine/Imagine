@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Test\Filter\Chart\Data;
 
 use Imagine\Filter\Chart\Data\DataPoint;
@@ -23,12 +24,12 @@ class DataPointTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
               'x' => 1,
-              'y' => 2
+              'y' => 2,
             ),
             array(
                 'x' => 0.005,
-                'y' => 5000.0
-            )
+                'y' => 5000.0,
+            ),
         );
     }
 }

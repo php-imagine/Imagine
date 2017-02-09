@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CropBalanced
+ * CropBalanced.
  *
  * This class calculates the most interesting point in the image by:
  *
@@ -12,57 +12,64 @@
 
 namespace Imagine\Image;
 
-Abstract class AbstractBalanced
+abstract class AbstractBalanced
 {
     /**
-     * Get special offset for class
+     * Get special offset for class.
      *
-     * @param  mixed    $original
-     * @param  int      $targetWidth
-     * @param  int      $targetHeight
-     * @return array    The crop point coordinate
+     * @param mixed $original
+     * @param int   $targetWidth
+     * @param int   $targetHeight
+     *
+     * @return array The crop point coordinate
      */
-    abstract function getSpecialOffset($original, $targetWidth, $targetHeight);
+    abstract public function getSpecialOffset($original, $targetWidth, $targetHeight);
 
     /**
-     * Apply image filter and return the crop point
+     * Apply image filter and return the crop point.
      *
-     * @param  mixed    $original
-     * @param  int      $targetWidth
-     * @param  int      $targetHeight
-     * @return array    The crop point coordinate
+     * @param mixed $original
+     * @param int   $targetWidth
+     * @param int   $targetHeight
+     *
+     * @return array The crop point coordinate
      */
-    abstract function getRandomEdgeOffset($original, $targetWidth, $targetHeight);
+    abstract public function getRandomEdgeOffset($original, $targetWidth, $targetHeight);
 
     /**
-     * Crop image in four to return four energetic points
+     * Crop image in four to return four energetic points.
      *
-     * @param mixed     $originalImage
-     * @param int       $targetWidth
-     * @param int       $targetHeight
-     * @return array    The crop point coordinate
+     * @param mixed $originalImage
+     * @param int   $targetWidth
+     * @param int   $targetHeight
+     *
+     * @return array The crop point coordinate
+     *
      * @throws \Exception
      */
-    abstract function getOffsetBalanced($originalImage, $targetWidth, $targetHeight);
+    abstract public function getOffsetBalanced($originalImage, $targetWidth, $targetHeight);
 
     /**
      * By doing random sampling from the image, find the most energetic point on the passed in
-     * image
+     * image.
      *
-     * @param mixed     $image
-     * @return array    The coordinate of the most energetic point
+     * @param mixed $image
+     *
+     * @return array The coordinate of the most energetic point
+     *
      * @throws \Exception
      */
-    abstract function getHighestEnergyPoint($image);
-
+    abstract public function getHighestEnergyPoint($image);
 
     /**
-     * Returns a YUV weighted greyscale value
+     * Returns a YUV weighted greyscale value.
      *
-     * @param  int $r
-     * @param  int $g
-     * @param  int $b
+     * @param int $r
+     * @param int $g
+     * @param int $b
+     *
      * @return int
+     *
      * @see http://en.wikipedia.org/wiki/YUV
      */
     protected function getLuminanceFromRGB($r, $g, $b)

@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Filter\Chart;
 
 use Imagine\Draw\LinePlotter;
@@ -22,47 +23,47 @@ class LineChart implements FilterInterface
     /** @var LinePlotter */
     private $plotter;
 
-    /** @var  ChartConfig */
+    /** @var ChartConfig */
     protected $config;
 
     /*** @var GridDrawerInterface*/
     private $gridDrawer;
 
-    /** @var bool  */
+    /** @var bool */
     private $drawBorder;
 
-    /** @var bool  */
+    /** @var bool */
     private $drawGrid;
 
-    /** @var bool  */
+    /** @var bool */
     private $labelAxes;
 
-    /** @var bool  */
+    /** @var bool */
     private $fitToData;
 
     /** @var Point */
     protected $origin;
 
-    /** @var float  */
+    /** @var float */
     private $padding = 1.0;
 
-    /** @var float  */
+    /** @var float */
     private $margin = 1.0;
 
-    /** @var  string */
+    /** @var string */
     protected $fontFace;
 
-    /** @var  int */
+    /** @var int */
     protected $fontSize;
 
     /**
-     * @param ImagineInterface $imagine
-     * @param LinePlotter $plotter
+     * @param ImagineInterface    $imagine
+     * @param LinePlotter         $plotter
      * @param GridDrawerInterface $gridDrawer
-     * @param bool $fitToData
-     * @param bool $drawBorder
-     * @param bool $drawGrid
-     * @param bool $labelAxes
+     * @param bool                $fitToData
+     * @param bool                $drawBorder
+     * @param bool                $drawGrid
+     * @param bool                $labelAxes
      */
     public function __construct(
         ImagineInterface $imagine,
@@ -85,7 +86,7 @@ class LineChart implements FilterInterface
 
     /**
      * @param array $data
-     * @param null $lineStyle
+     * @param null  $lineStyle
      */
     public function addData(array $data, $lineStyle = null)
     {
@@ -106,7 +107,7 @@ class LineChart implements FilterInterface
     public function apply(ImageInterface $image)
     {
         try {
-            $font =  $this->imagine->font($this->fontFace, $this->fontSize, new RGB(new RGBPalette(), array(0, 0, 0), 100));
+            $font = $this->imagine->font($this->fontFace, $this->fontSize, new RGB(new RGBPalette(), array(0, 0, 0), 100));
         } catch (\Exception $e) {
             $font = null;
         }
@@ -133,9 +134,15 @@ class LineChart implements FilterInterface
         $this->gridDrawer->drawAxes();
         $this->gridDrawer->drawMarkers();
 
-        if (true === $this->drawBorder) { $this->gridDrawer->drawBorder();}
-        if (true === $this->drawGrid) { $this->gridDrawer->drawGrid(); }
-        if (true === $this->labelAxes) {$this->gridDrawer->drawLabels(); }
+        if (true === $this->drawBorder) {
+            $this->gridDrawer->drawBorder();
+        }
+        if (true === $this->drawGrid) {
+            $this->gridDrawer->drawGrid();
+        }
+        if (true === $this->labelAxes) {
+            $this->gridDrawer->drawLabels();
+        }
 
         return $image;
     }

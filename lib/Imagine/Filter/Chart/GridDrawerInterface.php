@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Filter\Chart;
 
 use Imagine\Draw\PlotterInterface;
@@ -6,7 +7,7 @@ use Imagine\Draw\PlotterInterface;
 interface GridDrawerInterface
 {
     /**
-     * @param ChartConfig|null $config
+     * @param ChartConfig|null      $config
      * @param PlotterInterface|null $plotter
      */
     public function __construct(ChartConfig $config = null, PlotterInterface $plotter = null);

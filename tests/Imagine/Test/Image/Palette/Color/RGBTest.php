@@ -45,7 +45,7 @@ class RGBTest extends AbstractColorTest
     public function provideColorAndAlphaTuples()
     {
         return array(
-            array(14, $this->getColor())
+            array(14, $this->getColor()),
         );
     }
 

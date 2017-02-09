@@ -8,7 +8,6 @@ use Imagine\Exception\RuntimeException;
 
 class Issue131Test extends \PHPUnit_Framework_TestCase
 {
-
     private function getTemporaryDir()
     {
         $tempDir = tempnam(sys_get_temp_dir(), 'imagine');
@@ -59,13 +58,13 @@ class Issue131Test extends \PHPUnit_Framework_TestCase
     public function testShouldSaveOneFileWithImagick()
     {
         $dir = realpath($this->getTemporaryDir());
-        $targetFile = $dir . '/myfile.png';
+        $targetFile = $dir.'/myfile.png';
 
-        $imagine = $this->getImagickImagine(__DIR__ . '/multi-layer.psd');
+        $imagine = $this->getImagickImagine(__DIR__.'/multi-layer.psd');
 
         $imagine->save($targetFile);
 
-        if ( ! $this->probeOneFileAndCleanup($dir, $targetFile)) {
+        if (!$this->probeOneFileAndCleanup($dir, $targetFile)) {
             $this->fail('Imagick failed to generate one file');
         }
     }
@@ -73,13 +72,13 @@ class Issue131Test extends \PHPUnit_Framework_TestCase
     public function testShouldSaveOneFileWithGmagick()
     {
         $dir = realpath($this->getTemporaryDir());
-        $targetFile = $dir . '/myfile.png';
+        $targetFile = $dir.'/myfile.png';
 
-        $imagine = $this->getGmagickImagine(__DIR__ . '/multi-layer.psd');
+        $imagine = $this->getGmagickImagine(__DIR__.'/multi-layer.psd');
 
         $imagine->save($targetFile);
 
-        if ( ! $this->probeOneFileAndCleanup($dir, $targetFile)) {
+        if (!$this->probeOneFileAndCleanup($dir, $targetFile)) {
             $this->fail('Gmagick failed to generate one file');
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Draw;
 
 use Imagine\Image\Box;
@@ -13,10 +14,10 @@ class LinePlotter implements PlotterInterface
 {
     const DRAW_RESOLUTION = 10;
 
-    /**@var DrawerInterface */
+    /** @var DrawerInterface */
     private $drawer;
 
-    /** @var  LineStyle */
+    /** @var LineStyle */
     protected $style;
 
     /**
@@ -60,7 +61,7 @@ class LinePlotter implements PlotterInterface
 
     /**
      * @param PointCollection $collection
-     * @param LineStyle|null $style
+     * @param LineStyle|null  $style
      */
     public function plotCollection(PointCollection $collection, LineStyle $style = null)
     {
@@ -81,7 +82,6 @@ class LinePlotter implements PlotterInterface
                     $this->drawSolid($point1, $point2, $style);
             }
         }
-
     }
 
     /**
@@ -103,7 +103,7 @@ class LinePlotter implements PlotterInterface
     /**
      * @param PointInterface $p1
      * @param PointInterface $p2
-     * @param LineStyle $style
+     * @param LineStyle      $style
      */
     protected function drawDashed(PointInterface $p1, PointInterface $p2, LineStyle $style)
     {
@@ -120,7 +120,6 @@ class LinePlotter implements PlotterInterface
         $previousPoint = null;
 
         if (0 != ($x2 - $x1)) {
-
             $a = ($y2 - $y1) / ($x2 - $x1);
             $b = $y1 - $x1 * ($y2 - $y1) / ($x2 - $x1);
 
@@ -130,7 +129,7 @@ class LinePlotter implements PlotterInterface
             $spacingSqrt = $style->getSpacing() * $style->getSpacing();
             $increase = ($x2 - $x1) / self::DRAW_RESOLUTION >= 1 ? 1 : ($x2 - $x1) / self::DRAW_RESOLUTION;
 
-            for ($x = $x1; $x <= $x2; $x+=$increase) {
+            for ($x = $x1; $x <= $x2; $x += $increase) {
                 $y = $a * $x + $b;
                 $distance = ($x - $lastX) * ($x - $lastX) + ($y - $lastY) * ($y - $lastY);
                 if ($firstDash || null === $previousPoint && $distance > $spacingSqrt) {
@@ -165,7 +164,7 @@ class LinePlotter implements PlotterInterface
     /**
      * @param PointInterface $p1
      * @param PointInterface $p2
-     * @param LineStyle $style
+     * @param LineStyle      $style
      */
     protected function drawDotted(PointInterface $p1, PointInterface $p2, LineStyle $style)
     {
@@ -190,7 +189,7 @@ class LinePlotter implements PlotterInterface
             $prevY = $a * $prevX + $b;
 
             $increase = ($x2 - $x1) / self::DRAW_RESOLUTION >= 1 ? 1 : ($x2 - $x1) / self::DRAW_RESOLUTION;
-            for ($x = $x1; $x <= $x2; $x+=$increase) {
+            for ($x = $x1; $x <= $x2; $x += $increase) {
                 $y = $a * $x + $b;
                 $distance = ($x - $prevX) * ($x - $prevX) + ($y - $prevY) * ($y - $prevY);
                 if ($firstDot || $distance >= $spacingSqrt) {
@@ -215,7 +214,7 @@ class LinePlotter implements PlotterInterface
     /**
      * @param PointInterface $p1
      * @param PointInterface $p2
-     * @param LineStyle $style
+     * @param LineStyle      $style
      */
     protected function drawSolid(PointInterface $p1, PointInterface $p2, LineStyle $style)
     {

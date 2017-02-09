@@ -37,7 +37,7 @@ class CenterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider for testShouldGetCenterCoordinates
+     * Data provider for testShouldGetCenterCoordinates.
      *
      * @return array
      */
@@ -58,9 +58,9 @@ class CenterTest extends \PHPUnit_Framework_TestCase
      * @dataProvider getMoves
      *
      * @param Imagine\Image\BoxInterface $box
-     * @param integer                    $move
-     * @param integer                    $x1
-     * @param integer                    $y1
+     * @param int                        $move
+     * @param int                        $x1
+     * @param int                        $y1
      */
     public function testShouldMoveByGivenAmount(BoxInterface $box, $move, $x1, $y1)
     {

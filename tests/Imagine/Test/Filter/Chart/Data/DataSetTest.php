@@ -1,4 +1,5 @@
 <?php
+
 namespace Imagine\Test\Filter\Chart\Data;
 
 use Imagine\Filter\Chart\Data\DataSet;
@@ -7,7 +8,7 @@ class DataSetTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param array $data
-     * @param bool $flipAxes
+     * @param bool  $flipAxes
      * @param float $expectedMaxX
      * @param float $expectedMinX
      * @param float $expectedMaxY
@@ -22,8 +23,7 @@ class DataSetTest extends \PHPUnit_Framework_TestCase
         $expectedMinX,
         $expectedMaxY,
         $expectedMinY
-    )
-    {
+    ) {
         $dataSet = new DataSet($data, null, $flipAxes);
 
         $this->assertEquals($expectedMaxX, $dataSet->getMaxX());
