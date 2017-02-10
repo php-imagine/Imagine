@@ -103,18 +103,4 @@ class Effects implements EffectsInterface
 
         return $this;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function edge($radius = 0)
-    {
-        try {
-            $this->gmagick->edgeImage($radius);
-        } catch (\GmagickException $e) {
-            throw new RuntimeException('Failed to edge the image', $e->getCode(), $e);
-        }
-
-        return $this;
-    }
 }

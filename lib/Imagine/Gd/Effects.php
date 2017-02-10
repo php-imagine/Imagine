@@ -106,16 +106,4 @@ class Effects implements EffectsInterface
 
         return $this;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function edge($radius = 0)
-    {
-        if (false === imagefilter($this->resource, IMG_FILTER_EDGEDETECT)) {
-            throw new RuntimeException('Failed to edge the image');
-        }
-
-        return $this;
-    }
 }

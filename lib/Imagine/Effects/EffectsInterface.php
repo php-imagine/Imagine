@@ -77,15 +77,4 @@ interface EffectsInterface
      * @throws RuntimeException
      */
     public function blur($sigma);
-
-    /**
-     * Edge the image
-     *
-     * @param float|int $radius
-     *
-     * @return EffectsInterface
-     *
-     * @throws RuntimeException
-     */
-    public function edge($radius);
 }
