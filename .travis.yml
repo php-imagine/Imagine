@@ -10,7 +10,6 @@ env:
 
 before_install:
   - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
-  - composer self-update
 
 install:
   - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
