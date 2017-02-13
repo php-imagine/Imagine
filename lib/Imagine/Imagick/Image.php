@@ -710,8 +710,15 @@ final class Image extends AbstractImage
             } else {
                 $compression += 5;
             }
-
-            $image->setImageCompressionQuality($compression);
+            $v = \Imagick::getVersion();
+            preg_match('/ImageMagick ([0-9]+\.[0-9]+\.[0-9]+)/', $v['versionString'], $v);
+            if (version_compare($v[1], '6.8.7') < 0 ) {
+                //Use this for ImageMagick releases before 6.8.7-5
+                $image->setImageCompressionQuality($compression);
+            } else {
+            //Use this for ImageMagick releases after 6.8.7-5
+                $image->setCompressionQuality($compression);
+            }
         }
 
         if (isset($options['resolution-units']) && isset($options['resolution-x']) && isset($options['resolution-y'])) {
