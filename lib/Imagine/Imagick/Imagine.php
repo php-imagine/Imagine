@@ -81,7 +81,12 @@ final class Imagine extends AbstractImagine
             $imagick->setImageBackgroundColor($pixel);
 
             if (version_compare('6.3.1', $this->getVersion($imagick)) < 0) {
-                $imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
+                // setImageOpacity was replaced with setImageAlpha in php-imagick v3.4.3
+                if (method_exists($imagick, 'setImageAlpha')) {
+                    $imagick->setImageAlpha($pixel->getColorValue(\Imagick::COLOR_ALPHA));
+                } else {
+                    $imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
+                }
             }
 
             $pixel->clear();
