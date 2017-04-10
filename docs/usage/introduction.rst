@@ -116,6 +116,19 @@ Available filters are ``ImageInterface::FILTER_*`` constants.
 .. NOTE::
    GD only supports ``ImageInterface::RESIZE_UNDEFINED`` filter.
 
+Create Thumbnails
++++++++++++++++++
+
+You can also use the ``thumbnail`` method to resize images or create thumbnails.
+
+.. code-block:: php
+
+    // resize image without distortion
+    $image->thumbnail(new Box(300, 300), ImageInterface::THUMBNAIL_INSET);
+
+    // create cropped thumbnail
+    $image->thumbnail(new Box(150, 150), ImageInterface::THUMBNAIL_OUTBOUND);
+
 Create New Images
 +++++++++++++++++
 
