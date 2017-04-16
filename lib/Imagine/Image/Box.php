@@ -38,6 +38,23 @@ final class Box implements BoxInterface
      */
     public function __construct($width, $height)
     {
+        // Force int if $width is a float without module
+        if (is_float($width) && 0 == fmod($width, 1)) {
+            $width = intval($width);
+        }
+        // Force int if $height is a float without module
+        if (is_float($height) && 0 == fmod($height, 1)) {
+            $height = intval($height);
+        }
+
+        if (!is_int($width)) {
+            throw new InvalidArgumentException(sprintf('Length of either side must be an integer, but current type of width is %s', gettype($width)));
+        }
+
+        if (!is_int($height)) {
+            throw new InvalidArgumentException(sprintf('Length of either side must be an integer, but current type of height is %s', gettype($height)));
+        }
+
         if ($height < 1 || $width < 1) {
             throw new InvalidArgumentException(sprintf('Length of either side cannot be 0 or negative, current size is %sx%s', $width, $height));
         }
