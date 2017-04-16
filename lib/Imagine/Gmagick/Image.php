@@ -66,14 +66,27 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Destroys allocated gmagick resources
+     * Destroys gmagick instance
      */
     public function __destruct()
     {
-        if ($this->gmagick instanceof \Gmagick) {
-            $this->gmagick->clear();
-            $this->gmagick->destroy();
-        }
+        $this->gmagick = null;
+        $this->layers = null; // layers contains gmagick instance
+    }
+
+    /**
+     * Destroys allocated gmagick resources
+     *
+     * These lines inside destructor cause segmentation fault
+     * @see https://github.com/avalanche123/Imagine/issues/347
+     * @see https://bugs.php.net/bug.php?id=63677
+     *
+     * So if you need, you can clear resources manually by calling this method
+     */
+    public function destroyGmagick()
+    {
+        $this->gmagick->clear();
+        $this->gmagick->destroy();
     }
 
     /**
@@ -693,7 +706,7 @@ final class Image extends AbstractImage
     public function profile(ProfileInterface $profile)
     {
         try {
-            $this->gmagick->profileimage('ICM', $profile->data());
+            $this->gmagick->profileimage('ICC', $profile->data());
         } catch (\GmagickException $e) {
             if (false !== strpos($e->getMessage(), 'LCMS encoding not enabled')) {
                 throw new RuntimeException(sprintf('Unable to add profile %s to image, be sue to compile graphicsmagick with `--with-lcms2` option', $profile->name()), $e->getCode(), $e);
