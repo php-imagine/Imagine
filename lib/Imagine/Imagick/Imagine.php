@@ -52,6 +52,14 @@ final class Imagine extends AbstractImagine
 
         try {
             $imagick = new \Imagick($path);
+
+            $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+            if(preg_match('/pdf\[[0-9]+\]/', $ext)){
+                $path = substr($path, 0, -strlen($ext));
+                $path = $path."pdf";
+            }
+
             $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readFile($path));
         } catch (\Exception $e) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
