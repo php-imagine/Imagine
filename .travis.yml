@@ -18,6 +18,9 @@ install:
   - sh -e -c " if [ '$IMAGINE_DRIVER' = 'gmagick' ]; then bash ./.travis/gmagick.sh; fi"
   - composer install
 
+script:
+  - ./bin/simple-phpunit
+
 php:
   - 5.3
   - 5.4

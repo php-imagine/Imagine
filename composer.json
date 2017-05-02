@@ -20,7 +20,8 @@
         "bin-dir": "bin"
     },
     "require": {
-        "php": ">=5.3.2"
+        "php": ">=5.3.2",
+        "symfony/phpunit-bridge": "^3.2"
     },
     "require-dev": {
         "sami/sami": "^3.3"
