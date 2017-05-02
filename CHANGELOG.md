@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 0.7.0 (2017-05-02)
+  * Fix memory usage on metadata reading (@Seldaek)
+  * PHP 7.1 support
+  * Latest Imagemagick compatibility (@jdewit)
+
 ### 0.6.3 (2015-09-19)
   * Fix wrong array_merge when calling Transformation::getFilters without filters
   * Add export-ignore git attribute (@Benoth)
