@@ -258,7 +258,11 @@ final class Image extends AbstractImage
 
         try {
             $pixel = $this->getColor($color);
-
+            // if the input image doesn't have an alpha channel, we need to add one
+            //  ImageMagick 7 (?) seems not to do that automatically anymore.
+            if ($this->imagick->getImageAlphaChannel() == \Imagick::ALPHACHANNEL_UNDEFINED) {
+                $this->imagick->setImageAlphaChannel(\Imagick::ALPHACHANNEL_SET);
+            }
             $this->imagick->rotateimage($pixel, $angle);
 
             $pixel->clear();
