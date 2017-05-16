@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 0.7.1 (2017-05-16)
+  * Remove Symfony PHPUnit bridge as dependency (@craue)
+
 ### 0.7.0 (2017-05-02)
   * Fix memory usage on metadata reading (@Seldaek)
   * PHP 7.1 support
