@@ -608,6 +608,7 @@ final class Image extends AbstractImage
                 $this->profile($this->palette->profile());
             }
 
+            $this->imagick->transformImageColorspace(static::$colorspaceMapping[$palette->name()]);
             $this->profile($palette->profile());
             $this->setColorspace($palette);
         } catch (\ImagickException $e) {
