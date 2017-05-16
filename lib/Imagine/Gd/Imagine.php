@@ -90,7 +90,7 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException(sprintf('Failed to open file %s', $path));
         }
 
-        $resource = @imagecreatefromstring($data);
+        $resource = imagecreatefromstring($data);
 
         if (!is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
