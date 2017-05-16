@@ -39,7 +39,7 @@ abstract class AbstractImage implements ImageInterface
             $size->getHeight() / $imageSize->getHeight()
         );
 
-        $thumbnail = $this->copy();
+        $thumbnail = $this;
 
         $thumbnail->usePalette($this->palette());
         $thumbnail->strip();
