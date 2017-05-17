@@ -127,6 +127,19 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif');
     }
 
+    /**
+     * @dataProvider provideFromAndToPalettes
+     */
+    public function testUsePalette($from, $to, $color)
+    {
+        if (!$this->supportProfiles() && $from === 'Imagine\Image\Palette\Grayscale' && $to === 'Imagine\Image\Palette\RGB') {
+            $this->markTestSkipped('The installed ImageMagick version does not support ICC profiles');
+            return;
+        }
+
+        parent::testUsePalette($from, $to, $color);
+    }
+
     public function testChangeColorSpaceAndStripImage()
     {
         if ($this->supportProfiles()) {
