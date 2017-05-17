@@ -614,6 +614,7 @@ final class Image extends AbstractImage
             }
 
             if (!$this->detectProfilesSupport()) {
+                trigger_error('For changing palettes, color profile support should be enabled, compile ImageMagick with `--with-lcms2` option.', E_USER_WARNING);
                 $this->imagick->transformImageColorspace(static::$colorspaceMapping[$palette->name()]);
             }
 

@@ -132,12 +132,20 @@ class ImageTest extends AbstractImageTest
      */
     public function testUsePalette($from, $to, $color)
     {
-        if (!$this->supportProfiles() && $from === 'Imagine\Image\Palette\Grayscale' && $to === 'Imagine\Image\Palette\RGB') {
-            $this->markTestSkipped('The installed ImageMagick version does not support ICC profiles');
-            return;
-        }
+        if (!$this->supportProfiles()) {
 
-        parent::testUsePalette($from, $to, $color);
+            if ($from === 'Imagine\Image\Palette\Grayscale' && $to === 'Imagine\Image\Palette\RGB') {
+                $this->markTestSkipped('The installed ImageMagick version does not support ICC profiles');
+                return;
+            }
+
+            // Ignore the missing profiles support warning
+            @parent::testUsePalette($from, $to, $color);
+
+        }
+        else {
+            parent::testUsePalette($from, $to, $color);
+        }
     }
 
     public function testChangeColorSpaceAndStripImage()
