@@ -3,21 +3,32 @@
 set -xe
 
 IMAGEMAGICK_VERSION="6.8.9-10"
+IMAGEMAGICK_DIR="ImageMagick-$IMAGEMAGICK_VERSION"
+if [ "$WITHOUT_LCMS" = "true" ]
+then
+    IMAGEMAGICK_DIR="$IMAGEMAGICK_DIR-no-lcms"
+fi
 IMAGICK_VERSION="3.4.3"
 
 mkdir -p cache
 cd cache
 
-if [ ! -e ./ImageMagick-$IMAGEMAGICK_VERSION ]
+if [ ! -e ./$IMAGEMAGICK_DIR ]
 then
     wget http://www.imagemagick.org/download/releases/ImageMagick-$IMAGEMAGICK_VERSION.tar.xz
     tar -xf ImageMagick-$IMAGEMAGICK_VERSION.tar.xz
     rm ImageMagick-$IMAGEMAGICK_VERSION.tar.xz
-    cd ImageMagick-$IMAGEMAGICK_VERSION
-    ./configure --prefix=/opt/imagemagick
+    mv ImageMagick-$IMAGEMAGICK_VERSION $IMAGEMAGICK_DIR
+    cd $IMAGEMAGICK_DIR
+    if [ "$WITHOUT_LCMS" = "true" ]
+    then
+        ./configure --prefix=/opt/imagemagick --without-lcms --without-lcms2
+    else
+        ./configure --prefix=/opt/imagemagick
+    fi
     make -j
 else
-    cd ImageMagick-$IMAGEMAGICK_VERSION
+    cd $IMAGEMAGICK_DIR
 fi
 
 sudo make install

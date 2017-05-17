@@ -51,6 +51,11 @@ final class Image extends AbstractImage
      */
     private static $supportsColorspaceConversion;
 
+    /**
+     * @var Boolean
+     */
+    private static $supportsProfiles;
+
     private static $colorspaceMapping = array(
         PaletteInterface::PALETTE_CMYK      => \Imagick::COLORSPACE_CMYK,
         PaletteInterface::PALETTE_RGB       => \Imagick::COLORSPACE_RGB,
@@ -608,7 +613,10 @@ final class Image extends AbstractImage
                 $this->profile($this->palette->profile());
             }
 
-            $this->imagick->transformImageColorspace(static::$colorspaceMapping[$palette->name()]);
+            if (!$this->detectProfilesSupport()) {
+                $this->imagick->transformImageColorspace(static::$colorspaceMapping[$palette->name()]);
+            }
+
             $this->profile($palette->profile());
             $this->setColorspace($palette);
         } catch (\ImagickException $e) {
@@ -857,6 +865,34 @@ final class Image extends AbstractImage
         }
 
         return static::$supportsColorspaceConversion = method_exists('Imagick', 'setColorspace');
+    }
+
+    /**
+     * ImageMagick without the lcms delegate cannot handle profiles well.
+     * This detection is needed because there is no way to directly check for lcms.
+     *
+     * @return Boolean
+     */
+    private function detectProfilesSupport()
+    {
+        if (null !== static::$supportsProfiles) {
+            return static::$supportsProfiles;
+        }
+
+        static::$supportsProfiles = false;
+
+        try {
+            $image = new \Imagick();
+            $image->newImage(1, 1, new \ImagickPixel('#fff'));
+            $image->profileImage('icc', 'x');
+        }
+        catch (\ImagickException $exception) {
+            // If ImageMagick has support for profiles,
+            // it detects the invalid profile data 'x' and throws an exception.
+            static::$supportsProfiles = true;
+        }
+
+        return static::$supportsProfiles;
     }
 
     /**

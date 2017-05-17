@@ -6,6 +6,7 @@ cache:
 
 env:
   - IMAGINE_DRIVER=imagick
+  - IMAGINE_DRIVER=imagick WITHOUT_LCMS=true
   - IMAGINE_DRIVER=gmagick
 
 before_install:
