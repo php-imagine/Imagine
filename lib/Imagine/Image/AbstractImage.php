@@ -45,7 +45,7 @@ abstract class AbstractImage implements ImageInterface
         $thumbnail->strip();
         // if target width is larger than image width
         // AND target height is longer than image height
-        if ($size->contains($imageSize)) {
+        if (!$size->contains($imageSize)) {
             return $thumbnail;
         }
 
