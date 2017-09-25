@@ -6,7 +6,7 @@ Tweet about it using the [#php_imagine](https://twitter.com/search?q=%23php_imag
 Image manipulation library for PHP 5.3 inspired by Python's PIL and other image
 libraries.
 
-## Requirements##
+## Requirements
 
 The Imagine library has the following requirements:
 
@@ -21,7 +21,7 @@ Depending on the chosen Image implementation, you may need one of the following:
 ### Installation using composer
 `php composer.phar require imagine/imagine`
 
-##Basic Principles##
+## Basic Principles
 
 The main purpose of Imagine is to provide all the necessary functionality to bring all native low level image processing libraries in PHP to the same simple and intuitive OO API.
 
