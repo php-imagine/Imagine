@@ -13,6 +13,7 @@ namespace Imagine\Gmagick;
 
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Effects\ConvolutionMatrixInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Exception\NotSupportedException;
 
@@ -102,5 +103,13 @@ class Effects implements EffectsInterface
         }
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function convolve(ConvolutionMatrixInterface $matrix)
+    {
+        throw new NotSupportedException('Gmagick does not support convolve yet');
     }
 }
