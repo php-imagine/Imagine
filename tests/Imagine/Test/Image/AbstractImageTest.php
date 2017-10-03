@@ -266,12 +266,20 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertNotSame($image, $thumbnail);
     }
 
+    public function testThumbnailWithInvalidSettingShouldThrowAnException()
+    {
+        $factory = $this->getImagine();
+        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', 'Invalid setting specified');
+        $image->thumbnail(new Box(20, 20), "boumboum");
+    }
+
     public function testThumbnailWithInvalidModeShouldThrowAnException()
     {
         $factory = $this->getImagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
-        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', 'Invalid mode specified');
-        $image->thumbnail(new Box(20, 20), "boumboum");
+        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', 'Only one mode should be specified');
+        $image->thumbnail(new Box(20, 20), ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
     }
 
     public function testResizeShouldReturnTheImage()
@@ -291,9 +299,9 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
         $image   = $factory->create(new Box($sourceW, $sourceH));
-        $inset   = $image->thumbnail(new Box($thumbW, $thumbH), $mode);
+        $thumb   = $image->thumbnail(new Box($thumbW, $thumbH), $mode);
 
-        $size = $inset->getSize();
+        $size = $thumb->getSize();
 
         $this->assertEquals($expectedW, $size->getWidth());
         $this->assertEquals($expectedH, $size->getHeight());
@@ -302,6 +310,10 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function provideDimensionsAndModesForThumbnailGeneration()
     {
         return array(
+            // support previous values of mode constants
+            array(320, 240, 32, 48, 'inset', 32, round(32 * 240 / 320)),
+            array(320, 240, 32, 48, 'outbound', 32, 48),
+
             // landscape with smaller portrait
             array(320, 240, 32, 48, ImageInterface::THUMBNAIL_INSET, 32, round(32 * 240 / 320)),
             array(320, 240, 32, 48, ImageInterface::THUMBNAIL_OUTBOUND, 32, 48),
@@ -309,10 +321,10 @@ abstract class AbstractImageTest extends ImagineTestCase
             array(320, 240, 32, 16, ImageInterface::THUMBNAIL_INSET, round(16 * 320 / 240), 16),
             array(320, 240, 32, 16, ImageInterface::THUMBNAIL_OUTBOUND, 32, 16),
 
-            // portait with smaller portrait
+            // portrait with smaller portrait
             array(240, 320, 24, 48, ImageInterface::THUMBNAIL_INSET, 24, round(24 * 320 / 240)),
             array(240, 320, 24, 48, ImageInterface::THUMBNAIL_OUTBOUND, 24, 48),
-            // portait with smaller landscape
+            // portrait with smaller landscape
             array(240, 320, 24, 16, ImageInterface::THUMBNAIL_INSET, round(16 * 240 / 320), 16),
             array(240, 320, 24, 16, ImageInterface::THUMBNAIL_OUTBOUND, 24, 16),
 
@@ -323,12 +335,26 @@ abstract class AbstractImageTest extends ImagineTestCase
             array(32, 24, 320, 200, ImageInterface::THUMBNAIL_INSET, 32, 24),
             array(32, 24, 320, 200, ImageInterface::THUMBNAIL_OUTBOUND, 32, 24),
 
-            // portait with larger portrait
+            // portrait with larger portrait
             array(24, 32, 240, 300, ImageInterface::THUMBNAIL_INSET, 24, 32),
             array(24, 32, 240, 300, ImageInterface::THUMBNAIL_OUTBOUND, 24, 32),
-            // portait with larger landscape
+            // portrait with larger landscape
             array(24, 32, 240, 400, ImageInterface::THUMBNAIL_INSET, 24, 32),
             array(24, 32, 240, 400, ImageInterface::THUMBNAIL_OUTBOUND, 24, 32),
+
+            // landscape with larger portrait (allow upscale)
+            array(32, 24, 320, 300, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_UPSCALE, 320, round(24 * 320 / 32)),
+            array(32, 24, 320, 300, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE, 320, 300),
+            // landscape with larger landscape (allow upscale)
+            array(32, 24, 320, 200, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_UPSCALE, round(32 * 200 / 24), 200),
+            array(32, 24, 320, 200, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE, 320, 200),
+
+            // portrait with larger portrait (allow upscale)
+            array(24, 32, 240, 300, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_UPSCALE, round(24 * 300 / 32), 300),
+            array(24, 32, 240, 300, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE, 240, 300),
+            // portrait with larger landscape (allow upscale)
+            array(24, 32, 240, 400, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_UPSCALE, 240, round(32 * 240 / 24)),
+            array(24, 32, 240, 400, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE, 240, 400),
 
             // landscape with intersect portrait
             array(320, 240, 340, 220, ImageInterface::THUMBNAIL_INSET, round(220 * 320 / 240), 220),
@@ -339,7 +365,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         );
     }
 
-    public function testThumbnailGenerationToDimensionsLergestThanSource()
+    public function testThumbnailGenerationToDimensionsLargestThanSource()
     {
         $test_image = 'tests/Imagine/Fixtures/google.png';
         $test_image_width = 364;

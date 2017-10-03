@@ -26,12 +26,17 @@ abstract class AbstractImage implements ImageInterface
      *
      * @return ImageInterface
      */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
+    public function thumbnail(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-        if ($mode !== ImageInterface::THUMBNAIL_INSET &&
-            $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
-            throw new InvalidArgumentException('Invalid mode specified');
+        $settings = $this->checkThumbnailSettings($settings);
+
+        $mode = $settings & (ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
+
+        if (!$mode) {
+            $mode = ImageInterface::THUMBNAIL_INSET;
         }
+
+        $allowUpscale = (bool) ($settings & ImageInterface::THUMBNAIL_UPSCALE);
 
         $imageSize = $this->getSize();
         $ratios = array(
@@ -45,7 +50,7 @@ abstract class AbstractImage implements ImageInterface
         $thumbnail->strip();
         // if target width is larger than image width
         // AND target height is longer than image height
-        if ($size->contains($imageSize)) {
+        if ($size->contains($imageSize) && !$allowUpscale) {
             return $thumbnail;
         }
 
@@ -55,31 +60,56 @@ abstract class AbstractImage implements ImageInterface
             $ratio = max($ratios);
         }
 
-        if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
+        if ($mode === ImageInterface::THUMBNAIL_INSET) {
+            $imageSize = $imageSize->scale($ratio);
+            $thumbnail->resize($imageSize, $filter);
+        } else {
             if (!$imageSize->contains($size)) {
+                if ($allowUpscale) {
+                    $imageSize = $imageSize->scale($ratio);
+                    $thumbnail->resize($imageSize, $filter);
+                }
                 $size = new Box(
                     min($imageSize->getWidth(), $size->getWidth()),
                     min($imageSize->getHeight(), $size->getHeight())
                 );
             } else {
-                $imageSize = $thumbnail->getSize()->scale($ratio);
+                $imageSize = $imageSize->scale($ratio);
                 $thumbnail->resize($imageSize, $filter);
             }
             $thumbnail->crop(new Point(
                 max(0, round(($imageSize->getWidth() - $size->getWidth()) / 2)),
                 max(0, round(($imageSize->getHeight() - $size->getHeight()) / 2))
             ), $size);
-        } else {
-            if (!$imageSize->contains($size)) {
-                $imageSize = $imageSize->scale($ratio);
-                $thumbnail->resize($imageSize, $filter);
-            } else {
-                $imageSize = $thumbnail->getSize()->scale($ratio);
-                $thumbnail->resize($imageSize, $filter);
-            }
         }
 
         return $thumbnail;
+    }
+
+    /**
+     * Check the settings argument in thumbnail() method
+     */
+    private function checkThumbnailSettings($settings)
+    {
+        // Preserve BC until version 1.0
+        if ($settings === 'inset') {
+            $settings = ImageInterface::THUMBNAIL_INSET;
+        } elseif ($settings === 'outbound') {
+            $settings = ImageInterface::THUMBNAIL_OUTBOUND;
+        }
+
+        $allSettings = ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE;
+
+        if (!is_int($settings) || ($settings & ~$allSettings)) {
+            throw new InvalidArgumentException('Invalid setting specified');
+        }
+
+        if ($settings & ImageInterface::THUMBNAIL_INSET &&
+            $settings & ImageInterface::THUMBNAIL_OUTBOUND) {
+            throw new InvalidArgumentException('Only one mode should be specified');
+        }
+
+        return $settings;
     }
 
     /**
