@@ -265,6 +265,8 @@ final class Image extends AbstractImage
             $pixel = $this->getColor($color);
 
             $this->imagick->rotateimage($pixel, $angle);
+            // Reset the image page: next operations will use the correct canvas size
+            $this->imagick->setImagePage(0, 0, 0, 0);
 
             $pixel->clear();
             $pixel->destroy();
