@@ -75,7 +75,14 @@ final class Point implements PointInterface
      */
     public function move($amount)
     {
-        return new Point($this->x + $amount, $this->y + $amount);
+    	if ($amount instanceof BoxInterface) {
+    		$amountX = $amount->getWidth();
+    		$amountY = $amount->getHeight();
+    	} else {
+    		$amountX = $amountY= (int) $amount;
+    	}
+
+    	return new Point($amountX + $this->x, $amountY + $this->y);
     }
 
     /**
