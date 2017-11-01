@@ -75,7 +75,14 @@ final class Box implements BoxInterface
      */
     public function increase($size)
     {
-        return new Box((int) $size + $this->width, (int) $size + $this->height);
+    	if ($size instanceof BoxInterface) {
+    		$sizeWidth  = $size->getWidth();
+    		$sizeHeight = $size->getHeight();
+    	} else {
+    		$sizeWidth = $sizeHeight = (int) $size;
+    	}
+    	
+    	return new Box($sizeWidth + $this->width, $sizeHeight + $this->height);
     }
 
     /**
