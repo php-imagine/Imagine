@@ -43,7 +43,12 @@ final class Drawer implements DrawerInterface
      */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $thickness = 1)
     {
-        $x      = $center->getX();
+    	if (0 === ($thickness = max(1, (int) $thickness))) {
+    		// If $thickness is 0 do nothing (the arc is not going to be drawn):
+    		return $this;
+    	}
+
+    	$x      = $center->getX();
         $y      = $center->getY();
         $width  = $size->getWidth();
         $height = $size->getHeight();
@@ -52,12 +57,23 @@ final class Drawer implements DrawerInterface
             $pixel = $this->getColor($color);
             $arc   = new \ImagickDraw();
 
-            $arc->setStrokeColor($pixel);
-            $arc->setStrokeWidth(max(1, (int) $thickness));
-            $arc->setFillColor('transparent');
-            $arc->arc($x - $width / 2, $y - $height / 2, $x + $width / 2, $y + $height / 2, $start, $end);
+            $arc->setStrokeWidth($thickness);            
+            $this->setStrokeColorOpacity($arc, $pixel)
 
-            $this->imagick->drawImage($arc);
+            	 ->setFillColorOpacity($arc, 'transparent');
+
+            $arc->arc(
+            	$x - $width / 2,
+            	$y - $height / 2,
+            	$x + $width / 2,
+            	$y + $height / 2,
+            	$start,
+            	$end
+            );
+
+            if (false === $this->imagick->drawImage($arc)) {
+            	throw new RuntimeException('Arc operation failed');
+            }
 
             $pixel->clear();
             $pixel->destroy();
@@ -76,7 +92,12 @@ final class Drawer implements DrawerInterface
      */
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        $x      = $center->getX();
+    	if ((0 === ($thickness = max(1, (int) $thickness))) && (!$fill)) {
+    		// If $thickness is 0 and the cord is not filled, do nothing (the chord is not going to be drawn):
+    		return $this;
+    	}
+
+    	$x      = $center->getX();
         $y      = $center->getY();
         $width  = $size->getWidth();
         $height = $size->getHeight();
@@ -85,19 +106,21 @@ final class Drawer implements DrawerInterface
             $pixel = $this->getColor($color);
             $chord = new \ImagickDraw();
 
-            $chord->setStrokeColor($pixel);
-            $chord->setStrokeWidth(max(1, (int) $thickness));
-
+            $chord->setStrokeWidth($thickness);
+            $this->setStrokeColorOpacity($chord, 0 === $thickness ? 'transparent' : $pixel);
+            
             if ($fill) {
-                $chord->setFillColor($pixel);
+            	$this->setFillColorOpacity($chord, $pixel);
             } else {
+            	$start = deg2rad($start);
+            	$end   = deg2rad($end);
                 $this->line(
-                    new Point(round($x + $width / 2 * cos(deg2rad($start))), round($y + $height / 2 * sin(deg2rad($start)))),
-                    new Point(round($x + $width / 2 * cos(deg2rad($end))), round($y + $height / 2 * sin(deg2rad($end)))),
+                	new Point(round($x + $width / 2 * cos($start)), round($y + $height / 2 * sin($start))),
+                	new Point(round($x + $width / 2 * cos($end)), round($y + $height / 2 * sin($end))),
                     $color
                 );
 
-                $chord->setFillColor('transparent');
+                $this->setFillColorOpacity($chord, 'transparent');
             }
 
             $chord->arc(
@@ -109,7 +132,9 @@ final class Drawer implements DrawerInterface
                 $end
             );
 
-            $this->imagick->drawImage($chord);
+            if (false === $this->imagick->drawImage($chord)) {
+            	throw new RuntimeException('Chord operation failed');
+            }
 
             $pixel->clear();
             $pixel->destroy();
@@ -122,27 +147,68 @@ final class Drawer implements DrawerInterface
 
         return $this;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function circle(PointInterface $center, $radius, ColorInterface $color, $fill = false, $thickness = 1)
+    {
+    	if ((0 === ($thickness = max(1, (int) $thickness))) && (!$fill)) {
+    		// If $thickness is 0 and the ellipse is not filled, do nothing (the ellipse is not going to be drawn):
+    		return $this;
+    	}
+    	
+    	try {
+    		$pixel  = $this->getColor($color);
+    		$circle = new \ImagickDraw();
+    		
+    		$circle->setStrokeWidth($thickness);
+    		$this->setStrokeColorOpacity($circle, 0 === $thickness ? 'transparent' : $pixel)
+    		
+    		     ->setFillColorOpacity($circle, $fill ? $pixel : 'transparent');
+    		
+    		$circle->circle(
+    			$center->getX(),
+    			$center->getY(),
+    			$center->getX() - $radius,
+    			$center->getY()
+    		);
+    		
+    		if (false === $this->imagick->drawImage($circle)) {
+    			throw new RuntimeException('Circle operation failed');
+    		}
+    		
+    		$pixel->clear();
+    		$pixel->destroy();
+    		
+    		$circle->clear();
+    		$circle->destroy();
+    	} catch (\ImagickException $e) {
+    		throw new RuntimeException('Draw circle operation failed', $e->getCode(), $e);
+    	}
+    }
 
     /**
      * {@inheritdoc}
      */
     public function ellipse(PointInterface $center, BoxInterface $size, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        $width  = $size->getWidth();
+    	if ((0 === ($thickness = max(1, (int) $thickness))) && (!$fill)) {
+    		// If $thickness is 0 and the ellipse is not filled, do nothing (the ellipse is not going to be drawn):
+    		return $this;
+    	}
+
+    	$width  = $size->getWidth();
         $height = $size->getHeight();
 
         try {
-            $pixel   = $this->getColor($color);
+        	$pixel   = $this->getColor($color);
             $ellipse = new \ImagickDraw();
 
-            $ellipse->setStrokeColor($pixel);
-            $ellipse->setStrokeWidth(max(1, (int) $thickness));
-
-            if ($fill) {
-                $ellipse->setFillColor($pixel);
-            } else {
-                $ellipse->setFillColor('transparent');
-            }
+            $ellipse->setStrokeWidth($thickness);
+            $this->setStrokeColorOpacity($ellipse, 0 === $thickness ? 'transparent' : $pixel)
+            
+                 ->setFillColorOpacity($ellipse, $fill ? $pixel : 'transparent');
 
             $ellipse->ellipse(
                 $center->getX(),
@@ -173,13 +239,20 @@ final class Drawer implements DrawerInterface
      */
     public function line(PointInterface $start, PointInterface $end, ColorInterface $color, $thickness = 1)
     {
-        try {
-            $pixel = $this->getColor($color);
+    	if (0 === ($thickness = max(1, (int) $thickness))) {
+    		// If $thickness is 0 do nothing (the line is not going to be drawn):
+    		return $this;
+    	}
+
+    	try {
+        	$pixel = $this->getColor($color);
             $line  = new \ImagickDraw();
 
-            $line->setStrokeColor($pixel);
-            $line->setStrokeWidth(max(1, (int) $thickness));
-            $line->setFillColor($pixel);
+            $line->setStrokeWidth($thickness);
+            $this->setStrokeColorOpacity($line, $pixel)
+            
+                 ->setFillColorOpacity($line, $pixel);
+
             $line->line(
                 $start->getX(),
                 $start->getY(),
@@ -187,7 +260,9 @@ final class Drawer implements DrawerInterface
                 $end->getY()
             );
 
-            $this->imagick->drawImage($line);
+            if (false === $this->imagick->drawImage($line)) {
+            	throw new RuntimeException('Line operation failed');
+            }
 
             $pixel->clear();
             $pixel->destroy();
@@ -206,6 +281,11 @@ final class Drawer implements DrawerInterface
      */
     public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
+    	if ((0 === ($thickness = max(1, (int) $thickness))) && (!$fill)) {
+    		// If $thickness is 0 and the pieSlice is not filled, do nothing (the pieSlice is not going to be drawn):
+    		return $this;
+    	}
+
         $width  = $size->getWidth();
         $height = $size->getHeight();
 
@@ -247,10 +327,13 @@ final class Drawer implements DrawerInterface
             $pixel = $this->getColor($color);
             $point = new \ImagickDraw();
 
-            $point->setFillColor($pixel);
+            $this->setFillColorOpacity($point, $pixel);
+            
             $point->point($x, $y);
 
-            $this->imagick->drawimage($point);
+            if (false === $this->imagick->drawImage($point)) {
+            	throw new RuntimeException('Point operation failed');
+            }
 
             $pixel->clear();
             $pixel->destroy();
@@ -269,7 +352,12 @@ final class Drawer implements DrawerInterface
      */
     public function polygon(array $coordinates, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        if (count($coordinates) < 3) {
+    	if ((0 === ($thickness = max(1, (int) $thickness))) && (!$fill)) {
+    		// If $thickness is 0 and the polygon is not filled, do nothing (the polygon is not going to be drawn):
+    		return $this;
+    	}
+
+    	if (count($coordinates) < 3) {
             throw new InvalidArgumentException(sprintf('Polygon must consist of at least 3 coordinates, %d given', count($coordinates)));
         }
 
@@ -281,17 +369,16 @@ final class Drawer implements DrawerInterface
             $pixel   = $this->getColor($color);
             $polygon = new \ImagickDraw();
 
-            $polygon->setStrokeColor($pixel);
-            $polygon->setStrokeWidth(max(1, (int) $thickness));
-
-            if ($fill) {
-                $polygon->setFillColor($pixel);
-            } else {
-                $polygon->setFillColor('transparent');
-            }
+            $polygon->setStrokeWidth($thickness);
+            $this->setStrokeColorOpacity($polygon, 0 === $thickness ? 'transparent' : $pixel)
+            
+                ->setFillColorOpacity($polygon, $fill ? $pixel : 'transparent');
 
             $polygon->polygon($points);
-            $this->imagick->drawImage($polygon);
+
+            if (false === $this->imagick->drawImage($polygon)) {
+            	throw new RuntimeException('Polygon operation failed');
+            }
 
             $pixel->clear();
             $pixel->destroy();
@@ -303,6 +390,48 @@ final class Drawer implements DrawerInterface
         }
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rectangle(PointInterface $leftTop, PointInterface $rightBottom, ColorInterface $color, $fill = false, $thickness = 1)
+    {
+    	if ((0 === ($thickness = max(1, (int) $thickness))) && (!$fill)) {
+    		// If $thickness is 0 and the polygon is not filled, do nothing (the polygon is not going to be drawn):
+    		return $this;
+    	}
+
+    	try {
+    		$pixel     = $this->getColor($color);
+    		$rectangle = new \ImagickDraw();
+
+    		$rectangle->setStrokeWidth($thickness);
+    		$this->setStrokeColorOpacity($rectangle, 0 === $thickness ? 'transparent' : $pixel)
+    		
+    		     ->setFillColorOpacity($rectangle, $fill ? $pixel : 'transparent');
+    		
+    		$rectangle->rectangle(
+    			$leftTop->getX(),
+    			$leftTop->getY(),
+    			$rightBottom->getX(),
+    			$rightBottom->getY()
+    		);
+
+    		if (false === $this->imagick->drawImage($rectangle)) {
+    			throw new RuntimeException('Rectangle operation failed');
+    		}
+    		
+    		$pixel->clear();
+    		$pixel->destroy();
+    		
+    		$rectangle->clear();
+    		$rectangle->destroy();
+    	} catch (\ImagickException $e) {
+    		throw new RuntimeException('Draw rectangle operation failed', $e->getCode(), $e);
+    	}
+    	
+    	return $this;    	
     }
 
     /**
@@ -326,7 +455,9 @@ final class Drawer implements DrawerInterface
             } else {
                 $text->setFontSize((int) ($font->getSize() * (96 / 72)));
             }
-            $text->setFillColor($pixel);
+
+            $this->setFillColorOpacity($text, $pixel);
+
             $text->setTextAntialias(true);
 
             $info = $this->imagick->queryFontMetrics($text, $string);
@@ -348,10 +479,12 @@ final class Drawer implements DrawerInterface
                 $string = $this->wrapText($string, $text, $angle, $width);
             }
 
-            $this->imagick->annotateImage(
+            if (false === $this->imagick->annotateImage(
                 $text, $position->getX() + $x1 + $xdiff,
                 $position->getY() + $y2 + $ydiff, $angle, $string
-            );
+            )) {
+            	throw new RuntimeException('Text operation failed');
+            }
 
             $pixel->clear();
             $pixel->destroy();
@@ -368,16 +501,52 @@ final class Drawer implements DrawerInterface
     /**
      * Gets specifically formatted color string from ColorInterface instance
      *
-     * @param ColorInterface $color
+     * @param  ColorInterface $color
      *
-     * @return string
+     * @return \ImagickPixel
      */
     private function getColor(ColorInterface $color)
     {
         $pixel = new \ImagickPixel((string) $color);
-        $pixel->setColorValue(\Imagick::COLOR_ALPHA, $color->getAlpha() / 100);
+        if (null !== $color->getAlpha()) {
+        	$pixel->setColorValue(\Imagick::COLOR_ALPHA, $color->getAlpha() / 100);
+        }
 
         return $pixel;
+    }
+    
+    /**
+     * Set color and opacity (0 if === 'transparent', 1 if !== 'transparent') of a fill
+     *
+     * @param  \ImagickDraw         $draw
+     * @param  string|\ImagickPixel $pixel
+     *
+     * @return DrawerInterface
+     */
+    private function setFillColorOpacity(\ImagickDraw $draw, $pixel)
+    {
+    	$draw->setFillColor($pixel);
+    	// Ensure that the stroke is visible:
+    	$draw->setFillOpacity('transparent' === $pixel ? 0 : 1);
+    	
+    	return $this;
+    }
+    
+    /**
+     * Set color and opacity (0 if === 'transparent', 1 if !== 'transparent') of a stroke
+     *
+     * @param  \ImagickDraw         $draw
+     * @param  string|\ImagickPixel $pixel
+     *
+     * @return DrawerInterface
+     */
+    private function setStrokeColorOpacity(\ImagickDraw $draw, $pixel)
+    {
+    	$draw->setStrokeColor($pixel);
+    	// Ensure that the stroke is visible:
+    	$draw->setStrokeOpacity('transparent' === $pixel ? 0 : 1);
+    	
+    	return $this;
     }
 
     /**
