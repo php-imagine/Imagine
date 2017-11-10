@@ -42,7 +42,8 @@ interface PointInterface
     /**
      * Returns another point, moved by a given amount from current coordinates
      *
-     * @param  integer        $amount
+     * @param  integer|BoxInterface $amount
+     * 
      * @return ImageInterface
      */
     public function move($amount);

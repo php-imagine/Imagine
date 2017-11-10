@@ -64,7 +64,14 @@ final class Center implements PointInterface
      */
     public function move($amount)
     {
-        return new OriginalPoint($this->getX() + $amount, $this->getY() + $amount);
+    	if ($amount instanceof BoxInterface) {
+    		$amountX = $amount->getWidth();
+    		$amountY = $amount->getHeight();
+    	} else {
+    		$amountX = $amountY= (int) $amount;
+    	}
+
+    	return new OriginalPoint($this->getX() + $amountX, $this->getY() + $amountY);
     }
 
     /**

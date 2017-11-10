@@ -57,6 +57,21 @@ interface DrawerInterface
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1);
 
     /**
+     * Draws and circle with center at the given x, y coordinates, and given radius 
+     *
+     * @param PointInterface $center
+     * @param integer        $radius
+     * @param ColorInterface $color
+     * @param Boolean        $fill
+     * @param integer        $thickness
+     *
+     * @throws RuntimeException
+     *
+     * @return DrawerInterface
+     */
+    public function circle(PointInterface $center, $radius, ColorInterface $color, $fill = false, $thickness = 1);
+
+    /**
      * Draws and ellipse with center at the given x, y coordinates, and given
      * width and height
      *
@@ -128,6 +143,21 @@ interface DrawerInterface
      * @return DrawerInterface
      */
     public function polygon(array $coordinates, ColorInterface $color, $fill = false, $thickness = 1);
+    
+    /**
+     * Draws a rectangle from left, top(x, y) to right, bottom(x, y) coordinates
+     *
+     * @param PointInterface $leftTop
+     * @param PointInterface $rightBottom
+     * @param ColorInterface $color
+     * @param Boolean        $fill
+     * @param integer        $thickness
+     *
+     * @throws RuntimeException
+     *
+     * @return DrawerInterface
+     */
+    public function rectangle(PointInterface $leftTop, PointInterface $rightBottom, ColorInterface $color, $fill = false, $thickness = 1);
 
     /**
      * Annotates image with specified text at a given position starting on the

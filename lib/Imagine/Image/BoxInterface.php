@@ -42,7 +42,7 @@ interface BoxInterface
     /**
      * Creates new BoxInterface, adding given size to both sides
      *
-     * @param integer $size
+     * @param integer|BoxInterface $size
      *
      * @return BoxInterface
      */
@@ -53,6 +53,7 @@ interface BoxInterface
      * start position defaults to top left corner xy(0,0)
      *
      * @param BoxInterface   $box
+     * 
      * @param PointInterface $start
      *
      * @return Boolean
