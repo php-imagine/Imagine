@@ -71,7 +71,7 @@ final class Center implements PointInterface
     		$amountX = $amountY= (int) $amount;
     	}
 
-    	return new Point($amountX + $this->x, $amountY + $this->y);
+    	return new OriginalPoint($amountX + $this->x, $amountY + $this->y);
     }
 
     /**
