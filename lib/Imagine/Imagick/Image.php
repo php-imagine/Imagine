@@ -694,6 +694,9 @@ final class Image extends AbstractImage
             $image->setImageCompressionQuality($options['webp_quality']);
         }
 
+        if (isset($options['webp_lossless']) && in_array($format, array('webp'))) {
+            $image->setOption('webp:lossless', $options['webp_lossless']);
+        }
 
         if ((isset($options['png_compression_level']) || isset($options['png_compression_filter'])) && $format === 'png') {
             // first digit: compression level (default: 7)
