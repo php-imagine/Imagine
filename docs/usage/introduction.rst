@@ -14,7 +14,7 @@ The recommended way to install Imagine is through `Composer`_.
 Composer is a dependency management library for PHP.
 
 Here is an example of composer project configuration that requires imagine
-version 0.4.
+version 0.5.
 
 .. code-block:: json
 
