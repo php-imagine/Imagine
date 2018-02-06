@@ -25,6 +25,20 @@ use Imagine\Image\Palette\Color\ColorInterface;
  */
 class Autorotate implements FilterInterface
 {
+    /**
+     * Image transformation: flip vertically.
+     *
+     * @var string
+     */
+    const FLIP_VERTICALLY = 'V';
+
+    /**
+     * Image transformation: flip horizontally.
+     *
+     * @var string
+     */
+    const FLIP_HORIZONTALLY = 'H';
+
     private $color;
 
     /**
@@ -40,40 +54,60 @@ class Autorotate implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        $metadata = $image->metadata();
+        foreach ($this->getTransformations($image) as $transformation) {
+            if ($transformation === self::FLIP_HORIZONTALLY) {
+                $image->flipHorizontally();
+            } elseif ($transformation === self::FLIP_VERTICALLY) {
+                $image->flipVertically();
+            } elseif (is_int($transformation)) {
+                $image->rotate($transformation, $this->getColor($image));
+            }
+        }
 
+        return $image;
+    }
+
+    /**
+     * Get the transformations.
+     *
+     * @return array An array containing Autorotate::FLIP_VERTICALLY, Autorotate::FLIP_HORIZONTALLY, rotation degrees.
+     */
+    public function getTransformations(ImageInterface $image)
+    {
+        $transformations = [];
+        $metadata = $image->metadata();
         switch (isset($metadata['ifd0.Orientation']) ? $metadata['ifd0.Orientation'] : null) {
             case 1: // top-left
                 break;
             case 2: // top-right
-                $image->flipHorizontally();
+                $transformations[] = self::FLIP_HORIZONTALLY;
                 break;
             case 3: // bottom-right
-                $image->rotate(180, $this->getColor($image));
+                $transformations[] = 180;
                 break;
             case 4: // bottom-left
-                $image->flipHorizontally();
-                $image->rotate(180, $this->getColor($image));
+                $transformations[] = self::FLIP_HORIZONTALLY;
+                $transformations[] = 180;
                 break;
             case 5: // left-top
-                $image->flipHorizontally();
-                $image->rotate(-90, $this->getColor($image));
+                $transformations[] = self::FLIP_HORIZONTALLY;
+                $transformations[] = -90;
                 break;
             case 6: // right-top
-                $image->rotate(90, $this->getColor($image));
+                $transformations[] = 90;
                 break;
             case 7: // right-bottom
-                $image->flipHorizontally();
-                $image->rotate(90, $this->getColor($image));
+                $transformations[] = self::FLIP_HORIZONTALLY;
+                $transformations[] = 90;
                 break;
             case 8: // left-bottom
-                $image->rotate(-90, $this->getColor($image));
+                $transformations[] = -90;
                 break;
             default: // Invalid orientation
                 break;
         }
 
-        return $image;
+        return $transformations;
     }
 
     private function getColor(ImageInterface $image)
