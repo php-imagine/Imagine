@@ -70,7 +70,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
     {
         $invalidResource = __DIR__.'/path/that/does/not/exist';
 
-        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', sprintf('File %s does not exist.', $invalidResource));
+        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\InvalidArgumentException', sprintf('File %s does not exist.', $invalidResource));
         $this->getImagine()->open($invalidResource);
     }
 
@@ -78,7 +78,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
     {
         $source = 'tests/Imagine/Fixtures/invalid-image.jpg';
 
-        $this->setExpectedException('Imagine\Exception\RuntimeException', sprintf('Unable to open image %s', $source));
+        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\RuntimeException', sprintf('Unable to open image %s', $source));
         $this->getImagine()->open($source);
     }
 

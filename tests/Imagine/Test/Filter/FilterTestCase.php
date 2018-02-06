@@ -11,7 +11,7 @@
 
 namespace Imagine\Test\Filter;
 
-abstract class FilterTestCase extends \PHPUnit_Framework_TestCase
+abstract class FilterTestCase extends \PHPUnit\Framework\TestCase
 {
     protected function getImage()
     {

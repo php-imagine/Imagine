@@ -15,7 +15,7 @@ use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
 
-class GdTransparentGifHandlingTest extends \PHPUnit_Framework_TestCase
+class GdTransparentGifHandlingTest extends \PHPUnit\Framework\TestCase
 {
     private function getImagine()
     {
