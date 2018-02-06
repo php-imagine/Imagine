@@ -13,7 +13,7 @@ namespace Imagine\Test;
 
 use Imagine\Test\Constraint\IsImageEqual;
 
-class ImagineTestCase extends \PHPUnit_Framework_TestCase
+class ImagineTestCase extends \PHPUnit\Framework\TestCase
 {
     const HTTP_IMAGE = 'http://imagine.readthedocs.org/en/latest/_static/logo.jpg';
 

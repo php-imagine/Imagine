@@ -16,7 +16,7 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
 
-class BoxTest extends \PHPUnit_Framework_TestCase
+class BoxTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @covers Imagine\Image\Box::getWidth
