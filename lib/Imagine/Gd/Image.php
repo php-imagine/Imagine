@@ -275,20 +275,24 @@ final class Image extends AbstractImage
      */
     final public function flipHorizontally()
     {
-        $size   = $this->getSize();
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-        $dest   = $this->createImage($size, 'flip');
-
-        for ($i = 0; $i < $width; $i++) {
-            if (false === imagecopy($dest, $this->resource, $i, 0, ($width - 1) - $i, 0, 1, $height)) {
-                throw new RuntimeException('Horizontal flip operation failed');
+        if (function_exists('imageflip')) {
+            imageflip($this->resource, IMG_FLIP_HORIZONTAL);
+        } else {
+            $size   = $this->getSize();
+            $width  = $size->getWidth();
+            $height = $size->getHeight();
+            $dest   = $this->createImage($size, 'flip');
+    
+            for ($i = 0; $i < $width; $i++) {
+                if (false === imagecopy($dest, $this->resource, $i, 0, ($width - 1) - $i, 0, 1, $height)) {
+                    throw new RuntimeException('Horizontal flip operation failed');
+                }
             }
+    
+            imagedestroy($this->resource);
+    
+            $this->resource = $dest;
         }
-
-        imagedestroy($this->resource);
-
-        $this->resource = $dest;
 
         return $this;
     }
@@ -300,20 +304,24 @@ final class Image extends AbstractImage
      */
     final public function flipVertically()
     {
-        $size   = $this->getSize();
-        $width  = $size->getWidth();
-        $height = $size->getHeight();
-        $dest   = $this->createImage($size, 'flip');
-
-        for ($i = 0; $i < $height; $i++) {
-            if (false === imagecopy($dest, $this->resource, 0, $i, 0, ($height - 1) - $i, $width, 1)) {
-                throw new RuntimeException('Vertical flip operation failed');
+        if (function_exists('imageflip')) {
+            imageflip($this->resource, IMG_FLIP_VERTICAL);
+        } else {
+            $size   = $this->getSize();
+            $width  = $size->getWidth();
+            $height = $size->getHeight();
+            $dest   = $this->createImage($size, 'flip');
+    
+            for ($i = 0; $i < $height; $i++) {
+                if (false === imagecopy($dest, $this->resource, 0, $i, 0, ($height - 1) - $i, $width, 1)) {
+                    throw new RuntimeException('Vertical flip operation failed');
+                }
             }
+    
+            imagedestroy($this->resource);
+    
+            $this->resource = $dest;
         }
-
-        imagedestroy($this->resource);
-
-        $this->resource = $dest;
 
         return $this;
     }
