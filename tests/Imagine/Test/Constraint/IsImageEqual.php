@@ -15,6 +15,10 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\Histogram\Bucket;
 use Imagine\Image\Histogram\Range;
 
+if (!class_exists('PHPUnit_Framework_Constraint')) {
+    class_alias('\PHPUnit\Framework\Constraint\Constraint', 'PHPUnit_Framework_Constraint');
+}
+
 class IsImageEqual extends \PHPUnit_Framework_Constraint
 {
     /**

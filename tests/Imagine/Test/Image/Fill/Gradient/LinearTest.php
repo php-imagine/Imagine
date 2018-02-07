@@ -15,7 +15,7 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\PointInterface;
 
-abstract class LinearTest extends \PHPUnit_Framework_TestCase
+abstract class LinearTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Imagine\Image\Fill\FillInterface

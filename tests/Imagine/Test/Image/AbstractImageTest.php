@@ -138,7 +138,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testSaveWithoutPathFileFromImageCreationShouldFail()
     {
         $image = $this->getImagine()->create(new Box(20, 20));
-        $this->setExpectedException('Imagine\Exception\RuntimeException');
+        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\RuntimeException');
         $image->save();
     }
 
@@ -230,7 +230,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $factory = $this->getImagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
-        $this->setExpectedException('Imagine\Exception\InvalidArgumentException');
+        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\InvalidArgumentException');
         $image->resize(new Box(30, 30), 'no filter');
     }
 
@@ -270,7 +270,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
-        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', 'Invalid mode specified');
+        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\InvalidArgumentException', 'Invalid mode specified');
         $image->thumbnail(new Box(20, 20), "boumboum");
     }
 

@@ -24,7 +24,7 @@
     },
     "require-dev": {
         "sami/sami": "^3.3",
-        "symfony/phpunit-bridge": "^3.2"
+        "symfony/phpunit-bridge": "^4"
     },
     "suggest": {
         "ext-gd": "to use the GD implementation",
