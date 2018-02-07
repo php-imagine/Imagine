@@ -12,7 +12,7 @@ env:
   - IMAGINE_DRIVER=gmagick
 
 before_install:
-  - phpenv config-rm xdebug.ini
+  - phpenv config-rm xdebug.ini || true
 
 install:
   - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
