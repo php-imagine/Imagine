@@ -5,7 +5,7 @@ namespace Imagine\Test\Issues;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
 
-class Issue59Test extends \PHPUnit_Framework_TestCase
+class Issue59Test extends \PHPUnit\Framework\TestCase
 {
     private function getImagine()
     {

@@ -16,7 +16,7 @@ use Imagine\Image\Point;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 
-abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractEffectsTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testNegate()

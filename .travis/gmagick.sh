@@ -3,7 +3,7 @@
 set -xe
 
 GRAPHICSMAGIC_VERSION="1.3.23"
-if [ $TRAVIS_PHP_VERSION = '7.0' ] || [ $TRAVIS_PHP_VERSION = '7.1' ]
+if [ ${TRAVIS_PHP_VERSION:0:1} = '7' ] || [ $TRAVIS_PHP_VERSION = 'nightly' ]
 then
   GMAGICK_VERSION="2.0.4RC1"
 else

@@ -6,7 +6,7 @@ use Imagine\Imagick\Imagine as ImagickImagine;
 use Imagine\Gmagick\Imagine as GmagickImagine;
 use Imagine\Exception\RuntimeException;
 
-class Issue131Test extends \PHPUnit_Framework_TestCase
+class Issue131Test extends \PHPUnit\Framework\TestCase
 {
 
     private function getTemporaryDir()

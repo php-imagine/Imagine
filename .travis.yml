@@ -1,30 +1,47 @@
+sudo: true
+
 language: php
 
 cache:
   directories:
-  - cache
+    - $HOME/.composer/cache
+    - cache
 
 env:
   - IMAGINE_DRIVER=imagick
   - IMAGINE_DRIVER=gmagick
 
 before_install:
-  - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+  - phpenv config-rm xdebug.ini || true
 
 install:
   - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
   - sudo apt-get install -y libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev
-  - sh -e -c " if [ '$IMAGINE_DRIVER' = 'imagick' ]; then bash ./.travis/imagick.sh; fi"
-  - sh -e -c " if [ '$IMAGINE_DRIVER' = 'gmagick' ]; then bash ./.travis/gmagick.sh; fi"
+  - if [[ $IMAGINE_DRIVER = imagick ]]; then ./.travis/imagick.sh; fi
+  - if [[ $IMAGINE_DRIVER = gmagick ]]; then ./.travis/gmagick.sh; fi
   - composer install
 
 script:
   - ./bin/simple-phpunit
 
 php:
-  - 5.3
   - 5.4
   - 5.5
   - 5.6
   - 7.0
   - 7.1
+  - 7.2
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
+  include:
+    - php: 5.3
+      dist: precise
+      env:
+        - IMAGINE_DRIVER=imagick
+    - php: 5.3
+      dist: precise
+      env:
+        - IMAGINE_DRIVER=gmagick

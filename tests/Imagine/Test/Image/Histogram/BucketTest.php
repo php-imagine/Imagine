@@ -14,7 +14,7 @@ namespace Imagine\Test\Image\Histogram;
 use Imagine\Image\Histogram\Bucket;
 use Imagine\Image\Histogram\Range;
 
-class BucketTest extends \PHPUnit_Framework_TestCase
+class BucketTest extends \PHPUnit\Framework\TestCase
 {
     private $bucket;
 

@@ -18,7 +18,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Image\ImagineInterface;
 
-abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractLayersTest extends \PHPUnit\Framework\TestCase
 {
     public function testMerge()
     {
