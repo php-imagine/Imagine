@@ -690,6 +690,14 @@ final class Image extends AbstractImage
             $image->setImageCompressionQuality($options['jpeg_quality']);
         }
 
+        if (isset($options['webp_quality']) && in_array($format, array('webp'))) {
+            $image->setImageCompressionQuality($options['webp_quality']);
+        }
+
+        if (isset($options['webp_lossless']) && in_array($format, array('webp'))) {
+            $image->setOption('webp:lossless', $options['webp_lossless']);
+        }
+
         if ((isset($options['png_compression_level']) || isset($options['png_compression_filter'])) && $format === 'png') {
             // first digit: compression level (default: 7)
             if (isset($options['png_compression_level'])) {
@@ -803,6 +811,7 @@ final class Image extends AbstractImage
             'png'  => 'image/png',
             'wbmp' => 'image/vnd.wap.wbmp',
             'xbm'  => 'image/xbm',
+            'webp' => 'image/webp',
         );
 
         if (!isset($mimeTypes[$format])) {
