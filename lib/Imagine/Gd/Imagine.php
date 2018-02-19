@@ -151,10 +151,11 @@ final class Imagine extends AbstractImagine
                 $truecolor   = imagecreatetruecolor($width, $height);
                 $transparent = imagecolorallocatealpha($truecolor, 255, 255, 255, 127);
 
-                imagefill($truecolor, 0, 0, $transparent);
-                imagecolortransparent($truecolor, $transparent);
+                imagealphablending($truecolor, false);
+                imagefilledrectangle($truecolor, 0, 0, $width, $height, $transparent);
+                imagealphablending($truecolor, false);
 
-                imagecopymerge($truecolor, $resource, 0, 0, 0, 0, $width, $height, 100);
+                imagecopy($truecolor, $resource, 0, 0, 0, 0, $width, $height);
 
                 imagedestroy($resource);
                 $resource = $truecolor;
