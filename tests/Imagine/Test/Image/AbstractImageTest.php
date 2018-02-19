@@ -744,6 +744,30 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals(10, $actualColor->getAlpha());
     }
 
+    /**
+     * @dataProvider imageAlphaLoadedProvider
+     */
+    public function testImageAlphaLoaded($path)
+    {
+        $image = $this->getImagine()->open('tests/Imagine/Fixtures/alpha/' . $path);
+        $size = $image->getSize();
+        $this->assertSame('5x1', "{$size->getWidth()}x{$size->getHeight()}", 'Checking size of loaded image');
+        $this->assertLessThanOrEqual(2, abs($image->getColorAt(new Point(0, 0))->getAlpha() - 0), 'Checking pixel 1 has an alpha of 0 (or near it)');
+        $this->assertLessThanOrEqual(2, abs($image->getColorAt(new Point(1, 0))->getAlpha() - 25), 'Checking pixel 2 has an alpha of 25 (or near it)');
+        $this->assertLessThanOrEqual(2, abs($image->getColorAt(new Point(2, 0))->getAlpha() - 50), 'Checking pixel 3 has an alpha of 50 (or near it)');
+        $this->assertLessThanOrEqual(2, abs($image->getColorAt(new Point(3, 0))->getAlpha() - 75), 'Checking pixel 4 has an alpha of 75 (or near it)');
+        $this->assertLessThanOrEqual(2, abs($image->getColorAt(new Point(4, 0))->getAlpha() - 100), 'Checking pixel 5 has an alpha of 100 (or near it)');
+    }
+
+    public function imageAlphaLoadedProvider()
+    {
+        return array(
+            array('grayscale-alpha.png'),
+            array('palette.png'),
+            array('truecolor-alpha.png'),
+        );
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()
