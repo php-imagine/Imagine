@@ -45,10 +45,10 @@ final class Image extends AbstractImage
      */
     private $palette;
 
-    private static $colorspaceMapping = array(
-        PaletteInterface::PALETTE_CMYK => \Gmagick::COLORSPACE_CMYK,
-        PaletteInterface::PALETTE_RGB  => \Gmagick::COLORSPACE_RGB,
-    );
+    /**
+     * @var array|null
+     */
+    private static $colorspaceMapping = null;
 
     /**
      * Constructs a new Image instance
@@ -657,7 +657,8 @@ final class Image extends AbstractImage
      */
     public function usePalette(PaletteInterface $palette)
     {
-        if (!isset(static::$colorspaceMapping[$palette->name()])) {
+        $colorspaceMapping = self::getColorspaceMapping();
+        if (!isset($colorspaceMapping[$palette->name()])) {
             throw new InvalidArgumentException(sprintf('The palette %s is not supported by Gmagick driver',$palette->name()));
         }
 
@@ -789,11 +790,28 @@ final class Image extends AbstractImage
      */
     private function setColorspace(PaletteInterface $palette)
     {
-        if (!isset(static::$colorspaceMapping[$palette->name()])) {
+        $colorspaceMapping = self::getColorspaceMapping();
+        if (!isset($colorspaceMapping[$palette->name()])) {
             throw new InvalidArgumentException(sprintf('The palette %s is not supported by Gmagick driver', $palette->name()));
         }
 
-        $this->gmagick->setimagecolorspace(static::$colorspaceMapping[$palette->name()]);
+        $this->gmagick->setimagecolorspace($colorspaceMapping[$palette->name()]);
         $this->palette = $palette;
+    }
+
+    private static function getColorspaceMapping()
+    {
+        if (self::$colorspaceMapping === null) {
+            $csm = array(
+                PaletteInterface::PALETTE_CMYK => \Gmagick::COLORSPACE_CMYK,
+                PaletteInterface::PALETTE_RGB  => \Gmagick::COLORSPACE_RGB,
+            );
+            if (defined('Gmagick::COLORSPACE_GRAY')) {
+                $csm[PaletteInterface::PALETTE_GRAYSCALE] = \Gmagick::COLORSPACE_GRAY;
+            }
+            self::$colorspaceMapping = $csm;
+        }
+
+        return self::$colorspaceMapping;
     }
 }
