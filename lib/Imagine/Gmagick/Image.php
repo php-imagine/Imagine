@@ -598,14 +598,20 @@ final class Image extends AbstractImage
             ColorInterface::COLOR_GRAY    => \Gmagick::COLOR_RED,
         );
 
+        $alpha = null;
         if ($this->palette->supportsAlpha()) {
-            try {
-                $alpha = (int) round($pixel->getcolorvalue(\Gmagick::COLOR_ALPHA) * 100);
-            } catch (\GmagickPixelException $e) {
-                $alpha = null;
+            if ($alpha === null && defined('Gmagick::COLOR_ALPHA')) {
+                try {
+                    $alpha = (int) round($pixel->getcolorvalue(\Gmagick::COLOR_ALPHA) * 100);
+                } catch (\GmagickPixelException $e) {
+                }
             }
-        } else {
-            $alpha = null;
+            if ($alpha === null && defined('Gmagick::COLOR_OPACITY')) {
+                try {
+                    $alpha = (int) round(100 - $pixel->getcolorvalue(\Gmagick::COLOR_OPACITY) * 100);
+                } catch (\GmagickPixelException $e) {
+                }
+            }
         }
 
         $palette = $this->palette();
