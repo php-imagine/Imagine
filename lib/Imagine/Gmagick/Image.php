@@ -560,7 +560,8 @@ final class Image extends AbstractImage
         try {
             $cropped   = clone $this->gmagick;
             $histogram = $cropped
-                ->cropImage(1, 1, $point->getX(), $point->getY())
+                ->rollimage(-$point->getX(), -$point->getY())
+                ->cropImage(1, 1, 0, 0)
                 ->getImageHistogram();
         } catch (\GmagickException $e) {
             throw new RuntimeException('Unable to get the pixel', $e->getCode(), $e);
