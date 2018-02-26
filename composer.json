@@ -20,7 +20,7 @@
         "bin-dir": "bin"
     },
     "require": {
-        "php": ">=5.3.2"
+        "php": ">=5.6"
     },
     "require-dev": {
         "sami/sami": "^3.3",
