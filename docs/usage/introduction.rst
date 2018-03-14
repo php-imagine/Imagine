@@ -136,8 +136,20 @@ You can optionally specify the fill color for the new image, which defaults to o
 
    $palette = new Imagine\Image\Palette\RGB();
    $size  = new Imagine\Image\Box(400, 300);
-   $color = $palette->color('#000', 100);
+   $color = $palette->color('#000', 0);
    $image = $imagine->create($size, $color);
+   
+To use a solid background color, for example orange, provide an alpha of 100.
+
+.. code-block:: php
+
+   <?php
+
+   $palette = new Imagine\Image\Palette\RGB();
+   $size  = new Imagine\Image\Box(400, 300);
+   $color = $palette->color('#ff9900', 100);
+   $image = $imagine->create($size, $color);
+
 
 Save Images
 +++++++++++
