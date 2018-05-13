@@ -287,10 +287,6 @@ final class Image extends AbstractImage
             $image->setCompressionQuality($options['webp_quality']);
         }
 
-        if (isset($options['webp_lossless']) && in_array($format, array('webp'))) {
-            throw new NotSupportedException('Gmagick does not support webp_lossless option');
-        }
-
         if ((isset($options['png_compression_level']) || isset($options['png_compression_filter'])) && $format === 'png') {
             // first digit: compression level (default: 7)
             if (isset($options['png_compression_level'])) {
