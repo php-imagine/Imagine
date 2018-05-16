@@ -196,7 +196,10 @@ final class Image extends AbstractImage
     final public function rotate($angle, ColorInterface $background = null)
     {
         $color = $background ? $background : $this->palette->color('fff');
-        $resource = imagerotate($this->resource, -1 * $angle, $this->getColor($color));
+        imagealphablending($this->resource, true);
+        $resource = imagerotate($this->resource, -1 * $angle, imageColorAllocateAlpha($this->resource, 0, 0, 0, 127));
+        imagealphablending($resource, false);
+        imagesavealpha($resource, true);
 
         if (false === $resource) {
             throw new RuntimeException('Image rotate operation failed');
