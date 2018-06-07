@@ -53,6 +53,7 @@ final class Imagine extends AbstractImagine
         try {
             $imagick = new \Imagick($path);
             $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readFile($path));
+            $imagick->clear();
         } catch (\Exception $e) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
         }
