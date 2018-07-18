@@ -217,7 +217,7 @@ you can avoid this by explicitly set this option to ``false`` when saving :
            ->save('/path/to/animated-resized.gif', array('flatten' => false));
 
 .. TIP::
-   You **SHOULD** not flatten image only for animated gif and png images.
+   You **SHOULD NOT** flatten image only for animated gif and png images.
 
 Of course, you can combine options :
 
