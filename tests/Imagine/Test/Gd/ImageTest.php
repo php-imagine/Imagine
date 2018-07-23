@@ -128,7 +128,16 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('GD driver only supports 72 dpi resolution');
     }
 
+    public function testJpegSamplingFactors()
+    {
+        $this->markTestSkipped('GD driver does not support JPEG sampling factors');
+    }
+
     protected function getImageResolution(ImageInterface $image)
+    {
+    }
+
+    protected function getSamplingFactors(ImageInterface $image)
     {
     }
 }

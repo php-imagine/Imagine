@@ -140,4 +140,9 @@ class ImageTest extends AbstractImageTest
     {
         return $image->getImagick()->getImageResolution();
     }
+
+    protected function getSamplingFactors(ImageInterface $image)
+    {
+        return $image->getImagick()->getSamplingFactors();
+    }
 }

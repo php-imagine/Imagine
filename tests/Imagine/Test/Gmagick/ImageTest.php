@@ -93,4 +93,9 @@ class ImageTest extends AbstractImageTest
     {
         return $image->getGmagick()->getimageresolution();
     }
+
+    protected function getSamplingFactors(ImageInterface $image)
+    {
+        return $image->getGmagick()->getSamplingFactors();
+    }
 }

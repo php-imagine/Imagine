@@ -696,6 +696,14 @@ final class Image extends AbstractImage
                 if (isset($options['jpeg_quality'])) {
                     $image->setImageCompressionQuality($options['jpeg_quality']);
                 }
+                if (isset($options['jpeg_sampling_factors'])) {
+                    if (!is_array($options['jpeg_sampling_factors']) || \count($options['jpeg_sampling_factors']) < 1) {
+                        throw new InvalidArgumentException('jpeg_sampling_factors option should be an array of integers');
+                    }
+                    $image->setSamplingFactors(array_map(function($factor) {
+                        return (int) $factor;
+                    }, $options['jpeg_sampling_factors']));
+                }
                 break;
             case 'png':
                 if (!isset($options['png_compression_level'])) {
