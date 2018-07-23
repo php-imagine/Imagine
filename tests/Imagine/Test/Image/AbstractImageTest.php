@@ -778,13 +778,13 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $image = $this->getImagine()->open('tests/Imagine/Fixtures/large.jpg');
 
-        $samplings = [
-            [1, 1, 1],
-            [2, 1, 1],
-        ];
+        $samplings = array(
+            array(1, 1, 1),
+            array(2, 1, 1),
+        );
 
         foreach($samplings as $sampling) {
-            $image->save(__DIR__ . '/tmp.jpg', ['jpeg_sampling_factors' => $sampling]);
+            $image->save(__DIR__ . '/tmp.jpg', array('jpeg_sampling_factors' => $sampling));
             $this->assertEquals($sampling, $this->getSamplingFactors($image));
         }
 
