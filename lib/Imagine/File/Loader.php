@@ -69,6 +69,9 @@ class Loader implements LoaderInterface
             throw new InvalidArgumentException('$path is empty');
         }
         $this->isUrl = filter_var($this->path, FILTER_VALIDATE_URL);
+        if (!$this->isUrl) {
+            $this->checkLocalFile();
+        }
     }
 
     /**
@@ -140,17 +143,27 @@ class Loader implements LoaderInterface
      */
     protected function readLocalFile()
     {
-        if (!is_file($this->path)) {
-            throw new InvalidArgumentException(sprintf('The file "%s" does not exist.', $this->path));
-        }
-        if (!is_readable($this->path)) {
-            throw new InvalidArgumentException(sprintf('The file "%s" is not readable.', $this->path));
-        }
+        $this->checkLocalFile();
         $data = @file_get_contents($this->path);
         if ($data === false) {
-            throw new InvalidArgumentException(sprintf('Failed to read from file "%s".', $this->path));
+            throw new InvalidArgumentException(sprintf('Failed to read from file %s.', $this->path));
         }
         return $data;
+    }
+
+    /**
+     * Check that the file exists and it's readable.
+     *
+     * @throws \Imagine\Exception\InvalidArgumentException
+     */
+    protected function checkLocalFile()
+    {
+        if (!is_file($this->path)) {
+            throw new InvalidArgumentException(sprintf('File %s does not exist.', $this->path));
+        }
+        if (!is_readable($this->path)) {
+            throw new InvalidArgumentException(sprintf('File %s is not readable.', $this->path));
+        }
     }
 
     /**
@@ -222,7 +235,7 @@ class Loader implements LoaderInterface
         $responseInfo = curl_getinfo($curl);
         curl_close($curl);
         if ($responseInfo['http_code'] == 404) {
-            throw new InvalidArgumentException(sprintf('The file "%s" does not exist.', $this->path));
+            throw new InvalidArgumentException(sprintf('File %s does not exist.', $this->path));
         }
         if ($responseInfo['http_code'] < 200 || $responseInfo['http_code'] >= 300) {
             throw new InvalidArgumentException(sprintf('Failed to download "%s": %s', $this->path, $responseInfo['http_code']));

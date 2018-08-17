@@ -62,7 +62,7 @@ final class Imagine extends AbstractImagine
                 $imagick->readImageBlob($loader->getData());
                 $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readData($loader->getData(), $loader));
             }
-        } catch (\Exception $e) {
+        } catch (\ImagickException $e) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
         }
 
