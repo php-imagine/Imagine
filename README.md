@@ -51,3 +51,8 @@ Some of the ideas for upcoming filters:
 ## Articles ##
 
  - [Image Processing with Imagine](http://www.phparch.com/2011/03/image-processing-with-imagine)
+
+## Contributing ##
+
+New pull requests should be based on the `develop` branch.
+The `master` branch is the stable branch: it usually matches the latest a release but in can be a bit ahead.
