@@ -74,7 +74,7 @@ class Autorotate implements FilterInterface
      */
     public function getTransformations(ImageInterface $image)
     {
-        $transformations = [];
+        $transformations = array();
         $metadata = $image->metadata();
         switch (isset($metadata['ifd0.Orientation']) ? $metadata['ifd0.Orientation'] : null) {
             case 1: // top-left
