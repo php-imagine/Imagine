@@ -19,7 +19,6 @@ use Imagine\Image\Point\Center;
 use Imagine\Test\ImagineTestCase;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Profile;
-use Imagine\Image\ImagineInterface;
 
 abstract class AbstractImageTest extends ImagineTestCase
 {

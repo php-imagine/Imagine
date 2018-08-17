@@ -12,7 +12,6 @@
 namespace Imagine\Test\Image;
 
 use Imagine\Image\Box;
-use Imagine\Image\Color;
 use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
 use Imagine\Image\Palette\RGB;

@@ -20,8 +20,8 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
     /**
      * Asserts that two images are equal using color histogram comparison method
      *
-     * @param ImageInterface $expected
-     * @param ImageInterface $actual
+     * @param \Imagine\Image\ImageInterface $expected
+     * @param \Imagine\Image\ImageInterface $actual
      * @param string         $message
      * @param float          $delta
      * @param integer        $buckets
