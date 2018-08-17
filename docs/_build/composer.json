@@ -1,0 +1,20 @@
+{
+    "require": {
+        "sami/sami": "^4"
+    },
+    "archive": {
+        "exclude": [
+            "/.*",
+            "/tests",
+            "/vendor",
+            "/bin",
+            "docs/_build",
+            "Imagine-*.tgz",
+            "imagine-*.phar",
+            "composer.phar"
+        ]
+    },
+    "scripts": {
+    	"update-docs": "sami.php.bat update sami_configuration.php -v"
+    }
+}
