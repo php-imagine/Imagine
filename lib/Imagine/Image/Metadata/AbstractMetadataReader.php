@@ -12,6 +12,7 @@
 namespace Imagine\Image\Metadata;
 
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\File\LoaderInterface;
 
 abstract class AbstractMetadataReader implements MetadataReaderInterface
 {
@@ -58,7 +59,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     /**
      * Gets the URI from a stream resource
      *
-     * @param resource $resource
+     * @param resource|\Imagine\File\LoaderInterface $resource
      *
      * @return string|null The URI f ava
      */
@@ -66,7 +67,12 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     {
         $metadata = array();
 
-        if (false !== $data = @stream_get_meta_data($resource)) {
+        if ($resource instanceof LoaderInterface) {
+            $metadata['uri'] = $resource->getPath();
+            if ($resource->isLocalFile()) {
+                $metadata['filepath'] = realpath($resource->getPath());
+            }
+        } elseif (false !== $data = @stream_get_meta_data($resource)) {
             $metadata['uri'] = $data['uri'];
             if (stream_is_local($resource)) {
                 $metadata['filepath'] = realpath($data['uri']);

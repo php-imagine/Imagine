@@ -70,7 +70,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
     {
         $invalidResource = __DIR__.'/path/that/does/not/exist';
 
-        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\InvalidArgumentException', sprintf('File %s does not exist.', $invalidResource));
+        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\InvalidArgumentException', sprintf('The file "%s" does not exist.', $invalidResource));
         $this->getImagine()->open($invalidResource);
     }
 
@@ -116,7 +116,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldCreateImageFromStreamWithMetadata()
     {
-        $source = 'http://imagine.readthedocs.org/en/latest/_static/exit-90-test.jpg';
+        $source = 'https://imagine.readthedocs.org/en/latest/_static/exit-90-test.jpg';
         $resource = fopen($source, 'r');
 
         $factory = $this->getImagine();

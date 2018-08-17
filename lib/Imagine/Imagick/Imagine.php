@@ -21,6 +21,8 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Grayscale;
+use Imagine\File\LoaderInterface;
+use Imagine\File\Loader;
 
 /**
  * Imagine implementation using the Imagick PHP extension
@@ -48,11 +50,18 @@ final class Imagine extends AbstractImagine
      */
     public function open($path)
     {
-        $path = $this->checkPath($path);
+        $loader = $path instanceof LoaderInterface ? $path : new Loader($path);
+        $path = $loader->getPath();
 
         try {
-            $imagick = new \Imagick($path);
-            $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readFile($path));
+            if ($loader->isLocalFile()) {
+                $imagick = new \Imagick($path);
+                $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readFile($path));
+            } else {
+                $imagick = new \Imagick();
+                $imagick->readImageBlob($loader->getData());
+                $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readData($loader->getData(), $loader));
+            }
         } catch (\Exception $e) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
         }
