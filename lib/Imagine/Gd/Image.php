@@ -27,6 +27,8 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Exception;
+use Throwable;
 
 /**
  * Image implementation using the GD library
@@ -579,13 +581,11 @@ final class Image extends AbstractImage
             $args[] = $options['foreground'];
         }
 
-        $this->setExceptionHandler();
-
-        if (false === call_user_func_array($save, $args)) {
-            throw new RuntimeException('Save operation failed');
-        }
-
-        $this->resetExceptionHandler();
+        $this->withExceptionHandler(function() use($save, $args) {
+            if (false === call_user_func_array($save, $args)) {
+                throw new RuntimeException('Save operation failed');
+            }
+        });
     }
 
     /**
@@ -691,7 +691,7 @@ final class Image extends AbstractImage
         return in_array($format, $formats);
     }
 
-    private function setExceptionHandler()
+    private function withExceptionHandler($callback)
     {
         set_error_handler(function ($errno, $errstr, $errfile, $errline) {
             if (0 === error_reporting()) {
@@ -700,11 +700,18 @@ final class Image extends AbstractImage
 
             throw new RuntimeException($errstr, $errno, new \ErrorException($errstr, 0, $errno, $errfile, $errline));
         }, E_WARNING | E_NOTICE);
-    }
-
-    private function resetExceptionHandler()
-    {
+        $exception = null;
+        try {
+            $callback();
+        } catch (Exception $x) {
+            $exception = $x;
+        } catch (Throwable $x) {
+            $exception = $x;
+        }
         restore_error_handler();
+        if ($exception !== null) {
+            throw $exception;
+        }
     }
 
     /**
