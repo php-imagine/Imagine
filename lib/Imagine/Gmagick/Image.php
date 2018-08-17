@@ -79,7 +79,7 @@ final class Image extends AbstractImage
     /**
      * Returns gmagick instance
      *
-     * @return Gmagick
+     * @return \Gmagick
      */
     public function getGmagick()
     {

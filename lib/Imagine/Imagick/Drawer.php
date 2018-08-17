@@ -26,7 +26,7 @@ use Imagine\Image\PointInterface;
 final class Drawer implements DrawerInterface
 {
     /**
-     * @var Imagick
+     * @var \Imagick
      */
     private $imagick;
 

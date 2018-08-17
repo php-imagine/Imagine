@@ -18,7 +18,7 @@ use Imagine\Image\PointInterface;
 abstract class LinearTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Imagine\Image\Fill\FillInterface
+     * @var \Imagine\Image\Fill\FillInterface
      */
     private $fill;
 
@@ -44,7 +44,7 @@ abstract class LinearTest extends \PHPUnit\Framework\TestCase
      * @dataProvider getPointsAndColors
      *
      * @param integer                      $shade
-     * @param Imagine\Image\PointInterface $position
+     * @param \Imagine\Image\PointInterface $position
      */
     public function testShouldProvideCorrectColorsValues(ColorInterface $color, PointInterface $position)
     {
@@ -76,7 +76,7 @@ abstract class LinearTest extends \PHPUnit\Framework\TestCase
      * @param ColorInterface $start
      * @param ColorInterface $end
      *
-     * @return Imagine\Image\Fill\FillInterface
+     * @return \Imagine\Image\Fill\FillInterface
      */
     abstract protected function getFill(ColorInterface $start, ColorInterface $end);
 

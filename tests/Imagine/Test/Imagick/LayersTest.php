@@ -16,7 +16,6 @@ use Imagine\Imagick\Image;
 use Imagine\Imagick\Layers;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractLayersTest;
-use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\RGB;
 
 class LayersTest extends AbstractLayersTest
