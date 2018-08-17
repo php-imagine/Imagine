@@ -140,19 +140,26 @@ final class Imagine extends AbstractImagine
     private function wrap($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
         if (!imageistruecolor($resource)) {
-            list($width, $height) = array(imagesx($resource), imagesy($resource));
+            if (function_exists('imagepalettetotruecolor')) {
+                if (false === imagepalettetotruecolor($resource)) {
+                    throw new RuntimeException('Could not convert a palette based image to true color');
+                }
+            } else {
+                list($width, $height) = array(imagesx($resource), imagesy($resource));
 
-            // create transparent truecolor canvas
-            $truecolor   = imagecreatetruecolor($width, $height);
-            $transparent = imagecolorallocatealpha($truecolor, 255, 255, 255, 127);
+                // create transparent truecolor canvas
+                $truecolor   = imagecreatetruecolor($width, $height);
+                $transparent = imagecolorallocatealpha($truecolor, 255, 255, 255, 127);
 
-            imagefill($truecolor, 0, 0, $transparent);
-            imagecolortransparent($truecolor, $transparent);
+                imagealphablending($truecolor, false);
+                imagefilledrectangle($truecolor, 0, 0, $width, $height, $transparent);
+                imagealphablending($truecolor, false);
 
-            imagecopymerge($truecolor, $resource, 0, 0, 0, 0, $width, $height, 100);
+                imagecopy($truecolor, $resource, 0, 0, 0, 0, $width, $height);
 
-            imagedestroy($resource);
-            $resource = $truecolor;
+                imagedestroy($resource);
+                $resource = $truecolor;
+            }
         }
 
         if (false === imagealphablending($resource, false) || false === imagesavealpha($resource, true)) {

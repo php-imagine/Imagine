@@ -743,6 +743,35 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals(10, $actualColor->getAlpha());
     }
 
+    /**
+     * @dataProvider imageAlphaLoadedProvider
+     */
+    public function testImageAlphaLoaded($path)
+    {
+        $image = $this->getImagine()->open('tests/Imagine/Fixtures/alpha/' . $path);
+        $size = $image->getSize();
+        $this->assertSame('5x1', "{$size->getWidth()}x{$size->getHeight()}", 'Checking size of loaded image');
+        foreach (array(
+            0 => 0,
+            1 => 25,
+            2 => 50,
+            3 => 75,
+            4 => 100,
+        ) as $x => $expectedAlpha) {
+            $alpha = $image->getColorAt(new Point($x, 0))->getAlpha();
+            $this->assertTrue(abs($alpha - $expectedAlpha) <= 2, "Checking pixel at x={$x} has an alpha near to {$expectedAlpha} (found: {$alpha})");
+        }
+    }
+
+    public function imageAlphaLoadedProvider()
+    {
+        return array(
+            array('grayscale-alpha.png'),
+            array('palette.png'),
+            array('truecolor-alpha.png'),
+        );
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()
