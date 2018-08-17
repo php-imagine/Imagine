@@ -116,7 +116,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldCreateImageFromStreamWithMetadata()
     {
-        $source = 'http://imagine.readthedocs.org/en/latest/_static/exit-90-test.jpg';
+        $source = 'https://imagine.readthedocs.org/en/latest/_static/exit-90-test.jpg';
         $resource = fopen($source, 'r');
 
         $factory = $this->getImagine();
