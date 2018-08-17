@@ -17,6 +17,13 @@ use Imagine\Exception\RuntimeException;
 class Loader implements LoaderInterface
 {
     /**
+     * The mimimum supported version of curl.
+     *
+     * @var string
+     */
+    const MINIMUM_CURL_VERSION = '7.34.0';
+
+    /**
      * The file path.
      *
      * @var string
@@ -36,6 +43,13 @@ class Loader implements LoaderInterface
      * @var string|null
      */
     protected $data;
+
+    /**
+     * Is curl available, with a decent version?
+     *
+     * @var bool|null
+     */
+    protected $isCurlSupported;
 
     /**
      * Initialize the instance.
@@ -149,10 +163,32 @@ class Loader implements LoaderInterface
      */
     protected function readRemoteFile()
     {
-        if (function_exists('curl_init')) {
+        if ($this->isCurlSupported()) {
             return $this->readRemoteFileWithCurl();
         }
         return $this->readRemoteFileWithFileGetContents();
+    }
+
+    /**
+     * Check if curl is available and it's a decent version.
+     *
+     * @return bool
+     */
+    protected function isCurlSupported()
+    {
+        if ($this->isCurlSupported === null) {
+            $isCurlSupported = false;
+            if (function_exists('curl_init') && function_exists('curl_version')) {
+                $curlVersion = curl_version();
+                if (is_array($curlVersion) && !empty($curlVersion['version'])) {
+                    if (version_compare($curlVersion['version'], static::MINIMUM_CURL_VERSION) >= 0) {
+                        $isCurlSupported = true;
+                    }
+                }
+            }
+            $this->isCurlSupported = $isCurlSupported;
+        }
+        return $this->isCurlSupported;
     }
 
     /**
@@ -171,12 +207,7 @@ class Loader implements LoaderInterface
         if (!@curl_setopt($curl, CURLOPT_RETURNTRANSFER, true)) {
             throw new RuntimeException('curl_setopt(CURLOPT_RETURNTRANSFER) failed.');
         }
-        if (!@curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept-Encoding: identity'))) {
-            throw new RuntimeException('curl_setopt(CURLOPT_HTTPHEADER) failed.');
-        }
-        if (!@curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true)) {
-            throw new RuntimeException('curl_setopt(CURLOPT_FOLLOWLOCATION) failed.');
-        }
+        $this->setCurlOptions($curl);
 
         $response = @curl_exec($curl);
         if ($response === false) {
@@ -201,6 +232,35 @@ class Loader implements LoaderInterface
     }
 
     /**
+     * Set curl options.
+     *
+     *
+     * @param resource $curl
+     *
+     * @throws \Imagine\Exception\RuntimeException
+     */
+    protected function setCurlOptions($curl)
+    {
+        if (!@curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept-Encoding: identity'))) {
+            throw new RuntimeException('curl_setopt(CURLOPT_HTTPHEADER) failed.');
+        }
+        if (!@curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true)) {
+            throw new RuntimeException('curl_setopt(CURLOPT_FOLLOWLOCATION) failed.');
+        }
+        if (defined('CURL_SSLVERSION_TLSv1_1')) {
+            if (!@curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_1)) {
+                throw new RuntimeException('curl_setopt(CURLOPT_SSLVERSION) failed.');
+            }
+        } else {
+            // Manually checked that CURL_SSLVERSION_TLSv1_1 is 5 for any version of curl from 7.34.0 to 7.61.0
+            // See for example https://github.com/curl/curl/blob/curl-7_34_0/include/curl/curl.h#L1668
+            if (!@curl_setopt($curl, CURLOPT_SSLVERSION, 5)) {
+                throw new RuntimeException('curl_setopt(CURLOPT_SSLVERSION) failed.');
+            }
+        }
+    }
+
+    /**
      * Read a remote file using the file_get_contents.
      *
      * @throws \Imagine\Exception\InvalidArgumentException
@@ -209,9 +269,10 @@ class Loader implements LoaderInterface
      */
     protected function readRemoteFileWithFileGetContents()
     {
+        $http_response_header = null;
         $data = @file_get_contents($this->path);
         if ($data === false) {
-            if (isset($http_response_header) && is_array($http_response_header) && isset($http_response_header[0]) && preg_match('/^HTTP\/\d+(?:\.\d+)*\s+(\d+\s+\w.*)/i', $http_response_header[0], $matches)) {
+            if (is_array($http_response_header) && isset($http_response_header[0]) && preg_match('/^HTTP\/\d+(?:\.\d+)*\s+(\d+\s+\w.*)/i', $http_response_header[0], $matches)) {
                 throw new InvalidArgumentException(sprintf('Failed to read from URL %s: %s', $this->path, $matches[1]));
             }
             throw new InvalidArgumentException(sprintf('Failed to read from URL %s', $this->path));
