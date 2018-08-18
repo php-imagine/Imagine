@@ -54,11 +54,11 @@ if (Test-Path -PathType Leaf -Path "$phpInstallPath\php-installed.txt") {
 $Env:Path = $phpInstallPath + ';' + $Env:Path
 
 # Setup composer
-if (-Not(Test-Path -PathType Leaf -Path C:\tools\downloads\composer.phar)) {
+if (-Not(Test-Path -PathType Leaf -Path C:\tools\bin\composer.phar)) {
 	Write-Output -InputObject 'Downloading composer'
-	Invoke-WebRequest -Uri https://getcomposer.org/download/1.7.2/composer.phar -OutFile C:\tools\downloads\composer.phar
+	Invoke-WebRequest -Uri https://getcomposer.org/download/1.7.2/composer.phar -OutFile C:\tools\bin\composer.phar
 }
 If (-Not(Test-Path -PathType Leaf -Path C:\tools\bin\composer.bat)) {
 	Write-Output -InputObject 'Creating composer.bat'
-	Add-Content -Path C:\tools\bin\composer.bat -Value '@php C:\tools\downloads\composer.phar %*'
+	Add-Content -Path C:\tools\bin\composer.bat -Value '@php "%~dpn0.phar" %*'
 }

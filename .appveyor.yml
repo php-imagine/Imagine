@@ -12,6 +12,7 @@ clone_depth: 50
 
 cache:
   - C:\tools\downloads -> .appveyor.yml
+  - C:\tools\bin -> .appveyor.yml
   - '%ProgramFiles%\WindowsPowerShell\Modules\VcRedist -> .appveyor.yml'
   - '%LOCALAPPDATA%\Composer\files'
 
