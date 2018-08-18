@@ -31,11 +31,10 @@ class ImagineTest extends AbstractImagineTest
 
     protected function getEstimatedFontBox()
     {
-        if (PHP_VERSION_ID >= 50600) {
-            return new Box(112, 45);
-        }
-
-        return new Box(112, 46);
+        return new Box(
+            DIRECTORY_SEPARATOR === '\\' ? 114 : 112,
+            PHP_VERSION_ID >= 50600 ? 45 : 46
+        );
     }
 
     protected function getImagine()
