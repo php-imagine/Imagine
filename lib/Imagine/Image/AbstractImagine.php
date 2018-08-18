@@ -62,8 +62,18 @@ abstract class AbstractImagine implements ImagineInterface
     protected function checkPath($path)
     {
         // provide compatibility with objects such as \SplFileInfo
+
         if (is_object($path) && method_exists($path, '__toString')) {
             $path = (string) $path;
+        }
+
+        $originalPath = $path;
+
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+        if(preg_match('/pdf\[[0-9]+\]/', $ext)){
+            $path = substr($path, 0, -strlen($ext));
+            $path = $path."pdf";
         }
 
         $handle = @fopen($path, 'r');
@@ -74,6 +84,6 @@ abstract class AbstractImagine implements ImagineInterface
 
         fclose($handle);
 
-        return $path;
+        return $originalPath;
     }
 }
