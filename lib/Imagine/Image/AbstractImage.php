@@ -96,6 +96,14 @@ abstract class AbstractImage implements ImageInterface
             $options['jpeg_quality'] = $options['quality'];
         }
 
+        if (isset($options['quality']) && !isset($options['png_compression_level'])) {
+            $options['png_compression_level'] = round((100 - $options['quality']) * 9 / 100);
+        }
+
+        if (isset($options['filters']) && !isset($options['png_compression_filter'])) {
+            $options['png_compression_filter'] = $options['filters'];
+        }
+
         return $options;
     }
 
