@@ -96,7 +96,7 @@ class Issue131Test extends \PHPUnit\Framework\TestCase
         $files = $this->getDirContent($dir);
         $retval = $retval && count($files) === 1;
         $file = current($files);
-        $retval = $retval && $targetFile === $file;
+        $retval = $retval && str_replace('/', DIRECTORY_SEPARATOR, $targetFile) === str_replace('/', DIRECTORY_SEPARATOR, $file);
 
         foreach ($files as $file) {
             unlink($file);
