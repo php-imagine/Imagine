@@ -105,10 +105,10 @@ final class Image extends AbstractImage
     public function copy()
     {
         try {
-            if (version_compare(phpversion("imagick"), "3.1.0b1", ">=") || defined("HHVM_VERSION")) {
-                $clone = clone $this->imagick;
-            } else {
+            if (version_compare(phpversion("imagick"), "3.1.0b1", "<") && !defined("HHVM_VERSION")) {
                 $clone = $this->imagick->clone();
+            } else {
+                $clone = clone $this->imagick;
             }
         } catch (\ImagickException $e) {
             throw new RuntimeException('Copy operation failed', $e->getCode(), $e);
