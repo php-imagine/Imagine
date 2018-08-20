@@ -23,7 +23,10 @@ $Env:Path = 'C:\tools\bin;' + $Env:Path
 if (-Not(Test-Path 'Env:PHP_VERSION')) {
 	throw 'The PHP_VERSION environment variable is not set'
 }
-$phpInstallPath = 'C:\tools\php-' + $Env:PHP_VERSION
+if (-Not(Test-Path 'Env:PHP_ARCHITECTURE')) {
+	throw 'The PHP_ARCHITECTURE environment variable is not set'
+}
+$phpInstallPath = 'C:\tools\php-' + $Env:PHP_VERSION + '-' + $Env:PHP_ARCHITECTURE
 if (-Not(Get-Module -ListAvailable -Name VcRedist)) {
 	Write-Output -InputObject 'Installing VcRedist PowerShell module'
 	Install-Module -Name VcRedist -Repository PSGallery -Scope AllUsers -Force

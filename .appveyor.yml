@@ -3,6 +3,8 @@ version: "Build {build}"
 environment:
   matrix:
     - PHP_VERSION: '7.1'
+      PHP_ARCHITECTURE: x64
+    - PHP_VERSION: '5.6'
       PHP_ARCHITECTURE: x86
 
 matrix:
