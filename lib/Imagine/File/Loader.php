@@ -68,7 +68,7 @@ class Loader implements LoaderInterface
         if ($this->path === '') {
             throw new InvalidArgumentException('$path is empty');
         }
-        $this->isUrl = filter_var($this->path, FILTER_VALIDATE_URL);
+        $this->isUrl = filter_var($this->path, FILTER_VALIDATE_URL) !== false;
         if (!$this->isUrl) {
             $this->checkLocalFile();
         }
