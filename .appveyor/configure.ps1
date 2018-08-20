@@ -54,6 +54,9 @@ if (Test-Path -PathType Leaf -Path "$phpInstallPath\php-installed.txt") {
 	Install-PhpExtension -Path $phpInstallPath -Extension imagick -Verbose
 	New-Item -ItemType File -Path "$phpInstallPath\php-installed.txt" | Out-Null
 }
+Write-Output -InputObject 'Refreshing CA Certificates'
+Update-PhpCAInfo -Path $phpInstallPath -Verbose 
+
 $Env:Path = $phpInstallPath + ';' + $Env:Path
 
 # Setup composer
