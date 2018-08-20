@@ -129,7 +129,7 @@ interface ImageInterface extends ManipulatorInterface
      *
      * @param string $scheme
      *
-     * @throws InvalidArgumentException When an unsupported Interface type is supplied
+     * @throws \Imagine\Exception\InvalidArgumentException When an unsupported Interface type is supplied
      *
      * @return ImageInterface
      */

@@ -17,7 +17,7 @@ class HorizontalTest extends LinearTest
 {
     /**
      * (non-PHPdoc)
-     * @see Imagine\Image\Fill\Gradient\LinearTest::getEnd()
+     * @see LinearTest::getEnd()
      */
     protected function getEnd()
     {
@@ -26,7 +26,7 @@ class HorizontalTest extends LinearTest
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Image\Fill\Gradient\LinearTest::getStart()
+     * @see LinearTest::getStart()
      */
     protected function getStart()
     {
@@ -35,7 +35,7 @@ class HorizontalTest extends LinearTest
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Image\Fill\Gradient\LinearTest::getMask()
+     * @see LinearTest::getMask()
      */
     protected function getFill(ColorInterface $start, ColorInterface $end)
     {
@@ -44,7 +44,7 @@ class HorizontalTest extends LinearTest
 
     /**
      * (non-PHPdoc)
-     * @see Imagine\Image\Fill\Gradient\LinearTest::getPointsAndShades()
+     * @see LinearTest::getPointsAndShades()
      */
     public function getPointsAndColors()
     {

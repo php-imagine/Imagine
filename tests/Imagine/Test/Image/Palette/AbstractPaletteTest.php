@@ -105,7 +105,7 @@ abstract class AbstractPaletteTest extends ImagineTestCase
     abstract public function provideColorsForBlending();
 
     /**
-     * @return PaletteInterface
+     * @return \Imagine\Image\Palette\PaletteInterface
      */
     abstract protected function getPalette();
 }

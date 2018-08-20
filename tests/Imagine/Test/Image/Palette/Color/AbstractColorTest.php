@@ -123,7 +123,7 @@ abstract class AbstractColorTest extends ImagineTestCase
     abstract public function provideColorAndAlphaTuples();
 
     /**
-     * @return ColorInterface
+     * @return \Imagine\Image\Palette\Color\ColorInterface
      */
     abstract protected function getColor();
 }

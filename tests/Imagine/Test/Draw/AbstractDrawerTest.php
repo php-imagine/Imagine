@@ -12,7 +12,6 @@
 namespace Imagine\Test\Draw;
 
 use Imagine\Image\Box;
-use Imagine\Image\Font;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;

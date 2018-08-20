@@ -22,7 +22,7 @@ if (!class_exists('PHPUnit_Framework_Constraint')) {
 class IsImageEqual extends \PHPUnit_Framework_Constraint
 {
     /**
-     * @var Imagine\Image\ImageInterface
+     * @var \Imagine\Image\ImageInterface
      */
     private $value;
 
@@ -37,11 +37,11 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     private $buckets;
 
     /**
-     * @param Imagine\Image\ImageInterface $value
+     * @param \Imagine\Image\ImageInterface $value
      * @param float                        $delta
      * @param integer                      $buckets
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function __construct($value, $delta = 0.1, $buckets = 4)
     {
@@ -104,7 +104,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     * @param Imagine\Image\ImageInterface $image
+     * @param \Imagine\Image\ImageInterface $image
      *
      * @return array
      */

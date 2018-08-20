@@ -82,11 +82,15 @@ class ExifMetadataReader extends AbstractMetadataReader
      *
      * @param string $path The path to the file or the data-URI representation.
      *
-     * @return MetadataBag
+     * @return MetadataBag|array
      */
     private function extract($path)
     {
-        if (false === $exifData = @exif_read_data($path, null, true, false)) {
+        try {
+            if (false === $exifData = @exif_read_data($path, null, true, false)) {
+                return array();
+            }
+        } catch (\Exception $e) {
             return array();
         }
 
