@@ -15,3 +15,5 @@ if (intval(ini_get('memory_limit')) < 64) {
 
 $loader = require __DIR__.'/../vendor/autoload.php';
 $loader->add('Imagine\Test', __DIR__);
+
+chdir(dirname(__DIR__));
