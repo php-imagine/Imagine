@@ -5,6 +5,9 @@ namespace Imagine\Test\Issues;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * @group ext-gd
+ */
 class Issue59Test extends \PHPUnit\Framework\TestCase
 {
     private function getImagine()

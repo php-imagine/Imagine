@@ -29,6 +29,7 @@ class ColorParserTest extends ImagineTestCase
     /**
      * @dataProvider provideRGBdataThatFail
      * @expectedException Imagine\Exception\InvalidArgumentException
+     * @group ext-gd
      */
     public function testParseToRGBThatFails($value)
     {
@@ -49,6 +50,7 @@ class ColorParserTest extends ImagineTestCase
     /**
      * @dataProvider provideCMYKdataThatFail
      * @expectedException Imagine\Exception\InvalidArgumentException
+     * @group ext-gd
      */
     public function testParseToCMYKThatFails($value)
     {

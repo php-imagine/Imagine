@@ -15,6 +15,9 @@ use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractImagineTest;
 use Imagine\Image\Box;
 
+/**
+ * @group ext-gd
+ */
 class ImagineTest extends AbstractImagineTest
 {
     protected function setUp()

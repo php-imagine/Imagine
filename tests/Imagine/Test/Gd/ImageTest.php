@@ -16,6 +16,9 @@ use Imagine\Test\Image\AbstractImageTest;
 use Imagine\Image\ImageInterface;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * @group ext-gd
+ */
 class ImageTest extends AbstractImageTest
 {
     protected function setUp()

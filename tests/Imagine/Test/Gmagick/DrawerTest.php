@@ -14,6 +14,9 @@ namespace Imagine\Test\Gmagick;
 use Imagine\Gmagick\Imagine;
 use Imagine\Test\Draw\AbstractDrawerTest;
 
+/**
+ * @group ext-gmagick
+ */
 class DrawerTest extends AbstractDrawerTest
 {
     protected function setUp()

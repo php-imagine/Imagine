@@ -16,6 +16,9 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
 use Imagine\Test\Image\AbstractImageTest;
 
+/**
+ * @group ext-gmagick
+ */
 class ImageTest extends AbstractImageTest
 {
     protected function setUp()

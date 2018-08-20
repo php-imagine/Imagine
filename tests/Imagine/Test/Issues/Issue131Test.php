@@ -56,6 +56,9 @@ class Issue131Test extends \PHPUnit\Framework\TestCase
         return $image;
     }
 
+    /**
+     * @group ext-imagick
+     */
     public function testShouldSaveOneFileWithImagick()
     {
         $dir = realpath($this->getTemporaryDir());
@@ -70,6 +73,9 @@ class Issue131Test extends \PHPUnit\Framework\TestCase
         }
     }
 
+    /**
+     * @group ext-gmagick
+     */
     public function testShouldSaveOneFileWithGmagick()
     {
         $dir = realpath($this->getTemporaryDir());

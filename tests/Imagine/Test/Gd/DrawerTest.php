@@ -14,6 +14,9 @@ namespace Imagine\Test\Gd;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Draw\AbstractDrawerTest;
 
+/**
+ * @group ext-gd
+ */
 class DrawerTest extends AbstractDrawerTest
 {
     protected function setUp()
