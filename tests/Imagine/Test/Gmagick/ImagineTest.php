@@ -15,6 +15,9 @@ use Imagine\Gmagick\Imagine;
 use Imagine\Test\Image\AbstractImagineTest;
 use Imagine\Image\Box;
 
+/**
+ * @group ext-gmagick
+ */
 class ImagineTest extends AbstractImagineTest
 {
     protected function setUp()

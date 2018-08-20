@@ -21,6 +21,9 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Test\Image\AbstractImageTest;
 use Imagine\Image\Box;
 
+/**
+ * @group ext-imagick
+ */
 class ImageTest extends AbstractImageTest
 {
     protected function setUp()

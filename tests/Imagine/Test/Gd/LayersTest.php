@@ -19,6 +19,9 @@ use Imagine\Test\Image\AbstractLayersTest;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\RGB;
 
+/**
+ * @group ext-gd
+ */
 class LayersTest extends AbstractLayersTest
 {
     protected function setUp()

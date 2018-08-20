@@ -14,6 +14,9 @@ namespace Imagine\Test\Gd;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Effects\AbstractEffectsTest;
 
+/**
+ * @group ext-gd
+ */
 class EffectsTest extends AbstractEffectsTest
 {
     protected function setUp()

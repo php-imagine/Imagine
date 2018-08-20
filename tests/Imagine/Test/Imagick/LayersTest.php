@@ -18,6 +18,9 @@ use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractLayersTest;
 use Imagine\Image\Palette\RGB;
 
+/**
+ * @group ext-imagick
+ */
 class LayersTest extends AbstractLayersTest
 {
     protected function setUp()
