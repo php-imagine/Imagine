@@ -28,6 +28,6 @@ build: off
 test_script:
   - set APPVEYOR_SAVE_CACHE_ON_ERROR=true
   - cd /d "%APPVEYOR_BUILD_FOLDER%"
-  - composer test
+  - composer test -- --exclude-group ext-gmagick
 
 deploy: off
