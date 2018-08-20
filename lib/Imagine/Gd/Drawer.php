@@ -262,6 +262,13 @@ final class Drawer implements DrawerInterface
             throw new RuntimeException('Font mask operation failed');
         }
 
+        if ($fontfile && DIRECTORY_SEPARATOR === '\\') {
+            // On Windows imagefttext() throws a "Could not find/open font" error if $fontfile is not an absolute path.
+            $fontfileRealpath = realpath($fontfile);
+            if ($fontfileRealpath !== false) {
+                $fontfile = $fontfileRealpath;
+            }
+        }
         if (false === imagefttext($this->resource, $fontsize, $angle, $x, $y, $this->getColor($font->getColor()), $fontfile, $string)) {
             imagealphablending($this->resource, false);
             throw new RuntimeException('Font mask operation failed');

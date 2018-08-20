@@ -16,9 +16,6 @@
             "homepage": "http://avalanche123.com"
         }
     ],
-    "config": {
-        "bin-dir": "bin"
-    },
     "require": {
         "php": ">=5.3.2"
     },
@@ -52,5 +49,8 @@
             "imagine-*.phar",
             "composer.phar"
         ]
-    }
+    },
+	"scripts": {
+		"test": "simple-phpunit --verbose"
+	}
 }
