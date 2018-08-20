@@ -18,7 +18,7 @@ interface MetadataReaderInterface
     /**
      * Reads metadata from a file.
      *
-     * @param string $file The path to the file where to read metadata.
+     * @param string|\Imagine\File\LoaderInterface $file The path to the file where to read metadata.
      *
      * @throws InvalidArgumentException In case the file does not exist.
      *
@@ -30,7 +30,7 @@ interface MetadataReaderInterface
      * Reads metadata from a binary string.
      *
      * @param string $data The binary string to read.
-     * @param resource|\Imagine\File\LoaderInterface $originalResource An optional resource to gather stream metadata.
+     * @param resource $originalResource An optional resource to gather stream metadata.
      *
      * @return MetadataBag
      */

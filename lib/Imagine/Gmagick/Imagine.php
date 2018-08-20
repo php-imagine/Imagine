@@ -51,9 +51,9 @@ class Imagine extends AbstractImagine
         try {
             if ($loader->isLocalFile()) {
                 $gmagick = new \Gmagick($path);
-                $image = new Image($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readFile($path));
+                $image = new Image($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readFile($loader));
             } else {
-                $image = $this->doLoad($loader->getData(), $this->getMetadataReader()->readData($loader->getData(), $loader));
+                $image = $this->doLoad($loader->getData(), $this->getMetadataReader()->readFile($loader));
             }
         } catch (\GmagickException $e) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);

@@ -13,6 +13,7 @@ namespace Imagine\Image\Metadata;
 
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\File\LoaderInterface;
+use Imagine\File\Loader;
 
 abstract class AbstractMetadataReader implements MetadataReaderInterface
 {
@@ -21,15 +22,9 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
      */
     public function readFile($file)
     {
-        if (stream_is_local($file)) {
-            if (!is_file($file)) {
-                throw new InvalidArgumentException(sprintf('File %s does not exist.', $file));
-            }
+        $loader = $file instanceof LoaderInterface ? $file : new Loader($file);
 
-            return new MetadataBag(array_merge(array('filepath' => realpath($file), 'uri' => $file), $this->extractFromFile($file)));
-        }
-
-        return new MetadataBag(array_merge(array('uri' => $file), $this->extractFromFile($file)));
+        return new MetadataBag(array_merge($this->getStreamMetadata($loader), $this->extractFromFile($loader)));
     }
 
     /**
@@ -85,7 +80,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     /**
      * Extracts metadata from a file
      *
-     * @param $file
+     * @param string|\Imagine\File\LoaderInterface $file
      *
      * @return array An associative array of metadata
      */

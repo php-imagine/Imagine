@@ -13,6 +13,8 @@ namespace Imagine\Image\Metadata;
 
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
+use Imagine\File\LoaderInterface;
+use Imagine\File\Loader;
 
 /**
  * Metadata driven by Exif information
@@ -36,19 +38,9 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     protected function extractFromFile($file)
     {
-        if (stream_is_local($file)) {
-            if (false === is_readable($file)) {
-                throw new InvalidArgumentException(sprintf('File %s is not readable.', $file));
-            }
+        $loader = $file instanceof LoaderInterface ? $file : new Loader($file);
 
-            return $this->extract($file);
-        }
-
-        if (false === $data = @file_get_contents($file)) {
-            throw new InvalidArgumentException(sprintf('File %s is not readable.', $file));
-        }
-
-        return $this->doReadData($data);
+        return $this->doReadData($loader->getData());
     }
 
     /**

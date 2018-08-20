@@ -94,7 +94,7 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
-        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readData($loader->getData(), $loader));
+        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readFile($loader));
     }
 
     /**
