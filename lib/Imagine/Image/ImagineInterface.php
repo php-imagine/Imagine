@@ -38,7 +38,7 @@ interface ImagineInterface
     /**
      * Opens an existing image from $path
      *
-     * @param string $path
+     * @param string|\Imagine\File\LoaderInterface|mixed $path The file path, a LoaderInterface instance, or an object whose string representation is the image path.
      *
      * @throws RuntimeException
      *

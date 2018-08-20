@@ -18,7 +18,7 @@ interface MetadataReaderInterface
     /**
      * Reads metadata from a file.
      *
-     * @param string $file The path to the file where to read metadata.
+     * @param string|\Imagine\File\LoaderInterface $file The path to the file where to read metadata.
      *
      * @throws InvalidArgumentException In case the file does not exist.
      *

@@ -20,6 +20,8 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\File\LoaderInterface;
+use Imagine\File\Loader;
 
 /**
  * Imagine implementation using the GD library
@@ -83,20 +85,16 @@ final class Imagine extends AbstractImagine
      */
     public function open($path)
     {
-        $path = $this->checkPath($path);
-        $data = @file_get_contents($path);
+        $loader = $path instanceof LoaderInterface ? $path : new Loader($path);
+        $path = $loader->getPath();
 
-        if (false === $data) {
-            throw new RuntimeException(sprintf('Failed to open file %s', $path));
-        }
-
-        $resource = @imagecreatefromstring($data);
+        $resource = @imagecreatefromstring($loader->getData());
 
         if (!is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
-        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readFile($path));
+        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readFile($loader));
     }
 
     /**

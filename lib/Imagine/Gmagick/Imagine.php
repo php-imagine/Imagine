@@ -22,6 +22,8 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Color\CMYK as CMYKColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\File\LoaderInterface;
+use Imagine\File\Loader;
 
 /**
  * Imagine implementation using the Gmagick PHP extension
@@ -43,11 +45,16 @@ class Imagine extends AbstractImagine
      */
     public function open($path)
     {
-        $path = $this->checkPath($path);
+        $loader = $path instanceof LoaderInterface ? $path : new Loader($path);
+        $path = $loader->getPath();
 
         try {
-            $gmagick = new \Gmagick($path);
-            $image = new Image($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readFile($path));
+            if ($loader->isLocalFile()) {
+                $gmagick = new \Gmagick($path);
+                $image = new Image($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readFile($loader));
+            } else {
+                $image = $this->doLoad($loader->getData(), $this->getMetadataReader()->readFile($loader));
+            }
         } catch (\GmagickException $e) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
         }

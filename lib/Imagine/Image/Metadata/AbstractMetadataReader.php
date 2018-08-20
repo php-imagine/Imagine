@@ -12,6 +12,8 @@
 namespace Imagine\Image\Metadata;
 
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\File\LoaderInterface;
+use Imagine\File\Loader;
 
 abstract class AbstractMetadataReader implements MetadataReaderInterface
 {
@@ -20,15 +22,9 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
      */
     public function readFile($file)
     {
-        if (stream_is_local($file)) {
-            if (!is_file($file)) {
-                throw new InvalidArgumentException(sprintf('File %s does not exist.', $file));
-            }
+        $loader = $file instanceof LoaderInterface ? $file : new Loader($file);
 
-            return new MetadataBag(array_merge(array('filepath' => realpath($file), 'uri' => $file), $this->extractFromFile($file)));
-        }
-
-        return new MetadataBag(array_merge(array('uri' => $file), $this->extractFromFile($file)));
+        return new MetadataBag(array_merge($this->getStreamMetadata($loader), $this->extractFromFile($loader)));
     }
 
     /**
@@ -58,7 +54,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     /**
      * Gets the URI from a stream resource
      *
-     * @param resource $resource
+     * @param resource|\Imagine\File\LoaderInterface $resource
      *
      * @return string|null The URI f ava
      */
@@ -66,7 +62,12 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     {
         $metadata = array();
 
-        if (false !== $data = @stream_get_meta_data($resource)) {
+        if ($resource instanceof LoaderInterface) {
+            $metadata['uri'] = $resource->getPath();
+            if ($resource->isLocalFile()) {
+                $metadata['filepath'] = realpath($resource->getPath());
+            }
+        } elseif (false !== $data = @stream_get_meta_data($resource)) {
             $metadata['uri'] = $data['uri'];
             if (stream_is_local($resource)) {
                 $metadata['filepath'] = realpath($data['uri']);
@@ -79,7 +80,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     /**
      * Extracts metadata from a file
      *
-     * @param $file
+     * @param string|\Imagine\File\LoaderInterface $file
      *
      * @return array An associative array of metadata
      */
