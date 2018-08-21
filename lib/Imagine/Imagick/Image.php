@@ -875,11 +875,11 @@ final class Image extends AbstractImage
      */
     private function detectProfilesSupport()
     {
-        if (null !== static::$supportsProfiles) {
-            return static::$supportsProfiles;
+        if (null !== self::$supportsProfiles) {
+            return self::$supportsProfiles;
         }
 
-        static::$supportsProfiles = false;
+        self::$supportsProfiles = false;
 
         try {
             $image = new \Imagick();
@@ -889,10 +889,10 @@ final class Image extends AbstractImage
         catch (\ImagickException $exception) {
             // If ImageMagick has support for profiles,
             // it detects the invalid profile data 'x' and throws an exception.
-            static::$supportsProfiles = true;
+            self::$supportsProfiles = true;
         }
 
-        return static::$supportsProfiles;
+        return self::$supportsProfiles;
     }
 
     /**
