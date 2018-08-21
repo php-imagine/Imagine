@@ -277,49 +277,65 @@ final class Image extends AbstractImage
 
         $format = strtolower($format);
 
-        $options = $this->updateSaveOptions($options);
-
-        if (isset($options['jpeg_quality']) && in_array($format, array('jpeg', 'jpg', 'pjpeg'))) {
-            $image->setCompressionQuality($options['jpeg_quality']);
-        }
-
-        if (isset($options['webp_quality']) && in_array($format, array('webp'))) {
-            $image->setCompressionQuality($options['webp_quality']);
-        }
-
-        if ((isset($options['png_compression_level']) || isset($options['png_compression_filter'])) && $format === 'png') {
-            // first digit: compression level (default: 7)
-            if (isset($options['png_compression_level'])) {
-                if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
-                    throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
+        switch ($format) {
+            case 'jpeg':
+            case 'jpg':
+            case 'pjpeg':
+                if (!isset($options['jpeg_quality'])) {
+                    if (isset($options['quality'])) {
+                        $options['jpeg_quality'] = $options['quality'];
+                    }
                 }
-                $compression = $options['png_compression_level'] * 10;
-            } else {
-                $compression = 70;
-            }
-
-            // second digit: compression filter (default: 5)
-            if (isset($options['png_compression_filter'])) {
-                if ($options['png_compression_filter'] < 0 || $options['png_compression_filter'] > 9) {
-                    throw new InvalidArgumentException('png_compression_filter option should be an integer from 0 to 9');
+                if (isset($options['jpeg_quality'])) {
+                    $image->setCompressionQuality($options['jpeg_quality']);
                 }
-                $compression += $options['png_compression_filter'];
-            } else {
-                $compression += 5;
-            }
-
-            $image->setCompressionQuality($compression);
+                break;
+            case 'png':
+                if (!isset($options['png_compression_level'])) {
+                    if (isset($options['quality'])) {
+                        $options['png_compression_level'] = round((100 - $options['quality']) * 9 / 100);
+                    }
+                }
+                if (isset($options['png_compression_level'])) {
+                    if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
+                        throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
+                    }
+                }
+                if (isset($options['png_compression_filter'])) {
+                    if ($options['png_compression_filter'] < 0 || $options['png_compression_filter'] > 9) {
+                        throw new InvalidArgumentException('png_compression_filter option should be an integer from 0 to 9');
+                    }
+                }
+                if (isset($options['png_compression_level']) || isset($options['png_compression_filter'])) {
+                    // first digit: compression level (default: 7)
+                    $compression = isset($options['png_compression_level']) ? $options['png_compression_level'] * 10 : 70;
+                    // second digit: compression filter (default: 5)
+                    $compression += isset($options['png_compression_filter']) ? $options['png_compression_filter'] : 5;
+                    $image->setCompressionQuality($compression);
+                }
+                break;
+            case 'webp':
+                if (!isset($options['webp_quality'])) {
+                    if (isset($options['quality'])) {
+                        $options['webp_quality'] = $options['quality'];
+                    }
+                }
+                if (isset($options['webp_quality'])) {
+                    $image->setCompressionQuality($options['webp_quality']);
+                }
+                break;
         }
-
         if (isset($options['resolution-units']) && isset($options['resolution-x']) && isset($options['resolution-y'])) {
-            if ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
-                $image->setimageunits(\Gmagick::RESOLUTION_PIXELSPERCENTIMETER);
-            } elseif ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERINCH) {
-                $image->setimageunits(\Gmagick::RESOLUTION_PIXELSPERINCH);
-            } else {
-                throw new InvalidArgumentException('Unsupported image unit format');
+            switch ($options['resolution-units']) {
+                case ImageInterface::RESOLUTION_PIXELSPERCENTIMETER:
+                    $image->setimageunits(\Gmagick::RESOLUTION_PIXELSPERCENTIMETER);
+                    break;
+                case ImageInterface::RESOLUTION_PIXELSPERINCH:
+                    $image->setimageunits(\Gmagick::RESOLUTION_PIXELSPERINCH);
+                    break;
+                default:
+                    throw new InvalidArgumentException('Unsupported image unit format');
             }
-
             $image->setimageresolution($options['resolution-x'], $options['resolution-y']);
         }
     }
