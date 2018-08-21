@@ -1,159 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="robots" content="index, follow, all" />
-        <title>Imagine\Image\Palette\RGB | </title>
-                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
-                            </head>
-        <body id="class">
-            <div class="header">
-        <ul>
-            <li><a href="../../../classes.html">Classes</a></li>
-                            <li><a href="../../../namespaces.html">Namespaces</a></li>
-                        <li><a href="../../../interfaces.html">Interfaces</a></li>
-            <li><a href="../../../traits.html">Traits</a></li>
-            <li><a href="../../../doc-index.html">Index</a></li>
-            
-        </ul>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Imagine\Image\Palette\RGB | Imagine API</title>
 
-        <div id="title"></div>
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
 
-            <div class="type">Class</div>
-    <h1><a href="../../../Imagine/Image/Palette.html">Imagine\Image\Palette</a>\RGB</h1>
+    <body id="class" data-name="class:Imagine_Image_Palette_RGB" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
     </div>
-        <div class="content">
-                <p>    class
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Imagine API</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../Imagine.html">Imagine</a></li><li class="backslash">\</li><li><a href="../../../Imagine/Image.html">Image</a></li><li class="backslash">\</li><li><a href="../../../Imagine/Image/Palette.html">Palette</a></li><li class="backslash">\</li><li>RGB</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            RGB
+                
+        </h1>
+    </div>
+
+    <p>    class
     <strong>RGB</strong>        implements
-        <a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a></p>
-
-    
-    
-    
-            <h2>Methods</h2>
-
-            <table>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method___construct">__construct</a>()
-                    <p>
+        <a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
 </p>
-                </td>
-                <td></td>
-            </tr>
+
+        
+    
+
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
                     <tr>
-                <td class="type">
-                    String
+                <td class="type" id="property_colors">
+                    static                    protected                                        array
                 </td>
-                <td class="last">
-                    <a href="#method_name">name</a>()
-                    <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_* constants</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    array
-                </td>
-                <td class="last">
-                    <a href="#method_pixelDefinition">pixelDefinition</a>()
-                    <p>Returns an array containing ColorInterface::COLOR_* constants that define the structure of colors for a pixel.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    Boolean
-                </td>
-                <td class="last">
-                    <a href="#method_supportsAlpha">supportsAlpha</a>()
-                    <p>Tells if alpha channel is supported in this palette</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    <a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
-                </td>
-                <td class="last">
-                    <a href="#method_useProfile">useProfile</a>(<a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)
-                    <p>Attachs an ICC profile to this Palette.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    <a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a>
-                </td>
-                <td class="last">
-                    <a href="#method_profile">profile</a>()
-                    <p>Returns the ICC profile attached to this Palette.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
-                </td>
-                <td class="last">
-                    <a href="#method_color">color</a>(string|array|integer $color, integer|null $alpha = null)
-                    <p>Returns a color given some values</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
-                </td>
-                <td class="last">
-                    <a href="#method_blend">blend</a>(<a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color1, <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color2, float $amount)
-                    <p>Blend two colors given an amount</p>
-                </td>
+                <td>$colors</td>
+                <td class="last"></td>
                 <td></td>
             </tr>
             </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    String
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_name">name</a>()
+        
+                                            <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_*
+constants</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_pixelDefinition">pixelDefinition</a>()
+        
+                                            <p>Returns an array containing ColorInterface::COLOR_* constants that
+define the structure of colors for a pixel.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_supportsAlpha">supportsAlpha</a>()
+        
+                                            <p>Tells if alpha channel is supported in this palette</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_useProfile">useProfile</a>(<a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)
+        
+                                            <p>Attachs an ICC profile to this Palette.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_profile">profile</a>()
+        
+                                            <p>Returns the ICC profile attached to this Palette.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_color">color</a>(string|array|integer $color, integer|null $alpha = null)
+        
+                                            <p>Returns a color given some values</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_blend">blend</a>(<a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color1, <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color2, float $amount)
+        
+                                            <p>Blend two colors given an amount</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
 
 
         <h2>Details</h2>
 
-                        <h3 id="method___construct">
-        <div class="location">at line 37</div>
-        <code>            public            
-    <strong>__construct</strong>()</code>
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 37</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
     </h3>
     <div class="details">
-        <p>
-</p>
-        <p>
-</p>
-        <div class="tags">
+            
+    
+
+                <div class="tags">
             
             
             
                     </div>
     </div>
 
-                <h3 id="method_name">
-        <div class="location">at line 45</div>
-        <code>            public            String
-    <strong>name</strong>()</code>
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_name">
+        <div class="location">at         line 45</div>
+        <code>                    String
+    <strong>name</strong>()
+        </code>
     </h3>
     <div class="details">
-        <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_* constants</p>
-        <p>
-</p>
-        <div class="tags">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_*
+constants</p>                                                </div>
+                <div class="tags">
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>String</td>
-            <td>
-</td>
+            <td></td>
         </tr>
     </table>
 
@@ -162,24 +244,29 @@
                     </div>
     </div>
 
-                <h3 id="method_pixelDefinition">
-        <div class="location">at line 53</div>
-        <code>            public            array
-    <strong>pixelDefinition</strong>()</code>
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_pixelDefinition">
+        <div class="location">at         line 53</div>
+        <code>                    array
+    <strong>pixelDefinition</strong>()
+        </code>
     </h3>
     <div class="details">
-        <p>Returns an array containing ColorInterface::COLOR_* constants that define the structure of colors for a pixel.</p>
-        <p>
-</p>
-        <div class="tags">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array containing ColorInterface::COLOR_* constants that
+define the structure of colors for a pixel.</p>                                                </div>
+                <div class="tags">
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>array</td>
-            <td>
-</td>
+            <td></td>
         </tr>
     </table>
 
@@ -188,24 +275,28 @@
                     </div>
     </div>
 
-                <h3 id="method_supportsAlpha">
-        <div class="location">at line 65</div>
-        <code>            public            Boolean
-    <strong>supportsAlpha</strong>()</code>
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_supportsAlpha">
+        <div class="location">at         line 65</div>
+        <code>                    Boolean
+    <strong>supportsAlpha</strong>()
+        </code>
     </h3>
     <div class="details">
-        <p>Tells if alpha channel is supported in this palette</p>
-        <p>
-</p>
-        <div class="tags">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Tells if alpha channel is supported in this palette</p>                                                </div>
+                <div class="tags">
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>Boolean</td>
-            <td>
-</td>
+            <td></td>
         </tr>
     </table>
 
@@ -214,34 +305,38 @@
                     </div>
     </div>
 
-                <h3 id="method_useProfile">
-        <div class="location">at line 73</div>
-        <code>            public            <a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
-    <strong>useProfile</strong>(<a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)</code>
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_useProfile">
+        <div class="location">at         line 73</div>
+        <code>                    <a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
+    <strong>useProfile</strong>(<a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)
+        </code>
     </h3>
     <div class="details">
-        <p>Attachs an ICC profile to this Palette.</p>
-        <p>(A default profile is provided by default)</p>
-        <div class="tags">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Attachs an ICC profile to this Palette.</p>                    <p>(A default profile is provided by default)</p>                            </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td><a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a></td>
                 <td>$profile</td>
-                <td>
-</td>
+                <td></td>
             </tr>
             </table>
 
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td><a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a></td>
-            <td>
-</td>
+            <td></td>
         </tr>
     </table>
 
@@ -250,24 +345,28 @@
                     </div>
     </div>
 
-                <h3 id="method_profile">
-        <div class="location">at line 83</div>
-        <code>            public            <a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a>
-    <strong>profile</strong>()</code>
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_profile">
+        <div class="location">at         line 83</div>
+        <code>                    <a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a>
+    <strong>profile</strong>()
+        </code>
     </h3>
     <div class="details">
-        <p>Returns the ICC profile attached to this Palette.</p>
-        <p>
-</p>
-        <div class="tags">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the ICC profile attached to this Palette.</p>                                                </div>
+                <div class="tags">
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td><a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a></td>
-            <td>
-</td>
+            <td></td>
         </tr>
     </table>
 
@@ -276,19 +375,24 @@
                     </div>
     </div>
 
-                <h3 id="method_color">
-        <div class="location">at line 95</div>
-        <code>            public            <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
-    <strong>color</strong>(string|array|integer $color, integer|null $alpha = null)</code>
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_color">
+        <div class="location">at         line 95</div>
+        <code>                    <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
+    <strong>color</strong>(string|array|integer $color, integer|null $alpha = null)
+        </code>
     </h3>
     <div class="details">
-        <p>Returns a color given some values</p>
-        <p>
-</p>
-        <div class="tags">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a color given some values</p>                                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td>string|array|integer</td>
                 <td>$color</td>
@@ -304,21 +408,21 @@
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td><a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a></td>
-            <td>
-</td>
+            <td></td>
         </tr>
     </table>
 
             
                             <h4>Exceptions</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
-                <td><a href="http://php.net/InvalidArgumentException"><abbr title="InvalidArgumentException">InvalidArgumentException</abbr></a></td>
-                <td>In case you pass an alpha value to a Palette that does not support alpha</td>
+                <td><a href="../../../Imagine/Exception/InvalidArgumentException.html"><abbr title="Imagine\Exception\InvalidArgumentException">InvalidArgumentException</abbr></a></td>
+                <td>In case you pass an alpha value to a
+                                 Palette that does not support alpha</td>
             </tr>
             </table>
 
@@ -326,30 +430,33 @@
                     </div>
     </div>
 
-                <h3 id="method_blend">
-        <div class="location">at line 114</div>
-        <code>            public            <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
-    <strong>blend</strong>(<a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color1, <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color2, float $amount)</code>
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_blend">
+        <div class="location">at         line 114</div>
+        <code>                    <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
+    <strong>blend</strong>(<a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color1, <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color2, float $amount)
+        </code>
     </h3>
     <div class="details">
-        <p>Blend two colors given an amount</p>
-        <p>
-</p>
-        <div class="tags">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Blend two colors given an amount</p>                                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td><a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a></td>
                 <td>$color1</td>
-                <td>
-</td>
+                <td></td>
             </tr>
                     <tr>
                 <td><a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a></td>
                 <td>$color2</td>
-                <td>
-</td>
+                <td></td>
             </tr>
                     <tr>
                 <td>float</td>
@@ -361,11 +468,10 @@
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td><a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a></td>
-            <td>
-</td>
+            <td></td>
         </tr>
     </table>
 
@@ -374,10 +480,17 @@
                     </div>
     </div>
 
+            </div>
+            </div>
+
     
             </div>
-            <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
     </div>
     </body>
+
 </html>

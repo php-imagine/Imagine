@@ -43,9 +43,10 @@ If you modify Imagine API, please update the API documentation by running at the
 
 .. code-block:: bash
 
+    cd docs/_build
     curl -s http://getcomposer.org/installer | php
-    php composer.phar install --dev
-    bin/sami.php update docs/sami_configuration.php -v
+    php composer.phar install
+    php composer.phar update-docs
 
 and commit the updated files in the *docs/API/* folder.
 
