@@ -858,14 +858,12 @@ final class Image extends AbstractImage
         $typeMapping = array(
             // We use Matte variants to preserve alpha
             //
-            // (the constants \Imagick::IMGTYPE_TRUECOLORMATTE and \Imagick::IMGTYPE_GRAYSCALEMATTE do not exist anymore in Imagick 7,
-            // to fix this the former values are hard coded here, the documentation under http://php.net/manual/en/imagick.settype.php
-            // doesn't tell us which constants to use and the alternative constants listed under
-            // https://pecl.php.net/package/imagick/3.4.3RC1 do not exist either, so we found no other way to fix it as to hard code
-            // the values here)
-            PaletteInterface::PALETTE_CMYK      => defined('\Imagick::IMGTYPE_TRUECOLORMATTE') ? \Imagick::IMGTYPE_TRUECOLORMATTE : 7,
-            PaletteInterface::PALETTE_RGB       => defined('\Imagick::IMGTYPE_TRUECOLORMATTE') ? \Imagick::IMGTYPE_TRUECOLORMATTE : 7,
-            PaletteInterface::PALETTE_GRAYSCALE => defined('\Imagick::IMGTYPE_GRAYSCALEMATTE') ? \Imagick::IMGTYPE_GRAYSCALEMATTE : 3,
+            // (the IMGTYPE_...ALPHA constants are only available since ImageMagick 7 and Imagick 3.4.3, previously they were named
+            // IMGTYPE_...MATTE but in some combinations of different Imagick and ImageMagick versions none of them are avaiable at all,
+            // so we found no other way to fix it as to hard code the values here)
+            PaletteInterface::PALETTE_CMYK      => defined('\Imagick::IMGTYPE_TRUECOLORALPHA') ? \Imagick::IMGTYPE_TRUECOLORALPHA : (defined('\Imagick::IMGTYPE_TRUECOLORMATTE') ? \Imagick::IMGTYPE_TRUECOLORMATTE : 7),
+            PaletteInterface::PALETTE_RGB       => defined('\Imagick::IMGTYPE_TRUECOLORALPHA') ? \Imagick::IMGTYPE_TRUECOLORALPHA : (defined('\Imagick::IMGTYPE_TRUECOLORMATTE') ? \Imagick::IMGTYPE_TRUECOLORMATTE : 7),
+            PaletteInterface::PALETTE_GRAYSCALE => defined('\Imagick::IMGTYPE_GRAYSCALEALPHA') ? \Imagick::IMGTYPE_GRAYSCALEALPHA : (defined('\Imagick::IMGTYPE_GRAYSCALEMATTE') ? \Imagick::IMGTYPE_GRAYSCALEMATTE : 3),
         );
 
         if (!isset(static::$colorspaceMapping[$palette->name()])) {
