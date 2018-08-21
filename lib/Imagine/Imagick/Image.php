@@ -613,11 +613,6 @@ final class Image extends AbstractImage
                 $this->profile($this->palette->profile());
             }
 
-            if (!$this->detectProfilesSupport()) {
-                trigger_error('For changing palettes, color profile support should be enabled, compile ImageMagick with `--with-lcms2` option.', E_USER_WARNING);
-                $this->imagick->transformImageColorspace(static::$colorspaceMapping[$palette->name()]);
-            }
-
             $this->profile($palette->profile());
             $this->setColorspace($palette);
         } catch (\ImagickException $e) {
@@ -640,6 +635,10 @@ final class Image extends AbstractImage
      */
     public function profile(ProfileInterface $profile)
     {
+        if (!$this->detectProfilesSupport()) {
+            throw new RuntimeException(sprintf('Unable to add profile %s to image, be sure to compile imagemagick with `--with-lcms2` option', $profile->name()));
+        }
+
         try {
             $this->imagick->profileImage('icc', $profile->data());
         } catch (\ImagickException $e) {
