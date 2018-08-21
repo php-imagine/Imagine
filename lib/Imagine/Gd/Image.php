@@ -549,44 +549,59 @@ final class Image extends AbstractImage
         $save = 'image'.$format;
         $args = array(&$this->resource, $filename);
 
-        // Preserve BC until version 1.0
-        if (isset($options['quality']) && !isset($options['png_compression_level'])) {
-            $options['png_compression_level'] = round((100 - $options['quality']) * 9 / 100);
-        }
-        if (isset($options['filters']) && !isset($options['png_compression_filter'])) {
-            $options['png_compression_filter'] = $options['filters'];
-        }
-
-        $options = $this->updateSaveOptions($options);
-
-        if ($format === 'jpeg' && isset($options['jpeg_quality'])) {
-            $args[] = $options['jpeg_quality'];
-        }
-
-        if ($format === 'png') {
-            if (isset($options['png_compression_level'])) {
-                if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
-                    throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
+        switch ($format) {
+            case 'jpeg':
+                if (!isset($options['jpeg_quality'])) {
+                    if (isset($options['quality'])) {
+                        $options['jpeg_quality'] = $options['quality'];
+                    }
                 }
-                $args[] = $options['png_compression_level'];
-            } else {
-                $args[] = -1; // use default level
-            }
-
-            if (isset($options['png_compression_filter'])) {
-                if (~PNG_ALL_FILTERS & $options['png_compression_filter']) {
-                    throw new InvalidArgumentException('png_compression_filter option should be a combination of the PNG_FILTER_XXX constants');
+                if (isset($options['jpeg_quality'])) {
+                    $args[] = $options['jpeg_quality'];
                 }
-                $args[] = $options['png_compression_filter'];
-            }
-        }
-
-        if (($format === 'webp') && isset($options['webp_quality'])) {
-            $args[] = $options['webp_quality'];
-        }
-
-        if (($format === 'wbmp' || $format === 'xbm') && isset($options['foreground'])) {
-            $args[] = $options['foreground'];
+                break;
+            case 'png':
+                if (!isset($options['png_compression_level'])) {
+                    if (isset($options['quality'])) {
+                        $options['png_compression_level'] = round((100 - $options['quality']) * 9 / 100);
+                    }
+                }
+                if (isset($options['png_compression_level'])) {
+                    if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
+                        throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
+                    }
+                    $args[] = $options['png_compression_level'];
+                } else {
+                    $args[] = -1; // use default level
+                }
+                if (!isset($options['png_compression_filter'])) {
+                    if (isset($options['filters'])) {
+                        $options['png_compression_filter'] = $options['filters'];
+                    }
+                }
+                if (isset($options['png_compression_filter'])) {
+                    if (~PNG_ALL_FILTERS & $options['png_compression_filter']) {
+                        throw new InvalidArgumentException('png_compression_filter option should be a combination of the PNG_FILTER_XXX constants');
+                    }
+                    $args[] = $options['png_compression_filter'];
+                }
+                break;
+            case 'wbmp':
+            case 'xbm':
+                if (isset($options['foreground'])) {
+                    $args[] = $options['foreground'];
+                }
+                break;
+            case 'webp':
+                if (!isset($options['webp_quality'])) {
+                    if (isset($options['quality'])) {
+                        $options['webp_quality'] = $options['quality'];
+                    }
+                }
+                if ($options['webp_quality'] < 0 || $options['webp_quality'] > 100) {
+                    throw new InvalidArgumentException('webp_quality option should be an integer from 0 to 100');
+                }
+                break;
         }
 
         $this->withExceptionHandler(function() use($save, $args) {
@@ -690,13 +705,13 @@ final class Image extends AbstractImage
      */
     private function supported($format = null)
     {
-        $formats = array('gif', 'jpeg', 'png', 'wbmp', 'webp', 'xbm');
+        $formats = self::getSupportedFormats();
 
         if (null === $format) {
-            return $formats;
+            return array_keys($formats);
         }
 
-        return in_array($format, $formats);
+        return is_string($format) && isset($formats[$format]);
     }
 
     private function withExceptionHandler($callback)
@@ -736,20 +751,29 @@ final class Image extends AbstractImage
     private function getMimeType($format)
     {
         $format = $this->normalizeFormat($format);
+        $formats = self::getSupportedFormats();
 
-        if (!$this->supported($format)) {
+        if (!isset($formats[$format])) {
             throw new RuntimeException('Invalid format');
         }
 
-        static $mimeTypes = array(
-            'jpeg' => 'image/jpeg',
-            'gif'  => 'image/gif',
-            'png'  => 'image/png',
-            'wbmp' => 'image/vnd.wap.wbmp',
-            'webp' => 'image/webp',
-            'xbm'  => 'image/xbm',
+        return $formats[$format]['mimeType'];
+    }
+
+    /**
+     * @return array
+     */
+    private static function getSupportedFormats()
+    {
+        static $supportedFormats = array(
+            'gif' => array('mimeType' => 'image/gif'),
+            'jpeg' => array('mimeType' => 'image/jpeg'),
+            'png' => array('mimeType' => 'image/png'),
+            'wbmp' => array('mimeType' => 'image/vnd.wap.wbmp'),
+            'webp' => array('mimeType' => 'image/webp'),
+            'xbm' => array('mimeType' => 'image/xbm'),
         );
 
-        return $mimeTypes[$format];
+        return $supportedFormats;
     }
 }
