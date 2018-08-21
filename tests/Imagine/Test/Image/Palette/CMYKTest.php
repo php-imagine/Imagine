@@ -38,7 +38,7 @@ class CMYKTest extends AbstractPaletteTest
 
     public function testColorWithDifferentAlphasAreNotSame($color = null, $alpha = null)
     {
-        $this->markTestSkipped('CMYK does not support alpha');
+        $this->markTestSkipped('CMYK color does not support alpha');
     }
 
     public function provideColorsForBlending()

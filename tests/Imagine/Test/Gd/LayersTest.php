@@ -73,22 +73,22 @@ class LayersTest extends AbstractLayersTest
 
     public function testLayerArrayAccessInvalidArgumentExceptions($offset = null)
     {
-        $this->markTestSkipped('Gd does not fully support layers array access');
+        $this->markTestSkipped('GD driver does not fully support layers array access');
     }
 
     public function testLayerArrayAccessOutOfBoundsExceptions($offset = null)
     {
-        $this->markTestSkipped('Gd does not fully support layers array access');
+        $this->markTestSkipped('GD driver does not fully support layers array access');
     }
 
     public function testAnimateEmpty()
     {
-        $this->markTestSkipped('Gd does not support animated gifs');
+        $this->markTestSkipped('GD driver does not support animated gifs');
     }
 
     public function testAnimateLoaded()
     {
-        $this->markTestSkipped('Gd does not support animated gifs');
+        $this->markTestSkipped('GD driver does not support animated gifs');
     }
 
     /**
@@ -96,7 +96,7 @@ class LayersTest extends AbstractLayersTest
      */
     public function testAnimateWithParameters($delay, $loops)
     {
-        $this->markTestSkipped('Gd does not support animated gifs');
+        $this->markTestSkipped('GD driver does not support animated gifs');
     }
 
     /**
@@ -104,7 +104,7 @@ class LayersTest extends AbstractLayersTest
      */
     public function testAnimateWithWrongParameters($delay, $loops)
     {
-        $this->markTestSkipped('Gd does not support animated gifs');
+        $this->markTestSkipped('GD driver does not support animated gifs');
     }
 
     public function getImage($path = null)

@@ -72,7 +72,7 @@ class ImageTest extends AbstractImageTest
 
     public function testPaletteIsGrayIfGrayImage()
     {
-        $this->markTestSkipped('Gd does not support Gray colorspace');
+        $this->markTestSkipped('GD driver does not support Gray colorspace');
     }
 
     public function testPaletteIsCMYKIfCMYKImage()
@@ -125,7 +125,7 @@ class ImageTest extends AbstractImageTest
      */
     public function testResolutionOnSave($source)
     {
-        $this->markTestSkipped('Gd only supports 72 dpi resolution');
+        $this->markTestSkipped('GD driver only supports 72 dpi resolution');
     }
 
     protected function getImageResolution(ImageInterface $image)

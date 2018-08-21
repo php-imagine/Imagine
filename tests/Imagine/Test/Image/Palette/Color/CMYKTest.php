@@ -34,12 +34,12 @@ class CMYKTest extends AbstractColorTest
 
     public function testIsNotOpaque($color = null)
     {
-        $this->markTestSkipped('CMYK color can not be not opaque');
+        $this->markTestSkipped('CMYK color does not support alpha');
     }
 
     public function provideNotOpaqueColors()
     {
-        $this->markTestSkipped('CMYK color can not be not opaque');
+        $this->markTestSkipped('CMYK color does not support alpha');
     }
 
     public function provideGrayscaleData()
