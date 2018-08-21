@@ -127,47 +127,6 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif');
     }
 
-    /**
-     * @dataProvider provideFromAndToPalettes
-     */
-    public function testUsePalette($from, $to, $color)
-    {
-        if (!$this->supportProfiles()) {
-
-            if ($from === 'Imagine\Image\Palette\Grayscale' && $to === 'Imagine\Image\Palette\RGB') {
-                $this->markTestSkipped('The installed ImageMagick version does not support ICC profiles');
-                return;
-            }
-
-            // Ignore the missing profiles support warning
-            @parent::testUsePalette($from, $to, $color);
-
-        }
-        else {
-            parent::testUsePalette($from, $to, $color);
-        }
-    }
-
-    public function testChangeColorSpaceAndStripImage()
-    {
-        if ($this->supportProfiles()) {
-            parent::testChangeColorSpaceAndStripImage();
-        }
-        else {
-            $this->markTestSkipped('The installed ImageMagick version does not support ICC profiles');
-        }
-    }
-
-    public function testStripGBRImageHasGoodColors()
-    {
-        if ($this->supportProfiles()) {
-            parent::testStripGBRImageHasGoodColors();
-        }
-        else {
-            $this->markTestSkipped('The installed ImageMagick version does not support ICC profiles');
-        }
-    }
-
     protected function supportMultipleLayers()
     {
         return true;
@@ -176,21 +135,5 @@ class ImageTest extends AbstractImageTest
     protected function getImageResolution(ImageInterface $image)
     {
         return $image->getImagick()->getImageResolution();
-    }
-
-    private function supportProfiles()
-    {
-        try {
-            $image = new \Imagick();
-            $image->newImage(1, 1, new \ImagickPixel('#fff'));
-            $image->profileImage('icc', 'x');
-        }
-        catch (\ImagickException $exception) {
-            // If ImageMagick has support for profiles,
-            // it detects the invalid profile data 'x' and throws an exception.
-            return true;
-        }
-
-        return false;
     }
 }

@@ -148,22 +148,22 @@ abstract class AbstractImageTest extends ImagineTestCase
             array(
                 'Imagine\Image\Palette\RGB',
                 'Imagine\Image\Palette\CMYK',
-                array(10, 20, 30),
+                array(10, 10, 10),
             ),
             array(
                 'Imagine\Image\Palette\RGB',
                 'Imagine\Image\Palette\Grayscale',
-                array(10, 20, 30),
+                array(10, 10, 10),
             ),
             array(
                 'Imagine\Image\Palette\CMYK',
                 'Imagine\Image\Palette\RGB',
-                array(10, 20, 30, 0),
+                array(10, 10, 10, 0),
             ),
             array(
                 'Imagine\Image\Palette\CMYK',
                 'Imagine\Image\Palette\Grayscale',
-                array(10, 20, 30, 0),
+                array(10, 10, 10, 0),
             ),
             array(
                 'Imagine\Image\Palette\Grayscale',
