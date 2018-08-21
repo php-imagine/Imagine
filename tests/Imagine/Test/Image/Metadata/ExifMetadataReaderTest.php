@@ -48,4 +48,10 @@ class ExifMetadataReaderTest extends MetadataReaderTestCase
         $this->assertTrue(isset($metadata['ifd0.Orientation']));
         $this->assertEquals(6, $metadata['ifd0.Orientation']);
     }
+
+    public function testReadingUnsupportedFile()
+    {
+        $metadata = $this->getReader()->readData('not valid');
+        $this->assertSame(0, $metadata->count());
+    }
 }

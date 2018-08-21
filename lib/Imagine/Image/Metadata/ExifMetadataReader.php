@@ -85,11 +85,18 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     private function extract($path)
     {
-        try {
-            if (false === $exifData = @exif_read_data($path, null, true, false)) {
-                return array();
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            if (error_reporting() !== 0) {
+                throw new \Exception($errstr, $errno);
             }
+        }, E_WARNING | E_NOTICE);
+        try {
+            $exifData = @exif_read_data($path, null, true, false);
         } catch (\Exception $e) {
+            $exifData = false;
+        }
+        restore_error_handler();
+        if ($exifData === false) {
             return array();
         }
 
