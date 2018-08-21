@@ -684,60 +684,76 @@ final class Image extends AbstractImage
 
         $format = strtolower($format);
 
-        $options = $this->updateSaveOptions($options);
-
-        if (isset($options['jpeg_quality']) && in_array($format, array('jpeg', 'jpg', 'pjpeg'))) {
-            $image->setImageCompressionQuality($options['jpeg_quality']);
-        }
-
-        if (isset($options['webp_quality']) && in_array($format, array('webp'))) {
-            $image->setImageCompressionQuality($options['webp_quality']);
-        }
-
-        if (isset($options['webp_lossless']) && in_array($format, array('webp'))) {
-            $image->setOption('webp:lossless', $options['webp_lossless']);
-        }
-
-        if ((isset($options['png_compression_level']) || isset($options['png_compression_filter'])) && $format === 'png') {
-            // first digit: compression level (default: 7)
-            if (isset($options['png_compression_level'])) {
-                if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
-                    throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
+        switch ($format) {
+            case 'jpeg':
+            case 'jpg':
+            case 'pjpeg':
+                if (!isset($options['jpeg_quality'])) {
+                    if (isset($options['quality'])) {
+                        $options['jpeg_quality'] = $options['quality'];
+                    }
                 }
-                $compression = $options['png_compression_level'] * 10;
-            } else {
-                $compression = 70;
-            }
-
-            // second digit: compression filter (default: 5)
-            if (isset($options['png_compression_filter'])) {
-                if ($options['png_compression_filter'] < 0 || $options['png_compression_filter'] > 9) {
-                    throw new InvalidArgumentException('png_compression_filter option should be an integer from 0 to 9');
+                if (isset($options['jpeg_quality'])) {
+                    $image->setImageCompressionQuality($options['jpeg_quality']);
                 }
-                $compression += $options['png_compression_filter'];
-            } else {
-                $compression += 5;
-            }
-
-            $image->setImageCompressionQuality($compression);
+                break;
+            case 'png':
+                if (!isset($options['png_compression_level'])) {
+                    if (isset($options['quality'])) {
+                        $options['png_compression_level'] = round((100 - $options['quality']) * 9 / 100);
+                    }
+                }
+                if (isset($options['png_compression_level'])) {
+                    if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
+                        throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
+                    }
+                }
+                if (isset($options['png_compression_filter'])) {
+                    if ($options['png_compression_filter'] < 0 || $options['png_compression_filter'] > 9) {
+                        throw new InvalidArgumentException('png_compression_filter option should be an integer from 0 to 9');
+                    }
+                }
+                if (isset($options['png_compression_level']) || isset($options['png_compression_filter'])) {
+                    // first digit: compression level (default: 7)
+                    $compression = isset($options['png_compression_level']) ? $options['png_compression_level'] * 10 : 70;
+                    // second digit: compression filter (default: 5)
+                    $compression += isset($options['png_compression_filter']) ? $options['png_compression_filter'] : 5;
+                    $image->setImageCompressionQuality($compression);
+                }
+                break;
+            case 'webp':
+                if (!isset($options['webp_quality'])) {
+                    if (isset($options['quality'])) {
+                        $options['webp_quality'] = $options['quality'];
+                    }
+                }
+                if (isset($options['webp_quality'])) {
+                    $image->setImageCompressionQuality($options['webp_quality']);
+                }
+                if (isset($options['webp_lossless'])) {
+                    $image->setOption('webp:lossless', $options['webp_lossless']);
+                }
+                break;
         }
-
         if (isset($options['resolution-units']) && isset($options['resolution-x']) && isset($options['resolution-y'])) {
-            if ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
-                $image->setImageUnits(\Imagick::RESOLUTION_PIXELSPERCENTIMETER);
-            } elseif ($options['resolution-units'] == ImageInterface::RESOLUTION_PIXELSPERINCH) {
-                $image->setImageUnits(\Imagick::RESOLUTION_PIXELSPERINCH);
+            if (empty($options['resampling-filter'])) {
+                $filterName = ImageInterface::FILTER_UNDEFINED;
             } else {
-                throw new RuntimeException('Unsupported image unit format');
+                $filterName = $options['resampling-filter'];
             }
-
-            $filter = ImageInterface::FILTER_UNDEFINED;
-            if (!empty($options['resampling-filter'])) {
-                $filter = $options['resampling-filter'];
+            $filter = $this->getFilter($filterName);
+            switch ($options['resolution-units']) {
+                case ImageInterface::RESOLUTION_PIXELSPERCENTIMETER:
+                    $image->setImageUnits(\Imagick::RESOLUTION_PIXELSPERCENTIMETER);
+                    break;
+                case ImageInterface::RESOLUTION_PIXELSPERINCH:
+                    $image->setImageUnits(\Imagick::RESOLUTION_PIXELSPERINCH);
+                    break;
+                default:
+                    throw new RuntimeException('Unsupported image unit format');
             }
-
             $image->setImageResolution($options['resolution-x'], $options['resolution-y']);
-            $image->resampleImage($options['resolution-x'], $options['resolution-y'], $this->getFilter($filter), 0);
+            $image->resampleImage($options['resolution-x'], $options['resolution-y'], $filter, 0);
         }
     }
 
