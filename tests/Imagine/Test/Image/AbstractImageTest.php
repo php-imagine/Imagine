@@ -774,6 +774,23 @@ abstract class AbstractImageTest extends ImagineTestCase
         );
     }
 
+    public function testJpegSamplingFactors()
+    {
+        $image = $this->getImagine()->open('tests/Imagine/Fixtures/large.jpg');
+
+        $samplings = array(
+            array(1, 1, 1),
+            array(2, 1, 1),
+        );
+
+        foreach($samplings as $sampling) {
+            $image->save(__DIR__ . '/tmp.jpg', array('jpeg_sampling_factors' => $sampling));
+            $this->assertEquals($sampling, $this->getSamplingFactors($image));
+        }
+
+        unlink(__DIR__ . '/tmp.jpg');
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()
@@ -813,4 +830,9 @@ abstract class AbstractImageTest extends ImagineTestCase
      * @return boolean
      */
     abstract protected function supportMultipleLayers();
+
+    /**
+     * @return array
+     */
+    abstract protected function getSamplingFactors(ImageInterface $image);
 }
