@@ -174,8 +174,8 @@ operation fails</p>                </div>
                     <a href="#method_save">save</a>(string $path = null, array $options = array())
         
                                             <p>Saves the image at a specified path, the target file extension is used
-to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are
-supported</p>                </div>
+to determine file format, only jpg, jpeg, gif, png, wbmp, xbm, webp and bmp are
+supported.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -530,7 +530,7 @@ operation fails</p>                    <p>Returns source image</p>              
             </div>
                     <div class="method-item">
                     <h3 id="method_save">
-        <div class="location">at         line 107</div>
+        <div class="location">at         line 108</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>save</strong>(string $path = null, array $options = array())
         </code>
@@ -541,8 +541,8 @@ operation fails</p>                    <p>Returns source image</p>              
 
                     <div class="method-description">
                                     <p>Saves the image at a specified path, the target file extension is used
-to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are
-supported</p>                                                </div>
+to determine file format, only jpg, jpeg, gif, png, wbmp, xbm, webp and bmp are
+supported.</p>                    <p>Please remark that bmp is supported by the GD driver only since PHP 7.2.</p>                            </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -586,7 +586,7 @@ supported</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_show">
-        <div class="location">at         line 119</div>
+        <div class="location">at         line 120</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>show</strong>(string $format, array $options = array())
         </code>
@@ -640,7 +640,7 @@ supported</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_flipHorizontally">
-        <div class="location">at         line 128</div>
+        <div class="location">at         line 129</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipHorizontally</strong>()
         </code>
@@ -679,7 +679,7 @@ supported</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_flipVertically">
-        <div class="location">at         line 137</div>
+        <div class="location">at         line 138</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>flipVertically</strong>()
         </code>
@@ -718,7 +718,7 @@ supported</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_strip">
-        <div class="location">at         line 146</div>
+        <div class="location">at         line 147</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>strip</strong>()
         </code>
@@ -757,7 +757,7 @@ supported</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_thumbnail">
-        <div class="location">at         line 160</div>
+        <div class="location">at         line 161</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = self::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         </code>
@@ -817,7 +817,7 @@ Returns it as a new image, doesn't modify the current image</p>                 
             </div>
                     <div class="method-item">
                     <h3 id="method_applyMask">
-        <div class="location">at         line 169</div>
+        <div class="location">at         line 170</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>applyMask</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $mask)
         </code>
@@ -857,7 +857,7 @@ Returns it as a new image, doesn't modify the current image</p>                 
             </div>
                     <div class="method-item">
                     <h3 id="method_fill">
-        <div class="location">at         line 180</div>
+        <div class="location">at         line 181</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>fill</strong>(<a href="../../Imagine/Image/Fill/FillInterface.html"><abbr title="Imagine\Image\Fill\FillInterface">FillInterface</abbr></a> $fill)
         </code>
