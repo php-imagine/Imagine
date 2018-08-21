@@ -52,12 +52,14 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testPaletteAssociatedIsRelatedToGivenColor($paletteClass, $input)
     {
         $palette = new $paletteClass();
+        /* @var \Imagine\Image\Palette\PaletteInterface $palette */
+        $palette->profile();
 
         $image = $this
             ->getImagine()
             ->create(new Box(10, 10), $palette->color($input));
 
-        $this->assertEquals($palette, $image->palette());
+            $this->assertEquals($palette, $image->palette());
     }
 
     public function providePalettes()
