@@ -256,10 +256,13 @@ final class Image extends AbstractImage
      */
     public function get($format, array $options = array())
     {
-        ob_start();
-        $this->saveOrOutput($format, $options);
+        $stream = fopen('php://memory', 'wb+');
 
-        return ob_get_clean();
+        $this->saveOrOutput($format, $options, $stream);
+
+        rewind($stream);
+
+        return stream_get_contents($stream);
     }
 
     /**
@@ -531,14 +534,14 @@ final class Image extends AbstractImage
      *
      * Performs save or show operation using one of GD's image... functions
      *
-     * @param string $format
-     * @param array  $options
-     * @param string $filename
+     * @param string               $format
+     * @param array                $options
+     * @param string|resource|null $destination Outputs to STDOUT if null.
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    private function saveOrOutput($format, array $options, $filename = null)
+    private function saveOrOutput($format, array $options, $destination = null)
     {
         $format = $this->normalizeFormat($format);
 
@@ -547,7 +550,7 @@ final class Image extends AbstractImage
         }
 
         $save = 'image'.$format;
-        $args = array(&$this->resource, $filename);
+        $args = array(&$this->resource, $destination);
 
         switch ($format) {
             case 'jpeg':
