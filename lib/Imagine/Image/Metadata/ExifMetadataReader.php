@@ -11,7 +11,6 @@
 
 namespace Imagine\Image\Metadata;
 
-use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\File\LoaderInterface;
 use Imagine\File\Loader;
