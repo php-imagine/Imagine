@@ -550,6 +550,11 @@ final class Image extends AbstractImage
         $args = array(&$this->resource, $filename);
 
         switch ($format) {
+            case 'bmp':
+                if (isset($options['compressed'])) {
+                    $args[] = (bool) $options['compressed'];
+                }
+                break;
             case 'jpeg':
                 if (!isset($options['jpeg_quality'])) {
                     if (isset($options['quality'])) {
@@ -765,14 +770,21 @@ final class Image extends AbstractImage
      */
     private static function getSupportedFormats()
     {
-        static $supportedFormats = array(
-            'gif' => array('mimeType' => 'image/gif'),
-            'jpeg' => array('mimeType' => 'image/jpeg'),
-            'png' => array('mimeType' => 'image/png'),
-            'wbmp' => array('mimeType' => 'image/vnd.wap.wbmp'),
-            'webp' => array('mimeType' => 'image/webp'),
-            'xbm' => array('mimeType' => 'image/xbm'),
-        );
+        static $supportedFormats;
+        if (!isset($supportedFormats)) {
+            $supportedFormats = array(
+                'gif' => array('mimeType' => 'image/gif'),
+                'jpeg' => array('mimeType' => 'image/jpeg'),
+                'png' => array('mimeType' => 'image/png'),
+                'wbmp' => array('mimeType' => 'image/vnd.wap.wbmp'),
+                'webp' => array('mimeType' => 'image/webp'),
+                'xbm' => array('mimeType' => 'image/xbm'),
+            );
+            if (function_exists('imagebmp')) {
+                $supportedFormats['bmp'] = array('mimeType' => 'image/bmp');
+            }
+            ksort($supportedFormats);
+        }
 
         return $supportedFormats;
     }

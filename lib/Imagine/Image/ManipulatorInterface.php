@@ -94,8 +94,9 @@ interface ManipulatorInterface
 
     /**
      * Saves the image at a specified path, the target file extension is used
-     * to determine file format, only jpg, jpeg, gif, png, wbmp and xbm are
-     * supported
+     * to determine file format, only jpg, jpeg, gif, png, wbmp, xbm, webp and bmp are
+     * supported.
+     * Please remark that bmp is supported by the GD driver only since PHP 7.2.
      *
      * @param string $path
      * @param array  $options
