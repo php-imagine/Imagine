@@ -12,7 +12,6 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Image\AbstractFont;
-use Imagine\Image\Box;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
@@ -56,7 +55,7 @@ final class Font extends AbstractFont
 
         $info = $this->gmagick->queryfontmetrics($text, $string);
 
-        $box = new Box($info['textWidth'], $info['textHeight']);
+        $box = $this->getClassFactory()->createBox($info['textWidth'], $info['textHeight']);
 
         return $box;
     }

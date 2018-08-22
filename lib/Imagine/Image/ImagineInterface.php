@@ -13,12 +13,12 @@ namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Factory\ClassFactoryAwareInterface;
 
 /**
  * The imagine interface.
  */
-interface ImagineInterface
+interface ImagineInterface extends ClassFactoryAwareInterface
 {
     const VERSION = '0.7-dev';
 

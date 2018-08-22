@@ -16,6 +16,7 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Factory\ClassFactoryInterface;
 
 class Layers extends AbstractLayers
 {
@@ -63,7 +64,7 @@ class Layers extends AbstractLayers
      */
     public function current()
     {
-        return new Image($this->resource, $this->palette, new MetadataBag());
+        return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $this->resource, $this->palette, new MetadataBag());
     }
 
     /**
@@ -120,7 +121,7 @@ class Layers extends AbstractLayers
     public function offsetGet($offset)
     {
         if (0 === $offset) {
-            return new Image($this->resource, $this->palette, new MetadataBag());
+            return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $this->resource, $this->palette, new MetadataBag());
         }
 
         throw new RuntimeException('GD only supports one layer at offset 0');

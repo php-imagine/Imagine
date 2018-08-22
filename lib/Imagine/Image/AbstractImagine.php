@@ -15,11 +15,18 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Metadata\DefaultMetadataReader;
 use Imagine\Image\Metadata\ExifMetadataReader;
 use Imagine\Image\Metadata\MetadataReaderInterface;
+use Imagine\Factory\ClassFactoryInterface;
+use Imagine\Factory\ClassFactory;
 
 abstract class AbstractImagine implements ImagineInterface
 {
     /** @var MetadataReaderInterface */
     private $metadataReader;
+
+    /**
+     * @var \Imagine\Factory\ClassFactoryInterface|null
+     */
+    private $classFactory;
 
     /**
      * @param MetadataReaderInterface $metadataReader
@@ -39,14 +46,36 @@ abstract class AbstractImagine implements ImagineInterface
     public function getMetadataReader()
     {
         if (null === $this->metadataReader) {
-            if (ExifMetadataReader::isSupported()) {
-                $this->metadataReader = new ExifMetadataReader();
-            } else {
-                $this->metadataReader = new DefaultMetadataReader();
-            }
+            $this->metadataReader = $this->getClassFactory()->createMetadataReader();
         }
 
         return $this->metadataReader;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::setClassFactory()
+     */
+    public function setClassFactory(ClassFactoryInterface $classFactory)
+    {
+        $this->classFactory = $classFactory;
+
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::getClassFactory()
+     */
+    public function getClassFactory()
+    {
+        if ($this->classFactory === null) {
+            $this->classFactory = new ClassFactory();
+        }
+
+        return $this->classFactory;
     }
 
     /**
