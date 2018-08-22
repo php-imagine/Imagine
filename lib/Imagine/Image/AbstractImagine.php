@@ -11,15 +11,19 @@
 
 namespace Imagine\Image;
 
-use Imagine\Image\Metadata\DefaultMetadataReader;
-use Imagine\Image\Metadata\ExifMetadataReader;
 use Imagine\Image\Metadata\MetadataReaderInterface;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Factory\ClassFactoryInterface;
 
 abstract class AbstractImagine implements ImagineInterface
 {
     /** @var MetadataReaderInterface */
     private $metadataReader;
+
+    /**
+     * @var \Imagine\Factory\ClassFactoryInterface|null
+     */
+    private $classFactory;
 
     /**
      * @param MetadataReaderInterface $metadataReader
@@ -39,15 +43,44 @@ abstract class AbstractImagine implements ImagineInterface
     public function getMetadataReader()
     {
         if (null === $this->metadataReader) {
-            if (ExifMetadataReader::isSupported()) {
-                $this->metadataReader = new ExifMetadataReader();
-            } else {
-                $this->metadataReader = new DefaultMetadataReader();
-            }
+            $this->metadataReader = $this->getClassFactory()->createMetadataReader();
         }
 
         return $this->metadataReader;
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::setClassFactory()
+     */
+    public function setClassFactory(ClassFactoryInterface $classFactory)
+    {
+        $this->classFactory = $classFactory;
+
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::getClassFactory()
+     */
+    public function getClassFactory()
+    {
+        if ($this->classFactory === null) {
+            $this->classFactory = $this->createDefaultClassFactory();
+        }
+
+        return $this->classFactory;
+    }
+
+    /**
+     * Create an instance of the default class factory.
+     *
+     * @return \Imagine\Factory\ClassFactoryInterface
+     */
+    protected abstract function createDefaultClassFactory();
 
     /**
      * Checks a path that could be used with ImagineInterface::open and returns

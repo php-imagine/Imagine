@@ -11,8 +11,16 @@
 
 namespace Imagine\Image;
 
-abstract class AbstractLayers implements LayersInterface
+use Imagine\Factory\ClassFactoryAwareInterface;
+use Imagine\Factory\ClassFactoryInterface;
+
+abstract class AbstractLayers implements LayersInterface, ClassFactoryAwareInterface
 {
+    /**
+     * @var \Imagine\Factory\ClassFactoryInterface|null
+     */
+    private $classFactory;
+
     /**
      * {@inheritdoc}
      */
@@ -58,4 +66,37 @@ abstract class AbstractLayers implements LayersInterface
     {
         return isset($this[$offset]);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::setClassFactory()
+     */
+    public function setClassFactory(ClassFactoryInterface $classFactory)
+    {
+        $this->classFactory = $classFactory;
+
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::getClassFactory()
+     */
+    public function getClassFactory()
+    {
+        if ($this->classFactory === null) {
+            $this->classFactory = $this->createDefaultClassFactory();
+        }
+
+        return $this->classFactory;
+    }
+
+    /**
+     * Create an instance of the default class factory.
+     *
+     * @return \Imagine\Factory\ClassFactoryInterface
+     */
+    protected abstract function createDefaultClassFactory();
 }
