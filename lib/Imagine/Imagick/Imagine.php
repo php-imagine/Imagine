@@ -54,11 +54,16 @@ final class Imagine extends AbstractImagine
         $path = $loader->getPath();
 
         try {
-            $imagick = new \Imagick();
             if ($loader->isLocalFile()) {
-                // Don't pass the file name to the constructor - it may break PHP on Windows - see https://github.com/mkoppanen/imagick/issues/252
-                $imagick->readImageBlob($loader->getData(), $path);
+                if (DIRECTORY_SEPARATOR === '\\' && PHP_INT_SIZE === 8 && PHP_VERSION_ID >= 70100 && PHP_VERSION_ID < 70200) {
+                    $imagick = new \Imagick();
+                    // PHP 7.1 64 bit on Windows: don't pass the file name to the constructor: it may break PHP - see https://github.com/mkoppanen/imagick/issues/252
+                    $imagick->readImageBlob($loader->getData(), $path);
+                } else {
+                    $imagick = new \Imagick($loader->getPath());
+                }
             } else {
+                $imagick = new \Imagick();
                 $imagick->readImageBlob($loader->getData());
             }
             $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readFile($loader));
