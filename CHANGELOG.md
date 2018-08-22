@@ -63,7 +63,7 @@
     to previous Imagine\Image\Color constructor must be removed and use the
     palette provided by Imagine\Image\ImageInterface::getPalette to create
     colors.
-  * BC break : Animated GIF default delay is no longer 800ms but null. This 
+  * BC break : Animated GIF default delay is no longer 800ms but null. This
     avoids resettings a delay on animated image.
   * Add support for ICC profiles
   * Add support for CMYK and grayscale colorspace images.

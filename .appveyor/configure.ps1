@@ -55,7 +55,7 @@ if (Test-Path -PathType Leaf -Path "$phpInstallPath\php-installed.txt") {
 	New-Item -ItemType File -Path "$phpInstallPath\php-installed.txt" | Out-Null
 }
 Write-Output -InputObject 'Refreshing CA Certificates'
-Update-PhpCAInfo -Path $phpInstallPath -Verbose 
+Update-PhpCAInfo -Path $phpInstallPath -Verbose
 
 $Env:Path = $phpInstallPath + ';' + $Env:Path
 

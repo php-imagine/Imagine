@@ -20,7 +20,7 @@ cache:
 
 install:
   - ps: .\.appveyor\configure.ps1
-  - composer self-update      
+  - composer self-update
   - composer install --no-progress --no-suggest --optimize-autoloader --no-ansi --no-interaction %PREFER_LOWEST%
 
 build: off
