@@ -28,20 +28,21 @@ install:
             PHPUNIT_EXCLUDED_GROUPS=none
             if test "${IMAGINE_DRIVER}" = 'imagick'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},ext-imagick"; fi
             if test "${IMAGINE_DRIVER}" = 'gmagick'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},ext-gmagick"; fi
+            composer --no-interaction remove --dev --no-update --no-scripts friendsofphp/php-cs-fixer
             php --ri curl || true
             ;;
     esac
-  - composer install
+  - composer --no-interaction install
 
 script:
   - |
     set -o errexit
     case "${TRAVISOPERATION:-}" in
         codestyle)
-            composer codestyle
+            composer --no-interaction codestyle
             ;;
         *)
-            composer test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
+            composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
             ;;
     esac
 
