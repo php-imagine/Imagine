@@ -4,3 +4,5 @@ docs/_build/cache
 composer.lock
 vendor/
 bin/
+/.php_cs.cache
+/.php_cs
