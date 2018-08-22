@@ -23,12 +23,22 @@ abstract class AbstractClassFactoryTest extends ImagineTestCase
         $image = $imagine->create(new Box(1, 1));
         $this->assertSame($imagine->getClassFactory(), $image->getClassFactory());
         $palette = new RGB();
-        $font = $imagine->font(__FILE__, 1, $palette->color('#000000'));
-        $this->assertSame($imagine->getClassFactory(), $font->getClassFactory());
+        if ($this->canTestFont()) {
+            $font = $imagine->font(__FILE__, 1, $palette->color('#000000'));
+            $this->assertSame($imagine->getClassFactory(), $font->getClassFactory());
+        }
     }
 
     /**
      * @return \Imagine\Image\ImagineInterface
      */
     protected abstract function getImagine();
+
+    /**
+     * @return bool
+     */
+    protected function canTestFont()
+    {
+        return true;
+    }
 }

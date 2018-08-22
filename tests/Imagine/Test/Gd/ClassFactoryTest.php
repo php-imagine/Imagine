@@ -27,9 +27,20 @@ class ClassFactoryTest extends AbstractClassFactoryTest
             $this->markTestSkipped('Gd not installed');
         }
     }
-    
+
     protected function getImagine()
     {
         return new Imagine();
+    }
+
+    /**
+     * {@inheritdoc}
+     * @see \Imagine\Test\Factory\AbstractClassFactoryTest::canTestFont()
+     */
+    protected function canTestFont()
+    {
+        $info = gd_info();
+
+        return (bool) $info['FreeType Support'];
     }
 }
