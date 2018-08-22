@@ -67,7 +67,10 @@ final class Box implements BoxInterface
      */
     public function scale($ratio)
     {
-        return new self(round($ratio * $this->width), round($ratio * $this->height));
+        $width = max(1, round($ratio * $this->width));
+        $height = max(1, round($ratio * $this->height));
+
+        return new self($width, $height);
     }
 
     /**
