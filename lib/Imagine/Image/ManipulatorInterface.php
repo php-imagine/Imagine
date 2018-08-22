@@ -120,7 +120,7 @@ interface ManipulatorInterface
     public function show($format, array $options = array());
 
     /**
-     * Flips current image using horizontal axis
+     * Flips current image using vertical axis
      *
      * @throws RuntimeException
      *
@@ -129,7 +129,7 @@ interface ManipulatorInterface
     public function flipHorizontally();
 
     /**
-     * Flips current image using vertical axis
+     * Flips current image using horizontal axis
      *
      * @throws RuntimeException
      *
