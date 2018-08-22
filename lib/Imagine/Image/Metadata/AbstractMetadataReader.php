@@ -68,9 +68,11 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
                 $metadata['filepath'] = realpath($resource->getPath());
             }
         } elseif (false !== $data = @stream_get_meta_data($resource)) {
-            $metadata['uri'] = $data['uri'];
-            if (stream_is_local($resource)) {
-                $metadata['filepath'] = realpath($data['uri']);
+            if (isset($data['uri'])) {
+                $metadata['uri'] = $data['uri'];
+                if (stream_is_local($resource)) {
+                    $metadata['filepath'] = realpath($data['uri']);
+                }
             }
         }
 
