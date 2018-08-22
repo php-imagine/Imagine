@@ -23,7 +23,8 @@
   * Added jpeg_sampling_factors option when saving JPEG images (Gmagick/Imagick only) (@ausi)
   * Added BMP as supported image format (@mlocati)
   * Added support to new image type constants of Imagick (@ausi)
-  * Check that Imagick correctly supports profiles (@ausi) 
+  * Check that Imagick correctly supports profiles (@ausi)
+  * Fix creating Gmagick images with alpha colors when palette doesn't support alpha (@FractalizeR)
 
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)
