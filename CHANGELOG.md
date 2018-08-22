@@ -1,5 +1,30 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+  * Imagine is now tested under Windows too (@mlocati)
+  * Add support to webp image format (@chregu, @antoligy, @alexander-schranz)
+  * Add `Imagine\File\LoaderInterface` that allows loading remote images with any imaging driver (@mlocati).
+    You can use your own `LoaderInterface` implementation so that you can for instance use curl or any other library.
+  * Fixed some phpdoc issues.
+  * `flipHorizontally` and `flipVertically` methods of GD images is now much faster on PHP 5.5+ (@mlocati)
+  * Fixed loading of PNG indexed images with GD
+  * Loading indexed images with GD is now much faster on PHP 5.5+ (@mlocati)
+  * Added support to grayscale images with Gmagick (@mlocati)
+  * Added support to alpha channels of Gmagick images (@mlocati)
+  * Fixed `getColorAt` method of Gmagick images (@mlocati)
+  * Added `getTransformations` to the `Autorotate` filter, so that you can get the list of transformations that should be applied to an image accordingly to the EXIF metadata (@mlocati)
+  * The metadata reader now doesn't throw exceptions or warnings (@lentex, @mlocati)
+  * Fixed documentation (@ZhangChaoWN, @Mark-H, @mlocati)
+  * Fixed pixel range issue with GMagick image (@b-viguier)
+  * Fixed `text` drawer method on Windows when using relative font file paths (@mlocati)
+  * Fixed `box` font method on Windows when using relative font file paths (@mlocati)
+  * Fixed crash on Windows when loading an image with Imagick (@mlocati)
+  * Fixed generation of API documentation (@mlocati)
+  * Added jpeg_sampling_factors option when saving JPEG images (Gmagick/Imagick only) (@ausi)
+  * Added BMP as supported image format (@mlocati)
+  * Added support to new image type constants of Imagick (@ausi)
+  * Check that Imagick correctly supports profiles (@ausi) 
+
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)
 
