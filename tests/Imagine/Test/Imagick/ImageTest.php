@@ -65,20 +65,20 @@ class ImageTest extends AbstractImageTest
         // Crop to a 50x50 box from the image center
         $imagine->crop(new Point(15, 15), new Box(50, 50));
 
-        $colorPoints = [
+        $colorPoints = array(
             // Center
-            ['point' => new Point(22, 22), 'color' => $rgb->color('#000000', 100)],
+            array('point' => new Point(22, 22), 'color' => $rgb->color('#000000', 100)),
             // Corners
-            ['point' => new Point(5, 5), 'color' => $rgb->color('#FFFFFF', 30)],
-            ['point' => new Point(5, 39), 'color' => $rgb->color('#FFFFFF', 30)],
-            ['point' => new Point(39, 5), 'color' => $rgb->color('#FFFFFF', 30)],
-            ['point' => new Point(39, 39), 'color' => $rgb->color('#FFFFFF', 30)],
+            array('point' => new Point(5, 5), 'color' => $rgb->color('#FFFFFF', 30)),
+            array('point' => new Point(5, 39), 'color' => $rgb->color('#FFFFFF', 30)),
+            array('point' => new Point(39, 5), 'color' => $rgb->color('#FFFFFF', 30)),
+            array('point' => new Point(39, 39), 'color' => $rgb->color('#FFFFFF', 30)),
             // Side spikes of the rotated square
-            ['point' => new Point(5, 22), 'color' => $rgb->color('#000000', 100)],
-            ['point' => new Point(22, 5), 'color' => $rgb->color('#000000', 100)],
-            ['point' => new Point(39, 22), 'color' => $rgb->color('#000000', 100)],
-            ['point' => new Point(22, 22), 'color' => $rgb->color('#000000', 100)],
-        ];
+            array('point' => new Point(5, 22), 'color' => $rgb->color('#000000', 100)),
+            array('point' => new Point(22, 5), 'color' => $rgb->color('#000000', 100)),
+            array('point' => new Point(39, 22), 'color' => $rgb->color('#000000', 100)),
+            array('point' => new Point(22, 22), 'color' => $rgb->color('#000000', 100)),
+        );
 
         foreach ($colorPoints as $colorPoint) {
             /** @var Point $point */
