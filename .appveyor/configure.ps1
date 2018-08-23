@@ -60,11 +60,7 @@ Update-PhpCAInfo -Path $phpInstallPath -Verbose
 $Env:Path = $phpInstallPath + ';' + $Env:Path
 
 # Setup composer
-if (-Not(Test-Path -PathType Leaf -Path C:\tools\bin\composer.phar)) {
-	Write-Output -InputObject 'Downloading composer'
-	Invoke-WebRequest -Uri https://getcomposer.org/download/1.7.2/composer.phar -OutFile C:\tools\bin\composer.phar
-}
-If (-Not(Test-Path -PathType Leaf -Path C:\tools\bin\composer.bat)) {
-	Write-Output -InputObject 'Creating composer.bat'
-	Add-Content -Path C:\tools\bin\composer.bat -Value '@php "%~dpn0.phar" %*'
+if (-Not(Test-Path -PathType Leaf -Path C:\tools\bin\composer.bat)) {
+	Write-Output -InputObject 'Installing Composer'
+	Install-Composer -Path C:\tools\bin -PhpPath $phpInstallPath -NoAddToPath -Verbose
 }
