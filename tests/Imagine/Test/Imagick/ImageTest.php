@@ -53,12 +53,13 @@ class ImageTest extends AbstractImageTest
 
     public function testImageRotateAndCropUsesTheCorrectCanvas()
     {
+        $rgb = new RGB();
         // Create a single image 30x30 black
-        $imageColor = (new RGB())->color('#000000', 100);
+        $imageColor = $rgb->color('#000000', 100);
         $imagine = $this->getImagine()->create(new Box(30, 30), $imageColor);
 
         // Prepare for rotation: set the background color to white
-        $imageBackgroundColor = (new RGB())->color('#FFFFFF', 100);
+        $imageBackgroundColor = $rgb->color('#FFFFFF', 100);
         $imagine->rotate(45, $imageBackgroundColor);
 
         // Crop to a 50x50 box from the image center
@@ -66,17 +67,17 @@ class ImageTest extends AbstractImageTest
 
         $colorPoints = [
             // Center
-            ['point' => new Point(22, 22), 'color' => (new RGB())->color('#000000', 100)],
+            ['point' => new Point(22, 22), 'color' => $rgb->color('#000000', 100)],
             // Corners
-            ['point' => new Point(5, 5), 'color' => (new RGB())->color('#FFFFFF', 30)],
-            ['point' => new Point(5, 39), 'color' => (new RGB())->color('#FFFFFF', 30)],
-            ['point' => new Point(39, 5), 'color' => (new RGB())->color('#FFFFFF', 30)],
-            ['point' => new Point(39, 39), 'color' => (new RGB())->color('#FFFFFF', 30)],
+            ['point' => new Point(5, 5), 'color' => $rgb->color('#FFFFFF', 30)],
+            ['point' => new Point(5, 39), 'color' => $rgb->color('#FFFFFF', 30)],
+            ['point' => new Point(39, 5), 'color' => $rgb->color('#FFFFFF', 30)],
+            ['point' => new Point(39, 39), 'color' => $rgb->color('#FFFFFF', 30)],
             // Side spikes of the rotated square
-            ['point' => new Point(5, 22), 'color' => (new RGB())->color('#000000', 100)],
-            ['point' => new Point(22, 5), 'color' => (new RGB())->color('#000000', 100)],
-            ['point' => new Point(39, 22), 'color' => (new RGB())->color('#000000', 100)],
-            ['point' => new Point(22, 22), 'color' => (new RGB())->color('#000000', 100)],
+            ['point' => new Point(5, 22), 'color' => $rgb->color('#000000', 100)],
+            ['point' => new Point(22, 5), 'color' => $rgb->color('#000000', 100)],
+            ['point' => new Point(39, 22), 'color' => $rgb->color('#000000', 100)],
+            ['point' => new Point(22, 22), 'color' => $rgb->color('#000000', 100)],
         ];
 
         foreach ($colorPoints as $colorPoint) {
