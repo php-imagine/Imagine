@@ -13,7 +13,6 @@ namespace Imagine\Gd;
 
 use Imagine\Image\AbstractImage;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\Color\ColorInterface;
@@ -98,7 +97,7 @@ final class Image extends AbstractImage
             throw new RuntimeException('Image copy operation failed');
         }
 
-        return new Image($copy, $this->palette, $this->metadata);
+        return $this->getClassFactory()->createImage($copy, $this->palette, $this->metadata);
     }
 
     /**
@@ -344,7 +343,7 @@ final class Image extends AbstractImage
      */
     public function draw()
     {
-        return new Drawer($this->resource);
+        return $this->getClassFactory()->createDrawer($this->resource);
     }
 
     /**
@@ -352,7 +351,7 @@ final class Image extends AbstractImage
      */
     public function effects()
     {
-        return new Effects($this->resource);
+        return $this->getClassFactory()->createEffects($this->resource);
     }
 
     /**
@@ -360,7 +359,7 @@ final class Image extends AbstractImage
      */
     public function getSize()
     {
-        return new Box(imagesx($this->resource), imagesy($this->resource));
+        return $this->getClassFactory()->createBox(imagesx($this->resource), imagesy($this->resource));
     }
 
     /**
@@ -469,7 +468,7 @@ final class Image extends AbstractImage
     public function layers()
     {
         if (null === $this->layers) {
-            $this->layers = new Layers($this, $this->palette, $this->resource);
+            $this->layers = $this->getClassFactory()->createLayers($this);
         }
 
         return $this->layers;
@@ -787,5 +786,15 @@ final class Image extends AbstractImage
         }
 
         return $supportedFormats;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\AbstractImage::createDefaultClassFactory()
+     */
+    protected function createDefaultClassFactory()
+    {
+        return new ClassFactory();
     }
 }

@@ -13,13 +13,20 @@ namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Metadata\MetadataBag;
+use Imagine\Factory\ClassFactoryInterface;
+use Imagine\Factory\ClassFactoryAwareInterface;
 
-abstract class AbstractImage implements ImageInterface
+abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterface
 {
     /**
      * @var MetadataBag
      */
     protected $metadata;
+
+    /**
+     * @var \Imagine\Factory\ClassFactoryInterface|null
+     */
+    private $classFactory;
 
     /**
      * {@inheritdoc}
@@ -117,4 +124,36 @@ abstract class AbstractImage implements ImageInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::getClassFactory()
+     */
+    public function getClassFactory()
+    {
+        if ($this->classFactory === null) {
+            $this->classFactory = $this->createDefaultClassFactory();
+        }
+
+        return $this->classFactory;
+    }
+    
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::setClassFactory()
+     */
+    public function setClassFactory(ClassFactoryInterface $classFactory)
+    {
+        $this->classFactory = $classFactory;
+
+        return $this;
+    }
+
+    /**
+     * Create an instance of the default class factory.
+     *
+     * @return \Imagine\Factory\ClassFactoryInterface
+     */
+    protected abstract function createDefaultClassFactory();
 }

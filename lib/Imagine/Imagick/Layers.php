@@ -113,7 +113,7 @@ class Layers extends AbstractLayers
         for ($offset = 0; $offset < $count; $offset++) {
             try {
                 $coalescedResource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($coalescedResource->getImage(), $this->palette, new MetadataBag());
+                $this->layers[$offset] = $this->getClassFactory()->createImage($coalescedResource->getImage(), $this->palette, new MetadataBag());
             } catch (\ImagickException $e) {
                 throw new RuntimeException('Failed to retrieve layer', $e->getCode(), $e);
             }
@@ -141,7 +141,7 @@ class Layers extends AbstractLayers
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($this->resource->getImage(), $this->palette, new MetadataBag());
+                $this->layers[$offset] = $this->getClassFactory()->createImage($this->resource->getImage(), $this->palette, new MetadataBag());
             } catch (\ImagickException $e) {
                 throw new RuntimeException(sprintf('Failed to extract layer %d', $offset), $e->getCode(), $e);
             }
@@ -267,5 +267,15 @@ class Layers extends AbstractLayers
         } catch (\ImagickException $e) {
             throw new RuntimeException('Unable to remove layer', $e->getCode(), $e);
         }
+    }
+    
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\AbstractLayers::createDefaultClassFactory()
+     */
+    protected function createDefaultClassFactory()
+    {
+        return new ClassFactory();
     }
 }

@@ -22,7 +22,6 @@ use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Grayscale;
 use Imagine\File\LoaderInterface;
-use Imagine\File\Loader;
 
 /**
  * Imagine implementation using the Imagick PHP extension
@@ -50,7 +49,7 @@ final class Imagine extends AbstractImagine
      */
     public function open($path)
     {
-        $loader = $path instanceof LoaderInterface ? $path : new Loader($path);
+        $loader = $path instanceof LoaderInterface ? $path : $this->getClassFactory()->createFileLoader($path);
         $path = $loader->getPath();
 
         try {
@@ -66,7 +65,7 @@ final class Imagine extends AbstractImagine
                 $imagick = new \Imagick();
                 $imagick->readImageBlob($loader->getData());
             }
-            $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readFile($loader));
+            $image = $this->getClassFactory()->createImage($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readFile($loader));
         } catch (\ImagickException $e) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
         }
@@ -106,7 +105,7 @@ final class Imagine extends AbstractImagine
             $pixel->clear();
             $pixel->destroy();
 
-            return new Image($imagick, $palette, new MetadataBag());
+            return $this->getClassFactory()->createImage($imagick, $palette, new MetadataBag());
         } catch (\ImagickException $e) {
             throw new RuntimeException('Could not create empty image', $e->getCode(), $e);
         }
@@ -123,7 +122,7 @@ final class Imagine extends AbstractImagine
             $imagick->readImageBlob($string);
             $imagick->setImageMatte(true);
 
-            return new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readData($string));
+            return $this->getClassFactory()->createImage($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readData($string));
         } catch (\ImagickException $e) {
             throw new RuntimeException('Could not load image from string', $e->getCode(), $e);
         }
@@ -147,7 +146,7 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException('Could not read image from resource', $e->getCode(), $e);
         }
 
-        return new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readData($content, $resource));
+        return $this->getClassFactory()->createImage($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readData($content, $resource));
     }
 
     /**
@@ -155,7 +154,7 @@ final class Imagine extends AbstractImagine
      */
     public function font($file, $size, ColorInterface $color)
     {
-        return new Font(new \Imagick(), $file, $size, $color);
+        return $this->getClassFactory()->createFont($file, $size, $color);
     }
 
     /**
@@ -195,5 +194,15 @@ final class Imagine extends AbstractImagine
         list($version) = sscanf($v['versionString'], 'ImageMagick %s %04d-%02d-%02d %s %s');
 
         return $version;
+    }
+    
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\AbstractImagine::createDefaultClassFactory()
+     */
+    protected function createDefaultClassFactory()
+    {
+        return new ClassFactory();
     }
 }

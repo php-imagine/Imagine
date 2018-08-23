@@ -23,7 +23,6 @@ use Imagine\Image\Palette\Color\CMYK as CMYKColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\File\LoaderInterface;
-use Imagine\File\Loader;
 
 /**
  * Imagine implementation using the Gmagick PHP extension
@@ -45,13 +44,13 @@ class Imagine extends AbstractImagine
      */
     public function open($path)
     {
-        $loader = $path instanceof LoaderInterface ? $path : new Loader($path);
+        $loader = $path instanceof LoaderInterface ? $path : $this->getClassFactory()->createFileLoader($path);
         $path = $loader->getPath();
 
         try {
             if ($loader->isLocalFile()) {
                 $gmagick = new \Gmagick($path);
-                $image = new Image($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readFile($loader));
+                $image = $this->getClassFactory()->createImage($gmagick, $this->createPalette($gmagick), $this->getMetadataReader()->readFile($loader));
             } else {
                 $image = $this->doLoad($loader->getData(), $this->getMetadataReader()->readFile($loader));
             }
@@ -94,7 +93,7 @@ class Imagine extends AbstractImagine
             $gmagick->setimagecolorspace(\Gmagick::COLORSPACE_TRANSPARENT);
             $gmagick->setimagebackgroundcolor($pixel);
 
-            $image = new Image($gmagick, $palette, new MetadataBag());
+            $image = $this->getClassFactory()->createImage($gmagick, $palette, new MetadataBag());
 
             if ($switchPalette) {
                 $image->usePalette($switchPalette);
@@ -137,10 +136,7 @@ class Imagine extends AbstractImagine
      */
     public function font($file, $size, ColorInterface $color)
     {
-        $gmagick = new \Gmagick();
-        $gmagick->newimage(1, 1, 'transparent');
-
-        return new Font($gmagick, $file, $size, $color);
+        return $this->getClassFactory()->createFont($file, $size, $color);
     }
 
     private function createPalette(\Gmagick $gmagick)
@@ -167,6 +163,16 @@ class Imagine extends AbstractImagine
             throw new RuntimeException('Could not load image from string', $e->getCode(), $e);
         }
 
-        return new Image($gmagick, $this->createPalette($gmagick), $metadata);
+        return $this->getClassFactory()->createImage($gmagick, $this->createPalette($gmagick), $metadata);
+    }
+    
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\AbstractImagine::createDefaultClassFactory()
+     */
+    protected function createDefaultClassFactory()
+    {
+        return new ClassFactory();
     }
 }

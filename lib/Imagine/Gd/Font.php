@@ -13,7 +13,6 @@ namespace Imagine\Gd;
 
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
-use Imagine\Image\Box;
 
 /**
  * Font implementation using the GD library
@@ -44,6 +43,16 @@ final class Font extends AbstractFont
         $width    = abs(max($xs) - min($xs));
         $height   = abs(max($ys) - min($ys));
 
-        return new Box($width, $height);
+        return $this->getClassFactory()->createBox($width, $height);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\AbstractFont::createDefaultClassFactory()
+     */
+    protected function createDefaultClassFactory()
+    {
+        return new ClassFactory();
     }
 }

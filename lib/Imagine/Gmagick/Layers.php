@@ -131,7 +131,7 @@ class Layers extends AbstractLayers
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setimageindex($offset);
-                $this->layers[$offset] = new Image($this->resource->getimage(), $this->palette, new MetadataBag());
+                $this->layers[$offset] = $this->getClassFactory()->createImage($this->resource->getimage(), $this->palette, new MetadataBag());
             } catch (\GmagickException $e) {
                 throw new RuntimeException(sprintf('Failed to extract layer %d', $offset), $e->getCode(), $e);
             }
@@ -268,5 +268,15 @@ class Layers extends AbstractLayers
         } catch (\GmagickException $e) {
             throw new RuntimeException('Unable to remove layer', $e->getCode(), $e);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\AbstractLayers::createDefaultClassFactory()
+     */
+    protected function createDefaultClassFactory()
+    {
+        return new ClassFactory();
     }
 }

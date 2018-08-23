@@ -63,7 +63,7 @@ class Layers extends AbstractLayers
      */
     public function current()
     {
-        return new Image($this->resource, $this->palette, new MetadataBag());
+        return $this->getClassFactory()->createImage($this->resource, $this->palette, new MetadataBag());
     }
 
     /**
@@ -120,7 +120,7 @@ class Layers extends AbstractLayers
     public function offsetGet($offset)
     {
         if (0 === $offset) {
-            return new Image($this->resource, $this->palette, new MetadataBag());
+            return $this->getClassFactory()->createImage($this->resource, $this->palette, new MetadataBag());
         }
 
         throw new RuntimeException('GD only supports one layer at offset 0');
@@ -140,5 +140,15 @@ class Layers extends AbstractLayers
     public function offsetUnset($offset)
     {
         throw new NotSupportedException('GD does not support layer unset');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\AbstractLayers::createDefaultClassFactory()
+     */
+    protected function createDefaultClassFactory()
+    {
+        return new ClassFactory();
     }
 }
