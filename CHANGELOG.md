@@ -26,6 +26,8 @@
   * Check that Imagick correctly supports profiles (@ausi)
   * Fix creating Gmagick images with alpha colors when palette doesn't support alpha (@FractalizeR)
   * Fix warning about deprecated clone method in copy method of Imagick images (@mlocati)
+  * Fix copy methods of Images (the original image and its new copy are now fully detached) (@mlocati)
+  * It's now possible to use `clone $image` as an alternative to `$image->copy()` (@mlocati)
 
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)
