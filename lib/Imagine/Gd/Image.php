@@ -15,6 +15,7 @@ use Exception;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractImage;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Fill\FillInterface;
@@ -28,7 +29,6 @@ use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
 use Throwable;
-use Imagine\Factory\ClassFactoryInterface;
 
 /**
  * Image implementation using the GD library.
@@ -85,7 +85,7 @@ final class Image extends AbstractImage
         $this->resource = $copy;
         $this->palette = clone $this->palette;
         if ($this->layers !== null) {
-            $this->layers = new Layers($this, $this->palette, $this->resource);
+            $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_GD, $this, $this->layers->key());
         }
     }
 

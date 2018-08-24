@@ -12,11 +12,9 @@
 namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Image\Metadata\DefaultMetadataReader;
-use Imagine\Image\Metadata\ExifMetadataReader;
-use Imagine\Image\Metadata\MetadataReaderInterface;
-use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Factory\ClassFactory;
+use Imagine\Factory\ClassFactoryInterface;
+use Imagine\Image\Metadata\MetadataReaderInterface;
 
 abstract class AbstractImagine implements ImagineInterface
 {
@@ -63,7 +61,7 @@ abstract class AbstractImagine implements ImagineInterface
 
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      *

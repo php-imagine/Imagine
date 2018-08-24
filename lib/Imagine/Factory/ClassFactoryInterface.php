@@ -27,7 +27,7 @@ interface ClassFactoryInterface
      * @var string
      */
     const HANDLE_IMAGICK = 'imagick';
-    
+
     /**
      * Create a new instance of a metadata reader.
      *
@@ -36,7 +36,7 @@ interface ClassFactoryInterface
     public function createMetadataReader();
 
     /**
-     * Create new BoxInterface instance
+     * Create new BoxInterface instance.
      *
      * @param int $width The box width
      * @param int $height The box height
@@ -46,7 +46,7 @@ interface ClassFactoryInterface
     public function createBox($width, $height);
 
     /**
-     * Create new FontInterface instance
+     * Create new FontInterface instance.
      *
      * @param string $handle The handle that identifies the manipulation library (one of the HANDLE_... constants, or your own implementation).
      * @param string $file
@@ -71,10 +71,11 @@ interface ClassFactoryInterface
      *
      * @param string $handle The handle that identifies the manipulation library (one of the HANDLE_... constants, or your own implementation).
      * @param \Imagine\Image\ImageInterface $image
+     * @param mixed|null $initialKey the key of the initially selected layer
      *
      * @return \Imagine\Image\LayersInterface
      */
-    public function createLayers($handle, \Imagine\Image\ImageInterface $image);
+    public function createLayers($handle, \Imagine\Image\ImageInterface $image, $initialKey = null);
 
     /**
      * Create a new ImageInterface instance.
@@ -87,7 +88,7 @@ interface ClassFactoryInterface
      * @return \Imagine\Image\ImageInterface
      */
     public function createImage($handle, $resource, \Imagine\Image\Palette\PaletteInterface $palette, \Imagine\Image\Metadata\MetadataBag $metadata);
-    
+
     /**
      * Create a new DrawerInterface instance.
      *
@@ -97,7 +98,7 @@ interface ClassFactoryInterface
      * @return \Imagine\Draw\DrawerInterface
      */
     public function createDrawer($handle, $resource);
-    
+
     /**
      * Create a new EffectsInterface instance.
      *
@@ -106,5 +107,5 @@ interface ClassFactoryInterface
      *
      * @return \Imagine\Effects\EffectsInterface
      */
-    public function createEffects($handle, $resource);    
+    public function createEffects($handle, $resource);
 }

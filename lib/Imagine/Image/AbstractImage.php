@@ -12,10 +12,10 @@
 namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Factory\ClassFactoryInterface;
-use Imagine\Factory\ClassFactoryAwareInterface;
 use Imagine\Factory\ClassFactory;
+use Imagine\Factory\ClassFactoryAwareInterface;
+use Imagine\Factory\ClassFactoryInterface;
+use Imagine\Image\Metadata\MetadataBag;
 
 abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterface
 {
@@ -124,6 +124,7 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
             $this->metadata = clone $this->metadata;
         }
     }
+
     /**
      * {@inheritdoc}
      *
@@ -137,7 +138,7 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
 
         return $this->classFactory;
     }
-    
+
     /**
      * {@inheritdoc}
      *

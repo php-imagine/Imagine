@@ -14,6 +14,7 @@ namespace Imagine\Gmagick;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractImage;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Fill\FillInterface;
@@ -24,7 +25,6 @@ use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
-use Imagine\Factory\ClassFactoryInterface;
 
 /**
  * Image implementation using the Gmagick PHP extension.
@@ -35,6 +35,7 @@ final class Image extends AbstractImage
      * @var \Gmagick
      */
     private $gmagick;
+
     /**
      * @var Layers|null
      */
@@ -80,7 +81,9 @@ final class Image extends AbstractImage
         parent::__clone();
         $this->gmagick = clone $this->gmagick;
         $this->palette = clone $this->palette;
-        $this->layers = new Layers($this, $this->palette, $this->gmagick, $this->layers->key());
+        if ($this->layers !== null) {
+            $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_GMAGICK, $this, $this->layers->key());
+        }
     }
 
     /**

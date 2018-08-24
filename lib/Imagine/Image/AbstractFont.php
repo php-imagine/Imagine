@@ -11,10 +11,10 @@
 
 namespace Imagine\Image;
 
-use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Factory\ClassFactory;
 use Imagine\Factory\ClassFactoryAwareInterface;
 use Imagine\Factory\ClassFactoryInterface;
-use Imagine\Factory\ClassFactory;
+use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
  * Abstract font base class.
@@ -91,10 +91,10 @@ abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
         if ($this->classFactory === null) {
             $this->classFactory = new ClassFactory();
         }
-        
+
         return $this->classFactory;
     }
-    
+
     /**
      * {@inheritdoc}
      *
@@ -103,7 +103,7 @@ abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
     public function setClassFactory(ClassFactoryInterface $classFactory)
     {
         $this->classFactory = $classFactory;
-        
+
         return $this;
     }
 }

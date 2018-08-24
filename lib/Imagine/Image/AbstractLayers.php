@@ -11,9 +11,9 @@
 
 namespace Imagine\Image;
 
+use Imagine\Factory\ClassFactory;
 use Imagine\Factory\ClassFactoryAwareInterface;
 use Imagine\Factory\ClassFactoryInterface;
-use Imagine\Factory\ClassFactory;
 
 abstract class AbstractLayers implements LayersInterface, ClassFactoryAwareInterface
 {
@@ -79,7 +79,7 @@ abstract class AbstractLayers implements LayersInterface, ClassFactoryAwareInter
 
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      *

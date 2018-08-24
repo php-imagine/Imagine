@@ -14,6 +14,7 @@ namespace Imagine\Imagick;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractImage;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Fill\FillInterface;
@@ -26,7 +27,6 @@ use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
-use Imagine\Factory\ClassFactoryInterface;
 
 /**
  * Image implementation using the Imagick PHP extension.
@@ -37,10 +37,12 @@ final class Image extends AbstractImage
      * @var \Imagick
      */
     private $imagick;
+
     /**
      * @var Layers|null
      */
     private $layers;
+
     /**
      * @var PaletteInterface
      */
@@ -87,7 +89,9 @@ final class Image extends AbstractImage
             $this->imagick = $this->cloneImagick();
         }
         $this->palette = clone $this->palette;
-        $this->layers = new Layers($this, $this->palette, $this->imagick, $this->layers->key());
+        if ($this->layers !== null) {
+            $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_IMAGICK, $this, $this->layers->key());
+        }
     }
 
     /**

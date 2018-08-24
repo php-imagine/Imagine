@@ -14,10 +14,10 @@ namespace Imagine\Imagick;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
-use Imagine\Factory\ClassFactoryInterface;
 
 class Layers extends AbstractLayers
 {

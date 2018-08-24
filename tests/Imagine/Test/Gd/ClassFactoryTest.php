@@ -22,7 +22,7 @@ class ClassFactoryTest extends AbstractClassFactoryTest
     protected function setUp()
     {
         parent::setUp();
-        
+
         if (!function_exists('gd_info')) {
             $this->markTestSkipped('Gd not installed');
         }
@@ -35,6 +35,7 @@ class ClassFactoryTest extends AbstractClassFactoryTest
 
     /**
      * {@inheritdoc}
+     *
      * @see \Imagine\Test\Factory\AbstractClassFactoryTest::canTestFont()
      */
     protected function canTestFont()

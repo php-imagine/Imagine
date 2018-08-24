@@ -15,7 +15,6 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Factory\ClassFactoryInterface;
-use Imagine\File\Loader;
 use Imagine\File\LoaderInterface;
 use Imagine\Image\AbstractImagine;
 use Imagine\Image\BoxInterface;

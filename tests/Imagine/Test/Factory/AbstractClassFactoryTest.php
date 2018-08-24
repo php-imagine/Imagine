@@ -12,8 +12,8 @@
 namespace Imagine\Test\Factory;
 
 use Imagine\Image\Box;
-use Imagine\Test\ImagineTestCase;
 use Imagine\Image\Palette\RGB;
+use Imagine\Test\ImagineTestCase;
 
 abstract class AbstractClassFactoryTest extends ImagineTestCase
 {
@@ -32,7 +32,7 @@ abstract class AbstractClassFactoryTest extends ImagineTestCase
     /**
      * @return \Imagine\Image\ImagineInterface
      */
-    protected abstract function getImagine();
+    abstract protected function getImagine();
 
     /**
      * @return bool

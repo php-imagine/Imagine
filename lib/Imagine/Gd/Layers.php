@@ -13,10 +13,10 @@ namespace Imagine\Gd;
 
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
-use Imagine\Factory\ClassFactoryInterface;
 
 class Layers extends AbstractLayers
 {
