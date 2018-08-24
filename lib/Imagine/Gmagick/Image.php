@@ -71,8 +71,14 @@ final class Image extends AbstractImage
     public function __destruct()
     {
         if ($this->gmagick instanceof \Gmagick) {
-            $this->gmagick->clear();
-            $this->gmagick->destroy();
+            $instance = $this->gmagick->current();
+
+            if ($instance) {
+                $instance->clear();
+                $instance->destroy();
+                unset($instance);
+            }
+            unset($this->gmagick);
         }
     }
 
