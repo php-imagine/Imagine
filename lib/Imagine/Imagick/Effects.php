@@ -81,7 +81,7 @@ class Effects implements EffectsInterface
         }
 
         try {
-            $this->imagick->colorizeImage((string) $color, new \ImagickPixel(sprintf('rgba(%d, %d, %d, 1)', $color->getRed(), $color->getGreen(), $color->getBlue())));
+            $this->imagick->colorizeImage((string) $color, new \ImagickPixel(sprintf('rgba(%d, %d, %d, 1)', $color->getRed(), $color->getGreen(), $color->getBlue())), true);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to colorize the image', $e->getCode(), $e);
         }
