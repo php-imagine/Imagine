@@ -5,9 +5,9 @@
   * Add support to webp image format (@chregu, @antoligy, @alexander-schranz)
   * Add `Imagine\File\LoaderInterface` that allows loading remote images with any imaging driver (@mlocati).
     You can use your own `LoaderInterface` implementation so that you can for instance use curl or any other library.
-  * Fixed some phpdoc issues.
+  * Fixed some phpdoc issues (@mlocati)
   * `flipHorizontally` and `flipVertically` methods of GD images is now much faster on PHP 5.5+ (@mlocati)
-  * Fixed loading of PNG indexed images with GD
+  * Fixed loading of PNG indexed images with GD (@mlocati)
   * Loading indexed images with GD is now much faster on PHP 5.5+ (@mlocati)
   * Added support to grayscale images with Gmagick (@mlocati)
   * Added support to alpha channels of Gmagick images (@mlocati)
