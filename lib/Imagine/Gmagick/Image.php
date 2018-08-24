@@ -76,6 +76,14 @@ final class Image extends AbstractImage
         }
     }
 
+    public function __clone()
+    {
+        parent::__clone();
+        $this->gmagick = clone $this->gmagick;
+        $this->palette = clone $this->palette;
+        $this->layers = new Layers($this, $this->palette, $this->gmagick, $this->layers->key());
+    }
+
     /**
      * Returns gmagick instance
      *
@@ -93,7 +101,7 @@ final class Image extends AbstractImage
      */
     public function copy()
     {
-        return new self(clone $this->gmagick, $this->palette, clone $this->metadata);
+        return clone $this;
     }
 
     /**

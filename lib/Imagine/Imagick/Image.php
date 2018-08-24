@@ -81,6 +81,16 @@ final class Image extends AbstractImage
         $this->layers = new Layers($this, $this->palette, $this->imagick);
     }
 
+    public function __clone()
+    {
+        parent::__clone();
+        if ($this->imagick instanceof \Imagick) {
+            $this->imagick = $this->cloneImagick();
+        }
+        $this->palette = clone $this->palette;
+        $this->layers = new Layers($this, $this->palette, $this->imagick, $this->layers->key());
+    }
+
     /**
      * Destroys allocated imagick resources
      */
@@ -110,19 +120,10 @@ final class Image extends AbstractImage
     public function copy()
     {
         try {
-            // the clone method has been deprecated in imagick 3.1.0b1.
-            // we can't use phpversion('imagick') because it may return `@PACKAGE_VERSION@`
-            // so, let's check if ImagickDraw has the setResolution method, which has been introduced in the same version 3.1.0b1
-            if (method_exists('ImagickDraw', 'setResolution')) {
-                $clone = clone $this->imagick;
-            } else {
-                $clone = $this->imagick->clone();
-            }
+            return clone $this;
         } catch (\ImagickException $e) {
             throw new RuntimeException('Copy operation failed', $e->getCode(), $e);
         }
-
-        return new self($clone, $this->palette, clone $this->metadata);
     }
 
     /**
@@ -968,5 +969,23 @@ final class Image extends AbstractImage
         }
 
         return $supportedFilters[$filter];
+    }
+
+    /**
+     * Clone the Imagick resource of this instance.
+     *
+     * @throws \ImagickException
+     *
+     * @return \Imagick
+     */
+    protected function cloneImagick()
+    {
+        // the clone method has been deprecated in imagick 3.1.0b1.
+        // we can't use phpversion('imagick') because it may return `@PACKAGE_VERSION@`
+        // so, let's check if ImagickDraw has the setResolution method, which has been introduced in the same version 3.1.0b1
+        if (method_exists('ImagickDraw', 'setResolution')) {
+            return clone $this->imagick;
+        }
+        return $this->imagick->clone();
     }
 }
