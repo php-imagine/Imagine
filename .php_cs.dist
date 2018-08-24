@@ -6,6 +6,7 @@ return PhpCsFixer\Config::create()
         '@Symfony' => true,
         '@Symfony:risky' => true,
         'array_syntax' => true,
+        'concat_space' => ['spacing' => 'one'],
         'is_null' => ['use_yoda_style' => false],
         'no_php4_constructor' => true,
         'no_short_echo_tag' => true,
@@ -15,6 +16,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
         'phpdoc_align' => false,
         'phpdoc_order' => true,
+        'pre_increment' => false,
         'protected_to_private' => false,
     ))
     ->setCacheFile(__DIR__ . '/.php_cs.cache')
@@ -36,6 +38,8 @@ fixerSets:
 risky: true
 fixers:
   array_syntax: true
+  concat_space:
+    spacing: one
   is_null:
     use_yoda_style: false
   no_php4_constructor: true
@@ -47,6 +51,7 @@ fixers:
     only_untyped: false
   phpdoc_align: false
   phpdoc_order: true
+  pre_increment: false
   protected_to_private: false
 
 */
