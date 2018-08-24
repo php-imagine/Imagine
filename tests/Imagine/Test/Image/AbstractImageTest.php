@@ -675,13 +675,28 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $this->getMonoLayeredImage()->metadata());
     }
 
-    public function testCloneWorks()
+    public function cloneWorksProvider()
+    {
+        return array(
+            array(true),
+            array(false),
+        );
+    }
+
+    /**
+     * @dataProvider cloneWorksProvider
+     */
+    public function testCloneWorks($withCopy)
     {
         $size = new Box(5, 10);
         $image = $this->getImagine()->create($size);
         $palette = $image->palette();
         $metadata = $image->metadata();
-        $clone = clone $image;
+        if ($withCopy) {
+            $clone = $image->copy();
+        } else {
+            $clone = clone $image;
+        }
         $this->assertEquals($size, $clone->getSize());
         $this->assertNotSame($palette, $clone->palette());
         $this->assertNotSame($metadata, $clone->metadata());
