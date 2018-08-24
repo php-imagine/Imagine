@@ -27,8 +27,8 @@ class RelativeResize implements FilterInterface
     /**
      * Constructs a RelativeResize filter with the given method and argument.
      *
-     * @param string $method    BoxInterface method
-     * @param mixed  $parameter Parameter for BoxInterface method
+     * @param string $method BoxInterface method
+     * @param mixed $parameter Parameter for BoxInterface method
      */
     public function __construct($method, $parameter)
     {

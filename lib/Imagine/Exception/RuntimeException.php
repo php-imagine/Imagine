@@ -12,7 +12,7 @@
 namespace Imagine\Exception;
 
 /**
- * Imagine-specific runtime exception
+ * Imagine-specific runtime exception.
  */
 class RuntimeException extends \RuntimeException implements Exception
 {

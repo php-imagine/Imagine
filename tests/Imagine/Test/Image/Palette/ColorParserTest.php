@@ -18,6 +18,9 @@ class ColorParserTest extends ImagineTestCase
 {
     /**
      * @dataProvider provideRGBdataToParse
+     *
+     * @param mixed $expected
+     * @param mixed $value
      */
     public function testParseToRGB($expected, $value)
     {
@@ -28,8 +31,10 @@ class ColorParserTest extends ImagineTestCase
 
     /**
      * @dataProvider provideRGBdataThatFail
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      * @group ext-gd
+     *
+     * @param mixed $value
      */
     public function testParseToRGBThatFails($value)
     {
@@ -39,6 +44,9 @@ class ColorParserTest extends ImagineTestCase
 
     /**
      * @dataProvider provideCMYKdataToParse
+     *
+     * @param mixed $expected
+     * @param mixed $value
      */
     public function testParseToCMYK($expected, $value)
     {
@@ -49,8 +57,10 @@ class ColorParserTest extends ImagineTestCase
 
     /**
      * @dataProvider provideCMYKdataThatFail
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      * @group ext-gd
+     *
+     * @param mixed $value
      */
     public function testParseToCMYKThatFails($value)
     {
@@ -111,6 +121,9 @@ class ColorParserTest extends ImagineTestCase
 
     /**
      * @dataProvider provideGrayscaledataToParse
+     *
+     * @param mixed $expected
+     * @param mixed $value
      */
     public function testParseToGrayscale($expected, $value)
     {
@@ -121,7 +134,9 @@ class ColorParserTest extends ImagineTestCase
 
     /**
      * @dataProvider provideGrayscaledataThatFail
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException \Imagine\Exception\InvalidArgumentException
+     *
+     * @param mixed $value
      */
     public function testParseToGrayscaleThatFails($value)
     {

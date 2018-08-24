@@ -12,11 +12,11 @@
 namespace Imagine\Image\Metadata;
 
 use Imagine\Exception\NotSupportedException;
-use Imagine\File\LoaderInterface;
 use Imagine\File\Loader;
+use Imagine\File\LoaderInterface;
 
 /**
- * Metadata driven by Exif information
+ * Metadata driven by Exif information.
  */
 class ExifMetadataReader extends AbstractMetadataReader
 {
@@ -59,7 +59,7 @@ class ExifMetadataReader extends AbstractMetadataReader
     }
 
     /**
-     * Extracts metadata from raw data, merges with existing metadata
+     * Extracts metadata from raw data, merges with existing metadata.
      *
      * @param string $data
      *
@@ -79,7 +79,7 @@ class ExifMetadataReader extends AbstractMetadataReader
     /**
      * Performs the exif data extraction given a path or data-URI representation.
      *
-     * @param string $path The path to the file or the data-URI representation.
+     * @param string $path the path to the file or the data-URI representation
      *
      * @return MetadataBag|array
      */
@@ -108,7 +108,7 @@ class ExifMetadataReader extends AbstractMetadataReader
                 continue;
             }
             foreach ($exifData[$name] as $prop => $value) {
-                $metadata[$prefix.'.'.$prop] = $value;
+                $metadata[$prefix . '.' . $prop] = $value;
             }
         }
 

@@ -11,27 +11,27 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Image\AbstractImage;
-use Imagine\Image\ImageInterface;
-use Imagine\Image\Box;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Fill\FillInterface;
-use Imagine\Image\Point;
-use Imagine\Image\PointInterface;
-use Imagine\Image\Palette\PaletteInterface;
-use Imagine\Image\Palette\Color\RGB as RGBColor;
-use Imagine\Image\ProfileInterface;
-use Imagine\Image\Palette\RGB;
+use Exception;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
-use Exception;
+use Imagine\Image\AbstractImage;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Fill\FillInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Metadata\MetadataBag;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
+use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Image\Palette\RGB;
+use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
+use Imagine\Image\ProfileInterface;
 use Throwable;
 
 /**
- * Image implementation using the GD library
+ * Image implementation using the GD library.
  */
 final class Image extends AbstractImage
 {
@@ -51,11 +51,11 @@ final class Image extends AbstractImage
     private $palette;
 
     /**
-     * Constructs a new Image instance
+     * Constructs a new Image instance.
      *
-     * @param resource         $resource
+     * @param resource $resource
      * @param PaletteInterface $palette
-     * @param MetadataBag      $metadata
+     * @param MetadataBag $metadata
      */
     public function __construct($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
@@ -65,7 +65,7 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Makes sure the current image resource is destroyed
+     * Makes sure the current image resource is destroyed.
      */
     public function __destruct()
     {
@@ -90,7 +90,7 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Returns Gd resource
+     * Returns Gd resource.
      *
      * @return resource
      */
@@ -117,10 +117,10 @@ final class Image extends AbstractImage
     final public function crop(PointInterface $start, BoxInterface $size)
     {
         if (!$start->in($this->getSize())) {
-            throw new OutOfBoundsException('Crop coordinates must start at minimum 0, 0 position from top  left corner, crop height and width must be positive integers and must not exceed the current image borders');
+            throw new OutOfBoundsException('Crop coordinates must start at minimum 0, 0 position from top left corner, crop height and width must be positive integers and must not exceed the current image borders');
         }
 
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         $dest = $this->createImage($size, 'crop');
@@ -176,7 +176,7 @@ final class Image extends AbstractImage
             throw new InvalidArgumentException('Unsupported filter type, GD only supports ImageInterface::FILTER_UNDEFINED filter');
         }
 
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         $dest = $this->createImage($size, 'resize');
@@ -252,7 +252,7 @@ final class Image extends AbstractImage
      */
     public function show($format, array $options = array())
     {
-        header('Content-type: '.$this->getMimeType($format));
+        header('Content-type: ' . $this->getMimeType($format));
 
         $this->saveOrOutput($format, $options);
 
@@ -288,19 +288,19 @@ final class Image extends AbstractImage
         if (function_exists('imageflip')) {
             imageflip($this->resource, IMG_FLIP_HORIZONTAL);
         } else {
-            $size   = $this->getSize();
-            $width  = $size->getWidth();
+            $size = $this->getSize();
+            $width = $size->getWidth();
             $height = $size->getHeight();
-            $dest   = $this->createImage($size, 'flip');
-    
+            $dest = $this->createImage($size, 'flip');
+
             for ($i = 0; $i < $width; $i++) {
                 if (false === imagecopy($dest, $this->resource, $i, 0, ($width - 1) - $i, 0, 1, $height)) {
                     throw new RuntimeException('Horizontal flip operation failed');
                 }
             }
-    
+
             imagedestroy($this->resource);
-    
+
             $this->resource = $dest;
         }
 
@@ -317,19 +317,19 @@ final class Image extends AbstractImage
         if (function_exists('imageflip')) {
             imageflip($this->resource, IMG_FLIP_VERTICAL);
         } else {
-            $size   = $this->getSize();
-            $width  = $size->getWidth();
+            $size = $this->getSize();
+            $width = $size->getWidth();
             $height = $size->getHeight();
-            $dest   = $this->createImage($size, 'flip');
-    
+            $dest = $this->createImage($size, 'flip');
+
             for ($i = 0; $i < $height; $i++) {
                 if (false === imagecopy($dest, $this->resource, 0, $i, 0, ($height - 1) - $i, $width, 1)) {
                     throw new RuntimeException('Vertical flip operation failed');
                 }
             }
-    
+
             imagedestroy($this->resource);
-    
+
             $this->resource = $dest;
         }
 
@@ -382,7 +382,7 @@ final class Image extends AbstractImage
             throw new InvalidArgumentException('Cannot mask non-gd images');
         }
 
-        $size     = $this->getSize();
+        $size = $this->getSize();
         $maskSize = $mask->getSize();
 
         if ($size != $maskSize) {
@@ -391,10 +391,10 @@ final class Image extends AbstractImage
 
         for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
             for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
-                $position  = new Point($x, $y);
-                $color     = $this->getColorAt($position);
+                $position = new Point($x, $y);
+                $color = $this->getColorAt($position);
                 $maskColor = $mask->getColorAt($position);
-                $round     = (int) round(max($color->getAlpha(), (100 - $color->getAlpha()) * $maskColor->getRed() / 255));
+                $round = (int) round(max($color->getAlpha(), (100 - $color->getAlpha()) * $maskColor->getRed() / 255));
 
                 if (false === imagesetpixel($this->resource, $x, $y, $this->getColor($color->dissolve($round - $color->getAlpha())))) {
                     throw new RuntimeException('Apply mask operation failed');
@@ -444,7 +444,7 @@ final class Image extends AbstractImage
      */
     public function histogram()
     {
-        $size   = $this->getSize();
+        $size = $this->getSize();
         $colors = array();
 
         for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
@@ -466,7 +466,7 @@ final class Image extends AbstractImage
         }
 
         $index = imagecolorat($this->resource, $point->getX(), $point->getY());
-        $info  = imagecolorsforindex($this->resource, $index);
+        $info = imagecolorsforindex($this->resource, $index);
 
         return $this->palette->color(array($info['red'], $info['green'], $info['blue']), max(min(100 - (int) round($info['alpha'] / 127 * 100), 100), 0));
     }
@@ -489,9 +489,9 @@ final class Image extends AbstractImage
     public function interlace($scheme)
     {
         static $supportedInterlaceSchemes = array(
-            ImageInterface::INTERLACE_NONE      => 0,
-            ImageInterface::INTERLACE_LINE      => 1,
-            ImageInterface::INTERLACE_PLANE     => 1,
+            ImageInterface::INTERLACE_NONE => 0,
+            ImageInterface::INTERLACE_LINE => 1,
+            ImageInterface::INTERLACE_PLANE => 1,
             ImageInterface::INTERLACE_PARTITION => 1,
         );
 
@@ -535,12 +535,12 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Performs save or show operation using one of GD's image... functions
      *
      * @param string $format
-     * @param array  $options
+     * @param array $options
      * @param string $filename
      *
      * @throws InvalidArgumentException
@@ -554,7 +554,7 @@ final class Image extends AbstractImage
             throw new InvalidArgumentException(sprintf('Saving image in "%s" format is not supported, please use one of the following extensions: "%s"', $format, implode('", "', $this->supported())));
         }
 
-        $save = 'image'.$format;
+        $save = 'image' . $format;
         $args = array(&$this->resource, $filename);
 
         switch ($format) {
@@ -617,7 +617,7 @@ final class Image extends AbstractImage
                 break;
         }
 
-        $this->withExceptionHandler(function() use($save, $args) {
+        $this->withExceptionHandler(function () use ($save, $args) {
             if (false === call_user_func_array($save, $args)) {
                 throw new RuntimeException('Save operation failed');
             }
@@ -625,28 +625,27 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Generates a GD image
      *
      * @param BoxInterface $size
-     * @param  string the operation initiating the creation
-     *
-     * @return resource
+     * @param string $operation the operation initiating the creation
      *
      * @throws RuntimeException
      *
+     * @return resource
      */
     private function createImage(BoxInterface $size, $operation)
     {
         $resource = imagecreatetruecolor($size->getWidth(), $size->getHeight());
 
         if (false === $resource) {
-            throw new RuntimeException('Image '.$operation.' failed');
+            throw new RuntimeException('Image ' . $operation . ' failed');
         }
 
         if (false === imagealphablending($resource, false) || false === imagesavealpha($resource, true)) {
-            throw new RuntimeException('Image '.$operation.' failed');
+            throw new RuntimeException('Image ' . $operation . ' failed');
         }
 
         if (function_exists('imageantialias')) {
@@ -661,16 +660,16 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Generates a GD color from Color instance
      *
      * @param ColorInterface $color
      *
-     * @return integer A color identifier
-     *
      * @throws RuntimeException
      * @throws InvalidArgumentException
+     *
+     * @return int A color identifier
      */
     private function getColor(ColorInterface $color)
     {
@@ -688,7 +687,7 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Normalizes a given format name
      *
@@ -708,13 +707,13 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Checks whether a given format is supported by GD library
      *
      * @param string $format
      *
-     * @return Boolean
+     * @return bool
      */
     private function supported($format = null)
     {
@@ -751,15 +750,15 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Get the mime type based on format.
      *
      * @param string $format
      *
-     * @return string mime-type
-     *
      * @throws RuntimeException
+     *
+     * @return string mime-type
      */
     private function getMimeType($format)
     {

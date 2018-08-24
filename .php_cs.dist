@@ -1,0 +1,57 @@
+<?php
+
+return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
+    ->setRules(array(
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'array_syntax' => true,
+        'concat_space' => ['spacing' => 'one'],
+        'is_null' => ['use_yoda_style' => false],
+        'no_php4_constructor' => true,
+        'no_short_echo_tag' => true,
+        'no_unreachable_default_argument_value' => true,
+        'no_useless_return' => true,
+        'ordered_imports' => true,
+        'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
+        'phpdoc_align' => false,
+        'phpdoc_order' => true,
+        'pre_increment' => false,
+        'protected_to_private' => false,
+    ))
+    ->setCacheFile(__DIR__ . '/.php_cs.cache')
+    ->setFinder(PhpCsFixer\Finder::create()
+        ->exclude('vendor')
+        ->in(__DIR__)
+    )
+;
+/*
+This document has been generated with
+https://mlocati.github.io/php-cs-fixer-configurator/?version=2.2#configurator
+you can change this configuration by importing this YAML code:
+
+version: 2.2.20
+expandSets: false
+fixerSets:
+  - '@Symfony'
+  - '@Symfony:risky'
+risky: true
+fixers:
+  array_syntax: true
+  concat_space:
+    spacing: one
+  is_null:
+    use_yoda_style: false
+  no_php4_constructor: true
+  no_short_echo_tag: true
+  no_unreachable_default_argument_value: true
+  no_useless_return: true
+  ordered_imports: true
+  phpdoc_add_missing_param_annotation:
+    only_untyped: false
+  phpdoc_align: false
+  phpdoc_order: true
+  pre_increment: false
+  protected_to_private: false
+
+*/

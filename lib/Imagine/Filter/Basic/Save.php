@@ -11,11 +11,11 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Image\ImageInterface;
 use Imagine\Filter\FilterInterface;
+use Imagine\Image\ImageInterface;
 
 /**
- * A save filter
+ * A save filter.
  */
 class Save implements FilterInterface
 {
@@ -30,14 +30,14 @@ class Save implements FilterInterface
     private $options;
 
     /**
-     * Constructs Save filter with given path and options
+     * Constructs Save filter with given path and options.
      *
      * @param string $path
-     * @param array  $options
+     * @param array $options
      */
     public function __construct($path = null, array $options = array())
     {
-        $this->path    = $path;
+        $this->path = $path;
         $this->options = $options;
     }
 

@@ -14,13 +14,13 @@ namespace Imagine\Filter;
 use Imagine\Image\ImageInterface;
 
 /**
- * Interface for imagine filters
+ * Interface for imagine filters.
  */
 interface FilterInterface
 {
     /**
      * Applies scheduled transformation to ImageInterface instance
-     * Returns processed ImageInterface instance
+     * Returns processed ImageInterface instance.
      *
      * @param ImageInterface $image
      *

@@ -12,8 +12,8 @@
 namespace Imagine\Image\Metadata;
 
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\File\LoaderInterface;
 use Imagine\File\Loader;
+use Imagine\File\LoaderInterface;
 
 abstract class AbstractMetadataReader implements MetadataReaderInterface
 {
@@ -52,7 +52,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     }
 
     /**
-     * Gets the URI from a stream resource
+     * Gets the URI from a stream resource.
      *
      * @param resource|\Imagine\File\LoaderInterface $resource
      *
@@ -80,7 +80,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     }
 
     /**
-     * Extracts metadata from a file
+     * Extracts metadata from a file.
      *
      * @param string|\Imagine\File\LoaderInterface $file
      *
@@ -89,7 +89,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     abstract protected function extractFromFile($file);
 
     /**
-     * Extracts metadata from raw data
+     * Extracts metadata from raw data.
      *
      * @param $data
      *
@@ -98,7 +98,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
     abstract protected function extractFromData($data);
 
     /**
-     * Extracts metadata from a stream
+     * Extracts metadata from a stream.
      *
      * @param $resource
      *

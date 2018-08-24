@@ -12,12 +12,12 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Effects\EffectsInterface;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Exception\NotSupportedException;
 
 /**
- * Effects implementation using the Gmagick PHP extension
+ * Effects implementation using the Gmagick PHP extension.
  */
 class Effects implements EffectsInterface
 {

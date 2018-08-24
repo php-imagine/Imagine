@@ -11,13 +11,13 @@
 
 namespace Imagine\Test\Gd;
 
-use Imagine\Gd\Layers;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
-use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Test\Image\AbstractLayersTest;
+use Imagine\Gd\Layers;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\RGB;
+use Imagine\Test\Image\AbstractLayersTest;
 
 /**
  * @group ext-gd
@@ -55,7 +55,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testLayerArrayAccess()
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
         $layers = $image->layers();
 
         $this->assertLayersEquals($image, $layers[0]);
@@ -64,7 +64,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testLayerAddGetSetRemove()
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
         $layers = $image->layers();
 
         $this->assertLayersEquals($image, $layers->get(0));
@@ -93,6 +93,9 @@ class LayersTest extends AbstractLayersTest
 
     /**
      * @dataProvider provideAnimationParameters
+     *
+     * @param mixed $delay
+     * @param mixed $loops
      */
     public function testAnimateWithParameters($delay, $loops)
     {
@@ -101,6 +104,9 @@ class LayersTest extends AbstractLayersTest
 
     /**
      * @dataProvider provideAnimationParameters
+     *
+     * @param mixed $delay
+     * @param mixed $loops
      */
     public function testAnimateWithWrongParameters($delay, $loops)
     {

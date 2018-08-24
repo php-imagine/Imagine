@@ -15,66 +15,67 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
- * Interface for the effects
+ * Interface for the effects.
  */
 interface EffectsInterface
 {
     /**
-     * Apply gamma correction
+     * Apply gamma correction.
      *
-     * @param  float            $correction
-     * @return EffectsInterface
+     * @param float $correction
      *
      * @throws RuntimeException
+     *
+     * @return EffectsInterface
      */
     public function gamma($correction);
 
     /**
-     * Invert the colors of the image
-     *
-     * @return EffectsInterface
+     * Invert the colors of the image.
      *
      * @throws RuntimeException
+     *
+     * @return EffectsInterface
      */
     public function negative();
 
     /**
-     * Grayscale the image
-     *
-     * @return EffectsInterface
+     * Grayscale the image.
      *
      * @throws RuntimeException
+     *
+     * @return EffectsInterface
      */
     public function grayscale();
 
     /**
-     * Colorize the image
+     * Colorize the image.
      *
      * @param ColorInterface $color
      *
-     * @return EffectsInterface
-     *
      * @throws RuntimeException
+     *
+     * @return EffectsInterface
      */
     public function colorize(ColorInterface $color);
 
     /**
-     * Sharpens the image
-     *
-     * @return EffectsInterface
+     * Sharpens the image.
      *
      * @throws RuntimeException
+     *
+     * @return EffectsInterface
      */
     public function sharpen();
 
     /**
-     * Blur the image
+     * Blur the image.
      *
      * @param float|int $sigma
      *
-     * @return EffectsInterface
-     *
      * @throws RuntimeException
+     *
+     * @return EffectsInterface
      */
     public function blur($sigma);
 }

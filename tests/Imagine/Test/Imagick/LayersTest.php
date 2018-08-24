@@ -12,11 +12,11 @@
 namespace Imagine\Test\Imagick;
 
 use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Imagick\Image;
-use Imagine\Imagick\Layers;
-use Imagine\Imagick\Imagine;
-use Imagine\Test\Image\AbstractLayersTest;
 use Imagine\Image\Palette\RGB;
+use Imagine\Imagick\Image;
+use Imagine\Imagick\Imagine;
+use Imagine\Imagick\Layers;
+use Imagine\Test\Image\AbstractLayersTest;
 
 /**
  * @group ext-imagick
@@ -73,10 +73,10 @@ class LayersTest extends AbstractLayersTest
         $width = null;
         $height = null;
 
-        $resource = new \Imagick;
+        $resource = new \Imagick();
         $palette = new RGB();
-        $resource->newImage(20, 10, new \ImagickPixel("black"));
-        $resource->newImage(10, 10, new \ImagickPixel("black"));
+        $resource->newImage(20, 10, new \ImagickPixel('black'));
+        $resource->newImage(10, 10, new \ImagickPixel('black'));
 
         $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
         $layers->coalesce();

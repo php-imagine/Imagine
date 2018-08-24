@@ -70,7 +70,9 @@ class Autorotate implements FilterInterface
     /**
      * Get the transformations.
      *
-     * @return array An array containing Autorotate::FLIP_VERTICALLY, Autorotate::FLIP_HORIZONTALLY, rotation degrees.
+     * @param ImageInterface $image
+     *
+     * @return array an array containing Autorotate::FLIP_VERTICALLY, Autorotate::FLIP_HORIZONTALLY, rotation degrees
      */
     public function getTransformations(ImageInterface $image)
     {

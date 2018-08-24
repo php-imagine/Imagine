@@ -41,13 +41,13 @@ class Profile implements ProfileInterface
     }
 
     /**
-     * Creates a profile from a path to a file
+     * Creates a profile from a path to a file.
      *
-     * @param String $path
-     *
-     * @return Profile
+     * @param string $path
      *
      * @throws InvalidArgumentException In case the provided path is not valid
+     *
+     * @return Profile
      */
     public static function fromPath($path)
     {

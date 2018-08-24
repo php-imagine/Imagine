@@ -11,20 +11,20 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Image\AbstractImagine;
-use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Palette\RGB;
-use Imagine\Image\Palette\PaletteInterface;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\File\LoaderInterface;
 use Imagine\File\Loader;
+use Imagine\File\LoaderInterface;
+use Imagine\Image\AbstractImagine;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Metadata\MetadataBag;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
+use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Image\Palette\RGB;
 
 /**
- * Imagine implementation using the GD library
+ * Imagine implementation using the GD library.
  */
 final class Imagine extends AbstractImagine
 {
@@ -47,7 +47,7 @@ final class Imagine extends AbstractImagine
      */
     public function create(BoxInterface $size, ColorInterface $color = null)
     {
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         $resource = imagecreatetruecolor($width, $height);
@@ -146,7 +146,7 @@ final class Imagine extends AbstractImagine
                 list($width, $height) = array(imagesx($resource), imagesy($resource));
 
                 // create transparent truecolor canvas
-                $truecolor   = imagecreatetruecolor($width, $height);
+                $truecolor = imagecreatetruecolor($width, $height);
                 $transparent = imagecolorallocatealpha($truecolor, 255, 255, 255, 127);
 
                 imagealphablending($truecolor, false);

@@ -11,22 +11,22 @@
 
 namespace Imagine\Gmagick;
 
-use Imagine\Image\AbstractImagine;
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
+use Imagine\Exception\RuntimeException;
+use Imagine\File\Loader;
+use Imagine\File\LoaderInterface;
+use Imagine\Image\AbstractImagine;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Metadata\MetadataBag;
+use Imagine\Image\Palette\CMYK;
+use Imagine\Image\Palette\Color\CMYK as CMYKColor;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Grayscale;
-use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
-use Imagine\Image\Palette\Color\CMYK as CMYKColor;
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\RuntimeException;
-use Imagine\File\LoaderInterface;
-use Imagine\File\Loader;
 
 /**
- * Imagine implementation using the Gmagick PHP extension
+ * Imagine implementation using the Gmagick PHP extension.
  */
 class Imagine extends AbstractImagine
 {
@@ -80,10 +80,10 @@ class Imagine extends AbstractImagine
             if ($color instanceof CMYKColor) {
                 $switchPalette = $palette;
                 $palette = new RGB();
-                $pixel   = new \GmagickPixel($palette->color((string) $color));
+                $pixel = new \GmagickPixel($palette->color((string) $color));
             } else {
                 $switchPalette = null;
-                $pixel   = new \GmagickPixel((string) $color);
+                $pixel = new \GmagickPixel((string) $color);
             }
 
             if (!$color->getPalette()->supportsAlpha() && $color->getAlpha() !== null && $color->getAlpha() < 100) {

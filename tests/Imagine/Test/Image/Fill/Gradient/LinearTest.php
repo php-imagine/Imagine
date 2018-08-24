@@ -11,8 +11,8 @@
 
 namespace Imagine\Test\Image\Fill\Gradient;
 
-use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\RGB;
 use Imagine\Image\PointInterface;
 
 abstract class LinearTest extends \PHPUnit\Framework\TestCase
@@ -36,15 +36,16 @@ abstract class LinearTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->start = $this->getStart();
-        $this->end   = $this->getEnd();
-        $this->fill  = $this->getFill($this->start, $this->end);
+        $this->end = $this->getEnd();
+        $this->fill = $this->getFill($this->start, $this->end);
     }
 
     /**
      * @dataProvider getPointsAndColors
      *
-     * @param integer                      $shade
+     * @param int $shade
      * @param \Imagine\Image\PointInterface $position
+     * @param ColorInterface $color
      */
     public function testShouldProvideCorrectColorsValues(ColorInterface $color, PointInterface $position)
     {
@@ -52,8 +53,8 @@ abstract class LinearTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Imagine\Image\Fill\Gradient\Linear::getStart
-     * @covers Imagine\Image\Fill\Gradient\Linear::getEnd
+     * @covers \Imagine\Image\Fill\Gradient\Linear::getStart
+     * @covers \Imagine\Image\Fill\Gradient\Linear::getEnd
      */
     public function testShouldReturnCorrectStartAndEnd()
     {

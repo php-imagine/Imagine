@@ -16,7 +16,7 @@ use Imagine\Image\Box;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
- * Font implementation using the Gmagick PHP extension
+ * Font implementation using the Gmagick PHP extension.
  */
 final class Font extends AbstractFont
 {
@@ -26,9 +26,9 @@ final class Font extends AbstractFont
     private $gmagick;
 
     /**
-     * @param \Gmagick       $gmagick
-     * @param string         $file
-     * @param integer        $size
+     * @param \Gmagick $gmagick
+     * @param string $file
+     * @param int $size
      * @param ColorInterface $color
      */
     public function __construct(\Gmagick $gmagick, $file, $size, ColorInterface $color)
@@ -43,10 +43,10 @@ final class Font extends AbstractFont
      */
     public function box($string, $angle = 0)
     {
-        $text  = new \GmagickDraw();
+        $text = new \GmagickDraw();
 
         $text->setfont($this->file);
-        /**
+        /*
          * @see http://www.php.net/manual/en/imagick.queryfontmetrics.php#101027
          *
          * ensure font resolution is the same as GD's hard-coded 96

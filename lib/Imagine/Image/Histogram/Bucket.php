@@ -12,7 +12,7 @@
 namespace Imagine\Image\Histogram;
 
 /**
- * Bucket histogram
+ * Bucket histogram.
  */
 final class Bucket implements \Countable
 {
@@ -22,13 +22,13 @@ final class Bucket implements \Countable
     private $range;
 
     /**
-     * @var integer
+     * @var int
      */
     private $count;
 
     /**
-     * @param Range   $range
-     * @param integer $count
+     * @param Range $range
+     * @param int $count
      */
     public function __construct(Range $range, $count = 0)
     {
@@ -37,7 +37,7 @@ final class Bucket implements \Countable
     }
 
     /**
-     * @param integer $value
+     * @param int $value
      */
     public function add($value)
     {
@@ -47,7 +47,7 @@ final class Bucket implements \Countable
     }
 
     /**
-     * @return integer The number of elements in the bucket.
+     * @return int the number of elements in the bucket
      */
     public function count()
     {

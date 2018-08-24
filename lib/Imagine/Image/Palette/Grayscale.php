@@ -11,11 +11,11 @@
 
 namespace Imagine\Image\Palette;
 
-use Imagine\Image\Palette\Color\Gray as GrayColor;
-use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\ProfileInterface;
-use Imagine\Image\Profile;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\Gray as GrayColor;
+use Imagine\Image\Profile;
+use Imagine\Image\ProfileInterface;
 
 class Grayscale implements PaletteInterface
 {
@@ -109,7 +109,7 @@ class Grayscale implements PaletteInterface
      */
     public function blend(ColorInterface $color1, ColorInterface $color2, $amount)
     {
-        if (!$color1 instanceof GrayColor || ! $color2 instanceof GrayColor) {
+        if (!$color1 instanceof GrayColor || !$color2 instanceof GrayColor) {
             throw new RuntimeException('Grayscale palette can only blend Grayscale colors');
         }
 

@@ -12,10 +12,10 @@
 namespace Imagine\Test\Draw;
 
 use Imagine\Image\Box;
+use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
-use Imagine\Image\ImagineInterface;
 use Imagine\Test\ImagineTestCase;
 
 abstract class AbstractDrawerTest extends ImagineTestCase
@@ -33,7 +33,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         $canvas->save('tests/Imagine/Fixtures/smiley.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/smiley.png'));
+        $this->assertFileExists('tests/Imagine/Fixtures/smiley.png');
 
         unlink('tests/Imagine/Fixtures/smiley.png');
     }
@@ -42,14 +42,14 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('000'));
 
         $canvas->draw()
             ->ellipse(new Center($canvas->getSize()), new Box(300, 200), $this->getColor('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/ellipse.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/ellipse.png'));
+        $this->assertFileExists('tests/Imagine/Fixtures/ellipse.png');
 
         unlink('tests/Imagine/Fixtures/ellipse.png');
     }
@@ -58,14 +58,14 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('000'));
 
         $canvas->draw()
             ->pieSlice(new Point(200, 150), new Box(100, 200), 45, 135, $this->getColor('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/pie.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/pie.png'));
+        $this->assertFileExists('tests/Imagine/Fixtures/pie.png');
 
         unlink('tests/Imagine/Fixtures/pie.png');
     }
@@ -74,14 +74,14 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('000'));
 
         $canvas->draw()
             ->chord(new Point(200, 150), new Box(100, 200), 45, 135, $this->getColor('fff'), true);
 
         $canvas->save('tests/Imagine/Fixtures/chord.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/chord.png'));
+        $this->assertFileExists('tests/Imagine/Fixtures/chord.png');
 
         unlink('tests/Imagine/Fixtures/chord.png');
     }
@@ -90,7 +90,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('000'));
 
         $canvas->draw()
             ->line(new Point(50, 50), new Point(350, 250), $this->getColor('fff'))
@@ -98,7 +98,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         $canvas->save('tests/Imagine/Fixtures/lines.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/lines.png'));
+        $this->assertFileExists('tests/Imagine/Fixtures/lines.png');
 
         unlink('tests/Imagine/Fixtures/lines.png');
     }
@@ -107,7 +107,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('000'));
 
         $canvas->draw()
             ->polygon(array(
@@ -119,7 +119,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         $canvas->save('tests/Imagine/Fixtures/polygon.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/polygon.png'));
+        $this->assertFileExists('tests/Imagine/Fixtures/polygon.png');
 
         unlink('tests/Imagine/Fixtures/polygon.png');
     }
@@ -128,7 +128,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('000'));
 
         $canvas->draw()
             ->dot(new Point(200, 150), $this->getColor('fff'))
@@ -138,7 +138,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         $canvas->save('tests/Imagine/Fixtures/dot.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/dot.png'));
+        $this->assertFileExists('tests/Imagine/Fixtures/dot.png');
 
         unlink('tests/Imagine/Fixtures/dot.png');
     }
@@ -147,15 +147,15 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $canvas = $imagine->create(new Box(400, 300),  $this->getColor('000'));
-        $size   = $canvas->getSize();
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('000'));
+        $size = $canvas->getSize();
 
         $canvas->draw()
             ->arc(new Center($size), $size->scale(0.5), 0, 180, $this->getColor('fff'));
 
         $canvas->save('tests/Imagine/Fixtures/arc.png');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/arc.png'));
+        $this->assertFileExists('tests/Imagine/Fixtures/arc.png');
 
         unlink('tests/Imagine/Fixtures/arc.png');
     }
@@ -166,16 +166,16 @@ abstract class AbstractDrawerTest extends ImagineTestCase
             $this->markTestSkipped('This install does not support font tests');
         }
 
-        $path   = 'tests/Imagine/Fixtures/font/Arial.ttf';
-        $black  =  $this->getColor('000');
+        $path = 'tests/Imagine/Fixtures/font/Arial.ttf';
+        $black = $this->getColor('000');
         $file36 = 'tests/Imagine/Fixtures/bulat36.png';
         $file24 = 'tests/Imagine/Fixtures/bulat24.png';
         $file18 = 'tests/Imagine/Fixtures/bulat18.png';
         $file12 = 'tests/Imagine/Fixtures/bulat12.png';
 
         $imagine = $this->getImagine();
-        $canvas  = $imagine->create(new Box(400, 300), $this->getColor('fff'));
-        $font    = $imagine->font($path, 36, $black);
+        $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
+        $font = $imagine->font($path, 36, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(0, 0), 135);
@@ -184,12 +184,12 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         unset($canvas);
 
-        $this->assertTrue(file_exists($file36));
+        $this->assertFileExists($file36);
 
         unlink($file36);
 
         $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
-        $font   = $imagine->font($path, 24, $black);
+        $font = $imagine->font($path, 24, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(24, 24));
@@ -198,12 +198,12 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         unset($canvas);
 
-        $this->assertTrue(file_exists($file24));
+        $this->assertFileExists($file24);
 
         unlink($file24);
 
         $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
-        $font   = $imagine->font($path, 18, $black);
+        $font = $imagine->font($path, 18, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(18, 18));
@@ -212,12 +212,12 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         unset($canvas);
 
-        $this->assertTrue(file_exists($file18));
+        $this->assertFileExists($file18);
 
         unlink($file18);
 
         $canvas = $imagine->create(new Box(400, 300), $this->getColor('fff'));
-        $font   = $imagine->font($path, 12, $black);
+        $font = $imagine->font($path, 12, $black);
 
         $canvas->draw()
             ->text('Bulat', $font, new Point(12, 12));
@@ -226,7 +226,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         unset($canvas);
 
-        $this->assertTrue(file_exists($file12));
+        $this->assertFileExists($file12);
 
         unlink($file12);
     }

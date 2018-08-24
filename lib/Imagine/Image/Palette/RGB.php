@@ -11,11 +11,11 @@
 
 namespace Imagine\Image\Palette;
 
-use Imagine\Image\Palette\Color\RGB as RGBColor;
-use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\ProfileInterface;
-use Imagine\Image\Profile;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
+use Imagine\Image\Profile;
+use Imagine\Image\ProfileInterface;
 
 class RGB implements PaletteInterface
 {
@@ -113,7 +113,7 @@ class RGB implements PaletteInterface
      */
     public function blend(ColorInterface $color1, ColorInterface $color2, $amount)
     {
-        if (!$color1 instanceof RGBColor || ! $color2 instanceof RGBColor) {
+        if (!$color1 instanceof RGBColor || !$color2 instanceof RGBColor) {
             throw new RuntimeException('RGB palette can only blend RGB colors');
         }
 

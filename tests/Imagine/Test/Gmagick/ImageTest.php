@@ -13,7 +13,6 @@ namespace Imagine\Test\Gmagick;
 
 use Imagine\Gmagick\Imagine;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Point;
 use Imagine\Test\Image\AbstractImageTest;
 
 /**
@@ -77,7 +76,6 @@ class ImageTest extends AbstractImageTest
     {
         $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
     }
-
 
     protected function getImagine()
     {

@@ -11,13 +11,13 @@
 
 namespace Imagine\Test\Gmagick;
 
-use Imagine\Gmagick\Layers;
 use Imagine\Gmagick\Image;
 use Imagine\Gmagick\Imagine;
-use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Test\Image\AbstractLayersTest;
+use Imagine\Gmagick\Layers;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\RGB;
+use Imagine\Test\Image\AbstractLayersTest;
 
 /**
  * @group ext-gmagick

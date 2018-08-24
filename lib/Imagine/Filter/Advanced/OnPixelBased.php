@@ -18,7 +18,7 @@ use Imagine\Image\Point;
 
 /**
  * The OnPixelBased takes a callable, and for each pixel, this callable is called with the
- * image  (\Imagine\Image\ImageInterface) and the current point (\Imagine\Image\Point)
+ * image (\Imagine\Image\ImageInterface) and the current point (\Imagine\Image\Point).
  */
 class OnPixelBased implements FilterInterface
 {
@@ -35,7 +35,7 @@ class OnPixelBased implements FilterInterface
 
     /**
      * Applies scheduled transformation to ImageInterface instance
-     * Returns processed ImageInterface instance
+     * Returns processed ImageInterface instance.
      *
      * @param ImageInterface $image
      *

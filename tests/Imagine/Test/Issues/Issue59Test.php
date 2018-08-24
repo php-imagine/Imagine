@@ -2,8 +2,8 @@
 
 namespace Imagine\Test\Issues;
 
-use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
+use Imagine\Gd\Imagine;
 
 /**
  * @group ext-gd
@@ -24,7 +24,7 @@ class Issue59Test extends \PHPUnit\Framework\TestCase
     public function testShouldResize()
     {
         $imagine = $this->getImagine();
-        $new     = sys_get_temp_dir()."/sample.jpeg";
+        $new = sys_get_temp_dir() . '/sample.jpeg';
 
         $imagine
             ->open('tests/Imagine/Fixtures/sample.gif')

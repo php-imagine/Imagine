@@ -19,7 +19,7 @@ use Imagine\Test\Filter\FilterTestCase;
 class ResizeTest extends FilterTestCase
 {
     /**
-     * @covers Imagine\Filter\Basic\Resize::apply
+     * @covers \Imagine\Filter\Basic\Resize::apply
      *
      * @dataProvider getDataSet
      *
@@ -40,7 +40,7 @@ class ResizeTest extends FilterTestCase
     }
 
     /**
-     * Data provider for testShouldResizeImageAndReturnResult
+     * Data provider for testShouldResizeImageAndReturnResult.
      *
      * @return array
      */
@@ -50,7 +50,7 @@ class ResizeTest extends FilterTestCase
             array(new Box(50, 15)),
             array(new Box(300, 25)),
             array(new Box(123, 23)),
-            array(new Box(45, 23))
+            array(new Box(45, 23)),
         );
     }
 }

@@ -11,8 +11,8 @@
 
 namespace Imagine\Test\Image\Palette\Color;
 
-use Imagine\Image\Palette\Color\Gray;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\Gray;
 use Imagine\Image\Palette\Grayscale;
 
 class GrayTest extends AbstractColorTest
@@ -25,6 +25,7 @@ class GrayTest extends AbstractColorTest
             array(new Gray(new Grayscale(), array(255), 100)),
         );
     }
+
     public function provideNotOpaqueColors()
     {
         return array(
@@ -45,7 +46,7 @@ class GrayTest extends AbstractColorTest
     public function provideColorAndAlphaTuples()
     {
         return array(
-            array(14, $this->getColor())
+            array(14, $this->getColor()),
         );
     }
 

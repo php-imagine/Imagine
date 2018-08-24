@@ -12,7 +12,7 @@
 namespace Imagine\Image\Metadata;
 
 /**
- * An interface for Image Metadata
+ * An interface for Image Metadata.
  */
 class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
 {
@@ -25,9 +25,9 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     }
 
     /**
-     * Returns the metadata key, default value if it does not exist
+     * Returns the metadata key, default value if it does not exist.
      *
-     * @param string     $key
+     * @param string $key
      * @param mixed|null $default
      *
      * @return mixed
@@ -86,7 +86,7 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     }
 
     /**
-     * Returns metadata as an array
+     * Returns metadata as an array.
      *
      * @return array An associative array
      */

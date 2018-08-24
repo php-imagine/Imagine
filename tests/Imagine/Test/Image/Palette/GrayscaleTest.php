@@ -11,8 +11,8 @@
 
 namespace Imagine\Test\Image\Palette;
 
-use Imagine\Image\Palette\Grayscale;
 use Imagine\Image\Palette\Color\Gray;
+use Imagine\Image\Palette\Grayscale;
 
 class GrayscaleTest extends AbstractPaletteTest
 {
