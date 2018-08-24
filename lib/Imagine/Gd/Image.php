@@ -630,8 +630,7 @@ final class Image extends AbstractImage
      * Generates a GD image
      *
      * @param BoxInterface $size
-     * @param string the operation initiating the creation
-     * @param mixed $operation
+     * @param string $operation the operation initiating the creation
      *
      * @throws RuntimeException
      *

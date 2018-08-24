@@ -385,10 +385,10 @@ final class Drawer implements DrawerInterface
      *
      * Fits a string into box with given width
      *
-     * @param mixed $string
-     * @param mixed $text
-     * @param mixed $angle
-     * @param mixed $width
+     * @param string $string
+     * @param \ImagickDraw $text
+     * @param int $angle
+     * @param int $width
      */
     private function wrapText($string, $text, $angle, $width)
     {

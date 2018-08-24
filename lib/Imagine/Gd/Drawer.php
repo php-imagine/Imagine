@@ -321,10 +321,10 @@ final class Drawer implements DrawerInterface
      *
      * Fits a string into box with given width
      *
-     * @param mixed $string
+     * @param string $string
      * @param AbstractFont $font
-     * @param mixed $angle
-     * @param mixed $width
+     * @param int $angle
+     * @param int $width
      */
     private function wrapText($string, AbstractFont $font, $angle, $width)
     {
