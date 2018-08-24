@@ -692,6 +692,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $image = $this->getImagine()->create($size);
         $palette = $image->palette();
         $metadata = $image->metadata();
+        $layers = $image->layers();
         if ($withCopy) {
             $clone = $image->copy();
         } else {
@@ -700,10 +701,13 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals($size, $clone->getSize());
         $this->assertNotSame($palette, $clone->palette());
         $this->assertNotSame($metadata, $clone->metadata());
+        $this->assertNotSame($layers, $clone->layers());
+        $this->assertEquals($layers->key(), $clone->layers()->key());
         unset($clone);
         $this->assertEquals($size, $image->getSize());
         $this->assertSame($palette, $image->palette());
         $this->assertSame($metadata, $image->metadata());
+        $this->assertSame($layers, $image->layers());
     }
 
     public function testImageSizeOnAnimatedGif()
