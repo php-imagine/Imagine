@@ -11,9 +11,9 @@
 
 namespace Imagine\Test\Filter\Advanced;
 
+use Imagine\Filter\Advanced\Canvas;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
-use Imagine\Filter\Advanced\Canvas;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
@@ -22,7 +22,7 @@ use Imagine\Test\Filter\FilterTestCase;
 class CanvasTest extends FilterTestCase
 {
     /**
-     * @covers Imagine\Filter\Advanced\Canvas::apply
+     * @covers \Imagine\Filter\Advanced\Canvas::apply
      *
      * @dataProvider getDataSet
      *
@@ -47,7 +47,7 @@ class CanvasTest extends FilterTestCase
     }
 
     /**
-     * Data provider for testShouldCanvasImageAndReturnResult
+     * Data provider for testShouldCanvasImageAndReturnResult.
      *
      * @return array
      */

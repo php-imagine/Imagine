@@ -12,7 +12,7 @@
 namespace Imagine\Exception;
 
 /**
- * Imagine-specific exception
+ * Imagine-specific exception.
  */
 interface Exception
 {

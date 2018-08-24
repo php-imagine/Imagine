@@ -11,11 +11,11 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\OutOfBoundsException;
+use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Exception\RuntimeException;
-use Imagine\Exception\OutOfBoundsException;
-use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Palette\PaletteInterface;
 
 class Layers extends AbstractLayers
@@ -29,7 +29,7 @@ class Layers extends AbstractLayers
      */
     private $resource;
     /**
-     * @var integer
+     * @var int
      */
     private $offset;
     /**
@@ -130,12 +130,13 @@ class Layers extends AbstractLayers
     }
 
     /**
-     * Tries to extract layer at given offset
+     * Tries to extract layer at given offset.
      *
-     * @param integer $offset
+     * @param int $offset
+     *
+     * @throws RuntimeException
      *
      * @return Image
-     * @throws RuntimeException
      */
     private function extractAt($offset)
     {

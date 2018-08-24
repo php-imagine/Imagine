@@ -11,21 +11,21 @@
 
 namespace Imagine\Test\Image;
 
-use Imagine\Image\PointInterface;
-use Imagine\Image\BoxInterface;
 use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
 
 class BoxTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers Imagine\Image\Box::getWidth
-     * @covers Imagine\Image\Box::getHeight
+     * @covers \Imagine\Image\Box::getWidth
+     * @covers \Imagine\Image\Box::getHeight
      *
      * @dataProvider getSizes
      *
-     * @param integer $width
-     * @param integer $height
+     * @param int $width
+     * @param int $height
      */
     public function testShouldAssignWidthAndHeight($width, $height)
     {
@@ -36,7 +36,7 @@ class BoxTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Data provider for testShouldAssignWidthAndHeight
+     * Data provider for testShouldAssignWidthAndHeight.
      *
      * @return array
      */
@@ -45,19 +45,19 @@ class BoxTest extends \PHPUnit\Framework\TestCase
         return array(
             array(1, 1),
             array(10, 10),
-            array(15, 36)
+            array(15, 36),
         );
     }
 
     /**
-     * @covers Imagine\Image\Box::__construct
+     * @covers \Imagine\Image\Box::__construct
      *
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      *
      * @dataProvider getInvalidSizes
      *
-     * @param integer $width
-     * @param integer $height
+     * @param int $width
+     * @param int $height
      */
     public function testShouldThrowExceptionOnInvalidSize($width, $height)
     {
@@ -65,7 +65,7 @@ class BoxTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Data provider for testShouldThrowExceptionOnInvalidSize
+     * Data provider for testShouldThrowExceptionOnInvalidSize.
      *
      * @return array
      */
@@ -75,19 +75,19 @@ class BoxTest extends \PHPUnit\Framework\TestCase
             array(0, 0),
             array(15, 0),
             array(0, 25),
-            array(-1, 4)
+            array(-1, 4),
         );
     }
 
     /**
-     * @covers Imagine\Image\Box::contains
+     * @covers \Imagine\Image\Box::contains
      *
      * @dataProvider getSizeBoxStartAndExpected
      *
      * @param BoxInterface   $size
      * @param BoxInterface   $box
      * @param PointInterface $start
-     * @param Boolean        $expected
+     * @param bool        $expected
      */
     public function testShouldDetermineIfASizeContainsABoxAtAStartPosition(
         BoxInterface       $size,
@@ -99,7 +99,7 @@ class BoxTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Data provider for testShouldDetermineIfASizeContainsABoxAtAStartPosition
+     * Data provider for testShouldDetermineIfASizeContainsABoxAtAStartPosition.
      *
      * @return array
      */
@@ -139,9 +139,9 @@ class BoxTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getSizesAndSquares
      *
-     * @param integer $width
-     * @param integer $height
-     * @param integer $square
+     * @param int $width
+     * @param int $height
+     * @param int $square
      */
     public function testShouldCalculateSquare($width, $height, $square)
     {
@@ -162,10 +162,10 @@ class BoxTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getDimensionsAndTargets
      *
-     * @param integer $width
-     * @param integer $height
-     * @param integer $targetWidth
-     * @param integer $targetHeight
+     * @param int $width
+     * @param int $height
+     * @param int $targetWidth
+     * @param int $targetHeight
      */
     public function testShouldResizeToTargetWidthAndHeight($width, $height, $targetWidth, $targetHeight)
     {

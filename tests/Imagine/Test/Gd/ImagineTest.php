@@ -12,8 +12,8 @@
 namespace Imagine\Test\Gd;
 
 use Imagine\Gd\Imagine;
-use Imagine\Test\Image\AbstractImagineTest;
 use Imagine\Image\Box;
+use Imagine\Test\Image\AbstractImagineTest;
 
 /**
  * @group ext-gd

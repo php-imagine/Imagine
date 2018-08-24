@@ -11,14 +11,14 @@
 
 namespace Imagine\Test\Image\Palette\Color;
 
+use Imagine\Image\Palette\CMYK as CMYKPalette;
 use Imagine\Image\Palette\Color\CMYK;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Palette\CMYK as CMYKPalette;
 
 class CMYKTest extends AbstractColorTest
 {
     /**
-     * @expectedException Imagine\Exception\RuntimeException
+     * @expectedException \Imagine\Exception\RuntimeException
      */
     public function testDissolve()
     {
@@ -52,7 +52,7 @@ class CMYKTest extends AbstractColorTest
     public function provideColorAndAlphaTuples()
     {
         return array(
-            array(null, $this->getColor())
+            array(null, $this->getColor()),
         );
     }
 

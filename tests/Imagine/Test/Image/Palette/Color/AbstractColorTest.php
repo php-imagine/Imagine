@@ -17,6 +17,9 @@ abstract class AbstractColorTest extends ImagineTestCase
 {
     /**
      * @dataProvider provideColorAndAlphaTuples
+     *
+     * @param mixed $expected
+     * @param mixed $color
      */
     public function testGetAlpha($expected, $color)
     {
@@ -30,6 +33,9 @@ abstract class AbstractColorTest extends ImagineTestCase
 
     /**
      * @dataProvider provideColorAndValueComponents
+     *
+     * @param mixed $expected
+     * @param mixed $color
      */
     public function testGetvalue($expected, $color)
     {
@@ -90,6 +96,9 @@ abstract class AbstractColorTest extends ImagineTestCase
 
     /**
      * @dataProvider provideGrayscaleData
+     *
+     * @param mixed $expected
+     * @param mixed $color
      */
     public function testGrayscale($expected, $color)
     {
@@ -98,6 +107,8 @@ abstract class AbstractColorTest extends ImagineTestCase
 
     /**
      * @dataProvider provideOpaqueColors
+     *
+     * @param mixed $color
      */
     public function testIsOpaque($color)
     {
@@ -106,6 +117,8 @@ abstract class AbstractColorTest extends ImagineTestCase
 
     /**
      * @dataProvider provideNotOpaqueColors
+     *
+     * @param mixed $color
      */
     public function testIsNotOpaque($color)
     {

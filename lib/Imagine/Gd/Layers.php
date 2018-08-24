@@ -11,11 +11,11 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Image\AbstractLayers;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
-use Imagine\Exception\NotSupportedException;
 
 class Layers extends AbstractLayers
 {

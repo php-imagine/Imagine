@@ -11,19 +11,19 @@
 
 namespace Imagine\Image;
 
-use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
- * The imagine interface
+ * The imagine interface.
  */
 interface ImagineInterface
 {
     const VERSION = '0.7-dev';
 
     /**
-     * Creates a new empty image with an optional background color
+     * Creates a new empty image with an optional background color.
      *
      * @param BoxInterface   $size
      * @param ColorInterface $color
@@ -36,9 +36,9 @@ interface ImagineInterface
     public function create(BoxInterface $size, ColorInterface $color = null);
 
     /**
-     * Opens an existing image from $path
+     * Opens an existing image from $path.
      *
-     * @param string|\Imagine\File\LoaderInterface|mixed $path The file path, a LoaderInterface instance, or an object whose string representation is the image path.
+     * @param string|\Imagine\File\LoaderInterface|mixed $path the file path, a LoaderInterface instance, or an object whose string representation is the image path
      *
      * @throws RuntimeException
      *
@@ -47,7 +47,7 @@ interface ImagineInterface
     public function open($path);
 
     /**
-     * Loads an image from a binary $string
+     * Loads an image from a binary $string.
      *
      * @param string $string
      *
@@ -58,7 +58,7 @@ interface ImagineInterface
     public function load($string);
 
     /**
-     * Loads an image from a resource $resource
+     * Loads an image from a resource $resource.
      *
      * @param resource $resource
      *
@@ -69,12 +69,12 @@ interface ImagineInterface
     public function read($resource);
 
     /**
-     * Constructs a font with specified $file, $size and $color
+     * Constructs a font with specified $file, $size and $color.
      *
      * The font size is to be specified in points (e.g. 10pt means 10)
      *
      * @param string         $file
-     * @param integer        $size
+     * @param int        $size
      * @param ColorInterface $color
      *
      * @return FontInterface

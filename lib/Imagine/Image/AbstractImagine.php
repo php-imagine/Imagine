@@ -11,10 +11,10 @@
 
 namespace Imagine\Image;
 
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Metadata\DefaultMetadataReader;
 use Imagine\Image\Metadata\ExifMetadataReader;
 use Imagine\Image\Metadata\MetadataReaderInterface;
-use Imagine\Exception\InvalidArgumentException;
 
 abstract class AbstractImagine implements ImagineInterface
 {
@@ -55,9 +55,9 @@ abstract class AbstractImagine implements ImagineInterface
      *
      * @param string|object $path
      *
-     * @return string
+     * @throws InvalidArgumentException in case the given path is invalid
      *
-     * @throws InvalidArgumentException In case the given path is invalid.
+     * @return string
      */
     protected function checkPath($path)
     {

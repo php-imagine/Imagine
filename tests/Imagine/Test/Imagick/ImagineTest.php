@@ -11,9 +11,9 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Image\Box;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractImagineTest;
-use Imagine\Image\Box;
 
 /**
  * @group ext-imagick

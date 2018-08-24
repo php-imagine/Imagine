@@ -11,9 +11,9 @@
 
 namespace Imagine\Test\Functional;
 
-use Imagine\Image\Point;
-use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Point;
 
 /**
  * @group ext-gd
@@ -34,10 +34,10 @@ class GdTransparentGifHandlingTest extends \PHPUnit\Framework\TestCase
     public function testShouldResize()
     {
         $imagine = $this->getImagine();
-        $new     = sys_get_temp_dir()."/sample.jpeg";
+        $new = sys_get_temp_dir() . '/sample.jpeg';
 
         $image = $imagine->open('tests/Imagine/Fixtures/xparent.gif');
-        $size  = $image->getSize()->scale(0.5);
+        $size = $image->getSize()->scale(0.5);
 
         $image
             ->resize($size)

@@ -12,7 +12,7 @@
 namespace Imagine\Exception;
 
 /**
- * Imagine-specific invalid argument exception
+ * Imagine-specific invalid argument exception.
  */
 class InvalidArgumentException extends \InvalidArgumentException implements Exception
 {

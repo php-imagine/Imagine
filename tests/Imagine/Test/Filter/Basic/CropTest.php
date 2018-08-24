@@ -11,9 +11,9 @@
 
 namespace Imagine\Test\Filter\Basic;
 
+use Imagine\Filter\Basic\Crop;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
-use Imagine\Filter\Basic\Crop;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Test\Filter\FilterTestCase;
@@ -21,7 +21,7 @@ use Imagine\Test\Filter\FilterTestCase;
 class CropTest extends FilterTestCase
 {
     /**
-     * @covers Imagine\Filter\Basic\Crop::apply
+     * @covers \Imagine\Filter\Basic\Crop::apply
      *
      * @dataProvider getDataSet
      *
@@ -43,7 +43,7 @@ class CropTest extends FilterTestCase
     }
 
     /**
-     * Provides coordinates and sizes for testShouldApplyCropAndReturnResult
+     * Provides coordinates and sizes for testShouldApplyCropAndReturnResult.
      *
      * @return array
      */
@@ -51,7 +51,7 @@ class CropTest extends FilterTestCase
     {
         return array(
             array(new Point(0, 0), new Box(40, 50)),
-            array(new Point(0, 15), new Box(50, 32))
+            array(new Point(0, 15), new Box(50, 32)),
         );
     }
 }

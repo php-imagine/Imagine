@@ -121,6 +121,7 @@ class Loader implements LoaderInterface
                 $this->data = $this->readRemoteFile();
             }
         }
+
         return $this->data;
     }
 
@@ -148,6 +149,7 @@ class Loader implements LoaderInterface
         if ($data === false) {
             throw new InvalidArgumentException(sprintf('Failed to read from file %s.', $this->path));
         }
+
         return $data;
     }
 
@@ -179,6 +181,7 @@ class Loader implements LoaderInterface
         if ($this->isCurlSupported()) {
             return $this->readRemoteFileWithCurl();
         }
+
         return $this->readRemoteFileWithFileGetContents();
     }
 
@@ -201,6 +204,7 @@ class Loader implements LoaderInterface
             }
             $this->isCurlSupported = $isCurlSupported;
         }
+
         return $this->isCurlSupported;
     }
 
@@ -290,6 +294,7 @@ class Loader implements LoaderInterface
             }
             throw new InvalidArgumentException(sprintf('Failed to read from URL %s', $this->path));
         }
+
         return $data;
     }
 }

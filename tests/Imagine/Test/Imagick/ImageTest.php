@@ -11,15 +11,15 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Image\Point;
-use Imagine\Imagick\Imagine;
-use Imagine\Imagick\Image;
 use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
+use Imagine\Image\Point;
+use Imagine\Imagick\Image;
+use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractImageTest;
-use Imagine\Image\Box;
 
 /**
  * @group ext-imagick
@@ -104,8 +104,10 @@ class ImageTest extends AbstractImageTest
 
     /**
      * @depends testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct
-     * @expectedException Imagine\Exception\RuntimeException
+     * @expectedException \Imagine\Exception\RuntimeException
      * @expectedExceptionMessage Your version of Imagick does not support colorspace conversions.
+     *
+     * @param mixed $image
      */
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnPaletteChange($image)
     {
@@ -129,7 +131,6 @@ class ImageTest extends AbstractImageTest
         );
         unlink('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif');
     }
-
 
     protected function supportMultipleLayers()
     {

@@ -11,8 +11,8 @@
 
 namespace Imagine\Test\Image\Palette\Color;
 
-use Imagine\Image\Palette\Color\RGB;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\RGB;
 use Imagine\Image\Palette\RGB as RGBPalette;
 
 class RGBTest extends AbstractColorTest
@@ -25,6 +25,7 @@ class RGBTest extends AbstractColorTest
             array(new RGB(new RGBPalette(), array(255, 255, 255), 100)),
         );
     }
+
     public function provideNotOpaqueColors()
     {
         return array(
@@ -45,7 +46,7 @@ class RGBTest extends AbstractColorTest
     public function provideColorAndAlphaTuples()
     {
         return array(
-            array(14, $this->getColor())
+            array(14, $this->getColor()),
         );
     }
 

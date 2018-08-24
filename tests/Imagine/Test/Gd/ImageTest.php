@@ -11,10 +11,10 @@
 
 namespace Imagine\Test\Gd;
 
-use Imagine\Gd\Imagine;
-use Imagine\Test\Image\AbstractImageTest;
-use Imagine\Image\ImageInterface;
 use Imagine\Exception\RuntimeException;
+use Imagine\Gd\Imagine;
+use Imagine\Image\ImageInterface;
+use Imagine\Test\Image\AbstractImageTest;
 
 /**
  * @group ext-gd
@@ -66,7 +66,6 @@ class ImageTest extends AbstractImageTest
             parent::testProfile();
             $this->fail('A RuntimeException should have been raised');
         } catch (RuntimeException $e) {
-
         }
     }
 
@@ -122,6 +121,8 @@ class ImageTest extends AbstractImageTest
 
     /**
      * @dataProvider provideVariousSources
+     *
+     * @param mixed $source
      */
     public function testResolutionOnSave($source)
     {

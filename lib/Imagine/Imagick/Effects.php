@@ -18,7 +18,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB;
 
 /**
- * Effects implementation using the Imagick PHP extension
+ * Effects implementation using the Imagick PHP extension.
  */
 class Effects implements EffectsInterface
 {

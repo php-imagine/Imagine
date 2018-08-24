@@ -16,8 +16,8 @@ use Imagine\Filter\Basic\ApplyMask;
 use Imagine\Filter\Basic\Copy;
 use Imagine\Filter\Basic\Crop;
 use Imagine\Filter\Basic\Fill;
-use Imagine\Filter\Basic\FlipVertically;
 use Imagine\Filter\Basic\FlipHorizontally;
+use Imagine\Filter\Basic\FlipVertically;
 use Imagine\Filter\Basic\Paste;
 use Imagine\Filter\Basic\Resize;
 use Imagine\Filter\Basic\Rotate;
@@ -25,16 +25,16 @@ use Imagine\Filter\Basic\Save;
 use Imagine\Filter\Basic\Show;
 use Imagine\Filter\Basic\Strip;
 use Imagine\Filter\Basic\Thumbnail;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\ManipulatorInterface;
+use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\PointInterface;
 
 /**
- * A transformation filter
+ * A transformation filter.
  */
 final class Transformation implements FilterInterface, ManipulatorInterface
 {
@@ -67,13 +67,14 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * Applies a given FilterInterface onto given ImageInterface and returns
-     * modified ImageInterface
+     * modified ImageInterface.
      *
      * @param ImageInterface  $image
      * @param FilterInterface $filter
      *
-     * @return ImageInterface
      * @throws InvalidArgumentException
+     *
+     * @return ImageInterface
      */
     public function applyFilter(ImageInterface $image, FilterInterface $filter)
     {
@@ -224,10 +225,11 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * Registers a given FilterInterface in an internal array of filters for
-     * later application to an instance of ImageInterface
+     * later application to an instance of ImageInterface.
      *
      * @param  FilterInterface $filter
      * @param  int             $priority
+     *
      * @return Transformation
      */
     public function add(FilterInterface $filter, $priority = 0)

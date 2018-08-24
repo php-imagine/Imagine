@@ -2,13 +2,12 @@
 
 namespace Imagine\Test\Issues;
 
-use Imagine\Imagick\Imagine as ImagickImagine;
-use Imagine\Gmagick\Imagine as GmagickImagine;
 use Imagine\Exception\RuntimeException;
+use Imagine\Gmagick\Imagine as GmagickImagine;
+use Imagine\Imagick\Imagine as ImagickImagine;
 
 class Issue131Test extends \PHPUnit\Framework\TestCase
 {
-
     private function getTemporaryDir()
     {
         $tempDir = tempnam(sys_get_temp_dir(), 'imagine');
@@ -68,7 +67,7 @@ class Issue131Test extends \PHPUnit\Framework\TestCase
 
         $imagine->save($targetFile);
 
-        if ( ! $this->probeOneFileAndCleanup($dir, $targetFile)) {
+        if (!$this->probeOneFileAndCleanup($dir, $targetFile)) {
             $this->fail('Imagick failed to generate one file');
         }
     }
@@ -85,7 +84,7 @@ class Issue131Test extends \PHPUnit\Framework\TestCase
 
         $imagine->save($targetFile);
 
-        if ( ! $this->probeOneFileAndCleanup($dir, $targetFile)) {
+        if (!$this->probeOneFileAndCleanup($dir, $targetFile)) {
             $this->fail('Gmagick failed to generate one file');
         }
     }

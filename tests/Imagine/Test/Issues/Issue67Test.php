@@ -2,8 +2,8 @@
 
 namespace Imagine\Test\Issues;
 
-use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
+use Imagine\Gd\Imagine;
 
 /**
  * @group ext-gd
@@ -22,8 +22,8 @@ class Issue67Test extends \PHPUnit\Framework\TestCase
     }
 
     /**
-    * @expectedException Imagine\Exception\RuntimeException
-    */
+     * @expectedException \Imagine\Exception\RuntimeException
+     */
     public function testShouldThrowExceptionNotError()
     {
         $invalidPath = '/thispathdoesnotexist';

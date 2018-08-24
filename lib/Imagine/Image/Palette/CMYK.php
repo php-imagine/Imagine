@@ -11,10 +11,10 @@
 
 namespace Imagine\Image\Palette;
 
+use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\CMYK as CMYKColor;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Exception\RuntimeException;
-use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Profile;
 use Imagine\Image\ProfileInterface;
 
@@ -82,7 +82,7 @@ class CMYK implements PaletteInterface
      */
     public function blend(ColorInterface $color1, ColorInterface $color2, $amount)
     {
-        if (!$color1 instanceof CMYKColor || ! $color2 instanceof CMYKColor) {
+        if (!$color1 instanceof CMYKColor || !$color2 instanceof CMYKColor) {
             throw new RuntimeException('CMYK palette can only blend CMYK colors');
         }
 

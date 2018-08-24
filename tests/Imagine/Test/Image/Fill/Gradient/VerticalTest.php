@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Imagine\Test\Image\Fill\Gradient;
 
 use Imagine\Image\Fill\Gradient\Vertical;
@@ -16,7 +17,8 @@ use Imagine\Image\Point;
 class VerticalTest extends LinearTest
 {
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see LinearTest::getEnd()
      */
     protected function getEnd()
@@ -25,7 +27,8 @@ class VerticalTest extends LinearTest
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see LinearTest::getStart()
      */
     protected function getStart()
@@ -34,8 +37,12 @@ class VerticalTest extends LinearTest
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see LinearTest::getMask()
+     *
+     * @param ColorInterface $start
+     * @param ColorInterface $end
      */
     protected function getFill(ColorInterface $start, ColorInterface $end)
     {
@@ -43,7 +50,8 @@ class VerticalTest extends LinearTest
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see LinearTest::getPointsAndShades()
      */
     public function getPointsAndColors()
@@ -51,7 +59,7 @@ class VerticalTest extends LinearTest
         return array(
             array($this->getColor('fff'), new Point(5, 100)),
             array($this->getColor('000'), new Point(15, 0)),
-            array($this->getColor(array(128, 128, 128)), new Point(25, 50))
+            array($this->getColor(array(128, 128, 128)), new Point(25, 50)),
         );
     }
 }

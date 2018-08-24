@@ -12,11 +12,11 @@
 namespace Imagine\Filter\Basic;
 
 use Imagine\Filter\FilterInterface;
-use Imagine\Image\ImageInterface;
 use Imagine\Image\BoxInterface;
+use Imagine\Image\ImageInterface;
 
 /**
- * A resize filter
+ * A resize filter.
  */
 class Resize implements FilterInterface
 {
@@ -27,7 +27,7 @@ class Resize implements FilterInterface
     private $filter;
 
     /**
-     * Constructs Resize filter with given width and height
+     * Constructs Resize filter with given width and height.
      *
      * @param BoxInterface $size
      * @param string       $filter

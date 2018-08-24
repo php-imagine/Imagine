@@ -14,8 +14,6 @@ namespace Imagine\Test\Image\Metadata;
 use Imagine\Image\Metadata\MetadataReaderInterface;
 use Imagine\Test\ImagineTestCase;
 
-/**
- */
 abstract class MetadataReaderTestCase extends ImagineTestCase
 {
     /**

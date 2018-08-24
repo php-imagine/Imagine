@@ -10,9 +10,9 @@ $iterator = Finder::create()
 ;
 
 return new Sami($iterator, array(
-    'title'                => 'Imagine API',
-    'theme'                => 'default',
-    'build_dir'            => __DIR__.'/../API/API',
-    'cache_dir'            => __DIR__.'/cache',
+    'title' => 'Imagine API',
+    'theme' => 'default',
+    'build_dir' => __DIR__ . '/../API/API',
+    'cache_dir' => __DIR__ . '/cache',
     'default_opened_level' => 2,
 ));

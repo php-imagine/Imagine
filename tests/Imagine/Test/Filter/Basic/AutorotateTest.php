@@ -11,7 +11,7 @@
 
 namespace Imagine\Test\Filter\Basic;
 
-USE Imagine\Filter\Basic\Autorotate;
+use Imagine\Filter\Basic\Autorotate;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Test\Filter\FilterTestCase;
 
@@ -19,6 +19,10 @@ class AutorotateTest extends FilterTestCase
 {
     /**
      * @dataProvider provideMetadataAndRotations
+     *
+     * @param mixed $expectedRotation
+     * @param mixed $hFlipExpected
+     * @param MetadataBag $metadata
      */
     public function testApply($expectedRotation, $hFlipExpected, MetadataBag $metadata)
     {
