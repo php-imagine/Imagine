@@ -675,12 +675,20 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $this->getMonoLayeredImage()->metadata());
     }
 
-    public function testCloningImageResultsInNewMetadataInstance()
+    public function testCloneWorks()
     {
-        $image = $this->getMonoLayeredImage();
-        $originalMetadata = $image->metadata();
+        $size = new Box(5, 10);
+        $image = $this->getImagine()->create($size);
+        $palette = $image->palette();
+        $metadata = $image->metadata();
         $clone = clone $image;
-        $this->assertNotSame($originalMetadata, $clone->metadata(), 'The image\'s metadata is the same after cloning the image, but must be a new instance.');
+        $this->assertEquals($size, $clone->getSize());
+        $this->assertNotSame($palette, $clone->palette());
+        $this->assertNotSame($metadata, $clone->metadata());
+        unset($clone);
+        $this->assertEquals($size, $image->getSize());
+        $this->assertSame($palette, $image->palette());
+        $this->assertSame($metadata, $image->metadata());
     }
 
     public function testImageSizeOnAnimatedGif()
