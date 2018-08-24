@@ -74,6 +74,21 @@ final class Image extends AbstractImage
         }
     }
 
+    public function __clone()
+    {
+        parent::__clone();
+        $size = $this->getSize();
+        $copy = $this->createImage($size, 'copy');
+        if (false === imagecopy($copy, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight())) {
+            throw new RuntimeException('Image copy operation failed');
+        }
+        $this->resource = $copy;
+        $this->palette = clone $this->palette;
+        if ($this->layers !== null) {
+            $this->layers = new Layers($this, $this->palette, $this->resource);
+        }
+    }
+
     /**
      * Returns Gd resource
      *
@@ -91,14 +106,7 @@ final class Image extends AbstractImage
      */
     final public function copy()
     {
-        $size = $this->getSize();
-        $copy = $this->createImage($size, 'copy');
-
-        if (false === imagecopy($copy, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight())) {
-            throw new RuntimeException('Image copy operation failed');
-        }
-
-        return new Image($copy, $this->palette, $this->metadata);
+        return clone $this;
     }
 
     /**

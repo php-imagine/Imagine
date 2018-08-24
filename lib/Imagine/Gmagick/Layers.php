@@ -34,7 +34,7 @@ class Layers extends AbstractLayers
     /**
      * @var integer
      */
-    private $offset = 0;
+    private $offset;
 
     /**
      * @var array
@@ -46,11 +46,12 @@ class Layers extends AbstractLayers
      */
     private $palette;
 
-    public function __construct(Image $image, PaletteInterface $palette, \Gmagick $resource)
+    public function __construct(Image $image, PaletteInterface $palette, \Gmagick $resource, $initialOffset = 0)
     {
         $this->image = $image;
         $this->resource = $resource;
         $this->palette = $palette;
+        $this->offset = (int) $initialOffset;
     }
 
     /**
