@@ -33,7 +33,7 @@ class Rotate implements FilterInterface
     /**
      * Constructs Rotate filter with given angle and background color.
      *
-     * @param int        $angle
+     * @param int $angle
      * @param ColorInterface $background
      */
     public function __construct($angle, ColorInterface $background = null)

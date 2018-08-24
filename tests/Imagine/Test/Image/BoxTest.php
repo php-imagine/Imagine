@@ -84,14 +84,14 @@ class BoxTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider getSizeBoxStartAndExpected
      *
-     * @param BoxInterface   $size
-     * @param BoxInterface   $box
+     * @param BoxInterface $size
+     * @param BoxInterface $box
      * @param PointInterface $start
-     * @param bool        $expected
+     * @param bool $expected
      */
     public function testShouldDetermineIfASizeContainsABoxAtAStartPosition(
-        BoxInterface       $size,
-        BoxInterface       $box,
+        BoxInterface $size,
+        BoxInterface $box,
         PointInterface $start,
         $expected
     ) {

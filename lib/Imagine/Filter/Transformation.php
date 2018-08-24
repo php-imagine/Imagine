@@ -69,7 +69,7 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * Applies a given FilterInterface onto given ImageInterface and returns
      * modified ImageInterface.
      *
-     * @param ImageInterface  $image
+     * @param ImageInterface $image
      * @param FilterInterface $filter
      *
      * @throws InvalidArgumentException
@@ -227,8 +227,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
      * Registers a given FilterInterface in an internal array of filters for
      * later application to an instance of ImageInterface.
      *
-     * @param  FilterInterface $filter
-     * @param  int             $priority
+     * @param FilterInterface $filter
+     * @param int $priority
      *
      * @return Transformation
      */

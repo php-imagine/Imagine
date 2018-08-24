@@ -53,9 +53,9 @@ final class Image extends AbstractImage
     /**
      * Constructs a new Image instance.
      *
-     * @param resource         $resource
+     * @param resource $resource
      * @param PaletteInterface $palette
-     * @param MetadataBag      $metadata
+     * @param MetadataBag $metadata
      */
     public function __construct($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
@@ -117,7 +117,7 @@ final class Image extends AbstractImage
     final public function crop(PointInterface $start, BoxInterface $size)
     {
         if (!$start->in($this->getSize())) {
-            throw new OutOfBoundsException('Crop coordinates must start at minimum 0, 0 position from top  left corner, crop height and width must be positive integers and must not exceed the current image borders');
+            throw new OutOfBoundsException('Crop coordinates must start at minimum 0, 0 position from top left corner, crop height and width must be positive integers and must not exceed the current image borders');
         }
 
         $width = $size->getWidth();
@@ -540,7 +540,7 @@ final class Image extends AbstractImage
      * Performs save or show operation using one of GD's image... functions
      *
      * @param string $format
-     * @param array  $options
+     * @param array $options
      * @param string $filename
      *
      * @throws InvalidArgumentException
@@ -630,7 +630,7 @@ final class Image extends AbstractImage
      * Generates a GD image
      *
      * @param BoxInterface $size
-     * @param  string the operation initiating the creation
+     * @param string the operation initiating the creation
      * @param mixed $operation
      *
      * @throws RuntimeException

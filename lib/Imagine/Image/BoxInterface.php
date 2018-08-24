@@ -52,7 +52,7 @@ interface BoxInterface
      * Checks whether current box can fit given box at a given start position,
      * start position defaults to top left corner xy(0,0).
      *
-     * @param BoxInterface   $box
+     * @param BoxInterface $box
      * @param PointInterface $start
      *
      * @return bool

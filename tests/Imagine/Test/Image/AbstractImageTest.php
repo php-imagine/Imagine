@@ -556,7 +556,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testLayerOnMultiLayeredImage()
     {
-        foreach ($this->getMultiLayeredImage()->layers()  as $layer) {
+        foreach ($this->getMultiLayeredImage()->layers() as $layer) {
             $this->assertInstanceOf('Imagine\\Image\\ImageInterface', $layer);
             $this->assertCount(1, $layer->layers());
         }

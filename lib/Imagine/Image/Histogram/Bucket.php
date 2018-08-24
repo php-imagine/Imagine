@@ -27,7 +27,7 @@ final class Bucket implements \Countable
     private $count;
 
     /**
-     * @param Range   $range
+     * @param Range $range
      * @param int $count
      */
     public function __construct(Range $range, $count = 0)

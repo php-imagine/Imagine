@@ -42,7 +42,7 @@ interface FontInterface
     /**
      * Gets BoxInterface of font size on the image based on string and angle.
      *
-     * @param string  $string
+     * @param string $string
      * @param int $angle
      *
      * @return BoxInterface

@@ -43,7 +43,7 @@ abstract class LinearTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getPointsAndColors
      *
-     * @param int                      $shade
+     * @param int $shade
      * @param \Imagine\Image\PointInterface $position
      * @param ColorInterface $color
      */

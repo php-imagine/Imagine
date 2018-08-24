@@ -52,7 +52,7 @@ interface ImageInterface extends ManipulatorInterface
      * Returns the image content as a binary string.
      *
      * @param string $format
-     * @param array  $options
+     * @param array $options
      *
      * @throws RuntimeException
      *
@@ -117,7 +117,7 @@ interface ImageInterface extends ManipulatorInterface
     /**
      * Returns the image layers when applicable.
      *
-     * @throws RuntimeException     In case the layer can not be returned
+     * @throws RuntimeException In case the layer can not be returned
      * @throws OutOfBoundsException In case the index is not a valid value
      *
      * @return LayersInterface

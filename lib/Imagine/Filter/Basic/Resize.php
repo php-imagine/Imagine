@@ -30,7 +30,7 @@ class Resize implements FilterInterface
      * Constructs Resize filter with given width and height.
      *
      * @param BoxInterface $size
-     * @param string       $filter
+     * @param string $filter
      */
     public function __construct(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {

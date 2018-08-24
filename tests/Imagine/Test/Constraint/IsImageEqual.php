@@ -38,8 +38,8 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
 
     /**
      * @param \Imagine\Image\ImageInterface $value
-     * @param float                        $delta
-     * @param int                      $buckets
+     * @param float $delta
+     * @param int $buckets
      *
      * @throws \InvalidArgumentException
      */

@@ -25,7 +25,7 @@ class CenterTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider getSizesAndCoordinates
      *
-     * @param \Imagine\Image\BoxInterface   $box
+     * @param \Imagine\Image\BoxInterface $box
      * @param \Imagine\Image\PointInterface $expected
      */
     public function testShouldGetCenterCoordinates(BoxInterface $box, PointInterface $expected)
@@ -58,9 +58,9 @@ class CenterTest extends \PHPUnit\Framework\TestCase
      * @dataProvider getMoves
      *
      * @param \Imagine\Image\BoxInterface $box
-     * @param int                    $move
-     * @param int                    $x1
-     * @param int                    $y1
+     * @param int $move
+     * @param int $x1
+     * @param int $y1
      */
     public function testShouldMoveByGivenAmount(BoxInterface $box, $move, $x1, $y1)
     {

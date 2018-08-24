@@ -24,10 +24,9 @@ interface PaletteInterface
      * Returns a color given some values.
      *
      * @param string|array|int $color A color
-     * @param int|null         $alpha Set alpha to null to disable it
+     * @param int|null $alpha Set alpha to null to disable it
      *
-     * @throws \Imagine\Exception\InvalidArgumentException In case you pass an alpha value to a
-     *                                  Palette that does not support alpha
+     * @throws \Imagine\Exception\InvalidArgumentException In case you pass an alpha value to a Palette that does not support alpha
      *
      * @return ColorInterface
      */
@@ -38,7 +37,7 @@ interface PaletteInterface
      *
      * @param ColorInterface $color1
      * @param ColorInterface $color2
-     * @param float          $amount The amount of color2 in color1
+     * @param float $amount The amount of color2 in color1
      *
      * @return ColorInterface
      */

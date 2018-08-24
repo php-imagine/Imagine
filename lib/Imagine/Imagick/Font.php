@@ -26,9 +26,9 @@ final class Font extends AbstractFont
     private $imagick;
 
     /**
-     * @param \Imagick       $imagick
-     * @param string         $file
-     * @param int        $size
+     * @param \Imagick $imagick
+     * @param string $file
+     * @param int $size
      * @param ColorInterface $color
      */
     public function __construct(\Imagick $imagick, $file, $size, ColorInterface $color)

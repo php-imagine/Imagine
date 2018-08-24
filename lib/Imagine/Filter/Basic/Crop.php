@@ -36,7 +36,7 @@ class Crop implements FilterInterface
      * height values.
      *
      * @param PointInterface $start
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      */
     public function __construct(PointInterface $start, BoxInterface $size)
     {

@@ -65,9 +65,9 @@ final class Image extends AbstractImage
     /**
      * Constructs a new Image instance.
      *
-     * @param \Imagick         $imagick
+     * @param \Imagick $imagick
      * @param PaletteInterface $palette
-     * @param MetadataBag      $metadata
+     * @param MetadataBag $metadata
      */
     public function __construct(\Imagick $imagick, PaletteInterface $palette, MetadataBag $metadata)
     {
@@ -353,7 +353,7 @@ final class Image extends AbstractImage
     }
 
     /**
-     * @param array  $options
+     * @param array $options
      * @param string $path
      */
     private function prepareOutput(array $options, $path = null)
@@ -681,8 +681,8 @@ final class Image extends AbstractImage
      * Applies options before save or output
      *
      * @param \Imagick $image
-     * @param array    $options
-     * @param string   $path
+     * @param array $options
+     * @param string $path
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException

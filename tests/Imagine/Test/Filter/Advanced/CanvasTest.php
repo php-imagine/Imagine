@@ -26,7 +26,7 @@ class CanvasTest extends FilterTestCase
      *
      * @dataProvider getDataSet
      *
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      * @param PointInterface $placement
      * @param ColorInterface $background
      */

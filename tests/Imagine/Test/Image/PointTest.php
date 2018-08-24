@@ -24,10 +24,10 @@ class PointTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider getCoordinates
      *
-     * @param int      $x
-     * @param int      $y
+     * @param int $x
+     * @param int $y
      * @param BoxInterface $box
-     * @param bool      $expected
+     * @param bool $expected
      */
     public function testShouldAssignXYCoordinates($x, $y, BoxInterface $box, $expected)
     {

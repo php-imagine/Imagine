@@ -26,9 +26,9 @@ final class Font extends AbstractFont
     private $gmagick;
 
     /**
-     * @param \Gmagick       $gmagick
-     * @param string         $file
-     * @param int        $size
+     * @param \Gmagick $gmagick
+     * @param string $file
+     * @param int $size
      * @param ColorInterface $color
      */
     public function __construct(\Gmagick $gmagick, $file, $size, ColorInterface $color)

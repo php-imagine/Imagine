@@ -38,8 +38,8 @@ abstract class AbstractFont implements FontInterface
      *
      * The font size is to be specified in points (e.g. 10pt means 10)
      *
-     * @param string         $file
-     * @param int        $size
+     * @param string $file
+     * @param int $size
      * @param ColorInterface $color
      */
     public function __construct($file, $size, ColorInterface $color)

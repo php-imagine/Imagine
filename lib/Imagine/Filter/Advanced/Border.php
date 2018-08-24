@@ -40,8 +40,8 @@ class Border implements FilterInterface
      * Constructs Border filter with given color, width and height.
      *
      * @param ColorInterface $color
-     * @param int        $width  Width of the border on the left and right sides of the image
-     * @param int        $height Height of the border on the top and bottom sides of the image
+     * @param int $width Width of the border on the left and right sides of the image
+     * @param int $height Height of the border on the top and bottom sides of the image
      */
     public function __construct(ColorInterface $color, $width = 1, $height = 1)
     {

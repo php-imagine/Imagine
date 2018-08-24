@@ -28,7 +28,7 @@ class BucketTest extends \PHPUnit\Framework\TestCase
      * @dataProvider getCountAndValues
      *
      * @param int $count
-     * @param array   $values
+     * @param array $values
      */
     public function testShouldOnlyRegisterValuesInRange($count, array $values)
     {

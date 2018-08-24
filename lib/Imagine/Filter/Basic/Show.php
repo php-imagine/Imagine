@@ -33,7 +33,7 @@ class Show implements FilterInterface
      * Constructs the Show filter with given format and options.
      *
      * @param string $format
-     * @param array  $options
+     * @param array $options
      */
     public function __construct($format, array $options = array())
     {

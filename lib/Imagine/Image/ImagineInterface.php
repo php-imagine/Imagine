@@ -25,7 +25,7 @@ interface ImagineInterface
     /**
      * Creates a new empty image with an optional background color.
      *
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      * @param ColorInterface $color
      *
      * @throws InvalidArgumentException
@@ -73,8 +73,8 @@ interface ImagineInterface
      *
      * The font size is to be specified in points (e.g. 10pt means 10)
      *
-     * @param string         $file
-     * @param int        $size
+     * @param string $file
+     * @param int $size
      * @param ColorInterface $color
      *
      * @return FontInterface

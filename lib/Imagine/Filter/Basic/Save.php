@@ -33,7 +33,7 @@ class Save implements FilterInterface
      * Constructs Save filter with given path and options.
      *
      * @param string $path
-     * @param array  $options
+     * @param array $options
      */
     public function __construct($path = null, array $options = array())
     {

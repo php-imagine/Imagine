@@ -27,11 +27,11 @@ interface DrawerInterface
      * start and end angles.
      *
      * @param PointInterface $center
-     * @param BoxInterface   $size
-     * @param int        $start
-     * @param int        $end
+     * @param BoxInterface $size
+     * @param int $start
+     * @param int $end
      * @param ColorInterface $color
-     * @param int        $thickness
+     * @param int $thickness
      *
      * @throws RuntimeException
      *
@@ -43,12 +43,12 @@ interface DrawerInterface
      * Same as arc, but also connects end points with a straight line.
      *
      * @param PointInterface $center
-     * @param BoxInterface   $size
-     * @param int        $start
-     * @param int        $end
+     * @param BoxInterface $size
+     * @param int $start
+     * @param int $end
      * @param ColorInterface $color
-     * @param bool        $fill
-     * @param int        $thickness
+     * @param bool $fill
+     * @param int $thickness
      *
      * @throws RuntimeException
      *
@@ -61,10 +61,10 @@ interface DrawerInterface
      * width and height.
      *
      * @param PointInterface $center
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      * @param ColorInterface $color
-     * @param bool        $fill
-     * @param int        $thickness
+     * @param bool $fill
+     * @param int $thickness
      *
      * @throws RuntimeException
      *
@@ -78,7 +78,7 @@ interface DrawerInterface
      * @param PointInterface $start
      * @param PointInterface $end
      * @param ColorInterface $outline
-     * @param int        $thickness
+     * @param int $thickness
      *
      * @return DrawerInterface
      */
@@ -88,12 +88,12 @@ interface DrawerInterface
      * Same as arc, but connects end points and the center.
      *
      * @param PointInterface $center
-     * @param BoxInterface   $size
-     * @param int        $start
-     * @param int        $end
+     * @param BoxInterface $size
+     * @param int $start
+     * @param int $end
      * @param ColorInterface $color
-     * @param bool        $fill
-     * @param int        $thickness
+     * @param bool $fill
+     * @param int $thickness
      *
      * @throws RuntimeException
      *
@@ -118,10 +118,10 @@ interface DrawerInterface
      * Draws a polygon using array of x, y coordinates. Must contain at least
      * three coordinates.
      *
-     * @param array          $coordinates
+     * @param array $coordinates
      * @param ColorInterface $color
-     * @param bool        $fill
-     * @param int        $thickness
+     * @param bool $fill
+     * @param int $thickness
      *
      * @throws RuntimeException
      *
@@ -135,11 +135,11 @@ interface DrawerInterface
      *
      * The rotation is done CW
      *
-     * @param string         $string
-     * @param AbstractFont   $font
+     * @param string $string
+     * @param AbstractFont $font
      * @param PointInterface $position
-     * @param int        $angle
-     * @param int        $width
+     * @param int $angle
+     * @param int $width
      *
      * @throws RuntimeException
      *

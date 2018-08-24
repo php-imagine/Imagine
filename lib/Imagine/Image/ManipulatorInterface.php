@@ -39,7 +39,7 @@ interface ManipulatorInterface
      * Returns cropped self.
      *
      * @param PointInterface $start
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      *
      * @throws OutOfBoundsException
      * @throws RuntimeException
@@ -52,7 +52,7 @@ interface ManipulatorInterface
      * Resizes current image and returns self.
      *
      * @param BoxInterface $size
-     * @param string       $filter
+     * @param string $filter
      *
      * @throws RuntimeException
      *
@@ -65,7 +65,7 @@ interface ManipulatorInterface
      * Optional $background can be used to specify the fill color of the empty
      * area of rotated image.
      *
-     * @param int        $angle
+     * @param int $angle
      * @param ColorInterface $background
      *
      * @throws RuntimeException
@@ -99,7 +99,7 @@ interface ManipulatorInterface
      * Please remark that bmp is supported by the GD driver only since PHP 7.2.
      *
      * @param string $path
-     * @param array  $options
+     * @param array $options
      *
      * @throws RuntimeException
      *
@@ -111,7 +111,7 @@ interface ManipulatorInterface
      * Outputs the image content.
      *
      * @param string $format
-     * @param array  $options
+     * @param array $options
      *
      * @throws RuntimeException
      *
@@ -151,8 +151,8 @@ interface ManipulatorInterface
      * Returns it as a new image, doesn't modify the current image.
      *
      * @param BoxInterface $size
-     * @param string       $mode
-     * @param string       $filter The filter to use for resizing, one of ImageInterface::FILTER_*
+     * @param string $mode
+     * @param string $filter The filter to use for resizing, one of ImageInterface::FILTER_*
      *
      * @throws RuntimeException
      *

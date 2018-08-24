@@ -27,7 +27,7 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * Returns the metadata key, default value if it does not exist.
      *
-     * @param string     $key
+     * @param string $key
      * @param mixed|null $default
      *
      * @return mixed

@@ -49,9 +49,9 @@ class Canvas implements FilterInterface
      * inside the new canvas.
      *
      * @param ImagineInterface $imagine
-     * @param BoxInterface     $size
-     * @param PointInterface   $placement
-     * @param ColorInterface   $background
+     * @param BoxInterface $size
+     * @param PointInterface $placement
+     * @param ColorInterface $background
      */
     public function __construct(ImagineInterface $imagine, BoxInterface $size, PointInterface $placement = null, ColorInterface $background = null)
     {

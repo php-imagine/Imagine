@@ -53,9 +53,9 @@ final class Image extends AbstractImage
     /**
      * Constructs a new Image instance.
      *
-     * @param \Gmagick         $gmagick
+     * @param \Gmagick $gmagick
      * @param PaletteInterface $palette
-     * @param MetadataBag      $metadata
+     * @param MetadataBag $metadata
      */
     public function __construct(\Gmagick $gmagick, PaletteInterface $palette, MetadataBag $metadata)
     {
@@ -268,8 +268,8 @@ final class Image extends AbstractImage
      * Applies options before save or output
      *
      * @param \Gmagick $image
-     * @param array    $options
-     * @param string   $path
+     * @param array $options
+     * @param string $path
      *
      * @throws InvalidArgumentException
      */
@@ -409,7 +409,7 @@ final class Image extends AbstractImage
     }
 
     /**
-     * @param array  $options
+     * @param array $options
      * @param string $path
      */
     private function prepareOutput(array $options, $path = null)

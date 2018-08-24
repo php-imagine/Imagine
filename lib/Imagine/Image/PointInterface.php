@@ -42,7 +42,7 @@ interface PointInterface
     /**
      * Returns another point, moved by a given amount from current coordinates.
      *
-     * @param  int        $amount
+     * @param int $amount
      *
      * @return ImageInterface
      */
