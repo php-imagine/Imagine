@@ -25,6 +25,7 @@
   * Added support to new image type constants of Imagick (@ausi)
   * Check that Imagick correctly supports profiles (@ausi)
   * Fix creating Gmagick images with alpha colors when palette doesn't support alpha (@FractalizeR)
+  * Fix warning about deprecated clone method in copy method of Imagick images (@mlocati)
 
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)
