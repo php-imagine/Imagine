@@ -110,7 +110,10 @@ final class Image extends AbstractImage
     public function copy()
     {
         try {
-            if (version_compare(phpversion("imagick"), "3.1.0b1", ">=") || defined("HHVM_VERSION")) {
+            // the clone method has been deprecated in imagick 3.1.0b1.
+            // we can't use phpversion('imagick') because it may return `@PACKAGE_VERSION@`
+            // so, let's check if ImagickDraw has the setResolution method, which has been introduced in the same version 3.1.0b1
+            if (method_exists('ImagickDraw', 'setResolution')) {
                 $clone = clone $this->imagick;
             } else {
                 $clone = $this->imagick->clone();
