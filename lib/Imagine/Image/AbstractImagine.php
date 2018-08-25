@@ -18,18 +18,20 @@ use Imagine\Image\Metadata\MetadataReaderInterface;
 
 abstract class AbstractImagine implements ImagineInterface
 {
-    /** @var MetadataReaderInterface */
+    /**
+     * @var \Imagine\Image\Metadata\MetadataReaderInterface|null
+     */
     private $metadataReader;
 
     /**
-     * @var \Imagine\Factory\ClassFactoryInterface|null
+     * @var \Imagine\Factory\ClassFactoryInterface
      */
     private $classFactory;
 
     /**
-     * @param MetadataReaderInterface $metadataReader
+     * {@inheritdoc}
      *
-     * @return ImagineInterface
+     * @see \Imagine\Image\ImagineInterface::setMetadataReader()
      */
     public function setMetadataReader(MetadataReaderInterface $metadataReader)
     {
@@ -39,7 +41,9 @@ abstract class AbstractImagine implements ImagineInterface
     }
 
     /**
-     * @return MetadataReaderInterface
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::getMetadataReader()
      */
     public function getMetadataReader()
     {

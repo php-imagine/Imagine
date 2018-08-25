@@ -14,6 +14,7 @@ namespace Imagine\Image;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Factory\ClassFactoryAwareInterface;
+use Imagine\Image\Metadata\MetadataReaderInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
@@ -81,4 +82,20 @@ interface ImagineInterface extends ClassFactoryAwareInterface
      * @return FontInterface
      */
     public function font($file, $size, ColorInterface $color);
+
+    /**
+     * Set the object to be used to read image metadata.
+     *
+     * @param \Imagine\Image\Metadata\MetadataReaderInterface $metadataReader
+     *
+     * @return $this
+     */
+    public function setMetadataReader(MetadataReaderInterface $metadataReader);
+
+    /**
+     * Get the object to be used to read image metadata.
+     *
+     * @return \Imagine\Image\Metadata\MetadataReaderInterface
+     */
+    public function getMetadataReader();
 }
