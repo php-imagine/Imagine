@@ -29,9 +29,10 @@ install:
             if test "${IMAGINE_DRIVER}" = 'imagick'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},ext-imagick"; fi
             if test "${IMAGINE_DRIVER}" = 'gmagick'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},ext-gmagick"; fi
             composer --no-interaction remove --dev --no-update --no-scripts friendsofphp/php-cs-fixer
-            php --ri curl || true
             ;;
     esac
+  - php --ri curl || true
+  - ifconfig || true
   - composer --no-interaction install
 
 script:
