@@ -14,8 +14,8 @@ namespace Imagine\Imagick;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractImage;
-use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Fill\Gradient\Horizontal;
@@ -37,10 +37,12 @@ final class Image extends AbstractImage
      * @var \Imagick
      */
     private $imagick;
+
     /**
-     * @var Layers
+     * @var Layers|null
      */
     private $layers;
+
     /**
      * @var PaletteInterface
      */
@@ -78,7 +80,6 @@ final class Image extends AbstractImage
             $this->setColorspace($palette);
         }
         $this->palette = $palette;
-        $this->layers = new Layers($this, $this->palette, $this->imagick);
     }
 
     public function __clone()
@@ -88,7 +89,9 @@ final class Image extends AbstractImage
             $this->imagick = $this->cloneImagick();
         }
         $this->palette = clone $this->palette;
-        $this->layers = new Layers($this, $this->palette, $this->imagick, $this->layers->key());
+        if ($this->layers !== null) {
+            $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_IMAGICK, $this, $this->layers->key());
+        }
     }
 
     /**
@@ -242,7 +245,7 @@ final class Image extends AbstractImage
     public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
         try {
-            if ($this->layers->count() > 1) {
+            if ($this->layers()->count() > 1) {
                 $this->imagick = $this->imagick->coalesceImages();
                 foreach ($this->imagick as $frame) {
                     $frame->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
@@ -369,14 +372,14 @@ final class Image extends AbstractImage
 
             $options['flatten'] = false;
 
-            $this->layers->animate($format, $delay, $loops);
+            $this->layers()->animate($format, $delay, $loops);
         } else {
-            $this->layers->merge();
+            $this->layers()->merge();
         }
         $this->applyImageOptions($this->imagick, $options, $path);
 
         // flatten only if image has multiple layers
-        if ((!isset($options['flatten']) || $options['flatten'] === true) && count($this->layers) > 1) {
+        if ((!isset($options['flatten']) || $options['flatten'] === true) && $this->layers()->count() > 1) {
             $this->flatten();
         }
     }
@@ -394,7 +397,7 @@ final class Image extends AbstractImage
      */
     public function draw()
     {
-        return new Drawer($this->imagick);
+        return $this->getClassFactory()->createDrawer(ClassFactoryInterface::HANDLE_IMAGICK, $this->imagick);
     }
 
     /**
@@ -402,7 +405,7 @@ final class Image extends AbstractImage
      */
     public function effects()
     {
-        return new Effects($this->imagick);
+        return $this->getClassFactory()->createEffects(ClassFactoryInterface::HANDLE_IMAGICK, $this->imagick);
     }
 
     /**
@@ -420,7 +423,7 @@ final class Image extends AbstractImage
             throw new RuntimeException('Could not get size', $e->getCode(), $e);
         }
 
-        return new Box($width, $height);
+        return $this->getClassFactory()->createBox($width, $height);
     }
 
     /**
@@ -588,6 +591,10 @@ final class Image extends AbstractImage
      */
     public function layers()
     {
+        if ($this->layers === null) {
+            $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_IMAGICK, $this);
+        }
+
         return $this->layers;
     }
 

@@ -11,13 +11,21 @@
 
 namespace Imagine\Image;
 
+use Imagine\Factory\ClassFactory;
+use Imagine\Factory\ClassFactoryAwareInterface;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
  * Abstract font base class.
  */
-abstract class AbstractFont implements FontInterface
+abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
 {
+    /**
+     * @var \Imagine\Factory\ClassFactoryInterface|null
+     */
+    private $classFactory;
+
     /**
      * @var string
      */
@@ -71,5 +79,31 @@ abstract class AbstractFont implements FontInterface
     final public function getColor()
     {
         return $this->color;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::getClassFactory()
+     */
+    public function getClassFactory()
+    {
+        if ($this->classFactory === null) {
+            $this->classFactory = new ClassFactory();
+        }
+
+        return $this->classFactory;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::setClassFactory()
+     */
+    public function setClassFactory(ClassFactoryInterface $classFactory)
+    {
+        $this->classFactory = $classFactory;
+
+        return $this;
     }
 }

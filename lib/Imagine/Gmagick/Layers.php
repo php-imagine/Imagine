@@ -15,6 +15,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
@@ -134,7 +135,7 @@ class Layers extends AbstractLayers
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setimageindex($offset);
-                $this->layers[$offset] = new Image($this->resource->getimage(), $this->palette, new MetadataBag());
+                $this->layers[$offset] = $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GMAGICK, $this->resource->getimage(), $this->palette, new MetadataBag());
             } catch (\GmagickException $e) {
                 throw new RuntimeException(sprintf('Failed to extract layer %d', $offset), $e->getCode(), $e);
             }

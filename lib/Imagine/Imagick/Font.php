@@ -12,7 +12,6 @@
 namespace Imagine\Imagick;
 
 use Imagine\Image\AbstractFont;
-use Imagine\Image\Box;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
@@ -61,7 +60,7 @@ final class Font extends AbstractFont
 
         $info = $this->imagick->queryFontMetrics($text, $string);
 
-        $box = new Box($info['textWidth'], $info['textHeight']);
+        $box = $this->getClassFactory()->createBox($info['textWidth'], $info['textHeight']);
 
         return $box;
     }

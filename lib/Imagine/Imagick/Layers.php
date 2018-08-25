@@ -14,6 +14,7 @@ namespace Imagine\Imagick;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
@@ -114,7 +115,7 @@ class Layers extends AbstractLayers
         for ($offset = 0; $offset < $count; $offset++) {
             try {
                 $coalescedResource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($coalescedResource->getImage(), $this->palette, new MetadataBag());
+                $this->layers[$offset] = $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_IMAGICK, $coalescedResource->getImage(), $this->palette, new MetadataBag());
             } catch (\ImagickException $e) {
                 throw new RuntimeException('Failed to retrieve layer', $e->getCode(), $e);
             }
@@ -143,7 +144,7 @@ class Layers extends AbstractLayers
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($this->resource->getImage(), $this->palette, new MetadataBag());
+                $this->layers[$offset] = $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_IMAGICK, $this->resource->getImage(), $this->palette, new MetadataBag());
             } catch (\ImagickException $e) {
                 throw new RuntimeException(sprintf('Failed to extract layer %d', $offset), $e->getCode(), $e);
             }

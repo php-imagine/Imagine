@@ -14,8 +14,8 @@ namespace Imagine\Gmagick;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractImage;
-use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\ImageInterface;
@@ -35,8 +35,9 @@ final class Image extends AbstractImage
      * @var \Gmagick
      */
     private $gmagick;
+
     /**
-     * @var Layers
+     * @var Layers|null
      */
     private $layers;
 
@@ -62,7 +63,6 @@ final class Image extends AbstractImage
         $this->metadata = $metadata;
         $this->gmagick = $gmagick;
         $this->setColorspace($palette);
-        $this->layers = new Layers($this, $this->palette, $this->gmagick);
     }
 
     /**
@@ -81,7 +81,9 @@ final class Image extends AbstractImage
         parent::__clone();
         $this->gmagick = clone $this->gmagick;
         $this->palette = clone $this->palette;
-        $this->layers = new Layers($this, $this->palette, $this->gmagick, $this->layers->key());
+        if ($this->layers !== null) {
+            $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_GMAGICK, $this, $this->layers->key());
+        }
     }
 
     /**
@@ -425,14 +427,14 @@ final class Image extends AbstractImage
 
             $options['flatten'] = false;
 
-            $this->layers->animate($format, $delay, $loops);
+            $this->layers()->animate($format, $delay, $loops);
         } else {
-            $this->layers->merge();
+            $this->layers()->merge();
         }
         $this->applyImageOptions($this->gmagick, $options, $path);
 
         // flatten only if image has multiple layers
-        if ((!isset($options['flatten']) || $options['flatten'] === true) && count($this->layers) > 1) {
+        if ((!isset($options['flatten']) || $options['flatten'] === true) && $this->layers()->count() > 1) {
             $this->flatten();
         }
     }
@@ -450,7 +452,7 @@ final class Image extends AbstractImage
      */
     public function draw()
     {
-        return new Drawer($this->gmagick);
+        return $this->getClassFactory()->createDrawer(ClassFactoryInterface::HANDLE_GMAGICK, $this->gmagick);
     }
 
     /**
@@ -458,7 +460,7 @@ final class Image extends AbstractImage
      */
     public function effects()
     {
-        return new Effects($this->gmagick);
+        return $this->getClassFactory()->createEffects(ClassFactoryInterface::HANDLE_GMAGICK, $this->gmagick);
     }
 
     /**
@@ -476,7 +478,7 @@ final class Image extends AbstractImage
             throw new RuntimeException('Get size operation failed', $e->getCode(), $e);
         }
 
-        return new Box($width, $height);
+        return $this->getClassFactory()->createBox($width, $height);
     }
 
     /**
@@ -663,6 +665,10 @@ final class Image extends AbstractImage
      */
     public function layers()
     {
+        if ($this->layers === null) {
+            $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_GMAGICK, $this);
+        }
+
         return $this->layers;
     }
 

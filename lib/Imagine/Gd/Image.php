@@ -15,8 +15,8 @@ use Exception;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractImage;
-use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\ImageInterface;
@@ -85,7 +85,7 @@ final class Image extends AbstractImage
         $this->resource = $copy;
         $this->palette = clone $this->palette;
         if ($this->layers !== null) {
-            $this->layers = new Layers($this, $this->palette, $this->resource);
+            $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_GD, $this, $this->layers->key());
         }
     }
 
@@ -352,7 +352,7 @@ final class Image extends AbstractImage
      */
     public function draw()
     {
-        return new Drawer($this->resource);
+        return $this->getClassFactory()->createDrawer(ClassFactoryInterface::HANDLE_GD, $this->resource);
     }
 
     /**
@@ -360,7 +360,7 @@ final class Image extends AbstractImage
      */
     public function effects()
     {
-        return new Effects($this->resource);
+        return $this->getClassFactory()->createEffects(ClassFactoryInterface::HANDLE_GD, $this->resource);
     }
 
     /**
@@ -368,7 +368,7 @@ final class Image extends AbstractImage
      */
     public function getSize()
     {
-        return new Box(imagesx($this->resource), imagesy($this->resource));
+        return $this->getClassFactory()->createBox(imagesx($this->resource), imagesy($this->resource));
     }
 
     /**
@@ -477,7 +477,7 @@ final class Image extends AbstractImage
     public function layers()
     {
         if (null === $this->layers) {
-            $this->layers = new Layers($this, $this->palette, $this->resource);
+            $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_GD, $this);
         }
 
         return $this->layers;

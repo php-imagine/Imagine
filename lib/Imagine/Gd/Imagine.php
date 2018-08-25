@@ -13,7 +13,7 @@ namespace Imagine\Gd;
 
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
-use Imagine\File\Loader;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\File\LoaderInterface;
 use Imagine\Image\AbstractImagine;
 use Imagine\Image\BoxInterface;
@@ -29,16 +29,10 @@ use Imagine\Image\Palette\RGB;
 final class Imagine extends AbstractImagine
 {
     /**
-     * @var array
-     */
-    private $info;
-
-    /**
      * @throws RuntimeException
      */
     public function __construct()
     {
-        $this->loadGdInfo();
         $this->requireGdVersion('2.0.1');
     }
 
@@ -85,7 +79,7 @@ final class Imagine extends AbstractImagine
      */
     public function open($path)
     {
-        $loader = $path instanceof LoaderInterface ? $path : new Loader($path);
+        $loader = $path instanceof LoaderInterface ? $path : $this->getClassFactory()->createFileLoader($path);
         $path = $loader->getPath();
 
         $resource = @imagecreatefromstring($loader->getData());
@@ -128,11 +122,7 @@ final class Imagine extends AbstractImagine
      */
     public function font($file, $size, ColorInterface $color)
     {
-        if (!$this->info['FreeType Support']) {
-            throw new RuntimeException('GD is not compiled with FreeType support');
-        }
-
-        return new Font($file, $size, $color);
+        return $this->getClassFactory()->createFont(ClassFactoryInterface::HANDLE_GD, $file, $size, $color);
     }
 
     private function wrap($resource, PaletteInterface $palette, MetadataBag $metadata)
@@ -168,20 +158,14 @@ final class Imagine extends AbstractImagine
             imageantialias($resource, true);
         }
 
-        return new Image($resource, $palette, $metadata);
-    }
-
-    private function loadGdInfo()
-    {
-        if (!function_exists('gd_info')) {
-            throw new RuntimeException('Gd not installed');
-        }
-
-        $this->info = gd_info();
+        return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $resource, $palette, $metadata);
     }
 
     private function requireGdVersion($version)
     {
+        if (!function_exists('gd_info')) {
+            throw new RuntimeException('Gd not installed');
+        }
         if (version_compare(GD_VERSION, $version, '<')) {
             throw new RuntimeException(sprintf('GD2 version %s or higher is required, %s provided', $version, GD_VERSION));
         }
