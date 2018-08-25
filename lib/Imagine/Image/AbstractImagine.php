@@ -24,6 +24,11 @@ abstract class AbstractImagine implements ImagineInterface
     private $metadataReader;
 
     /**
+     * @var \Imagine\Factory\ClassFactoryInterface
+     */
+    private $classFactory;
+
+    /**
      * {@inheritdoc}
      *
      * @see \Imagine\Image\ImagineInterface::setMetadataReader()
