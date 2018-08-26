@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="index, follow, all" />
-    <title>Imagine\Image\ProfileInterface | Imagine API</title>
+    <title>Imagine\Factory\ClassFactoryAwareInterface | Imagine API</title>
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
@@ -19,7 +19,7 @@
     
     </head>
 
-    <body id="class" data-name="class:Imagine_Image_ProfileInterface" data-root-path="../../">
+    <body id="class" data-name="class:Imagine_Factory_ClassFactoryAwareInterface" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
@@ -66,25 +66,27 @@
                         <div class="namespace-breadcrumbs">
             <ol class="breadcrumb">
                 <li><span class="label label-default">interface</span></li>
-                        <li><a href="../../Imagine.html">Imagine</a></li><li class="backslash">\</li><li><a href="../../Imagine/Image.html">Image</a></li><li class="backslash">\</li><li>ProfileInterface</li>
+                        <li><a href="../../Imagine.html">Imagine</a></li><li class="backslash">\</li><li><a href="../../Imagine/Factory.html">Factory</a></li><li class="backslash">\</li><li>ClassFactoryAwareInterface</li>
             </ol>
         </div>
                 <div id="page-content">
                 
     <div class="page-header">
         <h1>
-            ProfileInterface
+            ClassFactoryAwareInterface
                 
         </h1>
     </div>
 
     <p>    interface
-    <strong>ProfileInterface</strong>
+    <strong>ClassFactoryAwareInterface</strong>
 </p>
 
         
     
 
+            <div class="description">
+            <p>An interface that classes that accepts a class factory should implement.</p>                                </div>
     
     
     
@@ -94,22 +96,22 @@
             <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-2 type">
-                    string
+                    <abbr title="Imagine\Factory\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_name">name</a>()
+                    <a href="#method_setClassFactory">setClassFactory</a>(<a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a> $classFactory)
         
-                                            <p>Returns the name of the profile.</p>                </div>
+                                            <p>Set the class factory instance to be used.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    string
+                    <a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_data">data</a>()
+                    <a href="#method_getClassFactory">getClassFactory</a>()
         
-                                            <p>Returns the profile data.</p>                </div>
+                                            <p>Get the class factory instance to be used.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -119,10 +121,10 @@
 
             <div id="method-details">
                     <div class="method-item">
-                    <h3 id="method_name">
-        <div class="location">at         line 21</div>
-        <code>                    string
-    <strong>name</strong>()
+                    <h3 id="method_setClassFactory">
+        <div class="location">at         line 17</div>
+        <code>                    <abbr title="Imagine\Factory\$this">$this</abbr>
+    <strong>setClassFactory</strong>(<a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a> $classFactory)
         </code>
     </h3>
     <div class="details">
@@ -130,14 +132,24 @@
     
 
                     <div class="method-description">
-                                    <p>Returns the name of the profile.</p>                                                </div>
+                                    <p>Set the class factory instance to be used.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a></td>
+                <td>$classFactory</td>
+                <td></td>
+            </tr>
+            </table>
+
             
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
         <tr>
-            <td>string</td>
+            <td><abbr title="Imagine\Factory\$this">$this</abbr></td>
             <td></td>
         </tr>
     </table>
@@ -149,10 +161,10 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_data">
-        <div class="location">at         line 28</div>
-        <code>                    string
-    <strong>data</strong>()
+                    <h3 id="method_getClassFactory">
+        <div class="location">at         line 24</div>
+        <code>                    <a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a>
+    <strong>getClassFactory</strong>()
         </code>
     </h3>
     <div class="details">
@@ -160,14 +172,14 @@
     
 
                     <div class="method-description">
-                                    <p>Returns the profile data.</p>                                                </div>
+                                    <p>Get the class factory instance to be used.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
         <tr>
-            <td>string</td>
+            <td><a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a></td>
             <td></td>
         </tr>
     </table>

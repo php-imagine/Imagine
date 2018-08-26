@@ -119,13 +119,13 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    String
+                    string
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_name">name</a>()
         
                                             <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_*
-constants</p>                </div>
+constants.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -141,12 +141,12 @@ define the structure of colors for a pixel.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    Boolean
+                    bool
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_supportsAlpha">supportsAlpha</a>()
         
-                                            <p>Tells if alpha channel is supported in this palette</p>                </div>
+                                            <p>Tells if alpha channel is supported in this palette.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -174,9 +174,9 @@ define the structure of colors for a pixel.</p>                </div>
                     <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_color">color</a>(string|array|integer $color, integer|null $alpha = null)
+                    <a href="#method_color">color</a>(string|array|int $color, int|null $alpha = null)
         
-                                            <p>Returns a color given some values</p>                </div>
+                                            <p>Returns a color given some values.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -186,7 +186,7 @@ define the structure of colors for a pixel.</p>                </div>
                 <div class="col-md-8 type">
                     <a href="#method_blend">blend</a>(<a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color1, <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color2, float $amount)
         
-                                            <p>Blend two colors given an amount</p>                </div>
+                                            <p>Blend two colors given an amount.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -217,7 +217,7 @@ define the structure of colors for a pixel.</p>                </div>
                     <div class="method-item">
                     <h3 id="method_name">
         <div class="location">at         line 45</div>
-        <code>                    String
+        <code>                    string
     <strong>name</strong>()
         </code>
     </h3>
@@ -227,14 +227,14 @@ define the structure of colors for a pixel.</p>                </div>
 
                     <div class="method-description">
                                     <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_*
-constants</p>                                                </div>
+constants.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
         <tr>
-            <td>String</td>
+            <td>string</td>
             <td></td>
         </tr>
     </table>
@@ -279,7 +279,7 @@ define the structure of colors for a pixel.</p>                                 
                     <div class="method-item">
                     <h3 id="method_supportsAlpha">
         <div class="location">at         line 65</div>
-        <code>                    Boolean
+        <code>                    bool
     <strong>supportsAlpha</strong>()
         </code>
     </h3>
@@ -288,14 +288,14 @@ define the structure of colors for a pixel.</p>                                 
     
 
                     <div class="method-description">
-                                    <p>Tells if alpha channel is supported in this palette</p>                                                </div>
+                                    <p>Tells if alpha channel is supported in this palette.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
         <tr>
-            <td>Boolean</td>
+            <td>bool</td>
             <td></td>
         </tr>
     </table>
@@ -380,7 +380,7 @@ define the structure of colors for a pixel.</p>                                 
                     <h3 id="method_color">
         <div class="location">at         line 95</div>
         <code>                    <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
-    <strong>color</strong>(string|array|integer $color, integer|null $alpha = null)
+    <strong>color</strong>(string|array|int $color, int|null $alpha = null)
         </code>
     </h3>
     <div class="details">
@@ -388,18 +388,18 @@ define the structure of colors for a pixel.</p>                                 
     
 
                     <div class="method-description">
-                                    <p>Returns a color given some values</p>                                                </div>
+                                    <p>Returns a color given some values.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>string|array|integer</td>
+                <td>string|array|int</td>
                 <td>$color</td>
                 <td>A color</td>
             </tr>
                     <tr>
-                <td>integer|null</td>
+                <td>int|null</td>
                 <td>$alpha</td>
                 <td>Set alpha to null to disable it</td>
             </tr>
@@ -421,8 +421,7 @@ define the structure of colors for a pixel.</p>                                 
                     <table class="table table-condensed">
                     <tr>
                 <td><a href="../../../Imagine/Exception/InvalidArgumentException.html"><abbr title="Imagine\Exception\InvalidArgumentException">InvalidArgumentException</abbr></a></td>
-                <td>In case you pass an alpha value to a
-                                 Palette that does not support alpha</td>
+                <td>In case you pass an alpha value to a Palette that does not support alpha</td>
             </tr>
             </table>
 
@@ -443,7 +442,7 @@ define the structure of colors for a pixel.</p>                                 
     
 
                     <div class="method-description">
-                                    <p>Blend two colors given an amount</p>                                                </div>
+                                    <p>Blend two colors given an amount.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 

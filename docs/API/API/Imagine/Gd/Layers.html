@@ -99,7 +99,7 @@
                 <div class="col-md-8 type">
                     <a href="#method_add">add</a>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
         
-                                            <p>Adds an image at the end of the layers stack</p>                </div>
+                                            <p>Adds an image at the end of the layers stack.</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/AbstractLayers.html#method_add"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a></small></div>
             </div>
                     <div class="row">
@@ -107,9 +107,9 @@
                     <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_set">set</a>(integer $offset, <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
+                    <a href="#method_set">set</a>(int $offset, <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
         
-                                            <p>Set an image at offset</p>                </div>
+                                            <p>Set an image at offset.</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/AbstractLayers.html#method_set"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a></small></div>
             </div>
                     <div class="row">
@@ -117,9 +117,9 @@
                     <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_remove">remove</a>(integer $offset)
+                    <a href="#method_remove">remove</a>(int $offset)
         
-                                            <p>Removes the image at offset</p>                </div>
+                                            <p>Removes the image at offset.</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/AbstractLayers.html#method_remove"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a></small></div>
             </div>
                     <div class="row">
@@ -127,27 +127,47 @@
                     <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_get">get</a>(integer $offset)
+                    <a href="#method_get">get</a>(int $offset)
         
-                                            <p>Returns the image at offset</p>                </div>
+                                            <p>Returns the image at offset.</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/AbstractLayers.html#method_get"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    Boolean
+                    bool
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_has">has</a>(integer $offset)
+                    <a href="#method_has">has</a>(int $offset)
         
-                                            <p>Returns true if a layer at offset is preset</p>                </div>
+                                            <p>Returns true if a layer at offset is preset.</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/AbstractLayers.html#method_has"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Imagine\Factory\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setClassFactory">setClassFactory</a>(<a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a> $classFactory)
+        
+                                            <p>Set the class factory instance to be used.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/AbstractLayers.html#method_setClassFactory"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getClassFactory">getClassFactory</a>()
+        
+                                            <p>Get the class factory instance to be used.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/AbstractLayers.html#method_getClassFactory"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(<a href="../../Imagine/Gd/Image.html"><abbr title="Imagine\Gd\Image">Image</abbr></a> $image, <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette, $resource)
+                    <a href="#method___construct">__construct</a>(<a href="../../Imagine/Gd/Image.html"><abbr title="Imagine\Gd\Image">Image</abbr></a> $image, <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette, $resource, $initialOffset = 0)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -160,7 +180,7 @@
                 <div class="col-md-8 type">
                     <a href="#method_merge">merge</a>()
         
-                                            <p>Merge layers into the original objects</p>                </div>
+                                            <p>Merge layers into the original objects.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -179,9 +199,9 @@ the sequence.</p>                </div>
                     <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_animate">animate</a>(string $format, integer $delay, integer $loops)
+                    <a href="#method_animate">animate</a>(string $format, int $delay, int $loops)
         
-                                            <p>Animates layers</p>                </div>
+                                            <p>Animates layers.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -292,7 +312,7 @@ the sequence.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_add">
-        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_add"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 19</div>
+        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_add"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 28</div>
         <code>                    <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
     <strong>add</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
         </code>
@@ -302,7 +322,7 @@ the sequence.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Adds an image at the end of the layers stack</p>                                                </div>
+                                    <p>Adds an image at the end of the layers stack.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -341,9 +361,9 @@ the sequence.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_set">
-        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_set"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 29</div>
+        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_set"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 38</div>
         <code>                    <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
-    <strong>set</strong>(integer $offset, <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
+    <strong>set</strong>(int $offset, <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
         </code>
     </h3>
     <div class="details">
@@ -351,13 +371,13 @@ the sequence.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Set an image at offset</p>                                                </div>
+                                    <p>Set an image at offset.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>integer</td>
+                <td>int</td>
                 <td>$offset</td>
                 <td></td>
             </tr>
@@ -403,9 +423,9 @@ the sequence.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_remove">
-        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_remove"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 39</div>
+        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_remove"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 48</div>
         <code>                    <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
-    <strong>remove</strong>(integer $offset)
+    <strong>remove</strong>(int $offset)
         </code>
     </h3>
     <div class="details">
@@ -413,13 +433,13 @@ the sequence.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Removes the image at offset</p>                                                </div>
+                                    <p>Removes the image at offset.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>integer</td>
+                <td>int</td>
                 <td>$offset</td>
                 <td></td>
             </tr>
@@ -456,9 +476,9 @@ the sequence.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_get">
-        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_get"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 49</div>
+        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_get"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 58</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
-    <strong>get</strong>(integer $offset)
+    <strong>get</strong>(int $offset)
         </code>
     </h3>
     <div class="details">
@@ -466,13 +486,13 @@ the sequence.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns the image at offset</p>                                                </div>
+                                    <p>Returns the image at offset.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>integer</td>
+                <td>int</td>
                 <td>$offset</td>
                 <td></td>
             </tr>
@@ -509,9 +529,9 @@ the sequence.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_has">
-        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_has"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 57</div>
-        <code>                    Boolean
-    <strong>has</strong>(integer $offset)
+        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_has"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 66</div>
+        <code>                    bool
+    <strong>has</strong>(int $offset)
         </code>
     </h3>
     <div class="details">
@@ -519,13 +539,13 @@ the sequence.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns true if a layer at offset is preset</p>                                                </div>
+                                    <p>Returns true if a layer at offset is preset.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>integer</td>
+                <td>int</td>
                 <td>$offset</td>
                 <td></td>
             </tr>
@@ -536,7 +556,7 @@ the sequence.</p>                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td>Boolean</td>
+            <td>bool</td>
             <td></td>
         </tr>
     </table>
@@ -548,10 +568,102 @@ the sequence.</p>                </div>
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_setClassFactory">
+        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_setClassFactory"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 76</div>
+        <code>                    <abbr title="Imagine\Factory\$this">$this</abbr>
+    <strong>setClassFactory</strong>(<a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a> $classFactory)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set the class factory instance to be used.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a></td>
+                <td>$classFactory</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Imagine\Factory\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../Imagine/Factory/ClassFactoryAwareInterface.html#method_setClassFactory"><abbr title="Imagine\Factory\ClassFactoryAwareInterface">ClassFactoryAwareInterface</abbr>::setClassFactory</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getClassFactory">
+        <div class="location">in <a href="../../Imagine/Image/AbstractLayers.html#method_getClassFactory"><abbr title="Imagine\Image\AbstractLayers">AbstractLayers</abbr></a> at         line 88</div>
+        <code>                    <a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a>
+    <strong>getClassFactory</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get the class factory instance to be used.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../Imagine/Factory/ClassFactoryAwareInterface.html#method_getClassFactory"><abbr title="Imagine\Factory\ClassFactoryAwareInterface">ClassFactoryAwareInterface</abbr>::getClassFactory</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 27</div>
+        <div class="location">at         line 28</div>
         <code>                    
-    <strong>__construct</strong>(<a href="../../Imagine/Gd/Image.html"><abbr title="Imagine\Gd\Image">Image</abbr></a> $image, <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette, $resource)
+    <strong>__construct</strong>(<a href="../../Imagine/Gd/Image.html"><abbr title="Imagine\Gd\Image">Image</abbr></a> $image, <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette, $resource, $initialOffset = 0)
         </code>
     </h3>
     <div class="details">
@@ -577,6 +689,11 @@ the sequence.</p>                </div>
                 <td>$resource</td>
                 <td></td>
             </tr>
+                    <tr>
+                <td></td>
+                <td>$initialOffset</td>
+                <td></td>
+            </tr>
             </table>
 
             
@@ -588,7 +705,7 @@ the sequence.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_merge">
-        <div class="location">at         line 42</div>
+        <div class="location">at         line 43</div>
         <code>                    
     <strong>merge</strong>()
         </code>
@@ -598,7 +715,7 @@ the sequence.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Merge layers into the original objects</p>                                                </div>
+                                    <p>Merge layers into the original objects.</p>                                                </div>
                 <div class="tags">
             
             
@@ -618,7 +735,7 @@ the sequence.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_coalesce">
-        <div class="location">at         line 49</div>
+        <div class="location">at         line 50</div>
         <code>                    
     <strong>coalesce</strong>()
         </code>
@@ -640,9 +757,9 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_animate">
-        <div class="location">at         line 56</div>
+        <div class="location">at         line 57</div>
         <code>                    <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
-    <strong>animate</strong>(string $format, integer $delay, integer $loops)
+    <strong>animate</strong>(string $format, int $delay, int $loops)
         </code>
     </h3>
     <div class="details">
@@ -650,7 +767,7 @@ the sequence.</p>                                                </div>
     
 
                     <div class="method-description">
-                                    <p>Animates layers</p>                                                </div>
+                                    <p>Animates layers.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -661,12 +778,12 @@ the sequence.</p>                                                </div>
                 <td>The output output format</td>
             </tr>
                     <tr>
-                <td>integer</td>
+                <td>int</td>
                 <td>$delay</td>
                 <td>The delay in milliseconds between two frames</td>
             </tr>
                     <tr>
-                <td>integer</td>
+                <td>int</td>
                 <td>$loops</td>
                 <td>The number of loops, 0 means infinite</td>
             </tr>
@@ -703,7 +820,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_current">
-        <div class="location">at         line 64</div>
+        <div class="location">at         line 65</div>
         <code>                    
     <strong>current</strong>()
         </code>
@@ -724,7 +841,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_key">
-        <div class="location">at         line 72</div>
+        <div class="location">at         line 73</div>
         <code>                    
     <strong>key</strong>()
         </code>
@@ -745,7 +862,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_next">
-        <div class="location">at         line 80</div>
+        <div class="location">at         line 81</div>
         <code>                    
     <strong>next</strong>()
         </code>
@@ -766,7 +883,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_rewind">
-        <div class="location">at         line 88</div>
+        <div class="location">at         line 89</div>
         <code>                    
     <strong>rewind</strong>()
         </code>
@@ -787,7 +904,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_valid">
-        <div class="location">at         line 96</div>
+        <div class="location">at         line 97</div>
         <code>                    
     <strong>valid</strong>()
         </code>
@@ -808,7 +925,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_count">
-        <div class="location">at         line 104</div>
+        <div class="location">at         line 105</div>
         <code>                    
     <strong>count</strong>()
         </code>
@@ -829,7 +946,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_offsetExists">
-        <div class="location">at         line 112</div>
+        <div class="location">at         line 113</div>
         <code>                    
     <strong>offsetExists</strong>($offset)
         </code>
@@ -860,7 +977,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_offsetGet">
-        <div class="location">at         line 120</div>
+        <div class="location">at         line 121</div>
         <code>                    
     <strong>offsetGet</strong>($offset)
         </code>
@@ -891,7 +1008,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_offsetSet">
-        <div class="location">at         line 132</div>
+        <div class="location">at         line 133</div>
         <code>                    
     <strong>offsetSet</strong>($offset, $value)
         </code>
@@ -927,7 +1044,7 @@ the sequence.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_offsetUnset">
-        <div class="location">at         line 140</div>
+        <div class="location">at         line 141</div>
         <code>                    
     <strong>offsetUnset</strong>($offset)
         </code>

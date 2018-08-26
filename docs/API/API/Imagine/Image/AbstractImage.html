@@ -80,7 +80,7 @@
 
     <p>abstract     class
     <strong>AbstractImage</strong>        implements
-        <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
+        <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>, <a href="../../Imagine/Factory/ClassFactoryAwareInterface.html"><abbr title="Imagine\Factory\ClassFactoryAwareInterface">ClassFactoryAwareInterface</abbr></a>
 </p>
 
         
@@ -114,7 +114,7 @@
                     <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         
                                             <p>Generates a thumbnail from a current image
-Returns it as a new image, doesn't modify the current image</p>                </div>
+Returns it as a new image, doesn't modify the current image.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -124,7 +124,7 @@ Returns it as a new image, doesn't modify the current image</p>                <
                 <div class="col-md-8 type">
                     <a href="#method_updateSaveOptions">updateSaveOptions</a>(array $options)
         
-                                            <p>Updates a given array of save options for backward compatibility with legacy names</p>                </div>
+                                            <p>Updates a given array of save options for backward compatibility with legacy names.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -134,7 +134,7 @@ Returns it as a new image, doesn't modify the current image</p>                <
                 <div class="col-md-8 type">
                     <a href="#method_metadata">metadata</a>()
         
-                                            <p>Returns the Image's meta data</p>                </div>
+                                            <p>Returns the Image's meta data.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -144,7 +144,27 @@ Returns it as a new image, doesn't modify the current image</p>                <
                 <div class="col-md-8 type">
                     <a href="#method___clone">__clone</a>()
         
-                                            <p>Assures the metadata instance will be cloned, too</p>                </div>
+                                            <p>Assures the metadata instance will be cloned, too.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getClassFactory">getClassFactory</a>()
+        
+                                            <p>Get the class factory instance to be used.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Imagine\Factory\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setClassFactory">setClassFactory</a>(<a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a> $classFactory)
+        
+                                            <p>Set the class factory instance to be used.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -155,7 +175,7 @@ Returns it as a new image, doesn't modify the current image</p>                <
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_thumbnail">
-        <div class="location">at         line 29</div>
+        <div class="location">at         line 37</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         </code>
@@ -166,7 +186,7 @@ Returns it as a new image, doesn't modify the current image</p>                <
 
                     <div class="method-description">
                                     <p>Generates a thumbnail from a current image
-Returns it as a new image, doesn't modify the current image</p>                                                </div>
+Returns it as a new image, doesn't modify the current image.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -215,7 +235,7 @@ Returns it as a new image, doesn't modify the current image</p>                 
             </div>
                     <div class="method-item">
                     <h3 id="method_updateSaveOptions">
-        <div class="location">at         line 92</div>
+        <div class="location">at         line 100</div>
         <code>            protected        array
     <strong>updateSaveOptions</strong>(array $options)
         </code>
@@ -225,7 +245,7 @@ Returns it as a new image, doesn't modify the current image</p>                 
     
 
                     <div class="method-description">
-                                    <p>Updates a given array of save options for backward compatibility with legacy names</p>                                                </div>
+                                    <p>Updates a given array of save options for backward compatibility with legacy names.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -255,7 +275,7 @@ Returns it as a new image, doesn't modify the current image</p>                 
             </div>
                     <div class="method-item">
                     <h3 id="method_metadata">
-        <div class="location">at         line 105</div>
+        <div class="location">at         line 113</div>
         <code>                    <a href="../../Imagine/Image/Metadata/MetadataBag.html"><abbr title="Imagine\Image\Metadata\MetadataBag">MetadataBag</abbr></a>
     <strong>metadata</strong>()
         </code>
@@ -265,7 +285,7 @@ Returns it as a new image, doesn't modify the current image</p>                 
     
 
                     <div class="method-description">
-                                    <p>Returns the Image's meta data</p>                                                </div>
+                                    <p>Returns the Image's meta data.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -285,7 +305,7 @@ Returns it as a new image, doesn't modify the current image</p>                 
             </div>
                     <div class="method-item">
                     <h3 id="method___clone">
-        <div class="location">at         line 113</div>
+        <div class="location">at         line 121</div>
         <code>                    
     <strong>__clone</strong>()
         </code>
@@ -295,11 +315,103 @@ Returns it as a new image, doesn't modify the current image</p>                 
     
 
                     <div class="method-description">
-                                    <p>Assures the metadata instance will be cloned, too</p>                                                </div>
+                                    <p>Assures the metadata instance will be cloned, too.</p>                                                </div>
                 <div class="tags">
             
             
             
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getClassFactory">
+        <div class="location">at         line 133</div>
+        <code>                    <a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a>
+    <strong>getClassFactory</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get the class factory instance to be used.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../Imagine/Factory/ClassFactoryAwareInterface.html#method_getClassFactory"><abbr title="Imagine\Factory\ClassFactoryAwareInterface">ClassFactoryAwareInterface</abbr>::getClassFactory</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setClassFactory">
+        <div class="location">at         line 147</div>
+        <code>                    <abbr title="Imagine\Factory\$this">$this</abbr>
+    <strong>setClassFactory</strong>(<a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a> $classFactory)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set the class factory instance to be used.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a></td>
+                <td>$classFactory</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Imagine\Factory\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../Imagine/Factory/ClassFactoryAwareInterface.html#method_setClassFactory"><abbr title="Imagine\Factory\ClassFactoryAwareInterface">ClassFactoryAwareInterface</abbr>::setClassFactory</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
