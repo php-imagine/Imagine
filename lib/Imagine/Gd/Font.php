@@ -17,7 +17,7 @@ use Imagine\Image\AbstractFont;
 /**
  * Font implementation using the GD library.
  */
-final class Font extends AbstractFont
+class Font extends AbstractFont
 {
     /**
      * {@inheritdoc}

@@ -26,7 +26,7 @@ use Imagine\Image\Palette\RGB;
 /**
  * Imagine implementation using the GD library.
  */
-final class Imagine extends AbstractImagine
+class Imagine extends AbstractImagine
 {
     /**
      * @throws RuntimeException

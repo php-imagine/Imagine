@@ -14,7 +14,7 @@ namespace Imagine\Image\Palette\Color;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Palette\RGB as RGBPalette;
 
-final class RGB implements ColorInterface
+class RGB implements ColorInterface
 {
     /**
      * @var int

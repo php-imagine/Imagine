@@ -16,7 +16,7 @@ use Imagine\Exception\InvalidArgumentException;
 /**
  * A box implementation.
  */
-final class Box implements BoxInterface
+class Box implements BoxInterface
 {
     /**
      * @var int
