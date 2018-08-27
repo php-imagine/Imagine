@@ -61,11 +61,11 @@ class ClassFactory implements ClassFactoryInterface
     public function createDrawer($handle, $resource)
     {
         switch ($handle) {
-            case static::HANDLE_GD:
+            case self::HANDLE_GD:
                 return $this->finalize(new \Imagine\Gd\Drawer($resource));
-            case static::HANDLE_GMAGICK:
+            case self::HANDLE_GMAGICK:
                 return $this->finalize(new \Imagine\Gmagick\Drawer($resource));
-            case static::HANDLE_IMAGICK:
+            case self::HANDLE_IMAGICK:
                 return $this->finalize(new \Imagine\Imagick\Drawer($resource));
             default:
                 throw new InvalidArgumentException(sprintf('Unrecognized handle %s in %s', $handle, __FUNCTION__));
@@ -80,11 +80,11 @@ class ClassFactory implements ClassFactoryInterface
     public function createLayers($handle, ImageInterface $image, $initialKey = null)
     {
         switch ($handle) {
-            case static::HANDLE_GD:
+            case self::HANDLE_GD:
                 return $this->finalize(new \Imagine\Gd\Layers($image, $image->palette(), $image->getGdResource(), (int) $initialKey));
-            case static::HANDLE_GMAGICK:
+            case self::HANDLE_GMAGICK:
                 return $this->finalize(new \Imagine\Gmagick\Layers($image, $image->palette(), $image->getGmagick(), (int) $initialKey));
-            case static::HANDLE_IMAGICK:
+            case self::HANDLE_IMAGICK:
                 return $this->finalize(new \Imagine\Imagick\Layers($image, $image->palette(), $image->getImagick(), (int) $initialKey));
             default:
                 throw new InvalidArgumentException(sprintf('Unrecognized handle %s in %s', $handle, __FUNCTION__));
@@ -99,11 +99,11 @@ class ClassFactory implements ClassFactoryInterface
     public function createEffects($handle, $resource)
     {
         switch ($handle) {
-            case static::HANDLE_GD:
+            case self::HANDLE_GD:
                 return $this->finalize(new \Imagine\Gd\Effects($resource));
-            case static::HANDLE_GMAGICK:
+            case self::HANDLE_GMAGICK:
                 return $this->finalize(new \Imagine\Gmagick\Effects($resource));
-            case static::HANDLE_IMAGICK:
+            case self::HANDLE_IMAGICK:
                 return $this->finalize(new \Imagine\Imagick\Effects($resource));
             default:
                 throw new InvalidArgumentException(sprintf('Unrecognized handle %s in %s', $handle, __FUNCTION__));
@@ -118,11 +118,11 @@ class ClassFactory implements ClassFactoryInterface
     public function createImage($handle, $resource, PaletteInterface $palette, MetadataBag $metadata)
     {
         switch ($handle) {
-            case static::HANDLE_GD:
+            case self::HANDLE_GD:
                 return $this->finalize(new \Imagine\Gd\Image($resource, $palette, $metadata));
-            case static::HANDLE_GMAGICK:
+            case self::HANDLE_GMAGICK:
                 return $this->finalize(new \Imagine\Gmagick\Image($resource, $palette, $metadata));
-            case static::HANDLE_IMAGICK:
+            case self::HANDLE_IMAGICK:
                 return $this->finalize(new \Imagine\Imagick\Image($resource, $palette, $metadata));
             default:
                 throw new InvalidArgumentException(sprintf('Unrecognized handle %s in %s', $handle, __FUNCTION__));
@@ -137,19 +137,19 @@ class ClassFactory implements ClassFactoryInterface
     public function createFont($handle, $file, $size, ColorInterface $color)
     {
         switch ($handle) {
-            case static::HANDLE_GD:
+            case self::HANDLE_GD:
                 $gdInfo = static::getGDInfo();
                 if (!$gdInfo['FreeType Support']) {
                     throw new RuntimeException('GD is not compiled with FreeType support');
                 }
 
                 return $this->finalize(new \Imagine\Gd\Font($file, $size, $color));
-            case static::HANDLE_GMAGICK:
+            case self::HANDLE_GMAGICK:
                 $gmagick = new \Gmagick();
                 $gmagick->newimage(1, 1, 'transparent');
 
                 return $this->finalize(new \Imagine\Gmagick\Font($gmagick, $file, $size, $color));
-            case static::HANDLE_IMAGICK:
+            case self::HANDLE_IMAGICK:
                 return $this->finalize(new \Imagine\Imagick\Font(new \Imagick(), $file, $size, $color));
             default:
                 throw new InvalidArgumentException(sprintf('Unrecognized handle %s in %s', $handle, __FUNCTION__));
