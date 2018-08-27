@@ -186,6 +186,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         );
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testProfile()
     {
         $this
@@ -207,6 +210,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertSame(364, $size->getHeight());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testCopyResizedImageToImage()
     {
         $factory = $this->getImagine();
@@ -226,6 +232,8 @@ abstract class AbstractImageTest extends ImagineTestCase
      * @dataProvider provideFilters
      *
      * @param mixed $filter
+     *
+     * @doesNotPerformAssertions
      */
     public function testResizeWithVariousFilters($filter)
     {
@@ -507,20 +515,43 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink($outfile);
     }
 
-    public function testInOutResult()
+    public function inOutResultProvider()
     {
-        $this->processInOut('trans', 'png', 'png');
-        $this->processInOut('trans', 'png', 'gif');
-        $this->processInOut('trans', 'png', 'jpg');
-        $this->processInOut('anima', 'gif', 'png');
-        $this->processInOut('anima', 'gif', 'gif');
-        $this->processInOut('anima', 'gif', 'jpg');
-        $this->processInOut('trans', 'gif', 'png');
-        $this->processInOut('trans', 'gif', 'gif');
-        $this->processInOut('trans', 'gif', 'jpg');
-        $this->processInOut('large', 'jpg', 'png');
-        $this->processInOut('large', 'jpg', 'gif');
-        $this->processInOut('large', 'jpg', 'jpg');
+        return array(
+            array('trans', 'png', 'png'),
+            array('trans', 'png', 'gif'),
+            array('trans', 'png', 'jpg'),
+            array('anima', 'gif', 'png'),
+            array('anima', 'gif', 'gif'),
+            array('anima', 'gif', 'jpg'),
+            array('trans', 'gif', 'png'),
+            array('trans', 'gif', 'gif'),
+            array('trans', 'gif', 'jpg'),
+            array('large', 'jpg', 'png'),
+            array('large', 'jpg', 'gif'),
+            array('large', 'jpg', 'jpg'),
+        );
+    }
+
+    /**
+     * @dataProvider inOutResultProvider
+     *
+     * @param string $file
+     * @param string $in
+     * @param string $out
+     *
+     * @doesNotPerformAssertions
+     */
+    public function testInOutResult($file, $in, $out)
+    {
+        $factory = $this->getImagine();
+        $class = preg_replace('/\\\\/', '_', get_called_class());
+        $image = $factory->open('tests/Imagine/Fixtures/' . $file . '.' . $in);
+        $thumb = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
+        if (!is_dir('tests/Imagine/Fixtures/results/in_out')) {
+            mkdir('tests/Imagine/Fixtures/results/in_out', 0777, true);
+        }
+        $thumb->save("tests/Imagine/Fixtures/results/in_out/{$class}_{$file}_from_{$in}_to.{$out}");
     }
 
     public function testLayerReturnsALayerInterface()
@@ -647,9 +678,13 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals('#d07560', (string) $color);
     }
 
-    // Test whether a simple action such as resizing a GIF works
-    // Using the original animated GIF and a slightly more complex one as reference
-    // anima2.gif courtesy of Cyndi Norrie (http://cyndipop.tumblr.com/) via 15 Folds (http://15folds.com)
+    /**
+     * Test whether a simple action such as resizing a GIF works
+     * Using the original animated GIF and a slightly more complex one as reference
+     * anima2.gif courtesy of Cyndi Norrie (http://cyndipop.tumblr.com/) via 15 Folds (http://15folds.com).
+     *
+     * @doesNotPerformAssertions
+     */
     public function testResizeAnimatedGifResizeResult()
     {
         if (!$this->supportMultipleLayers()) {
@@ -885,18 +920,6 @@ abstract class AbstractImageTest extends ImagineTestCase
     private function getInconsistentMultiLayeredImage()
     {
         return $this->getImagine()->open('tests/Imagine/Fixtures/anima.gif');
-    }
-
-    protected function processInOut($file, $in, $out)
-    {
-        $factory = $this->getImagine();
-        $class = preg_replace('/\\\\/', '_', get_called_class());
-        $image = $factory->open('tests/Imagine/Fixtures/' . $file . '.' . $in);
-        $thumb = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
-        if (!is_dir('tests/Imagine/Fixtures/results/in_out')) {
-            mkdir('tests/Imagine/Fixtures/results/in_out', 0777, true);
-        }
-        $thumb->save("tests/Imagine/Fixtures/results/in_out/{$class}_{$file}_from_{$in}_to.{$out}");
     }
 
     /**

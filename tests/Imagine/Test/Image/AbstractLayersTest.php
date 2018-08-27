@@ -11,9 +11,8 @@
 
 namespace Imagine\Test\Image;
 
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\OutOfBoundsException;
 use Imagine\Image\Box;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
@@ -126,6 +125,8 @@ abstract class AbstractLayersTest extends \PHPUnit\Framework\TestCase
      * @dataProvider provideInvalidArguments
      *
      * @param mixed $offset
+     *
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      */
     public function testLayerArrayAccessInvalidArgumentExceptions($offset)
     {
@@ -134,17 +135,15 @@ abstract class AbstractLayersTest extends \PHPUnit\Framework\TestCase
 
         $layers = $firstImage->layers();
 
-        try {
-            $layers[$offset] = $secondImage;
-            $this->fail('An exception should have been raised');
-        } catch (InvalidArgumentException $e) {
-        }
+        $layers[$offset] = $secondImage;
     }
 
     /**
      * @dataProvider provideOutOfBoundsArguments
      *
      * @param mixed $offset
+     *
+     * @expectedException \Imagine\Exception\OutOfBoundsException
      */
     public function testLayerArrayAccessOutOfBoundsExceptions($offset)
     {
@@ -153,13 +152,12 @@ abstract class AbstractLayersTest extends \PHPUnit\Framework\TestCase
 
         $layers = $firstImage->layers();
 
-        try {
-            $layers[$offset] = $secondImage;
-            $this->fail('An exception should have been raised');
-        } catch (OutOfBoundsException $e) {
-        }
+        $layers[$offset] = $secondImage;
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testAnimateEmpty()
     {
         $image = $this->getImage();
@@ -180,6 +178,7 @@ abstract class AbstractLayersTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider provideAnimationParameters
+     * @doesNotPerformAssertions
      *
      * @param mixed $delay
      * @param mixed $loops
@@ -267,6 +266,11 @@ abstract class AbstractLayersTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    /**
+     * @param string|null $path
+     *
+     * @return ImageInterface
+     */
     abstract protected function getImage($path = null);
 
     /**

@@ -56,6 +56,7 @@ class Issue131Test extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @doesNotPerformAssertions
      * @group ext-imagick
      */
     public function testShouldSaveOneFileWithImagick()

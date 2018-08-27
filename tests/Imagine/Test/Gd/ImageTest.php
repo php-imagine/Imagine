@@ -11,7 +11,6 @@
 
 namespace Imagine\Test\Gd;
 
-use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 use Imagine\Image\ImageInterface;
 use Imagine\Test\Image\AbstractImageTest;
@@ -60,13 +59,12 @@ class ImageTest extends AbstractImageTest
         );
     }
 
+    /**
+     * @expectedException \Imagine\Exception\RuntimeException
+     */
     public function testProfile()
     {
-        try {
-            parent::testProfile();
-            $this->fail('A RuntimeException should have been raised');
-        } catch (RuntimeException $e) {
-        }
+        parent::testProfile();
     }
 
     public function testPaletteIsGrayIfGrayImage()

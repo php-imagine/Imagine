@@ -51,6 +51,9 @@ class ImageTest extends AbstractImageTest
         return new Imagine();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testImageResizeUsesProperMethodBasedOnInputAndOutputSizes()
     {
         $imagine = $this->getImagine();
@@ -86,7 +89,13 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif');
     }
 
-    // Older imagemagick versions does not support colorspace conversion
+    /**
+     * Older imagemagick versions does not support colorspace conversion.
+     *
+     * @doesNotPerformAssertions
+     *
+     * @return \Imagine\Imagick\Image
+     */
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
     {
         $palette = new CMYK();
