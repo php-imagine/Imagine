@@ -80,6 +80,7 @@ final class Image extends AbstractImage
         $size = $this->getSize();
         $copy = $this->createImage($size, 'copy');
         if (false === imagecopy($copy, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight())) {
+            imagedestroy($copy);
             throw new RuntimeException('Image copy operation failed');
         }
         $this->resource = $copy;
@@ -126,6 +127,7 @@ final class Image extends AbstractImage
         $dest = $this->createImage($size, 'crop');
 
         if (false === imagecopy($dest, $this->resource, 0, 0, $start->getX(), $start->getY(), $width, $height)) {
+            imagedestroy($dest);
             throw new RuntimeException('Image crop operation failed');
         }
 
@@ -203,6 +205,7 @@ final class Image extends AbstractImage
         imagealphablending($dest, false);
 
         if ($success === false) {
+            imagedestroy($dest);
             throw new RuntimeException('Image resize operation failed');
         }
 
@@ -310,6 +313,7 @@ final class Image extends AbstractImage
 
             for ($i = 0; $i < $width; $i++) {
                 if (false === imagecopy($dest, $this->resource, $i, 0, ($width - 1) - $i, 0, 1, $height)) {
+                    imagedestroy($dest);
                     throw new RuntimeException('Horizontal flip operation failed');
                 }
             }
@@ -339,6 +343,7 @@ final class Image extends AbstractImage
 
             for ($i = 0; $i < $height; $i++) {
                 if (false === imagecopy($dest, $this->resource, 0, $i, 0, ($height - 1) - $i, $width, 1)) {
+                    imagedestroy($dest);
                     throw new RuntimeException('Vertical flip operation failed');
                 }
             }
