@@ -43,11 +43,11 @@ class OnPixelBased implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        $w = $image->getSize()->getWidth();
-        $h = $image->getSize()->getHeight();
-
-        for ($x = 0; $x < $w; $x++) {
-            for ($y = 0; $y < $h; $y++) {
+        $size = $image->getSize();
+        $w = $size->getWidth();
+        $h = $size->getHeight();
+        for ($y = 0; $y < $h; $y++) {
+            for ($x = 0; $x < $w; $x++) {
                 call_user_func($this->callback, $image, new Point($x, $y));
             }
         }
