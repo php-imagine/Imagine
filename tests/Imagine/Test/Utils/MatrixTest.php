@@ -17,6 +17,7 @@ class MatrixTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider dataProviderForTestMatrixHasAtLeastOneElement
+     * @doesNotPerformAssertions
      *
      * @param mixed $width
      * @param mixed $height
@@ -25,7 +26,7 @@ class MatrixTest extends \PHPUnit\Framework\TestCase
     public function testMatrixHasAtLeastOneElement($width, $height, $exceptionMessage)
     {
         if (null !== $exceptionMessage) {
-            $this->setExpectedException('Imagine\Exception\InvalidArgumentException', $exceptionMessage);
+            $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', $exceptionMessage);
         }
 
         new Matrix($width, $height);
@@ -40,13 +41,12 @@ class MatrixTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    /**
+     * @expectedException \Imagine\Exception\InvalidArgumentException
+     * @expectedExceptionMessage there are more provided elements than space in the matrix
+     */
     public function testMatrixComplainsIfYouGiveToMuchElements()
     {
-        $this->setExpectedException(
-            'Imagine\Exception\InvalidArgumentException',
-            'there are more provided elements than space in the matrix'
-        );
-
         new Matrix(1, 1, array(1, 1));
     }
 
@@ -68,6 +68,7 @@ class MatrixTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider dataProviderForTestMatrixCorrectlyGivesOutOfBoundExceptions
+     * @doesNotPerformAssertions
      *
      * @param mixed $x
      * @param mixed $y
@@ -75,7 +76,7 @@ class MatrixTest extends \PHPUnit\Framework\TestCase
      */
     public function testMatrixCorrectlyGivesOutOfBoundExceptions($x, $y, $exceptionMessage)
     {
-        $this->setExpectedException('Imagine\Exception\OutOfBoundsException', $exceptionMessage);
+        $this->isGoingToThrowException('Imagine\Exception\OutOfBoundsException', $exceptionMessage);
 
         $matrix = new Matrix(1, 1);
 
@@ -92,5 +93,17 @@ class MatrixTest extends \PHPUnit\Framework\TestCase
             array(1, 0, 'There is no position (1, 0) in this matrix'),
             array(1, 1, 'There is no position (1, 1) in this matrix'),
         );
+    }
+
+    protected function isGoingToThrowException($class, $message = null)
+    {
+        if (method_exists($this, 'expectException')) {
+            $this->expectException($class);
+            if ($message !== null) {
+                $this->expectExceptionMessage($message);
+            }
+        } else {
+            parent::setExpectedException($class, $message);
+        }
     }
 }
