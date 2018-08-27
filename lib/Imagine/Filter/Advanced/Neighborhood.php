@@ -47,11 +47,11 @@ class Neighborhood implements FilterInterface
     }
 
     /**
-     * Applies scheduled transformation to ImageInterface instance
+     * Applies scheduled transformation to ImageInterface instance.
      *
      * @param ImageInterface $image
      *
-     * @return ImageInterface Returns processed ImageInterface instance.
+     * @return ImageInterface returns processed ImageInterface instance
      */
     public function apply(ImageInterface $image)
     {
