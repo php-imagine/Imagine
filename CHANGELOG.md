@@ -35,6 +35,8 @@
   * Add support for pasting with alpha for GD and Imagick (@AlloVince, @mlocati)
   * Downscaling a Box until it reaches a dimension less that 1 returns a box with dimension of 1 instead of throwing an exception (@mlocati)    
     **BREAKING CHANGE** if you relied on Box::scale throwing an exception in this case
+  * New filters: BlackWhite, BorderDetection, Negation, Neighborhood (@rejinka)
+  * Minor optimization of filters based on OnPixelBased (@rejinka, @mlocati)
 
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)
