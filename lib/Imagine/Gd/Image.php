@@ -161,12 +161,14 @@ final class Image extends AbstractImage
             imagealphablending($this->resource, true);
             imagealphablending($image->resource, true);
 
-            if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(), 0, 0, $size->getWidth(), $size->getHeight())) {
-                throw new RuntimeException('Image paste operation failed');
-            }
+            $success = imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(), 0, 0, $size->getWidth(), $size->getHeight());
 
             imagealphablending($this->resource, false);
             imagealphablending($image->resource, false);
+
+            if ($success === false) {
+                throw new RuntimeException('Image paste operation failed');
+            }
         } elseif ($alpha > 0) {
             if (false === imagecopymerge(/*dst_im*/$this->resource, /*src_im*/$image->resource, /*dst_x*/$start->getX(), /*dst_y*/$start->getY(), /*src_x*/0, /*src_y*/0, /*src_w*/$size->getWidth(), /*src_h*/$size->getHeight(), /*pct*/$alpha)) {
                 throw new RuntimeException('Image paste operation failed');
@@ -195,12 +197,14 @@ final class Image extends AbstractImage
         imagealphablending($this->resource, true);
         imagealphablending($dest, true);
 
-        if (false === imagecopyresampled($dest, $this->resource, 0, 0, 0, 0, $width, $height, imagesx($this->resource), imagesy($this->resource))) {
-            throw new RuntimeException('Image resize operation failed');
-        }
+        $success = imagecopyresampled($dest, $this->resource, 0, 0, 0, 0, $width, $height, imagesx($this->resource), imagesy($this->resource));
 
         imagealphablending($this->resource, false);
         imagealphablending($dest, false);
+
+        if ($success === false) {
+            throw new RuntimeException('Image resize operation failed');
+        }
 
         imagedestroy($this->resource);
 
