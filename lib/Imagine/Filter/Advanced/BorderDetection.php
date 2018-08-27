@@ -22,46 +22,68 @@ use Imagine\Utils\Matrix;
  *  0,  1, 0       1,  1, 1,       -1,  2, -1,
  *  1, -4, 1  and  1, -8, 1,  and   2, -4,  2,
  *  0,  1, 0       1,  1, 1        -1,  2, -1
- * </pre></code>
+ * </pre></code>.
  *
  * Consider to apply this filter on a grayscaled image.
  */
 class BorderDetection extends Neighborhood implements FilterInterface
 {
+    /**
+     * First variant of the detection matrix.
+     *
+     * @var int
+     */
     const VARIANT_ONE = 0;
+
+    /**
+     * Second variant of the detection matrix.
+     *
+     * @var int
+     */
     const VARIANT_TWO = 1;
+
+    /**
+     * Third variant of the detection matrix.
+     *
+     * @var int
+     */
     const VARIANT_THREE = 2;
 
+    /**
+     * Initialize this filter.
+     *
+     * @param int $variant One of the BorderDetection::VARIANT_... constants.
+     *
+     * @throws \Imagine\Exception\InvalidArgumentException throws an InvalidArgumentException if $variant is not valid
+     */
     public function __construct($variant = self::VARIANT_ONE)
     {
         $matrix = null;
 
-        if (self::VARIANT_ONE === $variant) {
-            $matrix = new Matrix(3, 3, array(
-                0,  1, 0,
-                1, -4, 1,
-                0,  1, 0,
-            ));
-        }
-
-        if (self::VARIANT_TWO === $variant) {
-            $matrix = new Matrix(3, 3, array(
-                1,  1, 1,
-                1, -8, 1,
-                1,  1, 1,
-            ));
-        }
-
-        if (self::VARIANT_THREE === $variant) {
-            $matrix = new Matrix(3, 3, array(
-                -1,  2, -1,
-                2, -4,  2,
-                -1,  2, -1,
-            ));
-        }
-
-        if (null === $matrix) {
-            throw new InvalidArgumentException('Unknown variant ' . $variant);
+        switch ($variant) {
+            case self::VARIANT_ONE:
+                $matrix = new Matrix(3, 3, array(
+                    0,  1, 0,
+                    1, -4, 1,
+                    0,  1, 0,
+                ));
+                break;
+            case self::VARIANT_TWO:
+                $matrix = new Matrix(3, 3, array(
+                    1,  1, 1,
+                    1, -8, 1,
+                    1,  1, 1,
+                ));
+                break;
+            case self::VARIANT_THREE:
+                $matrix = new Matrix(3, 3, array(
+                    -1,  2, -1,
+                    2, -4,  2,
+                    -1,  2, -1,
+                ));
+                break;
+            default:
+                throw new InvalidArgumentException('Unknown variant ' . $variant);
         }
 
         parent::__construct($matrix);
