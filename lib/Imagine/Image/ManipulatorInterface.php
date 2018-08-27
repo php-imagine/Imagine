@@ -83,6 +83,7 @@ interface ManipulatorInterface
      *
      * @param ImageInterface $image
      * @param PointInterface $start
+     * @param int $alpha How to paste the image, from 0 (fully transparent) to 100 (fully opaque)
      *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
@@ -90,7 +91,7 @@ interface ManipulatorInterface
      *
      * @return static
      */
-    public function paste(ImageInterface $image, PointInterface $start);
+    public function paste(ImageInterface $image, PointInterface $start, $alpha = 100);
 
     /**
      * Saves the image at a specified path, the target file extension is used

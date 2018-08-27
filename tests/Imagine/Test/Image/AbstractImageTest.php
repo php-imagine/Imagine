@@ -841,6 +841,35 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink(__DIR__ . '/tmp.jpg');
     }
 
+    public function pasteWithAlphaProvider()
+    {
+        return array(
+            array(0),
+            array(25),
+            array(50),
+            array(75),
+            array(100),
+        );
+    }
+
+    /**
+     * @dataProvider pasteWithAlphaProvider
+     *
+     * @param int $alpha
+     */
+    public function testPasteWithAlpha($alpha)
+    {
+        $rgb = new RGB();
+        $imagine = $this->getImagine();
+        $whiteImage = $imagine->create(new Box(3, 3), $rgb->color('FFF'));
+        $blackImage = $imagine->create(new Box(1, 1), $rgb->color('000'));
+        $whiteImage->paste($blackImage, new Point(1, 1), $alpha);
+        $finalColor = $whiteImage->getColorAt(new Point(1, 1));
+        $grayLevel = (int) (255 * (100 - $alpha) / 100);
+        $expectedColor = $rgb->color(array($grayLevel, $grayLevel, $grayLevel));
+        $this->assertEquals($expectedColor, $finalColor);
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()

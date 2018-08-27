@@ -220,20 +220,43 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    public function paste(ImageInterface $image, PointInterface $start)
+    public function paste(ImageInterface $image, PointInterface $start, $alpha = 100)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Imagick\Image can only paste() Imagick\Image instances, %s given', get_class($image)));
+        }
+
+        $alpha = (int) round($alpha);
+        if ($alpha < 0 || $alpha > 100) {
+            throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$alpha', 0, 100, $alpha));
         }
 
         if (!$this->getSize()->contains($image->getSize(), $start)) {
             throw new OutOfBoundsException('Cannot paste image of the given size at the specified position, as it moves outside of the current image\'s box');
         }
 
-        try {
-            $this->imagick->compositeImage($image->imagick, \Imagick::COMPOSITE_DEFAULT, $start->getX(), $start->getY());
-        } catch (\ImagickException $e) {
-            throw new RuntimeException('Paste operation failed', $e->getCode(), $e);
+        if ($alpha === 100) {
+            $pasteMe = $image->imagick;
+        } elseif ($alpha > 0) {
+            $pasteMe = $image->cloneImagick();
+            $pasteMe->setImageOpacity($alpha / 100);
+        } else {
+            $pasteMe = null;
+        }
+        if ($pasteMe !== null) {
+            try {
+                $this->imagick->compositeImage($pasteMe, \Imagick::COMPOSITE_DEFAULT, $start->getX(), $start->getY());
+                $error = null;
+            } catch (\ImagickException $e) {
+                $error = $e;
+            }
+            if ($pasteMe !== $image->imagick) {
+                $pasteMe->clear();
+                $pasteMe->destroy();
+            }
+            if ($error !== null) {
+                throw new RuntimeException('Paste operation failed', $error->getCode(), $error);
+            }
         }
 
         return $this;

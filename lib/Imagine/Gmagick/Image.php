@@ -12,6 +12,7 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Factory\ClassFactoryInterface;
@@ -185,20 +186,29 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    public function paste(ImageInterface $image, PointInterface $start)
+    public function paste(ImageInterface $image, PointInterface $start, $alpha = 100)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Gmagick\Image can only paste() Gmagick\Image instances, %s given', get_class($image)));
+        }
+
+        $alpha = (int) round($alpha);
+        if ($alpha < 0 || $alpha > 100) {
+            throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$alpha', 0, 100, $alpha));
         }
 
         if (!$this->getSize()->contains($image->getSize(), $start)) {
             throw new OutOfBoundsException('Cannot paste image of the given size at the specified position, as it moves outside of the current image\'s box');
         }
 
-        try {
-            $this->gmagick->compositeimage($image->gmagick, \Gmagick::COMPOSITE_DEFAULT, $start->getX(), $start->getY());
-        } catch (\GmagickException $e) {
-            throw new RuntimeException('Paste operation failed', $e->getCode(), $e);
+        if ($alpha === 100) {
+            try {
+                $this->gmagick->compositeimage($image->gmagick, \Gmagick::COMPOSITE_DEFAULT, $start->getX(), $start->getY());
+            } catch (\GmagickException $e) {
+                throw new RuntimeException('Paste operation failed', $e->getCode(), $e);
+            }
+        } elseif ($alpha > 0) {
+            throw new NotSupportedException('Gmagick doesn\'t support paste with alpha.', 1);
         }
 
         return $this;
