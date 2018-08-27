@@ -21,28 +21,31 @@ class OnPixelBasedTest extends FilterTestCase
 {
     /**
      * @dataProvider getDataSet
+     *
+     * @param Box $size
+     * @param mixed $expectedVisitedCoordinates
      */
     public function testEachPixelIsVisited(Box $size, $expectedVisitedCoordinates)
     {
-        $image       = $this->getImage();
-        $imageWidth  = $size->getWidth();
+        $image = $this->getImage();
+        $imageWidth = $size->getWidth();
         $imageHeight = $size->getHeight();
 
         $size = $this->getMock('Imagine\\Image\\BoxInterface');
         $size
-            ->expects($this->exactly($imageHeight+1))
+            ->expects($this->exactly(1))
             ->method('getHeight')
             ->will($this->returnValue($imageHeight))
         ;
 
         $size
-            ->expects($this->exactly($imageHeight * ($imageWidth + 1)))
+            ->expects($this->exactly(1))
             ->method('getWidth')
             ->will($this->returnValue($imageWidth))
         ;
 
         $image
-            ->expects($this->exactly($imageHeight+1 + $imageHeight * ($imageWidth + 1)))
+            ->expects($this->exactly(1))
             ->method('getSize')
             ->will($this->returnValue($size))
         ;
@@ -57,7 +60,7 @@ class OnPixelBasedTest extends FilterTestCase
     }
 
     /**
-     * Data provider for testEachPixelIsVisited
+     * Data provider for testEachPixelIsVisited.
      *
      * @return array
      */

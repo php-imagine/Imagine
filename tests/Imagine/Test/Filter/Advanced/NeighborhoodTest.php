@@ -23,6 +23,9 @@ class NeighborhoodTest extends FilterTestCase
 {
     /**
      * @dataProvider dataProviderForTestDoesNotRunOutOfBoundAndCalculatesCorrectColors
+     *
+     * @param mixed $matrix
+     * @param mixed $image
      */
     public function testDoesNotRunOutOfBoundAndCalculatesCorrectColors($matrix, $image)
     {
@@ -36,9 +39,9 @@ class NeighborhoodTest extends FilterTestCase
         {
             $rgb = new RGB();
             $matrix = new Matrix(3, 3, array(
-                0,  1, 0,
+                0, 1, 0,
                 1, -4, 1,
-                0,  1, 0
+                0, 1, 0,
             ));
 
             $image = $this->getImage();
@@ -51,7 +54,7 @@ class NeighborhoodTest extends FilterTestCase
             $drawer = $this->getDrawer();
             $expectedDraw = new Matrix(3, 3, array(
                 array(168, 36, 255), array(0, 0, 0), array(197, 255, 255),
-                array(180, 136, 0),  array(0, 0, 0), array(86, 255, 56),
+                array(180, 136, 0), array(0, 0, 0), array(86, 255, 56),
                 array(0, 0, 16), array(195, 251, 58), array(0, 0, 0),
             ));
 
@@ -61,7 +64,7 @@ class NeighborhoodTest extends FilterTestCase
                     $drawer
                         ->expects($this->at($i++))
                         ->method('dot')
-                        ->with(new Point($x+1, $y+1), $rgb->color($expectedDraw->getElementAt($x, $y)))
+                        ->with(new Point($x + 1, $y + 1), $rgb->color($expectedDraw->getElementAt($x, $y)))
                     ;
                 }
             }
@@ -87,7 +90,7 @@ class NeighborhoodTest extends FilterTestCase
             array(205, 215, 55), array(34, 85, 12), array(53, 74, 99), array(1, 2, 3), array(99, 99, 124),
             array(45, 98, 156), array(22, 64, 159), array(65, 155, 99), array(6, 4, 66), array(22, 55, 144),
             array(66, 42, 67), array(124, 54, 86), array(12, 21, 64), array(22, 63, 74), array(1, 5, 7),
-            array(53, 123, 54), array(160, 80, 70), array(32, 63, 55), array(43, 43, 63), array(254, 235, 122)
+            array(53, 123, 54), array(160, 80, 70), array(32, 63, 55), array(43, 43, 63), array(254, 235, 122),
         ));
 
         $image = parent::getImage();

@@ -37,7 +37,7 @@ class BlackWhite extends OnPixelBased implements FilterInterface
         $this->grayScaleFilter = new Grayscale();
 
         $rgb = new RGB();
-        parent::__construct(function(ImageInterface $image, Point $point) use ($threshold, $rgb) {
+        parent::__construct(function (ImageInterface $image, Point $point) use ($threshold, $rgb) {
             $newRedValue = $image->getColorAt($point)->getValue(ColorInterface::COLOR_RED) < $threshold ? 255 : 0;
 
             $image->draw()->dot($point, $rgb->color(array($newRedValue, $newRedValue, $newRedValue)));

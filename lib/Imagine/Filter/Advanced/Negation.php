@@ -21,11 +21,10 @@ class Negation implements FilterInterface
 {
     /**
      * Applies scheduled transformation to ImageInterface instance
-     * Returns processed ImageInterface instance
      *
      * @param ImageInterface $image
      *
-     * @return ImageInterface
+     * @return ImageInterface Returns processed ImageInterface instance.
      */
     public function apply(ImageInterface $image)
     {

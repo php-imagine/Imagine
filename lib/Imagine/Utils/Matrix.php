@@ -28,9 +28,10 @@ class Matrix
      * The given $elements get arranged as follows: The elements will be set from left to right in a row until the
      * row is full. Then, the next line begins alike and so on.
      *
-     * @param $width
-     * @param $height
+     * @param int $width
+     * @param int $height
      * @param array $elements
+     *
      * @throws \Imagine\Exception\InvalidArgumentException
      */
     public function __construct($width, $height, $elements = array())
@@ -47,8 +48,8 @@ class Matrix
             throw new InvalidArgumentException('there are more provided elements than space in the matrix');
         }
 
-        $this->width    = $width;
-        $this->height   = $height;
+        $this->width = $width;
+        $this->height = $height;
         $this->elements = $elements;
 
         if (count($this->elements) < $this->width * $this->height) {

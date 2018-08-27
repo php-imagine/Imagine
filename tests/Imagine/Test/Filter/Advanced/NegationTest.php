@@ -12,7 +12,6 @@
 namespace Imagine\Test\Filter\Advanced;
 
 use Imagine\Filter\Advanced\Negation;
-use Imagine\Image\Point;
 use Imagine\Test\Filter\FilterTestCase;
 
 class NegationTest extends FilterTestCase

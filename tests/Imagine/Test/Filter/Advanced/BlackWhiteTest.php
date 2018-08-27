@@ -20,6 +20,10 @@ class BlackWhiteTest extends FilterTestCase
 {
     /**
      * @dataProvider getData
+     *
+     * @param mixed $border
+     * @param mixed $currentColor
+     * @param mixed $expectedColor
      */
     public function testCallback($border, $currentColor, $expectedColor)
     {
@@ -76,7 +80,7 @@ class BlackWhiteTest extends FilterTestCase
             array(150, array(150, 150, 150), array(0, 0, 0)),
             array(151, array(150, 150, 150), array(255, 255, 255)),
             array(0, array(150, 150, 150), array(0, 0, 0)),
-            array(255, array(150, 150, 150), array(255, 255, 255))
+            array(255, array(150, 150, 150), array(255, 255, 255)),
         );
     }
 }

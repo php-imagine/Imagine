@@ -17,6 +17,10 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider dataProviderForTestMatrixHasAtLeastOneElement
+     *
+     * @param mixed $width
+     * @param mixed $height
+     * @param mixed $exceptionMessage
      */
     public function testMatrixHasAtLeastOneElement($width, $height, $exceptionMessage)
     {
@@ -32,7 +36,7 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
         return array(
             array(0, 1, 'width has to be > 0'),
             array(1, 0, 'height has to be > 0'),
-            array(1, 1, null)
+            array(1, 1, null),
         );
     }
 
@@ -43,7 +47,7 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
             'there are more provided elements than space in the matrix'
         );
 
-        new Matrix(1, 1, array(1,1));
+        new Matrix(1, 1, array(1, 1));
     }
 
     public function testElementsGetCorrectlyArrangedAndFilledUp()
@@ -64,6 +68,10 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProviderForTestMatrixCorrectlyGivesOutOfBoundExceptions
+     *
+     * @param mixed $x
+     * @param mixed $y
+     * @param mixed $exceptionMessage
      */
     public function testMatrixCorrectlyGivesOutOfBoundExceptions($x, $y, $exceptionMessage)
     {
@@ -77,12 +85,12 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
     public function dataProviderForTestMatrixCorrectlyGivesOutOfBoundExceptions()
     {
         return array(
-            array(0,  -1, 'There is no position (0, -1) in this matrix'),
-            array(-1,  0, 'There is no position (-1, 0) in this matrix'),
+            array(0, -1, 'There is no position (0, -1) in this matrix'),
+            array(-1, 0, 'There is no position (-1, 0) in this matrix'),
             array(-1, -1, 'There is no position (-1, -1) in this matrix'),
-            array(0,   1, 'There is no position (0, 1) in this matrix'),
-            array( 1,  0, 'There is no position (1, 0) in this matrix'),
-            array( 1,  1, 'There is no position (1, 1) in this matrix'),
+            array(0, 1, 'There is no position (0, 1) in this matrix'),
+            array(1, 0, 'There is no position (1, 0) in this matrix'),
+            array(1, 1, 'There is no position (1, 1) in this matrix'),
         );
     }
 }

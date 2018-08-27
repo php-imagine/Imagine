@@ -13,23 +13,26 @@ namespace Imagine\Filter\Advanced;
 
 use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Point;
 use Imagine\Utils\Matrix;
 
 /**
- * The Neighborhood filter takes a matrix and calculates the color current pixel based on its neighborhood. For example:
+ * The Neighborhood filter takes a matrix and calculates the color current pixel based on its neighborhood.
  *
+ * @example
+ * <code><pre>
  *           a, b, c
  * Matrix =  d, e, f
  *           g, h, i
+ * </pre></code>
  *
  * and color{i, j} the color of the pixel at position (i, j). It calculates the color of pixel (x, y) like that:
  *
- * color (x, y) =   a * color(x-1, y-1) + b * color(x, y-1) + c * color(x+1, y-1)
- *                + d * color(x-1, y)   + e * color(x, y)   + f * color(x+1, y)
- *                + g * color(x-1, y+1) + h * color(x, y+1) + i * color(x+1, y+1)
+ * <code><pre>
+ * color (x, y) =   a * color(x - 1, y - 1) + b * color(x, y - 1) + c * color(x + 1, y - 1)
+ *                + d * color(x - 1, y)     + e * color(x, y)     + f * color(x + 1, y)
+ *                + g * color(x - 1, y + 1) + h * color(x, y + 1) + i * color(x + 1, y + 1)
+ * </pre></code>
  */
 class Neighborhood implements FilterInterface
 {
@@ -45,18 +48,17 @@ class Neighborhood implements FilterInterface
 
     /**
      * Applies scheduled transformation to ImageInterface instance
-     * Returns processed ImageInterface instance
      *
      * @param ImageInterface $image
      *
-     * @return ImageInterface
+     * @return ImageInterface Returns processed ImageInterface instance.
      */
     public function apply(ImageInterface $image)
     {
         // We reduce the usage of methods on the image to dramatically increase the performance of this algorithm.
         // Really... We need that performance...
         // Therefore we first build a matrix, that holds the colors of the image.
-        $width  = $image->getSize()->getWidth();
+        $width = $image->getSize()->getWidth();
         $height = $image->getSize()->getHeight();
         $byteData = new Matrix($width, $height);
 
@@ -66,7 +68,7 @@ class Neighborhood implements FilterInterface
             }
         }
 
-        $dWidth  = (int) (($this->matrix->getWidth()  - 1) / 2);
+        $dWidth = (int) (($this->matrix->getWidth() - 1) / 2);
         $dHeight = (int) (($this->matrix->getHeight() - 1) / 2);
 
         // foreach point, which has a big enough neighborhood

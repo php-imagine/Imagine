@@ -16,19 +16,20 @@ use Imagine\Filter\FilterInterface;
 use Imagine\Utils\Matrix;
 
 /**
- * BorderDetection based on Laplace-Operator. Three different variants are offered:
- *
- *               First          Second            Third
- *              0,  1, 0       1,  1, 1,       -1,  2, -1,
- *              1, -4, 1  and  1, -8, 1,  and   2, -4,  2,
- *              0,  1, 0       1,  1, 1        -1,  2, -1
+ * BorderDetection based on Laplace-Operator. Three different variants are offered:.
+ * <code><pre>
+ *   First          Second            Third
+ *  0,  1, 0       1,  1, 1,       -1,  2, -1,
+ *  1, -4, 1  and  1, -8, 1,  and   2, -4,  2,
+ *  0,  1, 0       1,  1, 1        -1,  2, -1
+ * </pre></code>
  *
  * Consider to apply this filter on a grayscaled image.
  */
 class BorderDetection extends Neighborhood implements FilterInterface
 {
-    const VARIANT_ONE   = 0;
-    const VARIANT_TWO   = 1;
+    const VARIANT_ONE = 0;
+    const VARIANT_TWO = 1;
     const VARIANT_THREE = 2;
 
     public function __construct($variant = self::VARIANT_ONE)
@@ -39,7 +40,7 @@ class BorderDetection extends Neighborhood implements FilterInterface
             $matrix = new Matrix(3, 3, array(
                 0,  1, 0,
                 1, -4, 1,
-                0,  1, 0
+                0,  1, 0,
             ));
         }
 
@@ -47,7 +48,7 @@ class BorderDetection extends Neighborhood implements FilterInterface
             $matrix = new Matrix(3, 3, array(
                 1,  1, 1,
                 1, -8, 1,
-                1,  1, 1
+                1,  1, 1,
             ));
         }
 
@@ -55,7 +56,7 @@ class BorderDetection extends Neighborhood implements FilterInterface
             $matrix = new Matrix(3, 3, array(
                 -1,  2, -1,
                 2, -4,  2,
-                -1,  2, -1
+                -1,  2, -1,
             ));
         }
 
