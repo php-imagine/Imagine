@@ -12,7 +12,6 @@
 namespace Imagine\Test\Filter\Advanced;
 
 use Imagine\Filter\Advanced\Neighborhood;
-use Imagine\Gd\Image;
 use Imagine\Image\Box;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
@@ -24,8 +23,8 @@ class NeighborhoodTest extends FilterTestCase
     /**
      * @dataProvider dataProviderForTestDoesNotRunOutOfBoundAndCalculatesCorrectColors
      *
-     * @param mixed $matrix
-     * @param mixed $image
+     * @param \Imagine\Utils\Matrix $matrix
+     * @param \Imagine\Image\ImageInterface $image
      */
     public function testDoesNotRunOutOfBoundAndCalculatesCorrectColors($matrix, $image)
     {
@@ -81,6 +80,11 @@ class NeighborhoodTest extends FilterTestCase
         return $tests;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Filter\FilterTestCase::getImage()
+     */
     public function getImage()
     {
         $rgb = new RGB();
