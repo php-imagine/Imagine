@@ -78,9 +78,9 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
-     * {@inheritdoc}
+     * @dataProvider pasteWithAlphaProvider
      *
-     * @see \Imagine\Test\Image\AbstractImageTest::testPasteWithAlpha()
+     * @param int $alpha
      */
     public function testPasteWithAlpha($alpha)
     {
