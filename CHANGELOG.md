@@ -24,12 +24,17 @@
   * Added BMP as supported image format (@mlocati)
   * Added support to new image type constants of Imagick (@ausi)
   * Check that Imagick correctly supports profiles (@ausi)
+  * Added setMetadataReader/getMetadataReader to ImagineInterface (@mlocati)  
+    **BREAKING CHANGE** if you have your own ImagineInterface implementation, it now must implements those two methods
   * Fix creating Gmagick images with alpha colors when palette doesn't support alpha (@FractalizeR)
   * Fix warning about deprecated clone method in copy method of Imagick images (@mlocati)
   * Fix copy methods of Images (the original image and its new copy are now fully detached) (@mlocati)
   * It's now possible to use `clone $image` as an alternative to `$image->copy()` (@mlocati)
-  * Add support to custom classes for BoxInterface, MetadataReaderInterface, FontInterface, LoaderInterface, LayersInterface, ImageInterface (@mlocati)
+  * Add support to custom classes for BoxInterface, MetadataReaderInterface, FontInterface, LoaderInterface, LayersInterface, ImageInterface (@mlocati)  
+    **BREAKING CHANGE** if you have your own ImagineInterface implementation, it now must implements the methods of ClassFactoryAwareInterface
   * Add support for pasting with alpha for GD and Imagick (@AlloVince, @mlocati)
+  * Downscaling a Box until it reaches a dimension less that 1 returns a box with dimension of 1 instead of throwing an exception (@mlocati)    
+    **BREAKING CHANGE** if you relied on Box::scale throwing an exception in this case
 
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)
