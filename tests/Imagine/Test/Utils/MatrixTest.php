@@ -13,7 +13,7 @@ namespace Imagine\Test\Utils;
 
 use Imagine\Utils\Matrix;
 
-class MatrixTest extends \PHPUnit_Framework_TestCase
+class MatrixTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider dataProviderForTestMatrixHasAtLeastOneElement
