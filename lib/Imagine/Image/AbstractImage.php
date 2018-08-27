@@ -95,7 +95,9 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
     }
 
     /**
-     * Check the settings argument in thumbnail() method
+     * Check the settings argument in thumbnail() method.
+     *
+     * @param int $settings
      */
     private function checkThumbnailSettings($settings)
     {
