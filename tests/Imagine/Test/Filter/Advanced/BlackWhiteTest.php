@@ -30,7 +30,7 @@ class BlackWhiteTest extends FilterTestCase
         $rgb = new RGB();
         $image = $this->getImage();
 
-        $size = $this->getMock('Imagine\\Image\\BoxInterface');
+        $size = $this->getMockBuilder('Imagine\\Image\\BoxInterface')->getMock();
         $size
             ->expects($this->any())
             ->method('getWidth')

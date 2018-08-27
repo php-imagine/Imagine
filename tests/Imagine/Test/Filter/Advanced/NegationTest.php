@@ -18,7 +18,7 @@ class NegationTest extends FilterTestCase
 {
     public function testApplyingNegation()
     {
-        $effects = $this->getMock('Imagine\Effects\EffectsInterface');
+        $effects = $this->getMockBuilder('Imagine\Effects\EffectsInterface')->getMock();
         $effects
             ->expects($this->once())
             ->method('negative')
