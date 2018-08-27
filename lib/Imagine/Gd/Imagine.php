@@ -67,7 +67,7 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException('Could not set background color fill');
         }
 
-        if ($color->getAlpha() >= 95) {
+        if ($color->getAlpha() <= 5) {
             imagecolortransparent($resource, $index);
         }
 
