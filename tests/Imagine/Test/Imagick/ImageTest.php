@@ -51,6 +51,46 @@ class ImageTest extends AbstractImageTest
         return new Imagine();
     }
 
+    public function testImageRotateAndCropUsesTheCorrectCanvas()
+    {
+        $rgb = new RGB();
+        // Create a single image 30x30 black
+        $imageColor = $rgb->color('#000000', 100);
+        $imagine = $this->getImagine()->create(new Box(30, 30), $imageColor);
+
+        // Prepare for rotation: set the background color to white
+        $imageBackgroundColor = $rgb->color('#FFFFFF', 100);
+        $imagine->rotate(45, $imageBackgroundColor);
+
+        // Crop to a 50x50 box from the image center
+        $imagine->crop(new Point(15, 15), new Box(50, 50));
+
+        $colorPoints = array(
+            // Center
+            array('point' => new Point(22, 22), 'color' => $rgb->color('#000000', 100)),
+            // Corners
+            array('point' => new Point(5, 5), 'color' => $rgb->color('#FFFFFF', 30)),
+            array('point' => new Point(5, 39), 'color' => $rgb->color('#FFFFFF', 30)),
+            array('point' => new Point(39, 5), 'color' => $rgb->color('#FFFFFF', 30)),
+            array('point' => new Point(39, 39), 'color' => $rgb->color('#FFFFFF', 30)),
+            // Side spikes of the rotated square
+            array('point' => new Point(5, 22), 'color' => $rgb->color('#000000', 100)),
+            array('point' => new Point(22, 5), 'color' => $rgb->color('#000000', 100)),
+            array('point' => new Point(39, 22), 'color' => $rgb->color('#000000', 100)),
+            array('point' => new Point(22, 22), 'color' => $rgb->color('#000000', 100)),
+        );
+
+        foreach ($colorPoints as $colorPoint) {
+            /** @var Point $point */
+            $point = $colorPoint['point'];
+            $this->assertEquals(
+                $colorPoint['color'],
+                $imagine->getColorAt($point),
+                'Point at [' . $point->getX().','.$point->getY().'] Does not match the expected color '
+            );
+        }
+    }
+
     public function testImageResizeUsesProperMethodBasedOnInputAndOutputSizes()
     {
         $imagine = $this->getImagine();
