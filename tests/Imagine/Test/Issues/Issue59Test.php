@@ -21,6 +21,9 @@ class Issue59Test extends \PHPUnit\Framework\TestCase
         return $imagine;
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testShouldResize()
     {
         $imagine = $this->getImagine();
