@@ -29,6 +29,7 @@
   * Fix copy methods of Images (the original image and its new copy are now fully detached) (@mlocati)
   * It's now possible to use `clone $image` as an alternative to `$image->copy()` (@mlocati)
   * Add support to custom classes for BoxInterface, MetadataReaderInterface, FontInterface, LoaderInterface, LayersInterface, ImageInterface (@mlocati)
+  * Add support for pasting with alpha for GD and Imagick (@AlloVince, @mlocati)
 
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)

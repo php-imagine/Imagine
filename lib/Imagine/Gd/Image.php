@@ -141,10 +141,15 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function paste(ImageInterface $image, PointInterface $start)
+    final public function paste(ImageInterface $image, PointInterface $start, $alpha = 100)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Gd\Image can only paste() Gd\Image instances, %s given', get_class($image)));
+        }
+
+        $alpha = (int) round($alpha);
+        if ($alpha < 0 || $alpha > 100) {
+            throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$alpha', 0, 100, $alpha));
         }
 
         $size = $image->getSize();
@@ -152,15 +157,21 @@ final class Image extends AbstractImage
             throw new OutOfBoundsException('Cannot paste image of the given size at the specified position, as it moves outside of the current image\'s box');
         }
 
-        imagealphablending($this->resource, true);
-        imagealphablending($image->resource, true);
+        if ($alpha === 100) {
+            imagealphablending($this->resource, true);
+            imagealphablending($image->resource, true);
 
-        if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(), 0, 0, $size->getWidth(), $size->getHeight())) {
-            throw new RuntimeException('Image paste operation failed');
+            if (false === imagecopy($this->resource, $image->resource, $start->getX(), $start->getY(), 0, 0, $size->getWidth(), $size->getHeight())) {
+                throw new RuntimeException('Image paste operation failed');
+            }
+
+            imagealphablending($this->resource, false);
+            imagealphablending($image->resource, false);
+        } elseif ($alpha > 0) {
+            if (false === imagecopymerge(/*dst_im*/$this->resource, /*src_im*/$image->resource, /*dst_x*/$start->getX(), /*dst_y*/$start->getY(), /*src_x*/0, /*src_y*/0, /*src_w*/$size->getWidth(), /*src_h*/$size->getHeight(), /*pct*/$alpha)) {
+                throw new RuntimeException('Image paste operation failed');
+            }
         }
-
-        imagealphablending($this->resource, false);
-        imagealphablending($image->resource, false);
 
         return $this;
     }
