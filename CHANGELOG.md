@@ -38,7 +38,8 @@
   * New filters: `BlackWhite`, `BorderDetection`, `Negation`, `Neighborhood` (@rejinka)
   * Minor optimization of filters based on `OnPixelBased` (@rejinka, @mlocati)
   * Add flag to `thumbnail` to allow upscaling images (@vlakoff)  
-    **NOTE** the `$mode` argument has been renamed to `$settings`, and it's now an integer (but old string values are accepted for backward compatibility) 
+    **NOTE** the `$mode` argument has been renamed to `$settings`, and it's now an integer (but old string values are accepted for backward compatibility)
+  * New filter: `brightness` (@lenybernard, @mlocati) 
 
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)
