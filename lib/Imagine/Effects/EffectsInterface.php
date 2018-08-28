@@ -78,4 +78,15 @@ interface EffectsInterface
      * @return EffectsInterface
      */
     public function blur($sigma);
+
+    /**
+     * Changes the brightness of the image.
+     *
+     * @param int $brightness The level of brightness (-100 (black) to 100 (white))
+     *
+     * @throws RuntimeException
+     *
+     * @return EffectsInterface
+     */
+    public function brightness($brightness);
 }

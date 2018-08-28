@@ -12,6 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Effects\EffectsInterface;
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
@@ -112,6 +113,33 @@ class Effects implements EffectsInterface
             $this->imagick->gaussianBlurImage(0, $sigma);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to blur the image', $e->getCode(), $e);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function brightness($brightness)
+    {
+        $brightness = (int) round($brightness);
+        if ($brightness < -100 || $brightness > 100) {
+            throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$brightness', -100, 100, $brightness));
+        }
+        try {
+            if (method_exists($this->imagick, 'brightnesscontrastimage')) {
+                // Available since Imagick 3.3.0
+                $this->imagick->brightnesscontrastimage($brightness, 0);
+            } else {
+                // This *emulates* brightnesscontrastimage
+                $sign = $brightness < 0 ? -1 : 1;
+                $v = abs($brightness) / 100;
+                $v = (1 / (sin(($v * .99999 * M_PI_2) + M_PI_2))) - 1;
+                $this->imagick->modulateimage(100 + $sign * $v * 100, 100, 100);
+            }
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to brightness the image');
         }
 
         return $this;

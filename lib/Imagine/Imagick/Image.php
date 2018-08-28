@@ -594,6 +594,9 @@ final class Image extends AbstractImage
         );
 
         $alpha = $this->palette->supportsAlpha() ? (int) round($pixel->getColorValue(\Imagick::COLOR_ALPHA) * 100) : null;
+        if ($alpha) {
+            $alpha = min(max($alpha, 0), 100);
+        }
         $palette = $this->palette();
 
         return $this->palette->color(array_map(function ($color) use ($palette, $pixel, $colorMapping) {

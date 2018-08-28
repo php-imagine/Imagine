@@ -82,6 +82,34 @@ abstract class AbstractEffectsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($greyG, $greyB);
     }
 
+    public function brightnessProvider()
+    {
+        $color = '#145af0';
+
+        return array(
+            array($color, -100, '#000000'),
+            array($color, 0, $color),
+            array($color, 100, '#ffffff'),
+        );
+    }
+
+    /**
+     * @dataProvider brightnessProvider
+     *
+     * @param string $color
+     * @param int $brightness
+     * @param string $expectedColor
+     */
+    public function testBrightness($color, $brightness, $expectedColor)
+    {
+        $palette = new RGB();
+        $imagine = $this->getImagine();
+        $image = $imagine->create(new Box(3, 3), $palette->color($color));
+        $image->effects()->brightness($brightness);
+        $actualColor = $image->getColorAt(new Point(1, 1));
+        $this->assertEquals($expectedColor, (string) $actualColor);
+    }
+
     protected function getGrayValue()
     {
         return '#565656';
