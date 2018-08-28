@@ -14,11 +14,12 @@ namespace Imagine\Test\Functional;
 use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Point;
+use Imagine\Test\ImagineTestCase;
 
 /**
  * @group ext-gd
  */
-class GdTransparentGifHandlingTest extends \PHPUnit\Framework\TestCase
+class GdTransparentGifHandlingTest extends ImagineTestCase
 {
     private function getImagine()
     {

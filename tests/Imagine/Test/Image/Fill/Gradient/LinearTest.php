@@ -14,8 +14,9 @@ namespace Imagine\Test\Image\Fill\Gradient;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\PointInterface;
+use Imagine\Test\ImagineTestCase;
 
-abstract class LinearTest extends \PHPUnit\Framework\TestCase
+abstract class LinearTest extends ImagineTestCase
 {
     /**
      * @var \Imagine\Image\Fill\FillInterface

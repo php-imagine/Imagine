@@ -14,8 +14,9 @@ namespace Imagine\Test\Image;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Point;
+use Imagine\Test\ImagineTestCase;
 
-class PointTest extends \PHPUnit\Framework\TestCase
+class PointTest extends ImagineTestCase
 {
     /**
      * @covers \Imagine\Image\Point::getX

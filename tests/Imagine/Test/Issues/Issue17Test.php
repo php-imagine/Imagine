@@ -6,11 +6,12 @@ use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
+use Imagine\Test\ImagineTestCase;
 
 /**
  * @group ext-gd
  */
-class Issue17Test extends \PHPUnit\Framework\TestCase
+class Issue17Test extends ImagineTestCase
 {
     private function getImagine()
     {

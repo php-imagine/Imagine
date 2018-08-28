@@ -16,8 +16,9 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
 use Imagine\Image\PointInterface;
+use Imagine\Test\ImagineTestCase;
 
-class CenterTest extends \PHPUnit\Framework\TestCase
+class CenterTest extends ImagineTestCase
 {
     /**
      * @covers \Imagine\Image\Point\Center::getX
