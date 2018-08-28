@@ -176,6 +176,16 @@
                                             <p>Changes the brightness of the image.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_convolve">convolve</a>(<a href="../../Imagine/Utils/Matrix.html"><abbr title="Imagine\Utils\Matrix">Matrix</abbr></a> $matrix)
+        
+                                            <p>Convolves the image.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
             </div>
 
 
@@ -184,7 +194,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 27</div>
+        <div class="location">at         line 28</div>
         <code>                    
     <strong>__construct</strong>($resource)
         </code>
@@ -213,7 +223,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_gamma">
-        <div class="location">at         line 35</div>
+        <div class="location">at         line 36</div>
         <code>                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>gamma</strong>(float $correction)
         </code>
@@ -262,7 +272,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_negative">
-        <div class="location">at         line 47</div>
+        <div class="location">at         line 48</div>
         <code>                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>negative</strong>()
         </code>
@@ -301,7 +311,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_grayscale">
-        <div class="location">at         line 59</div>
+        <div class="location">at         line 60</div>
         <code>                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>grayscale</strong>()
         </code>
@@ -340,7 +350,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_colorize">
-        <div class="location">at         line 71</div>
+        <div class="location">at         line 72</div>
         <code>                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>colorize</strong>(<a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color)
         </code>
@@ -389,7 +399,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_sharpen">
-        <div class="location">at         line 87</div>
+        <div class="location">at         line 88</div>
         <code>                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>sharpen</strong>()
         </code>
@@ -428,7 +438,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_blur">
-        <div class="location">at         line 102</div>
+        <div class="location">at         line 103</div>
         <code>                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>blur</strong>(float|int $sigma = 1)
         </code>
@@ -477,7 +487,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_brightness">
-        <div class="location">at         line 114</div>
+        <div class="location">at         line 115</div>
         <code>                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>brightness</strong>(int $brightness)
         </code>
@@ -496,6 +506,55 @@
                 <td>int</td>
                 <td>$brightness</td>
                 <td>The level of brightness (-100 (black) to 100 (white))</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Imagine/Exception/RuntimeException.html"><abbr title="Imagine\Exception\RuntimeException">RuntimeException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_convolve">
+        <div class="location">at         line 131</div>
+        <code>                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
+    <strong>convolve</strong>(<a href="../../Imagine/Utils/Matrix.html"><abbr title="Imagine\Utils\Matrix">Matrix</abbr></a> $matrix)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Convolves the image.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Imagine/Utils/Matrix.html"><abbr title="Imagine\Utils\Matrix">Matrix</abbr></a></td>
+                <td>$matrix</td>
+                <td>The matrix from which derive the convolution kernel</td>
             </tr>
             </table>
 

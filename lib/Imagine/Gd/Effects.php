@@ -16,6 +16,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
+use Imagine\Utils\Matrix;
 
 /**
  * Effects implementation using the GD library.
@@ -119,6 +120,21 @@ class Effects implements EffectsInterface
         }
         if (false === imagefilter($this->resource, IMG_FILTER_BRIGHTNESS, $gdBrightness)) {
             throw new RuntimeException('Failed to brightness the image');
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function convolve(Matrix $matrix)
+    {
+        if ($matrix->getWidth() !== 3 || $matrix->getHeight() !== 3) {
+            throw new InvalidArgumentException(sprintf('A convolution matrix must be 3x3 (%dx%d provided).', $matrix->getWidth(), $matrix->getHeight()));
+        }
+        if (false === imageconvolution($this->resource, $matrix->getMatrix(), 1, 0)) {
+            throw new RuntimeException('Failed to convolve the image');
         }
 
         return $this;

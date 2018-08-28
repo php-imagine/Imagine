@@ -16,6 +16,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Utils\Matrix;
 
 /**
  * Effects implementation using the Gmagick PHP extension.
@@ -124,6 +125,27 @@ class Effects implements EffectsInterface
             $this->gmagick->modulateimage(100 + $sign * $v * 100, 100, 100);
         } catch (\GmagickException $e) {
             throw new RuntimeException('Failed to brightness the image');
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function convolve(Matrix $matrix)
+    {
+        if (!method_exists($this->gmagick, 'convolveimage')) {
+            // convolveimage has been added in gmagick 2.0.1RC2
+            throw new NotSupportedException('The version of Gmagick extension is too old: it does not support convolve.');
+        }
+        if ($matrix->getWidth() !== 3 || $matrix->getHeight() !== 3) {
+            throw new InvalidArgumentException(sprintf('A convolution matrix must be 3x3 (%dx%d provided).', $matrix->getWidth(), $matrix->getHeight()));
+        }
+        try {
+            $this->gmagick->convolveimage($matrix->getValueList());
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to convolve the image');
         }
 
         return $this;

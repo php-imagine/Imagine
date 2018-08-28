@@ -85,9 +85,7 @@ class Issue131Test extends \PHPUnit\Framework\TestCase
 
         $imagine->save($targetFile);
 
-        if (!$this->probeOneFileAndCleanup($dir, $targetFile)) {
-            $this->fail('Gmagick failed to generate one file');
-        }
+        $this->assertTrue($this->probeOneFileAndCleanup($dir, $targetFile), 'Gmagick failed to generate one file');
     }
 
     private function probeOneFileAndCleanup($dir, $targetFile)

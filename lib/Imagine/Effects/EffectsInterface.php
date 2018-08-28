@@ -13,6 +13,7 @@ namespace Imagine\Effects;
 
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Utils\Matrix;
 
 /**
  * Interface for the effects.
@@ -89,4 +90,15 @@ interface EffectsInterface
      * @return EffectsInterface
      */
     public function brightness($brightness);
+
+    /**
+     * Convolves the image.
+     *
+     * @param \Imagine\Utils\Matrix $matrix The matrix from which derive the convolution kernel
+     *
+     * @throws RuntimeException
+     *
+     * @return EffectsInterface
+     */
+    public function convolve(Matrix $matrix);
 }

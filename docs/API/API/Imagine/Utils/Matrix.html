@@ -93,10 +93,10 @@
             <table class="table table-condensed">
                     <tr>
                 <td class="type" id="property_elements">
-                                        protected                                        
+                                        protected                                        int[]|float[]
                 </td>
                 <td>$elements</td>
-                <td class="last"></td>
+                <td class="last">The array of elements.</td>
                 <td></td>
             </tr>
                     <tr>
@@ -104,7 +104,7 @@
                                         protected                                        int
                 </td>
                 <td>$width</td>
-                <td class="last"></td>
+                <td class="last">The matrix width.</td>
                 <td></td>
             </tr>
                     <tr>
@@ -112,7 +112,7 @@
                                         protected                                        int
                 </td>
                 <td>$height</td>
-                <td class="last"></td>
+                <td class="last">The matrix height.</td>
                 <td></td>
             </tr>
             </table>
@@ -126,7 +126,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(int $width, int $height, array $elements = array())
+                    <a href="#method___construct">__construct</a>(int $width, int $height, int[]|float[] $elements = array())
         
                                             <p>The given $elements get arranged as follows: The elements will be set from left to right in a row until the
 row is full. Then, the next line begins alike and so on.</p>                </div>
@@ -134,24 +134,22 @@ row is full. Then, the next line begins alike and so on.</p>                </di
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_getHeight">getHeight</a>()
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
+                    int
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getWidth">getWidth</a>()
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Get the matrix width.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHeight">getHeight</a>()
+        
+                                            <p>Get the matrix height.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -159,32 +157,59 @@ row is full. Then, the next line begins alike and so on.</p>                </di
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setElementAt">setElementAt</a>($x, $y, $value)
+                    <a href="#method_setElementAt">setElementAt</a>(int $x, int $y, int|float $value)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Set the value of a cell.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    int|float
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_getElementAt">getElementAt</a>($x, $y)
+                    <a href="#method_getElementAt">getElementAt</a>(int $x, int $y)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Get the value of a cell.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    int[]|float[]
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_calculatePosition">calculatePosition</a>($x, $y)
+                    <a href="#method_getValueList">getValueList</a>()
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Return all the matrix values, as a monodimensional array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int[]|float[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMatrix">getMatrix</a>()
+        
+                                            <p>Return all the matrix values, as a bidimensional array (every array item contains the values of a row).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Imagine/Utils/Matrix.html"><abbr title="Imagine\Utils\Matrix">Matrix</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_normalize">normalize</a>()
+        
+                                            <p>Returns a new Matrix instance, representing the normalized value of this matrix.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_calculatePosition">calculatePosition</a>(int $x, int $y)
+        
+                                            <p>Calculate the offset position of a cell.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -195,9 +220,9 @@ row is full. Then, the next line begins alike and so on.</p>                </di
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 37</div>
+        <div class="location">at         line 50</div>
         <code>                    
-    <strong>__construct</strong>(int $width, int $height, array $elements = array())
+    <strong>__construct</strong>(int $width, int $height, int[]|float[] $elements = array())
         </code>
     </h3>
     <div class="details">
@@ -214,17 +239,17 @@ row is full. Then, the next line begins alike and so on.</p>                    
                     <tr>
                 <td>int</td>
                 <td>$width</td>
-                <td></td>
+                <td>the matrix width</td>
             </tr>
                     <tr>
                 <td>int</td>
                 <td>$height</td>
-                <td></td>
+                <td>he matrix height</td>
             </tr>
                     <tr>
-                <td>array</td>
+                <td>int[]|float[]</td>
                 <td>$elements</td>
-                <td></td>
+                <td>the matrix elements</td>
             </tr>
             </table>
 
@@ -245,28 +270,9 @@ row is full. Then, the next line begins alike and so on.</p>                    
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_getHeight">
-        <div class="location">at         line 63</div>
-        <code>                    
-    <strong>getHeight</strong>()
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
                     <h3 id="method_getWidth">
-        <div class="location">at         line 68</div>
-        <code>                    
+        <div class="location">at         line 79</div>
+        <code>                    int
     <strong>getWidth</strong>()
         </code>
     </h3>
@@ -274,8 +280,49 @@ row is full. Then, the next line begins alike and so on.</p>                    
             
     
 
+                    <div class="method-description">
+                                    <p>Get the matrix width.</p>                                                </div>
                 <div class="tags">
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHeight">
+        <div class="location">at         line 89</div>
+        <code>                    int
+    <strong>getHeight</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get the matrix height.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -284,31 +331,33 @@ row is full. Then, the next line begins alike and so on.</p>                    
             </div>
                     <div class="method-item">
                     <h3 id="method_setElementAt">
-        <div class="location">at         line 73</div>
+        <div class="location">at         line 101</div>
         <code>                    
-    <strong>setElementAt</strong>($x, $y, $value)
+    <strong>setElementAt</strong>(int $x, int $y, int|float $value)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Set the value of a cell.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td></td>
+                <td>int</td>
                 <td>$x</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>int</td>
                 <td>$y</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>int|float</td>
                 <td>$value</td>
                 <td></td>
             </tr>
@@ -323,32 +372,133 @@ row is full. Then, the next line begins alike and so on.</p>                    
             </div>
                     <div class="method-item">
                     <h3 id="method_getElementAt">
-        <div class="location">at         line 78</div>
-        <code>                    
-    <strong>getElementAt</strong>($x, $y)
+        <div class="location">at         line 114</div>
+        <code>                    int|float
+    <strong>getElementAt</strong>(int $x, int $y)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Get the value of a cell.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td></td>
+                <td>int</td>
                 <td>$x</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>int</td>
                 <td>$y</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int|float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getValueList">
+        <div class="location">at         line 124</div>
+        <code>                    int[]|float[]
+    <strong>getValueList</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return all the matrix values, as a monodimensional array.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int[]|float[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMatrix">
+        <div class="location">at         line 134</div>
+        <code>                    int[]|float[]
+    <strong>getMatrix</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return all the matrix values, as a bidimensional array (every array item contains the values of a row).</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int[]|float[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_normalize">
+        <div class="location">at         line 144</div>
+        <code>                    <a href="../../Imagine/Utils/Matrix.html"><abbr title="Imagine\Utils\Matrix">Matrix</abbr></a>
+    <strong>normalize</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a new Matrix instance, representing the normalized value of this matrix.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Imagine/Utils/Matrix.html"><abbr title="Imagine\Utils\Matrix">Matrix</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -357,33 +507,53 @@ row is full. Then, the next line begins alike and so on.</p>                    
             </div>
                     <div class="method-item">
                     <h3 id="method_calculatePosition">
-        <div class="location">at         line 83</div>
-        <code>            protected        
-    <strong>calculatePosition</strong>($x, $y)
+        <div class="location">at         line 169</div>
+        <code>            protected        int
+    <strong>calculatePosition</strong>(int $x, int $y)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Calculate the offset position of a cell.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td></td>
+                <td>int</td>
                 <td>$x</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>int</td>
                 <td>$y</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
             
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Imagine/Exception/OutOfBoundsException.html"><abbr title="Imagine\Exception\OutOfBoundsException">OutOfBoundsException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
             
                     </div>
     </div>
