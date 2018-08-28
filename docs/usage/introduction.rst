@@ -14,7 +14,7 @@ The recommended way to install Imagine is through `Composer`_.
 Composer is a dependency management library for PHP.
 
 Here is an example of composer project configuration that requires imagine
-version 0.4.
+version 0.5.
 
 .. code-block:: json
 
@@ -136,8 +136,20 @@ You can optionally specify the fill color for the new image, which defaults to o
 
    $palette = new Imagine\Image\Palette\RGB();
    $size  = new Imagine\Image\Box(400, 300);
-   $color = $palette->color('#000', 100);
+   $color = $palette->color('#000', 0);
    $image = $imagine->create($size, $color);
+   
+To use a solid background color, for example orange, provide an alpha of 100.
+
+.. code-block:: php
+
+   <?php
+
+   $palette = new Imagine\Image\Palette\RGB();
+   $size  = new Imagine\Image\Box(400, 300);
+   $color = $palette->color('#ff9900', 100);
+   $image = $imagine->create($size, $color);
+
 
 Save Images
 +++++++++++
@@ -217,7 +229,7 @@ you can avoid this by explicitly set this option to ``false`` when saving :
            ->save('/path/to/animated-resized.gif', array('flatten' => false));
 
 .. TIP::
-   You **SHOULD** not flatten image only for animated gif and png images.
+   You **SHOULD NOT** flatten image only for animated gif and png images.
 
 Of course, you can combine options :
 

@@ -11,32 +11,28 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Image\AbstractImagine;
-use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Palette\RGB;
-use Imagine\Image\Palette\PaletteInterface;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
+use Imagine\File\LoaderInterface;
+use Imagine\Image\AbstractImagine;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\Metadata\MetadataBag;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\Color\RGB as RGBColor;
+use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Image\Palette\RGB;
 
 /**
- * Imagine implementation using the GD library
+ * Imagine implementation using the GD library.
  */
 final class Imagine extends AbstractImagine
 {
-    /**
-     * @var array
-     */
-    private $info;
-
     /**
      * @throws RuntimeException
      */
     public function __construct()
     {
-        $this->loadGdInfo();
         $this->requireGdVersion('2.0.1');
     }
 
@@ -45,7 +41,7 @@ final class Imagine extends AbstractImagine
      */
     public function create(BoxInterface $size, ColorInterface $color = null)
     {
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         $resource = imagecreatetruecolor($width, $height);
@@ -71,7 +67,7 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException('Could not set background color fill');
         }
 
-        if ($color->getAlpha() >= 95) {
+        if ($color->getAlpha() <= 5) {
             imagecolortransparent($resource, $index);
         }
 
@@ -83,20 +79,16 @@ final class Imagine extends AbstractImagine
      */
     public function open($path)
     {
-        $path = $this->checkPath($path);
-        $data = @file_get_contents($path);
+        $loader = $path instanceof LoaderInterface ? $path : $this->getClassFactory()->createFileLoader($path);
+        $path = $loader->getPath();
 
-        if (false === $data) {
-            throw new RuntimeException(sprintf('Failed to open file %s', $path));
-        }
-
-        $resource = @imagecreatefromstring($data);
+        $resource = @imagecreatefromstring($loader->getData());
 
         if (!is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
-        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readFile($path));
+        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readFile($loader));
     }
 
     /**
@@ -122,7 +114,7 @@ final class Imagine extends AbstractImagine
             throw new InvalidArgumentException('Cannot read resource content');
         }
 
-        return $this->doLoad($content, $this->getMetadataReader()->readStream($resource));
+        return $this->doLoad($content, $this->getMetadataReader()->readData($content, $resource));
     }
 
     /**
@@ -130,29 +122,32 @@ final class Imagine extends AbstractImagine
      */
     public function font($file, $size, ColorInterface $color)
     {
-        if (!$this->info['FreeType Support']) {
-            throw new RuntimeException('GD is not compiled with FreeType support');
-        }
-
-        return new Font($file, $size, $color);
+        return $this->getClassFactory()->createFont(ClassFactoryInterface::HANDLE_GD, $file, $size, $color);
     }
 
     private function wrap($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
         if (!imageistruecolor($resource)) {
-            list($width, $height) = array(imagesx($resource), imagesy($resource));
+            if (function_exists('imagepalettetotruecolor')) {
+                if (false === imagepalettetotruecolor($resource)) {
+                    throw new RuntimeException('Could not convert a palette based image to true color');
+                }
+            } else {
+                list($width, $height) = array(imagesx($resource), imagesy($resource));
 
-            // create transparent truecolor canvas
-            $truecolor   = imagecreatetruecolor($width, $height);
-            $transparent = imagecolorallocatealpha($truecolor, 255, 255, 255, 127);
+                // create transparent truecolor canvas
+                $truecolor = imagecreatetruecolor($width, $height);
+                $transparent = imagecolorallocatealpha($truecolor, 255, 255, 255, 127);
 
-            imagefill($truecolor, 0, 0, $transparent);
-            imagecolortransparent($truecolor, $transparent);
+                imagealphablending($truecolor, false);
+                imagefilledrectangle($truecolor, 0, 0, $width, $height, $transparent);
+                imagealphablending($truecolor, false);
 
-            imagecopymerge($truecolor, $resource, 0, 0, 0, 0, $width, $height, 100);
+                imagecopy($truecolor, $resource, 0, 0, 0, 0, $width, $height);
 
-            imagedestroy($resource);
-            $resource = $truecolor;
+                imagedestroy($resource);
+                $resource = $truecolor;
+            }
         }
 
         if (false === imagealphablending($resource, false) || false === imagesavealpha($resource, true)) {
@@ -163,22 +158,16 @@ final class Imagine extends AbstractImagine
             imageantialias($resource, true);
         }
 
-        return new Image($resource, $palette, $metadata);
-    }
-
-    private function loadGdInfo()
-    {
-        if (!function_exists('gd_info')) {
-            throw new RuntimeException('Gd not installed');
-        }
-
-        $this->info = gd_info();
+        return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $resource, $palette, $metadata);
     }
 
     private function requireGdVersion($version)
     {
+        if (!function_exists('gd_info')) {
+            throw new RuntimeException('Gd not installed');
+        }
         if (version_compare(GD_VERSION, $version, '<')) {
-            throw new RuntimeException(sprintf('GD2 version %s or higher is required', $version));
+            throw new RuntimeException(sprintf('GD2 version %s or higher is required, %s provided', $version, GD_VERSION));
         }
     }
 
@@ -187,7 +176,7 @@ final class Imagine extends AbstractImagine
         $resource = @imagecreatefromstring($string);
 
         if (!is_resource($resource)) {
-            throw new InvalidArgumentException('An image could not be created from the given input');
+            throw new RuntimeException('An image could not be created from the given input');
         }
 
         return $this->wrap($resource, new RGB(), $metadata);

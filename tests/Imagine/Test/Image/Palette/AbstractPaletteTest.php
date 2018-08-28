@@ -11,13 +11,17 @@
 
 namespace Imagine\Test\Image\Palette;
 
-use Imagine\Test\ImagineTestCase;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Test\ImagineTestCase;
 
 abstract class AbstractPaletteTest extends ImagineTestCase
 {
     /**
      * @dataProvider provideColorAndAlphaTuples
+     *
+     * @param mixed $expected
+     * @param mixed $color
+     * @param mixed $alpha
      */
     public function testColor($expected, $color, $alpha)
     {
@@ -28,6 +32,9 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     /**
      * @dataProvider provideColorAndAlpha
+     *
+     * @param mixed $color
+     * @param mixed $alpha
      */
     public function testColorIsCached($color, $alpha)
     {
@@ -36,6 +43,9 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     /**
      * @dataProvider provideColorAndAlpha
+     *
+     * @param mixed $color
+     * @param mixed $alpha
      */
     public function testColorWithDifferentAlphasAreNotSame($color, $alpha)
     {
@@ -44,6 +54,11 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     /**
      * @dataProvider provideColorsForBlending
+     *
+     * @param mixed $expected
+     * @param mixed $color1
+     * @param mixed $color2
+     * @param mixed $amount
      */
     public function testBlend($expected, $color1, $color2, $amount)
     {
@@ -54,15 +69,14 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     public function testUseProfile()
     {
-        $this->getMock('Imagine\Image\ProfileInterface');
+        $this->getMockBuilder('Imagine\Image\ProfileInterface')->getMock();
 
         $palette = $this->getPalette();
 
-        $new = $this->getMock('Imagine\Image\ProfileInterface');
+        $new = $this->getMockBuilder('Imagine\Image\ProfileInterface')->getMock();
         $palette->useProfile($new);
 
         $this->assertEquals($new, $palette->profile());
-
     }
 
     public function testProfile()
@@ -105,7 +119,7 @@ abstract class AbstractPaletteTest extends ImagineTestCase
     abstract public function provideColorsForBlending();
 
     /**
-     * @return PaletteInterface
+     * @return \Imagine\Image\Palette\PaletteInterface
      */
     abstract protected function getPalette();
 }

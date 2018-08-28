@@ -12,12 +12,12 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Effects\EffectsInterface;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Exception\NotSupportedException;
 
 /**
- * Effects implementation using the Gmagick PHP extension
+ * Effects implementation using the Gmagick PHP extension.
  */
 class Effects implements EffectsInterface
 {
@@ -36,7 +36,7 @@ class Effects implements EffectsInterface
         try {
             $this->gmagick->gammaimage($correction);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Failed to apply gamma correction to the image');
+            throw new RuntimeException('Failed to apply gamma correction to the image', $e->getCode(), $e);
         }
 
         return $this;
@@ -54,7 +54,7 @@ class Effects implements EffectsInterface
         try {
             $this->gmagick->negateimage(false, \Gmagick::CHANNEL_ALL);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Failed to negate the image');
+            throw new RuntimeException('Failed to negate the image', $e->getCode(), $e);
         }
 
         return $this;
@@ -68,7 +68,7 @@ class Effects implements EffectsInterface
         try {
             $this->gmagick->setImageType(2);
         } catch (\GmagickException $e) {
-            throw new RuntimeException('Failed to grayscale the image');
+            throw new RuntimeException('Failed to grayscale the image', $e->getCode(), $e);
         }
 
         return $this;

@@ -11,33 +11,32 @@
 
 namespace Imagine\Image\Palette\Color;
 
-use Imagine\Image\Palette\RGB as RGBPalette;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Image\Palette\RGB as RGBPalette;
 
 final class RGB implements ColorInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     private $r;
 
     /**
-     * @var integer
+     * @var int
      */
     private $g;
 
     /**
-     * @var integer
+     * @var int
      */
     private $b;
 
     /**
-     * @var integer
+     * @var int
      */
     private $alpha;
 
     /**
-     *
      * @var RGBPalette
      */
     private $palette;
@@ -67,9 +66,9 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Returns RED value of the color
+     * Returns RED value of the color.
      *
-     * @return integer
+     * @return int
      */
     public function getRed()
     {
@@ -77,9 +76,9 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Returns GREEN value of the color
+     * Returns GREEN value of the color.
      *
-     * @return integer
+     * @return int
      */
     public function getGreen()
     {
@@ -87,9 +86,9 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Returns BLUE value of the color
+     * Returns BLUE value of the color.
      *
-     * @return integer
+     * @return int
      */
     public function getBlue()
     {
@@ -167,7 +166,7 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Returns hex representation of the color
+     * Returns hex representation of the color.
      *
      * @return string
      */
@@ -177,11 +176,11 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Performs checks for validity of given alpha value and sets it
      *
-     * @param integer $alpha
+     * @param int $alpha
      *
      * @throws InvalidArgumentException
      */
@@ -195,7 +194,7 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Performs checks for color validity (array of array(R, G, B))
      *
@@ -209,6 +208,11 @@ final class RGB implements ColorInterface
             throw new InvalidArgumentException('Color argument must look like array(R, G, B), where R, G, B are the integer values between 0 and 255 for red, green and blue color indexes accordingly');
         }
 
-        list($this->r, $this->g, $this->b) = array_values($color);
+        $colors = array_values($color);
+        array_walk($colors, function (&$color) {
+            $color = max(0, min(255, $color));
+        });
+
+        list($this->r, $this->g, $this->b) = $colors;
     }
 }

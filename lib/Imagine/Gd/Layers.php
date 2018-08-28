@@ -11,11 +11,12 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Image\AbstractLayers;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
+use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
-use Imagine\Exception\NotSupportedException;
 
 class Layers extends AbstractLayers
 {
@@ -24,7 +25,7 @@ class Layers extends AbstractLayers
     private $resource;
     private $palette;
 
-    public function __construct(Image $image, PaletteInterface $palette, $resource)
+    public function __construct(Image $image, PaletteInterface $palette, $resource, $initialOffset = 0)
     {
         if (!is_resource($resource)) {
             throw new RuntimeException('Invalid Gd resource provided');
@@ -32,7 +33,7 @@ class Layers extends AbstractLayers
 
         $this->image = $image;
         $this->resource = $resource;
-        $this->offset = 0;
+        $this->offset = (int) $initialOffset;
         $this->palette = $palette;
     }
 
@@ -63,7 +64,7 @@ class Layers extends AbstractLayers
      */
     public function current()
     {
-        return new Image($this->resource, $this->palette, new MetadataBag());
+        return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $this->resource, $this->palette, new MetadataBag());
     }
 
     /**
@@ -120,7 +121,7 @@ class Layers extends AbstractLayers
     public function offsetGet($offset)
     {
         if (0 === $offset) {
-            return new Image($this->resource, $this->palette, new MetadataBag());
+            return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $this->resource, $this->palette, new MetadataBag());
         }
 
         throw new RuntimeException('GD only supports one layer at offset 0');

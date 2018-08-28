@@ -12,19 +12,18 @@
 namespace Imagine\Test\Image;
 
 use Imagine\Image\Box;
-use Imagine\Image\Color;
+use Imagine\Image\ImagineInterface;
+use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
-use Imagine\Image\Palette\RGB;
-use Imagine\Image\ImagineInterface;
 
 abstract class AbstractImagineTest extends ImagineTestCase
 {
     public function testShouldCreateEmptyImage()
     {
         $factory = $this->getImagine();
-        $image   = $factory->create(new Box(50, 50));
-        $size    = $image->getSize();
+        $image = $factory->create(new Box(50, 50));
+        $size = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(50, $size->getWidth());
@@ -35,8 +34,8 @@ abstract class AbstractImagineTest extends ImagineTestCase
     {
         $source = 'tests/Imagine/Fixtures/google.png';
         $factory = $this->getImagine();
-        $image   = $factory->open($source);
-        $size    = $image->getSize();
+        $image = $factory->open($source);
+        $size = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(364, $size->getWidth());
@@ -53,8 +52,8 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $source = 'tests/Imagine/Fixtures/google.png';
         $resource = new \SplFileInfo($source);
         $factory = $this->getImagine();
-        $image   = $factory->open($resource);
-        $size    = $image->getSize();
+        $image = $factory->open($resource);
+        $size = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(364, $size->getWidth());
@@ -68,9 +67,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldFailOnUnknownImage()
     {
-        $invalidResource = __DIR__.'/path/that/does/not/exist';
+        $invalidResource = __DIR__ . '/path/that/does/not/exist';
 
-        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', sprintf('File %s does not exist.', $invalidResource));
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', sprintf('File %s does not exist.', $invalidResource));
         $this->getImagine()->open($invalidResource);
     }
 
@@ -78,15 +77,22 @@ abstract class AbstractImagineTest extends ImagineTestCase
     {
         $source = 'tests/Imagine/Fixtures/invalid-image.jpg';
 
-        $this->setExpectedException('Imagine\Exception\RuntimeException', sprintf('Unable to open image %s', $source));
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException', sprintf('Unable to open image %s', $source));
         $this->getImagine()->open($source);
     }
 
     public function testShouldOpenAnHttpImage()
     {
         $factory = $this->getImagine();
-        $image   = $factory->open(self::HTTP_IMAGE);
-        $size    = $image->getSize();
+        try {
+            $image = $factory->open(self::HTTP_IMAGE);
+        } catch (\Imagine\Exception\RuntimeException $x) {
+            if (getenv('TRAVIS') && getenv('CONTINUOUS_INTEGRATION') && $x->getMessage() === 'gnutls_handshake() failed: A TLS packet with unexpected length was received.') {
+                $this->markTestSkipped($x->getMessage());
+            }
+            throw $x;
+        }
+        $size = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(280, $size->getWidth());
@@ -101,8 +107,8 @@ abstract class AbstractImagineTest extends ImagineTestCase
     public function testShouldCreateImageFromString()
     {
         $factory = $this->getImagine();
-        $image   = $factory->load(file_get_contents('tests/Imagine/Fixtures/google.png'));
-        $size    = $image->getSize();
+        $image = $factory->load(file_get_contents('tests/Imagine/Fixtures/google.png'));
+        $size = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(364, $size->getWidth());
@@ -114,13 +120,33 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertArrayNotHasKey('filepath', $metadata);
     }
 
+    public function testShouldCreateImageFromStreamWithMetadata()
+    {
+        $source = 'http://imagine.readthedocs.org/en/latest/_static/exit-90-test.jpg';
+        $resource = fopen($source, 'r');
+
+        $factory = $this->getImagine();
+        $image = $factory->read($resource);
+        $size = $image->getSize();
+
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertEquals(50, $size->getWidth());
+        $this->assertEquals(50, $size->getHeight());
+
+        $metadata = $image->metadata();
+
+        $this->assertEquals($source, $metadata['uri']);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+        $this->assertEquals(6, $metadata['ifd0.Orientation']);
+    }
+
     public function testShouldCreateImageFromResource()
     {
         $source = 'tests/Imagine/Fixtures/google.png';
         $factory = $this->getImagine();
         $resource = fopen($source, 'r');
-        $image   = $factory->read($resource);
-        $size    = $image->getSize();
+        $image = $factory->read($resource);
+        $size = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(364, $size->getWidth());
@@ -136,8 +162,8 @@ abstract class AbstractImagineTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
         $resource = fopen(self::HTTP_IMAGE, 'r');
-        $image   = $factory->read($resource);
-        $size    = $image->getSize();
+        $image = $factory->read($resource);
+        $size = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
         $this->assertEquals(280, $size->getWidth());
@@ -156,8 +182,8 @@ abstract class AbstractImagineTest extends ImagineTestCase
         }
 
         $palette = new RGB();
-        $path    = 'tests/Imagine/Fixtures/font/Arial.ttf';
-        $black   = $palette->color('000');
+        $path = 'tests/Imagine/Fixtures/font/Arial.ttf';
+        $black = $palette->color('000');
         $factory = $this->getImagine();
 
         $this->assertEquals($this->getEstimatedFontBox(), $factory->font($path, 36, $black)->box('string'));
@@ -167,7 +193,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
         $palette = new RGB();
-        $image   = $imagine->create(new Box(1, 1), $palette->color("#f00", 17));
+        $image = $imagine->create(new Box(1, 1), $palette->color('#f00', 17));
         $actualColor = $image->getColorAt(new Point(0, 0));
         $this->assertEquals(17, $actualColor->getAlpha());
     }

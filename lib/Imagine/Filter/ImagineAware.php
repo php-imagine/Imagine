@@ -15,7 +15,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\ImagineInterface;
 
 /**
- * ImagineAware base class
+ * ImagineAware base class.
  */
 abstract class ImagineAware implements FilterInterface
 {
@@ -39,9 +39,9 @@ abstract class ImagineAware implements FilterInterface
     /**
      * Get ImagineInterface instance.
      *
-     * @return ImagineInterface
-     *
      * @throws InvalidArgumentException
+     *
+     * @return ImagineInterface
      */
     public function getImagine()
     {

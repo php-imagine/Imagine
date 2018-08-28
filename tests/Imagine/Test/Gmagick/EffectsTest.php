@@ -14,6 +14,9 @@ namespace Imagine\Test\Gmagick;
 use Imagine\Gmagick\Imagine;
 use Imagine\Test\Effects\AbstractEffectsTest;
 
+/**
+ * @group ext-gmagick
+ */
 class EffectsTest extends AbstractEffectsTest
 {
     protected function setUp()
@@ -25,9 +28,15 @@ class EffectsTest extends AbstractEffectsTest
         }
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Effects\AbstractEffectsTest::testColorize()
+     *
+     * @expectedException \Imagine\Exception\RuntimeException
+     */
     public function testColorize()
     {
-        $this->setExpectedException('RuntimeException');
         parent::testColorize();
     }
 

@@ -14,7 +14,7 @@ namespace Imagine\Image\Fill\Gradient;
 use Imagine\Image\PointInterface;
 
 /**
- * Horizontal gradient fill
+ * Horizontal gradient fill.
  */
 final class Horizontal extends Linear
 {

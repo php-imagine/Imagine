@@ -1,13 +1,12 @@
-#Imagine
-[![project status](http://stillmaintained.com/avalanche123/Imagine.png)](http://stillmaintained.com/avalanche123/Imagine)
-[![Build Status](https://secure.travis-ci.org/avalanche123/Imagine.png?branch=develop)](http://travis-ci.org/avalanche123/Imagine)
+# Imagine
+[![Travis CI Build Status](https://travis-ci.org/avalanche123/Imagine.svg?branch=develop)](https://travis-ci.org/avalanche123/Imagine) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/avalanche123/Imagine?branch=develop&svg=true)](https://ci.appveyor.com/project/avalanche123/Imagine)
 
 Tweet about it using the [#php_imagine](https://twitter.com/search?q=%23php_imagine) hashtag.
 
 Image manipulation library for PHP 5.3 inspired by Python's PIL and other image
 libraries.
 
-##Requirements##
+## Requirements
 
 The Imagine library has the following requirements:
 
@@ -19,7 +18,10 @@ Depending on the chosen Image implementation, you may need one of the following:
  - Imagick
  - Gmagick
 
-##Basic Principles##
+### Installation using composer
+`php composer.phar require imagine/imagine`
+
+## Basic Principles
 
 The main purpose of Imagine is to provide all the necessary functionality to bring all native low level image processing libraries in PHP to the same simple and intuitive OO API.
 
@@ -49,3 +51,8 @@ Some of the ideas for upcoming filters:
 ## Articles ##
 
  - [Image Processing with Imagine](http://www.phparch.com/2011/03/image-processing-with-imagine)
+
+## Contributing ##
+
+New pull requests should be based on the `develop` branch.
+The `master` branch is the stable branch: it usually matches the latest a release but in can be a bit ahead.

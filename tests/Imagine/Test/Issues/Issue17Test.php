@@ -2,12 +2,15 @@
 
 namespace Imagine\Test\Issues;
 
-use Imagine\Image\ImageInterface;
-use Imagine\Image\Box;
-use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Imagine\Image\ImageInterface;
 
-class Issue17Test extends \PHPUnit_Framework_TestCase
+/**
+ * @group ext-gd
+ */
+class Issue17Test extends \PHPUnit\Framework\TestCase
 {
     private function getImagine()
     {
@@ -22,14 +25,14 @@ class Issue17Test extends \PHPUnit_Framework_TestCase
 
     public function testShouldResize()
     {
-        $size    = new Box(100, 10);
+        $size = new Box(100, 10);
         $imagine = $this->getImagine();
 
         $imagine->open('tests/Imagine/Fixtures/large.jpg')
             ->thumbnail($size, ImageInterface::THUMBNAIL_OUTBOUND)
             ->save('tests/Imagine/Fixtures/resized.jpg');
 
-        $this->assertTrue(file_exists('tests/Imagine/Fixtures/resized.jpg'));
+        $this->assertFileExists('tests/Imagine/Fixtures/resized.jpg');
         $this->assertEquals(
             $size,
             $imagine->open('tests/Imagine/Fixtures/resized.jpg')->getSize()

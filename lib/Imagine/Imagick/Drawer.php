@@ -21,12 +21,12 @@ use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
 /**
- * Drawer implementation using the Imagick PHP extension
+ * Drawer implementation using the Imagick PHP extension.
  */
 final class Drawer implements DrawerInterface
 {
     /**
-     * @var Imagick
+     * @var \Imagick
      */
     private $imagick;
 
@@ -43,14 +43,14 @@ final class Drawer implements DrawerInterface
      */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $thickness = 1)
     {
-        $x      = $center->getX();
-        $y      = $center->getY();
-        $width  = $size->getWidth();
+        $x = $center->getX();
+        $y = $center->getY();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         try {
             $pixel = $this->getColor($color);
-            $arc   = new \ImagickDraw();
+            $arc = new \ImagickDraw();
 
             $arc->setStrokeColor($pixel);
             $arc->setStrokeWidth(max(1, (int) $thickness));
@@ -76,9 +76,9 @@ final class Drawer implements DrawerInterface
      */
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        $x      = $center->getX();
-        $y      = $center->getY();
-        $width  = $size->getWidth();
+        $x = $center->getX();
+        $y = $center->getY();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         try {
@@ -128,11 +128,11 @@ final class Drawer implements DrawerInterface
      */
     public function ellipse(PointInterface $center, BoxInterface $size, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         try {
-            $pixel   = $this->getColor($color);
+            $pixel = $this->getColor($color);
             $ellipse = new \ImagickDraw();
 
             $ellipse->setStrokeColor($pixel);
@@ -175,7 +175,7 @@ final class Drawer implements DrawerInterface
     {
         try {
             $pixel = $this->getColor($color);
-            $line  = new \ImagickDraw();
+            $line = new \ImagickDraw();
 
             $line->setStrokeColor($pixel);
             $line->setStrokeWidth(max(1, (int) $thickness));
@@ -206,7 +206,7 @@ final class Drawer implements DrawerInterface
      */
     public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        $width  = $size->getWidth();
+        $width = $size->getWidth();
         $height = $size->getHeight();
 
         $x1 = round($center->getX() + $width / 2 * cos(deg2rad($start)));
@@ -278,7 +278,7 @@ final class Drawer implements DrawerInterface
         }, $coordinates);
 
         try {
-            $pixel   = $this->getColor($color);
+            $pixel = $this->getColor($color);
             $polygon = new \ImagickDraw();
 
             $polygon->setStrokeColor($pixel);
@@ -312,15 +312,15 @@ final class Drawer implements DrawerInterface
     {
         try {
             $pixel = $this->getColor($font->getColor());
-            $text  = new \ImagickDraw();
+            $text = new \ImagickDraw();
 
             $text->setFont($font->getFile());
-            /**
+            /*
              * @see http://www.php.net/manual/en/imagick.queryfontmetrics.php#101027
              *
              * ensure font resolution is the same as GD's hard-coded 96
              */
-            if (version_compare(phpversion("imagick"), "3.0.2", ">=")) {
+            if (version_compare(phpversion('imagick'), '3.0.2', '>=')) {
                 $text->setResolution(96, 96);
                 $text->setFontSize($font->getSize());
             } else {
@@ -330,9 +330,9 @@ final class Drawer implements DrawerInterface
             $text->setTextAntialias(true);
 
             $info = $this->imagick->queryFontMetrics($text, $string);
-            $rad  = deg2rad($angle);
-            $cos  = cos($rad);
-            $sin  = sin($rad);
+            $rad = deg2rad($angle);
+            $cos = cos($rad);
+            $sin = sin($rad);
 
             // round(0 * $cos - 0 * $sin)
             $x1 = 0;
@@ -366,7 +366,7 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * Gets specifically formatted color string from ColorInterface instance
+     * Gets specifically formatted color string from ColorInterface instance.
      *
      * @param ColorInterface $color
      *
@@ -381,9 +381,14 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * Internal
+     * Internal.
      *
      * Fits a string into box with given width
+     *
+     * @param string $string
+     * @param \ImagickDraw $text
+     * @param int $angle
+     * @param int $width
      */
     private function wrapText($string, $text, $angle, $width)
     {

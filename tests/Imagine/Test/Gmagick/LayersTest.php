@@ -11,14 +11,17 @@
 
 namespace Imagine\Test\Gmagick;
 
-use Imagine\Gmagick\Layers;
 use Imagine\Gmagick\Image;
 use Imagine\Gmagick\Imagine;
-use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Test\Image\AbstractLayersTest;
+use Imagine\Gmagick\Layers;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\RGB;
+use Imagine\Test\Image\AbstractLayersTest;
 
+/**
+ * @group ext-gmagick
+ */
 class LayersTest extends AbstractLayersTest
 {
     protected function setUp()
@@ -33,7 +36,7 @@ class LayersTest extends AbstractLayersTest
     public function testCount()
     {
         $palette = new RGB();
-        $resource = $this->getMock('\Gmagick');
+        $resource = $this->getMockBuilder('\Gmagick')->getMock();
 
         $resource->expects($this->once())
             ->method('getnumberimages')
@@ -47,13 +50,13 @@ class LayersTest extends AbstractLayersTest
     public function testGetLayer()
     {
         $palette = new RGB();
-        $resource = $this->getMock('\Gmagick');
+        $resource = $this->getMockBuilder('\Gmagick')->getMock();
 
         $resource->expects($this->any())
             ->method('getnumberimages')
             ->will($this->returnValue(2));
 
-        $layer = $this->getMock('\Gmagick');
+        $layer = $this->getMockBuilder('\Gmagick')->getMock();
 
         $resource->expects($this->any())
             ->method('getimage')

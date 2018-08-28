@@ -11,10 +11,13 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Image\Box;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractImagineTest;
-use Imagine\Image\Box;
 
+/**
+ * @group ext-imagick
+ */
 class ImagineTest extends AbstractImagineTest
 {
     protected function setUp()
@@ -28,7 +31,10 @@ class ImagineTest extends AbstractImagineTest
 
     protected function getEstimatedFontBox()
     {
-        return new Box(117, 55);
+        return new Box(
+            DIRECTORY_SEPARATOR === '\\' ? 118 : 117,
+            55
+        );
     }
 
     protected function getImagine()

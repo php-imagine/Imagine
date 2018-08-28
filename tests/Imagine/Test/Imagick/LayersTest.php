@@ -12,13 +12,15 @@
 namespace Imagine\Test\Imagick;
 
 use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Imagick\Image;
-use Imagine\Imagick\Layers;
-use Imagine\Imagick\Imagine;
-use Imagine\Test\Image\AbstractLayersTest;
-use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\RGB;
+use Imagine\Imagick\Image;
+use Imagine\Imagick\Imagine;
+use Imagine\Imagick\Layers;
+use Imagine\Test\Image\AbstractLayersTest;
 
+/**
+ * @group ext-imagick
+ */
 class LayersTest extends AbstractLayersTest
 {
     protected function setUp()
@@ -33,7 +35,7 @@ class LayersTest extends AbstractLayersTest
     public function testCount()
     {
         $palette = new RGB();
-        $resource = $this->getMock('\Imagick');
+        $resource = $this->getMockBuilder('\Imagick')->getMock();
 
         $resource->expects($this->once())
             ->method('getNumberImages')
@@ -47,13 +49,13 @@ class LayersTest extends AbstractLayersTest
     public function testGetLayer()
     {
         $palette = new RGB();
-        $resource = $this->getMock('\Imagick');
+        $resource = $this->getMockBuilder('\Imagick')->getMock();
 
         $resource->expects($this->any())
             ->method('getNumberImages')
             ->will($this->returnValue(2));
 
-        $layer = $this->getMock('\Imagick');
+        $layer = $this->getMockBuilder('\Imagick')->getMock();
 
         $resource->expects($this->any())
             ->method('getImage')
@@ -71,10 +73,10 @@ class LayersTest extends AbstractLayersTest
         $width = null;
         $height = null;
 
-        $resource = new \Imagick;
+        $resource = new \Imagick();
         $palette = new RGB();
-        $resource->newImage(20, 10, new \ImagickPixel("black"));
-        $resource->newImage(10, 10, new \ImagickPixel("black"));
+        $resource->newImage(20, 10, new \ImagickPixel('black'));
+        $resource->newImage(10, 10, new \ImagickPixel('black'));
 
         $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
         $layers->coalesce();

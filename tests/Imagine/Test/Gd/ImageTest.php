@@ -12,10 +12,12 @@
 namespace Imagine\Test\Gd;
 
 use Imagine\Gd\Imagine;
-use Imagine\Test\Image\AbstractImageTest;
 use Imagine\Image\ImageInterface;
-use Imagine\Exception\RuntimeException;
+use Imagine\Test\Image\AbstractImageTest;
 
+/**
+ * @group ext-gd
+ */
 class ImageTest extends AbstractImageTest
 {
     protected function setUp()
@@ -57,19 +59,17 @@ class ImageTest extends AbstractImageTest
         );
     }
 
+    /**
+     * @expectedException \Imagine\Exception\RuntimeException
+     */
     public function testProfile()
     {
-        try {
-            parent::testProfile();
-            $this->fail('A RuntimeException should have been raised');
-        } catch (RuntimeException $e) {
-
-        }
+        parent::testProfile();
     }
 
     public function testPaletteIsGrayIfGrayImage()
     {
-        $this->markTestSkipped('Gd does not support Gray colorspace');
+        $this->markTestSkipped('GD driver does not support Gray colorspace');
     }
 
     public function testPaletteIsCMYKIfCMYKImage()
@@ -119,13 +119,24 @@ class ImageTest extends AbstractImageTest
 
     /**
      * @dataProvider provideVariousSources
+     *
+     * @param mixed $source
      */
     public function testResolutionOnSave($source)
     {
-        $this->markTestSkipped('Gd only supports 72 dpi resolution');
+        $this->markTestSkipped('GD driver only supports 72 dpi resolution');
+    }
+
+    public function testJpegSamplingFactors()
+    {
+        $this->markTestSkipped('GD driver does not support JPEG sampling factors');
     }
 
     protected function getImageResolution(ImageInterface $image)
+    {
+    }
+
+    protected function getSamplingFactors(ImageInterface $image)
     {
     }
 }

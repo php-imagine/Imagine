@@ -11,23 +11,22 @@
 
 namespace Imagine\Image\Palette\Color;
 
-use Imagine\Image\Palette\Grayscale;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Image\Palette\Grayscale;
 
 final class Gray implements ColorInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     private $gray;
 
     /**
-     * @var integer
+     * @var int
      */
     private $alpha;
 
     /**
-     *
      * @var Grayscale
      */
     private $palette;
@@ -53,9 +52,9 @@ final class Gray implements ColorInterface
     }
 
     /**
-     * Returns Gray value of the color
+     * Returns Gray value of the color.
      *
-     * @return integer
+     * @return int
      */
     public function getGray()
     {
@@ -121,7 +120,7 @@ final class Gray implements ColorInterface
     }
 
     /**
-     * Returns hex representation of the color
+     * Returns hex representation of the color.
      *
      * @return string
      */
@@ -131,9 +130,9 @@ final class Gray implements ColorInterface
     }
 
     /**
-     * Performs checks for validity of given alpha value and sets it
+     * Performs checks for validity of given alpha value and sets it.
      *
-     * @param integer $alpha
+     * @param int $alpha
      *
      * @throws InvalidArgumentException
      */
@@ -147,7 +146,7 @@ final class Gray implements ColorInterface
     }
 
     /**
-     * Performs checks for color validity (array of array(gray))
+     * Performs checks for color validity (array of array(gray)).
      *
      * @param array $color
      *
@@ -159,6 +158,9 @@ final class Gray implements ColorInterface
             throw new InvalidArgumentException('Color argument must look like array(gray), where gray is the integer value between 0 and 255 for the grayscale');
         }
 
-        list($this->gray) = array_values($color);
+        $color = array_values($color);
+        $color[0] = max(0, min(255, $color[0]));
+
+        list($this->gray) = $color;
     }
 }

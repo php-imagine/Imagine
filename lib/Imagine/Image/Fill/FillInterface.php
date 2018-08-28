@@ -15,12 +15,12 @@ use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\PointInterface;
 
 /**
- * Interface for the fill
+ * Interface for the fill.
  */
 interface FillInterface
 {
     /**
-     * Gets color of the fill for the given position
+     * Gets color of the fill for the given position.
      *
      * @param PointInterface $position
      *

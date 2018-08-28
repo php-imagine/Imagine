@@ -2,13 +2,12 @@
 
 namespace Imagine\Test\Issues;
 
-use Imagine\Imagick\Imagine as ImagickImagine;
-use Imagine\Gmagick\Imagine as GmagickImagine;
 use Imagine\Exception\RuntimeException;
+use Imagine\Gmagick\Imagine as GmagickImagine;
+use Imagine\Imagick\Imagine as ImagickImagine;
 
-class Issue131Test extends \PHPUnit_Framework_TestCase
+class Issue131Test extends \PHPUnit\Framework\TestCase
 {
-
     private function getTemporaryDir()
     {
         $tempDir = tempnam(sys_get_temp_dir(), 'imagine');
@@ -56,6 +55,10 @@ class Issue131Test extends \PHPUnit_Framework_TestCase
         return $image;
     }
 
+    /**
+     * @doesNotPerformAssertions
+     * @group ext-imagick
+     */
     public function testShouldSaveOneFileWithImagick()
     {
         $dir = realpath($this->getTemporaryDir());
@@ -65,11 +68,14 @@ class Issue131Test extends \PHPUnit_Framework_TestCase
 
         $imagine->save($targetFile);
 
-        if ( ! $this->probeOneFileAndCleanup($dir, $targetFile)) {
+        if (!$this->probeOneFileAndCleanup($dir, $targetFile)) {
             $this->fail('Imagick failed to generate one file');
         }
     }
 
+    /**
+     * @group ext-gmagick
+     */
     public function testShouldSaveOneFileWithGmagick()
     {
         $dir = realpath($this->getTemporaryDir());
@@ -79,7 +85,7 @@ class Issue131Test extends \PHPUnit_Framework_TestCase
 
         $imagine->save($targetFile);
 
-        if ( ! $this->probeOneFileAndCleanup($dir, $targetFile)) {
+        if (!$this->probeOneFileAndCleanup($dir, $targetFile)) {
             $this->fail('Gmagick failed to generate one file');
         }
     }
@@ -90,7 +96,7 @@ class Issue131Test extends \PHPUnit_Framework_TestCase
         $files = $this->getDirContent($dir);
         $retval = $retval && count($files) === 1;
         $file = current($files);
-        $retval = $retval && $targetFile === $file;
+        $retval = $retval && str_replace('/', DIRECTORY_SEPARATOR, $targetFile) === str_replace('/', DIRECTORY_SEPARATOR, $file);
 
         foreach ($files as $file) {
             unlink($file);

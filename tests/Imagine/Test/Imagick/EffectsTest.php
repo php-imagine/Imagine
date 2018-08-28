@@ -14,6 +14,9 @@ namespace Imagine\Test\Imagick;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Effects\AbstractEffectsTest;
 
+/**
+ * @group ext-imagick
+ */
 class EffectsTest extends AbstractEffectsTest
 {
     protected function setUp()

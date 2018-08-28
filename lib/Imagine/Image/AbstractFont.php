@@ -11,20 +11,28 @@
 
 namespace Imagine\Image;
 
+use Imagine\Factory\ClassFactory;
+use Imagine\Factory\ClassFactoryAwareInterface;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
- * Abstract font base class
+ * Abstract font base class.
  */
-abstract class AbstractFont implements FontInterface
+abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
 {
+    /**
+     * @var \Imagine\Factory\ClassFactoryInterface|null
+     */
+    private $classFactory;
+
     /**
      * @var string
      */
     protected $file;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $size;
 
@@ -34,18 +42,18 @@ abstract class AbstractFont implements FontInterface
     protected $color;
 
     /**
-     * Constructs a font with specified $file, $size and $color
+     * Constructs a font with specified $file, $size and $color.
      *
      * The font size is to be specified in points (e.g. 10pt means 10)
      *
-     * @param string         $file
-     * @param integer        $size
+     * @param string $file
+     * @param int $size
      * @param ColorInterface $color
      */
     public function __construct($file, $size, ColorInterface $color)
     {
-        $this->file  = $file;
-        $this->size  = $size;
+        $this->file = $file;
+        $this->size = $size;
         $this->color = $color;
     }
 
@@ -71,5 +79,31 @@ abstract class AbstractFont implements FontInterface
     final public function getColor()
     {
         return $this->color;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::getClassFactory()
+     */
+    public function getClassFactory()
+    {
+        if ($this->classFactory === null) {
+            $this->classFactory = new ClassFactory();
+        }
+
+        return $this->classFactory;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::setClassFactory()
+     */
+    public function setClassFactory(ClassFactoryInterface $classFactory)
+    {
+        $this->classFactory = $classFactory;
+
+        return $this;
     }
 }

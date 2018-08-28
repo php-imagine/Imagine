@@ -11,14 +11,14 @@
 
 namespace Imagine\Test\Image\Palette\Color;
 
+use Imagine\Image\Palette\CMYK as CMYKPalette;
 use Imagine\Image\Palette\Color\CMYK;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Palette\CMYK as CMYKPalette;
 
 class CMYKTest extends AbstractColorTest
 {
     /**
-     * @expectedException Imagine\Exception\RuntimeException
+     * @expectedException \Imagine\Exception\RuntimeException
      */
     public function testDissolve()
     {
@@ -34,12 +34,12 @@ class CMYKTest extends AbstractColorTest
 
     public function testIsNotOpaque($color = null)
     {
-        $this->markTestSkipped('CMYK color can not be not opaque');
+        $this->markTestSkipped('CMYK color does not support alpha');
     }
 
     public function provideNotOpaqueColors()
     {
-        $this->markTestSkipped('CMYK color can not be not opaque');
+        $this->markTestSkipped('CMYK color does not support alpha');
     }
 
     public function provideGrayscaleData()
@@ -52,7 +52,7 @@ class CMYKTest extends AbstractColorTest
     public function provideColorAndAlphaTuples()
     {
         return array(
-            array(null, $this->getColor())
+            array(null, $this->getColor()),
         );
     }
 

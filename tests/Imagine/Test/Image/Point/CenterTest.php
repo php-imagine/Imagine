@@ -11,22 +11,22 @@
 
 namespace Imagine\Test\Image\Point;
 
-use Imagine\Image\Point\Center;
-use Imagine\Image\Point;
-use Imagine\Image\PointInterface;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
+use Imagine\Image\Point;
+use Imagine\Image\Point\Center;
+use Imagine\Image\PointInterface;
 
-class CenterTest extends \PHPUnit_Framework_TestCase
+class CenterTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers Imagine\Image\Point\Center::getX
-     * @covers Imagine\Image\Point\Center::getY
+     * @covers \Imagine\Image\Point\Center::getX
+     * @covers \Imagine\Image\Point\Center::getY
      *
      * @dataProvider getSizesAndCoordinates
      *
-     * @param Imagine\Image\BoxInterface   $box
-     * @param Imagine\Image\PointInterface $expected
+     * @param \Imagine\Image\BoxInterface $box
+     * @param \Imagine\Image\PointInterface $expected
      */
     public function testShouldGetCenterCoordinates(BoxInterface $box, PointInterface $expected)
     {
@@ -37,7 +37,7 @@ class CenterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider for testShouldGetCenterCoordinates
+     * Data provider for testShouldGetCenterCoordinates.
      *
      * @return array
      */
@@ -51,16 +51,16 @@ class CenterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Image\Point::getX
-     * @covers Imagine\Image\Point::getY
-     * @covers Imagine\Image\Point::move
+     * @covers \Imagine\Image\Point::getX
+     * @covers \Imagine\Image\Point::getY
+     * @covers \Imagine\Image\Point::move
      *
      * @dataProvider getMoves
      *
-     * @param Imagine\Image\BoxInterface $box
-     * @param integer                    $move
-     * @param integer                    $x1
-     * @param integer                    $y1
+     * @param \Imagine\Image\BoxInterface $box
+     * @param int $move
+     * @param int $x1
+     * @param int $y1
      */
     public function testShouldMoveByGivenAmount(BoxInterface $box, $move, $x1, $y1)
     {
@@ -80,7 +80,7 @@ class CenterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Imagine\Image\Point\Center::__toString
+     * @covers \Imagine\Image\Point\Center::__toString
      */
     public function testToString()
     {

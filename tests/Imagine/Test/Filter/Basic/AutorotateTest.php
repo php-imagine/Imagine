@@ -11,7 +11,7 @@
 
 namespace Imagine\Test\Filter\Basic;
 
-USE Imagine\Filter\Basic\Autorotate;
+use Imagine\Filter\Basic\Autorotate;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Test\Filter\FilterTestCase;
 
@@ -19,8 +19,12 @@ class AutorotateTest extends FilterTestCase
 {
     /**
      * @dataProvider provideMetadataAndRotations
+     *
+     * @param mixed $expectedRotation
+     * @param mixed $hFlipExpected
+     * @param MetadataBag $metadata
      */
-    public function testApply($expectedRotation, MetadataBag $metadata)
+    public function testApply($expectedRotation, $hFlipExpected, MetadataBag $metadata)
     {
         $image = $this->getImage();
         $image->expects($this->any())
@@ -36,6 +40,9 @@ class AutorotateTest extends FilterTestCase
                 ->with($expectedRotation);
         }
 
+        $image->expects($hFlipExpected ? $this->once() : $this->never())
+            ->method('flipHorizontally');
+
         $filter = new Autorotate($this->getColor());
         $filter->apply($image);
     }
@@ -43,14 +50,17 @@ class AutorotateTest extends FilterTestCase
     public function provideMetadataAndRotations()
     {
         return array(
-            array(null, new MetadataBag(array())),
-            array(null, new MetadataBag(array('ifd0.Orientation' => 0))),
-            array(null, new MetadataBag(array('ifd0.Orientation' => 1))),
-            array(null, new MetadataBag(array('ifd0.Orientation' => 2))),
-            array(null, new MetadataBag(array('ifd0.Orientation' => null))),
-            array(90, new MetadataBag(array('ifd0.Orientation' => 6))),
-            array(180, new MetadataBag(array('ifd0.Orientation' => 3))),
-            array(-90, new MetadataBag(array('ifd0.Orientation' => 8))),
+            array(null, false, new MetadataBag(array())),
+            array(null, false, new MetadataBag(array('ifd0.Orientation' => null))),
+            array(null, false, new MetadataBag(array('ifd0.Orientation' => 0))),
+            array(null, false, new MetadataBag(array('ifd0.Orientation' => 1))),
+            array(null, true, new MetadataBag(array('ifd0.Orientation' => 2))),
+            array(180, false, new MetadataBag(array('ifd0.Orientation' => 3))),
+            array(180, true, new MetadataBag(array('ifd0.Orientation' => 4))),
+            array(-90, true, new MetadataBag(array('ifd0.Orientation' => 5))),
+            array(90, false, new MetadataBag(array('ifd0.Orientation' => 6))),
+            array(90, true, new MetadataBag(array('ifd0.Orientation' => 7))),
+            array(-90, false, new MetadataBag(array('ifd0.Orientation' => 8))),
         );
     }
 }

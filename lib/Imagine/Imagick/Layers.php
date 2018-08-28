@@ -11,11 +11,12 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\OutOfBoundsException;
+use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Exception\RuntimeException;
-use Imagine\Exception\OutOfBoundsException;
-use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Palette\PaletteInterface;
 
 class Layers extends AbstractLayers
@@ -29,9 +30,9 @@ class Layers extends AbstractLayers
      */
     private $resource;
     /**
-     * @var integer
+     * @var int
      */
-    private $offset = 0;
+    private $offset;
     /**
      * @var array
      */
@@ -39,11 +40,12 @@ class Layers extends AbstractLayers
 
     private $palette;
 
-    public function __construct(Image $image, PaletteInterface $palette, \Imagick $resource)
+    public function __construct(Image $image, PaletteInterface $palette, \Imagick $resource, $initialOffset = 0)
     {
         $this->image = $image;
         $this->resource = $resource;
         $this->palette = $palette;
+        $this->offset = (int) $initialOffset;
     }
 
     /**
@@ -84,10 +86,10 @@ class Layers extends AbstractLayers
                 $this->resource->setFormat($format);
 
                 if (null !== $delay) {
-                    $this->resource->setImageDelay($delay / 10);
-                    $this->resource->setImageTicksPerSecond(100);
+                    $layer->getImagick()->setImageDelay($delay / 10);
+                    $layer->getImagick()->setImageTicksPerSecond(100);
                 }
-                $this->resource->setImageIterations($loops);
+                $layer->getImagick()->setImageIterations($loops);
 
                 $this->resource->setImage($layer->getImagick());
             }
@@ -113,7 +115,7 @@ class Layers extends AbstractLayers
         for ($offset = 0; $offset < $count; $offset++) {
             try {
                 $coalescedResource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($coalescedResource->getImage(), $this->palette, new MetadataBag());
+                $this->layers[$offset] = $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_IMAGICK, $coalescedResource->getImage(), $this->palette, new MetadataBag());
             } catch (\ImagickException $e) {
                 throw new RuntimeException('Failed to retrieve layer', $e->getCode(), $e);
             }
@@ -129,19 +131,20 @@ class Layers extends AbstractLayers
     }
 
     /**
-     * Tries to extract layer at given offset
+     * Tries to extract layer at given offset.
      *
-     * @param integer $offset
+     * @param int $offset
+     *
+     * @throws RuntimeException
      *
      * @return Image
-     * @throws RuntimeException
      */
     private function extractAt($offset)
     {
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setIteratorIndex($offset);
-                $this->layers[$offset] = new Image($this->resource->getImage(), $this->palette, new MetadataBag());
+                $this->layers[$offset] = $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_IMAGICK, $this->resource->getImage(), $this->palette, new MetadataBag());
             } catch (\ImagickException $e) {
                 throw new RuntimeException(sprintf('Failed to extract layer %d', $offset), $e->getCode(), $e);
             }

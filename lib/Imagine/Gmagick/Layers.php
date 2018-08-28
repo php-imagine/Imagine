@@ -11,11 +11,12 @@
 
 namespace Imagine\Gmagick;
 
-use Imagine\Image\AbstractLayers;
-use Imagine\Exception\RuntimeException;
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\OutOfBoundsException;
-use Imagine\Exception\InvalidArgumentException;
+use Imagine\Exception\RuntimeException;
+use Imagine\Factory\ClassFactoryInterface;
+use Imagine\Image\AbstractLayers;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
 
@@ -32,9 +33,9 @@ class Layers extends AbstractLayers
     private $resource;
 
     /**
-     * @var integer
+     * @var int
      */
-    private $offset = 0;
+    private $offset;
 
     /**
      * @var array
@@ -46,11 +47,12 @@ class Layers extends AbstractLayers
      */
     private $palette;
 
-    public function __construct(Image $image, PaletteInterface $palette, \Gmagick $resource)
+    public function __construct(Image $image, PaletteInterface $palette, \Gmagick $resource, $initialOffset = 0)
     {
         $this->image = $image;
         $this->resource = $resource;
         $this->palette = $palette;
+        $this->offset = (int) $initialOffset;
     }
 
     /**
@@ -120,18 +122,20 @@ class Layers extends AbstractLayers
     }
 
     /**
-     * Tries to extract layer at given offset
+     * Tries to extract layer at given offset.
      *
-     * @param  integer          $offset
-     * @return Image
+     * @param int $offset
+     *
      * @throws RuntimeException
+     *
+     * @return Image
      */
     private function extractAt($offset)
     {
         if (!isset($this->layers[$offset])) {
             try {
                 $this->resource->setimageindex($offset);
-                $this->layers[$offset] = new Image($this->resource->getimage(), $this->palette, new MetadataBag());
+                $this->layers[$offset] = $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GMAGICK, $this->resource->getimage(), $this->palette, new MetadataBag());
             } catch (\GmagickException $e) {
                 throw new RuntimeException(sprintf('Failed to extract layer %d', $offset), $e->getCode(), $e);
             }
@@ -235,11 +239,11 @@ class Layers extends AbstractLayers
             }
             $this->resource->addimage($frame);
 
-            /**
+            /*
              * ugly hack to bypass issue https://bugs.php.net/bug.php?id=64623
              */
             if (count($this) == 2) {
-                $this->resource->setimageindex($offset+1);
+                $this->resource->setimageindex($offset + 1);
                 $this->resource->nextimage();
                 $this->resource->addimage($frame);
                 unset($this[0]);

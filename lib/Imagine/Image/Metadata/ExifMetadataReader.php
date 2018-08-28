@@ -11,19 +11,25 @@
 
 namespace Imagine\Image\Metadata;
 
-use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
+use Imagine\File\Loader;
+use Imagine\File\LoaderInterface;
 
 /**
- * Metadata driven by Exif information
+ * Metadata driven by Exif information.
  */
 class ExifMetadataReader extends AbstractMetadataReader
 {
     public function __construct()
     {
-        if (!function_exists('exif_read_data')) {
+        if (!self::isSupported()) {
             throw new NotSupportedException('PHP exif extension is required to use the ExifMetadataReader');
         }
+    }
+
+    public static function isSupported()
+    {
+        return function_exists('exif_read_data');
     }
 
     /**
@@ -31,11 +37,9 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     protected function extractFromFile($file)
     {
-        if (false === $data = @file_get_contents($file)) {
-            throw new InvalidArgumentException(sprintf('File %s is not readable.', $file));
-        }
+        $loader = $file instanceof LoaderInterface ? $file : new Loader($file);
 
-        return $this->doReadData($data);
+        return $this->doReadData($loader->getData());
     }
 
     /**
@@ -55,7 +59,7 @@ class ExifMetadataReader extends AbstractMetadataReader
     }
 
     /**
-     * Extracts metadata from raw data, merges with existing metadata
+     * Extracts metadata from raw data, merges with existing metadata.
      *
      * @param string $data
      *
@@ -75,13 +79,24 @@ class ExifMetadataReader extends AbstractMetadataReader
     /**
      * Performs the exif data extraction given a path or data-URI representation.
      *
-     * @param string $path The path to the file or the data-URI representation.
+     * @param string $path the path to the file or the data-URI representation
      *
-     * @return MetadataBag
+     * @return MetadataBag|array
      */
     private function extract($path)
     {
-        if (false === $exifData = @exif_read_data($path, null, true, false)) {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            if (error_reporting() !== 0) {
+                throw new \Exception($errstr, $errno);
+            }
+        }, E_WARNING | E_NOTICE);
+        try {
+            $exifData = @exif_read_data($path, null, true, false);
+        } catch (\Exception $e) {
+            $exifData = false;
+        }
+        restore_error_handler();
+        if ($exifData === false) {
             return array();
         }
 
@@ -93,7 +108,7 @@ class ExifMetadataReader extends AbstractMetadataReader
                 continue;
             }
             foreach ($exifData[$name] as $prop => $value) {
-                $metadata[$prefix.'.'.$prop] = $value;
+                $metadata[$prefix . '.' . $prop] = $value;
             }
         }
 

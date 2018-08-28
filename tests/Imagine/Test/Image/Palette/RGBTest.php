@@ -11,8 +11,8 @@
 
 namespace Imagine\Test\Image\Palette;
 
-use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
+use Imagine\Image\Palette\RGB;
 
 class RGBTest extends AbstractPaletteTest
 {

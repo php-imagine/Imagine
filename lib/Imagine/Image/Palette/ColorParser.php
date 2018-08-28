@@ -16,13 +16,13 @@ use Imagine\Exception\InvalidArgumentException;
 class ColorParser
 {
     /**
-     * Parses a color to a RGB tuple
+     * Parses a color to a RGB tuple.
      *
-     * @param string|array|integer $color
-     *
-     * @return array
+     * @param string|array|int $color
      *
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     public function parseToRGB($color)
     {
@@ -40,13 +40,13 @@ class ColorParser
     }
 
     /**
-     * Parses a color to a CMYK tuple
+     * Parses a color to a CMYK tuple.
      *
-     * @param string|array|integer $color
-     *
-     * @return array
+     * @param string|array|int $color
      *
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     public function parseToCMYK($color)
     {
@@ -60,10 +60,10 @@ class ColorParser
             $k = 1 - max($r, $g, $b);
 
             $color = array(
-                1 === $k ? 0 : round((1 - $r - $k) / (1- $k) * 100),
-                1 === $k ? 0 : round((1 - $g - $k) / (1- $k) * 100),
-                1 === $k ? 0 : round((1 - $b - $k) / (1- $k) * 100),
-                round($k * 100)
+                1 === $k ? 0 : round((1 - $r - $k) / (1 - $k) * 100),
+                1 === $k ? 0 : round((1 - $g - $k) / (1 - $k) * 100),
+                1 === $k ? 0 : round((1 - $b - $k) / (1 - $k) * 100),
+                round($k * 100),
             );
         }
 
@@ -71,13 +71,13 @@ class ColorParser
     }
 
     /**
-     * Parses a color to a grayscale value
+     * Parses a color to a grayscale value.
      *
-     * @param string|array|integer $color
-     *
-     * @return array
+     * @param string|array|int $color
      *
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     public function parseToGrayscale($color)
     {
@@ -95,13 +95,13 @@ class ColorParser
     }
 
     /**
-     * Parses a color
+     * Parses a color.
      *
-     * @param string|array|integer $color
-     *
-     * @return array
+     * @param string|array|int $color
      *
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     private function parse($color)
     {

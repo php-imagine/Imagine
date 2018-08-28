@@ -11,12 +11,13 @@
 
 namespace Imagine\Filter\Basic;
 
+use Imagine\Exception\InvalidArgumentException;
+use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\PointInterface;
-use Imagine\Filter\FilterInterface;
 
 /**
- * A paste filter
+ * A paste filter.
  */
 class Paste implements FilterInterface
 {
@@ -31,16 +32,29 @@ class Paste implements FilterInterface
     private $start;
 
     /**
+     * How to paste the image, from 0 (fully transparent) to 100 (fully opaque).
+     *
+     * @var int
+     */
+    private $alpha;
+
+    /**
      * Constructs a Paste filter with given ImageInterface to paste and x, y
-     * coordinates of target position
+     * coordinates of target position.
      *
      * @param ImageInterface $image
      * @param PointInterface $start
+     * @param int $alpha how to paste the image, from 0 (fully transparent) to 100 (fully opaque)
      */
-    public function __construct(ImageInterface $image, PointInterface $start)
+    public function __construct(ImageInterface $image, PointInterface $start, $alpha = 100)
     {
         $this->image = $image;
         $this->start = $start;
+        $alpha = (int) round($alpha);
+        if ($alpha < 0 || $alpha > 100) {
+            throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$alpha', 0, 100, $alpha));
+        }
+        $this->alpha = $alpha;
     }
 
     /**
@@ -48,6 +62,6 @@ class Paste implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->paste($this->image, $this->start);
+        return $image->paste($this->image, $this->start, $this->alpha);
     }
 }

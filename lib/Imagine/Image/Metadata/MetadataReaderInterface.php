@@ -18,9 +18,9 @@ interface MetadataReaderInterface
     /**
      * Reads metadata from a file.
      *
-     * @param $file The path to the file where to read metadata.
+     * @param string|\Imagine\File\LoaderInterface $file the path to the file where to read metadata
      *
-     * @throws InvalidArgumentException In case the file does not exist.
+     * @throws InvalidArgumentException in case the file does not exist
      *
      * @return MetadataBag
      */
@@ -29,18 +29,19 @@ interface MetadataReaderInterface
     /**
      * Reads metadata from a binary string.
      *
-     * @param $data The binary string to read.
+     * @param string $data the binary string to read
+     * @param resource $originalResource an optional resource to gather stream metadata
      *
      * @return MetadataBag
      */
-    public function readData($data);
+    public function readData($data, $originalResource = null);
 
     /**
      * Reads metadata from a stream.
      *
-     * @param $resource The stream to read.
+     * @param resource $resource the stream to read
      *
-     * @throws InvalidArgumentException In case the resource is not valid.
+     * @throws InvalidArgumentException in case the resource is not valid
      *
      * @return MetadataBag
      */

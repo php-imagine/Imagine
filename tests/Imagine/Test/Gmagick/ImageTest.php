@@ -13,9 +13,11 @@ namespace Imagine\Test\Gmagick;
 
 use Imagine\Gmagick\Imagine;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Point;
 use Imagine\Test\Image\AbstractImageTest;
 
+/**
+ * @group ext-gmagick
+ */
 class ImageTest extends AbstractImageTest
 {
     protected function setUp()
@@ -29,19 +31,6 @@ class ImageTest extends AbstractImageTest
         if (!class_exists('Gmagick')) {
             $this->markTestSkipped('Gmagick is not installed');
         }
-    }
-
-    // We redeclare this test because Gmagick does not support alpha
-    public function testGetColorAt()
-    {
-        $color = $this
-            ->getImagine()
-            ->open('tests/Imagine/Fixtures/65-percent-black.png')
-            ->getColorAt(new Point(0, 0));
-
-        $this->assertEquals('#000000', (string) $color);
-        // Gmagick does not supports alpha
-        $this->assertTrue($color->isOpaque());
     }
 
     public function provideFromAndToPalettes()
@@ -88,6 +77,18 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
     }
 
+    /**
+     * @dataProvider pasteWithAlphaProvider
+     *
+     * @param int $alpha
+     */
+    public function testPasteWithAlpha($alpha)
+    {
+        if ($alpha > 0 && $alpha < 100) {
+            $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
+        }
+        parent::testPasteWithAlpha($alpha);
+    }
 
     protected function getImagine()
     {
@@ -102,5 +103,10 @@ class ImageTest extends AbstractImageTest
     protected function getImageResolution(ImageInterface $image)
     {
         return $image->getGmagick()->getimageresolution();
+    }
+
+    protected function getSamplingFactors(ImageInterface $image)
+    {
+        return $image->getGmagick()->getSamplingFactors();
     }
 }

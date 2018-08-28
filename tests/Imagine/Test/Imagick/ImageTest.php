@@ -11,15 +11,19 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Imagick\Imagine;
-use Imagine\Imagick\Image;
 use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
+use Imagine\Image\Point;
+use Imagine\Imagick\Image;
+use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractImageTest;
-use Imagine\Image\Box;
 
+/**
+ * @group ext-imagick
+ */
 class ImageTest extends AbstractImageTest
 {
     protected function setUp()
@@ -47,6 +51,9 @@ class ImageTest extends AbstractImageTest
         return new Imagine();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testImageResizeUsesProperMethodBasedOnInputAndOutputSizes()
     {
         $imagine = $this->getImagine();
@@ -67,11 +74,32 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/resize/small.png');
     }
 
-    // Older imagemagick versions does not support colorspace conversion
+    public function testAnimatedGifResize()
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+        $image
+            ->resize(new Box(150, 100))
+            ->save('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif', array('animated' => true))
+        ;
+        $this->assertImageEquals(
+            $imagine->open('tests/Imagine/Fixtures/resize/anima3-150x100.gif'),
+            $imagine->open('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif')
+        );
+        unlink('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif');
+    }
+
+    /**
+     * Older imagemagick versions does not support colorspace conversion.
+     *
+     * @doesNotPerformAssertions
+     *
+     * @return \Imagine\Imagick\Image
+     */
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
     {
         $palette = new CMYK();
-        $imagick = $this->getMock('\Imagick');
+        $imagick = $this->getMockBuilder('\Imagick')->getMock();
         $imagick->expects($this->any())
             ->method('setColorspace')
             ->will($this->throwException(new \RuntimeException('Method not supported')));
@@ -85,12 +113,32 @@ class ImageTest extends AbstractImageTest
 
     /**
      * @depends testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct
-     * @expectedException Imagine\Exception\RuntimeException
+     * @expectedException \Imagine\Exception\RuntimeException
      * @expectedExceptionMessage Your version of Imagick does not support colorspace conversions.
+     *
+     * @param mixed $image
      */
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnPaletteChange($image)
     {
         $image->usePalette(new RGB());
+    }
+
+    public function testAnimatedGifCrop()
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+        $image
+            ->crop(
+                new Point(0, 0),
+                new Box(150, 100)
+            )
+            ->save('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif', array('animated' => true))
+        ;
+        $this->assertImageEquals(
+            $imagine->open('tests/Imagine/Fixtures/crop/anima3-topleft.gif'),
+            $imagine->open('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif')
+        );
+        unlink('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif');
     }
 
     protected function supportMultipleLayers()
@@ -101,5 +149,10 @@ class ImageTest extends AbstractImageTest
     protected function getImageResolution(ImageInterface $image)
     {
         return $image->getImagick()->getImageResolution();
+    }
+
+    protected function getSamplingFactors(ImageInterface $image)
+    {
+        return $image->getImagick()->getSamplingFactors();
     }
 }

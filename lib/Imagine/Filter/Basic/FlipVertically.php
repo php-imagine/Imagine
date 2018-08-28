@@ -11,11 +11,11 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Image\ImageInterface;
 use Imagine\Filter\FilterInterface;
+use Imagine\Image\ImageInterface;
 
 /**
- * A "flip vertically" filter
+ * A "flip vertically" filter.
  */
 class FlipVertically implements FilterInterface
 {

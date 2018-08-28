@@ -209,7 +209,7 @@ a file:
         /**
          * {@inheritdoc}
          */
-        protected function extractFromData($data);
+        protected function extractFromData($data)
         {
             // posix informations about raw data in non-sense
             return array();

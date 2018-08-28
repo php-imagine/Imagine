@@ -12,13 +12,12 @@
 namespace Imagine\Test\Image;
 
 use Imagine\Image\Box;
-use Imagine\Image\Point;
-use Imagine\Image\Palette\RGB;
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\OutOfBoundsException;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use Imagine\Image\Palette\RGB;
+use Imagine\Image\Point;
 
-abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractLayersTest extends \PHPUnit\Framework\TestCase
 {
     public function testMerge()
     {
@@ -27,18 +26,18 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         foreach ($image->layers() as $layer) {
             $layer
                 ->draw()
-                ->polygon(array(new Point(0, 0),new Point(0, 20),new Point(20, 20),new Point(20, 0)), $palette->color('#FF0000'), true);
+                ->polygon(array(new Point(0, 0), new Point(0, 20), new Point(20, 20), new Point(20, 0)), $palette->color('#FF0000'), true);
         }
         $image->layers()->merge();
 
-        $this->assertEquals('#ff0000', (string) $image->getColorAt(new Point(5,5)));
+        $this->assertEquals('#ff0000', (string) $image->getColorAt(new Point(5, 5)));
     }
 
     public function testLayerArrayAccess()
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $thirdImage = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $firstImage = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
+        $secondImage = $this->getImage(__DIR__ . '/../../Fixtures/yellow.gif');
+        $thirdImage = $this->getImage(__DIR__ . '/../../Fixtures/blue.gif');
 
         $layers = $firstImage->layers();
 
@@ -80,9 +79,9 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
     public function testLayerAddGetSetRemove()
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $thirdImage = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $firstImage = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
+        $secondImage = $this->getImage(__DIR__ . '/../../Fixtures/yellow.gif');
+        $thirdImage = $this->getImage(__DIR__ . '/../../Fixtures/blue.gif');
 
         $layers = $firstImage->layers();
 
@@ -124,48 +123,49 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideInvalidArguments
+     *
+     * @param mixed $offset
+     *
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      */
     public function testLayerArrayAccessInvalidArgumentExceptions($offset)
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $firstImage = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
+        $secondImage = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
 
         $layers = $firstImage->layers();
 
-        try {
-            $layers[$offset] = $secondImage;
-            $this->fail('An exception should have been raised');
-        } catch (InvalidArgumentException $e) {
-
-        }
+        $layers[$offset] = $secondImage;
     }
 
     /**
      * @dataProvider provideOutOfBoundsArguments
+     *
+     * @param mixed $offset
+     *
+     * @expectedException \Imagine\Exception\OutOfBoundsException
      */
     public function testLayerArrayAccessOutOfBoundsExceptions($offset)
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $firstImage = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
+        $secondImage = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
 
         $layers = $firstImage->layers();
 
-        try {
-            $layers[$offset] = $secondImage;
-            $this->fail('An exception should have been raised');
-        } catch (OutOfBoundsException $e) {
-
-        }
+        $layers[$offset] = $secondImage;
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testAnimateEmpty()
     {
         $image = $this->getImage();
         $layers = $image->layers();
 
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
+        $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/yellow.gif');
+        $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/blue.gif');
 
         $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
 
@@ -178,14 +178,18 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideAnimationParameters
+     * @doesNotPerformAssertions
+     *
+     * @param mixed $delay
+     * @param mixed $loops
      */
     public function testAnimateWithParameters($delay, $loops)
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
         $layers = $image->layers();
 
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/yellow.gif');
+        $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/blue.gif');
 
         $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
 
@@ -209,16 +213,19 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      * @dataProvider provideWrongAnimationParameters
+     *
+     * @param mixed $delay
+     * @param mixed $loops
      */
     public function testAnimateWithWrongParameters($delay, $loops)
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__ . '/../../Fixtures/pink.gif');
         $layers = $image->layers();
 
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/yellow.gif');
+        $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/blue.gif');
 
         $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
 
@@ -259,11 +266,17 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @param string|null $path
+     *
+     * @return ImageInterface
+     */
     abstract protected function getImage($path = null);
 
     /**
      * @return ImagineInterface
      */
     abstract protected function getImagine();
+
     abstract protected function assertLayersEquals($expected, $actual);
 }

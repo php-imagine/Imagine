@@ -38,7 +38,7 @@ class ProfileTest extends ImagineTestCase
     }
 
     /**
-     * @expectedException Imagine\Exception\InvalidArgumentException
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      */
     public function testFromInvalidPath()
     {

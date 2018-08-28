@@ -13,16 +13,16 @@ namespace Imagine\Test\Image\Histogram;
 
 use Imagine\Image\Histogram\Range;
 
-class RangeTest extends \PHPUnit_Framework_TestCase
+class RangeTest extends \PHPUnit\Framework\TestCase
 {
     private $start = 0;
-    private $end   = 63;
+    private $end = 63;
 
     /**
      * @dataProvider getExpectedResultsAndValues
      *
-     * @param Boolean $contains
-     * @param integer $value
+     * @param bool $contains
+     * @param int $value
      */
     public function testShouldDetermineIfContainsValue($contains, $value)
     {
@@ -42,7 +42,7 @@ class RangeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Imagine\Exception\OutOfBoundsException
+     * @expectedException \Imagine\Exception\OutOfBoundsException
      */
     public function testShouldThrowExceptionIfEndIsSmallerThanStart()
     {

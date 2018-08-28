@@ -11,13 +11,13 @@
 
 namespace Imagine\Filter\Basic;
 
-use Imagine\Image\ImageInterface;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\PointInterface;
 use Imagine\Filter\FilterInterface;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\PointInterface;
 
 /**
- * A crop filter
+ * A crop filter.
  */
 class Crop implements FilterInterface
 {
@@ -33,15 +33,15 @@ class Crop implements FilterInterface
 
     /**
      * Constructs a Crop filter with given x, y, coordinates and crop width and
-     * height values
+     * height values.
      *
      * @param PointInterface $start
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      */
     public function __construct(PointInterface $start, BoxInterface $size)
     {
         $this->start = $start;
-        $this->size  = $size;
+        $this->size = $size;
     }
 
     /**

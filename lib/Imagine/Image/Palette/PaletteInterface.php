@@ -11,8 +11,8 @@
 
 namespace Imagine\Image\Palette;
 
-use Imagine\Image\ProfileInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\ProfileInterface;
 
 interface PaletteInterface
 {
@@ -21,24 +21,23 @@ interface PaletteInterface
     const PALETTE_CMYK = 'cmyk';
 
     /**
-     * Returns a color given some values
+     * Returns a color given some values.
      *
-     * @param string|array|integer $color A color
-     * @param integer|null         $alpha Set alpha to null to disable it
+     * @param string|array|int $color A color
+     * @param int|null $alpha Set alpha to null to disable it
+     *
+     * @throws \Imagine\Exception\InvalidArgumentException In case you pass an alpha value to a Palette that does not support alpha
      *
      * @return ColorInterface
-     *
-     * @throws InvalidArgumentException In case you pass an alpha value to a
-     *                                  Palette that does not support alpha
      */
     public function color($color, $alpha = null);
 
     /**
-     * Blend two colors given an amount
+     * Blend two colors given an amount.
      *
      * @param ColorInterface $color1
      * @param ColorInterface $color2
-     * @param float          $amount The amount of color2 in color1
+     * @param float $amount The amount of color2 in color1
      *
      * @return ColorInterface
      */
@@ -64,9 +63,9 @@ interface PaletteInterface
 
     /**
      * Returns the name of this Palette, one of PaletteInterface::PALETTE_*
-     * constants
+     * constants.
      *
-     * @return String
+     * @return string
      */
     public function name();
 
@@ -79,9 +78,9 @@ interface PaletteInterface
     public function pixelDefinition();
 
     /**
-     * Tells if alpha channel is supported in this palette
+     * Tells if alpha channel is supported in this palette.
      *
-     * @return Boolean
+     * @return bool
      */
     public function supportsAlpha();
 }

@@ -12,9 +12,12 @@
 namespace Imagine\Test\Gd;
 
 use Imagine\Gd\Imagine;
-use Imagine\Test\Image\AbstractImagineTest;
 use Imagine\Image\Box;
+use Imagine\Test\Image\AbstractImagineTest;
 
+/**
+ * @group ext-gd
+ */
 class ImagineTest extends AbstractImagineTest
 {
     protected function setUp()
@@ -28,7 +31,10 @@ class ImagineTest extends AbstractImagineTest
 
     protected function getEstimatedFontBox()
     {
-        return new Box(112, 46);
+        return new Box(
+            DIRECTORY_SEPARATOR === '\\' ? 114 : 112,
+            PHP_VERSION_ID >= 50600 ? 45 : 46
+        );
     }
 
     protected function getImagine()

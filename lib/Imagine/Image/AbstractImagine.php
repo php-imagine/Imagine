@@ -11,19 +11,27 @@
 
 namespace Imagine\Image;
 
-use Imagine\Image\Metadata\DefaultMetadataReader;
-use Imagine\Image\Metadata\MetadataReaderInterface;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Factory\ClassFactory;
+use Imagine\Factory\ClassFactoryInterface;
+use Imagine\Image\Metadata\MetadataReaderInterface;
 
 abstract class AbstractImagine implements ImagineInterface
 {
-    /** @var MetadataReaderInterface */
+    /**
+     * @var \Imagine\Image\Metadata\MetadataReaderInterface|null
+     */
     private $metadataReader;
 
     /**
-     * @param MetadataReaderInterface $metadataReader
+     * @var \Imagine\Factory\ClassFactoryInterface
+     */
+    private $classFactory;
+
+    /**
+     * {@inheritdoc}
      *
-     * @return ImagineInterface
+     * @see \Imagine\Image\ImagineInterface::setMetadataReader()
      */
     public function setMetadataReader(MetadataReaderInterface $metadataReader)
     {
@@ -33,15 +41,43 @@ abstract class AbstractImagine implements ImagineInterface
     }
 
     /**
-     * @return MetadataReaderInterface
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::getMetadataReader()
      */
     public function getMetadataReader()
     {
         if (null === $this->metadataReader) {
-            $this->metadataReader = new DefaultMetadataReader();
+            $this->metadataReader = $this->getClassFactory()->createMetadataReader();
         }
 
         return $this->metadataReader;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::setClassFactory()
+     */
+    public function setClassFactory(ClassFactoryInterface $classFactory)
+    {
+        $this->classFactory = $classFactory;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Factory\ClassFactoryAwareInterface::getClassFactory()
+     */
+    public function getClassFactory()
+    {
+        if ($this->classFactory === null) {
+            $this->classFactory = new ClassFactory();
+        }
+
+        return $this->classFactory;
     }
 
     /**
@@ -50,9 +86,9 @@ abstract class AbstractImagine implements ImagineInterface
      *
      * @param string|object $path
      *
-     * @return string
+     * @throws InvalidArgumentException in case the given path is invalid
      *
-     * @throws InvalidArgumentException In case the given path is invalid.
+     * @return string
      */
     protected function checkPath($path)
     {

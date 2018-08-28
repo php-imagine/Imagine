@@ -16,14 +16,12 @@
             "homepage": "http://avalanche123.com"
         }
     ],
-    "config": {
-        "bin-dir": "bin"
-    },
     "require": {
         "php": ">=5.3.2"
     },
     "require-dev": {
-        "sami/sami": "dev-master"
+        "symfony/phpunit-bridge": "^3.2 || ^4.0",
+        "friendsofphp/php-cs-fixer": "2.2.*"
     },
     "suggest": {
         "ext-gd": "to use the GD implementation",
@@ -39,5 +37,21 @@
         "branch-alias": {
             "dev-develop": "0.7-dev"
         }
+    },
+    "archive": {
+        "exclude": [
+            "/.*",
+            "/tests",
+            "/vendor",
+            "/bin",
+            "docs/_build",
+            "Imagine-*.tgz",
+            "imagine-*.phar",
+            "composer.phar"
+        ]
+    },
+    "scripts": {
+        "test": "simple-phpunit --verbose",
+        "codestyle": "php-cs-fixer fix --path-mode=intersection --config=.php_cs.dist --dry-run --diff --no-interaction -- ."
     }
 }

@@ -14,8 +14,8 @@ namespace Imagine\Test\Filter\Advanced;
 use Imagine\Filter\Advanced\Grayscale;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
-use Imagine\Test\Filter\FilterTestCase;
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Test\Filter\FilterTestCase;
 
 class GrayscaleTest extends FilterTestCase
 {
@@ -24,43 +24,41 @@ class GrayscaleTest extends FilterTestCase
      *
      * @dataProvider getDataSet
      *
-     * @param BoxInterface   $size
+     * @param BoxInterface $size
      * @param ColorInterface $color
      * @param ColorInterface $filteredColor
      */
-    public function testGrayscaling(BoxInterface $size, ColorInterface $color, ColorInterface $filteredColor)
+    public function testCallback(BoxInterface $size, ColorInterface $color, ColorInterface $filteredColor)
     {
-        $image       = $this->getImage();
-        $imageWidth  = $size->getWidth();
+        $image = $this->getImage();
+        $imageWidth = $size->getWidth();
         $imageHeight = $size->getHeight();
 
-        $size = $this->getMock('Imagine\\Image\\BoxInterface');
-        $size->expects($this->once())
-             ->method('getWidth')
-             ->will($this->returnValue($imageWidth));
-
-        $size->expects($this->once())
-             ->method('getHeight')
-             ->will($this->returnValue($imageHeight));
-
+        $size = $this->getMockBuilder('Imagine\\Image\\BoxInterface')->getMock();
+        $size->expects($this->any())
+            ->method('getWidth')
+            ->will($this->returnValue($imageWidth));
+        $size->expects($this->any())
+            ->method('getHeight')
+            ->will($this->returnValue($imageHeight));
         $image->expects($this->any())
             ->method('getSize')
             ->will($this->returnValue($size));
 
-        $image->expects($this->exactly($imageWidth*$imageHeight))
+        $image->expects($this->exactly($imageWidth * $imageHeight))
             ->method('getColorAt')
             ->will($this->returnValue($color));
 
-        $color->expects($this->exactly($imageWidth*$imageHeight))
+        $color->expects($this->exactly($imageWidth * $imageHeight))
             ->method('grayscale')
             ->will($this->returnValue($filteredColor));
 
         $draw = $this->getDrawer();
-        $draw->expects($this->exactly($imageWidth*$imageHeight))
+        $draw->expects($this->exactly($imageWidth * $imageHeight))
             ->method('dot')
             ->with($this->isInstanceOf('Imagine\\Image\\Point'), $this->equalTo($filteredColor));
 
-        $image->expects($this->exactly($imageWidth*$imageHeight))
+        $image->expects($this->exactly($imageWidth * $imageHeight))
               ->method('draw')
               ->will($this->returnValue($draw));
 
@@ -69,7 +67,7 @@ class GrayscaleTest extends FilterTestCase
     }
 
     /**
-     * Data provider for testShouldCanvasImageAndReturnResult
+     * Data provider for testShouldCanvasImageAndReturnResult.
      *
      * @return array
      */
