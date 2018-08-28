@@ -135,6 +135,15 @@ class Effects implements EffectsInterface
      */
     public function convolve(Matrix $matrix)
     {
-        throw new NotSupportedException('Gmagick does not support convolve yet');
+        if ($matrix->getWidth() !== 3 || $matrix->getHeight() !== 3) {
+            throw new InvalidArgumentException(sprintf('A convolution matrix must be 3x3 (%dx%d provided).', $matrix->getWidth(), $matrix->getHeight()));
+        }
+        try {
+            $this->gmagick->convolveimage($matrix->getValueList());
+        } catch (\ImagickException $e) {
+            throw new RuntimeException('Failed to convolve the image');
+        }
+
+        return $this;
     }
 }

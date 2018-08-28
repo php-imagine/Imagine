@@ -44,16 +44,4 @@ class EffectsTest extends AbstractEffectsTest
     {
         return new Imagine();
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Effects\AbstractEffectsTest::testConvolution()
-     *
-     * @expectedException \Imagine\Exception\RuntimeException
-     */
-    public function testConvolution()
-    {
-        parent::testConvolution();
-    }
 }
