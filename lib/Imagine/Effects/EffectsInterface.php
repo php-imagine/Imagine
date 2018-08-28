@@ -92,13 +92,13 @@ interface EffectsInterface
     public function brightness($brightness);
 
     /**
-     * Convolves the image
+     * Convolves the image.
      *
      * @param ConvolutionMatrixInterface $matrix The convolution kernel
      *
-     * @return EffectsInterface
-     *
      * @throws RuntimeException
+     *
+     * @return EffectsInterface
      */
     public function convolve(ConvolutionMatrixInterface $matrix);
 }

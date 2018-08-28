@@ -133,6 +133,7 @@ class Effects implements EffectsInterface
         if (false === imageconvolution($this->resource, $matrix->getMatrix(), 1, 0)) {
             throw new RuntimeException('Failed to convolve the image');
         }
+
         return $this;
     }
 }

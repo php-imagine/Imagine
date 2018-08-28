@@ -14,19 +14,19 @@ namespace Imagine\Image\Effects;
 use InvalidArgumentException;
 
 /**
- * The convolution kernel class
+ * The convolution kernel class.
  */
 class ConvolutionMatrix implements ConvolutionMatrixInterface
 {
     /**
-     * The convolution kernel
+     * The convolution kernel.
      *
      * @var array|float[]
      */
     protected $kernel;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param float $topLeft
      * @param float $topCenter
@@ -75,12 +75,13 @@ class ConvolutionMatrix implements ConvolutionMatrixInterface
     public function normalize()
     {
         $normalizedMatrix = array();
-        $divisor          = $this->getDivisor();
+        $divisor = $this->getDivisor();
         foreach ($this->getKernel() as $val) {
             $normalizedMatrix[] = $val / $divisor;
         }
         $clone = clone $this;
         $clone->setKernel($normalizedMatrix);
+
         return $clone;
     }
 
@@ -108,6 +109,7 @@ class ConvolutionMatrix implements ConvolutionMatrixInterface
     protected function setKernel($kernel)
     {
         $this->kernel = $kernel;
+
         return $this;
     }
 }

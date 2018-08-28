@@ -11,8 +11,9 @@
 namespace Imagine\Test\Image\Effects;
 
 use Imagine\Image\Effects\ConvolutionMatrix;
+use Imagine\Test\ImagineTestCase;
 
-class ConvolutionMatrixTest extends \PHPUnit_Framework_TestCase
+class ConvolutionMatrixTest extends ImagineTestCase
 {
     public function testNormalize()
     {
@@ -30,7 +31,7 @@ class ConvolutionMatrixTest extends \PHPUnit_Framework_TestCase
             array(
                 array(-.125, -.125, -.125),
                 array(-.125, 2, -.125),
-                array(-.125, -.125, -.125)
+                array(-.125, -.125, -.125),
             ),
             $normalizedMatrix->getMatrix()
         );
@@ -42,7 +43,7 @@ class ConvolutionMatrixTest extends \PHPUnit_Framework_TestCase
             array(
                 array(-1, -1, -1),
                 array(-1, 16, -1),
-                array(-1, -1, -1)
+                array(-1, -1, -1),
             ),
             $matrix->getMatrix()
         );

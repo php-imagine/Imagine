@@ -156,6 +156,7 @@ class Effects implements EffectsInterface
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to convolve the image');
         }
+
         return $this;
     }
 }

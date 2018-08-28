@@ -12,7 +12,7 @@
 namespace Imagine\Image\Effects;
 
 /**
- * The convolution kernel interface
+ * The convolution kernel interface.
  */
 interface ConvolutionMatrixInterface
 {
