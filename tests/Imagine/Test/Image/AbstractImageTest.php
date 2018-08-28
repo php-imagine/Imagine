@@ -143,10 +143,12 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink($tmpFile);
     }
 
+    /**
+     * @expectedException \Imagine\Exception\RuntimeException
+     */
     public function testSaveWithoutPathFileFromImageCreationShouldFail()
     {
         $image = $this->getImagine()->create(new Box(20, 20));
-        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\RuntimeException');
         $image->save();
     }
 
@@ -248,7 +250,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $factory = $this->getImagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
-        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\InvalidArgumentException');
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $image->resize(new Box(30, 30), 'no filter');
     }
 
@@ -288,7 +290,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
-        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('Imagine\Exception\InvalidArgumentException', 'Invalid mode specified');
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', 'Invalid setting specified');
         $image->thumbnail(new Box(20, 20), 'boumboum');
     }
 
@@ -296,7 +298,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
-        $this->setExpectedException('Imagine\Exception\InvalidArgumentException', 'Only one mode should be specified');
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', 'Only one mode should be specified');
         $image->thumbnail(new Box(20, 20), ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
     }
 
@@ -317,15 +319,15 @@ abstract class AbstractImageTest extends ImagineTestCase
      * @param mixed $sourceH
      * @param mixed $thumbW
      * @param mixed $thumbH
-     * @param mixed $mode
+     * @param mixed $setting
      * @param mixed $expectedW
      * @param mixed $expectedH
      */
-    public function testThumbnailGeneration($sourceW, $sourceH, $thumbW, $thumbH, $mode, $expectedW, $expectedH)
+    public function testThumbnailGeneration($sourceW, $sourceH, $thumbW, $thumbH, $setting, $expectedW, $expectedH)
     {
         $factory = $this->getImagine();
         $image = $factory->create(new Box($sourceW, $sourceH));
-        $thumb = $image->thumbnail(new Box($thumbW, $thumbH), $mode);
+        $thumb = $image->thumbnail(new Box($thumbW, $thumbH), $setting);
         $size = $thumb->getSize();
 
         $this->assertEquals($expectedW, $size->getWidth());
@@ -335,7 +337,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function provideDimensionsAndModesForThumbnailGeneration()
     {
         return array(
-            // support previous values of mode constants
+            // support previous values of setting constants
             array(320, 240, 32, 48, 'inset', 32, round(32 * 240 / 320)),
             array(320, 240, 32, 48, 'outbound', 32, 48),
 

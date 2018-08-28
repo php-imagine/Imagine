@@ -32,4 +32,20 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
 
         self::assertThat($actual, $constraint, $message);
     }
+
+    /**
+     * @param string $class
+     * @param string|null $message
+     */
+    protected function isGoingToThrowException($class, $message = null)
+    {
+        if (method_exists($this, 'expectException')) {
+            $this->expectException($class);
+            if ($message !== null) {
+                $this->expectExceptionMessage($message);
+            }
+        } else {
+            parent::setExpectedException($class, $message);
+        }
+    }
 }
