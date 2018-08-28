@@ -26,9 +26,9 @@ class Thumbnail implements FilterInterface
     private $size;
 
     /**
-     * @var string
+     * @var int|string
      */
-    private $mode;
+    private $settings;
 
     /**
      * @var string
@@ -36,16 +36,16 @@ class Thumbnail implements FilterInterface
     private $filter;
 
     /**
-     * Constructs the Thumbnail filter with given width, height and mode.
+     * Constructs the Thumbnail filter.
      *
      * @param BoxInterface $size
-     * @param string $mode
-     * @param string $filter
+     * @param int|string $settings See ImageInterface::THUMBNAIL_... flags (it may be a string for backward compatibility with old constant values that were strings)
+     * @param string $filter See ImageInterface::FILTER_... constants
      */
-    public function __construct(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
+    public function __construct(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
         $this->size = $size;
-        $this->mode = $mode;
+        $this->settings = $settings;
         $this->filter = $filter;
     }
 
@@ -54,6 +54,6 @@ class Thumbnail implements FilterInterface
      */
     public function apply(ImageInterface $image)
     {
-        return $image->thumbnail($this->size, $this->mode, $this->filter);
+        return $image->thumbnail($this->size, $this->settings, $this->filter);
     }
 }
