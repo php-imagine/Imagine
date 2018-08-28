@@ -33,7 +33,7 @@ use Throwable;
 /**
  * Image implementation using the GD library.
  */
-final class Image extends AbstractImage
+class Image extends AbstractImage
 {
     /**
      * @var resource
@@ -105,7 +105,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function copy()
+    public function copy()
     {
         return clone $this;
     }
@@ -115,7 +115,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function crop(PointInterface $start, BoxInterface $size)
+    public function crop(PointInterface $start, BoxInterface $size)
     {
         if (!$start->in($this->getSize())) {
             throw new OutOfBoundsException('Crop coordinates must start at minimum 0, 0 position from top left corner, crop height and width must be positive integers and must not exceed the current image borders');
@@ -143,7 +143,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function paste(ImageInterface $image, PointInterface $start, $alpha = 100)
+    public function paste(ImageInterface $image, PointInterface $start, $alpha = 100)
     {
         if (!$image instanceof self) {
             throw new InvalidArgumentException(sprintf('Gd\Image can only paste() Gd\Image instances, %s given', get_class($image)));
@@ -185,7 +185,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
+    public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
         if (ImageInterface::FILTER_UNDEFINED !== $filter) {
             throw new InvalidArgumentException('Unsupported filter type, GD only supports ImageInterface::FILTER_UNDEFINED filter');
@@ -221,7 +221,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function rotate($angle, ColorInterface $background = null)
+    public function rotate($angle, ColorInterface $background = null)
     {
         $color = $background ? $background : $this->palette->color('fff');
         $resource = imagerotate($this->resource, -1 * $angle, $this->getColor($color));
@@ -241,7 +241,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function save($path = null, array $options = array())
+    public function save($path = null, array $options = array())
     {
         $path = null === $path ? (isset($this->metadata['filepath']) ? $this->metadata['filepath'] : $path) : $path;
 
@@ -301,7 +301,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function flipHorizontally()
+    public function flipHorizontally()
     {
         if (function_exists('imageflip')) {
             imageflip($this->resource, IMG_FLIP_HORIZONTAL);
@@ -331,7 +331,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function flipVertically()
+    public function flipVertically()
     {
         if (function_exists('imageflip')) {
             imageflip($this->resource, IMG_FLIP_VERTICAL);
@@ -361,7 +361,7 @@ final class Image extends AbstractImage
      *
      * @return ImageInterface
      */
-    final public function strip()
+    public function strip()
     {
         // GD strips profiles and comment, so there's nothing to do here
         return $this;

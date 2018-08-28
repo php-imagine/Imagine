@@ -16,7 +16,7 @@ use Imagine\Exception\OutOfBoundsException;
 /**
  * Range histogram.
  */
-final class Range
+class Range
 {
     /**
      * @var int
