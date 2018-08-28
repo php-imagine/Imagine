@@ -126,11 +126,11 @@ class RGB implements PaletteInterface
 
         return $this->color(
             array(
-                (int) $color2->getRed() * $amount + $color1->getRed() * $amountComplement,
-                (int) $color2->getGreen() * $amount + $color1->getGreen() * $amountComplement,
-                (int) $color2->getBlue() * $amount + $color1->getBlue() * $amountComplement,
+                (int) round($color2->getRed() * $amount + $color1->getRed() * $amountComplement),
+                (int) round($color2->getGreen() * $amount + $color1->getGreen() * $amountComplement),
+                (int) round($color2->getBlue() * $amount + $color1->getBlue() * $amountComplement),
             ),
-            (int) $color2->getAlpha() * $amount + $color1->getAlpha() * $amountComplement
+            (int) round($color2->getAlpha() * $amount + $color1->getAlpha() * $amountComplement)
         );
     }
 }
