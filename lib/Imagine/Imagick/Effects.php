@@ -15,9 +15,9 @@ use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
-use Imagine\Image\Effects\ConvolutionMatrixInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB;
+use Imagine\Utils\Matrix;
 
 /**
  * Effects implementation using the Imagick PHP extension.
@@ -149,10 +149,13 @@ class Effects implements EffectsInterface
     /**
      * {@inheritdoc}
      */
-    public function convolve(ConvolutionMatrixInterface $matrix)
+    public function convolve(Matrix $matrix)
     {
+        if ($matrix->getWidth() !== 3 || $matrix->getHeight() !== 3) {
+            throw new InvalidArgumentException(sprintf('A convolution matrix must be 3x3 (%dx%d provided).', $matrix->getWidth(), $matrix->getHeight()));
+        }
         try {
-            $this->imagick->convolveImage($matrix->getKernel());
+            $this->imagick->convolveImage($matrix->getValueList());
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to convolve the image');
         }

@@ -12,11 +12,11 @@
 namespace Imagine\Test\Effects;
 
 use Imagine\Image\Box;
-use Imagine\Image\Effects\ConvolutionMatrix;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
+use Imagine\Utils\Matrix;
 
 abstract class AbstractEffectsTest extends ImagineTestCase
 {
@@ -162,16 +162,15 @@ abstract class AbstractEffectsTest extends ImagineTestCase
         $this->assertNotEquals(255, $pixel->getBlue());
     }
 
-
     public function testConvolution()
     {
         $imagine = $this->getImagine();
         $image = $imagine->open('tests/Imagine/Fixtures/trans.gif');
-        $matrix = new ConvolutionMatrix(
+        $matrix = new Matrix(3, 3, array(
             0, 0.5, 0,
             0.5, 1, 0.5,
-            0, 0.5, 0
-        );
+            0, 0.5, 0,
+        ));
         $image->effects()->convolve($matrix->normalize());
 
         $this->assertImageEquals(

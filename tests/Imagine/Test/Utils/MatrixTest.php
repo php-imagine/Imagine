@@ -11,17 +11,18 @@
 
 namespace Imagine\Test\Utils;
 
+use Imagine\Test\ImagineTestCase;
 use Imagine\Utils\Matrix;
 
-class MatrixTest extends \PHPUnit\Framework\TestCase
+class MatrixTest extends ImagineTestCase
 {
     /**
      * @dataProvider dataProviderForTestMatrixHasAtLeastOneElement
      * @doesNotPerformAssertions
      *
-     * @param mixed $width
-     * @param mixed $height
-     * @param mixed $exceptionMessage
+     * @param int $width
+     * @param int $height
+     * @param string|null $exceptionMessage
      */
     public function testMatrixHasAtLeastOneElement($width, $height, $exceptionMessage)
     {
@@ -95,15 +96,37 @@ class MatrixTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    protected function isGoingToThrowException($class, $message = null)
+    public function testNormalize()
     {
-        if (method_exists($this, 'expectException')) {
-            $this->expectException($class);
-            if ($message !== null) {
-                $this->expectExceptionMessage($message);
-            }
-        } else {
-            parent::setExpectedException($class, $message);
-        }
+        $matrix = new Matrix(3, 3, array(
+            -1, -1, -1,
+            -1, 16, -1,
+            -1, -1, -1,
+        ));
+        $normalizedMatrix = $matrix->normalize();
+        $this->assertEquals(
+            array(-.125, -.125, -.125, -.125, 2, -.125, -.125, -.125, -.125),
+            $normalizedMatrix->getValueList()
+        );
+        $this->assertEquals(
+            array(
+                array(-.125, -.125, -.125),
+                array(-.125, 2, -.125),
+                array(-.125, -.125, -.125),
+            ),
+            $normalizedMatrix->getMatrix()
+        );
+        $this->assertEquals(
+            array(-1, -1, -1, -1, 16, -1, -1, -1, -1),
+            $matrix->getValueList()
+        );
+        $this->assertEquals(
+            array(
+                array(-1, -1, -1),
+                array(-1, 16, -1),
+                array(-1, -1, -1),
+            ),
+            $matrix->getMatrix()
+        );
     }
 }
