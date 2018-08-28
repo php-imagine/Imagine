@@ -18,7 +18,7 @@ use Imagine\Image\PointInterface;
 /**
  * Point center.
  */
-final class Center implements PointInterface
+class Center implements PointInterface
 {
     /**
      * @var BoxInterface

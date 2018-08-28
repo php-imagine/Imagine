@@ -17,7 +17,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
 /**
  * Font implementation using the Imagick PHP extension.
  */
-final class Font extends AbstractFont
+class Font extends AbstractFont
 {
     /**
      * @var \Imagick

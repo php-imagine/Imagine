@@ -30,7 +30,7 @@ use Imagine\Image\ProfileInterface;
 /**
  * Image implementation using the Gmagick PHP extension.
  */
-final class Image extends AbstractImage
+class Image extends AbstractImage
 {
     /**
      * @var \Gmagick

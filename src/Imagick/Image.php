@@ -31,7 +31,7 @@ use Imagine\Image\ProfileInterface;
 /**
  * Image implementation using the Imagick PHP extension.
  */
-final class Image extends AbstractImage
+class Image extends AbstractImage
 {
     /**
      * @var \Imagick

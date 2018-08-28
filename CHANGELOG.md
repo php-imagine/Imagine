@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+  * Remove `final` from classes and methods: we'll use semver in case of breaking changes (@mlocati)
+
 ### 1.0.0-alpha1 (2018-08-28)
   * Imagine is now tested under Windows too (@mlocati)
   * Add support to webp image format (@chregu, @antoligy, @alexander-schranz)
