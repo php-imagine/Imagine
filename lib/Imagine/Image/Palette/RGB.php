@@ -11,6 +11,7 @@
 
 namespace Imagine\Image\Palette;
 
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
@@ -117,11 +118,17 @@ class RGB implements PaletteInterface
             throw new RuntimeException('RGB palette can only blend RGB colors');
         }
 
+        $amout = (float) $amount;
+        if ($amout < 0.0 || $amout > 1.0) {
+            throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$amount', 0, 1, $amount));
+        }
+        $amountComplement = 1 - $amount;
+
         return $this->color(
             array(
-                (int) $color2->getRed() * $amount + $color1->getRed() * (1 - $amount),
-                (int) $color2->getGreen() * $amount + $color1->getGreen() * (1 - $amount),
-                (int) $color2->getBlue() * $amount + $color1->getBlue() * (1 - $amount),
+                (int) $color2->getRed() * $amount + $color1->getRed() * $amountComplement,
+                (int) $color2->getGreen() * $amount + $color1->getGreen() * $amountComplement,
+                (int) $color2->getBlue() * $amount + $color1->getBlue() * $amountComplement,
             ),
             (int) min(100, min($color1->getAlpha(), $color2->getAlpha()) + round(abs($color2->getAlpha() - $color1->getAlpha()) * $amount))
         );
