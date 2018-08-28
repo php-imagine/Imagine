@@ -254,7 +254,7 @@ Returns cropped self.</p>                </div>
                     <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_paste">paste</a>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start)
+                    <a href="#method_paste">paste</a>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, int $alpha = 100)
         
                                             <p>Pastes an image into a parent image
 Throws exceptions if image exceeds parent image borders or if paste
@@ -1037,7 +1037,7 @@ Returns cropped self.</p>                                                </div>
                     <h3 id="method_paste">
         <div class="location">at         line 223</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
-    <strong>paste</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start)
+    <strong>paste</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, int $alpha = 100)
         </code>
     </h3>
     <div class="details">
@@ -1061,6 +1061,11 @@ operation fails.</p>                    <p>Returns source image</p>             
                 <td><a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a></td>
                 <td>$start</td>
                 <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$alpha</td>
+                <td>How to paste the image, from 0 (fully transparent) to 100 (fully opaque)</td>
             </tr>
             </table>
 
@@ -1099,7 +1104,7 @@ operation fails.</p>                    <p>Returns source image</p>             
             </div>
                     <div class="method-item">
                     <h3 id="method_resize">
-        <div class="location">at         line 245</div>
+        <div class="location">at         line 268</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>resize</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $filter = ImageInterface::FILTER_UNDEFINED)
         </code>
@@ -1153,7 +1158,7 @@ operation fails.</p>                    <p>Returns source image</p>             
             </div>
                     <div class="method-item">
                     <h3 id="method_rotate">
-        <div class="location">at         line 269</div>
+        <div class="location">at         line 292</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>rotate</strong>(int $angle, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $background = null)
         </code>
@@ -1208,7 +1213,7 @@ area of rotated image.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_save">
-        <div class="location">at         line 292</div>
+        <div class="location">at         line 315</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>save</strong>(string $path = null, array $options = array())
         </code>
@@ -1264,7 +1269,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_show">
-        <div class="location">at         line 314</div>
+        <div class="location">at         line 337</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>show</strong>(string $format, array $options = array())
         </code>
@@ -1318,7 +1323,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_get">
-        <div class="location">at         line 325</div>
+        <div class="location">at         line 348</div>
         <code>                    string
     <strong>get</strong>(string $format, array $options = array())
         </code>
@@ -1372,7 +1377,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_interlace">
-        <div class="location">at         line 340</div>
+        <div class="location">at         line 363</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>interlace</strong>(string $scheme)
         </code>
@@ -1421,7 +1426,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method___toString">
-        <div class="location">at         line 390</div>
+        <div class="location">at         line 413</div>
         <code>                    string
     <strong>__toString</strong>()
         </code>
@@ -1460,7 +1465,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_draw">
-        <div class="location">at         line 398</div>
+        <div class="location">at         line 421</div>
         <code>                    <a href="../../Imagine/Draw/DrawerInterface.html"><abbr title="Imagine\Draw\DrawerInterface">DrawerInterface</abbr></a>
     <strong>draw</strong>()
         </code>
@@ -1490,7 +1495,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_effects">
-        <div class="location">at         line 406</div>
+        <div class="location">at         line 429</div>
         <code>                    <a href="../../Imagine/Effects/EffectsInterface.html"><abbr title="Imagine\Effects\EffectsInterface">EffectsInterface</abbr></a>
     <strong>effects</strong>()
         </code>
@@ -1518,7 +1523,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_getSize">
-        <div class="location">at         line 414</div>
+        <div class="location">at         line 437</div>
         <code>                    <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a>
     <strong>getSize</strong>()
         </code>
@@ -1548,7 +1553,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_applyMask">
-        <div class="location">at         line 434</div>
+        <div class="location">at         line 457</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>applyMask</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $mask)
         </code>
@@ -1588,7 +1593,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_mask">
-        <div class="location">at         line 467</div>
+        <div class="location">at         line 490</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>mask</strong>()
         </code>
@@ -1619,7 +1624,7 @@ image, while keeping the existing image unmodified.</p>                         
             </div>
                     <div class="method-item">
                     <h3 id="method_fill">
-        <div class="location">at         line 486</div>
+        <div class="location">at         line 509</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>fill</strong>(<a href="../../Imagine/Image/Fill/FillInterface.html"><abbr title="Imagine\Image\Fill\FillInterface">FillInterface</abbr></a> $fill)
         </code>
@@ -1661,7 +1666,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_histogram">
-        <div class="location">at         line 515</div>
+        <div class="location">at         line 538</div>
         <code>                    array
     <strong>histogram</strong>()
         </code>
@@ -1691,7 +1696,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_getColorAt">
-        <div class="location">at         line 533</div>
+        <div class="location">at         line 556</div>
         <code>                    <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
     <strong>getColorAt</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $point)
         </code>
@@ -1740,7 +1745,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_pixelToColor">
-        <div class="location">at         line 559</div>
+        <div class="location">at         line 582</div>
         <code>                    <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
     <strong>pixelToColor</strong>(ImagickPixel $pixel)
         </code>
@@ -1789,7 +1794,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_layers">
-        <div class="location">at         line 592</div>
+        <div class="location">at         line 615</div>
         <code>                    <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
     <strong>layers</strong>()
         </code>
@@ -1832,7 +1837,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_usePalette">
-        <div class="location">at         line 604</div>
+        <div class="location">at         line 627</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>usePalette</strong>(<a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette)
         </code>
@@ -1881,7 +1886,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_palette">
-        <div class="location">at         line 641</div>
+        <div class="location">at         line 664</div>
         <code>                    <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
     <strong>palette</strong>()
         </code>
@@ -1911,7 +1916,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_profile">
-        <div class="location">at         line 649</div>
+        <div class="location">at         line 672</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>profile</strong>(<a href="../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)
         </code>
@@ -1960,7 +1965,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_cloneImagick">
-        <div class="location">at         line 989</div>
+        <div class="location">at         line 1012</div>
         <code>            protected        Imagick
     <strong>cloneImagick</strong>()
         </code>

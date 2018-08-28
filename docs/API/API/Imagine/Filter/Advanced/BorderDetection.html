@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="index, follow, all" />
-    <title>Imagine\Filter\Basic\Paste | Imagine API</title>
+    <title>Imagine\Filter\Advanced\BorderDetection | Imagine API</title>
 
             <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
@@ -19,7 +19,7 @@
     
     </head>
 
-    <body id="class" data-name="class:Imagine_Filter_Basic_Paste" data-root-path="../../../">
+    <body id="class" data-name="class:Imagine_Filter_Advanced_BorderDetection" data-root-path="../../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
@@ -66,20 +66,20 @@
                         <div class="namespace-breadcrumbs">
             <ol class="breadcrumb">
                 <li><span class="label label-default">class</span></li>
-                        <li><a href="../../../Imagine.html">Imagine</a></li><li class="backslash">\</li><li><a href="../../../Imagine/Filter.html">Filter</a></li><li class="backslash">\</li><li><a href="../../../Imagine/Filter/Basic.html">Basic</a></li><li class="backslash">\</li><li>Paste</li>
+                        <li><a href="../../../Imagine.html">Imagine</a></li><li class="backslash">\</li><li><a href="../../../Imagine/Filter.html">Filter</a></li><li class="backslash">\</li><li><a href="../../../Imagine/Filter/Advanced.html">Advanced</a></li><li class="backslash">\</li><li>BorderDetection</li>
             </ol>
         </div>
                 <div id="page-content">
                 
     <div class="page-header">
         <h1>
-            Paste
+            BorderDetection
                 
         </h1>
     </div>
 
     <p>    class
-    <strong>Paste</strong>        implements
+    <strong>BorderDetection</strong>        extends <a href="../../../Imagine/Filter/Advanced/Neighborhood.html"><abbr title="Imagine\Filter\Advanced\Neighborhood">Neighborhood</abbr></a>        implements
         <a href="../../../Imagine/Filter/FilterInterface.html"><abbr title="Imagine\Filter\FilterInterface">FilterInterface</abbr></a>
 </p>
 
@@ -87,10 +87,60 @@
     
 
             <div class="description">
-            <p>A paste filter.</p>                                </div>
+            <p>BorderDetection based on Laplace-Operator. Three different variants are offered:.</p>            <p><code></p>
+
+<pre>
+  First          Second            Third
+ 0,  1, 0       1,  1, 1,       -1,  2, -1,
+ 1, -4, 1  and  1, -8, 1,  and   2, -4,  2,
+ 0,  1, 0       1,  1, 1        -1,  2, -1
+</pre>
+
+<p></code>.</p>
+
+<p>Consider to apply this filter on a grayscaled image.</p>                    </div>
     
     
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>VARIANT_ONE</td>
+                <td class="last">
+                    <p><em>First variant of the detection matrix.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>VARIANT_TWO</td>
+                <td class="last">
+                    <p><em>Second variant of the detection matrix.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>VARIANT_THREE</td>
+                <td class="last">
+                    <p><em>Third variant of the detection matrix.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
     
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_matrix">
+                                        protected                                        <a href="../../../Imagine/Utils/Matrix.html"><abbr title="Imagine\Utils\Matrix">Matrix</abbr></a>
+                </td>
+                <td>$matrix</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../../Imagine/Filter/Advanced/Neighborhood.html#property_matrix"><abbr title="Imagine\Filter\Advanced\Neighborhood">Neighborhood</abbr></a></small></td>
+            </tr>
+            </table>
+
     
             <h2>Methods</h2>
 
@@ -100,10 +150,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(<a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, int $alpha = 100)
+                    <a href="#method___construct">__construct</a>(int $variant = self::VARIANT_ONE)
         
-                                            <p>Constructs a Paste filter with given ImageInterface to paste and x, y
-coordinates of target position.</p>                </div>
+                                            <p>Initialize this filter.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -113,9 +162,8 @@ coordinates of target position.</p>                </div>
                 <div class="col-md-8 type">
                     <a href="#method_apply">apply</a>(<a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
         
-                                            <p>Applies scheduled transformation to ImageInterface instance
-Returns processed ImageInterface instance.</p>                </div>
-                <div class="col-md-2"></div>
+                                            <p>Applies scheduled transformation to ImageInterface instance.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Imagine/Filter/Advanced/Neighborhood.html#method_apply"><abbr title="Imagine\Filter\Advanced\Neighborhood">Neighborhood</abbr></a></small></div>
             </div>
             </div>
 
@@ -125,9 +173,9 @@ Returns processed ImageInterface instance.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 49</div>
+        <div class="location">at         line 59</div>
         <code>                    
-    <strong>__construct</strong>(<a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, int $alpha = 100)
+    <strong>__construct</strong>(int $variant = self::VARIANT_ONE)
         </code>
     </h3>
     <div class="details">
@@ -135,31 +183,29 @@ Returns processed ImageInterface instance.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Constructs a Paste filter with given ImageInterface to paste and x, y
-coordinates of target position.</p>                                                </div>
+                                    <p>Initialize this filter.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a></td>
-                <td>$image</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td><a href="../../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a></td>
-                <td>$start</td>
-                <td></td>
-            </tr>
-                    <tr>
                 <td>int</td>
-                <td>$alpha</td>
-                <td>how to paste the image, from 0 (fully transparent) to 100 (fully opaque)</td>
+                <td>$variant</td>
+                <td>One of the BorderDetection::VARIANT_... constants.</td>
             </tr>
             </table>
 
             
             
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Imagine/Exception/InvalidArgumentException.html"><abbr title="Imagine\Exception\InvalidArgumentException">InvalidArgumentException</abbr></a></td>
+                <td>throws an InvalidArgumentException if $variant is not valid</td>
+            </tr>
+            </table>
+
             
                     </div>
     </div>
@@ -167,7 +213,7 @@ coordinates of target position.</p>                                             
             </div>
                     <div class="method-item">
                     <h3 id="method_apply">
-        <div class="location">at         line 63</div>
+        <div class="location">in <a href="../../../Imagine/Filter/Advanced/Neighborhood.html#method_apply"><abbr title="Imagine\Filter\Advanced\Neighborhood">Neighborhood</abbr></a> at         line 56</div>
         <code>                    <a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>apply</strong>(<a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
         </code>
@@ -177,8 +223,7 @@ coordinates of target position.</p>                                             
     
 
                     <div class="method-description">
-                                    <p>Applies scheduled transformation to ImageInterface instance
-Returns processed ImageInterface instance.</p>                                                </div>
+                                    <p>Applies scheduled transformation to ImageInterface instance.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
