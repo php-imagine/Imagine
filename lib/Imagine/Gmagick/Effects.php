@@ -12,6 +12,7 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Effects\EffectsInterface;
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
@@ -109,8 +110,18 @@ class Effects implements EffectsInterface
      */
     public function brightness($brightness)
     {
+        $brightness = (int) round($brightness);
+        if ($brightness < -100 || $brightness > 100) {
+            throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$brightness', -100, 100, $brightness));
+        }
         try {
-            $this->gmagick->modulateImage($brightness, 1, 100);
+            // This *emulates* setting the brightness
+            $sign = $brightness < 0 ? -1 : 1;
+            $v = abs($brightness) / 100;
+            if ($sign > 0) {
+                $v = (2 / (sin(($v * .99999 * M_PI_2) + M_PI_2))) - 2;
+            }
+            $this->gmagick->modulateimage(100 + $sign * $v * 100, 100, 100);
         } catch (\GmagickException $e) {
             throw new RuntimeException('Failed to brightness the image');
         }

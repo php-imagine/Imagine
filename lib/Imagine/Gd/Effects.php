@@ -12,6 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Effects\EffectsInterface;
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
@@ -112,7 +113,11 @@ class Effects implements EffectsInterface
      */
     public function brightness($brightness)
     {
-        if (false === imagefilter($this->resource, IMG_FILTER_BRIGHTNESS, $brightness)) {
+        $gdBrightness = (int) round($brightness / 100 * 255);
+        if ($gdBrightness < -255 || $gdBrightness > 255) {
+            throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$brightness', -100, 100, $brightness));
+        }
+        if (false === imagefilter($this->resource, IMG_FILTER_BRIGHTNESS, $gdBrightness)) {
             throw new RuntimeException('Failed to brightness the image');
         }
 
