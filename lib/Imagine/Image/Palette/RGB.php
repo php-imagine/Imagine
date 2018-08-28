@@ -119,9 +119,9 @@ class RGB implements PaletteInterface
 
         return $this->color(
             array(
-                (int) min(255, min($color1->getRed(), $color2->getRed()) + round(abs($color2->getRed() - $color1->getRed()) * $amount)),
-                (int) min(255, min($color1->getGreen(), $color2->getGreen()) + round(abs($color2->getGreen() - $color1->getGreen()) * $amount)),
-                (int) min(255, min($color1->getBlue(), $color2->getBlue()) + round(abs($color2->getBlue() - $color1->getBlue()) * $amount)),
+                (int) $color2->getRed() * $amount + $color1->getRed() * (1 -$amount),
+                (int) $color2->getGreen() * $amount + $color1->getGreen() * (1 -$amount),
+                (int) $color2->getBlue() * $amount + $color1->getBlue() * (1 -$amount),
             ),
             (int) min(100, min($color1->getAlpha(), $color2->getAlpha()) + round(abs($color2->getAlpha() - $color1->getAlpha()) * $amount))
         );
