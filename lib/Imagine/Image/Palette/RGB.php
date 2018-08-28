@@ -118,8 +118,8 @@ class RGB implements PaletteInterface
             throw new RuntimeException('RGB palette can only blend RGB colors');
         }
 
-        $amout = (float) $amount;
-        if ($amout < 0.0 || $amout > 1.0) {
+        $amount = (float) $amount;
+        if ($amount < 0.0 || $amount > 1.0) {
             throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$amount', 0, 1, $amount));
         }
         $amountComplement = 1 - $amount;
