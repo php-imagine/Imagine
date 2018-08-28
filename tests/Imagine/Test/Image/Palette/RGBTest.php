@@ -43,7 +43,7 @@ class RGBTest extends AbstractPaletteTest
 
         return array(
             array(
-                new RGBColor($palette, array(240, 0, 0), 0),
+                new RGBColor($palette, array(118, 0, 0), 0),
                 new RGBColor($palette, array(230, 0, 0), 0),
                 new RGBColor($palette, array(128, 0, 0), 0),
                 1.1,
@@ -53,6 +53,24 @@ class RGBTest extends AbstractPaletteTest
                 new RGBColor($palette, array(1, 2, 3), 0),
                 new RGBColor($palette, array(50, 25, 32), 0),
                 0.4,
+            ),
+            array(
+                new RGBColor($palette, array(20, 30, 40), 0),
+                new RGBColor($palette, array(20, 30, 40), 0),
+                new RGBColor($palette, array(200, 210, 220), 0),
+                0.0,
+            ),
+            array(
+                new RGBColor($palette, array((20 + 200) / 2, (30 + 210) / 2, (40 + 220) / 2), 0),
+                new RGBColor($palette, array(20, 30, 40), 0),
+                new RGBColor($palette, array(200, 210, 220), 0),
+                0.5,
+            ),
+            array(
+                new RGBColor($palette, array(200, 210, 220), 0),
+                new RGBColor($palette, array(20, 30, 40), 0),
+                new RGBColor($palette, array(200, 210, 220), 0),
+                1.0,
             ),
         );
     }

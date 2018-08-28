@@ -11,7 +11,6 @@
 
 namespace Imagine\Image\Palette;
 
-use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
@@ -119,18 +118,15 @@ class RGB implements PaletteInterface
         }
 
         $amount = (float) $amount;
-        if ($amount < 0.0 || $amount > 1.0) {
-            throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$amount', 0, 1, $amount));
-        }
         $amountComplement = 1 - $amount;
 
         return $this->color(
             array(
-                (int) round($color2->getRed() * $amount + $color1->getRed() * $amountComplement),
-                (int) round($color2->getGreen() * $amount + $color1->getGreen() * $amountComplement),
-                (int) round($color2->getBlue() * $amount + $color1->getBlue() * $amountComplement),
+                min(max((int) round($color2->getRed() * $amount + $color1->getRed() * $amountComplement), 0), 255),
+                min(max((int) round($color2->getGreen() * $amount + $color1->getGreen() * $amountComplement), 0), 255),
+                min(max((int) round($color2->getBlue() * $amount + $color1->getBlue() * $amountComplement), 0), 255),
             ),
-            (int) round($color2->getAlpha() * $amount + $color1->getAlpha() * $amountComplement)
+            min(max((int) round($color2->getAlpha() * $amount + $color1->getAlpha() * $amountComplement), 0), 255)
         );
     }
 }
