@@ -354,7 +354,7 @@ final class Image extends AbstractImage
             throw new RuntimeException('Get operation failed', $e->getCode(), $e);
         }
 
-        return $this->imagick->getImagesBlob();
+        return $this->imagick->optimizeImageLayers()->getImagesBlob();
     }
 
     /**
