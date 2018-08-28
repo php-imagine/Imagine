@@ -170,7 +170,7 @@ interface ManipulatorInterface
      * Returns it as a new image, doesn't modify the current image.
      *
      * @param BoxInterface $size
-     * @param int $settings One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |)
+     * @param int|string $settings One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |). It may be a string for backward compatibility with old constant values that were strings.
      * @param string $filter The filter to use for resizing, one of ImageInterface::FILTER_*
      *
      * @throws RuntimeException

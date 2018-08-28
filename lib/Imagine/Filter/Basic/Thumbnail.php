@@ -39,7 +39,7 @@ class Thumbnail implements FilterInterface
      * Constructs the Thumbnail filter.
      *
      * @param BoxInterface $size
-     * @param int|string $settings See ImageInterface::THUMBNAIL_... flags (it may be a string for backward compatibility with old constant values that were strings)
+     * @param int|string $settings One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |). It may be a string for backward compatibility with old constant values that were strings.
      * @param string $filter See ImageInterface::FILTER_... constants
      */
     public function __construct(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
