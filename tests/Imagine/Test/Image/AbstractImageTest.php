@@ -370,18 +370,18 @@ abstract class AbstractImageTest extends ImagineTestCase
             array(24, 32, 240, 400, ImageInterface::THUMBNAIL_OUTBOUND, 24, 32),
 
             // landscape with larger portrait (allow upscale)
-            array(32, 24, 320, 300, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_UPSCALE, 320, round(24 * 320 / 32)),
-            array(32, 24, 320, 300, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE, 320, 300),
+            array(32, 24, 320, 300, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_FLAG_UPSCALE, 320, round(24 * 320 / 32)),
+            array(32, 24, 320, 300, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_FLAG_UPSCALE, 320, 300),
             // landscape with larger landscape (allow upscale)
-            array(32, 24, 320, 200, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_UPSCALE, round(32 * 200 / 24), 200),
-            array(32, 24, 320, 200, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE, 320, 200),
+            array(32, 24, 320, 200, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_FLAG_UPSCALE, round(32 * 200 / 24), 200),
+            array(32, 24, 320, 200, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_FLAG_UPSCALE, 320, 200),
 
             // portrait with larger portrait (allow upscale)
-            array(24, 32, 240, 300, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_UPSCALE, round(24 * 300 / 32), 300),
-            array(24, 32, 240, 300, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE, 240, 300),
+            array(24, 32, 240, 300, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_FLAG_UPSCALE, round(24 * 300 / 32), 300),
+            array(24, 32, 240, 300, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_FLAG_UPSCALE, 240, 300),
             // portrait with larger landscape (allow upscale)
-            array(24, 32, 240, 400, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_UPSCALE, 240, round(32 * 240 / 24)),
-            array(24, 32, 240, 400, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_UPSCALE, 240, 400),
+            array(24, 32, 240, 400, ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_FLAG_UPSCALE, 240, round(32 * 240 / 24)),
+            array(24, 32, 240, 400, ImageInterface::THUMBNAIL_OUTBOUND | ImageInterface::THUMBNAIL_FLAG_UPSCALE, 240, 400),
 
             // landscape with intersect portrait
             array(320, 240, 340, 220, ImageInterface::THUMBNAIL_INSET, round(220 * 320 / 240), 220),
