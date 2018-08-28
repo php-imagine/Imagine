@@ -44,4 +44,15 @@ class EffectsTest extends AbstractEffectsTest
     {
         return new Imagine();
     }
+
+    public function testConvolution()
+    {
+        $gm = new \Gmagick();
+        if (!method_exists($gm, 'convolveimage')) {
+            // convolveimage has been added in gmagick 2.0.1RC2
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        }
+
+        parent::testConvolution();
+    }
 }
