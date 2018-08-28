@@ -25,20 +25,20 @@
   * Add support to new image type constants of Imagick (@ausi)
   * Check that Imagick correctly supports profiles (@ausi)
   * Add `setMetadataReader`/`getMetadataReader` to `ImagineInterface` (@mlocati)  
-    **BREAKING CHANGE** if you have your own `ImagineInterface` implementation, it now must implements those two methods
+    **BREAKING CHANGE** if you have your own `ImagineInterface` implementation, it now must implement those two methods
   * Fix creating Gmagick images with alpha colors when palette doesn't support alpha (@FractalizeR)
   * Fix warning about deprecated clone method in copy method of Imagick images (@mlocati)
   * Fix copy methods of Images (the original image and its new copy are now fully detached) (@mlocati)
   * It's now possible to use `clone $image` as an alternative to `$image->copy()` (@mlocati)
   * Add support to custom classes for `BoxInterface`, `MetadataReaderInterface`, `FontInterface`, `LoaderInterface`, `LayersInterface`, `ImageInterface` (@mlocati)  
-    **BREAKING CHANGE** if you have your own `ImagineInterface` implementation, it now must implements the methods of `ClassFactoryAwareInterface`
+    **BREAKING CHANGE** if you have your own `ImagineInterface` implementation, it now must implement the methods of `ClassFactoryAwareInterface`
   * Add support for pasting with alpha for GD and Imagick (@AlloVince, @mlocati)
-  * Downscaling a `Box` until it reaches a dimension less that 1 returns a box with dimension of 1 instead of throwing an exception (@mlocati)    
+  * Downscaling a `Box` until it reaches a dimension less than 1 returns a box with dimension of 1 instead of throwing an exception (@mlocati)    
     **BREAKING CHANGE** if you relied on `Box::scale` throwing an exception in this case
   * New filters: `BlackWhite`, `BorderDetection`, `Negation`, `Neighborhood` (@rejinka)
   * Minor optimization of filters based on `OnPixelBased` (@rejinka, @mlocati)
   * Add flag to `thumbnail` to allow upscaling images (@vlakoff)  
-    **NOTE** the `$mode` argument has been renamed to `$setting`, and it's now an integer (but old string values are accepted for backward compatibility) 
+    **NOTE** the `$mode` argument has been renamed to `$settings`, and it's now an integer (but old string values are accepted for backward compatibility) 
 
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)

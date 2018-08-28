@@ -319,15 +319,15 @@ abstract class AbstractImageTest extends ImagineTestCase
      * @param mixed $sourceH
      * @param mixed $thumbW
      * @param mixed $thumbH
-     * @param mixed $setting
+     * @param mixed $settings
      * @param mixed $expectedW
      * @param mixed $expectedH
      */
-    public function testThumbnailGeneration($sourceW, $sourceH, $thumbW, $thumbH, $setting, $expectedW, $expectedH)
+    public function testThumbnailGeneration($sourceW, $sourceH, $thumbW, $thumbH, $settings, $expectedW, $expectedH)
     {
         $factory = $this->getImagine();
         $image = $factory->create(new Box($sourceW, $sourceH));
-        $thumb = $image->thumbnail(new Box($thumbW, $thumbH), $setting);
+        $thumb = $image->thumbnail(new Box($thumbW, $thumbH), $settings);
         $size = $thumb->getSize();
 
         $this->assertEquals($expectedW, $size->getWidth());
