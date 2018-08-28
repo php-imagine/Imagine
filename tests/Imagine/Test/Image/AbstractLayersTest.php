@@ -16,8 +16,9 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
+use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractLayersTest extends \PHPUnit\Framework\TestCase
+abstract class AbstractLayersTest extends ImagineTestCase
 {
     public function testMerge()
     {

@@ -12,8 +12,9 @@
 namespace Imagine\Test\Image\Histogram;
 
 use Imagine\Image\Histogram\Range;
+use Imagine\Test\ImagineTestCase;
 
-class RangeTest extends \PHPUnit\Framework\TestCase
+class RangeTest extends ImagineTestCase
 {
     private $start = 0;
     private $end = 63;
