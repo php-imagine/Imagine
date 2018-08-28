@@ -29,8 +29,8 @@
         "ext-gmagick": "to use the Gmagick implementation"
     },
     "autoload": {
-        "psr-0": {
-            "Imagine": "lib/"
+        "psr-4": {
+            "Imagine\\": "src/"
         }
     },
     "extra": {

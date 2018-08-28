@@ -196,7 +196,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this
             ->getImagine()
             ->create(new Box(10, 10))
-            ->profile(Profile::fromPath(__DIR__ . '/../../../../lib/Imagine/resources/Adobe/RGB/VideoHD.icc'));
+            ->profile(Profile::fromPath(__DIR__ . '/../../../../src/resources/Adobe/RGB/VideoHD.icc'));
     }
 
     public function testRotateWithNoBackgroundColor()

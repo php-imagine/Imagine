@@ -19,7 +19,7 @@
 
     <filter>
         <whitelist>
-            <directory>./lib/Imagine/</directory>
+            <directory>./src/</directory>
             <exclude>
                 <directory>./tests/Imagine/Fixtures</directory>
             </exclude>

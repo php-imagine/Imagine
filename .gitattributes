@@ -1,5 +1,5 @@
 /.* export-ignore
 /docs export-ignore
-/lib/Imagine/resources/Adobe/Profile[[:space:]]Information.pdf export-ignore
+/src/resources/Adobe/Profile[[:space:]]Information.pdf export-ignore
 /tests export-ignore
 /phpunit.xml.dist export-ignore

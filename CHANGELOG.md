@@ -42,6 +42,7 @@
   * New filter: `brightness` (@lenybernard, @mlocati)
   * New filter: `colvolve` available for all graphics libraries except gmagick with version prior to 2.0.1RC2 (@armatronic, @mlocati)
   * Fix bug in Imagine\Image\Palette\RGB::blend() (@dmolineus, @mlocati)
+  * Autoload was moved from PSR-0 to PSR-4, and code files moved from `/lib/Imagine` to `/src` (@mlocati)
 
 ### 0.7.1 (2017-05-16)
   * Remove Symfony PHPUnit bridge as dependency (@craue)
