@@ -100,9 +100,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(<a href="../../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
+                    <a href="#method___construct">__construct</a>(<a href="../../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int|string $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         
-                                            <p>Constructs the Thumbnail filter with given width, height and mode.</p>                </div>
+                                            <p>Constructs the Thumbnail filter.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -126,7 +126,7 @@ Returns processed ImageInterface instance.</p>                </div>
                     <h3 id="method___construct">
         <div class="location">at         line 45</div>
         <code>                    
-    <strong>__construct</strong>(<a href="../../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
+    <strong>__construct</strong>(<a href="../../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int|string $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         </code>
     </h3>
     <div class="details">
@@ -134,7 +134,7 @@ Returns processed ImageInterface instance.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Constructs the Thumbnail filter with given width, height and mode.</p>                                                </div>
+                                    <p>Constructs the Thumbnail filter.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -145,14 +145,14 @@ Returns processed ImageInterface instance.</p>                </div>
                 <td></td>
             </tr>
                     <tr>
-                <td>string</td>
-                <td>$mode</td>
-                <td></td>
+                <td>int|string</td>
+                <td>$settings</td>
+                <td>See ImageInterface::THUMBNAIL_... flags (it may be a string for backward compatibility with old constant values that were strings)</td>
             </tr>
                     <tr>
                 <td>string</td>
                 <td>$filter</td>
-                <td></td>
+                <td>See ImageInterface::FILTER_... constants</td>
             </tr>
             </table>
 
