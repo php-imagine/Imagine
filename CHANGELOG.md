@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
+### 1.0.0-alpha1 (2018-08-28)
   * Imagine is now tested under Windows too (@mlocati)
   * Add support to webp image format (@chregu, @antoligy, @alexander-schranz)
   * Add `Imagine\File\LoaderInterface` that allows loading remote images with any imaging driver (@mlocati).
