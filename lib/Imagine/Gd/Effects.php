@@ -106,4 +106,16 @@ class Effects implements EffectsInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function brightness($brightness)
+    {
+        if (false === imagefilter($this->resource, IMG_FILTER_BRIGHTNESS, $brightness)) {
+            throw new RuntimeException('Failed to brightness the image');
+        }
+
+        return $this;
+    }
 }
