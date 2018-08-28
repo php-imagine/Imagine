@@ -112,11 +112,21 @@
                     <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
+                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         
                                             <p>Generates a thumbnail from a current image
 Returns it as a new image, doesn't modify the current image.</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/AbstractImage.html#method_thumbnail"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAllThumbnailModes">getAllThumbnailModes</a>()
+        
+                                            <p>Get all the available thumbnail modes.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/AbstractImage.html#method_getAllThumbnailModes"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -487,7 +497,7 @@ returns modified image.</p>                </div>
                     <h3 id="method_thumbnail">
         <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_thumbnail"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 37</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
-    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
+    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         </code>
     </h3>
     <div class="details">
@@ -507,9 +517,9 @@ Returns it as a new image, doesn't modify the current image.</p>                
                 <td></td>
             </tr>
                     <tr>
-                <td>string</td>
-                <td>$mode</td>
-                <td></td>
+                <td>int</td>
+                <td>$settings</td>
+                <td>One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |)</td>
             </tr>
                     <tr>
                 <td>string</td>
@@ -544,8 +554,38 @@ Returns it as a new image, doesn't modify the current image.</p>                
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_getAllThumbnailModes">
+        <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_getAllThumbnailModes"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 145</div>
+        <code>            protected        int[]
+    <strong>getAllThumbnailModes</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get all the available thumbnail modes.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_updateSaveOptions">
-        <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_updateSaveOptions"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 100</div>
+        <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_updateSaveOptions"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 160</div>
         <code>            protected        array
     <strong>updateSaveOptions</strong>(array $options)
         </code>
@@ -585,7 +625,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_metadata">
-        <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_metadata"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 113</div>
+        <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_metadata"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 173</div>
         <code>                    <a href="../../Imagine/Image/Metadata/MetadataBag.html"><abbr title="Imagine\Image\Metadata\MetadataBag">MetadataBag</abbr></a>
     <strong>metadata</strong>()
         </code>
@@ -636,7 +676,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_getClassFactory">
-        <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_getClassFactory"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 133</div>
+        <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_getClassFactory"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 193</div>
         <code>                    <a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a>
     <strong>getClassFactory</strong>()
         </code>
@@ -663,12 +703,6 @@ Returns it as a new image, doesn't modify the current image.</p>                
                             <h4>See also</h4>
 
                     <table class="table table-condensed">
-                    <tr>
-                <td>
-                                            <a href="../../Imagine/Factory/ClassFactoryAwareInterface.html#method_getClassFactory"><abbr title="Imagine\Factory\ClassFactoryAwareInterface">ClassFactoryAwareInterface</abbr>::getClassFactory</a>
-                                    </td>
-                <td></td>
-            </tr>
             </table>
 
                     </div>
@@ -677,7 +711,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_setClassFactory">
-        <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_setClassFactory"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 147</div>
+        <div class="location">in <a href="../../Imagine/Image/AbstractImage.html#method_setClassFactory"><abbr title="Imagine\Image\AbstractImage">AbstractImage</abbr></a> at         line 207</div>
         <code>                    <abbr title="Imagine\Factory\$this">$this</abbr>
     <strong>setClassFactory</strong>(<a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a> $classFactory)
         </code>
@@ -714,12 +748,6 @@ Returns it as a new image, doesn't modify the current image.</p>                
                             <h4>See also</h4>
 
                     <table class="table table-condensed">
-                    <tr>
-                <td>
-                                            <a href="../../Imagine/Factory/ClassFactoryAwareInterface.html#method_setClassFactory"><abbr title="Imagine\Factory\ClassFactoryAwareInterface">ClassFactoryAwareInterface</abbr>::setClassFactory</a>
-                                    </td>
-                <td></td>
-            </tr>
             </table>
 
                     </div>
@@ -1794,7 +1822,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_layers">
-        <div class="location">at         line 615</div>
+        <div class="location">at         line 618</div>
         <code>                    <a href="../../Imagine/Image/LayersInterface.html"><abbr title="Imagine\Image\LayersInterface">LayersInterface</abbr></a>
     <strong>layers</strong>()
         </code>
@@ -1837,7 +1865,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_usePalette">
-        <div class="location">at         line 627</div>
+        <div class="location">at         line 630</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>usePalette</strong>(<a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a> $palette)
         </code>
@@ -1886,7 +1914,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_palette">
-        <div class="location">at         line 664</div>
+        <div class="location">at         line 667</div>
         <code>                    <a href="../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
     <strong>palette</strong>()
         </code>
@@ -1916,7 +1944,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_profile">
-        <div class="location">at         line 672</div>
+        <div class="location">at         line 675</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>profile</strong>(<a href="../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)
         </code>
@@ -1965,7 +1993,7 @@ returns modified image.</p>                                                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_cloneImagick">
-        <div class="location">at         line 1012</div>
+        <div class="location">at         line 1015</div>
         <code>            protected        Imagick
     <strong>cloneImagick</strong>()
         </code>
