@@ -49,6 +49,7 @@ class Layers extends AbstractLayers
      */
     public function coalesce()
     {
+        return $this;
     }
 
     /**

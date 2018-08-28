@@ -120,6 +120,8 @@ class Layers extends AbstractLayers
                 throw new RuntimeException('Failed to retrieve layer', $e->getCode(), $e);
             }
         }
+
+        return $this;
     }
 
     /**

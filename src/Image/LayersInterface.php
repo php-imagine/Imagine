@@ -44,6 +44,10 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
     /**
      * Coalesce layers. Each layer in the sequence is the same size as the first and composited with the next layer in
      * the sequence.
+     *
+     * @throws \Imagine\Exception\NotSupportedException
+     *
+     * @return $this
      */
     public function coalesce();
 

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+  * The `coalesce` method of `LayerInterface` instances now returns the LayerInterface itself (@mlocati)  
+    **BREAKING CHANGE** if you have your own `LayerInterface` implementation, it now must return `$this`
+
 ### 1.0.0-alpha1 (2018-08-28)
   * Imagine is now tested under Windows too (@mlocati)
   * Add support to webp image format (@chregu, @antoligy, @alexander-schranz)
