@@ -22,8 +22,26 @@ use Imagine\Image\Palette\Color\ColorInterface;
  */
 interface ManipulatorInterface
 {
-    const THUMBNAIL_INSET = 'inset';
-    const THUMBNAIL_OUTBOUND = 'outbound';
+    /**
+     * The original image is scaled so it is fully contained within the thumbnail dimensions (the image width/height ratio doesn't change).
+     *
+     * @var int
+     */
+    const THUMBNAIL_INSET = 0x00000001;
+
+    /**
+     * The thumbnail is scaled so that its smallest side equals the length of the corresponding side in the original image (the width or the height are cropped).
+     *
+     * @var int
+     */
+    const THUMBNAIL_OUTBOUND = 0x00000002;
+
+    /**
+     * Allow upscaling the image if it's smaller than the wanted thumbnail size.
+     *
+     * @var int
+     */
+    const THUMBNAIL_FLAG_UPSCALE = 0x00010000;
 
     /**
      * Copies current source image into a new ImageInterface instance.
@@ -152,14 +170,14 @@ interface ManipulatorInterface
      * Returns it as a new image, doesn't modify the current image.
      *
      * @param BoxInterface $size
-     * @param string $mode
+     * @param int|string $settings One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |). It may be a string for backward compatibility with old constant values that were strings.
      * @param string $filter The filter to use for resizing, one of ImageInterface::FILTER_*
      *
      * @throws RuntimeException
      *
      * @return static
      */
-    public function thumbnail(BoxInterface $size, $mode = self::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED);
+    public function thumbnail(BoxInterface $size, $settings = self::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED);
 
     /**
      * Applies a given mask to current image's alpha channel.

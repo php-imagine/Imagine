@@ -269,7 +269,7 @@ supported.</p>                </div>
                     <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
+                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         
                                             <p>Generates a thumbnail from a current image
 Returns it as a new image, doesn't modify the current image.</p>                </div>
@@ -1038,7 +1038,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
                     <h3 id="method_thumbnail">
         <div class="location">at         line 221</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
-    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $mode = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
+    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         </code>
     </h3>
     <div class="details">
@@ -1058,9 +1058,9 @@ Returns it as a new image, doesn't modify the current image.</p>                
                 <td></td>
             </tr>
                     <tr>
-                <td>string</td>
-                <td>$mode</td>
-                <td></td>
+                <td>int</td>
+                <td>$settings</td>
+                <td>One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |)</td>
             </tr>
                     <tr>
                 <td>string</td>

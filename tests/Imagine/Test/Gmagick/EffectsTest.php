@@ -28,9 +28,15 @@ class EffectsTest extends AbstractEffectsTest
         }
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Effects\AbstractEffectsTest::testColorize()
+     *
+     * @expectedException \Imagine\Exception\RuntimeException
+     */
     public function testColorize()
     {
-        $this->{method_exists($this, $_ = 'expectException') ? $_ : 'setExpectedException'}('RuntimeException');
         parent::testColorize();
     }
 

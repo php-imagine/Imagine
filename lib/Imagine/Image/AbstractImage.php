@@ -34,60 +34,120 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
      *
      * @return ImageInterface
      */
-    public function thumbnail(BoxInterface $size, $mode = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
+    public function thumbnail(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-        if ($mode !== ImageInterface::THUMBNAIL_INSET &&
-            $mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
-            throw new InvalidArgumentException('Invalid mode specified');
-        }
+        $settings = $this->checkThumbnailSettings($settings);
+
+        $mode = $settings & 0xffff;
+
+        $allowUpscale = (bool) ($settings & ImageInterface::THUMBNAIL_FLAG_UPSCALE);
 
         $imageSize = $this->getSize();
-        $ratios = array(
-            $size->getWidth() / $imageSize->getWidth(),
-            $size->getHeight() / $imageSize->getHeight(),
-        );
 
         $thumbnail = $this->copy();
 
         $thumbnail->usePalette($this->palette());
         $thumbnail->strip();
-        // if target width is larger than image width
-        // AND target height is longer than image height
-        if ($size->contains($imageSize)) {
+
+        if ($size->getWidth() === $imageSize->getWidth() && $size->getHeight() === $imageSize->getHeight()) {
+            // The thumbnail size is the same as the wanted size.
+            return $thumbnail;
+        }
+        if (!$allowUpscale && $size->contains($imageSize)) {
+            // Thumbnail is smaller than the image and we are not upscaling
             return $thumbnail;
         }
 
-        if ($mode === ImageInterface::THUMBNAIL_INSET) {
-            $ratio = min($ratios);
-        } else {
-            $ratio = max($ratios);
-        }
-
-        if ($mode === ImageInterface::THUMBNAIL_OUTBOUND) {
-            if (!$imageSize->contains($size)) {
-                $size = new Box(
-                    min($imageSize->getWidth(), $size->getWidth()),
-                    min($imageSize->getHeight(), $size->getHeight())
+        $ratios = array(
+            $size->getWidth() / $imageSize->getWidth(),
+            $size->getHeight() / $imageSize->getHeight(),
+        );
+        switch ($mode) {
+            case ImageInterface::THUMBNAIL_OUTBOUND:
+                // Crop the image so that it fits the wanted size
+                $ratio = max($ratios);
+                if ($imageSize->contains($size)) {
+                    // Downscale the image
+                    $imageSize = $imageSize->scale($ratio);
+                    $thumbnail->resize($imageSize, $filter);
+                    $thumbnailSize = $size;
+                } else {
+                    if ($allowUpscale) {
+                        // Upscale the image so that the max dimension will be the wanted one
+                        $imageSize = $imageSize->scale($ratio);
+                        $thumbnail->resize($imageSize, $filter);
+                    }
+                    $thumbnailSize = new Box(
+                        min($imageSize->getWidth(), $size->getWidth()),
+                        min($imageSize->getHeight(), $size->getHeight())
+                    );
+                }
+                $thumbnail->crop(
+                    new Point(
+                        max(0, round(($imageSize->getWidth() - $size->getWidth()) / 2)),
+                        max(0, round(($imageSize->getHeight() - $size->getHeight()) / 2))
+                    ),
+                    $thumbnailSize
                 );
-            } else {
-                $imageSize = $thumbnail->getSize()->scale($ratio);
-                $thumbnail->resize($imageSize, $filter);
-            }
-            $thumbnail->crop(new Point(
-                max(0, round(($imageSize->getWidth() - $size->getWidth()) / 2)),
-                max(0, round(($imageSize->getHeight() - $size->getHeight()) / 2))
-            ), $size);
-        } else {
-            if (!$imageSize->contains($size)) {
-                $imageSize = $imageSize->scale($ratio);
-                $thumbnail->resize($imageSize, $filter);
-            } else {
-                $imageSize = $thumbnail->getSize()->scale($ratio);
-                $thumbnail->resize($imageSize, $filter);
-            }
+                break;
+            case ImageInterface::THUMBNAIL_INSET:
+            default:
+                // Scale the image so that it fits the wanted size
+                $ratio = min($ratios);
+                $thumbnailSize = $imageSize->scale($ratio);
+                $thumbnail->resize($thumbnailSize, $filter);
+                break;
         }
 
         return $thumbnail;
+    }
+
+    /**
+     * Check the settings argument in thumbnail() method.
+     *
+     * @param int $settings
+     */
+    private function checkThumbnailSettings($settings)
+    {
+        // Preserve BC until version 1.0
+        if (is_string($settings)) {
+            if ($settings === 'inset') {
+                $settings = ImageInterface::THUMBNAIL_INSET;
+            } elseif ($settings === 'outbound') {
+                $settings = ImageInterface::THUMBNAIL_OUTBOUND;
+            } elseif (is_numeric($settings)) {
+                $settings = (int) $settings;
+            }
+        }
+        if (!is_int($settings)) {
+            throw new InvalidArgumentException('Invalid setting specified');
+        }
+        $mode = $settings & 0xffff;
+        if ($mode === 0) {
+            $settings |= ImageInterface::THUMBNAIL_INSET;
+        } else {
+            if (!in_array($mode, $this->getAllThumbnailModes())) {
+                if (strlen(str_replace('0', '', decbin($mode))) === 1) {
+                    throw new InvalidArgumentException('Invalid setting specified');
+                }
+                throw new InvalidArgumentException('Only one mode should be specified');
+            }
+        }
+
+        return $settings;
+    }
+
+    /**
+     * Get all the available thumbnail modes.
+     *
+     * @return int[]
+     */
+    protected function getAllThumbnailModes()
+    {
+        return array(
+            ImageInterface::THUMBNAIL_INSET,
+            ImageInterface::THUMBNAIL_OUTBOUND,
+        );
     }
 
     /**
