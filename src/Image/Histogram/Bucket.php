@@ -44,6 +44,8 @@ final class Bucket implements \Countable
         if ($this->range->contains($value)) {
             $this->count++;
         }
+
+        return $this;
     }
 
     /**
