@@ -20,10 +20,25 @@ use Imagine\Image\Palette\RGB;
  */
 class WebOptimization implements FilterInterface
 {
+    /**
+     * @var \Imagine\Image\Palette\RGB
+     */
     private $palette;
+
+    /**
+     * @var string|callable|null
+     */
     private $path;
+
+    /**
+     * @var array
+     */
     private $options;
 
+    /**
+     * @param string|callable|null $path
+     * @param array $options
+     */
     public function __construct($path = null, array $options = array())
     {
         $this->path = $path;
@@ -37,6 +52,8 @@ class WebOptimization implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

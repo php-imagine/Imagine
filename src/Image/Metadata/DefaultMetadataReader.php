@@ -12,12 +12,14 @@
 namespace Imagine\Image\Metadata;
 
 /**
- * Default metadata reader.
+ * A metadata reader that actually doesn't try to extract metadata.
  */
 class DefaultMetadataReader extends AbstractMetadataReader
 {
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Metadata\AbstractMetadataReader::extractFromFile()
      */
     protected function extractFromFile($file)
     {
@@ -26,6 +28,8 @@ class DefaultMetadataReader extends AbstractMetadataReader
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Metadata\AbstractMetadataReader::extractFromData()
      */
     protected function extractFromData($data)
     {
@@ -34,6 +38,8 @@ class DefaultMetadataReader extends AbstractMetadataReader
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Metadata\AbstractMetadataReader::extractFromStream()
      */
     protected function extractFromStream($resource)
     {

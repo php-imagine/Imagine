@@ -20,12 +20,14 @@ use Imagine\Image\ImageInterface;
 class ApplyMask implements FilterInterface
 {
     /**
-     * @var ImageInterface
+     * @var \Imagine\Image\ImageInterface
      */
     private $mask;
 
     /**
-     * @param ImageInterface $mask
+     * Initialize the instance.
+     *
+     * @param \Imagine\Image\ImageInterface $mask
      */
     public function __construct(ImageInterface $mask)
     {
@@ -34,6 +36,8 @@ class ApplyMask implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

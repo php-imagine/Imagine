@@ -20,7 +20,7 @@ class ColorParser
      *
      * @param string|array|int $color
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      *
      * @return array
      */
@@ -44,7 +44,7 @@ class ColorParser
      *
      * @param string|array|int $color
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      *
      * @return array
      */
@@ -75,7 +75,7 @@ class ColorParser
      *
      * @param string|array|int $color
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      *
      * @return array
      */
@@ -99,7 +99,7 @@ class ColorParser
      *
      * @param string|array|int $color
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      *
      * @return array
      */

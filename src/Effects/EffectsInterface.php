@@ -11,7 +11,6 @@
 
 namespace Imagine\Effects;
 
-use Imagine\Exception\RuntimeException;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Utils\Matrix;
 
@@ -25,47 +24,47 @@ interface EffectsInterface
      *
      * @param float $correction
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return EffectsInterface
+     * @return $this
      */
     public function gamma($correction);
 
     /**
      * Invert the colors of the image.
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return EffectsInterface
+     * @return $this
      */
     public function negative();
 
     /**
      * Grayscale the image.
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return EffectsInterface
+     * @return $this
      */
     public function grayscale();
 
     /**
      * Colorize the image.
      *
-     * @param ColorInterface $color
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return EffectsInterface
+     * @return $this
      */
     public function colorize(ColorInterface $color);
 
     /**
      * Sharpens the image.
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return EffectsInterface
+     * @return $this
      */
     public function sharpen();
 
@@ -74,9 +73,9 @@ interface EffectsInterface
      *
      * @param float|int $sigma
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return EffectsInterface
+     * @return $this
      */
     public function blur($sigma);
 
@@ -85,9 +84,9 @@ interface EffectsInterface
      *
      * @param int $brightness The level of brightness (-100 (black) to 100 (white))
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return EffectsInterface
+     * @return $this
      */
     public function brightness($brightness);
 
@@ -96,9 +95,9 @@ interface EffectsInterface
      *
      * @param \Imagine\Utils\Matrix $matrix The matrix from which derive the convolution kernel
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return EffectsInterface
+     * @return $this
      */
     public function convolve(Matrix $matrix);
 }

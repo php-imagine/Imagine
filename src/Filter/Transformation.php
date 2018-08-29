@@ -39,26 +39,26 @@ use Imagine\Image\PointInterface;
 final class Transformation implements FilterInterface, ManipulatorInterface
 {
     /**
-     * @var array
+     * @var array[\Imagine\Filter\FilterInterface[]]
      */
     private $filters = array();
 
     /**
-     * @var array
+     * @var array[\Imagine\Filter\FilterInterface[]]|null
      */
     private $sorted;
 
     /**
      * An ImagineInterface instance.
      *
-     * @var ImagineInterface
+     * @var \Imagine\Image\ImageInterface|null
      */
     private $imagine;
 
     /**
      * Class constructor.
      *
-     * @param ImagineInterface $imagine An ImagineInterface instance
+     * @param \Imagine\Image\ImageInterface|null $imagine An ImagineInterface instance
      */
     public function __construct(ImagineInterface $imagine = null)
     {
@@ -66,15 +66,14 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * Applies a given FilterInterface onto given ImageInterface and returns
-     * modified ImageInterface.
+     * Applies a given FilterInterface onto given ImageInterface and returns modified ImageInterface.
      *
-     * @param ImageInterface $image
-     * @param FilterInterface $filter
+     * @param \Imagine\Image\ImageInterface $image
+     * @param \Imagine\Filter\FilterInterface $filter
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function applyFilter(ImageInterface $image, FilterInterface $filter)
     {
@@ -109,6 +108,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {
@@ -121,6 +122,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::copy()
      */
     public function copy()
     {
@@ -129,6 +132,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::crop()
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -137,6 +142,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::flipHorizontally()
      */
     public function flipHorizontally()
     {
@@ -145,6 +152,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::flipVertically()
      */
     public function flipVertically()
     {
@@ -153,6 +162,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::strip()
      */
     public function strip()
     {
@@ -161,6 +172,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::paste()
      */
     public function paste(ImageInterface $image, PointInterface $start, $alpha = 100)
     {
@@ -169,6 +182,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::applyMask()
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -177,6 +192,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::fill()
      */
     public function fill(FillInterface $fill)
     {
@@ -185,6 +202,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::resize()
      */
     public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
@@ -193,6 +212,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::rotate()
      */
     public function rotate($angle, ColorInterface $background = null)
     {
@@ -201,6 +222,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::save()
      */
     public function save($path = null, array $options = array())
     {
@@ -209,6 +232,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::show()
      */
     public function show($format, array $options = array())
     {
@@ -217,6 +242,8 @@ final class Transformation implements FilterInterface, ManipulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::thumbnail()
      */
     public function thumbnail(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
@@ -224,13 +251,12 @@ final class Transformation implements FilterInterface, ManipulatorInterface
     }
 
     /**
-     * Registers a given FilterInterface in an internal array of filters for
-     * later application to an instance of ImageInterface.
+     * Registers a given FilterInterface in an internal array of filters for later application to an instance of ImageInterface.
      *
-     * @param FilterInterface $filter
+     * @param \Imagine\Filter\FilterInterface $filter
      * @param int $priority
      *
-     * @return Transformation
+     * @return $this
      */
     public function add(FilterInterface $filter, $priority = 0)
     {

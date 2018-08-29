@@ -16,19 +16,19 @@ use Imagine\Image\Point as OriginalPoint;
 use Imagine\Image\PointInterface;
 
 /**
- * Point center.
+ * Center point of a box.
  */
 final class Center implements PointInterface
 {
     /**
-     * @var BoxInterface
+     * @var \Imagine\Image\BoxInterface
      */
     private $box;
 
     /**
      * Constructs coordinate with size instance, it needs to be relative to.
      *
-     * @param BoxInterface $box
+     * @param \Imagine\Image\BoxInterface $box
      */
     public function __construct(BoxInterface $box)
     {
@@ -37,6 +37,8 @@ final class Center implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::getX()
      */
     public function getX()
     {
@@ -45,6 +47,8 @@ final class Center implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::getY()
      */
     public function getY()
     {
@@ -53,6 +57,8 @@ final class Center implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::in()
      */
     public function in(BoxInterface $box)
     {
@@ -61,6 +67,8 @@ final class Center implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::move()
      */
     public function move($amount)
     {
@@ -69,6 +77,8 @@ final class Center implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::__toString()
      */
     public function __toString()
     {

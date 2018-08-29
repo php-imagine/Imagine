@@ -26,12 +26,12 @@ abstract class Linear implements FillInterface
     private $length;
 
     /**
-     * @var ColorInterface
+     * @var \Imagine\Image\Palette\Color\ColorInterface
      */
     private $start;
 
     /**
-     * @var ColorInterface
+     * @var \Imagine\Image\Palette\Color\ColorInterface
      */
     private $end;
 
@@ -40,8 +40,8 @@ abstract class Linear implements FillInterface
      * end shades, which default to 0 and 255 accordingly.
      *
      * @param int $length
-     * @param ColorInterface $start
-     * @param ColorInterface $end
+     * @param \Imagine\Image\Palette\Color\ColorInterface $start
+     * @param \Imagine\Image\Palette\Color\ColorInterface $end
      */
     final public function __construct($length, ColorInterface $start, ColorInterface $end)
     {
@@ -52,6 +52,8 @@ abstract class Linear implements FillInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Fill\FillInterface::getColor()
      */
     final public function getColor(PointInterface $position)
     {
@@ -69,7 +71,7 @@ abstract class Linear implements FillInterface
     }
 
     /**
-     * @return ColorInterface
+     * @return \Imagine\Image\Palette\Color\ColorInterface
      */
     final public function getStart()
     {
@@ -77,7 +79,7 @@ abstract class Linear implements FillInterface
     }
 
     /**
-     * @return ColorInterface
+     * @return \Imagine\Image\Palette\Color\ColorInterface
      */
     final public function getEnd()
     {
@@ -87,7 +89,7 @@ abstract class Linear implements FillInterface
     /**
      * Get the distance of the position relative to the beginning of the gradient.
      *
-     * @param PointInterface $position
+     * @param \Imagine\Image\PointInterface $position
      *
      * @return int
      */

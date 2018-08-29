@@ -16,12 +16,18 @@ use Imagine\Filter\FilterInterface;
 use Imagine\Image\ImageInterface;
 
 /**
- * The RelativeResize filter allows images to be resized relative to their
- * existing dimensions.
+ * The RelativeResize filter allows images to be resized relative to their existing dimensions.
  */
 class RelativeResize implements FilterInterface
 {
+    /**
+     * @var string
+     */
     private $method;
+
+    /**
+     * @var mixed
+     */
     private $parameter;
 
     /**
@@ -42,6 +48,8 @@ class RelativeResize implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

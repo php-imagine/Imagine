@@ -25,33 +25,32 @@ use Imagine\Image\PointInterface;
 class Canvas implements FilterInterface
 {
     /**
-     * @var BoxInterface
+     * @var \Imagine\Image\BoxInterface
      */
     private $size;
 
     /**
-     * @var PointInterface
+     * @var \Imagine\Image\PointInterface
      */
     private $placement;
 
     /**
-     * @var ColorInterface
+     * @var \Imagine\Image\Palette\Color\ColorInterface
      */
     private $background;
 
     /**
-     * @var ImagineInterface
+     * @var \Imagine\Image\ImagineInterface
      */
     private $imagine;
 
     /**
-     * Constructs Canvas filter with given width and height and the placement of the current image
-     * inside the new canvas.
+     * Constructs Canvas filter with given width and height and the placement of the current image inside the new canvas.
      *
-     * @param ImagineInterface $imagine
-     * @param BoxInterface $size
-     * @param PointInterface $placement
-     * @param ColorInterface $background
+     * @param \Imagine\Image\ImagineInterface $imagine
+     * @param \Imagine\Image\BoxInterface $size
+     * @param \Imagine\Image\PointInterface $placement
+     * @param \Imagine\Image\Palette\Color\ColorInterface $background
      */
     public function __construct(ImagineInterface $imagine, BoxInterface $size, PointInterface $placement = null, ColorInterface $background = null)
     {
@@ -63,6 +62,8 @@ class Canvas implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

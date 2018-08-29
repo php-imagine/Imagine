@@ -33,7 +33,7 @@ interface PointInterface
     /**
      * Checks if current coordinate is inside a given box.
      *
-     * @param BoxInterface $box
+     * @param \Imagine\Image\BoxInterface $box
      *
      * @return bool
      */
@@ -44,7 +44,7 @@ interface PointInterface
      *
      * @param int $amount
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\PointInterface
      */
     public function move($amount);
 

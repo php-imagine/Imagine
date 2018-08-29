@@ -34,7 +34,7 @@ final class Point implements PointInterface
      * @param int $x
      * @param int $y
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      */
     public function __construct($x, $y)
     {
@@ -48,6 +48,8 @@ final class Point implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::getX()
      */
     public function getX()
     {
@@ -56,6 +58,8 @@ final class Point implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::getY()
      */
     public function getY()
     {
@@ -64,6 +68,8 @@ final class Point implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::in()
      */
     public function in(BoxInterface $box)
     {
@@ -72,6 +78,8 @@ final class Point implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::move()
      */
     public function move($amount)
     {
@@ -80,6 +88,8 @@ final class Point implements PointInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\PointInterface::__toString()
      */
     public function __toString()
     {

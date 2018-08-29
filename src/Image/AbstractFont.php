@@ -37,7 +37,7 @@ abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
     protected $size;
 
     /**
-     * @var ColorInterface
+     * @var \Imagine\Image\Palette\Color\ColorInterface
      */
     protected $color;
 
@@ -48,7 +48,7 @@ abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
      *
      * @param string $file
      * @param int $size
-     * @param ColorInterface $color
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
      */
     public function __construct($file, $size, ColorInterface $color)
     {
@@ -59,6 +59,8 @@ abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\FontInterface::getFile()
      */
     final public function getFile()
     {
@@ -67,6 +69,8 @@ abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\FontInterface::getSize()
      */
     final public function getSize()
     {
@@ -75,6 +79,8 @@ abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\FontInterface::getColor()
      */
     final public function getColor()
     {

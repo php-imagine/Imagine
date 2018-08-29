@@ -37,21 +37,24 @@ use Imagine\Utils\Matrix;
 class Neighborhood implements FilterInterface
 {
     /**
-     * @var Matrix
+     * @var \Imagine\Utils\Matrix
      */
     protected $matrix;
 
+    /**
+     * Initialize the instance.
+     *
+     * @param \Imagine\Utils\Matrix $matrix
+     */
     public function __construct(Matrix $matrix)
     {
         $this->matrix = $matrix;
     }
 
     /**
-     * Applies scheduled transformation to ImageInterface instance.
+     * {@inheritdoc}
      *
-     * @param ImageInterface $image
-     *
-     * @return ImageInterface returns processed ImageInterface instance
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

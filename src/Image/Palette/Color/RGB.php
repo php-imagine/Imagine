@@ -37,10 +37,15 @@ final class RGB implements ColorInterface
     private $alpha;
 
     /**
-     * @var RGBPalette
+     * @var \Imagine\Image\Palette\RGB
      */
     private $palette;
 
+    /**
+     * @param \Imagine\Image\Palette\RGB $palette
+     * @param int[] $color
+     * @param int $alpha
+     */
     public function __construct(RGBPalette $palette, array $color, $alpha)
     {
         $this->palette = $palette;
@@ -50,6 +55,8 @@ final class RGB implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::getValue()
      */
     public function getValue($component)
     {
@@ -66,7 +73,7 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Returns RED value of the color.
+     * Returns RED value of the color (from 0 to 255).
      *
      * @return int
      */
@@ -76,7 +83,7 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Returns GREEN value of the color.
+     * Returns GREEN value of the color (from 0 to 255).
      *
      * @return int
      */
@@ -86,7 +93,7 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Returns BLUE value of the color.
+     * Returns BLUE value of the color (from 0 to 255).
      *
      * @return int
      */
@@ -97,6 +104,8 @@ final class RGB implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::getPalette()
      */
     public function getPalette()
     {
@@ -105,6 +114,8 @@ final class RGB implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::getAlpha()
      */
     public function getAlpha()
     {
@@ -113,6 +124,8 @@ final class RGB implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::dissolve()
      */
     public function dissolve($alpha)
     {
@@ -121,6 +134,8 @@ final class RGB implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::lighten()
      */
     public function lighten($shade)
     {
@@ -135,6 +150,8 @@ final class RGB implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::darken()
      */
     public function darken($shade)
     {
@@ -149,6 +166,8 @@ final class RGB implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::grayscale()
      */
     public function grayscale()
     {
@@ -159,6 +178,8 @@ final class RGB implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::isOpaque()
      */
     public function isOpaque()
     {
@@ -182,7 +203,7 @@ final class RGB implements ColorInterface
      *
      * @param int $alpha
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      */
     private function setAlpha($alpha)
     {
@@ -200,7 +221,7 @@ final class RGB implements ColorInterface
      *
      * @param array $color
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      */
     private function setColor(array $color)
     {

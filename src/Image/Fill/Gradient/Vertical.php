@@ -20,6 +20,8 @@ final class Vertical extends Linear
 {
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Fill\Gradient\Linear::getDistance()
      */
     public function getDistance(PointInterface $position)
     {

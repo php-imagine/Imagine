@@ -22,8 +22,18 @@ use Imagine\Image\Point;
  */
 class OnPixelBased implements FilterInterface
 {
+    /**
+     * @var callable
+     */
     protected $callback;
 
+    /**
+     * Initialize the instance.
+     *
+     * @param callable $callback
+     *
+     * @throws \Imagine\Exception\InvalidArgumentException
+     */
     public function __construct($callback)
     {
         if (!is_callable($callback)) {
@@ -34,12 +44,9 @@ class OnPixelBased implements FilterInterface
     }
 
     /**
-     * Applies scheduled transformation to ImageInterface instance
-     * Returns processed ImageInterface instance.
+     * {@inheritdoc}
      *
-     * @param ImageInterface $image
-     *
-     * @return ImageInterface
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

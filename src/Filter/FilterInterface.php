@@ -19,12 +19,11 @@ use Imagine\Image\ImageInterface;
 interface FilterInterface
 {
     /**
-     * Applies scheduled transformation to ImageInterface instance
-     * Returns processed ImageInterface instance.
+     * Applies scheduled transformation to an ImageInterface instance.
      *
-     * @param ImageInterface $image
+     * @param \Imagine\Image\ImageInterface $image
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface returns the processed ImageInterface instance
      */
     public function apply(ImageInterface $image);
 }

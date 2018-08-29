@@ -12,13 +12,18 @@
 namespace Imagine\Image\Metadata;
 
 /**
- * An interface for Image Metadata.
+ * The container of the data extracted from metadata.
  */
 class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $data;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data = array())
     {
         $this->data = $data;
@@ -39,6 +44,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Countable::count()
      */
     public function count()
     {
@@ -47,6 +54,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
 
     /**
      * {@inheritdoc}
+     *
+     * @see \IteratorAggregate::getIterator()
      */
     public function getIterator()
     {
@@ -55,6 +64,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetExists()
      */
     public function offsetExists($offset)
     {
@@ -63,6 +74,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetSet()
      */
     public function offsetSet($offset, $value)
     {
@@ -71,6 +84,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetUnset()
      */
     public function offsetUnset($offset)
     {
@@ -79,6 +94,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetGet()
      */
     public function offsetGet($offset)
     {
@@ -86,9 +103,9 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     }
 
     /**
-     * Returns metadata as an array.
+     * Returns metadata as an associative array.
      *
-     * @return array An associative array
+     * @return array
      */
     public function toArray()
     {

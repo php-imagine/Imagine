@@ -20,11 +20,9 @@ use Imagine\Image\ImageInterface;
 class Negation implements FilterInterface
 {
     /**
-     * Applies scheduled transformation to ImageInterface instance.
+     * {@inheritdoc}
      *
-     * @param ImageInterface $image
-     *
-     * @return ImageInterface returns processed ImageInterface instance
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

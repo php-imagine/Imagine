@@ -31,7 +31,7 @@ use Imagine\Image\Palette\RGB;
 class Imagine extends AbstractImagine
 {
     /**
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      */
     public function __construct()
     {
@@ -42,6 +42,8 @@ class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::open()
      */
     public function open($path)
     {
@@ -64,6 +66,8 @@ class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::create()
      */
     public function create(BoxInterface $size, ColorInterface $color = null)
     {
@@ -108,6 +112,8 @@ class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::load()
      */
     public function load($string)
     {
@@ -116,6 +122,8 @@ class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::read()
      */
     public function read($resource)
     {
@@ -134,12 +142,21 @@ class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::font()
      */
     public function font($file, $size, ColorInterface $color)
     {
         return $this->getClassFactory()->createFont(ClassFactoryInterface::HANDLE_GMAGICK, $file, $size, $color);
     }
 
+    /**
+     * @param \Gmagick $gmagick
+     *
+     * @throws \Imagine\Exception\NotSupportedException
+     *
+     * @return \Imagine\Image\Palette\PaletteInterface
+     */
     private function createPalette(\Gmagick $gmagick)
     {
         switch ($gmagick->getimagecolorspace()) {
@@ -155,6 +172,14 @@ class Imagine extends AbstractImagine
         }
     }
 
+    /**
+     * @param string $content
+     * @param \Imagine\Image\Metadata\MetadataBag $metadata
+     *
+     * @throws \Imagine\Exception\RuntimeException
+     *
+     * @return \Imagine\Image\ImageInterface
+     */
     private function doLoad($content, MetadataBag $metadata)
     {
         try {

@@ -39,10 +39,13 @@ class Autorotate implements FilterInterface
      */
     const FLIP_HORIZONTALLY = 'H';
 
+    /**
+     * @var string|array|\Imagine\Image\Palette\Color\ColorInterface
+     */
     private $color;
 
     /**
-     * @param string|array|ColorInterface $color A color
+     * @param string|array|\Imagine\Image\Palette\Color\ColorInterface $color A color
      */
     public function __construct($color = '000000')
     {
@@ -51,6 +54,8 @@ class Autorotate implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {
@@ -70,7 +75,7 @@ class Autorotate implements FilterInterface
     /**
      * Get the transformations.
      *
-     * @param ImageInterface $image
+     * @param \Imagine\Image\ImageInterface $image
      *
      * @return array an array containing Autorotate::FLIP_VERTICALLY, Autorotate::FLIP_HORIZONTALLY, rotation degrees
      */
@@ -112,6 +117,11 @@ class Autorotate implements FilterInterface
         return $transformations;
     }
 
+    /**
+     * @param \Imagine\Image\ImageInterface $image
+     *
+     * @return \Imagine\Image\Palette\Color\ColorInterface
+     */
     private function getColor(ImageInterface $image)
     {
         if ($this->color instanceof ColorInterface) {

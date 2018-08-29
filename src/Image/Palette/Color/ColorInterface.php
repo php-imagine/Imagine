@@ -11,19 +11,62 @@
 
 namespace Imagine\Image\Palette\Color;
 
-use Imagine\Image\Palette\PaletteInterface;
-
 interface ColorInterface
 {
+    /**
+     * Channel name: red.
+     *
+     * @var string
+     */
     const COLOR_RED = 'red';
+
+    /**
+     * Channel name: green.
+     *
+     * @var string
+     */
     const COLOR_GREEN = 'green';
+
+    /**
+     * Channel name: blue.
+     *
+     * @var string
+     */
     const COLOR_BLUE = 'blue';
 
+    /**
+     * Channel name: cyan.
+     *
+     * @var string
+     */
     const COLOR_CYAN = 'cyan';
+
+    /**
+     * Channel name: magenta.
+     *
+     * @var string
+     */
     const COLOR_MAGENTA = 'magenta';
+
+    /**
+     * Channel name: yellow.
+     *
+     * @var string
+     */
     const COLOR_YELLOW = 'yellow';
+
+    /**
+     * Channel name: key (black).
+     *
+     * @var string
+     */
     const COLOR_KEYLINE = 'keyline';
 
+    /**
+     * Channel name: gray.
+     *
+     * @var string
+     */
     const COLOR_GRAY = 'gray';
 
     /**
@@ -31,58 +74,59 @@ interface ColorInterface
      *
      * @param string $component One of the ColorInterface::COLOR_* component
      *
-     * @return int
+     * @throws \Imagine\Exception\InvalidArgumentException if $component is not valid
+     *
+     * @return int|null
      */
     public function getValue($component);
 
     /**
-     * Returns percentage of transparency of the color.
+     * Returns percentage of transparency of the color (from 0 - fully transparent, to 100 - fully opaque).
      *
-     * @return int
+     * @return int|null return NULL if the color type does not support transparency
      */
     public function getAlpha();
 
     /**
      * Returns the palette attached to the current color.
      *
-     * @return PaletteInterface
+     * @return \Imagine\Image\Palette\PaletteInterface
      */
     public function getPalette();
 
     /**
-     * Returns a copy of current color, incrementing the alpha channel by the
-     * given amount.
+     * Returns a copy of current color, incrementing the alpha channel by the given amount.
      *
      * @param int $alpha
      *
-     * @return ColorInterface
+     * @throws \Imagine\Exception\RuntimeException if the color type does not support transparency
+     *
+     * @return static
      */
     public function dissolve($alpha);
 
     /**
-     * Returns a copy of the current color, lightened by the specified number
-     * of shades.
+     * Returns a copy of the current color, lightened by the specified number of shades.
      *
      * @param int $shade
      *
-     * @return ColorInterface
+     * @return static
      */
     public function lighten($shade);
 
     /**
-     * Returns a copy of the current color, darkened by the specified number of
-     * shades.
+     * Returns a copy of the current color, darkened by the specified number of shades.
      *
      * @param int $shade
      *
-     * @return ColorInterface
+     * @return static
      */
     public function darken($shade);
 
     /**
      * Returns a gray related to the current color.
      *
-     * @return ColorInterface
+     * @return static
      */
     public function grayscale();
 

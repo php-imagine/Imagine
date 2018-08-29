@@ -15,12 +15,11 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Factory\ClassFactory;
 use Imagine\Factory\ClassFactoryAwareInterface;
 use Imagine\Factory\ClassFactoryInterface;
-use Imagine\Image\Metadata\MetadataBag;
 
 abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterface
 {
     /**
-     * @var MetadataBag
+     * @var \Imagine\Image\Metadata\MetadataBag
      */
     protected $metadata;
 
@@ -32,7 +31,7 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::thumbnail()
      */
     public function thumbnail(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
@@ -169,6 +168,8 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::metadata()
      */
     public function metadata()
     {
@@ -176,7 +177,7 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
     }
 
     /**
-     * Assures the metadata instance will be cloned, too.
+     * Clones all the resources associated to this instance.
      */
     public function __clone()
     {

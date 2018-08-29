@@ -20,11 +20,34 @@ use Imagine\Image\Palette\PaletteInterface;
 
 class Layers extends AbstractLayers
 {
+    /**
+     * @var \Imagine\Gd\Image
+     */
     private $image;
+
+    /**
+     * @var int
+     */
     private $offset;
+
+    /**
+     * @var resource
+     */
     private $resource;
+
+    /**
+     * @var \Imagine\Image\Palette\PaletteInterface
+     */
     private $palette;
 
+    /**
+     * @param \Imagine\Gd\Image $image
+     * @param \Imagine\Image\Palette\PaletteInterface $palette
+     * @param resource $resource
+     * @param int $initialOffset
+     *
+     * @throws \Imagine\Exception\RuntimeException
+     */
     public function __construct(Image $image, PaletteInterface $palette, $resource, $initialOffset = 0)
     {
         if (!is_resource($resource)) {
@@ -39,6 +62,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::merge()
      */
     public function merge()
     {
@@ -46,6 +71,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::coalesce()
      */
     public function coalesce()
     {
@@ -54,6 +81,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::animate()
      */
     public function animate($format, $delay, $loops)
     {
@@ -62,6 +91,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::current()
      */
     public function current()
     {
@@ -70,6 +101,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::key()
      */
     public function key()
     {
@@ -78,6 +111,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::next()
      */
     public function next()
     {
@@ -86,6 +121,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::rewind()
      */
     public function rewind()
     {
@@ -94,6 +131,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::valid()
      */
     public function valid()
     {
@@ -102,6 +141,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Countable::count()
      */
     public function count()
     {
@@ -110,6 +151,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetExists()
      */
     public function offsetExists($offset)
     {
@@ -118,6 +161,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetGet()
      */
     public function offsetGet($offset)
     {
@@ -130,6 +175,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetSet()
      */
     public function offsetSet($offset, $value)
     {
@@ -138,6 +185,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetUnset()
      */
     public function offsetUnset($offset)
     {

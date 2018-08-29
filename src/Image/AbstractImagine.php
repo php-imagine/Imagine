@@ -86,7 +86,7 @@ abstract class AbstractImagine implements ImagineInterface
      *
      * @param string|object $path
      *
-     * @throws InvalidArgumentException in case the given path is invalid
+     * @throws \Imagine\Exception\InvalidArgumentException in case the given path is invalid
      *
      * @return string
      */

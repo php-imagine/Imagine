@@ -21,6 +21,8 @@ final class Font extends AbstractFont
 {
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\FontInterface::box()
      */
     public function box($string, $angle = 0)
     {

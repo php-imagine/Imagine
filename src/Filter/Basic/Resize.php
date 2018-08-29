@@ -21,15 +21,19 @@ use Imagine\Image\ImageInterface;
 class Resize implements FilterInterface
 {
     /**
-     * @var BoxInterface
+     * @var \Imagine\Image\BoxInterface
      */
     private $size;
+
+    /**
+     * @var string
+     */
     private $filter;
 
     /**
      * Constructs Resize filter with given width and height.
      *
-     * @param BoxInterface $size
+     * @param \Imagine\Image\BoxInterface $size
      * @param string $filter
      */
     public function __construct(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
@@ -40,6 +44,8 @@ class Resize implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

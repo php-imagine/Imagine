@@ -23,8 +23,16 @@ use Imagine\Utils\Matrix;
  */
 class Effects implements EffectsInterface
 {
+    /**
+     * @var \Gmagick
+     */
     private $gmagick;
 
+    /**
+     * Initialize the instance.
+     *
+     * @param \Gmagick $gmagick
+     */
     public function __construct(\Gmagick $gmagick)
     {
         $this->gmagick = $gmagick;
@@ -32,6 +40,8 @@ class Effects implements EffectsInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Effects\EffectsInterface::gamma()
      */
     public function gamma($correction)
     {
@@ -46,6 +56,8 @@ class Effects implements EffectsInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Effects\EffectsInterface::negative()
      */
     public function negative()
     {
@@ -64,6 +76,8 @@ class Effects implements EffectsInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Effects\EffectsInterface::grayscale()
      */
     public function grayscale()
     {
@@ -78,6 +92,8 @@ class Effects implements EffectsInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Effects\EffectsInterface::colorize()
      */
     public function colorize(ColorInterface $color)
     {
@@ -86,6 +102,8 @@ class Effects implements EffectsInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Effects\EffectsInterface::sharpen()
      */
     public function sharpen()
     {
@@ -94,6 +112,8 @@ class Effects implements EffectsInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Effects\EffectsInterface::blur()
      */
     public function blur($sigma = 1)
     {
@@ -108,6 +128,8 @@ class Effects implements EffectsInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Effects\EffectsInterface::brightness()
      */
     public function brightness($brightness)
     {
@@ -132,6 +154,8 @@ class Effects implements EffectsInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Effects\EffectsInterface::convolve()
      */
     public function convolve(Matrix $matrix)
     {

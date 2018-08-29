@@ -38,10 +38,14 @@ final class CMYK implements ColorInterface
     private $k;
 
     /**
-     * @var CMYK
+     * @var \Imagine\Image\Palette\CMYK
      */
     private $palette;
 
+    /**
+     * @param \Imagine\Image\Palette\CMYK $palette
+     * @param int[] $color
+     */
     public function __construct(CMYKPalette $palette, array $color)
     {
         $this->palette = $palette;
@@ -50,6 +54,8 @@ final class CMYK implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::getValue()
      */
     public function getValue($component)
     {
@@ -68,7 +74,7 @@ final class CMYK implements ColorInterface
     }
 
     /**
-     * Returns Cyan value of the color.
+     * Returns Cyan value of the color (from 0 to 100).
      *
      * @return int
      */
@@ -78,7 +84,7 @@ final class CMYK implements ColorInterface
     }
 
     /**
-     * Returns Magenta value of the color.
+     * Returns Magenta value of the color (from 0 to 100).
      *
      * @return int
      */
@@ -88,7 +94,7 @@ final class CMYK implements ColorInterface
     }
 
     /**
-     * Returns Yellow value of the color.
+     * Returns Yellow value of the color (from 0 to 100).
      *
      * @return int
      */
@@ -98,7 +104,7 @@ final class CMYK implements ColorInterface
     }
 
     /**
-     * Returns Key value of the color.
+     * Returns Key value of the color (from 0 to 100).
      *
      * @return int
      */
@@ -109,6 +115,8 @@ final class CMYK implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::getPalette()
      */
     public function getPalette()
     {
@@ -117,6 +125,8 @@ final class CMYK implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::getAlpha()
      */
     public function getAlpha()
     {
@@ -125,6 +135,8 @@ final class CMYK implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::dissolve()
      */
     public function dissolve($alpha)
     {
@@ -133,6 +145,8 @@ final class CMYK implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::lighten()
      */
     public function lighten($shade)
     {
@@ -148,6 +162,8 @@ final class CMYK implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::darken()
      */
     public function darken($shade)
     {
@@ -163,6 +179,8 @@ final class CMYK implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::grayscale()
      */
     public function grayscale()
     {
@@ -179,6 +197,8 @@ final class CMYK implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::isOpaque()
      */
     public function isOpaque()
     {
@@ -198,9 +218,9 @@ final class CMYK implements ColorInterface
     /**
      * Internal, Performs checks for color validity (an of array(C, M, Y, K)).
      *
-     * @param array $color
+     * @param int[] $color
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      */
     private function setColor(array $color)
     {
