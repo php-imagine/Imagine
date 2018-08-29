@@ -21,7 +21,7 @@ use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\PointInterface;
 
 /**
- * Drawer implementation using the GD library.
+ * Drawer implementation using the GD PHP extension.
  */
 final class Drawer implements DrawerInterface
 {
@@ -48,6 +48,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::arc()
      */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $thickness = 1)
     {
@@ -73,6 +75,8 @@ final class Drawer implements DrawerInterface
      * This function does not work properly because of a bug in GD.
      *
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::chord()
      */
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
@@ -102,6 +106,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::ellipse()
      */
     public function ellipse(PointInterface $center, BoxInterface $size, ColorInterface $color, $fill = false, $thickness = 1)
     {
@@ -131,6 +137,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::line()
      */
     public function line(PointInterface $start, PointInterface $end, ColorInterface $color, $thickness = 1)
     {
@@ -154,6 +162,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::pieSlice()
      */
     public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
@@ -183,6 +193,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::dot()
      */
     public function dot(PointInterface $position, ColorInterface $color)
     {
@@ -204,6 +216,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::polygon()
      */
     public function polygon(array $coordinates, ColorInterface $color, $fill = false, $thickness = 1)
     {
@@ -241,6 +255,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::text()
      */
     public function text($string, AbstractFont $font, PointInterface $position, $angle = 0, $width = null)
     {
@@ -282,14 +298,12 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * Internal.
+     * Generates a GD color from Color instance.
      *
-     * Generates a GD color from Color instance
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
      *
-     * @param ColorInterface $color
-     *
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\RuntimeException
+     * @throws \Imagine\Exception\InvalidArgumentException
      *
      * @return resource
      */
@@ -317,12 +331,10 @@ final class Drawer implements DrawerInterface
     }
 
     /**
-     * Internal.
-     *
-     * Fits a string into box with given width
+     * Fits a string into box with given width.
      *
      * @param string $string
-     * @param AbstractFont $font
+     * @param \Imagine\Image\AbstractFont $font
      * @param int $angle
      * @param int $width
      */

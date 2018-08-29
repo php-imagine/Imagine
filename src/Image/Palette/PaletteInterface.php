@@ -14,32 +14,52 @@ namespace Imagine\Image\Palette;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\ProfileInterface;
 
+/**
+ * Interface that any palette must implement.
+ */
 interface PaletteInterface
 {
+    /**
+     * Palette name: grayscale.
+     *
+     * @var string
+     */
     const PALETTE_GRAYSCALE = 'gray';
+
+    /**
+     * Palette name: RGB.
+     *
+     * @var string
+     */
     const PALETTE_RGB = 'rgb';
+
+    /**
+     * Palette name: CMYK.
+     *
+     * @var string
+     */
     const PALETTE_CMYK = 'cmyk';
 
     /**
      * Returns a color given some values.
      *
-     * @param string|array|int $color A color
+     * @param string|int[]|int $color A color
      * @param int|null $alpha Set alpha to null to disable it
      *
      * @throws \Imagine\Exception\InvalidArgumentException In case you pass an alpha value to a Palette that does not support alpha
      *
-     * @return ColorInterface
+     * @return \Imagine\Image\Palette\Color\ColorInterface
      */
     public function color($color, $alpha = null);
 
     /**
      * Blend two colors given an amount.
      *
-     * @param ColorInterface $color1
-     * @param ColorInterface $color2
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color1
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color2
      * @param float $amount The amount of color2 in color1
      *
-     * @return ColorInterface
+     * @return \Imagine\Image\Palette\Color\ColorInterface
      */
     public function blend(ColorInterface $color1, ColorInterface $color2, $amount);
 
@@ -48,22 +68,21 @@ interface PaletteInterface
      *
      * (A default profile is provided by default)
      *
-     * @param ProfileInterface $profile
+     * @param \Imagine\Image\ProfileInterface $profile
      *
-     * @return PaletteInterface
+     * @return $this
      */
     public function useProfile(ProfileInterface $profile);
 
     /**
      * Returns the ICC profile attached to this Palette.
      *
-     * @return ProfileInterface
+     * @return \Imagine\Image\ProfileInterface
      */
     public function profile();
 
     /**
-     * Returns the name of this Palette, one of PaletteInterface::PALETTE_*
-     * constants.
+     * Returns the name of this Palette, one of PaletteInterface::PALETTE_ constants.
      *
      * @return string
      */
@@ -73,7 +92,7 @@ interface PaletteInterface
      * Returns an array containing ColorInterface::COLOR_* constants that
      * define the structure of colors for a pixel.
      *
-     * @return array
+     * @return string[]
      */
     public function pixelDefinition();
 

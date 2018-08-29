@@ -13,11 +13,25 @@ namespace Imagine\Image;
 
 use Imagine\Exception\InvalidArgumentException;
 
+/**
+ * The default implementation of ProfileInterface.
+ */
 class Profile implements ProfileInterface
 {
+    /**
+     * @var string
+     */
     private $data;
+
+    /**
+     * @var string
+     */
     private $name;
 
+    /**
+     * @param string $name
+     * @param string $data
+     */
     public function __construct($name, $data)
     {
         $this->name = $name;
@@ -26,6 +40,8 @@ class Profile implements ProfileInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ProfileInterface::name()
      */
     public function name()
     {
@@ -34,6 +50,8 @@ class Profile implements ProfileInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ProfileInterface::data()
      */
     public function data()
     {
@@ -45,9 +63,9 @@ class Profile implements ProfileInterface
      *
      * @param string $path
      *
-     * @throws InvalidArgumentException In case the provided path is not valid
+     * @throws \Imagine\Exception\InvalidArgumentException In case the provided path is not valid
      *
-     * @return Profile
+     * @return static
      */
     public static function fromPath($path)
     {

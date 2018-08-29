@@ -23,7 +23,7 @@ use Imagine\Image\Palette\PaletteInterface;
 class Layers extends AbstractLayers
 {
     /**
-     * @var Image
+     * @var \Imagine\Gmagick\Image
      */
     private $image;
 
@@ -38,15 +38,21 @@ class Layers extends AbstractLayers
     private $offset;
 
     /**
-     * @var array
+     * @var \Imagine\Gmagick\Image[]
      */
     private $layers = array();
 
     /**
-     * @var PaletteInterface
+     * @var \Imagine\Image\Palette\PaletteInterface
      */
     private $palette;
 
+    /**
+     * @param \Imagine\Gmagick\Image $image
+     * @param \Imagine\Image\Palette\PaletteInterface $palette
+     * @param \Gmagick $resource
+     * @param int $initialOffset
+     */
     public function __construct(Image $image, PaletteInterface $palette, \Gmagick $resource, $initialOffset = 0)
     {
         $this->image = $image;
@@ -57,6 +63,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::merge()
      */
     public function merge()
     {
@@ -72,6 +80,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::coalesce()
      */
     public function coalesce()
     {
@@ -80,6 +90,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::animate()
      */
     public function animate($format, $delay, $loops)
     {
@@ -115,6 +127,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::current()
      */
     public function current()
     {
@@ -126,9 +140,9 @@ class Layers extends AbstractLayers
      *
      * @param int $offset
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return Image
+     * @return \Imagine\Gmagick\Image
      */
     private function extractAt($offset)
     {
@@ -146,6 +160,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::key()
      */
     public function key()
     {
@@ -154,6 +170,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::next()
      */
     public function next()
     {
@@ -162,6 +180,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::rewind()
      */
     public function rewind()
     {
@@ -170,6 +190,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Iterator::valid()
      */
     public function valid()
     {
@@ -178,6 +200,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Countable::count()
      */
     public function count()
     {
@@ -190,6 +214,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetExists()
      */
     public function offsetExists($offset)
     {
@@ -198,6 +224,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetGet()
      */
     public function offsetGet($offset)
     {
@@ -206,6 +234,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetSet()
      */
     public function offsetSet($offset, $image)
     {
@@ -257,6 +287,8 @@ class Layers extends AbstractLayers
 
     /**
      * {@inheritdoc}
+     *
+     * @see \ArrayAccess::offsetUnset()
      */
     public function offsetUnset($offset)
     {

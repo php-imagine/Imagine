@@ -29,7 +29,7 @@ use Imagine\Image\Palette\RGB;
 final class Imagine extends AbstractImagine
 {
     /**
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      */
     public function __construct()
     {
@@ -38,6 +38,8 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::create()
      */
     public function create(BoxInterface $size, ColorInterface $color = null)
     {
@@ -76,6 +78,8 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::open()
      */
     public function open($path)
     {
@@ -93,6 +97,8 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::load()
      */
     public function load($string)
     {
@@ -101,6 +107,8 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::read()
      */
     public function read($resource)
     {
@@ -119,12 +127,23 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::font()
      */
     public function font($file, $size, ColorInterface $color)
     {
         return $this->getClassFactory()->createFont(ClassFactoryInterface::HANDLE_GD, $file, $size, $color);
     }
 
+    /**
+     * @param resource $resource
+     * @param \Imagine\Image\Palette\PaletteInterface $palette
+     * @param \Imagine\Image\Metadata\MetadataBag $metadata
+     *
+     * @throws \Imagine\Exception\RuntimeException
+     *
+     * @return \Imagine\Image\ImageInterface
+     */
     private function wrap($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
         if (!imageistruecolor($resource)) {
@@ -161,6 +180,11 @@ final class Imagine extends AbstractImagine
         return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $resource, $palette, $metadata);
     }
 
+    /**
+     * @param string $version
+     *
+     * @throws \Imagine\Exception\RuntimeException
+     */
     private function requireGdVersion($version)
     {
         if (!function_exists('gd_info')) {
@@ -171,6 +195,14 @@ final class Imagine extends AbstractImagine
         }
     }
 
+    /**
+     * @param string $string
+     * @param \Imagine\Image\Metadata\MetadataBag $metadata
+     *
+     * @throws \Imagine\Exception\RuntimeException
+     *
+     * @return \Imagine\Image\ImageInterface
+     */
     private function doLoad($string, MetadataBag $metadata)
     {
         $resource = @imagecreatefromstring($string);

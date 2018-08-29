@@ -21,12 +21,12 @@ use Imagine\Image\ImageInterface;
 class Fill implements FilterInterface
 {
     /**
-     * @var FillInterface
+     * @var \Imagine\Image\Fill\FillInterface
      */
     private $fill;
 
     /**
-     * @param FillInterface $fill
+     * @param \Imagine\Image\Fill\FillInterface $fill
      */
     public function __construct(FillInterface $fill)
     {
@@ -35,6 +35,8 @@ class Fill implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

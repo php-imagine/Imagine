@@ -27,10 +27,15 @@ final class Gray implements ColorInterface
     private $alpha;
 
     /**
-     * @var Grayscale
+     * @var \Imagine\Image\Palette\Grayscale
      */
     private $palette;
 
+    /**
+     * @param \Imagine\Image\Palette\Grayscale $palette
+     * @param int[] $color
+     * @param int $alpha
+     */
     public function __construct(Grayscale $palette, array $color, $alpha)
     {
         $this->palette = $palette;
@@ -40,6 +45,8 @@ final class Gray implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::getValue()
      */
     public function getValue($component)
     {
@@ -52,7 +59,7 @@ final class Gray implements ColorInterface
     }
 
     /**
-     * Returns Gray value of the color.
+     * Returns Gray value of the color (from 0 to 255).
      *
      * @return int
      */
@@ -63,6 +70,8 @@ final class Gray implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::getPalette()
      */
     public function getPalette()
     {
@@ -71,6 +80,8 @@ final class Gray implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::getAlpha()
      */
     public function getAlpha()
     {
@@ -79,6 +90,8 @@ final class Gray implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::dissolve()
      */
     public function dissolve($alpha)
     {
@@ -89,6 +102,8 @@ final class Gray implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::lighten()
      */
     public function lighten($shade)
     {
@@ -97,6 +112,8 @@ final class Gray implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::darken()
      */
     public function darken($shade)
     {
@@ -105,6 +122,8 @@ final class Gray implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::grayscale()
      */
     public function grayscale()
     {
@@ -113,6 +132,8 @@ final class Gray implements ColorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\Color\ColorInterface::isOpaque()
      */
     public function isOpaque()
     {
@@ -134,7 +155,7 @@ final class Gray implements ColorInterface
      *
      * @param int $alpha
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      */
     private function setAlpha($alpha)
     {
@@ -148,9 +169,9 @@ final class Gray implements ColorInterface
     /**
      * Performs checks for color validity (array of array(gray)).
      *
-     * @param array $color
+     * @param int[] $color
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      */
     private function setColor(array $color)
     {

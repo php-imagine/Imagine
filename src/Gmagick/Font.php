@@ -28,7 +28,7 @@ final class Font extends AbstractFont
      * @param \Gmagick $gmagick
      * @param string $file
      * @param int $size
-     * @param ColorInterface $color
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
      */
     public function __construct(\Gmagick $gmagick, $file, $size, ColorInterface $color)
     {
@@ -39,6 +39,8 @@ final class Font extends AbstractFont
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\FontInterface::box()
      */
     public function box($string, $angle = 0)
     {

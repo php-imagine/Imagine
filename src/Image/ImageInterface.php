@@ -11,11 +11,6 @@
 
 namespace Imagine\Image;
 
-use Imagine\Draw\DrawerInterface;
-use Imagine\Effects\EffectsInterface;
-use Imagine\Exception\OutOfBoundsException;
-use Imagine\Exception\RuntimeException;
-use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\PaletteInterface;
 
 /**
@@ -23,29 +18,158 @@ use Imagine\Image\Palette\PaletteInterface;
  */
 interface ImageInterface extends ManipulatorInterface
 {
+    /**
+     * Resolution units: pixels per inch.
+     *
+     * @var string
+     */
     const RESOLUTION_PIXELSPERINCH = 'ppi';
+
+    /**
+     * Resolution units: pixels per centimeter.
+     *
+     * @var string
+     */
     const RESOLUTION_PIXELSPERCENTIMETER = 'ppc';
 
+    /**
+     * Image interlacing: none.
+     *
+     * @var string
+     */
     const INTERLACE_NONE = 'none';
+
+    /**
+     * Image interlacing: scanline.
+     *
+     * @var string
+     */
     const INTERLACE_LINE = 'line';
+
+    /**
+     * Image interlacing: plane.
+     *
+     * @var string
+     */
     const INTERLACE_PLANE = 'plane';
+
+    /**
+     * Image interlacing: like plane interlacing except the different planes are saved to individual files.
+     *
+     * @var string
+     */
     const INTERLACE_PARTITION = 'partition';
 
+    /**
+     * Image filter: none/undefined.
+     *
+     * @var string
+     */
     const FILTER_UNDEFINED = 'undefined';
+
+    /**
+     * Resampling filter: point (interpolated).
+     *
+     * @var string
+     */
     const FILTER_POINT = 'point';
+
+    /**
+     * Resampling filter: box.
+     *
+     * @var string
+     */
     const FILTER_BOX = 'box';
+
+    /**
+     * Resampling filter: triangle.
+     *
+     * @var string
+     */
     const FILTER_TRIANGLE = 'triangle';
+
+    /**
+     * Resampling filter: hermite.
+     *
+     * @var string
+     */
     const FILTER_HERMITE = 'hermite';
+
+    /**
+     * Resampling filter: hanning.
+     *
+     * @var string
+     */
     const FILTER_HANNING = 'hanning';
+
+    /**
+     * Resampling filter: hamming.
+     *
+     * @var string
+     */
     const FILTER_HAMMING = 'hamming';
+
+    /**
+     * Resampling filter: blackman.
+     *
+     * @var string
+     */
     const FILTER_BLACKMAN = 'blackman';
+
+    /**
+     * Resampling filter: gaussian.
+     *
+     * @var string
+     */
     const FILTER_GAUSSIAN = 'gaussian';
+
+    /**
+     * Resampling filter: quadratic.
+     *
+     * @var string
+     */
     const FILTER_QUADRATIC = 'quadratic';
+
+    /**
+     * Resampling filter: cubic.
+     *
+     * @var string
+     */
     const FILTER_CUBIC = 'cubic';
+
+    /**
+     * Resampling filter: catrom.
+     *
+     * @var string
+     */
     const FILTER_CATROM = 'catrom';
+
+    /**
+     * Resampling filter: mitchell.
+     *
+     * @var string
+     */
     const FILTER_MITCHELL = 'mitchell';
+
+    /**
+     * Resampling filter: lanczos.
+     *
+     * @var string
+     */
     const FILTER_LANCZOS = 'lanczos';
+
+    /**
+     * Resampling filter: bessel.
+     *
+     * @var string
+     */
     const FILTER_BESSEL = 'bessel';
+
+    /**
+     * Resampling filter: sinc.
+     *
+     * @var string
+     */
     const FILTER_SINC = 'sinc';
 
     /**
@@ -54,7 +178,7 @@ interface ImageInterface extends ManipulatorInterface
      * @param string $format
      * @param array $options
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
      * @return string binary
      */
@@ -63,7 +187,7 @@ interface ImageInterface extends ManipulatorInterface
     /**
      * Returns the image content as a PNG binary string.
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
      * @return string binary
      */
@@ -72,19 +196,19 @@ interface ImageInterface extends ManipulatorInterface
     /**
      * Instantiates and returns a DrawerInterface instance for image drawing.
      *
-     * @return DrawerInterface
+     * @return \Imagine\Draw\DrawerInterface
      */
     public function draw();
 
     /**
-     * @return EffectsInterface
+     * @return \Imagine\Effects\EffectsInterface
      */
     public function effects();
 
     /**
      * Returns current image size.
      *
-     * @return BoxInterface
+     * @return \Imagine\Image\BoxInterface
      */
     public function getSize();
 
@@ -92,35 +216,35 @@ interface ImageInterface extends ManipulatorInterface
      * Transforms creates a grayscale mask from current image, returns a new
      * image, while keeping the existing image unmodified.
      *
-     * @return ImageInterface
+     * @return static
      */
     public function mask();
 
     /**
      * Returns array of image colors as Imagine\Image\Palette\Color\ColorInterface instances.
      *
-     * @return array
+     * @return \Imagine\Image\Palette\Color\ColorInterface[]
      */
     public function histogram();
 
     /**
      * Returns color at specified positions of current image.
      *
-     * @param PointInterface $point
+     * @param \Imagine\Image\PointInterface $point
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return ColorInterface
+     * @return \Imagine\Image\Palette\Color\ColorInterface
      */
     public function getColorAt(PointInterface $point);
 
     /**
      * Returns the image layers when applicable.
      *
-     * @throws RuntimeException In case the layer can not be returned
-     * @throws OutOfBoundsException In case the index is not a valid value
+     * @throws \Imagine\Exception\RuntimeException In case the layer can not be returned
+     * @throws \Imagine\Exception\OutOfBoundsException In case the index is not a valid value
      *
-     * @return LayersInterface
+     * @return \Imagine\Image\LayersInterface
      */
     public function layers();
 
@@ -131,43 +255,43 @@ interface ImageInterface extends ManipulatorInterface
      *
      * @throws \Imagine\Exception\InvalidArgumentException When an unsupported Interface type is supplied
      *
-     * @return ImageInterface
+     * @return $this
      */
     public function interlace($scheme);
 
     /**
      * Return the current color palette.
      *
-     * @return PaletteInterface
+     * @return \Imagine\Image\Palette\PaletteInterface
      */
     public function palette();
 
     /**
      * Set a palette for the image. Useful to change colorspace.
      *
-     * @param PaletteInterface $palette
+     * @param \Imagine\Image\Palette\PaletteInterface $palette
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return $this
      */
     public function usePalette(PaletteInterface $palette);
 
     /**
      * Applies a color profile on the Image.
      *
-     * @param ProfileInterface $profile
+     * @param \Imagine\Image\ProfileInterface $profile
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return $this
      */
     public function profile(ProfileInterface $profile);
 
     /**
      * Returns the Image's meta data.
      *
-     * @return Metadata\MetadataBag
+     * @return \Imagine\Image\Metadata\MetadataBag
      */
     public function metadata();
 }

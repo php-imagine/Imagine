@@ -22,14 +22,14 @@ abstract class ImagineAware implements FilterInterface
     /**
      * An ImagineInterface instance.
      *
-     * @var ImagineInterface
+     * @var \Imagine\Image\ImagineInterface
      */
     private $imagine;
 
     /**
      * Set ImagineInterface instance.
      *
-     * @param ImagineInterface $imagine An ImagineInterface instance
+     * @param \Imagine\Image\ImagineInterface $imagine An ImagineInterface instance
      */
     public function setImagine(ImagineInterface $imagine)
     {
@@ -39,9 +39,9 @@ abstract class ImagineAware implements FilterInterface
     /**
      * Get ImagineInterface instance.
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      *
-     * @return ImagineInterface
+     * @return \Imagine\Image\ImagineInterface
      */
     public function getImagine()
     {

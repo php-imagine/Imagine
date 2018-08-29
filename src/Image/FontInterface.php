@@ -11,8 +11,6 @@
 
 namespace Imagine\Image;
 
-use Imagine\Image\Palette\Color\ColorInterface;
-
 /**
  * The font interface.
  */
@@ -35,7 +33,7 @@ interface FontInterface
     /**
      * Gets font's color.
      *
-     * @return ColorInterface
+     * @return \Imagine\Image\Palette\Color\ColorInterface
      */
     public function getColor();
 
@@ -45,7 +43,7 @@ interface FontInterface
      * @param string $string
      * @param int $angle
      *
-     * @return BoxInterface
+     * @return \Imagine\Image\BoxInterface
      */
     public function box($string, $angle = 0);
 }

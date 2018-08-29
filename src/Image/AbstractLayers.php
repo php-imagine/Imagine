@@ -24,6 +24,8 @@ abstract class AbstractLayers implements LayersInterface, ClassFactoryAwareInter
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::add()
      */
     public function add(ImageInterface $image)
     {
@@ -34,6 +36,8 @@ abstract class AbstractLayers implements LayersInterface, ClassFactoryAwareInter
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::set()
      */
     public function set($offset, ImageInterface $image)
     {
@@ -44,6 +48,8 @@ abstract class AbstractLayers implements LayersInterface, ClassFactoryAwareInter
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::remove()
      */
     public function remove($offset)
     {
@@ -54,6 +60,8 @@ abstract class AbstractLayers implements LayersInterface, ClassFactoryAwareInter
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::get()
      */
     public function get($offset)
     {
@@ -62,6 +70,8 @@ abstract class AbstractLayers implements LayersInterface, ClassFactoryAwareInter
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\LayersInterface::has()
      */
     public function has($offset)
     {

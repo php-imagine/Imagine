@@ -22,21 +22,20 @@ use Imagine\Image\PointInterface;
 class Crop implements FilterInterface
 {
     /**
-     * @var PointInterface
+     * @var \Imagine\Image\PointInterface
      */
     private $start;
 
     /**
-     * @var BoxInterface
+     * @var \Imagine\Image\BoxInterface
      */
     private $size;
 
     /**
-     * Constructs a Crop filter with given x, y, coordinates and crop width and
-     * height values.
+     * Constructs a Crop filter with given x, y, coordinates and crop width and height values.
      *
-     * @param PointInterface $start
-     * @param BoxInterface $size
+     * @param \Imagine\Image\PointInterface $start
+     * @param \Imagine\Image\BoxInterface $size
      */
     public function __construct(PointInterface $start, BoxInterface $size)
     {
@@ -46,6 +45,8 @@ class Crop implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

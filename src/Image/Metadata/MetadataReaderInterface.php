@@ -11,8 +11,9 @@
 
 namespace Imagine\Image\Metadata;
 
-use Imagine\Exception\InvalidArgumentException;
-
+/**
+ * Interface that metadata readers must implement.
+ */
 interface MetadataReaderInterface
 {
     /**
@@ -20,9 +21,9 @@ interface MetadataReaderInterface
      *
      * @param string|\Imagine\File\LoaderInterface $file the path to the file where to read metadata
      *
-     * @throws InvalidArgumentException in case the file does not exist
+     * @throws \Imagine\Exception\InvalidArgumentException in case the file does not exist
      *
-     * @return MetadataBag
+     * @return \Imagine\Image\Metadata\MetadataBag
      */
     public function readFile($file);
 
@@ -32,7 +33,7 @@ interface MetadataReaderInterface
      * @param string $data the binary string to read
      * @param resource $originalResource an optional resource to gather stream metadata
      *
-     * @return MetadataBag
+     * @return \Imagine\Image\Metadata\MetadataBag
      */
     public function readData($data, $originalResource = null);
 
@@ -41,9 +42,9 @@ interface MetadataReaderInterface
      *
      * @param resource $resource the stream to read
      *
-     * @throws InvalidArgumentException in case the resource is not valid
+     * @throws \Imagine\Exception\InvalidArgumentException in case the resource is not valid
      *
-     * @return MetadataBag
+     * @return \Imagine\Image\Metadata\MetadataBag
      */
     public function readStream($resource);
 }

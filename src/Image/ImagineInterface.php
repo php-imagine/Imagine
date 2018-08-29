@@ -11,8 +11,6 @@
 
 namespace Imagine\Image;
 
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\RuntimeException;
 use Imagine\Factory\ClassFactoryAwareInterface;
 use Imagine\Image\Metadata\MetadataReaderInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
@@ -27,13 +25,13 @@ interface ImagineInterface extends ClassFactoryAwareInterface
     /**
      * Creates a new empty image with an optional background color.
      *
-     * @param BoxInterface $size
-     * @param ColorInterface $color
+     * @param \Imagine\Image\BoxInterface $size
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
      *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\InvalidArgumentException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function create(BoxInterface $size, ColorInterface $color = null);
 
@@ -42,9 +40,9 @@ interface ImagineInterface extends ClassFactoryAwareInterface
      *
      * @param string|\Imagine\File\LoaderInterface|mixed $path the file path, a LoaderInterface instance, or an object whose string representation is the image path
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function open($path);
 
@@ -53,9 +51,9 @@ interface ImagineInterface extends ClassFactoryAwareInterface
      *
      * @param string $string
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function load($string);
 
@@ -64,9 +62,9 @@ interface ImagineInterface extends ClassFactoryAwareInterface
      *
      * @param resource $resource
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function read($resource);
 
@@ -77,9 +75,9 @@ interface ImagineInterface extends ClassFactoryAwareInterface
      *
      * @param string $file
      * @param int $size
-     * @param ColorInterface $color
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
      *
-     * @return FontInterface
+     * @return \Imagine\Image\FontInterface
      */
     public function font($file, $size, ColorInterface $color);
 

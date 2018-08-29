@@ -15,10 +15,15 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\File\Loader;
 use Imagine\File\LoaderInterface;
 
+/**
+ * Base class for the default metadata readers.
+ */
 abstract class AbstractMetadataReader implements MetadataReaderInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Metadata\MetadataReaderInterface::readFile()
      */
     public function readFile($file)
     {
@@ -29,6 +34,8 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Metadata\MetadataReaderInterface::readData()
      */
     public function readData($data, $originalResource = null)
     {
@@ -41,6 +48,8 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Metadata\MetadataReaderInterface::readStream()
      */
     public function readStream($resource)
     {

@@ -30,7 +30,7 @@ use Imagine\Image\Palette\RGB;
 final class Imagine extends AbstractImagine
 {
     /**
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      */
     public function __construct()
     {
@@ -47,6 +47,8 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::open()
      */
     public function open($path)
     {
@@ -76,6 +78,8 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::create()
      */
     public function create(BoxInterface $size, ColorInterface $color = null)
     {
@@ -114,6 +118,8 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::load()
      */
     public function load($string)
     {
@@ -131,6 +137,8 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::read()
      */
     public function read($resource)
     {
@@ -152,6 +160,8 @@ final class Imagine extends AbstractImagine
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImagineInterface::font()
      */
     public function font($file, $size, ColorInterface $color)
     {
@@ -163,9 +173,9 @@ final class Imagine extends AbstractImagine
      *
      * @param \Imagick $imagick
      *
-     * @throws NotSupportedException
+     * @throws \Imagine\Exception\NotSupportedException
      *
-     * @return CMYK|Grayscale|RGB
+     * @return \Imagine\Image\Palette\CMYK|\Imagine\Image\Palette\Grayscale|\Imagine\Image\Palette\RGB
      */
     private function createPalette(\Imagick $imagick)
     {

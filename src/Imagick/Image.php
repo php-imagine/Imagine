@@ -39,12 +39,12 @@ final class Image extends AbstractImage
     private $imagick;
 
     /**
-     * @var Layers|null
+     * @var \Imagine\Imagick\Layers|null
      */
     private $layers;
 
     /**
-     * @var PaletteInterface
+     * @var \Imagine\Image\Palette\PaletteInterface
      */
     private $palette;
 
@@ -58,6 +58,9 @@ final class Image extends AbstractImage
      */
     private static $supportsProfiles;
 
+    /**
+     * @var array
+     */
     private static $colorspaceMapping = array(
         PaletteInterface::PALETTE_CMYK => \Imagick::COLORSPACE_CMYK,
         PaletteInterface::PALETTE_RGB => \Imagick::COLORSPACE_RGB,
@@ -68,8 +71,8 @@ final class Image extends AbstractImage
      * Constructs a new Image instance.
      *
      * @param \Imagick $imagick
-     * @param PaletteInterface $palette
-     * @param MetadataBag $metadata
+     * @param \Imagine\Image\Palette\PaletteInterface $palette
+     * @param \Imagine\Image\Metadata\MetadataBag $metadata
      */
     public function __construct(\Imagick $imagick, PaletteInterface $palette, MetadataBag $metadata)
     {
@@ -82,6 +85,11 @@ final class Image extends AbstractImage
         $this->palette = $palette;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\AbstractImage::__clone()
+     */
     public function __clone()
     {
         parent::__clone();
@@ -118,7 +126,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function copy()
     {
@@ -132,7 +140,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -164,7 +172,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function flipHorizontally()
     {
@@ -180,7 +188,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function flipVertically()
     {
@@ -196,7 +204,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function strip()
     {
@@ -218,7 +226,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function paste(ImageInterface $image, PointInterface $start, $alpha = 100)
     {
@@ -264,6 +272,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ManipulatorInterface::resize()
      */
     public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
@@ -287,7 +297,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function rotate($angle, ColorInterface $background = null)
     {
@@ -310,7 +320,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function save($path = null, array $options = array())
     {
@@ -332,7 +342,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function show($format, array $options = array())
     {
@@ -344,6 +354,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::get()
      */
     public function get($format, array $options = array())
     {
@@ -359,6 +371,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::interlace()
      */
     public function interlace($scheme)
     {
@@ -409,6 +423,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::__toString()
      */
     public function __toString()
     {
@@ -417,6 +433,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::draw()
      */
     public function draw()
     {
@@ -425,6 +443,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::effects()
      */
     public function effects()
     {
@@ -433,6 +453,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::getSize()
      */
     public function getSize()
     {
@@ -452,7 +474,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -486,6 +508,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::mask()
      */
     public function mask()
     {
@@ -504,7 +528,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function fill(FillInterface $fill)
     {
@@ -534,6 +558,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::histogram()
      */
     public function histogram()
     {
@@ -552,6 +578,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::getColorAt()
      */
     public function getColorAt(PointInterface $point)
     {
@@ -575,9 +603,9 @@ final class Image extends AbstractImage
      *
      * @param \ImagickPixel $pixel
      *
-     * @throws InvalidArgumentException In case a unknown color is requested
+     * @throws \Imagine\Exception\InvalidArgumentException In case a unknown color is requested
      *
-     * @return ColorInterface
+     * @return \Imagine\Image\Palette\Color\ColorInterface
      */
     public function pixelToColor(\ImagickPixel $pixel)
     {
@@ -614,6 +642,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::layers()
      */
     public function layers()
     {
@@ -626,6 +656,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::usePalette()
      */
     public function usePalette(PaletteInterface $palette)
     {
@@ -663,6 +695,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::palette()
      */
     public function palette()
     {
@@ -671,6 +705,8 @@ final class Image extends AbstractImage
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\ImageInterface::profile()
      */
     public function profile(ProfileInterface $profile)
     {
@@ -688,8 +724,6 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Internal.
-     *
      * Flatten the image.
      */
     private function flatten()
@@ -709,16 +743,14 @@ final class Image extends AbstractImage
     }
 
     /**
-     * Internal.
-     *
-     * Applies options before save or output
+     * Applies options before save or output.
      *
      * @param \Imagick $image
      * @param array $options
      * @param string $path
      *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\InvalidArgumentException
+     * @throws \Imagine\Exception\RuntimeException
      */
     private function applyImageOptions(\Imagick $image, array $options, $path)
     {
@@ -816,7 +848,7 @@ final class Image extends AbstractImage
     /**
      * Gets specifically formatted color string from Color instance.
      *
-     * @param ColorInterface $color
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
      *
      * @return \ImagickPixel
      */
@@ -831,7 +863,7 @@ final class Image extends AbstractImage
     /**
      * Checks whether given $fill is linear and opaque.
      *
-     * @param FillInterface $fill
+     * @param \Imagine\Image\Fill\FillInterface $fill
      *
      * @return bool
      */
@@ -843,7 +875,7 @@ final class Image extends AbstractImage
     /**
      * Performs optimized gradient fill for non-opaque linear gradients.
      *
-     * @param Linear $fill
+     * @param \Imagine\Image\Fill\Gradient\Linear $fill
      */
     private function applyFastLinear(Linear $fill)
     {
@@ -870,7 +902,7 @@ final class Image extends AbstractImage
      *
      * @param string $format
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
      * @return string mime-type
      */
@@ -897,9 +929,9 @@ final class Image extends AbstractImage
     /**
      * Sets colorspace and image type, assigns the palette.
      *
-     * @param PaletteInterface $palette
+     * @param \Imagine\Image\Palette\PaletteInterface $palette
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      */
     private function setColorspace(PaletteInterface $palette)
     {
@@ -970,7 +1002,7 @@ final class Image extends AbstractImage
      *
      * @param string $filter
      *
-     * @throws InvalidArgumentException if the filter is unsupported
+     * @throws \Imagine\Exception\InvalidArgumentException if the filter is unsupported
      *
      * @return string
      */

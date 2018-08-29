@@ -17,7 +17,7 @@ namespace Imagine\Image\Histogram;
 final class Bucket implements \Countable
 {
     /**
-     * @var Range
+     * @var \Imagine\Image\Histogram\Range
      */
     private $range;
 
@@ -27,7 +27,7 @@ final class Bucket implements \Countable
     private $count;
 
     /**
-     * @param Range $range
+     * @param \Imagine\Image\Histogram\Range $range
      * @param int $count
      */
     public function __construct(Range $range, $count = 0)
@@ -38,6 +38,8 @@ final class Bucket implements \Countable
 
     /**
      * @param int $value
+     *
+     * @return $this
      */
     public function add($value)
     {

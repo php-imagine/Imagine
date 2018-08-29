@@ -26,7 +26,7 @@ class Rotate implements FilterInterface
     private $angle;
 
     /**
-     * @var ColorInterface
+     * @var \Imagine\Image\Palette\Color\ColorInterface
      */
     private $background;
 
@@ -34,7 +34,7 @@ class Rotate implements FilterInterface
      * Constructs Rotate filter with given angle and background color.
      *
      * @param int $angle
-     * @param ColorInterface $background
+     * @param \Imagine\Image\Palette\Color\ColorInterface $background
      */
     public function __construct($angle, ColorInterface $background = null)
     {
@@ -44,6 +44,8 @@ class Rotate implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

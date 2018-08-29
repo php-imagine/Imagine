@@ -11,9 +11,6 @@
 
 namespace Imagine\Image;
 
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\OutOfBoundsException;
-use Imagine\Exception\RuntimeException;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 
@@ -46,7 +43,7 @@ interface ManipulatorInterface
     /**
      * Copies current source image into a new ImageInterface instance.
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
      * @return static
      */
@@ -56,25 +53,25 @@ interface ManipulatorInterface
      * Crops a specified box out of the source image (modifies the source image)
      * Returns cropped self.
      *
-     * @param PointInterface $start
-     * @param BoxInterface $size
+     * @param \Imagine\Image\PointInterface $start
+     * @param \Imagine\Image\BoxInterface $size
      *
-     * @throws OutOfBoundsException
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\OutOfBoundsException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return static
+     * @return $this
      */
     public function crop(PointInterface $start, BoxInterface $size);
 
     /**
      * Resizes current image and returns self.
      *
-     * @param BoxInterface $size
+     * @param \Imagine\Image\BoxInterface $size
      * @param string $filter
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return static
+     * @return $this
      */
     public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED);
 
@@ -84,11 +81,11 @@ interface ManipulatorInterface
      * area of rotated image.
      *
      * @param int $angle
-     * @param ColorInterface $background
+     * @param \Imagine\Image\Palette\Color\ColorInterface $background
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return static
+     * @return $this
      */
     public function rotate($angle, ColorInterface $background = null);
 
@@ -99,15 +96,15 @@ interface ManipulatorInterface
      *
      * Returns source image
      *
-     * @param ImageInterface $image
-     * @param PointInterface $start
+     * @param \Imagine\Image\ImageInterface $image
+     * @param \Imagine\Image\PointInterface $start
      * @param int $alpha How to paste the image, from 0 (fully transparent) to 100 (fully opaque)
      *
-     * @throws InvalidArgumentException
-     * @throws OutOfBoundsException
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\InvalidArgumentException
+     * @throws \Imagine\Exception\OutOfBoundsException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return static
+     * @return $this
      */
     public function paste(ImageInterface $image, PointInterface $start, $alpha = 100);
 
@@ -120,9 +117,9 @@ interface ManipulatorInterface
      * @param string $path
      * @param array $options
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return static
+     * @return $this
      */
     public function save($path = null, array $options = array());
 
@@ -132,36 +129,36 @@ interface ManipulatorInterface
      * @param string $format
      * @param array $options
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return static
+     * @return $this
      */
     public function show($format, array $options = array());
 
     /**
      * Flips current image using vertical axis.
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return static
+     * @return $this
      */
     public function flipHorizontally();
 
     /**
      * Flips current image using horizontal axis.
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return static
+     * @return $this
      */
     public function flipVertically();
 
     /**
      * Remove all profiles and comments.
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return static
+     * @return $this
      */
     public function strip();
 
@@ -169,11 +166,11 @@ interface ManipulatorInterface
      * Generates a thumbnail from a current image
      * Returns it as a new image, doesn't modify the current image.
      *
-     * @param BoxInterface $size
+     * @param \Imagine\Image\BoxInterface $size
      * @param int|string $settings One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |). It may be a string for backward compatibility with old constant values that were strings.
      * @param string $filter The filter to use for resizing, one of ImageInterface::FILTER_*
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
      * @return static
      */
@@ -182,9 +179,9 @@ interface ManipulatorInterface
     /**
      * Applies a given mask to current image's alpha channel.
      *
-     * @param ImageInterface $mask
+     * @param \Imagine\Image\ImageInterface $mask
      *
-     * @return static
+     * @return $this
      */
     public function applyMask(ImageInterface $mask);
 
@@ -193,9 +190,9 @@ interface ManipulatorInterface
      * the current image with corresponding color from FillInterface, and
      * returns modified image.
      *
-     * @param FillInterface $fill
+     * @param \Imagine\Image\Fill\FillInterface $fill
      *
-     * @return static
+     * @return $this
      */
     public function fill(FillInterface $fill);
 }

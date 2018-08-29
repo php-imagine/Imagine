@@ -15,12 +15,14 @@ interface ClassFactoryInterface
      * @var string
      */
     const HANDLE_GD = 'gd';
+
     /**
      * The handle to be used for the Gmagick manipulation library.
      *
      * @var string
      */
     const HANDLE_GMAGICK = 'gmagick';
+
     /**
      * The handle to be used for the Imagick manipulation library.
      *

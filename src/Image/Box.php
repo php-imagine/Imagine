@@ -34,7 +34,7 @@ final class Box implements BoxInterface
      * @param int $width
      * @param int $height
      *
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\InvalidArgumentException
      */
     public function __construct($width, $height)
     {
@@ -48,6 +48,8 @@ final class Box implements BoxInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\BoxInterface::getWidth()
      */
     public function getWidth()
     {
@@ -56,6 +58,8 @@ final class Box implements BoxInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\BoxInterface::getHeight()
      */
     public function getHeight()
     {
@@ -64,6 +68,8 @@ final class Box implements BoxInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\BoxInterface::scale()
      */
     public function scale($ratio)
     {
@@ -75,6 +81,8 @@ final class Box implements BoxInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\BoxInterface::increase()
      */
     public function increase($size)
     {
@@ -83,6 +91,8 @@ final class Box implements BoxInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\BoxInterface::contains()
      */
     public function contains(BoxInterface $box, PointInterface $start = null)
     {
@@ -93,6 +103,8 @@ final class Box implements BoxInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\BoxInterface::square()
      */
     public function square()
     {
@@ -101,6 +113,8 @@ final class Box implements BoxInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\BoxInterface::__toString()
      */
     public function __toString()
     {
@@ -109,6 +123,8 @@ final class Box implements BoxInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\BoxInterface::widen()
      */
     public function widen($width)
     {
@@ -117,6 +133,8 @@ final class Box implements BoxInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\BoxInterface::heighten()
      */
     public function heighten($height)
     {

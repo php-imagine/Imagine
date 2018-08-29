@@ -17,14 +17,14 @@ namespace Imagine\Image;
 interface BoxInterface
 {
     /**
-     * Gets current image height.
+     * Gets box height.
      *
      * @return int
      */
     public function getHeight();
 
     /**
-     * Gets current image width.
+     * Gets box width.
      *
      * @return int
      */
@@ -35,7 +35,7 @@ interface BoxInterface
      *
      * @param float $ratio
      *
-     * @return BoxInterface
+     * @return static
      */
     public function scale($ratio);
 
@@ -44,7 +44,7 @@ interface BoxInterface
      *
      * @param int $size
      *
-     * @return BoxInterface
+     * @return static
      */
     public function increase($size);
 
@@ -52,8 +52,8 @@ interface BoxInterface
      * Checks whether current box can fit given box at a given start position,
      * start position defaults to top left corner xy(0,0).
      *
-     * @param BoxInterface $box
-     * @param PointInterface $start
+     * @param \Imagine\Image\BoxInterface $box
+     * @param \Imagine\Image\PointInterface $start
      *
      * @return bool
      */
@@ -79,7 +79,7 @@ interface BoxInterface
      *
      * @param int $width
      *
-     * @return BoxInterface
+     * @return static
      */
     public function widen($width);
 
@@ -88,7 +88,7 @@ interface BoxInterface
      *
      * @param int $height
      *
-     * @return BoxInterface
+     * @return static
      */
     public function heighten($height);
 }

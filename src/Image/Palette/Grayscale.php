@@ -17,20 +17,23 @@ use Imagine\Image\Palette\Color\Gray as GrayColor;
 use Imagine\Image\Profile;
 use Imagine\Image\ProfileInterface;
 
+/**
+ * The grayscale palette.
+ */
 class Grayscale implements PaletteInterface
 {
     /**
-     * @var ColorParser
+     * @var \Imagine\Image\Palette\ColorParser
      */
     private $parser;
 
     /**
-     * @var ProfileInterface
+     * @var \Imagine\Image\ProfileInterface|null
      */
     private $profile;
 
     /**
-     * @var array
+     * @var \Imagine\Image\Palette\Color\Gray[]
      */
     protected static $colors = array();
 
@@ -41,6 +44,8 @@ class Grayscale implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::name()
      */
     public function name()
     {
@@ -49,6 +54,8 @@ class Grayscale implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::pixelDefinition()
      */
     public function pixelDefinition()
     {
@@ -57,6 +64,8 @@ class Grayscale implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::supportsAlpha()
      */
     public function supportsAlpha()
     {
@@ -65,6 +74,8 @@ class Grayscale implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::useProfile()
      */
     public function useProfile(ProfileInterface $profile)
     {
@@ -75,6 +86,8 @@ class Grayscale implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::profile()
      */
     public function profile()
     {
@@ -87,6 +100,8 @@ class Grayscale implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::color()
      */
     public function color($color, $alpha = null)
     {
@@ -106,6 +121,8 @@ class Grayscale implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::blend()
      */
     public function blend(ColorInterface $color1, ColorInterface $color2, $amount)
     {

@@ -18,10 +18,24 @@ use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Profile;
 use Imagine\Image\ProfileInterface;
 
+/**
+ * The CMYK palette.
+ */
 class CMYK implements PaletteInterface
 {
+    /**
+     * @var \Imagine\Image\Palette\ColorParser
+     */
     private $parser;
+
+    /**
+     * @var \Imagine\Image\ProfileInterface|null
+     */
     private $profile;
+
+    /**
+     * @var \Imagine\Image\Palette\Color\CMYK[]
+     */
     private static $colors = array();
 
     public function __construct()
@@ -31,6 +45,8 @@ class CMYK implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::name()
      */
     public function name()
     {
@@ -39,6 +55,8 @@ class CMYK implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::pixelDefinition()
      */
     public function pixelDefinition()
     {
@@ -52,6 +70,8 @@ class CMYK implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::supportsAlpha()
      */
     public function supportsAlpha()
     {
@@ -60,6 +80,8 @@ class CMYK implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::color()
      */
     public function color($color, $alpha = null)
     {
@@ -79,6 +101,8 @@ class CMYK implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::blend()
      */
     public function blend(ColorInterface $color1, ColorInterface $color2, $amount)
     {
@@ -96,6 +120,8 @@ class CMYK implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::useProfile()
      */
     public function useProfile(ProfileInterface $profile)
     {
@@ -106,6 +132,8 @@ class CMYK implements PaletteInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Palette\PaletteInterface::profile()
      */
     public function profile()
     {

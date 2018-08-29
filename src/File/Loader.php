@@ -12,7 +12,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 
 /**
- * Default implementation of the LoaderInterface.
+ * Default implementation of Imagine\File\LoaderInterface.
  */
 class Loader implements LoaderInterface
 {

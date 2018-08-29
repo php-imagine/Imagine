@@ -11,10 +11,6 @@
 
 namespace Imagine\Image;
 
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\OutOfBoundsException;
-use Imagine\Exception\RuntimeException;
-
 /**
  * The layers interface.
  */
@@ -23,7 +19,7 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
     /**
      * Merge layers into the original objects.
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      */
     public function merge();
 
@@ -34,10 +30,10 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
      * @param int $delay The delay in milliseconds between two frames
      * @param int $loops The number of loops, 0 means infinite
      *
-     * @throws InvalidArgumentException In case an invalid argument is provided
-     * @throws RuntimeException In case the driver fails to animate
+     * @throws \Imagine\Exception\InvalidArgumentException In case an invalid argument is provided
+     * @throws \Imagine\Exception\RuntimeException In case the driver fails to animate
      *
-     * @return LayersInterface
+     * @return $this
      */
     public function animate($format, $delay, $loops);
 
@@ -54,11 +50,11 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
     /**
      * Adds an image at the end of the layers stack.
      *
-     * @param ImageInterface $image
+     * @param \Imagine\Image\ImageInterface $image
      *
-     * @throws RuntimeException
+     * @throws \Imagine\Exception\RuntimeException
      *
-     * @return LayersInterface
+     * @return $this
      */
     public function add(ImageInterface $image);
 
@@ -66,13 +62,13 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
      * Set an image at offset.
      *
      * @param int $offset
-     * @param ImageInterface $image
+     * @param \Imagine\Image\ImageInterface $image
      *
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
-     * @throws OutOfBoundsException
+     * @throws \Imagine\Exception\RuntimeException
+     * @throws \Imagine\Exception\InvalidArgumentException
+     * @throws \Imagine\Exception\OutOfBoundsException
      *
-     * @return LayersInterface
+     * @return $this
      */
     public function set($offset, ImageInterface $image);
 
@@ -81,10 +77,10 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
      *
      * @param int $offset
      *
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\RuntimeException
+     * @throws \Imagine\Exception\InvalidArgumentException
      *
-     * @return LayersInterface
+     * @return $this
      */
     public function remove($offset);
 
@@ -93,10 +89,10 @@ interface LayersInterface extends \Iterator, \Countable, \ArrayAccess
      *
      * @param int $offset
      *
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
+     * @throws \Imagine\Exception\RuntimeException
+     * @throws \Imagine\Exception\InvalidArgumentException
      *
-     * @return ImageInterface
+     * @return \Imagine\Image\ImageInterface
      */
     public function get($offset);
 

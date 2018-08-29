@@ -41,6 +41,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::arc()
      */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $thickness = 1)
     {
@@ -79,6 +81,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::chord()
      */
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
@@ -123,6 +127,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::ellipse()
      */
     public function ellipse(PointInterface $center, BoxInterface $size, ColorInterface $color, $fill = false, $thickness = 1)
     {
@@ -164,6 +170,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::line()
      */
     public function line(PointInterface $start, PointInterface $end, ColorInterface $color, $thickness = 1)
     {
@@ -195,6 +203,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::pieSlice()
      */
     public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
@@ -229,6 +239,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::dot()
      */
     public function dot(PointInterface $position, ColorInterface $color)
     {
@@ -255,6 +267,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::polygon()
      */
     public function polygon(array $coordinates, ColorInterface $color, $fill = false, $thickness = 1)
     {
@@ -293,6 +307,8 @@ final class Drawer implements DrawerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::text()
      */
     public function text($string, AbstractFont $font, PointInterface $position, $angle = 0, $width = null)
     {
@@ -339,9 +355,9 @@ final class Drawer implements DrawerInterface
     /**
      * Gets specifically formatted color string from Color instance.
      *
-     * @param ColorInterface $color
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
      *
-     * @throws InvalidArgumentException In case a non-opaque color is passed
+     * @throws \Imagine\Exception\InvalidArgumentException In case a non-opaque color is passed
      *
      * @return \GmagickPixel
      */

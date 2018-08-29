@@ -20,6 +20,9 @@ use Imagine\File\LoaderInterface;
  */
 class ExifMetadataReader extends AbstractMetadataReader
 {
+    /**
+     * @throws \Imagine\Exception\NotSupportedException
+     */
     public function __construct()
     {
         if (!self::isSupported()) {
@@ -27,6 +30,11 @@ class ExifMetadataReader extends AbstractMetadataReader
         }
     }
 
+    /**
+     * Is this metadata reader supported?
+     *
+     * @return bool
+     */
     public static function isSupported()
     {
         return function_exists('exif_read_data');
@@ -34,6 +42,8 @@ class ExifMetadataReader extends AbstractMetadataReader
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Metadata\AbstractMetadataReader::extractFromFile()
      */
     protected function extractFromFile($file)
     {
@@ -44,6 +54,8 @@ class ExifMetadataReader extends AbstractMetadataReader
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Metadata\AbstractMetadataReader::extractFromData()
      */
     protected function extractFromData($data)
     {
@@ -52,6 +64,8 @@ class ExifMetadataReader extends AbstractMetadataReader
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Image\Metadata\AbstractMetadataReader::extractFromStream()
      */
     protected function extractFromStream($resource)
     {

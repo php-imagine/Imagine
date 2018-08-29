@@ -22,12 +22,12 @@ use Imagine\Image\PointInterface;
 class Paste implements FilterInterface
 {
     /**
-     * @var ImageInterface
+     * @var \Imagine\Image\ImageInterface
      */
     private $image;
 
     /**
-     * @var PointInterface
+     * @var \Imagine\Image\PointInterface
      */
     private $start;
 
@@ -42,8 +42,8 @@ class Paste implements FilterInterface
      * Constructs a Paste filter with given ImageInterface to paste and x, y
      * coordinates of target position.
      *
-     * @param ImageInterface $image
-     * @param PointInterface $start
+     * @param \Imagine\Image\ImageInterface $image
+     * @param \Imagine\Image\PointInterface $start
      * @param int $alpha how to paste the image, from 0 (fully transparent) to 100 (fully opaque)
      */
     public function __construct(ImageInterface $image, PointInterface $start, $alpha = 100)
@@ -59,6 +59,8 @@ class Paste implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {

@@ -21,7 +21,7 @@ use Imagine\Image\ImageInterface;
 class Thumbnail implements FilterInterface
 {
     /**
-     * @var BoxInterface
+     * @var \Imagine\Image\BoxInterface
      */
     private $size;
 
@@ -38,7 +38,7 @@ class Thumbnail implements FilterInterface
     /**
      * Constructs the Thumbnail filter.
      *
-     * @param BoxInterface $size
+     * @param \Imagine\Image\BoxInterface $size
      * @param int|string $settings One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |). It may be a string for backward compatibility with old constant values that were strings.
      * @param string $filter See ImageInterface::FILTER_... constants
      */
@@ -51,6 +51,8 @@ class Thumbnail implements FilterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Filter\FilterInterface::apply()
      */
     public function apply(ImageInterface $image)
     {
