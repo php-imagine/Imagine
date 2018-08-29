@@ -166,9 +166,9 @@ final class RGB implements ColorInterface
     }
 
     /**
-     * Returns hex representation of the color.
+     * {@inheritdoc}
      *
-     * @return string
+     * @see \Imagine\Image\Palette\Color\ColorInterface::__toString()
      */
     public function __toString()
     {
