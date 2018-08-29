@@ -153,9 +153,9 @@ class ImageTest extends AbstractImageTest
 
     public function testRotateWithNoBackgroundColor()
     {
-        if (version_compare(PHP_VERSION, '5.5', '>=')) {
+        if (version_compare(PHP_VERSION, '5.5', '>=') && version_compare(PHP_VERSION, '7.1.12', '<')) {
             // see https://bugs.php.net/bug.php?id=65148
-            $this->markTestSkipped('Disabling test while bug #65148 is open');
+            $this->markTestSkipped('Skipped because bug #65148 has not been backported to PHP '. PHP_VERSION);
         }
 
         parent::testRotateWithNoBackgroundColor();
