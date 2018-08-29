@@ -69,6 +69,13 @@ class LayersTest extends AbstractLayersTest
         }
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::testAnimateEmpty()
+     */
     public function testAnimateEmpty()
     {
         $this->markTestSkipped('Animate empty is skipped due to https://bugs.php.net/bug.php?id=62309');

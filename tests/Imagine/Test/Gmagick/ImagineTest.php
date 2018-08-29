@@ -29,6 +29,13 @@ class ImagineTest extends AbstractImagineTest
         }
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImagineTest::testCreateAlphaPrecision()
+     */
     public function testCreateAlphaPrecision()
     {
         $this->markTestSkipped('Alpha transparency is not supported by Gmagick');

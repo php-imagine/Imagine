@@ -57,47 +57,72 @@ class ImageTest extends AbstractImageTest
         );
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testPaletteIsGrayIfGrayImage()
+     */
     public function testPaletteIsGrayIfGrayImage()
     {
         $this->markTestSkipped('Gmagick does not support Gray colorspace, because of the lack omg image type support');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testGetColorAtCMYK()
+     */
     public function testGetColorAtCMYK()
     {
         $this->markTestSkipped('Gmagick fails to read CMYK colors properly, see https://bugs.php.net/bug.php?id=67435');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testImageCreatedAlpha()
+     */
     public function testImageCreatedAlpha()
     {
         $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testFillAlphaPrecision()
+     */
     public function testFillAlphaPrecision()
     {
         $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
     }
 
     /**
-     * @dataProvider pasteWithAlphaProvider
+     * Alpha transparency is not supported by Gmagick.
      *
-     * @param int $alpha
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::pasteWithAlphaProvider()
      */
-    public function testPasteWithAlpha($alpha)
+    public function pasteWithAlphaProvider()
     {
-        if ($alpha > 0 && $alpha < 100) {
-            $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
-        }
-        parent::testPasteWithAlpha($alpha);
+        return array(
+            array(0),
+            array(100),
+        );
     }
 
     protected function getImagine()
     {
         return new Imagine();
-    }
-
-    protected function supportMultipleLayers()
-    {
-        return true;
     }
 
     protected function getImageResolution(ImageInterface $image)
