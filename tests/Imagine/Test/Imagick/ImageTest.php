@@ -141,6 +141,42 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif');
     }
 
+    public function testOptimize()
+    {
+        $imagine = $this->getImagine();
+        $rgb = new RGB();
+        $image = $imagine->create(new Box(100, 100), $rgb->color('#fff'));
+        $blackFrame = $imagine->create($image->getSize(), $rgb->color('#000'));
+        $image->layers()->add(clone $blackFrame)->add(clone $blackFrame)->add(clone $blackFrame)->add(clone $blackFrame);
+        $originalFilename = IMAGINE_TEST_TEMPFOLDER . '/not-optimized.gif';
+        $image->save($originalFilename, array('animated' => true, 'optimize' => false));
+        $originalSize = filesize($originalFilename);
+        $optimizedFilename = IMAGINE_TEST_TEMPFOLDER . '/optimized.gif';
+        $image->save($optimizedFilename, array('animated' => true, 'optimize' => true));
+        $optimizedSize = filesize($optimizedFilename);
+        $this->assertLessThan($originalSize, $optimizedSize);
+        unlink($optimizedFilename);
+        unlink($originalFilename);
+    }
+
+    /**
+     * @expectedException \Imagine\Exception\RuntimeException
+     * @expectedExceptionMessage Image optimization failed
+     */
+    public function testOptimizeWithDifferentFrameSizes()
+    {
+        $imagine = $this->getImagine();
+        $rgb = new RGB();
+        $image = $imagine->create(new Box(10, 10), $rgb->color('#fff'));
+        $image->layers()->add($imagine->create($image->getSize()->scale(2)), $rgb->color('#fff'));
+        $image->save(IMAGINE_TEST_TEMPFOLDER . '/should-fail.gif', array('animated' => true, 'optimize' => true));
+    }
+
+    protected function supportMultipleLayers()
+    {
+        return true;
+    }
+
     protected function getImageResolution(ImageInterface $image)
     {
         return $image->getImagick()->getImageResolution();
