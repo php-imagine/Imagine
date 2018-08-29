@@ -56,7 +56,7 @@ abstract class AbstractMetadataReader implements MetadataReaderInterface
      *
      * @param resource|\Imagine\File\LoaderInterface $resource
      *
-     * @return string|null The URI f ava
+     * @return array
      */
     private function getStreamMetadata($resource)
     {
