@@ -847,6 +847,7 @@ final class Image extends AbstractImage
         }
         if (!empty($options['optimize'])) {
             try {
+                $image = $image->coalesceImages();
                 $optimized = $image->optimizeimagelayers();
             } catch (\ImagickException $e) {
                 throw new RuntimeException('Image optimization failed', $e->getCode(), $e);

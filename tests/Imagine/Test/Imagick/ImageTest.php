@@ -160,8 +160,7 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
-     * @expectedException \Imagine\Exception\RuntimeException
-     * @expectedExceptionMessage Image optimization failed
+     * @doesNotPerformAssertions
      */
     public function testOptimizeWithDifferentFrameSizes()
     {
@@ -169,7 +168,9 @@ class ImageTest extends AbstractImageTest
         $rgb = new RGB();
         $image = $imagine->create(new Box(10, 10), $rgb->color('#fff'));
         $image->layers()->add($imagine->create($image->getSize()->scale(2)), $rgb->color('#fff'));
-        $image->save(IMAGINE_TEST_TEMPFOLDER . '/should-fail.gif', array('animated' => true, 'optimize' => true));
+        $filename = IMAGINE_TEST_TEMPFOLDER . '/optimized.gif';
+        $image->save($filename, array('animated' => true, 'optimize' => true));
+        unlink($filename);
     }
 
     protected function supportMultipleLayers()
