@@ -15,7 +15,7 @@ use Imagine\Gmagick\Imagine;
 use Imagine\Test\Factory\AbstractClassFactoryTest;
 
 /**
- * @group ext-gd
+ * @group ext-gmagick
  */
 class ClassFactoryTest extends AbstractClassFactoryTest
 {

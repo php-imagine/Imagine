@@ -15,7 +15,7 @@ use Imagine\Imagick\Imagine;
 use Imagine\Test\Factory\AbstractClassFactoryTest;
 
 /**
- * @group ext-gd
+ * @group ext-imagick
  */
 class ClassFactoryTest extends AbstractClassFactoryTest
 {
