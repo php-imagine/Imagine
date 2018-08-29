@@ -32,11 +32,25 @@ class CMYKTest extends AbstractColorTest
         );
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\Palette\Color\AbstractColorTest::testIsNotOpaque()
+     */
     public function testIsNotOpaque($color = null)
     {
         $this->markTestSkipped('CMYK color does not support alpha');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\Palette\Color\AbstractColorTest::provideNotOpaqueColors()
+     */
     public function provideNotOpaqueColors()
     {
         $this->markTestSkipped('CMYK color does not support alpha');

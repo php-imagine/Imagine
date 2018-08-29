@@ -71,31 +71,50 @@ class LayersTest extends AbstractLayersTest
         $this->assertTrue($layers->has(0));
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::testLayerArrayAccessInvalidArgumentExceptions()
+     */
     public function testLayerArrayAccessInvalidArgumentExceptions($offset = null)
     {
         $this->markTestSkipped('GD driver does not fully support layers array access');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::testLayerArrayAccessOutOfBoundsExceptions()
+     */
     public function testLayerArrayAccessOutOfBoundsExceptions($offset = null)
     {
         $this->markTestSkipped('GD driver does not fully support layers array access');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::testAnimateEmpty()
+     */
     public function testAnimateEmpty()
     {
         $this->markTestSkipped('GD driver does not support animated gifs');
     }
 
-    public function testAnimateLoaded()
-    {
-        $this->markTestSkipped('GD driver does not support animated gifs');
-    }
-
     /**
+     * @group always-skipped
+     *
      * @dataProvider provideAnimationParameters
      *
-     * @param mixed $delay
-     * @param mixed $loops
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::testAnimateWithParameters()
      */
     public function testAnimateWithParameters($delay, $loops)
     {
@@ -103,10 +122,13 @@ class LayersTest extends AbstractLayersTest
     }
 
     /**
+     * @group always-skipped
+     *
      * @dataProvider provideAnimationParameters
      *
-     * @param mixed $delay
-     * @param mixed $loops
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::testAnimateWithWrongParameters()
      */
     public function testAnimateWithWrongParameters($delay, $loops)
     {

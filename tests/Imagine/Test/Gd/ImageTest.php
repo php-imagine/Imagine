@@ -29,6 +29,13 @@ class ImageTest extends AbstractImageTest
         }
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testImageResolutionChange()
+     */
     public function testImageResolutionChange()
     {
         $this->markTestSkipped('GD driver does not support resolution options');
@@ -67,31 +74,73 @@ class ImageTest extends AbstractImageTest
         parent::testProfile();
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testPaletteIsGrayIfGrayImage()
+     */
     public function testPaletteIsGrayIfGrayImage()
     {
         $this->markTestSkipped('GD driver does not support Gray colorspace');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testPaletteIsCMYKIfCMYKImage()
+     */
     public function testPaletteIsCMYKIfCMYKImage()
     {
         $this->markTestSkipped('GD driver does not recognize CMYK images properly');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testGetColorAtCMYK()
+     */
     public function testGetColorAtCMYK()
     {
         $this->markTestSkipped('GD driver does not recognize CMYK images properly');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testChangeColorSpaceAndStripImage()
+     */
     public function testChangeColorSpaceAndStripImage()
     {
         $this->markTestSkipped('GD driver does not support ICC profiles');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testStripImageWithInvalidProfile()
+     */
     public function testStripImageWithInvalidProfile()
     {
         $this->markTestSkipped('GD driver does not support ICC profiles');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testStripGBRImageHasGoodColors()
+     */
     public function testStripGBRImageHasGoodColors()
     {
         $this->markTestSkipped('GD driver does not support ICC profiles');
@@ -100,11 +149,6 @@ class ImageTest extends AbstractImageTest
     protected function getImagine()
     {
         return new Imagine();
-    }
-
-    protected function supportMultipleLayers()
-    {
-        return false;
     }
 
     public function testRotateWithNoBackgroundColor()
@@ -118,18 +162,53 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
+     * @group always-skipped
+     *
      * @dataProvider provideVariousSources
      *
-     * @param mixed $source
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testResolutionOnSave()
      */
     public function testResolutionOnSave($source)
     {
         $this->markTestSkipped('GD driver only supports 72 dpi resolution');
     }
 
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testJpegSamplingFactors()
+     */
     public function testJpegSamplingFactors()
     {
         $this->markTestSkipped('GD driver does not support JPEG sampling factors');
+    }
+
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testCountAMultiLayeredImage()
+     */
+    public function testCountAMultiLayeredImage()
+    {
+        $this->markTestSkipped('GD driver does not support multiple layers');
+    }
+
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testResizeAnimatedGifResizeResult()
+     */
+    public function testResizeAnimatedGifResizeResult()
+    {
+        $this->markTestSkipped('GD driver does not support multiple layers');
     }
 
     protected function getImageResolution(ImageInterface $image)

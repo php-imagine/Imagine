@@ -597,10 +597,6 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testCountAMultiLayeredImage()
     {
-        if (!$this->supportMultipleLayers()) {
-            $this->markTestSkipped('This driver does not support multiple layers');
-        }
-
         $this->assertGreaterThan(1, count($this->getMultiLayeredImage()->layers()));
     }
 
@@ -714,10 +710,6 @@ abstract class AbstractImageTest extends ImagineTestCase
      */
     public function testResizeAnimatedGifResizeResult()
     {
-        if (!$this->supportMultipleLayers()) {
-            $this->markTestSkipped('This driver does not support multiple layers');
-        }
-
         $imagine = $this->getImagine();
 
         $image = $imagine->open('tests/Imagine/Fixtures/anima.gif');
@@ -953,11 +945,6 @@ abstract class AbstractImageTest extends ImagineTestCase
      * @return \Imagine\Image\ImagineInterface
      */
     abstract protected function getImagine();
-
-    /**
-     * @return bool
-     */
-    abstract protected function supportMultipleLayers();
 
     /**
      * @param ImageInterface $image
