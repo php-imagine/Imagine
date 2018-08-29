@@ -63,7 +63,7 @@ class ExifMetadataReader extends AbstractMetadataReader
      *
      * @param string $data
      *
-     * @return MetadataBag
+     * @return array
      */
     private function doReadData($data)
     {
@@ -81,7 +81,7 @@ class ExifMetadataReader extends AbstractMetadataReader
      *
      * @param string $path the path to the file or the data-URI representation
      *
-     * @return MetadataBag|array
+     * @return array
      */
     private function extract($path)
     {
