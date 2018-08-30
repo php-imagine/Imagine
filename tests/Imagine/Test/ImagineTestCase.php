@@ -11,6 +11,7 @@
 
 namespace Imagine\Test;
 
+use Imagine\Test\Constraint\IsBoxInRange;
 use Imagine\Test\Constraint\IsImageEqual;
 
 class ImagineTestCase extends \PHPUnit\Framework\TestCase
@@ -29,6 +30,13 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
     public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, $buckets = 4)
     {
         $constraint = new IsImageEqual($expected, $delta, $buckets);
+
+        self::assertThat($actual, $constraint, $message);
+    }
+
+    public static function assertBoxInRange($minWidth, $maxWidth, $minHeight, $maxHeight, $actual, $message = '')
+    {
+        $constraint = new IsBoxInRange($minWidth, $maxWidth, $minHeight, $maxHeight);
 
         self::assertThat($actual, $constraint, $message);
     }

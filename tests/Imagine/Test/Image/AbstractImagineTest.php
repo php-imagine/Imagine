@@ -186,7 +186,11 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $black = $palette->color('000');
         $factory = $this->getImagine();
 
-        $this->assertEquals($this->getEstimatedFontBox(), $factory->font($path, 36, $black)->box('string'));
+        $this->assertBoxInRange(
+            112, 118,
+            45, 55,
+            $factory->font($path, 36, $black)->box('string')
+        );
     }
 
     public function testCreateAlphaPrecision()
@@ -197,8 +201,6 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $actualColor = $image->getColorAt(new Point(0, 0));
         $this->assertEquals(17, $actualColor->getAlpha());
     }
-
-    abstract protected function getEstimatedFontBox();
 
     /**
      * @return ImagineInterface

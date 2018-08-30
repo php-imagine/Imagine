@@ -12,7 +12,6 @@
 namespace Imagine\Test\Gd;
 
 use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
 use Imagine\Test\Image\AbstractImagineTest;
 
 /**
@@ -27,14 +26,6 @@ class ImagineTest extends AbstractImagineTest
         if (!function_exists('gd_info')) {
             $this->markTestSkipped('Gd not installed');
         }
-    }
-
-    protected function getEstimatedFontBox()
-    {
-        return new Box(
-            DIRECTORY_SEPARATOR === '\\' ? 114 : 112,
-            PHP_VERSION_ID >= 50600 ? 45 : 46
-        );
     }
 
     protected function getImagine()
