@@ -63,7 +63,7 @@ class IsImageEqual extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function evaluate($other, $description = '', $returnResult = false)
+    protected function matches($other)
     {
         if (!$other instanceof ImageInterface) {
             throw InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
