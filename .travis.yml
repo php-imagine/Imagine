@@ -40,7 +40,7 @@ script:
     set -o errexit
     case "${TRAVISOPERATION:-}" in
         codestyle)
-            composer --no-interaction codestyle
+            composer --no-interaction codestyle -- --no-interaction --dry-run --diff -- .
             ;;
         *)
             composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
