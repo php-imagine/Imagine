@@ -16,4 +16,12 @@ if ((int) (ini_get('memory_limit')) < 64) {
 $loader = require __DIR__ . '/../vendor/autoload.php';
 $loader->add('Imagine\Test', __DIR__);
 
+if (!class_exists('PHPUnit\Framework\Constraint\Constraint')) {
+    class_alias('PHPUnit_Framework_Constraint', 'PHPUnit\Framework\Constraint\Constraint');
+}
+
+if (!class_exists('PHPUnit\Util\InvalidArgumentHelper')) {
+    class_alias('PHPUnit_Util_InvalidArgumentHelper', 'PHPUnit\Util\InvalidArgumentHelper');
+}
+
 chdir(dirname(__DIR__));
