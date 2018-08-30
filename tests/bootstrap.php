@@ -28,4 +28,8 @@ if (!class_exists('PHPUnit\Framework\Exception')) {
     class_alias('PHPUnit_Framework_Exception', 'PHPUnit\Framework\Exception');
 }
 
+if (!class_exists('PHPUnit\Framework\ExpectationFailedException')) {
+    class_alias('PHPUnit_Framework_ExpectationFailedException', 'PHPUnit\Framework\ExpectationFailedException');
+}
+
 chdir(dirname(__DIR__));
