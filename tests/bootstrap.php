@@ -24,4 +24,8 @@ if (!class_exists('PHPUnit\Util\InvalidArgumentHelper')) {
     class_alias('PHPUnit_Util_InvalidArgumentHelper', 'PHPUnit\Util\InvalidArgumentHelper');
 }
 
+if (!class_exists('PHPUnit\Framework\Exception')) {
+    class_alias('PHPUnit_Framework_Exception', 'PHPUnit\Framework\Exception');
+}
+
 chdir(dirname(__DIR__));
