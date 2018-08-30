@@ -7,6 +7,8 @@
     **BREAKING CHANGE** if you have your own `ColorInterface` implementation, it now must implement `__toString`
   * New Imagick save option: `optimize` if set, the size of animated GIF files is optimized (@mlocati)  
     **NOTE** Imagick requires that the image frames have the same size
+  * The `paste` method now accepts images not fully included in the destination image (@mlocati)  
+    **BREAKING CHANGE** the paste method doesn't throw an OutOfBoundsException anymore
 
 ### 1.0.0-alpha1 (2018-08-28)
   * Imagine is now tested under Windows too (@mlocati)

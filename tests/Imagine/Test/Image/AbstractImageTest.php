@@ -17,6 +17,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
+use Imagine\Image\PointSigned;
 use Imagine\Image\Profile;
 use Imagine\Test\ImagineTestCase;
 
@@ -922,6 +923,42 @@ abstract class AbstractImageTest extends ImagineTestCase
         $grayLevel = (int) (255 * (100 - $alpha) / 100);
         $expectedColor = $rgb->color(array($grayLevel, $grayLevel, $grayLevel));
         $this->assertEquals($expectedColor, $finalColor);
+    }
+
+    public function testPasteOutOfBoundaries()
+    {
+        $imagine = $this->getImagine();
+        $palette = new RGB();
+        $background = $imagine->create(new Box(10, 10), $palette->color('#ffffff'));
+        $box = $imagine->create(new Box(10, 10), $palette->color('#000000'));
+
+        $pasted = $background->copy()->paste($box, new PointSigned(-5, -5));
+        $this->assertSame((string) $background->getSize(), (string) $pasted->getSize());
+        $this->assertSame('#000000', (string) $pasted->getColorAt(new Point(0, 0)));
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(9, 0)));
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(9, 9)));
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(0, 9)));
+
+        $pasted = $background->copy()->paste($box, new PointSigned(5, -5));
+        $this->assertSame((string) $background->getSize(), (string) $pasted->getSize());
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(0, 0)));
+        $this->assertSame('#000000', (string) $pasted->getColorAt(new Point(9, 0)));
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(9, 9)));
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(0, 9)));
+
+        $pasted = $background->copy()->paste($box, new PointSigned(5, 5));
+        $this->assertSame((string) $background->getSize(), (string) $pasted->getSize());
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(0, 0)));
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(9, 0)));
+        $this->assertSame('#000000', (string) $pasted->getColorAt(new Point(9, 9)));
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(0, 9)));
+
+        $pasted = $background->copy()->paste($box, new PointSigned(-5, 5));
+        $this->assertSame((string) $background->getSize(), (string) $pasted->getSize());
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(0, 0)));
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(9, 0)));
+        $this->assertSame('#ffffff', (string) $pasted->getColorAt(new Point(9, 9)));
+        $this->assertSame('#000000', (string) $pasted->getColorAt(new Point(0, 9)));
     }
 
     abstract protected function getImageResolution(ImageInterface $image);

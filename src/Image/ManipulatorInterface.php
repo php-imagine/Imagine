@@ -101,7 +101,6 @@ interface ManipulatorInterface
      * @param int $alpha How to paste the image, from 0 (fully transparent) to 100 (fully opaque)
      *
      * @throws \Imagine\Exception\InvalidArgumentException
-     * @throws \Imagine\Exception\OutOfBoundsException
      * @throws \Imagine\Exception\RuntimeException
      *
      * @return $this
