@@ -43,6 +43,7 @@ class IsImageEqual extends Constraint
      */
     public function __construct($value, $delta = 0.1, $buckets = 4)
     {
+        parent::__construct();
         if (!$value instanceof ImageInterface) {
             throw InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
         }
