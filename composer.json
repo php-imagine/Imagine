@@ -52,6 +52,6 @@
     },
     "scripts": {
         "test": "simple-phpunit --verbose",
-        "codestyle": "php-cs-fixer fix --path-mode=intersection --config=.php_cs.dist --dry-run --diff --no-interaction -- ."
+        "codestyle": "php-cs-fixer fix --path-mode=intersection --config=.php_cs.dist"
     }
 }

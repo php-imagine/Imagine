@@ -22,6 +22,7 @@ return PhpCsFixer\Config::create()
     ->setCacheFile(__DIR__ . '/.php_cs.cache')
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude('vendor')
+        ->exclude('cache')
         ->in(__DIR__)
     )
 ;
