@@ -14,12 +14,10 @@ namespace Imagine\Test\Constraint;
 use Imagine\Image\Histogram\Bucket;
 use Imagine\Image\Histogram\Range;
 use Imagine\Image\ImageInterface;
+use PHPUnit\Framework\Constraint\Constraint;
+use PHPUnit\Util\InvalidArgumentHelper;
 
-if (!class_exists('PHPUnit_Framework_Constraint')) {
-    class_alias('\PHPUnit\Framework\Constraint\Constraint', 'PHPUnit_Framework_Constraint');
-}
-
-class IsImageEqual extends \PHPUnit_Framework_Constraint
+class IsImageEqual extends Constraint
 {
     /**
      * @var \Imagine\Image\ImageInterface
@@ -45,16 +43,17 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
      */
     public function __construct($value, $delta = 0.1, $buckets = 4)
     {
+        parent::__construct();
         if (!$value instanceof ImageInterface) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
+            throw InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
         }
 
         if (!is_numeric($delta)) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(2, 'numeric');
+            throw InvalidArgumentHelper::factory(2, 'numeric');
         }
 
         if (!is_int($buckets) || $buckets <= 0) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(3, 'integer');
+            throw InvalidArgumentHelper::factory(3, 'integer');
         }
 
         $this->value = $value;
@@ -65,10 +64,10 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
     /**
      * {@inheritdoc}
      */
-    public function evaluate($other, $description = '', $returnResult = false)
+    protected function matches($other)
     {
         if (!$other instanceof ImageInterface) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
+            throw InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
         }
 
         list($currentRed, $currentGreen, $currentBlue, $currentAlpha) = $this->normalize($this->value);
@@ -100,7 +99,7 @@ class IsImageEqual extends \PHPUnit_Framework_Constraint
      */
     public function toString()
     {
-        return sprintf('contains color histogram identical to expected %s', \PHPUnit_Util_Type::toString($this->value));
+        return sprintf('contains color histogram identical to expected %s', $this->exporter->export($this->value));
     }
 
     /**
