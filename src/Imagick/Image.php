@@ -126,7 +126,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::copy()
      */
     public function copy()
     {
@@ -140,7 +140,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::crop()
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
@@ -172,7 +172,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::flipHorizontally()
      */
     public function flipHorizontally()
     {
@@ -188,7 +188,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::flipVertically()
      */
     public function flipVertically()
     {
@@ -204,7 +204,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::strip()
      */
     public function strip()
     {
@@ -226,7 +226,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::paste()
      */
     public function paste(ImageInterface $image, PointInterface $start, $alpha = 100)
     {
@@ -297,7 +297,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::rotate()
      */
     public function rotate($angle, ColorInterface $background = null)
     {
@@ -320,7 +320,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::save()
      */
     public function save($path = null, array $options = array())
     {
@@ -342,7 +342,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::show()
      */
     public function show($format, array $options = array())
     {
@@ -474,7 +474,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::applyMask()
      */
     public function applyMask(ImageInterface $mask)
     {
@@ -528,7 +528,7 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
-     * @return \Imagine\Image\ImageInterface
+     * @see \Imagine\Image\ManipulatorInterface::fill()
      */
     public function fill(FillInterface $fill)
     {
