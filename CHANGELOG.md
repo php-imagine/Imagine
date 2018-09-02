@@ -5,6 +5,8 @@
     **BREAKING CHANGE** if you have your own `LayerInterface` implementation, it now must return `$this`
   * The `__toString` method has been added to `ColorInterface` since all its implementations have it (@mlocati)  
     **BREAKING CHANGE** if you have your own `ColorInterface` implementation, it now must implement `__toString`
+  * New Imagick save option: `optimize` if set, the size of animated GIF files is optimized (@mlocati)  
+    **NOTE** Imagick requires that the image frames have the same size
 
 ### 1.0.0-alpha1 (2018-08-28)
   * Imagine is now tested under Windows too (@mlocati)

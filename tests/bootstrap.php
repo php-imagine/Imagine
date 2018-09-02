@@ -32,4 +32,9 @@ if (!class_exists('PHPUnit\Framework\ExpectationFailedException')) {
     class_alias('PHPUnit_Framework_ExpectationFailedException', 'PHPUnit\Framework\ExpectationFailedException');
 }
 
+define('IMAGINE_TEST_TEMPFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'tmp');
+if (!is_dir(IMAGINE_TEST_TEMPFOLDER)) {
+    mkdir(IMAGINE_TEST_TEMPFOLDER);
+}
+
 chdir(dirname(__DIR__));

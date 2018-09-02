@@ -413,7 +413,7 @@ final class Image extends AbstractImage
         } else {
             $this->layers()->merge();
         }
-        $this->applyImageOptions($this->imagick, $options, $path);
+        $this->imagick = $this->applyImageOptions($this->imagick, $options, $path);
 
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true) && $this->layers()->count() > 1) {
@@ -751,6 +751,8 @@ final class Image extends AbstractImage
      *
      * @throws \Imagine\Exception\InvalidArgumentException
      * @throws \Imagine\Exception\RuntimeException
+     *
+     * @return \Imagick
      */
     private function applyImageOptions(\Imagick $image, array $options, $path)
     {
@@ -843,6 +845,22 @@ final class Image extends AbstractImage
             $image->setImageResolution($options['resolution-x'], $options['resolution-y']);
             $image->resampleImage($options['resolution-x'], $options['resolution-y'], $filter, 0);
         }
+        if (!empty($options['optimize'])) {
+            try {
+                $image = $image->coalesceImages();
+                $optimized = $image->optimizeimagelayers();
+            } catch (\ImagickException $e) {
+                throw new RuntimeException('Image optimization failed', $e->getCode(), $e);
+            }
+            if ($optimized === false) {
+                throw new RuntimeException('Image optimization failed');
+            }
+            if ($optimized instanceof \Imagick) {
+                $image = $optimized;
+            }
+        }
+
+        return $image;
     }
 
     /**
