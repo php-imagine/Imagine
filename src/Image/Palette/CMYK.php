@@ -85,7 +85,7 @@ class CMYK implements PaletteInterface
      */
     public function color($color, $alpha = null)
     {
-        if (null !== $alpha) {
+        if (null !== $alpha && $alpha !== 100) {
             throw new InvalidArgumentException('CMYK palette does not support alpha');
         }
 
