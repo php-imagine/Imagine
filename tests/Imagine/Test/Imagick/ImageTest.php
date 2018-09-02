@@ -173,11 +173,6 @@ class ImageTest extends AbstractImageTest
         unlink($filename);
     }
 
-    protected function supportMultipleLayers()
-    {
-        return true;
-    }
-
     protected function getImageResolution(ImageInterface $image)
     {
         return $image->getImagick()->getImageResolution();

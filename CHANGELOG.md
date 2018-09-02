@@ -7,6 +7,7 @@
     **BREAKING CHANGE** if you have your own `ColorInterface` implementation, it now must implement `__toString`
   * New Imagick save option: `optimize` if set, the size of animated GIF files is optimized (@mlocati)  
     **NOTE** Imagick requires that the image frames have the same size
+
 ### 1.0.0-alpha1 (2018-08-28)
   * Imagine is now tested under Windows too (@mlocati)
   * Add support to webp image format (@chregu, @antoligy, @alexander-schranz)
