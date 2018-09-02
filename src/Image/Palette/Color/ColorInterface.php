@@ -136,4 +136,11 @@ interface ColorInterface
      * @return bool
      */
     public function isOpaque();
+
+    /**
+     * Returns hex representation of the color.
+     *
+     * @return string
+     */
+    public function __toString();
 }
