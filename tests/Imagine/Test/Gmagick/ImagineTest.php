@@ -12,7 +12,6 @@
 namespace Imagine\Test\Gmagick;
 
 use Imagine\Gmagick\Imagine;
-use Imagine\Image\Box;
 use Imagine\Test\Image\AbstractImagineTest;
 
 /**
@@ -39,11 +38,6 @@ class ImagineTest extends AbstractImagineTest
     public function testCreateAlphaPrecision()
     {
         $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
-    }
-
-    protected function getEstimatedFontBox()
-    {
-        return new Box(117, 55);
     }
 
     protected function getImagine()

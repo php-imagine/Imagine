@@ -11,7 +11,6 @@
 
 namespace Imagine\Test\Imagick;
 
-use Imagine\Image\Box;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractImagineTest;
 
@@ -27,14 +26,6 @@ class ImagineTest extends AbstractImagineTest
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not installed');
         }
-    }
-
-    protected function getEstimatedFontBox()
-    {
-        return new Box(
-            DIRECTORY_SEPARATOR === '\\' ? 118 : 117,
-            55
-        );
     }
 
     protected function getImagine()
