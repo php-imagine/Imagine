@@ -202,10 +202,6 @@ final class Image extends AbstractImage
             throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$alpha', 0, 100, $alpha));
         }
 
-        if (!$this->getSize()->contains($image->getSize(), $start)) {
-            throw new OutOfBoundsException('Cannot paste image of the given size at the specified position, as it moves outside of the current image\'s box');
-        }
-
         if ($alpha === 100) {
             try {
                 $this->gmagick->compositeimage($image->gmagick, \Gmagick::COMPOSITE_DEFAULT, $start->getX(), $start->getY());
