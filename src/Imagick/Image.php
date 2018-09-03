@@ -966,9 +966,13 @@ final class Image extends AbstractImage
         if (!isset(static::$colorspaceMapping[$palette->name()])) {
             throw new InvalidArgumentException(sprintf('The palette %s is not supported by Imagick driver', $palette->name()));
         }
-
-        $this->imagick->setType($typeMapping[$palette->name()]);
-        $this->imagick->setColorspace(static::$colorspaceMapping[$palette->name()]);
+        $type = $typeMapping[$palette->name()];
+        $this->imagick->settype($type);
+        if (method_exists($this->imagick, 'setimagetype') && $this->imagick->getnumberimages() > 0) {
+            $this->imagick->setimagetype($type);
+        }
+        $colorspace = static::$colorspaceMapping[$palette->name()];
+        $this->imagick->setcolorspace($colorspace);
         $this->palette = $palette;
     }
 
