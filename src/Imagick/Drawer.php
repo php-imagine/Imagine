@@ -322,6 +322,8 @@ final class Drawer implements DrawerInterface
         } catch (\ImagickException $e) {
             throw new RuntimeException('Draw rectangle operation failed', $e->getCode(), $e);
         }
+
+        return $this;
     }
 
     /**

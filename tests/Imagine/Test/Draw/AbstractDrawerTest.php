@@ -58,13 +58,14 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(15, 15), $this->getColor('fff'));
-        $image->draw()->circle(
+        $drawer = $image->draw();
+        $this->assertSame($drawer, $drawer->circle(
             new Point(7, 7),
             6,
             $this->getColor('f00'),
             $fill,
             $thickness
-        );
+        ));
         $expected = $imagine->open('tests/Imagine/Fixtures/drawer/circle/thinkness' . $thickness . '-filled' . ($fill ? '1' : '0') . '.png');
         $this->assertImageEquals($expected, $image, '', 0.107);
     }
@@ -154,13 +155,14 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(15, 15), $this->getColor('fff'));
-        $image->draw()->rectangle(
+        $drawer = $image->draw();
+        $this->assertSame($drawer, $drawer->rectangle(
             new Point(2, 2),
             new Point(12, 12),
             $this->getColor('f00'),
             $fill,
             $thickness
-        );
+        ));
         $expected = $imagine->open('tests/Imagine/Fixtures/drawer/rectangle/thinkness' . $thickness . '-filled' . ($fill ? '1' : '0') . '.png');
         $this->assertImageEquals($expected, $image);
     }
