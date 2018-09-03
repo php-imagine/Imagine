@@ -12,6 +12,7 @@
 namespace Imagine\Test\Constraint;
 
 use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\PaletteInterface;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Util\InvalidArgumentHelper;
 
@@ -26,6 +27,11 @@ class IsColorSimilar extends Constraint
      * @var float
      */
     private $maxDistance;
+
+    /**
+     * @var int
+     */
+    private $channelMultiplier;
 
     /**
      * @var string[]
@@ -59,6 +65,11 @@ class IsColorSimilar extends Constraint
         }
         $this->maxDistance = $maxDistance;
         $this->pixelDefinition = $this->value->getPalette()->pixelDefinition();
+        if ($this->value->getPalette() === PaletteInterface::PALETTE_CMYK) {
+            $this->channelMultiplier = 100;
+        } else {
+            $this->channelMultiplier = 255;
+        }
     }
 
     /**
@@ -127,7 +138,7 @@ class IsColorSimilar extends Constraint
         if ($otherAlpha === null) {
             $otherAlpha = 100;
         }
-        $squareSum += pow(($otherAlpha - $myAlpha) * 255 / 100, 2);
+        $squareSum += pow(($otherAlpha - $myAlpha) * $this->channelMultiplier / 100, 2);
 
         return sqrt($squareSum);
     }
