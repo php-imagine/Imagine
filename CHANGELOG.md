@@ -10,6 +10,8 @@
   * The `paste` method now accepts images not fully included in the destination image (@mlocati)  
     **BREAKING CHANGE** the paste method doesn't throw an OutOfBoundsException anymore
   * Fix handling of PNG compression in Imagick `save` method (@mlocati)
+  * New drawer methods: `rectangle` and `circle` (@mlocati)  
+    **BREAKING CHANGE** if you have your own implementation of `DrawerTest` you should add these two new methods
 
 ### 1.0.0-alpha1 (2018-08-28)
   * Imagine is now tested under Windows too (@mlocati)

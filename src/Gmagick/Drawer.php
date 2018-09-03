@@ -16,6 +16,7 @@ use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
+use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Point;
@@ -123,6 +124,16 @@ final class Drawer implements DrawerInterface
         }
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::circle()
+     */
+    public function circle(PointInterface $center, $radius, ColorInterface $color, $fill = false, $thickness = 1)
+    {
+        return $this->ellipse($center, new Box($radius, $radius), $color, $fill, $thickness);
     }
 
     /**
@@ -260,6 +271,39 @@ final class Drawer implements DrawerInterface
             $point = null;
         } catch (\GmagickException $e) {
             throw new RuntimeException('Draw point operation failed', $e->getCode(), $e);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::rectangle()
+     */
+    public function rectangle(PointInterface $leftTop, PointInterface $rightBottom, ColorInterface $color, $fill = false, $thickness = 1)
+    {
+        $minX = min($leftTop->getX(), $rightBottom->getX());
+        $maxX = max($leftTop->getX(), $rightBottom->getX());
+        $minY = min($leftTop->getY(), $rightBottom->getY());
+        $maxY = max($leftTop->getY(), $rightBottom->getY());
+
+        try {
+            $pixel = $this->getColor($color);
+            $rectangle = new \GmagickDraw();
+
+            $rectangle->setstrokecolor($pixel);
+            $rectangle->setstrokewidth(max(1, (int) $thickness));
+
+            if ($fill) {
+                $rectangle->setfillcolor($pixel);
+            } else {
+                $rectangle->setfillcolor('transparent');
+            }
+            $rectangle->rectangle($minX, $minY, $maxX, $maxY);
+            $this->gmagick->drawImage($rectangle);
+        } catch (\GmagickException $e) {
+            throw new RuntimeException('Draw polygon operation failed', $e->getCode(), $e);
         }
 
         return $this;
