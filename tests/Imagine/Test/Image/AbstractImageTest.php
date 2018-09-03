@@ -968,17 +968,18 @@ abstract class AbstractImageTest extends ImagineTestCase
             array('png', array('png_compression_level' => 9), array('png_compression_level' => 0)),
         );
     }
+
     /**
      * @dataProvider imageCompressionQualityProvider
      *
      * @param string $format
-     * @param array $lowCompressionOptions
-     * @param array $highCompressionOptions
+     * @param array $smallSizeOptions
+     * @param array $bigSizeOptions
      */
     public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
     {
         $image = $this->getImagine()->open('tests/Imagine/Fixtures/xparent.gif');
-        $filename = IMAGINE_TEST_TEMPFOLDER .'/test-compressed.' . $format;
+        $filename = IMAGINE_TEST_TEMPFOLDER . '/test-compressed.' . $format;
         $image->copy()->save($filename, array('format' => $format) + $smallSizeOptions);
         $smallSize = filesize($filename);
         unlink($filename);
@@ -987,8 +988,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink($filename);
         $this->assertLessThan($bigSize, $smallSize);
     }
-    
-    
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()
