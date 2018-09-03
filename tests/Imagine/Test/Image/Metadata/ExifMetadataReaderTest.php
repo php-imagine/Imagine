@@ -37,7 +37,14 @@ class ExifMetadataReaderTest extends MetadataReaderTestCase
 
     public function testExifDataAreReadWithReadData()
     {
-        $metadata = $this->getReader()->readData(file_get_contents(__DIR__ . '/../../../Fixtures/exifOrientation/90.jpg'));
+        try {
+            $metadata = $this->getReader()->readData(file_get_contents(__DIR__ . '/../../../Fixtures/exifOrientation/90.jpg'));
+        } catch (\Imagine\Exception\RuntimeException $x) {
+            if (getenv('TRAVIS') && getenv('CONTINUOUS_INTEGRATION') && $x->getMessage() === 'gnutls_handshake() failed: A TLS packet with unexpected length was received.') {
+                $this->markTestSkipped($x->getMessage());
+            }
+            throw $x;
+        }
         $this->assertTrue(isset($metadata['ifd0.Orientation']));
         $this->assertEquals(6, $metadata['ifd0.Orientation']);
     }
