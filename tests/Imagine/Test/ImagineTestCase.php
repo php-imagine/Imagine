@@ -12,6 +12,7 @@
 namespace Imagine\Test;
 
 use Imagine\Test\Constraint\IsBoxInRange;
+use Imagine\Test\Constraint\IsColorSimilar;
 use Imagine\Test\Constraint\IsImageEqual;
 
 class ImagineTestCase extends \PHPUnit\Framework\TestCase
@@ -37,6 +38,13 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
     public static function assertBoxInRange($minWidth, $maxWidth, $minHeight, $maxHeight, $actual, $message = '')
     {
         $constraint = new IsBoxInRange($minWidth, $maxWidth, $minHeight, $maxHeight);
+
+        self::assertThat($actual, $constraint, $message);
+    }
+
+    public static function assertColorSimilar($expected, $actual, $message = '', $maxDistance = 0.0)
+    {
+        $constraint = new IsColorSimilar($expected, $maxDistance);
 
         self::assertThat($actual, $constraint, $message);
     }
