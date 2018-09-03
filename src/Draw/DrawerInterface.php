@@ -115,7 +115,7 @@ interface DrawerInterface
     /**
      * Draws a polygon using array of x, y coordinates. Must contain at least three coordinates.
      *
-     * @param array $coordinates
+     * @param \Imagine\Image\PointInterface[] $coordinates
      * @param \Imagine\Image\Palette\Color\ColorInterface $color
      * @param bool $fill
      * @param int $thickness
