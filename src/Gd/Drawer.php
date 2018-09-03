@@ -321,7 +321,7 @@ final class Drawer implements DrawerInterface
         $y = $position->getY() + $fontsize;
 
         if ($width !== null) {
-            $string = $this->wrapText($string, $font, $angle, $width);
+            $string = $font->wrapText($string, $width, $angle);
         }
 
         if (false === imagealphablending($this->resource, true)) {
@@ -378,30 +378,5 @@ final class Drawer implements DrawerInterface
         }
 
         $this->info = gd_info();
-    }
-
-    /**
-     * Fits a string into box with given width.
-     *
-     * @param string $string
-     * @param \Imagine\Image\AbstractFont $font
-     * @param int $angle
-     * @param int $width
-     */
-    private function wrapText($string, AbstractFont $font, $angle, $width)
-    {
-        $result = '';
-        $words = explode(' ', $string);
-        foreach ($words as $word) {
-            $teststring = $result . ' ' . $word;
-            $testbox = imagettfbbox($font->getSize(), $angle, $font->getFile(), $teststring);
-            if ($testbox[2] > $width) {
-                $result .= ($result == '' ? '' : "\n") . $word;
-            } else {
-                $result .= ($result == '' ? '' : ' ') . $word;
-            }
-        }
-
-        return $result;
     }
 }

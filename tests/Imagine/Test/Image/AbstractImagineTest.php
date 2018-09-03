@@ -175,24 +175,6 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertArrayNotHasKey('filepath', $metadata);
     }
 
-    public function testShouldDetermineFontSize()
-    {
-        if (!$this->isFontTestSupported()) {
-            $this->markTestSkipped('This install does not support font tests');
-        }
-
-        $palette = new RGB();
-        $path = 'tests/Imagine/Fixtures/font/Arial.ttf';
-        $black = $palette->color('000');
-        $factory = $this->getImagine();
-
-        $this->assertBoxInRange(
-            112, 118,
-            45, 55,
-            $factory->font($path, 36, $black)->box('string')
-        );
-    }
-
     public function testCreateAlphaPrecision()
     {
         $imagine = $this->getImagine();
@@ -206,6 +188,4 @@ abstract class AbstractImagineTest extends ImagineTestCase
      * @return ImagineInterface
      */
     abstract protected function getImagine();
-
-    abstract protected function isFontTestSupported();
 }

@@ -11,6 +11,7 @@
 
 namespace Imagine\Image;
 
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Factory\ClassFactory;
 use Imagine\Factory\ClassFactoryAwareInterface;
 use Imagine\Factory\ClassFactoryInterface;
@@ -85,6 +86,45 @@ abstract class AbstractFont implements FontInterface, ClassFactoryAwareInterface
     final public function getColor()
     {
         return $this->color;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Image\FontInterface::wrapText()
+     */
+    public function wrapText($string, $maxWidth, $angle = 0)
+    {
+        $string = (string) $string;
+        if ($string === '') {
+            return $string;
+        }
+        $maxWidth = (int) round($maxWidth);
+        if ($maxWidth < 1) {
+            throw new InvalidArgumentException(sprintf('The $maxWidth parameter of wrapText must be greater than 0.'));
+        }
+        $words = explode(' ', $string);
+        $lines = array();
+        $currentLine = null;
+        foreach ($words as $word) {
+            if ($currentLine === null) {
+                $currentLine = $word;
+            } else {
+                $testLine = $currentLine . ' ' . $word;
+                $testbox = $this->box($testLine, $angle);
+                if ($testbox->getWidth() <= $maxWidth) {
+                    $currentLine = $testLine;
+                } else {
+                    $lines[] = $currentLine;
+                    $currentLine = $word;
+                }
+            }
+        }
+        if ($currentLine !== null) {
+            $lines[] = $currentLine;
+        }
+
+        return implode("\n", $lines);
     }
 
     /**

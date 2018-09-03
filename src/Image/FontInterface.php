@@ -46,4 +46,15 @@ interface FontInterface
      * @return \Imagine\Image\BoxInterface
      */
     public function box($string, $angle = 0);
+
+    /**
+     * Split a string into multiple lines so that it fits a specific width.
+     *
+     * @param string $string The text to be wrapped
+     * @param int $maxWidth The maximum width of the text
+     * @param int $angle
+     *
+     * @return string
+     */
+    public function wrapText($string, $maxWidth, $angle = 0);
 }
