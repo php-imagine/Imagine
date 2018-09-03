@@ -772,7 +772,8 @@ final class Image extends AbstractImage
                     }
                 }
                 if (isset($options['jpeg_quality'])) {
-                    $image->setImageCompressionQuality($options['jpeg_quality']);
+                    $image->setimagecompressionquality($options['jpeg_quality']);
+                    $image->setcompressionquality($options['jpeg_quality']);
                 }
                 if (isset($options['jpeg_sampling_factors'])) {
                     if (!is_array($options['jpeg_sampling_factors']) || \count($options['jpeg_sampling_factors']) < 1) {
@@ -804,7 +805,8 @@ final class Image extends AbstractImage
                     $compression = isset($options['png_compression_level']) ? $options['png_compression_level'] * 10 : 70;
                     // second digit: compression filter (default: 5)
                     $compression += isset($options['png_compression_filter']) ? $options['png_compression_filter'] : 5;
-                    $image->setImageCompressionQuality($compression);
+                    $image->setimagecompressionquality($compression);
+                    $image->setcompressionquality($compression);
                 }
                 break;
             case 'webp':
