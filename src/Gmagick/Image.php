@@ -752,7 +752,6 @@ final class Image extends AbstractImage
             $this->profile($palette->profile());
 
             $this->setColorspace($palette);
-            $this->palette = $palette;
         } catch (\GmagickException $e) {
             throw new RuntimeException('Failed to set colorspace', $e->getCode(), $e);
         }
