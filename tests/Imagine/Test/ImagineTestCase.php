@@ -42,9 +42,9 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
         self::assertThat($actual, $constraint, $message);
     }
 
-    public static function assertColorSimilar($expected, $actual, $message = '', $maxDistance = 0.0)
+    public static function assertColorSimilar($expected, $actual, $message = '', $maxDistance = 0.0, $includeAlpha = true)
     {
-        $constraint = new IsColorSimilar($expected, $maxDistance);
+        $constraint = new IsColorSimilar($expected, $maxDistance, $includeAlpha);
 
         self::assertThat($actual, $constraint, $message);
     }

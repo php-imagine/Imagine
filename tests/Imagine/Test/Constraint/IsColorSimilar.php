@@ -29,6 +29,11 @@ class IsColorSimilar extends Constraint
     private $maxDistance;
 
     /**
+     * @var bool
+     */
+    private $includeAlpha;
+
+    /**
      * @var int
      */
     private $channelMultiplier;
@@ -41,10 +46,11 @@ class IsColorSimilar extends Constraint
     /**
      * @param \Imagine\Image\Palette\Color\ColorInterface $value
      * @param float $maxDistance
+     * @param bool $includeAlpha
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($value, $maxDistance = 0.1)
+    public function __construct($value, $maxDistance = 0.1, $includeAlpha = true)
     {
         parent::__construct();
         if (!$value instanceof ColorInterface) {
@@ -64,6 +70,7 @@ class IsColorSimilar extends Constraint
             throw InvalidArgumentHelper::factory(2, 'float', $maxDistance);
         }
         $this->maxDistance = $maxDistance;
+        $this->includeAlpha = (bool) $includeAlpha;
         $this->pixelDefinition = $this->value->getPalette()->pixelDefinition();
         if ($this->value->getPalette() === PaletteInterface::PALETTE_CMYK) {
             $this->channelMultiplier = 100;
@@ -119,7 +126,7 @@ class IsColorSimilar extends Constraint
     }
 
     /**
-     * @param \Imagine\Image\ImageInterface $image
+     * @param \Imagine\Image\Palette\Color\ColorInterface $other
      * @param ColorInterface $other
      *
      * @return float
@@ -130,26 +137,39 @@ class IsColorSimilar extends Constraint
         foreach ($this->pixelDefinition as $color) {
             $squareSum += pow($other->getValue($color) - $this->value->getValue($color), 2);
         }
-        $myAlpha = $this->value->getAlpha();
-        if ($myAlpha === null) {
-            $myAlpha = 100;
+        if ($this->includeAlpha) {
+            $myAlpha = $this->value->getAlpha();
+            if ($myAlpha === null) {
+                $myAlpha = 100;
+            }
+            $otherAlpha = $other->getAlpha();
+            if ($otherAlpha === null) {
+                $otherAlpha = 100;
+            }
+            $squareSum += pow(($otherAlpha - $myAlpha) * $this->channelMultiplier / 100, 2);
         }
-        $otherAlpha = $other->getAlpha();
-        if ($otherAlpha === null) {
-            $otherAlpha = 100;
-        }
-        $squareSum += pow(($otherAlpha - $myAlpha) * $this->channelMultiplier / 100, 2);
 
         return sqrt($squareSum);
     }
 
+    /**
+     * @param \Imagine\Image\Palette\Color\ColorInterface $other
+     * @param ColorInterface $color
+     *
+     * @return string
+     */
     protected function stringify(ColorInterface $color)
     {
-        $alpha = $color->getAlpha();
-        if ($alpha === null) {
-            $alpha = 100;
+        $result = $color->__toString();
+        if ($this->includeAlpha) {
+            $alpha = $color->getAlpha();
+            if ($alpha === null) {
+                $alpha = 100;
+            }
+
+            return sprintf('%s (alpha: %s)', $result, $alpha);
         }
 
-        return sprintf('%s (alpha: %s)', $color->__toString(), $alpha);
+        return $result;
     }
 }
