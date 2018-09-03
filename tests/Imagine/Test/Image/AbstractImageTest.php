@@ -961,6 +961,34 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertSame('#000000', (string) $pasted->getColorAt(new Point(0, 9)));
     }
 
+    public function imageCompressionQualityProvider()
+    {
+        return array(
+            array('jpg', array('jpeg_quality' => 0), array('jpeg_quality' => 100)),
+            array('png', array('png_compression_level' => 9), array('png_compression_level' => 0)),
+        );
+    }
+
+    /**
+     * @dataProvider imageCompressionQualityProvider
+     *
+     * @param string $format
+     * @param array $smallSizeOptions
+     * @param array $bigSizeOptions
+     */
+    public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
+    {
+        $image = $this->getImagine()->open('tests/Imagine/Fixtures/xparent.gif');
+        $filename = IMAGINE_TEST_TEMPFOLDER . '/test-compressed.' . $format;
+        $image->copy()->save($filename, array('format' => $format) + $smallSizeOptions);
+        $smallSize = filesize($filename);
+        unlink($filename);
+        $image->copy()->save($filename, array('format' => $format) + $bigSizeOptions);
+        $bigSize = filesize($filename);
+        unlink($filename);
+        $this->assertLessThan($bigSize, $smallSize);
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()
