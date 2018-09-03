@@ -621,15 +621,16 @@ final class Image extends AbstractImage
         if ($alpha) {
             $alpha = min(max($alpha, 0), 100);
         }
-        $palette = $this->palette();
 
-        return $this->palette->color(array_map(function ($color) use ($palette, $pixel, $colorMapping) {
+        if ($this->palette()->name() === PaletteInterface::PALETTE_CMYK) {
+            $multiplier = 100;
+        } else {
+            $multiplier = 255;
+        }
+
+        return $this->palette->color(array_map(function ($color) use ($multiplier, $pixel, $colorMapping) {
             if (!isset($colorMapping[$color])) {
                 throw new InvalidArgumentException(sprintf('Color %s is not mapped in Imagick', $color));
-            }
-            $multiplier = 255;
-            if ($palette->name() === PaletteInterface::PALETTE_CMYK) {
-                $multiplier = 100;
             }
 
             return $pixel->getColorValue($colorMapping[$color]) * $multiplier;
