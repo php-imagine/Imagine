@@ -77,12 +77,12 @@ class ColorParser
      *
      * @throws \Imagine\Exception\InvalidArgumentException
      *
-     * @return array
+     * @return int[]
      */
     public function parseToGrayscale($color)
     {
         if (is_array($color) && 1 === count($color)) {
-            return array_values($color);
+            return array((int) round(array_pop($color)));
         }
 
         $color = array_unique($this->parse($color));
@@ -101,7 +101,7 @@ class ColorParser
      *
      * @throws \Imagine\Exception\InvalidArgumentException
      *
-     * @return array
+     * @return int[]
      */
     private function parse($color)
     {
@@ -111,17 +111,21 @@ class ColorParser
 
         if (is_array($color)) {
             if (3 === count($color) || 4 === count($color)) {
-                return array_values($color);
+                return array_map(
+                    function ($component) {
+                        return (int) round($component);
+                    },
+                    array_values($color)
+                );
             }
             throw new InvalidArgumentException('Color argument if array, must look like array(R, G, B), or array(C, M, Y, K) where R, G, B are the integer values between 0 and 255 for red, green and blue or cyan, magenta, yellow and black color indexes accordingly');
         }
-
         if (is_string($color)) {
             if (0 === strpos($color, 'cmyk(')) {
                 $substrColor = substr($color, 5, strlen($color) - 6);
 
                 $components = array_map(function ($component) {
-                    return round(trim($component, ' %'));
+                    return (int) round(trim($component, ' %'));
                 }, explode(',', $substrColor));
 
                 if (count($components) !== 4) {

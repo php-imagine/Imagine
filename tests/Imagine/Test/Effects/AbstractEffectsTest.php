@@ -72,13 +72,13 @@ abstract class AbstractEffectsTest extends ImagineTestCase
 
         $pixel = $image->getColorAt(new Point(10, 10));
 
-        $this->assertEquals($this->getGrayValue(), (string) $pixel);
+        $this->assertEquals('#565656', (string) $pixel);
 
         $greyR = (int) $pixel->getRed();
         $greyG = (int) $pixel->getGreen();
         $greyB = (int) $pixel->getBlue();
 
-        $this->assertEquals($greyR, $this->getComponentGrayValue());
+        $this->assertEquals($greyR, 86);
         $this->assertEquals($greyR, $greyG);
         $this->assertEquals($greyR, $greyB);
         $this->assertEquals($greyG, $greyB);
@@ -110,16 +110,6 @@ abstract class AbstractEffectsTest extends ImagineTestCase
         $image->effects()->brightness($brightness);
         $actualColor = $image->getColorAt(new Point(1, 1));
         $this->assertEquals($expectedColor, (string) $actualColor);
-    }
-
-    protected function getGrayValue()
-    {
-        return '#565656';
-    }
-
-    protected function getComponentGrayValue()
-    {
-        return 86;
     }
 
     public function testColorize()
