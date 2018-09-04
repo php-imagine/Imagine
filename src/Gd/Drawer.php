@@ -91,19 +91,23 @@ final class Drawer implements DrawerInterface
         }
         imagesetthickness($this->resource, $thickness);
 
-        if ($fill) {
-            $style = IMG_ARC_CHORD;
-        } else {
-            $style = IMG_ARC_CHORD | IMG_ARC_NOFILL;
-        }
-
         if (false === imagealphablending($this->resource, true)) {
             throw new RuntimeException('Draw chord operation failed');
         }
 
-        if (false === imagefilledarc($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $start, $end, $this->getColor($color), $style)) {
-            imagealphablending($this->resource, false);
-            throw new RuntimeException('Draw chord operation failed');
+        if ($fill) {
+            $style = IMG_ARC_CHORD;
+            if (false === imagefilledarc($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $start, $end, $this->getColor($color), $style)) {
+                imagealphablending($this->resource, false);
+                throw new RuntimeException('Draw chord operation failed');
+            }
+        } else {
+            foreach (array(IMG_ARC_NOFILL, IMG_ARC_NOFILL | IMG_ARC_CHORD) as $style) {
+                if (false === imagefilledarc($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $start, $end, $this->getColor($color), $style)) {
+                    imagealphablending($this->resource, false);
+                    throw new RuntimeException('Draw chord operation failed');
+                }
+            }
         }
 
         if (false === imagealphablending($this->resource, false)) {
