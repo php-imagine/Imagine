@@ -56,6 +56,17 @@ interface DrawerInterface
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1);
 
     /**
+     * Draws and circle with center at the given x, y coordinates, and given radius.
+     *
+     * @param \Imagine\Image\PointInterface $center
+     * @param int $radius
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
+     * @param bool $fill
+     * @param int $thickness
+     */
+    public function circle(PointInterface $center, $radius, ColorInterface $color, $fill = false, $thickness = 1);
+
+    /**
      * Draws and ellipse with center at the given x, y coordinates, and given width and height.
      *
      * @param \Imagine\Image\PointInterface $center
@@ -111,6 +122,17 @@ interface DrawerInterface
      * @return $this
      */
     public function dot(PointInterface $position, ColorInterface $color);
+
+    /**
+     * Draws a rectangle from left, top(x, y) to right, bottom(x, y) coordinates.
+     *
+     * @param \Imagine\Image\PointInterface $leftTop
+     * @param \Imagine\Image\PointInterface $rightBottom
+     * @param \Imagine\Image\Palette\Color\ColorInterface $color
+     * @param bool $fill
+     * @param int $thickness
+     */
+    public function rectangle(PointInterface $leftTop, PointInterface $rightBottom, ColorInterface $color, $fill = false, $thickness = 1);
 
     /**
      * Draws a polygon using array of x, y coordinates. Must contain at least three coordinates.

@@ -70,26 +70,7 @@ class IsImageEqual extends Constraint
             throw InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
         }
 
-        list($currentRed, $currentGreen, $currentBlue, $currentAlpha) = $this->normalize($this->value);
-        list($otherRed, $otherGreen, $otherBlue, $otherAlpha) = $this->normalize($other);
-
-        $total = 0;
-
-        foreach ($currentRed as $bucket => $count) {
-            $total += abs($count - $otherRed[$bucket]);
-        }
-
-        foreach ($currentGreen as $bucket => $count) {
-            $total += abs($count - $otherGreen[$bucket]);
-        }
-
-        foreach ($currentBlue as $bucket => $count) {
-            $total += abs($count - $otherBlue[$bucket]);
-        }
-
-        foreach ($currentAlpha as $bucket => $count) {
-            $total += abs($count - $otherAlpha[$bucket]);
-        }
+        $total = $this->getDelta($other);
 
         return $total <= $this->delta;
     }
@@ -100,6 +81,14 @@ class IsImageEqual extends Constraint
     public function toString()
     {
         return sprintf('contains color histogram identical to expected %s', $this->exporter->export($this->value));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function failureDescription($other)
+    {
+        return sprintf('contains color histogram identical to the expected one (max delta: %s, actual delta: %s)', $this->delta, $this->getDelta($other));
     }
 
     /**
@@ -154,5 +143,31 @@ class IsImageEqual extends Constraint
             array_map($callback, $blue),
             array_map($callback, $alpha),
         );
+    }
+
+    private function getDelta(ImageInterface $other)
+    {
+        list($currentRed, $currentGreen, $currentBlue, $currentAlpha) = $this->normalize($this->value);
+        list($otherRed, $otherGreen, $otherBlue, $otherAlpha) = $this->normalize($other);
+
+        $total = 0;
+
+        foreach ($currentRed as $bucket => $count) {
+            $total += abs($count - $otherRed[$bucket]);
+        }
+
+        foreach ($currentGreen as $bucket => $count) {
+            $total += abs($count - $otherGreen[$bucket]);
+        }
+
+        foreach ($currentBlue as $bucket => $count) {
+            $total += abs($count - $otherBlue[$bucket]);
+        }
+
+        foreach ($currentAlpha as $bucket => $count) {
+            $total += abs($count - $otherAlpha[$bucket]);
+        }
+
+        return $total;
     }
 }

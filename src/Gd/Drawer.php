@@ -15,6 +15,7 @@ use Imagine\Draw\DrawerInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
+use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
@@ -107,10 +108,21 @@ final class Drawer implements DrawerInterface
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Draw\DrawerInterface::circle()
+     */
+    public function circle(PointInterface $center, $radius, ColorInterface $color, $fill = false, $thickness = 1)
+    {
+        return $this->ellipse($center, new Box($radius, $radius), $color, $fill, $thickness);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Draw\DrawerInterface::ellipse()
      */
     public function ellipse(PointInterface $center, BoxInterface $size, ColorInterface $color, $fill = false, $thickness = 1)
     {
+        imageantialias($this->resource, true);
         imagesetthickness($this->resource, max(1, (int) $thickness));
 
         if ($fill) {
@@ -119,10 +131,12 @@ final class Drawer implements DrawerInterface
             $callback = 'imageellipse';
         }
 
+        imageantialias($this->resource, true);
         if (false === imagealphablending($this->resource, true)) {
             throw new RuntimeException('Draw ellipse operation failed');
         }
 
+        imageantialias($this->resource, true);
         if (false === $callback($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $this->getColor($color))) {
             imagealphablending($this->resource, false);
             throw new RuntimeException('Draw ellipse operation failed');
@@ -209,6 +223,42 @@ final class Drawer implements DrawerInterface
 
         if (false === imagealphablending($this->resource, false)) {
             throw new RuntimeException('Draw point operation failed');
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Draw\DrawerInterface::rectangle()
+     */
+    public function rectangle(PointInterface $leftTop, PointInterface $rightBottom, ColorInterface $color, $fill = false, $thickness = 1)
+    {
+        imagesetthickness($this->resource, max(1, (int) $thickness));
+
+        $minX = min($leftTop->getX(), $rightBottom->getX());
+        $maxX = max($leftTop->getX(), $rightBottom->getX());
+        $minY = min($leftTop->getY(), $rightBottom->getY());
+        $maxY = max($leftTop->getY(), $rightBottom->getY());
+
+        if ($fill) {
+            $callback = 'imagefilledrectangle';
+        } else {
+            $callback = 'imagerectangle';
+        }
+
+        if (false === imagealphablending($this->resource, true)) {
+            throw new RuntimeException('Draw polygon operation failed');
+        }
+
+        if (false === $callback($this->resource, $minX, $minY, $maxX, $maxY, $this->getColor($color))) {
+            imagealphablending($this->resource, false);
+            throw new RuntimeException('Draw polygon operation failed');
+        }
+
+        if (false === imagealphablending($this->resource, false)) {
+            throw new RuntimeException('Draw polygon operation failed');
         }
 
         return $this;

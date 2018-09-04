@@ -38,6 +38,38 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         unlink('tests/Imagine/Fixtures/smiley.png');
     }
 
+    public function drawACircleProvider()
+    {
+        return array(
+            array(false, 1),
+            array(true, 1),
+            array(false, 2),
+            array(true, 2),
+        );
+    }
+
+    /**
+     * @dataProvider drawACircleProvider
+     *
+     * @param bool $fill
+     * @param int $thickness
+     */
+    public function testDrawACircle($fill, $thickness)
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->create(new Box(15, 15), $this->getColor('fff'));
+        $drawer = $image->draw();
+        $this->assertSame($drawer, $drawer->circle(
+            new Point(7, 7),
+            6,
+            $this->getColor('f00'),
+            $fill,
+            $thickness
+        ));
+        $expected = $imagine->open('tests/Imagine/Fixtures/drawer/circle/thinkness' . $thickness . '-filled' . ($fill ? '1' : '0') . '.png');
+        $this->assertImageEquals($expected, $image, '', 0.107);
+    }
+
     public function testDrawAnEllipse()
     {
         $imagine = $this->getImagine();
@@ -101,6 +133,38 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertFileExists('tests/Imagine/Fixtures/lines.png');
 
         unlink('tests/Imagine/Fixtures/lines.png');
+    }
+
+    public function drawARectangleProvider()
+    {
+        return array(
+            array(false, 1),
+            array(true, 1),
+            array(false, 2),
+            array(true, 2),
+        );
+    }
+
+    /**
+     * @dataProvider drawARectangleProvider
+     *
+     * @param bool $fill
+     * @param int $thickness
+     */
+    public function testDrawARectangle($fill, $thickness)
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->create(new Box(15, 15), $this->getColor('fff'));
+        $drawer = $image->draw();
+        $this->assertSame($drawer, $drawer->rectangle(
+            new Point(2, 2),
+            new Point(12, 12),
+            $this->getColor('f00'),
+            $fill,
+            $thickness
+        ));
+        $expected = $imagine->open('tests/Imagine/Fixtures/drawer/rectangle/thinkness' . $thickness . '-filled' . ($fill ? '1' : '0') . '.png');
+        $this->assertImageEquals($expected, $image);
     }
 
     public function testDrawAPolygon()
