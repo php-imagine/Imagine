@@ -297,10 +297,12 @@ final class Image extends AbstractImage
      */
     public function rotate($angle, ColorInterface $background = null)
     {
-        $color = $background ? $background : $this->palette->color('fff');
+        if ($background === null) {
+            $background = $this->palette->color('fff');
+        }
 
         try {
-            $pixel = $this->getColor($color);
+            $pixel = $this->getColor($background);
 
             $this->imagick->rotateimage($pixel, $angle);
 
