@@ -102,4 +102,11 @@ interface PaletteInterface
      * @return bool
      */
     public function supportsAlpha();
+
+    /**
+     * Get the max value of palette components (255 for RGB and Grayscale, 100 for CMYK).
+     *
+     * @return int
+     */
+    public function getChannelsMaxValue();
 }

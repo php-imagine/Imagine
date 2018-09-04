@@ -79,6 +79,16 @@ class RGB implements PaletteInterface
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Image\Palette\PaletteInterface::getChannelsMaxValue()
+     */
+    public function getChannelsMaxValue()
+    {
+        return 255;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Image\Palette\PaletteInterface::useProfile()
      */
     public function useProfile(ProfileInterface $profile)
@@ -133,17 +143,17 @@ class RGB implements PaletteInterface
         if (!$color1 instanceof RGBColor || !$color2 instanceof RGBColor) {
             throw new RuntimeException('RGB palette can only blend RGB colors');
         }
-
         $amount = (float) $amount;
         $amountComplement = 1 - $amount;
+        $max = $this->getChannelsMaxValue();
 
         return $this->color(
             array(
-                min(max((int) round($color2->getRed() * $amount + $color1->getRed() * $amountComplement), 0), 255),
-                min(max((int) round($color2->getGreen() * $amount + $color1->getGreen() * $amountComplement), 0), 255),
-                min(max((int) round($color2->getBlue() * $amount + $color1->getBlue() * $amountComplement), 0), 255),
+                min(max((int) round($color2->getRed() * $amount + $color1->getRed() * $amountComplement), 0), $max),
+                min(max((int) round($color2->getGreen() * $amount + $color1->getGreen() * $amountComplement), 0), $max),
+                min(max((int) round($color2->getBlue() * $amount + $color1->getBlue() * $amountComplement), 0), $max),
             ),
-            min(max((int) round($color2->getAlpha() * $amount + $color1->getAlpha() * $amountComplement), 0), 255)
+            min(max((int) round($color2->getAlpha() * $amount + $color1->getAlpha() * $amountComplement), 0), 100)
         );
     }
 }
