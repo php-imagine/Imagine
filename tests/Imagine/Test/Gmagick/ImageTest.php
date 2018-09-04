@@ -62,6 +62,18 @@ class ImageTest extends AbstractImageTest
      *
      * {@inheritdoc}
      *
+     * @see \Imagine\Test\Image\AbstractImageTest::testRotateWithTransparency()
+     */
+    public function testRotateWithTransparency()
+    {
+        $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
+    }
+
+    /**
+     * @group always-skipped
+     *
+     * {@inheritdoc}
+     *
      * @see \Imagine\Test\Image\AbstractImageTest::testPaletteIsGrayIfGrayImage()
      */
     public function testPaletteIsGrayIfGrayImage()

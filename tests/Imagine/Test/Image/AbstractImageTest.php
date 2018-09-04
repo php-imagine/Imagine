@@ -213,6 +213,13 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertSame(364, $size->getHeight());
     }
 
+    public function testRotateWithTransparency()
+    {
+        $image = $this->getImagine()->open('tests/Imagine/Fixtures/large.jpg');
+        $color = $image->rotate(45, $image->palette()->color('#fff', 0))->getColorAt(new Point(0, 0));
+        $this->assertSame(0, $color->getAlpha());
+    }
+
     /**
      * @doesNotPerformAssertions
      */
