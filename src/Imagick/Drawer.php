@@ -204,7 +204,7 @@ final class Drawer implements DrawerInterface
     public function line(PointInterface $start, PointInterface $end, ColorInterface $color, $thickness = 1)
     {
         $thickness = max(0, (int) round($thickness));
-        if ($thickness === 1) {
+        if ($thickness === 0) {
             return $this;
         }
         try {
