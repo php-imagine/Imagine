@@ -75,6 +75,16 @@ class Grayscale implements PaletteInterface
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Image\Palette\PaletteInterface::getChannelsMaxValue()
+     */
+    public function getChannelsMaxValue()
+    {
+        return 255;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Image\Palette\PaletteInterface::useProfile()
      */
     public function useProfile(ProfileInterface $profile)
@@ -129,10 +139,11 @@ class Grayscale implements PaletteInterface
         if (!$color1 instanceof GrayColor || !$color2 instanceof GrayColor) {
             throw new RuntimeException('Grayscale palette can only blend Grayscale colors');
         }
+        $max = $this->getChannelsMaxValue();
 
         return $this->color(
             array(
-                (int) min(255, min($color1->getGray(), $color2->getGray()) + round(abs($color2->getGray() - $color1->getGray()) * $amount)),
+                (int) min($max, min($color1->getGray(), $color2->getGray()) + round(abs($color2->getGray() - $color1->getGray()) * $amount)),
             ),
             (int) min(100, min($color1->getAlpha(), $color2->getAlpha()) + round(abs($color2->getAlpha() - $color1->getAlpha()) * $amount))
         );

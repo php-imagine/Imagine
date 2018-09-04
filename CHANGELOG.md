@@ -12,6 +12,8 @@
   * Fix handling of PNG compression in Imagick `save` method (@mlocati)
   * New drawer methods: `rectangle` and `circle` (@mlocati)  
     **BREAKING CHANGE** if you have your own implementation of `DrawerTest` you should add these two new methods
+  * The `getChannelsMaxValue` method has been added to `PaletteInterface` (@mlocati)  
+    **BREAKING CHANGE** if you have your own `PaletteInterface` implementation, it now must implement this new method
 
 ### 1.0.0-alpha1 (2018-08-28)
   * Imagine is now tested under Windows too (@mlocati)

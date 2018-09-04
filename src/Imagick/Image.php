@@ -624,11 +624,7 @@ final class Image extends AbstractImage
             $alpha = min(max($alpha, 0), 100);
         }
 
-        if ($this->palette()->name() === PaletteInterface::PALETTE_CMYK) {
-            $multiplier = 100;
-        } else {
-            $multiplier = 255;
-        }
+        $multiplier = $this->palette()->getChannelsMaxValue();
 
         return $this->palette->color(array_map(function ($color) use ($multiplier, $pixel, $colorMapping) {
             if (!isset($colorMapping[$color])) {

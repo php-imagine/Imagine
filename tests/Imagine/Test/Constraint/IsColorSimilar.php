@@ -65,11 +65,7 @@ class IsColorSimilar extends Constraint
         }
         $this->maxDistance = $maxDistance;
         $this->pixelDefinition = $this->value->getPalette()->pixelDefinition();
-        if ($this->value->getPalette() === PaletteInterface::PALETTE_CMYK) {
-            $this->channelMultiplier = 100;
-        } else {
-            $this->channelMultiplier = 255;
-        }
+        $this->channelMultiplier = $this->value->getPalette()->getChannelsMaxValue();
     }
 
     /**
