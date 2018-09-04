@@ -262,7 +262,9 @@ final class Image extends AbstractImage
     public function rotate($angle, ColorInterface $background = null)
     {
         try {
-            $background = $background ?: $this->palette->color('fff');
+            if ($background === null) {
+                $background = $this->palette->color('fff');
+            }
             $pixel = $this->getColor($background);
 
             $this->gmagick->rotateimage($pixel, $angle);
