@@ -104,12 +104,9 @@ final class Drawer implements DrawerInterface
             if ($fill) {
                 $chord->setFillColor($pixel);
             } else {
-                $this->line(
-                    new Point(round($x + $width / 2 * cos(deg2rad($start))), round($y + $height / 2 * sin(deg2rad($start)))),
-                    new Point(round($x + $width / 2 * cos(deg2rad($end))), round($y + $height / 2 * sin(deg2rad($end)))),
-                    $color
-                );
-
+                $from = new Point(round($x + $width / 2 * cos(deg2rad($start))), round($y + $height / 2 * sin(deg2rad($start))));
+                $to = new Point(round($x + $width / 2 * cos(deg2rad($end))), round($y + $height / 2 * sin(deg2rad($end))));
+                $this->line($from, $to, $color, $thickness);
                 $chord->setFillColor('transparent');
             }
 
