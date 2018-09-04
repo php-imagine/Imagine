@@ -9,7 +9,7 @@
     **NOTE** Imagick requires that the image frames have the same size
   * The `paste` method now accepts images not fully included in the destination image (@mlocati)  
     **BREAKING CHANGE** the paste method doesn't throw an OutOfBoundsException anymore
-  * Fix handling of PNG compression in Gmagick `save` method (@mlocati)
+  * Fix handling of PNG compression in Imagick `save` method (@mlocati)
 
 ### 1.0.0-alpha1 (2018-08-28)
   * Imagine is now tested under Windows too (@mlocati)
