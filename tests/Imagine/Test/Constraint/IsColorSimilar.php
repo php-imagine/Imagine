@@ -12,7 +12,6 @@
 namespace Imagine\Test\Constraint;
 
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Palette\PaletteInterface;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Util\InvalidArgumentHelper;
 
