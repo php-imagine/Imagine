@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
+### 1.0.0-alpha2 (2018-09-08)
   * The `coalesce` method of `LayerInterface` instances now returns the LayerInterface itself (@mlocati)  
     **BREAKING CHANGE** if you have your own `LayerInterface` implementation, it now must return `$this`
   * The `__toString` method has been added to `ColorInterface` since all its implementations have it (@mlocati)  
@@ -11,7 +11,7 @@
     **BREAKING CHANGE** the paste method doesn't throw an OutOfBoundsException anymore
   * Fix handling of PNG compression in Imagick `save` method (@mlocati)
   * New drawer methods: `rectangle` and `circle` (@mlocati)  
-    **BREAKING CHANGE** if you have your own implementation of `DrawerTest` you should add these two new methods
+    **BREAKING CHANGE** if you have your own implementation of `DrawerInterface` you should add these two new methods
   * The `getChannelsMaxValue` method has been added to `PaletteInterface` (@mlocati)  
     **BREAKING CHANGE** if you have your own `PaletteInterface` implementation, it now must implement this new method
 
