@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.0.0-alpha2 (2018-09-08)
   * The `coalesce` method of `LayerInterface` instances now returns the LayerInterface itself (@mlocati)  
     **BREAKING CHANGE** if you have your own `LayerInterface` implementation, it now must return `$this`
