@@ -168,13 +168,11 @@ abstract class AbstractLayersTest extends ImagineTestCase
         $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/yellow.gif');
         $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/blue.gif');
 
-        $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
+        $target = $this->getTemporaryFilename('.gif');
 
         $image->save($target, array(
             'animated' => true,
         ));
-
-        @unlink($target);
     }
 
     /**
@@ -192,15 +190,13 @@ abstract class AbstractLayersTest extends ImagineTestCase
         $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/yellow.gif');
         $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/blue.gif');
 
-        $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
+        $target = $this->getTemporaryFilename("delay={$delay}-loops={$loops}.gif");
 
         $image->save($target, array(
             'animated' => true,
             'animated.delay' => $delay,
             'animated.loops' => $loops,
         ));
-
-        @unlink($target);
     }
 
     public function provideAnimationParameters()
@@ -228,15 +224,13 @@ abstract class AbstractLayersTest extends ImagineTestCase
         $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/yellow.gif');
         $layers[] = $this->getImage(__DIR__ . '/../../Fixtures/blue.gif');
 
-        $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
+        $target = $this->getTemporaryFilename("delay={$delay}-loops={$loops}.gif");
 
         $image->save($target, array(
             'animated' => true,
             'animated.delay' => $delay,
             'animated.loops' => $loops,
         ));
-
-        @unlink($target);
     }
 
     public function provideWrongAnimationParameters()

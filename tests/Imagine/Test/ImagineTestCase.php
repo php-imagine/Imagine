@@ -90,6 +90,9 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
                 break;
             }
         }
+        if (is_file($filename)) {
+            unlink($filename);
+        }
         self::$temporaryFiles[] = $filename;
 
         return $filename;

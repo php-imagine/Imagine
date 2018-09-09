@@ -60,33 +60,32 @@ class ImageTest extends AbstractImageTest
 
         $image = $imagine->open('tests/Imagine/Fixtures/resize/210-design-19933.jpg');
 
+        $filenameLarge = $this->getTemporaryFilename('large.png');
         $image
             ->resize(new Box(1500, 750))
-            ->save('tests/Imagine/Fixtures/resize/large.png')
+            ->save($filenameLarge)
         ;
 
+        $filenameLarge = $this->getTemporaryFilename('small.png');
         $image
             ->resize(new Box(100, 50))
-            ->save('tests/Imagine/Fixtures/resize/small.png')
+            ->save($filenameLarge)
         ;
-
-        unlink('tests/Imagine/Fixtures/resize/large.png');
-        unlink('tests/Imagine/Fixtures/resize/small.png');
     }
 
     public function testAnimatedGifResize()
     {
         $imagine = $this->getImagine();
         $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+        $filename = $this->getTemporaryFilename('.gif');
         $image
             ->resize(new Box(150, 100))
-            ->save('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif', array('animated' => true))
+            ->save($filename, array('animated' => true))
         ;
         $this->assertImageEquals(
             $imagine->open('tests/Imagine/Fixtures/resize/anima3-150x100.gif'),
-            $imagine->open('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif')
+            $imagine->open($filename)
         );
-        unlink('tests/Imagine/Fixtures/resize/anima3-150x100-actual.gif');
     }
 
     /**
@@ -127,18 +126,18 @@ class ImageTest extends AbstractImageTest
     {
         $imagine = $this->getImagine();
         $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+        $filename = $this->getTemporaryFilename('.gif');
         $image
             ->crop(
                 new Point(0, 0),
                 new Box(150, 100)
             )
-            ->save('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif', array('animated' => true))
+            ->save($filename, array('animated' => true))
         ;
         $this->assertImageEquals(
             $imagine->open('tests/Imagine/Fixtures/crop/anima3-topleft.gif'),
-            $imagine->open('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif')
+            $imagine->open($filename)
         );
-        unlink('tests/Imagine/Fixtures/crop/anima3-topleft-actual.gif');
     }
 
     public function testOptimize()
@@ -148,15 +147,13 @@ class ImageTest extends AbstractImageTest
         $image = $imagine->create(new Box(100, 100), $rgb->color('#fff'));
         $blackFrame = $imagine->create($image->getSize(), $rgb->color('#000'));
         $image->layers()->add(clone $blackFrame)->add(clone $blackFrame)->add(clone $blackFrame)->add(clone $blackFrame);
-        $originalFilename = IMAGINE_TEST_TEMPFOLDER . '/not-optimized.gif';
+        $originalFilename = $this->getTemporaryFilename('not-optimized.gif');
         $image->save($originalFilename, array('animated' => true, 'optimize' => false));
         $originalSize = filesize($originalFilename);
-        $optimizedFilename = IMAGINE_TEST_TEMPFOLDER . '/optimized.gif';
+        $optimizedFilename = $this->getTemporaryFilename('optimized.gif');
         $image->save($optimizedFilename, array('animated' => true, 'optimize' => true));
         $optimizedSize = filesize($optimizedFilename);
         $this->assertLessThan($originalSize, $optimizedSize);
-        unlink($optimizedFilename);
-        unlink($originalFilename);
     }
 
     /**
@@ -168,9 +165,8 @@ class ImageTest extends AbstractImageTest
         $rgb = new RGB();
         $image = $imagine->create(new Box(10, 10), $rgb->color('#fff'));
         $image->layers()->add($imagine->create($image->getSize()->scale(2)), $rgb->color('#fff'));
-        $filename = IMAGINE_TEST_TEMPFOLDER . '/optimized.gif';
+        $filename = $this->getTemporaryFilename('.gif');
         $image->save($filename, array('animated' => true, 'optimize' => true));
-        unlink($filename);
     }
 
     protected function getImageResolution(ImageInterface $image)
