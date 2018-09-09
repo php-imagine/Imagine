@@ -17,6 +17,11 @@ use Imagine\Test\Constraint\IsImageEqual;
 
 class ImagineTestCase extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var string[]
+     */
+    private static $temporaryFiles = array();
+
     const HTTP_IMAGE = 'http://imagine.readthedocs.org/en/latest/_static/logo.jpg';
 
     /**
@@ -47,6 +52,62 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
         $constraint = new IsColorSimilar($expected, $maxDistance);
 
         self::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * @param string $suffix
+     *
+     * @return string
+     */
+    protected static function getTemporaryFilename($suffix)
+    {
+        $suffix = (string) $suffix;
+        if ($suffix !== '' && $suffix[0] !== '.') {
+            $suffix = '-' . $suffix;
+        }
+        $s = get_called_class();
+        if (strpos($s, 'Imagine\\Test\\') === 0) {
+            $s = substr($s, 13);
+        }
+        $filenameBase = str_replace('\\', '-', $s);
+        if (PHP_VERSION_ID >= 50400) {
+            $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        } elseif (defined('DEBUG_BACKTRACE_IGNORE_ARGS')) {
+            $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+        } else {
+            $bt = debug_backtrace(false);
+        }
+        if (isset($bt[1]['function'])) {
+            $filenameBase .= '-' . $bt[1]['function'];
+        }
+        if (preg_match('/^(Gd|Gmagick|Imagick)-(.+)$/', $filenameBase, $m)) {
+            $filenameBase = $m[2] . '-' . $m[1];
+        }
+        $filenameBase = IMAGINE_TEST_TEMPFOLDER . '/' . $filenameBase;
+        for ($i = 0; ; $i++) {
+            $filename = $filenameBase . ($i === 0 ? '' : "-{$i}") . $suffix;
+            if (!in_array($filename, self::$temporaryFiles)) {
+                break;
+            }
+        }
+        self::$temporaryFiles[] = $filename;
+
+        return $filename;
+    }
+
+    public static function tearDownAfterClass()
+    {
+        if (!empty(self::$temporaryFiles)) {
+            $keepFiles = getenv('IMAGINE_TEST_KEEP_TEMPFILES');
+            if (empty($keepFiles)) {
+                foreach (self::$temporaryFiles as $temporaryFile) {
+                    if (is_file($temporaryFile)) {
+                        @unlink($temporaryFile);
+                    }
+                }
+            }
+            self::$temporaryFiles = array();
+        }
     }
 
     /**
