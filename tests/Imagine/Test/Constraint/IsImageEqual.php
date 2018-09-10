@@ -14,6 +14,8 @@ namespace Imagine\Test\Constraint;
 use Imagine\Image\Histogram\Bucket;
 use Imagine\Image\Histogram\Range;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Image\Palette\RGB;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Util\InvalidArgumentHelper;
 
@@ -98,6 +100,9 @@ class IsImageEqual extends Constraint
      */
     private function normalize(ImageInterface $image)
     {
+        if ($image->palette()->name() !== PaletteInterface::PALETTE_RGB) {
+            $image = $image->copy()->usePalette(new RGB());
+        }
         $step = (int) round(255 / $this->buckets);
 
         $red =
