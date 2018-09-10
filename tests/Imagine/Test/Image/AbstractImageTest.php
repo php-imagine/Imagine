@@ -624,14 +624,15 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testChangeColorSpaceAndStripImage()
     {
+        $palette = new RGB();
         $color = $this
             ->getImagine()
             ->open('tests/Imagine/Fixtures/pixel-CMYK.jpg')
-            ->usePalette(new RGB())
+            ->usePalette($palette)
             ->strip()
             ->getColorAt(new Point(0, 0));
 
-        $this->assertEquals('#0082a2', (string) $color);
+        $this->assertColorSimilar($palette->color('#0082a2'), $color, '', 1.4143, false);
     }
 
     public function testStripImageWithInvalidProfile()
@@ -677,7 +678,7 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->open('tests/Imagine/Fixtures/pixel-CMYK.jpg')
             ->getColorAt(new Point(0, 0));
 
-        $this->assertEquals('cmyk(98%, 0%, 30%, 23%)', (string) $color);
+        $this->assertEquals('cmyk(99%, 0%, 31%, 23%)', (string) $color);
         $this->assertTrue($color->isOpaque());
     }
 
@@ -698,13 +699,13 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testStripGBRImageHasGoodColors()
     {
-        $color = $this
+        $image = $this
             ->getImagine()
             ->open('tests/Imagine/Fixtures/pixel-GBR.jpg')
-            ->strip()
-            ->getColorAt(new Point(0, 0));
+            ->strip();
+        $color = $image->getColorAt(new Point(0, 0));
 
-        $this->assertEquals('#d07560', (string) $color);
+        $this->assertColorSimilar($image->palette()->color('#d07560'), $color, '', 1);
     }
 
     /**
@@ -925,7 +926,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $finalColor = $whiteImage->getColorAt(new Point(1, 1));
         $grayLevel = (int) (255 * (100 - $alpha) / 100);
         $expectedColor = $rgb->color(array($grayLevel, $grayLevel, $grayLevel));
-        $this->assertEquals($expectedColor, $finalColor);
+        $this->assertColorSimilar($expectedColor, $finalColor, '', 1.74);
     }
 
     public function testPasteOutOfBoundaries()

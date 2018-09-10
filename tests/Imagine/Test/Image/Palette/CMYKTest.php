@@ -54,13 +54,13 @@ class CMYKTest extends AbstractPaletteTest
 
         return array(
             array(
-                new CMYKColor($palette, array(56, 29, 38, 48)),
+                new CMYKColor($palette, array(56, 30, 38, 48)),
                 new CMYKColor($palette, array(1, 2, 3, 4)),
                 new CMYKColor($palette, array(50, 25, 32, 40)),
                 1.1,
             ),
             array(
-                new CMYKColor($palette, array(21, 12, 15, 20)),
+                new CMYKColor($palette, array(21, 12, 16, 20)),
                 new CMYKColor($palette, array(1, 2, 3, 4)),
                 new CMYKColor($palette, array(50, 25, 32, 40)),
                 0.4,
