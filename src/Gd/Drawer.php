@@ -124,7 +124,8 @@ final class Drawer implements DrawerInterface
      */
     public function circle(PointInterface $center, $radius, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        return $this->ellipse($center, new Box($radius, $radius), $color, $fill, $thickness);
+        $diameter = $radius * 2;
+        return $this->ellipse($center, new Box($diameter, $diameter), $color, $fill, $thickness);
     }
 
     /**
