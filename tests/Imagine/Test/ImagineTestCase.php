@@ -11,6 +11,7 @@
 
 namespace Imagine\Test;
 
+use Imagine\Image\ImagineInterface;
 use Imagine\Test\Constraint\IsBoxInRange;
 use Imagine\Test\Constraint\IsColorSimilar;
 use Imagine\Test\Constraint\IsImageEqual;
@@ -27,15 +28,16 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
     /**
      * Asserts that two images are equal using color histogram comparison method.
      *
-     * @param \Imagine\Image\ImageInterface $expected
-     * @param \Imagine\Image\ImageInterface $actual
+     * @param \Imagine\Image\ImageInterface|string $expected
+     * @param \Imagine\Image\ImageInterface|string $actual
      * @param string $message
      * @param float $delta
+     * @param \Imagine\Image\ImagineInterface|null $imagine
      * @param int $buckets
      */
-    public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, $buckets = 4)
+    public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, ImagineInterface $imagine = null, $buckets = 4)
     {
-        $constraint = new IsImageEqual($expected, $delta, $buckets);
+        $constraint = new IsImageEqual($expected, $delta, $imagine, $buckets);
 
         self::assertThat($actual, $constraint, $message);
     }
@@ -81,7 +83,12 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
             $filenameBase .= '-' . $bt[1]['function'];
         }
         if (preg_match('/^(Gd|Gmagick|Imagick)-(.+)$/', $filenameBase, $m)) {
-            $filenameBase = $m[2] . '-' . $m[1];
+            if (preg_match('/^(.+)\.(\w+)$/', $suffix, $m2)) {
+                $filenameBase = $m[2];
+                $suffix = $m2[1] . '-' . $m[1] . '.' . $m2[2];
+            } else {
+                $filenameBase = $m[2] . '-' . $m[1];
+            }
         }
         $filenameBase = IMAGINE_TEST_TEMPFOLDER . '/' . $filenameBase;
         for ($i = 0; ; $i++) {

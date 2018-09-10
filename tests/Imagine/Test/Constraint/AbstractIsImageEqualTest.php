@@ -49,22 +49,31 @@ abstract class AbstractIsImageEqualTest extends ImagineTestCase
         $this->assertRegExp('/^Argument #2 .* must be a /', $error->getMessage());
 
         try {
-            $this->assertImageEquals($image, $image, '', 0.1, 'invalid');
+            $this->assertImageEquals($image, $image, '', 0.1, null, 'invalid');
             $error = null;
         } catch (\Exception $x) {
             $error = $x;
         }
         $this->assertInstanceOf('PHPUnit\Framework\Exception', $error, 'the fourth argument should be an integer');
-        $this->assertRegExp('/^Argument #3 .* must be a /', $error->getMessage());
+        $this->assertRegExp('/^Argument #4 .* must be a /', $error->getMessage());
 
         try {
-            $this->assertImageEquals($image, $image, '', 0.1, 0);
+            $this->assertImageEquals($image, $image, '', 0.1, null, 0);
             $error = null;
         } catch (\Exception $x) {
             $error = $x;
         }
         $this->assertInstanceOf('PHPUnit\Framework\Exception', $error, 'the fourth argument should be a positive integer');
-        $this->assertRegExp('/^Argument #3 .* must be a /', $error->getMessage());
+        $this->assertRegExp('/^Argument #4 .* must be a /', $error->getMessage());
+
+        try {
+            $this->assertImageEquals('foo', 'bar', '', 0,  $this->getImagine());
+            $error = null;
+        } catch (\Exception $x) {
+            $error = $x;
+        }
+        $this->assertInstanceOf('Imagine\Exception\InvalidArgumentException', $error, 'the fourth argument should be a positive integer');
+        $this->assertRegExp('/^File .* does not exist.$/', $error->getMessage());
     }
 
     public function sameImagesProvider()
