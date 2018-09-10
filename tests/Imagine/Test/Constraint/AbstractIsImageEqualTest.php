@@ -67,7 +67,7 @@ abstract class AbstractIsImageEqualTest extends ImagineTestCase
         $this->assertRegExp('/^Argument #4 .* must be a /', $error->getMessage());
 
         try {
-            $this->assertImageEquals('foo', 'bar', '', 0,  $this->getImagine());
+            $this->assertImageEquals('foo', 'bar', '', 0, $this->getImagine());
             $error = null;
         } catch (\Exception $x) {
             $error = $x;

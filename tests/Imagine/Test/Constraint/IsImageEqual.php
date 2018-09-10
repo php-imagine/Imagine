@@ -107,6 +107,7 @@ class IsImageEqual extends Constraint
         if ($this->imagine !== null && is_string($other)) {
             $other = $this->imagine->open($other);
         }
+
         return sprintf('contains color histogram identical to the expected one (max delta: %s, actual delta: %s)', $this->delta, $this->getDelta($other));
     }
 
