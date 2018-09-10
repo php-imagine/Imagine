@@ -222,6 +222,9 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
     public function testText()
     {
+        if (!$this->isFontTestSupported()) {
+            $this->markTestSkipped('This install does not support font tests');
+        }
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(60, 60), $this->getColor('fff'));
         $drawer = $image->draw();
