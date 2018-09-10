@@ -38,7 +38,7 @@ class GdTransparentGifHandlingTest extends ImagineTestCase
     public function testShouldResize()
     {
         $imagine = $this->getImagine();
-        $new = sys_get_temp_dir() . '/sample.jpeg';
+        $new = $this->getTemporaryFilename('.jpeg');
 
         $image = $imagine->open('tests/Imagine/Fixtures/xparent.gif');
         $size = $image->getSize()->scale(0.5);
@@ -52,7 +52,5 @@ class GdTransparentGifHandlingTest extends ImagineTestCase
             ->paste($image, new Point(0, 0))
             ->save($new)
         ;
-
-        unlink($new);
     }
 }

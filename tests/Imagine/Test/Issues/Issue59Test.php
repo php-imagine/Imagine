@@ -28,13 +28,13 @@ class Issue59Test extends ImagineTestCase
     public function testShouldResize()
     {
         $imagine = $this->getImagine();
-        $new = sys_get_temp_dir() . '/sample.jpeg';
+        $new = $this->getTemporaryFilename('.jpeg');
 
         $imagine
             ->open('tests/Imagine/Fixtures/sample.gif')
             ->save($new)
         ;
 
-        unlink($new);
+        $this->assertFileExists($new);
     }
 }

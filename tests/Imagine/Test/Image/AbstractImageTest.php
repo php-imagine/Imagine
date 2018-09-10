@@ -79,9 +79,9 @@ abstract class AbstractImageTest extends ImagineTestCase
     /**
      * @dataProvider provideFromAndToPalettes
      *
-     * @param mixed $from
-     * @param mixed $to
-     * @param mixed $color
+     * @param string $from
+     * @param string $to
+     * @param int[] $color
      */
     public function testUsePalette($from, $to, $color)
     {
@@ -96,12 +96,18 @@ abstract class AbstractImageTest extends ImagineTestCase
         $image->usePalette($targetPalette);
 
         $this->assertEquals($targetPalette, $image->palette());
-        $image->save(__DIR__ . '/tmp.jpg');
+        $suffix = array();
+        $tmp = explode('\\', $from);
+        $suffix[] = array_pop($tmp);
+        $tmp = explode('\\', $to);
+        $suffix[] = array_pop($tmp);
+        $suffix[] = implode('-', $color);
+        $filename = $this->getTemporaryFilename(implode('-', $suffix) . '.jpg');
+        $image->save($filename);
 
-        $image = $this->getImagine()->open(__DIR__ . '/tmp.jpg');
+        $image = $this->getImagine()->open($filename);
 
         $this->assertInstanceOf($to, $image->palette());
-        unlink(__DIR__ . '/tmp.jpg');
     }
 
     public function testSaveWithoutFormatShouldSaveInOriginalFormat()
@@ -110,7 +116,7 @@ abstract class AbstractImageTest extends ImagineTestCase
             $this->markTestSkipped('The EXIF extension is required for this test');
         }
 
-        $tmpFile = __DIR__ . '/tmpfile';
+        $tmpFile = $this->getTemporaryFilename('');
 
         $this
             ->getImagine()
@@ -119,17 +125,12 @@ abstract class AbstractImageTest extends ImagineTestCase
 
         $data = exif_read_data($tmpFile);
         $this->assertEquals('image/jpeg', $data['MimeType']);
-        unlink($tmpFile);
     }
 
     public function testSaveWithoutPathFileFromImageLoadShouldBeOkay()
     {
         $source = __DIR__ . '/../../Fixtures/google.png';
-        $tmpFile = __DIR__ . '/../../Fixtures/google.tmp.png';
-
-        if (file_exists($tmpFile)) {
-            unlink($tmpFile);
-        }
+        $tmpFile = $this->getTemporaryFilename('.png');
 
         copy($source, $tmpFile);
 
@@ -142,7 +143,6 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->save();
 
         $this->assertNotEquals(md5_file($source), md5_file($tmpFile));
-        unlink($tmpFile);
     }
 
     /**
@@ -503,16 +503,15 @@ abstract class AbstractImageTest extends ImagineTestCase
 
         $image = $factory->open('tests/Imagine/Fixtures/google.png');
 
+        $filename = $this->getTemporaryFilename('.png');
         $image->applyMask($image->mask())
-            ->save('tests/Imagine/Fixtures/mask.png');
+            ->save($filename);
 
-        $size = $factory->open('tests/Imagine/Fixtures/mask.png')
+        $size = $factory->open($filename)
             ->getSize();
 
         $this->assertEquals(364, $size->getWidth());
         $this->assertEquals(126, $size->getHeight());
-
-        unlink('tests/Imagine/Fixtures/mask.png');
     }
 
     public function testColorHistogram()
@@ -528,7 +527,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
         $image = $imagine->open('tests/Imagine/Fixtures/resize/210-design-19933.jpg');
-        $outfile = 'tests/Imagine/Fixtures/resize/reduced.jpg';
+        $outfile = $this->getTemporaryFilename('.jpg');
         $image->save($outfile, array(
             'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
             'resolution-x' => 144,
@@ -547,8 +546,6 @@ abstract class AbstractImageTest extends ImagineTestCase
             $this->assertEquals(144, $info['x']);
             $this->assertEquals(144, $info['y']);
         }
-
-        unlink($outfile);
     }
 
     public function inOutResultProvider()
@@ -732,8 +729,8 @@ abstract class AbstractImageTest extends ImagineTestCase
             $frame->resize(new Box(121, 124));
         }
 
-        $image->save('tests/Imagine/Fixtures/results/anima-half-size.gif', array('animated' => true));
-        @unlink('tests/Imagine/Fixtures/results/anima-half-size.gif');
+        $filename = $this->getTemporaryFilename('anima.gif');
+        $image->save($filename, array('animated' => true));
 
         $image = $imagine->open('tests/Imagine/Fixtures/anima2.gif');
 
@@ -746,8 +743,8 @@ abstract class AbstractImageTest extends ImagineTestCase
             $frame->resize(new Box(200, 144));
         }
 
-        $image->save('tests/Imagine/Fixtures/results/anima2-half-size.gif', array('animated' => true));
-        @unlink('tests/Imagine/Fixtures/results/anima2-half-size.gif');
+        $filename = $this->getTemporaryFilename('anima2.gif');
+        $image->save($filename, array('animated' => true));
     }
 
     public function testMetadataReturnsMetadataInstance()
@@ -811,7 +808,7 @@ abstract class AbstractImageTest extends ImagineTestCase
      */
     public function testResolutionOnSave($source)
     {
-        $file = __DIR__ . '/test-resolution.jpg';
+        $file = $this->getTemporaryFilename(basename($source) . '.jpg');
 
         $image = $this->getImagine()->open($source);
         $image->save($file, array(
@@ -823,7 +820,6 @@ abstract class AbstractImageTest extends ImagineTestCase
 
         $saved = $this->getImagine()->open($file);
         $this->assertEquals(array('x' => 150, 'y' => 120), $this->getImageResolution($saved));
-        unlink($file);
     }
 
     public function provideVariousSources()
@@ -897,11 +893,10 @@ abstract class AbstractImageTest extends ImagineTestCase
         );
 
         foreach ($samplings as $sampling) {
-            $image->save(__DIR__ . '/tmp.jpg', array('jpeg_sampling_factors' => $sampling));
+            $filename = $this->getTemporaryFilename(implode('-', $sampling) . '.jpg');
+            $image->save($filename, array('jpeg_sampling_factors' => $sampling));
             $this->assertEquals($sampling, $this->getSamplingFactors($image));
         }
-
-        unlink(__DIR__ . '/tmp.jpg');
     }
 
     public function pasteWithAlphaProvider()
@@ -986,15 +981,12 @@ abstract class AbstractImageTest extends ImagineTestCase
      */
     public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
     {
+        $filenameSmall = $this->getTemporaryFilename('small.' . $format);
+        $filenameBig = $this->getTemporaryFilename('big.' . $format);
         $image = $this->getImagine()->open('tests/Imagine/Fixtures/xparent.gif');
-        $filename = IMAGINE_TEST_TEMPFOLDER . '/test-compressed.' . $format;
-        $image->copy()->save($filename, array('format' => $format) + $smallSizeOptions);
-        $smallSize = filesize($filename);
-        unlink($filename);
-        $image->copy()->save($filename, array('format' => $format) + $bigSizeOptions);
-        $bigSize = filesize($filename);
-        unlink($filename);
-        $this->assertLessThan($bigSize, $smallSize);
+        $image->copy()->save($filenameSmall, array('format' => $format) + $smallSizeOptions);
+        $image->copy()->save($filenameBig, array('format' => $format) + $bigSizeOptions);
+        $this->assertLessThan(filesize($filenameBig), filesize($filenameSmall));
     }
 
     abstract protected function getImageResolution(ImageInterface $image);
