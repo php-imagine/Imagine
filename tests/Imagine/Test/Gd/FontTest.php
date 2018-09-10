@@ -12,13 +12,16 @@
 namespace Imagine\Test\Gd;
 
 use Imagine\Gd\Imagine;
-use Imagine\Test\Image\AbstractImagineTest;
+use Imagine\Test\Image\AbstractFontTest;
 
 /**
  * @group ext-gd
  */
-class ImagineTest extends AbstractImagineTest
+class FontTest extends AbstractFontTest
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -26,8 +29,17 @@ class ImagineTest extends AbstractImagineTest
         if (!function_exists('gd_info')) {
             $this->markTestSkipped('Gd not installed');
         }
+        $infos = gd_info();
+        if (empty($infos['FreeType Support'])) {
+            $this->markTestSkipped('This install does not support font tests');
+        }
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractFontTest::getImagine()
+     */
     protected function getImagine()
     {
         return new Imagine();

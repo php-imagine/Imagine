@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ### NEXT (YYYY-MM-DD)
+* New `FontInterface` method: `wrapText` - split a text into multiple lines, so that it fits a specific width (@mlocati)  
+  **BREAKING CHANGE** if you have your own `FontInterface` implementation, it now must implement `wrapText`
 
 
 ### 1.0.0-alpha2 (2018-09-08)

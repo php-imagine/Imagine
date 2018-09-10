@@ -106,7 +106,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    int
+                    int|null
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getValue">getValue</a>(string $component)
@@ -121,7 +121,7 @@
                 <div class="col-md-8 type">
                     <a href="#method_getCyan">getCyan</a>()
         
-                                            <p>Returns Cyan value of the color.</p>                </div>
+                                            <p>Returns Cyan value of the color (from 0 to 100).</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -131,7 +131,7 @@
                 <div class="col-md-8 type">
                     <a href="#method_getMagenta">getMagenta</a>()
         
-                                            <p>Returns Magenta value of the color.</p>                </div>
+                                            <p>Returns Magenta value of the color (from 0 to 100).</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -141,7 +141,7 @@
                 <div class="col-md-8 type">
                     <a href="#method_getYellow">getYellow</a>()
         
-                                            <p>Returns Yellow value of the color.</p>                </div>
+                                            <p>Returns Yellow value of the color (from 0 to 100).</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -151,7 +151,7 @@
                 <div class="col-md-8 type">
                     <a href="#method_getKeyline">getKeyline</a>()
         
-                                            <p>Returns Key value of the color.</p>                </div>
+                                            <p>Returns Key value of the color (from 0 to 100).</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -166,12 +166,12 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    int
+                    int|null
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getAlpha">getAlpha</a>()
         
-                                            <p>Returns percentage of transparency of the color.</p>                </div>
+                                            <p>Returns percentage of transparency of the color (from 0 - fully transparent, to 100 - fully opaque).</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -181,8 +181,7 @@
                 <div class="col-md-8 type">
                     <a href="#method_dissolve">dissolve</a>(int $alpha)
         
-                                            <p>Returns a copy of current color, incrementing the alpha channel by the
-given amount.</p>                </div>
+                                            <p>Returns a copy of current color, incrementing the alpha channel by the given amount.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -192,8 +191,7 @@ given amount.</p>                </div>
                 <div class="col-md-8 type">
                     <a href="#method_lighten">lighten</a>(int $shade)
         
-                                            <p>Returns a copy of the current color, lightened by the specified number
-of shades.</p>                </div>
+                                            <p>Returns a copy of the current color, lightened by the specified number of shades.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -203,8 +201,7 @@ of shades.</p>                </div>
                 <div class="col-md-8 type">
                     <a href="#method_darken">darken</a>(int $shade)
         
-                                            <p>Returns a copy of the current color, darkened by the specified number of
-shades.</p>                </div>
+                                            <p>Returns a copy of the current color, darkened by the specified number of shades.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -245,7 +242,7 @@ shades.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 45</div>
+        <div class="location">at         line 49</div>
         <code>                    
     <strong>__construct</strong>(<a href="../../../../Imagine/Image/Palette/CMYK.html"><abbr title="Imagine\Image\Palette\CMYK">CMYK</abbr></a> $palette, array $color)
         </code>
@@ -279,8 +276,8 @@ shades.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getValue">
-        <div class="location">at         line 54</div>
-        <code>                    int
+        <div class="location">at         line 60</div>
+        <code>                    int|null
     <strong>getValue</strong>(string $component)
         </code>
     </h3>
@@ -306,20 +303,40 @@ shades.</p>                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td>int</td>
+            <td>int|null</td>
             <td></td>
         </tr>
     </table>
 
             
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Imagine/Exception/InvalidArgumentException.html"><abbr title="Imagine\Exception\InvalidArgumentException">InvalidArgumentException</abbr></a></td>
+                <td>if $component is not valid</td>
+            </tr>
+            </table>
+
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html#method_getValue"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr>::getValue</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method_getCyan">
-        <div class="location">at         line 75</div>
+        <div class="location">at         line 81</div>
         <code>                    int
     <strong>getCyan</strong>()
         </code>
@@ -329,7 +346,7 @@ shades.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns Cyan value of the color.</p>                                                </div>
+                                    <p>Returns Cyan value of the color (from 0 to 100).</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -349,7 +366,7 @@ shades.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getMagenta">
-        <div class="location">at         line 85</div>
+        <div class="location">at         line 91</div>
         <code>                    int
     <strong>getMagenta</strong>()
         </code>
@@ -359,7 +376,7 @@ shades.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns Magenta value of the color.</p>                                                </div>
+                                    <p>Returns Magenta value of the color (from 0 to 100).</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -379,7 +396,7 @@ shades.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getYellow">
-        <div class="location">at         line 95</div>
+        <div class="location">at         line 101</div>
         <code>                    int
     <strong>getYellow</strong>()
         </code>
@@ -389,7 +406,7 @@ shades.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns Yellow value of the color.</p>                                                </div>
+                                    <p>Returns Yellow value of the color (from 0 to 100).</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -409,7 +426,7 @@ shades.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getKeyline">
-        <div class="location">at         line 105</div>
+        <div class="location">at         line 111</div>
         <code>                    int
     <strong>getKeyline</strong>()
         </code>
@@ -419,7 +436,7 @@ shades.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns Key value of the color.</p>                                                </div>
+                                    <p>Returns Key value of the color (from 0 to 100).</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -439,7 +456,7 @@ shades.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getPalette">
-        <div class="location">at         line 113</div>
+        <div class="location">at         line 121</div>
         <code>                    <a href="../../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
     <strong>getPalette</strong>()
         </code>
@@ -463,14 +480,25 @@ shades.</p>                </div>
 
             
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html#method_getPalette"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr>::getPalette</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method_getAlpha">
-        <div class="location">at         line 121</div>
-        <code>                    int
+        <div class="location">at         line 131</div>
+        <code>                    int|null
     <strong>getAlpha</strong>()
         </code>
     </h3>
@@ -479,27 +507,38 @@ shades.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns percentage of transparency of the color.</p>                                                </div>
+                                    <p>Returns percentage of transparency of the color (from 0 - fully transparent, to 100 - fully opaque).</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
         <tr>
-            <td>int</td>
-            <td></td>
+            <td>int|null</td>
+            <td>return NULL if the color type does not support transparency</td>
         </tr>
     </table>
 
             
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html#method_getAlpha"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr>::getAlpha</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method_dissolve">
-        <div class="location">at         line 129</div>
+        <div class="location">at         line 141</div>
         <code>                    <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
     <strong>dissolve</strong>(int $alpha)
         </code>
@@ -509,8 +548,7 @@ shades.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns a copy of current color, incrementing the alpha channel by the
-given amount.</p>                                                </div>
+                                    <p>Returns a copy of current color, incrementing the alpha channel by the given amount.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -533,14 +571,34 @@ given amount.</p>                                                </div>
     </table>
 
             
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Imagine/Exception/RuntimeException.html"><abbr title="Imagine\Exception\RuntimeException">RuntimeException</abbr></a></td>
+                <td>if the color type does not support transparency</td>
+            </tr>
+            </table>
+
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html#method_dissolve"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr>::dissolve</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method_lighten">
-        <div class="location">at         line 137</div>
+        <div class="location">at         line 151</div>
         <code>                    <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
     <strong>lighten</strong>(int $shade)
         </code>
@@ -550,8 +608,7 @@ given amount.</p>                                                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns a copy of the current color, lightened by the specified number
-of shades.</p>                                                </div>
+                                    <p>Returns a copy of the current color, lightened by the specified number of shades.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -575,13 +632,24 @@ of shades.</p>                                                </div>
 
             
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html#method_lighten"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr>::lighten</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method_darken">
-        <div class="location">at         line 152</div>
+        <div class="location">at         line 168</div>
         <code>                    <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
     <strong>darken</strong>(int $shade)
         </code>
@@ -591,8 +659,7 @@ of shades.</p>                                                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns a copy of the current color, darkened by the specified number of
-shades.</p>                                                </div>
+                                    <p>Returns a copy of the current color, darkened by the specified number of shades.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -616,13 +683,24 @@ shades.</p>                                                </div>
 
             
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html#method_darken"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr>::darken</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method_grayscale">
-        <div class="location">at         line 167</div>
+        <div class="location">at         line 185</div>
         <code>                    <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
     <strong>grayscale</strong>()
         </code>
@@ -646,13 +724,24 @@ shades.</p>                                                </div>
 
             
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html#method_grayscale"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr>::grayscale</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method_isOpaque">
-        <div class="location">at         line 183</div>
+        <div class="location">at         line 203</div>
         <code>                    bool
     <strong>isOpaque</strong>()
         </code>
@@ -676,13 +765,24 @@ shades.</p>                                                </div>
 
             
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html#method_isOpaque"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr>::isOpaque</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method___toString">
-        <div class="location">at         line 193</div>
+        <div class="location">at         line 213</div>
         <code>                    string
     <strong>__toString</strong>()
         </code>
@@ -706,6 +806,17 @@ shades.</p>                                                </div>
 
             
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../../Imagine/Image/Palette/Color/ColorInterface.html#method___toString"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr>::__toString</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 

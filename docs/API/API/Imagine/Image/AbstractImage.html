@@ -111,7 +111,7 @@
                     <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
+                    <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int|string $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         
                                             <p>Generates a thumbnail from a current image
 Returns it as a new image, doesn't modify the current image.</p>                </div>
@@ -154,7 +154,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
                 <div class="col-md-8 type">
                     <a href="#method___clone">__clone</a>()
         
-                                            <p>Assures the metadata instance will be cloned, too.</p>                </div>
+                                            <p>Clones all the resources associated to this instance.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -185,9 +185,9 @@ Returns it as a new image, doesn't modify the current image.</p>                
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_thumbnail">
-        <div class="location">at         line 37</div>
+        <div class="location">at         line 36</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
-    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
+    <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int|string $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         </code>
     </h3>
     <div class="details">
@@ -207,9 +207,9 @@ Returns it as a new image, doesn't modify the current image.</p>                
                 <td></td>
             </tr>
                     <tr>
-                <td>int</td>
+                <td>int|string</td>
                 <td>$settings</td>
-                <td>One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |)</td>
+                <td>One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |). It may be a string for backward compatibility with old constant values that were strings.</td>
             </tr>
                     <tr>
                 <td>string</td>
@@ -239,13 +239,24 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </table>
 
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../Imagine/Image/ManipulatorInterface.html#method_thumbnail"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr>::thumbnail</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method_getAllThumbnailModes">
-        <div class="location">at         line 145</div>
+        <div class="location">at         line 144</div>
         <code>            protected        int[]
     <strong>getAllThumbnailModes</strong>()
         </code>
@@ -275,7 +286,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_updateSaveOptions">
-        <div class="location">at         line 160</div>
+        <div class="location">at         line 159</div>
         <code>            protected        array
     <strong>updateSaveOptions</strong>(array $options)
         </code>
@@ -315,7 +326,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_metadata">
-        <div class="location">at         line 173</div>
+        <div class="location">at         line 174</div>
         <code>                    <a href="../../Imagine/Image/Metadata/MetadataBag.html"><abbr title="Imagine\Image\Metadata\MetadataBag">MetadataBag</abbr></a>
     <strong>metadata</strong>()
         </code>
@@ -339,13 +350,24 @@ Returns it as a new image, doesn't modify the current image.</p>                
 
             
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../Imagine/Image/ImageInterface.html#method_metadata"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr>::metadata</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
             </div>
                     <div class="method-item">
                     <h3 id="method___clone">
-        <div class="location">at         line 181</div>
+        <div class="location">at         line 182</div>
         <code>                    
     <strong>__clone</strong>()
         </code>
@@ -355,7 +377,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
     
 
                     <div class="method-description">
-                                    <p>Assures the metadata instance will be cloned, too.</p>                                                </div>
+                                    <p>Clones all the resources associated to this instance.</p>                                                </div>
                 <div class="tags">
             
             
@@ -366,7 +388,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_getClassFactory">
-        <div class="location">at         line 193</div>
+        <div class="location">at         line 194</div>
         <code>                    <a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a>
     <strong>getClassFactory</strong>()
         </code>
@@ -407,7 +429,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_setClassFactory">
-        <div class="location">at         line 207</div>
+        <div class="location">at         line 208</div>
         <code>                    <abbr title="Imagine\Factory\$this">$this</abbr>
     <strong>setClassFactory</strong>(<a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a> $classFactory)
         </code>

@@ -85,6 +85,8 @@
         
     
 
+            <div class="description">
+            <p>Interface that any palette must implement.</p>                                </div>
     
     
             <h2>Constants</h2>
@@ -93,21 +95,21 @@
                     <tr>
                 <td>PALETTE_GRAYSCALE</td>
                 <td class="last">
-                    <p><em></em></p>
+                    <p><em>Palette name: grayscale.</em></p>
                     <p></p>
                 </td>
             </tr>
                     <tr>
                 <td>PALETTE_RGB</td>
                 <td class="last">
-                    <p><em></em></p>
+                    <p><em>Palette name: RGB.</em></p>
                     <p></p>
                 </td>
             </tr>
                     <tr>
                 <td>PALETTE_CMYK</td>
                 <td class="last">
-                    <p><em></em></p>
+                    <p><em>Palette name: CMYK.</em></p>
                     <p></p>
                 </td>
             </tr>
@@ -123,7 +125,7 @@
                     <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_color">color</a>(string|array|int $color, int|null $alpha = null)
+                    <a href="#method_color">color</a>(string|int[]|int $color, int|null $alpha = null)
         
                                             <p>Returns a color given some values.</p>                </div>
                 <div class="col-md-2"></div>
@@ -140,7 +142,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
+                    <abbr title="Imagine\Image\Palette\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_useProfile">useProfile</a>(<a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)
@@ -165,13 +167,12 @@
                 <div class="col-md-8 type">
                     <a href="#method_name">name</a>()
         
-                                            <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_*
-constants.</p>                </div>
+                                            <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_ constants.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    array
+                    string[]
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_pixelDefinition">pixelDefinition</a>()
@@ -190,6 +191,16 @@ define the structure of colors for a pixel.</p>                </div>
                                             <p>Tells if alpha channel is supported in this palette.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getChannelsMaxValue">getChannelsMaxValue</a>()
+        
+                                            <p>Get the max value of palette components (255 for RGB and Grayscale, 100 for CMYK).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
             </div>
 
 
@@ -198,9 +209,9 @@ define the structure of colors for a pixel.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_color">
-        <div class="location">at         line 33</div>
+        <div class="location">at         line 53</div>
         <code>                    <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
-    <strong>color</strong>(string|array|int $color, int|null $alpha = null)
+    <strong>color</strong>(string|int[]|int $color, int|null $alpha = null)
         </code>
     </h3>
     <div class="details">
@@ -214,7 +225,7 @@ define the structure of colors for a pixel.</p>                </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>string|array|int</td>
+                <td>string|int[]|int</td>
                 <td>$color</td>
                 <td>A color</td>
             </tr>
@@ -252,7 +263,7 @@ define the structure of colors for a pixel.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_blend">
-        <div class="location">at         line 44</div>
+        <div class="location">at         line 64</div>
         <code>                    <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a>
     <strong>blend</strong>(<a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color1, <a href="../../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color2, float $amount)
         </code>
@@ -302,8 +313,8 @@ define the structure of colors for a pixel.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_useProfile">
-        <div class="location">at         line 55</div>
-        <code>                    <a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a>
+        <div class="location">at         line 75</div>
+        <code>                    <abbr title="Imagine\Image\Palette\$this">$this</abbr>
     <strong>useProfile</strong>(<a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a> $profile)
         </code>
     </h3>
@@ -329,7 +340,7 @@ define the structure of colors for a pixel.</p>                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../Imagine/Image/Palette/PaletteInterface.html"><abbr title="Imagine\Image\Palette\PaletteInterface">PaletteInterface</abbr></a></td>
+            <td><abbr title="Imagine\Image\Palette\$this">$this</abbr></td>
             <td></td>
         </tr>
     </table>
@@ -342,7 +353,7 @@ define the structure of colors for a pixel.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_profile">
-        <div class="location">at         line 62</div>
+        <div class="location">at         line 82</div>
         <code>                    <a href="../../../Imagine/Image/ProfileInterface.html"><abbr title="Imagine\Image\ProfileInterface">ProfileInterface</abbr></a>
     <strong>profile</strong>()
         </code>
@@ -372,7 +383,7 @@ define the structure of colors for a pixel.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_name">
-        <div class="location">at         line 70</div>
+        <div class="location">at         line 89</div>
         <code>                    string
     <strong>name</strong>()
         </code>
@@ -382,8 +393,7 @@ define the structure of colors for a pixel.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_*
-constants.</p>                                                </div>
+                                    <p>Returns the name of this Palette, one of PaletteInterface::PALETTE_ constants.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -403,8 +413,8 @@ constants.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_pixelDefinition">
-        <div class="location">at         line 78</div>
-        <code>                    array
+        <div class="location">at         line 97</div>
+        <code>                    string[]
     <strong>pixelDefinition</strong>()
         </code>
     </h3>
@@ -421,7 +431,7 @@ define the structure of colors for a pixel.</p>                                 
 
                     <table class="table table-condensed">
         <tr>
-            <td>array</td>
+            <td>string[]</td>
             <td></td>
         </tr>
     </table>
@@ -434,7 +444,7 @@ define the structure of colors for a pixel.</p>                                 
             </div>
                     <div class="method-item">
                     <h3 id="method_supportsAlpha">
-        <div class="location">at         line 85</div>
+        <div class="location">at         line 104</div>
         <code>                    bool
     <strong>supportsAlpha</strong>()
         </code>
@@ -452,6 +462,36 @@ define the structure of colors for a pixel.</p>                                 
                     <table class="table table-condensed">
         <tr>
             <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getChannelsMaxValue">
+        <div class="location">at         line 111</div>
+        <code>                    int
+    <strong>getChannelsMaxValue</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get the max value of palette components (255 for RGB and Grayscale, 100 for CMYK).</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
             <td></td>
         </tr>
     </table>

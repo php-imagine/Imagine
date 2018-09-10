@@ -12,13 +12,16 @@
 namespace Imagine\Test\Imagick;
 
 use Imagine\Imagick\Imagine;
-use Imagine\Test\Image\AbstractImagineTest;
+use Imagine\Test\Image\AbstractFontTest;
 
 /**
  * @group ext-imagick
  */
-class ImagineTest extends AbstractImagineTest
+class FontTest extends AbstractFontTest
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -28,6 +31,11 @@ class ImagineTest extends AbstractImagineTest
         }
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractFontTest::getImagine()
+     */
     protected function getImagine()
     {
         return new Imagine();

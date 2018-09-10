@@ -395,6 +395,10 @@ final class Drawer implements DrawerInterface
             $text->setFillColor($pixel);
             $text->setTextAntialias(true);
 
+            if ($width !== null) {
+                $string = $font->wrapText($string, $width, $angle);
+            }
+
             $info = $this->imagick->queryFontMetrics($text, $string);
             $rad = deg2rad($angle);
             $cos = cos($rad);
@@ -409,10 +413,6 @@ final class Drawer implements DrawerInterface
 
             $xdiff = 0 - min($x1, $x2);
             $ydiff = 0 - min($y1, $y2);
-
-            if ($width !== null) {
-                $string = $this->wrapText($string, $text, $angle, $width);
-            }
 
             $this->imagick->annotateImage(
                 $text, $position->getX() + $x1 + $xdiff,
@@ -444,30 +444,5 @@ final class Drawer implements DrawerInterface
         $pixel->setColorValue(\Imagick::COLOR_ALPHA, $color->getAlpha() / 100);
 
         return $pixel;
-    }
-
-    /**
-     * Fits a string into box with given width.
-     *
-     * @param string $string
-     * @param \ImagickDraw $text
-     * @param int $angle
-     * @param int $width
-     */
-    private function wrapText($string, $text, $angle, $width)
-    {
-        $result = '';
-        $words = explode(' ', $string);
-        foreach ($words as $word) {
-            $teststring = $result . ' ' . $word;
-            $testbox = $this->imagick->queryFontMetrics($text, $teststring, true);
-            if ($testbox['textWidth'] > $width) {
-                $result .= ($result == '' ? '' : "\n") . $word;
-            } else {
-                $result .= ($result == '' ? '' : ' ') . $word;
-            }
-        }
-
-        return $result;
     }
 }

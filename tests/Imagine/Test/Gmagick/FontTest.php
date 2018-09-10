@@ -12,13 +12,16 @@
 namespace Imagine\Test\Gmagick;
 
 use Imagine\Gmagick\Imagine;
-use Imagine\Test\Image\AbstractImagineTest;
+use Imagine\Test\Image\AbstractFontTest;
 
 /**
  * @group ext-gmagick
  */
-class ImagineTest extends AbstractImagineTest
+class FontTest extends AbstractFontTest
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -29,17 +32,10 @@ class ImagineTest extends AbstractImagineTest
     }
 
     /**
-     * @group always-skipped
-     *
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\Image\AbstractImagineTest::testCreateAlphaPrecision()
+     * @see \Imagine\Test\Image\AbstractFontTest::getImagine()
      */
-    public function testCreateAlphaPrecision()
-    {
-        $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
-    }
-
     protected function getImagine()
     {
         return new Imagine();

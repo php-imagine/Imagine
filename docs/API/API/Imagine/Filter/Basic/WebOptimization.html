@@ -100,7 +100,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>($path = null, array $options = array())
+                    <a href="#method___construct">__construct</a>(string|callable|null $path = null, array $options = array())
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -113,8 +113,7 @@
                 <div class="col-md-8 type">
                     <a href="#method_apply">apply</a>(<a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
         
-                                            <p>Applies scheduled transformation to ImageInterface instance
-Returns processed ImageInterface instance.</p>                </div>
+                                            <p>Applies scheduled transformation to an ImageInterface instance.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -125,9 +124,9 @@ Returns processed ImageInterface instance.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 27</div>
+        <div class="location">at         line 42</div>
         <code>                    
-    <strong>__construct</strong>($path = null, array $options = array())
+    <strong>__construct</strong>(string|callable|null $path = null, array $options = array())
         </code>
     </h3>
     <div class="details">
@@ -139,7 +138,7 @@ Returns processed ImageInterface instance.</p>                </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td></td>
+                <td>string|callable|null</td>
                 <td>$path</td>
                 <td></td>
             </tr>
@@ -159,7 +158,7 @@ Returns processed ImageInterface instance.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_apply">
-        <div class="location">at         line 41</div>
+        <div class="location">at         line 58</div>
         <code>                    <a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>apply</strong>(<a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image)
         </code>
@@ -169,8 +168,7 @@ Returns processed ImageInterface instance.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Applies scheduled transformation to ImageInterface instance
-Returns processed ImageInterface instance.</p>                                                </div>
+                                    <p>Applies scheduled transformation to an ImageInterface instance.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -188,12 +186,23 @@ Returns processed ImageInterface instance.</p>                                  
                     <table class="table table-condensed">
         <tr>
             <td><a href="../../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a></td>
-            <td></td>
+            <td>returns the processed ImageInterface instance</td>
         </tr>
     </table>
 
             
             
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                            <a href="../../../Imagine/Filter/FilterInterface.html#method_apply"><abbr title="Imagine\Filter\FilterInterface">FilterInterface</abbr>::apply</a>
+                                    </td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
