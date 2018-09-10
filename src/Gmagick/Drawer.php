@@ -114,7 +114,7 @@ final class Drawer implements DrawerInterface
                 $x2 = round($x + $width / 2 * cos(deg2rad($end)));
                 $y2 = round($y + $height / 2 * sin(deg2rad($end)));
 
-                $this->line(new Point($x1, $y1), new Point($x2, $y2), $color);
+                $this->line(new Point($x1, $y1), new Point($x2, $y2), $color, $thickness);
 
                 $chord->setfillcolor('transparent');
             }
