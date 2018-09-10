@@ -247,11 +247,10 @@ abstract class AbstractDrawerTest extends ImagineTestCase
             ->ellipse(new Point(125, 100), new Box(50, 50), $this->getColor('fff'))
             ->ellipse(new Point(275, 100), new Box(50, 50), $this->getColor('fff'), true);
 
-        $canvas->save('tests/Imagine/Fixtures/smiley.png');
+        $filename = $this->getTemporaryFilename('.png');
+        $canvas->save($filename);
 
-        $this->assertFileExists('tests/Imagine/Fixtures/smiley.png');
-
-        unlink('tests/Imagine/Fixtures/smiley.png');
+        $this->assertFileExists($filename);
     }
 
     public function testText2()
