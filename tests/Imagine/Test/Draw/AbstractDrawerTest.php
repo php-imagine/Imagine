@@ -67,9 +67,6 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(60, 50), $this->getColor('fff'));
-        if ($image instanceof \Imagine\Gd\Image && $fill) {
-            $this->markTestSkipped('The GD Drawer can NOT draw correctly filled chords');
-        }
         $fill01 = $fill ? 1 : 0;
         $size = $image->getSize();
         $drawer = $image->draw();
@@ -89,10 +86,6 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(20, 20), $this->getColor('fff'));
-        if ($image instanceof \Imagine\Gd\Image && !$fill && $thickness > 1) {
-            $this->markTestSkipped('The GD Drawer can NOT draw correctly not filled circles with a thickness greater than 1');
-        }
-
         $size = $image->getSize();
         $fill01 = $fill ? 1 : 0;
         $drawer = $image->draw();
@@ -112,10 +105,6 @@ abstract class AbstractDrawerTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(30, 20), $this->getColor('fff'));
-        if ($image instanceof \Imagine\Gd\Image && !$fill && $thickness > 1) {
-            $this->markTestSkipped('The GD Drawer can NOT draw correctly not filled ellipses with a thickness greater than 1');
-        }
-
         $size = $image->getSize();
         $fill01 = $fill ? 1 : 0;
         $drawer = $image->draw();
