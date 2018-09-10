@@ -14,11 +14,19 @@ namespace Imagine\Test\Constraint;
 use Imagine\Image\Histogram\Bucket;
 use Imagine\Image\Histogram\Range;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\ImagineInterface;
+use Imagine\Image\Palette\PaletteInterface;
+use Imagine\Image\Palette\RGB;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Util\InvalidArgumentHelper;
 
 class IsImageEqual extends Constraint
 {
+    /**
+     * @var \Imagine\Image\ImagineInterface|null
+     */
+    private $imagine;
+
     /**
      * @var \Imagine\Image\ImageInterface
      */
@@ -35,15 +43,20 @@ class IsImageEqual extends Constraint
     private $buckets;
 
     /**
-     * @param \Imagine\Image\ImageInterface $value
+     * @param \Imagine\Image\ImageInterface|string $value
      * @param float $delta
+     * @param \Imagine\Image\ImagineInterface|null $imagine
      * @param int $buckets
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($value, $delta = 0.1, $buckets = 4)
+    public function __construct($value, $delta = 0.1, ImagineInterface $imagine = null, $buckets = 4)
     {
         parent::__construct();
+        $this->imagine = $imagine;
+        if ($this->imagine !== null && is_string($value)) {
+            $value = $this->imagine->open($value);
+        }
         if (!$value instanceof ImageInterface) {
             throw InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
         }
@@ -53,7 +66,7 @@ class IsImageEqual extends Constraint
         }
 
         if (!is_int($buckets) || $buckets <= 0) {
-            throw InvalidArgumentHelper::factory(3, 'integer');
+            throw InvalidArgumentHelper::factory(4, 'integer');
         }
 
         $this->value = $value;
@@ -66,6 +79,9 @@ class IsImageEqual extends Constraint
      */
     protected function matches($other)
     {
+        if ($this->imagine !== null && is_string($other)) {
+            $other = $this->imagine->open($other);
+        }
         if (!$other instanceof ImageInterface) {
             throw InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
         }
@@ -88,6 +104,10 @@ class IsImageEqual extends Constraint
      */
     protected function failureDescription($other)
     {
+        if ($this->imagine !== null && is_string($other)) {
+            $other = $this->imagine->open($other);
+        }
+
         return sprintf('contains color histogram identical to the expected one (max delta: %s, actual delta: %s)', $this->delta, $this->getDelta($other));
     }
 
@@ -98,6 +118,9 @@ class IsImageEqual extends Constraint
      */
     private function normalize(ImageInterface $image)
     {
+        if ($image->palette()->name() !== PaletteInterface::PALETTE_RGB) {
+            $image = $image->copy()->usePalette(new RGB());
+        }
         $step = (int) round(255 / $this->buckets);
 
         $red =

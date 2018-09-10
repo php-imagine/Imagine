@@ -54,7 +54,11 @@ final class Drawer implements DrawerInterface
      */
     public function arc(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $thickness = 1)
     {
-        imagesetthickness($this->resource, max(1, (int) $thickness));
+        $thickness = max(0, (int) round($thickness));
+        if ($thickness === 0) {
+            return $this;
+        }
+        imagesetthickness($this->resource, $thickness);
 
         if (false === imagealphablending($this->resource, true)) {
             throw new RuntimeException('Draw arc operation failed');
@@ -81,21 +85,29 @@ final class Drawer implements DrawerInterface
      */
     public function chord(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        imagesetthickness($this->resource, max(1, (int) $thickness));
-
-        if ($fill) {
-            $style = IMG_ARC_CHORD;
-        } else {
-            $style = IMG_ARC_CHORD | IMG_ARC_NOFILL;
+        $thickness = max(0, (int) round($thickness));
+        if ($thickness === 0 && !$fill) {
+            return $this;
         }
+        imagesetthickness($this->resource, $thickness);
 
         if (false === imagealphablending($this->resource, true)) {
             throw new RuntimeException('Draw chord operation failed');
         }
 
-        if (false === imagefilledarc($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $start, $end, $this->getColor($color), $style)) {
-            imagealphablending($this->resource, false);
-            throw new RuntimeException('Draw chord operation failed');
+        if ($fill) {
+            $style = IMG_ARC_CHORD;
+            if (false === imagefilledarc($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $start, $end, $this->getColor($color), $style)) {
+                imagealphablending($this->resource, false);
+                throw new RuntimeException('Draw chord operation failed');
+            }
+        } else {
+            foreach (array(IMG_ARC_NOFILL, IMG_ARC_NOFILL | IMG_ARC_CHORD) as $style) {
+                if (false === imagefilledarc($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $start, $end, $this->getColor($color), $style)) {
+                    imagealphablending($this->resource, false);
+                    throw new RuntimeException('Draw chord operation failed');
+                }
+            }
         }
 
         if (false === imagealphablending($this->resource, false)) {
@@ -112,7 +124,9 @@ final class Drawer implements DrawerInterface
      */
     public function circle(PointInterface $center, $radius, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        return $this->ellipse($center, new Box($radius, $radius), $color, $fill, $thickness);
+        $diameter = $radius * 2;
+
+        return $this->ellipse($center, new Box($diameter, $diameter), $color, $fill, $thickness);
     }
 
     /**
@@ -122,8 +136,12 @@ final class Drawer implements DrawerInterface
      */
     public function ellipse(PointInterface $center, BoxInterface $size, ColorInterface $color, $fill = false, $thickness = 1)
     {
+        $thickness = max(0, (int) round($thickness));
+        if ($thickness === 0 && !$fill) {
+            return $this;
+        }
         imageantialias($this->resource, true);
-        imagesetthickness($this->resource, max(1, (int) $thickness));
+        imagesetthickness($this->resource, $thickness);
 
         if ($fill) {
             $callback = 'imagefilledellipse';
@@ -156,7 +174,11 @@ final class Drawer implements DrawerInterface
      */
     public function line(PointInterface $start, PointInterface $end, ColorInterface $color, $thickness = 1)
     {
-        imagesetthickness($this->resource, max(1, (int) $thickness));
+        $thickness = max(0, (int) round($thickness));
+        if ($thickness === 0) {
+            return $this;
+        }
+        imagesetthickness($this->resource, $thickness);
 
         if (false === imagealphablending($this->resource, true)) {
             throw new RuntimeException('Draw line operation failed');
@@ -181,7 +203,11 @@ final class Drawer implements DrawerInterface
      */
     public function pieSlice(PointInterface $center, BoxInterface $size, $start, $end, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        imagesetthickness($this->resource, max(1, (int) $thickness));
+        $thickness = max(0, (int) round($thickness));
+        if ($thickness === 0 && !$fill) {
+            return $this;
+        }
+        imagesetthickness($this->resource, $thickness);
 
         if ($fill) {
             $style = IMG_ARC_EDGED;
@@ -235,7 +261,11 @@ final class Drawer implements DrawerInterface
      */
     public function rectangle(PointInterface $leftTop, PointInterface $rightBottom, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        imagesetthickness($this->resource, max(1, (int) $thickness));
+        $thickness = max(0, (int) round($thickness));
+        if ($thickness === 0 && !$fill) {
+            return $this;
+        }
+        imagesetthickness($this->resource, $thickness);
 
         $minX = min($leftTop->getX(), $rightBottom->getX());
         $maxX = max($leftTop->getX(), $rightBottom->getX());
@@ -271,7 +301,11 @@ final class Drawer implements DrawerInterface
      */
     public function polygon(array $coordinates, ColorInterface $color, $fill = false, $thickness = 1)
     {
-        imagesetthickness($this->resource, max(1, (int) $thickness));
+        $thickness = max(0, (int) round($thickness));
+        if ($thickness === 0 && !$fill) {
+            return $this;
+        }
+        imagesetthickness($this->resource, $thickness);
 
         if (count($coordinates) < 3) {
             throw new InvalidArgumentException(sprintf('A polygon must consist of at least 3 points, %d given', count($coordinates)));
