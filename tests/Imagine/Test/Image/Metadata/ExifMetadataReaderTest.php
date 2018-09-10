@@ -31,7 +31,14 @@ class ExifMetadataReaderTest extends MetadataReaderTestCase
     {
         $source = self::HTTP_IMAGE;
 
-        $metadata = $this->getReader()->readFile($source);
+        try {
+            $metadata = $this->getReader()->readFile($source);
+        } catch (\Imagine\Exception\RuntimeException $x) {
+            if (getenv('TRAVIS') && getenv('CONTINUOUS_INTEGRATION') && $x->getMessage() === 'gnutls_handshake() failed: A TLS packet with unexpected length was received.') {
+                $this->markTestSkipped($x->getMessage());
+            }
+            throw $x;
+        }
         $this->assertEquals(1, $metadata['ifd0.Orientation']);
     }
 
