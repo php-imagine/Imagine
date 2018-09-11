@@ -33,6 +33,11 @@
             "Imagine\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Imagine\\Test\\": "tests/tests/"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-develop": "0.7-dev"
