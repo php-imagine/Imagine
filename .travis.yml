@@ -8,8 +8,11 @@ cache:
     - cache
 
 env:
+  matrix:
   - IMAGINE_DRIVER=imagick
   - IMAGINE_DRIVER=gmagick
+  global:
+    secure: HqQihSflXXBGhNuYsUmi8mN3K6Wr5gfgOahzDjxjs5iJGyCr258BLJsEKh90PWIo8yykgW1hyGcBhxom7yjWo8HWyCjJANE0hCwRVGYV7emMwzRzsOAlDTwtjCJPTjEAZrXKQWLYeG+ZdVJqPx1vMdDoyHXW4rU3EZGv76uvHn8=
 
 before_install:
   - phpenv config-rm xdebug.ini || true
@@ -26,8 +29,8 @@ install:
             sudo apt-get update -y || true
             sudo apt-get install -y ca-certificates libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev
             PHPUNIT_EXCLUDED_GROUPS=always-skipped
-            if test "${IMAGINE_DRIVER}" = 'imagick'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},imagick"; fi
-            if test "${IMAGINE_DRIVER}" = 'gmagick'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},gmagick"; fi
+            if test "${IMAGINE_DRIVER-}" = 'imagick'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},imagick"; fi
+            if test "${IMAGINE_DRIVER-}" = 'gmagick'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},gmagick"; fi
             php --ri gd || true
             composer --no-interaction remove --dev --no-update --no-scripts friendsofphp/php-cs-fixer
             ;;
@@ -39,7 +42,7 @@ install:
 script:
   - |
     set -o errexit
-    case "${TRAVISOPERATION:-}" in
+    case "${TRAVISOPERATION-}" in
         codestyle)
             composer --no-interaction codestyle -- --no-interaction --dry-run --diff -- .
             ;;
@@ -47,6 +50,7 @@ script:
             composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
             ;;
     esac
+  - if test -n "${AUTOUPDATE_API-}"; then ./.travis/autoupdate-api.sh; fi
 
 php:
   - 5.4
@@ -72,3 +76,4 @@ matrix:
     - php: 7.2
       env:
         - TRAVISOPERATION=codestyle
+        - AUTOUPDATE_API=1
