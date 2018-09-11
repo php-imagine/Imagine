@@ -49,6 +49,8 @@ To create it:
 fi
 
 echo "Automatic API generation: updating API"
+cd "${TRAVIS_BUILD_DIR}"
+git checkout -qf "${AUTO_PROCESS_BRANCH}"
 cd "${TRAVIS_BUILD_DIR}/docs/_build"
 composer --no-interaction install
 composer --no-interaction update-docs
