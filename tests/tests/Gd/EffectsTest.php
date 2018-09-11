@@ -15,7 +15,7 @@ use Imagine\Gd\Imagine;
 use Imagine\Test\Effects\AbstractEffectsTest;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class EffectsTest extends AbstractEffectsTest
 {

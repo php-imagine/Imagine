@@ -6,7 +6,7 @@ use Imagine\Gd\Imagine;
 use Imagine\Test\Constraint\AbstractIsImageEqualTest;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class IsImageEqualTest extends AbstractIsImageEqualTest
 {

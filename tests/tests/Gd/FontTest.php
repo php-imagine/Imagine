@@ -15,7 +15,7 @@ use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractFontTest;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class FontTest extends AbstractFontTest
 {

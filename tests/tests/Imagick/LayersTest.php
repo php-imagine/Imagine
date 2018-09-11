@@ -19,7 +19,7 @@ use Imagine\Imagick\Layers;
 use Imagine\Test\Image\AbstractLayersTest;
 
 /**
- * @group ext-imagick
+ * @group imagick
  */
 class LayersTest extends AbstractLayersTest
 {

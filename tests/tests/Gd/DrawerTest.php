@@ -15,7 +15,7 @@ use Imagine\Gd\Imagine;
 use Imagine\Test\Draw\AbstractDrawerTest;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class DrawerTest extends AbstractDrawerTest
 {

@@ -17,7 +17,7 @@ use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class GdTransparentGifHandlingTest extends ImagineTestCase
 {

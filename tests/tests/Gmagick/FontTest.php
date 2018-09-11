@@ -15,7 +15,7 @@ use Imagine\Gmagick\Imagine;
 use Imagine\Test\Image\AbstractFontTest;
 
 /**
- * @group ext-gmagick
+ * @group gmagick
  */
 class FontTest extends AbstractFontTest
 {

@@ -16,7 +16,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Test\Image\AbstractImageTest;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class ImageTest extends AbstractImageTest
 {

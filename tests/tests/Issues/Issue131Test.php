@@ -58,7 +58,7 @@ class Issue131Test extends ImagineTestCase
 
     /**
      * @doesNotPerformAssertions
-     * @group ext-imagick
+     * @group imagick
      */
     public function testShouldSaveOneFileWithImagick()
     {
@@ -75,7 +75,7 @@ class Issue131Test extends ImagineTestCase
     }
 
     /**
-     * @group ext-gmagick
+     * @group gmagick
      */
     public function testShouldSaveOneFileWithGmagick()
     {

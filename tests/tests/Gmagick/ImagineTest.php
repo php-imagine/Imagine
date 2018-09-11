@@ -15,7 +15,7 @@ use Imagine\Gmagick\Imagine;
 use Imagine\Test\Image\AbstractImagineTest;
 
 /**
- * @group ext-gmagick
+ * @group gmagick
  */
 class ImagineTest extends AbstractImagineTest
 {

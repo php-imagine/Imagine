@@ -9,7 +9,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Test\ImagineTestCase;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class Issue17Test extends ImagineTestCase
 {
