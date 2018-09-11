@@ -7,6 +7,8 @@
 * Fix drawing unfilled chords with GD driver (@mlocati)
 * Fix thickness drawing of unfilled chords with Imagick and Gmagick drivers (@mlocati)
 * Fix handling of radius in `circle` method implementations (@mlocati)
+* The `dissolve` method of `ColorInterface` normalizes the final value of alpha (@mlocati)  
+  **BREAKING CHANGE** `dissolve` doesn't throw a `Imagine\Exception\InvalidArgumentException` anymore
 
 ### 1.0.0-alpha2 (2018-09-08)
 * The `coalesce` method of `LayerInterface` instances now returns the LayerInterface itself (@mlocati)  
