@@ -15,7 +15,7 @@ use Imagine\Gmagick\Imagine;
 use Imagine\Test\Effects\AbstractEffectsTest;
 
 /**
- * @group ext-gmagick
+ * @group gmagick
  */
 class EffectsTest extends AbstractEffectsTest
 {

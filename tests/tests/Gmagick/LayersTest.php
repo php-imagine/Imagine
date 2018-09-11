@@ -20,7 +20,7 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Test\Image\AbstractLayersTest;
 
 /**
- * @group ext-gmagick
+ * @group gmagick
  */
 class LayersTest extends AbstractLayersTest
 {

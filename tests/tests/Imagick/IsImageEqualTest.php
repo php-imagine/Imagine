@@ -6,7 +6,7 @@ use Imagine\Imagick\Imagine;
 use Imagine\Test\Constraint\AbstractIsImageEqualTest;
 
 /**
- * @group ext-imagick
+ * @group imagick
  */
 class IsImageEqualTest extends AbstractIsImageEqualTest
 {

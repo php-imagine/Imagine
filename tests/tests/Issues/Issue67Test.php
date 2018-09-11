@@ -7,7 +7,7 @@ use Imagine\Gd\Imagine;
 use Imagine\Test\ImagineTestCase;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class Issue67Test extends ImagineTestCase
 {

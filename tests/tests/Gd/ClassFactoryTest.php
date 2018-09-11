@@ -15,7 +15,7 @@ use Imagine\Gd\Imagine;
 use Imagine\Test\Factory\AbstractClassFactoryTest;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class ClassFactoryTest extends AbstractClassFactoryTest
 {

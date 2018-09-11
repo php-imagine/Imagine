@@ -15,7 +15,7 @@ use Imagine\Imagick\Imagine;
 use Imagine\Test\Draw\AbstractDrawerTest;
 
 /**
- * @group ext-imagick
+ * @group imagick
  */
 class DrawerTest extends AbstractDrawerTest
 {

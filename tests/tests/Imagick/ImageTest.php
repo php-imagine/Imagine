@@ -22,7 +22,7 @@ use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractImageTest;
 
 /**
- * @group ext-imagick
+ * @group imagick
  */
 class ImageTest extends AbstractImageTest
 {

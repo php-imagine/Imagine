@@ -32,7 +32,6 @@ class ColorParserTest extends ImagineTestCase
     /**
      * @dataProvider provideRGBdataThatFail
      * @expectedException \Imagine\Exception\InvalidArgumentException
-     * @group ext-gd
      *
      * @param mixed $value
      */
@@ -58,7 +57,6 @@ class ColorParserTest extends ImagineTestCase
     /**
      * @dataProvider provideCMYKdataThatFail
      * @expectedException \Imagine\Exception\InvalidArgumentException
-     * @group ext-gd
      *
      * @param mixed $value
      */
@@ -99,24 +97,32 @@ class ColorParserTest extends ImagineTestCase
 
     public function provideRGBdataThatFail()
     {
-        return array(
+        $result = array(
             array(array(0, 1)),
             array(array(0, 1, 0, 1, 0)),
             array('1234'),
             array('#1234'),
-            array(imagecreatetruecolor(10, 10)),
         );
+        if (function_exists('imagecreatetruecolor')) {
+            $result[] = array(imagecreatetruecolor(10, 10));
+        }
+
+        return $result;
     }
 
     public function provideCMYKdataThatFail()
     {
-        return array(
+        $result = array(
             array(array(0, 1)),
             array(array(0, 1, 0, 1, 0)),
             array('1234'),
             array('#1234'),
-            array(imagecreatetruecolor(10, 10)),
         );
+        if (function_exists('imagecreatetruecolor')) {
+            $result[] = array(imagecreatetruecolor(10, 10));
+        }
+
+        return $result;
     }
 
     /**

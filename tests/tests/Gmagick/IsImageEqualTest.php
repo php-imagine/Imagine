@@ -6,7 +6,7 @@ use Imagine\Gmagick\Imagine;
 use Imagine\Test\Constraint\AbstractIsImageEqualTest;
 
 /**
- * @group ext-gmagick
+ * @group gmagick
  */
 class IsImageEqualTest extends AbstractIsImageEqualTest
 {

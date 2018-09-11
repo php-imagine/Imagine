@@ -20,7 +20,7 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Test\Image\AbstractLayersTest;
 
 /**
- * @group ext-gd
+ * @group gd
  */
 class LayersTest extends AbstractLayersTest
 {
