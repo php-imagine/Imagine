@@ -159,7 +159,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->dot(new Point(1, 1), $this->getColor('f00')));
         $filename = $this->getTemporaryFilename('.png');
         $image->save($filename);
-        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . '/drawer/dot/dot.png', $filename, '', 0.095, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . '/drawer/dot/dot.png', $filename, '', 0.23, $imagine);
     }
 
     /**
