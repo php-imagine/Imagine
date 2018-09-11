@@ -57,7 +57,7 @@ abstract class AbstractColorTest extends ImagineTestCase
         $color2 = $color->dissolve(2);
         $this->assertEquals(2 + $alpha, $color2->getAlpha());
         $this->assertEquals($signature, (string) $color2);
-        
+
         $color2 = $color->dissolve(200);
         $this->assertEquals(100, $color2->getAlpha());
         $this->assertEquals($signature, (string) $color2);
