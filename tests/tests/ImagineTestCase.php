@@ -115,8 +115,8 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
                         @unlink($temporaryFile);
                     }
                 }
+                self::$temporaryFiles = array();
             }
-            self::$temporaryFiles = array();
         }
     }
 

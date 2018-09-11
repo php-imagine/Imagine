@@ -1,6 +1,4 @@
-tests/Imagine/Fixtures/results/in_out
-!tests/Imagine/Fixtures/results/in_out/.placeholder
-docs/_build/cache
+/docs/_build/cache
 composer.lock
 vendor/
 bin/

@@ -14,7 +14,8 @@ if ((int) (ini_get('memory_limit')) < 64) {
 }
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
-$loader->add('Imagine\Test', __DIR__);
+/* @var Composer\Autoload\ClassLoader $loader */
+$loader->addPsr4('Imagine\\Test\\', __DIR__ . DIRECTORY_SEPARATOR . 'tests');
 
 if (!class_exists('PHPUnit\Framework\Constraint\Constraint')) {
     class_alias('PHPUnit_Framework_Constraint', 'PHPUnit\Framework\Constraint\Constraint');
@@ -32,9 +33,11 @@ if (!class_exists('PHPUnit\Framework\ExpectationFailedException')) {
     class_alias('PHPUnit_Framework_ExpectationFailedException', 'PHPUnit\Framework\ExpectationFailedException');
 }
 
+define('IMAGINE_TEST_SRCFOLDER', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src');
+
+define('IMAGINE_TEST_FIXTURESFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'fixtures');
+
 define('IMAGINE_TEST_TEMPFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'tmp');
 if (!is_dir(IMAGINE_TEST_TEMPFOLDER)) {
     mkdir(IMAGINE_TEST_TEMPFOLDER);
 }
-
-chdir(dirname(__DIR__));

@@ -25,19 +25,19 @@ abstract class AbstractImageTest extends ImagineTestCase
 {
     public function testPaletteIsRGBIfRGBImage()
     {
-        $image = $this->getImagine()->open(__DIR__ . '/../../Fixtures/google.png');
+        $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
         $this->assertInstanceOf('Imagine\Image\Palette\RGB', $image->palette());
     }
 
     public function testPaletteIsCMYKIfCMYKImage()
     {
-        $image = $this->getImagine()->open(__DIR__ . '/../../Fixtures/pixel-CMYK.jpg');
+        $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/pixel-CMYK.jpg');
         $this->assertInstanceOf('Imagine\Image\Palette\CMYK', $image->palette());
     }
 
     public function testPaletteIsGrayIfGrayImage()
     {
-        $image = $this->getImagine()->open(__DIR__ . '/../../Fixtures/pixel-grayscale.jpg');
+        $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/pixel-grayscale.jpg');
         $this->assertInstanceOf('Imagine\Image\Palette\Grayscale', $image->palette());
     }
 
@@ -120,7 +120,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
         $this
             ->getImagine()
-            ->open(__DIR__ . '/../../Fixtures/large.jpg')
+            ->open(IMAGINE_TEST_FIXTURESFOLDER . '/large.jpg')
             ->save($tmpFile);
 
         $data = exif_read_data($tmpFile);
@@ -129,7 +129,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testSaveWithoutPathFileFromImageLoadShouldBeOkay()
     {
-        $source = __DIR__ . '/../../Fixtures/google.png';
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/google.png';
         $tmpFile = $this->getTemporaryFilename('.png');
 
         copy($source, $tmpFile);
@@ -198,14 +198,14 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this
             ->getImagine()
             ->create(new Box(10, 10))
-            ->profile(Profile::fromPath(__DIR__ . '/../../../../src/resources/Adobe/RGB/VideoHD.icc'));
+            ->profile(Profile::fromPath(IMAGINE_TEST_SRCFOLDER . '/resources/Adobe/RGB/VideoHD.icc'));
     }
 
     public function testRotateWithNoBackgroundColor()
     {
         $factory = $this->getImagine();
 
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
         $image->rotate(90);
 
         $size = $image->getSize();
@@ -216,7 +216,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testRotateWithTransparency()
     {
-        $image = $this->getImagine()->open('tests/Imagine/Fixtures/large.jpg');
+        $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/large.jpg');
         $color = $image->rotate(45, $image->palette()->color('#fff', 0))->getColorAt(new Point(0, 0));
         $this->assertSame(0, $color->getAlpha());
     }
@@ -228,7 +228,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
 
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
         $size = $image->getSize();
 
         $image->paste(
@@ -249,7 +249,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testResizeWithVariousFilters($filter)
     {
         $factory = $this->getImagine();
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
 
         $image->resize(new Box(30, 30), $filter);
     }
@@ -257,7 +257,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testResizeWithInvalidFilter()
     {
         $factory = $this->getImagine();
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
 
         $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $image->resize(new Box(30, 30), 'no filter');
@@ -289,7 +289,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
 
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
         $thumbnail = $image->thumbnail(new Box(20, 20));
 
         $this->assertNotSame($image, $thumbnail);
@@ -298,7 +298,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testThumbnailWithInvalidSettingShouldThrowAnException()
     {
         $factory = $this->getImagine();
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
         $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', 'Invalid setting specified');
         $image->thumbnail(new Box(20, 20), 'boumboum');
     }
@@ -306,7 +306,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testThumbnailWithInvalidModeShouldThrowAnException()
     {
         $factory = $this->getImagine();
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
         $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', 'Only one mode should be specified');
         $image->thumbnail(new Box(20, 20), ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_OUTBOUND);
     }
@@ -315,7 +315,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
 
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
         $resized = $image->resize(new Box(20, 20));
 
         $this->assertSame($image, $resized);
@@ -403,7 +403,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testThumbnailGenerationToDimensionsLargestThanSource()
     {
-        $test_image = 'tests/Imagine/Fixtures/google.png';
+        $test_image = IMAGINE_TEST_FIXTURESFOLDER . '/google.png';
         $test_image_width = 364;
         $test_image_height = 126;
         $width = $test_image_width + 1;
@@ -436,7 +436,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
 
-        $image = $factory->open('tests/Imagine/Fixtures/google.png')
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png')
             ->crop(new Point(0, 0), new Box(126, 126))
             ->resize(new Box(200, 200))
             ->flipHorizontally();
@@ -501,7 +501,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
 
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
 
         $filename = $this->getTemporaryFilename('.png');
         $image->applyMask($image->mask())
@@ -518,7 +518,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
 
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
 
         $this->assertEquals(6438, count($image->histogram()));
     }
@@ -526,7 +526,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testImageResolutionChange()
     {
         $imagine = $this->getImagine();
-        $image = $imagine->open('tests/Imagine/Fixtures/resize/210-design-19933.jpg');
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/resize/210-design-19933.jpg');
         $outfile = $this->getTemporaryFilename('.jpg');
         $image->save($outfile, array(
             'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
@@ -578,20 +578,17 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testInOutResult($file, $in, $out)
     {
         $factory = $this->getImagine();
-        $class = preg_replace('/\\\\/', '_', get_called_class());
-        $image = $factory->open('tests/Imagine/Fixtures/' . $file . '.' . $in);
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . "/{$file}.{$in}");
         $thumb = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
-        if (!is_dir('tests/Imagine/Fixtures/results/in_out')) {
-            mkdir('tests/Imagine/Fixtures/results/in_out', 0777, true);
-        }
-        $thumb->save("tests/Imagine/Fixtures/results/in_out/{$class}_{$file}_from_{$in}_to.{$out}");
+        $filename = $this->getTemporaryFilename("{$file}-{$in}.{$out}");
+        $thumb->save($filename);
     }
 
     public function testLayerReturnsALayerInterface()
     {
         $factory = $this->getImagine();
 
-        $image = $factory->open('tests/Imagine/Fixtures/google.png');
+        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
 
         $this->assertInstanceOf('Imagine\\Image\\LayersInterface', $image->layers());
     }
@@ -627,7 +624,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $palette = new RGB();
         $color = $this
             ->getImagine()
-            ->open('tests/Imagine/Fixtures/pixel-CMYK.jpg')
+            ->open(IMAGINE_TEST_FIXTURESFOLDER . '/pixel-CMYK.jpg')
             ->usePalette($palette)
             ->strip()
             ->getColorAt(new Point(0, 0));
@@ -639,7 +636,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $image = $this
             ->getImagine()
-            ->open('tests/Imagine/Fixtures/invalid-icc-profile.jpg');
+            ->open(IMAGINE_TEST_FIXTURESFOLDER . '/invalid-icc-profile.jpg');
 
         $color = $image->getColorAt(new Point(0, 0));
         $image->strip();
@@ -652,7 +649,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $color = $this
             ->getImagine()
-            ->open('tests/Imagine/Fixtures/65-percent-black.png')
+            ->open(IMAGINE_TEST_FIXTURESFOLDER . '/65-percent-black.png')
             ->getColorAt(new Point(0, 0));
 
         $this->assertEquals('#000000', (string) $color);
@@ -664,7 +661,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $color = $this
             ->getImagine()
-            ->open('tests/Imagine/Fixtures/pixel-grayscale.jpg')
+            ->open(IMAGINE_TEST_FIXTURESFOLDER . '/pixel-grayscale.jpg')
             ->getColorAt(new Point(0, 0));
 
         $this->assertEquals('#4d4d4d', (string) $color);
@@ -675,7 +672,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $color = $this
             ->getImagine()
-            ->open('tests/Imagine/Fixtures/pixel-CMYK.jpg')
+            ->open(IMAGINE_TEST_FIXTURESFOLDER . '/pixel-CMYK.jpg')
             ->getColorAt(new Point(0, 0));
 
         $this->assertEquals('cmyk(99%, 0%, 31%, 23%)', (string) $color);
@@ -686,7 +683,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $color = $this
             ->getImagine()
-            ->open('tests/Imagine/Fixtures/100-percent-black.png')
+            ->open(IMAGINE_TEST_FIXTURESFOLDER . '/100-percent-black.png')
             ->getColorAt(new Point(0, 0));
 
         $this->assertEquals('#000000', (string) $color);
@@ -701,7 +698,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $image = $this
             ->getImagine()
-            ->open('tests/Imagine/Fixtures/pixel-GBR.jpg')
+            ->open(IMAGINE_TEST_FIXTURESFOLDER . '/pixel-GBR.jpg')
             ->strip();
         $color = $image->getColorAt(new Point(0, 0));
 
@@ -719,7 +716,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $image = $imagine->open('tests/Imagine/Fixtures/anima.gif');
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima.gif');
 
         // Imagick requires the images to be coalesced first!
         if ($image instanceof \Imagine\Imagick\Image) {
@@ -733,7 +730,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $filename = $this->getTemporaryFilename('anima.gif');
         $image->save($filename, array('animated' => true));
 
-        $image = $imagine->open('tests/Imagine/Fixtures/anima2.gif');
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima2.gif');
 
         // Imagick requires the images to be coalesced first!
         if ($image instanceof \Imagine\Imagick\Image) {
@@ -794,7 +791,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $imagine = $this->getImagine();
 
-        $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima3.gif');
 
         $size = $image->getSize();
 
@@ -826,8 +823,8 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function provideVariousSources()
     {
         return array(
-            array(__DIR__ . '/../../Fixtures/example.svg'),
-            array(__DIR__ . '/../../Fixtures/100-percent-black.png'),
+            array(IMAGINE_TEST_FIXTURESFOLDER . '/example.svg'),
+            array(IMAGINE_TEST_FIXTURESFOLDER . '/100-percent-black.png'),
         );
     }
 
@@ -860,7 +857,7 @@ abstract class AbstractImageTest extends ImagineTestCase
      */
     public function testImageAlphaLoaded($path)
     {
-        $image = $this->getImagine()->open('tests/Imagine/Fixtures/alpha/' . $path);
+        $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/alpha/' . $path);
         $size = $image->getSize();
         $this->assertSame('5x1', "{$size->getWidth()}x{$size->getHeight()}", 'Checking size of loaded image');
         foreach (array(
@@ -886,7 +883,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testJpegSamplingFactors()
     {
-        $image = $this->getImagine()->open('tests/Imagine/Fixtures/large.jpg');
+        $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/large.jpg');
 
         $samplings = array(
             array(1, 1, 1),
@@ -984,7 +981,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         $filenameSmall = $this->getTemporaryFilename('small.' . $format);
         $filenameBig = $this->getTemporaryFilename('big.' . $format);
-        $image = $this->getImagine()->open('tests/Imagine/Fixtures/xparent.gif');
+        $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/xparent.gif');
         $image->copy()->save($filenameSmall, array('format' => $format) + $smallSizeOptions);
         $image->copy()->save($filenameBig, array('format' => $format) + $bigSizeOptions);
         $this->assertLessThan(filesize($filenameBig), filesize($filenameSmall));
@@ -994,17 +991,17 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     private function getMonoLayeredImage()
     {
-        return $this->getImagine()->open('tests/Imagine/Fixtures/google.png');
+        return $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
     }
 
     private function getMultiLayeredImage()
     {
-        return $this->getImagine()->open('tests/Imagine/Fixtures/cat.gif');
+        return $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/cat.gif');
     }
 
     private function getInconsistentMultiLayeredImage()
     {
-        return $this->getImagine()->open('tests/Imagine/Fixtures/anima.gif');
+        return $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima.gif');
     }
 
     /**

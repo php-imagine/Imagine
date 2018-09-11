@@ -54,7 +54,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->arc(new Center($size), $size->scale(0.5), 0, 180, $this->getColor('f00')));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}.png");
         $image->save($filename);
-        $this->assertImageEquals("tests/Imagine/Fixtures/drawer/arc/thinkness{$thickness}.png", $filename, '', 0.134, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/arc/thinkness{$thickness}.png", $filename, '', 0.134, $imagine);
     }
 
     /**
@@ -73,7 +73,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->chord(new Center($size), $size->scale(0.8), 0, 240, $this->getColor('f00'), $fill, $thickness));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}-fill{$fill01}.png");
         $image->save($filename);
-        $this->assertImageEquals("tests/Imagine/Fixtures/drawer/chord/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.153, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/chord/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.153, $imagine);
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->circle(new Point((int) $size->getWidth() / 2, (int) $size->getHeight() / 2), 0.8 * min($size->getWidth(), $size->getHeight()) / 2, $this->getColor('f00'), $fill, $thickness));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}-fill{$fill01}.png");
         $image->save($filename);
-        $this->assertImageEquals("tests/Imagine/Fixtures/drawer/circle/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.56, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/circle/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.56, $imagine);
     }
 
     /**
@@ -111,7 +111,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->ellipse(new Center($size), $size->scale(0.9), $this->getColor('f00'), $fill, $thickness));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}-fill{$fill01}.png");
         $image->save($filename);
-        $this->assertImageEquals("tests/Imagine/Fixtures/drawer/ellipse/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.434, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/ellipse/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.434, $imagine);
     }
 
     /**
@@ -129,7 +129,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->line(new Point(5, 5), new Point($size->getWidth() - 5, $size->getHeight() - 6), $this->getColor('f00'), $thickness));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}.png");
         $image->save($filename);
-        $this->assertImageEquals("tests/Imagine/Fixtures/drawer/line/thinkness{$thickness}.png", $filename, '', 0.09, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/line/thinkness{$thickness}.png", $filename, '', 0.09, $imagine);
     }
 
     /**
@@ -148,7 +148,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->pieSlice(new Point($size->getWidth() / 2, 5), $size->scale(0.9), 45, 135, $this->getColor('f00'), $fill, $thickness));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}-fill{$fill01}.png");
         $image->save($filename);
-        $this->assertImageEquals("tests/Imagine/Fixtures/drawer/pieslice/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.095, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/pieslice/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.095, $imagine);
     }
 
     public function testDot()
@@ -159,7 +159,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->dot(new Point(1, 1), $this->getColor('f00')));
         $filename = $this->getTemporaryFilename('.png');
         $image->save($filename);
-        $this->assertImageEquals('tests/Imagine/Fixtures/drawer/dot/dot.png', $filename, '', 0.095, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . '/drawer/dot/dot.png', $filename, '', 0.095, $imagine);
     }
 
     /**
@@ -178,7 +178,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->rectangle(new Point(5, 5), new Point($size->getWidth() - 5, $size->getHeight() - 5), $this->getColor('f00'), $fill, $thickness));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}-fill{$fill01}.png");
         $image->save($filename);
-        $this->assertImageEquals("tests/Imagine/Fixtures/drawer/rectangle/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.12, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/rectangle/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.12, $imagine);
     }
 
     /**
@@ -206,7 +206,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         ));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}-fill{$fill01}.png");
         $image->save($filename);
-        $this->assertImageEquals("tests/Imagine/Fixtures/drawer/polygon/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.154, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/polygon/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.154, $imagine);
     }
 
     public function testText()
@@ -219,13 +219,13 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $drawer = $image->draw();
         $this->assertSame($drawer, $drawer->text(
             'test',
-            $imagine->font('tests/Imagine/Fixtures/font/Arial.ttf', 12, $this->getColor('f00')),
+            $imagine->font(IMAGINE_TEST_FIXTURESFOLDER . '/font/Arial.ttf', 12, $this->getColor('f00')),
             new Point(3, 3),
             45
         ));
         $filename = $this->getTemporaryFilename('.png');
         $image->save($filename);
-        $this->assertImageEquals('tests/Imagine/Fixtures/drawer/text/text.png', $filename, '', 0.049, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . '/drawer/text/text.png', $filename, '', 0.049, $imagine);
     }
 
     public function testDrawASmileyFace()
@@ -251,7 +251,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
             $this->markTestSkipped('This install does not support font tests');
         }
 
-        $path = 'tests/Imagine/Fixtures/font/Arial.ttf';
+        $path = IMAGINE_TEST_FIXTURESFOLDER . '/font/Arial.ttf';
         $black = $this->getColor('000');
         $file36 = $this->getTemporaryFilename('36.png');
         $file24 = $this->getTemporaryFilename('24.png');

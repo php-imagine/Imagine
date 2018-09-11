@@ -58,7 +58,7 @@ class ImageTest extends AbstractImageTest
     {
         $imagine = $this->getImagine();
 
-        $image = $imagine->open('tests/Imagine/Fixtures/resize/210-design-19933.jpg');
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/resize/210-design-19933.jpg');
 
         $filenameLarge = $this->getTemporaryFilename('large.png');
         $image
@@ -76,14 +76,14 @@ class ImageTest extends AbstractImageTest
     public function testAnimatedGifResize()
     {
         $imagine = $this->getImagine();
-        $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima3.gif');
         $filename = $this->getTemporaryFilename('.gif');
         $image
             ->resize(new Box(150, 100))
             ->save($filename, array('animated' => true))
         ;
         $this->assertImageEquals(
-            $imagine->open('tests/Imagine/Fixtures/resize/anima3-150x100.gif'),
+            $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/resize/anima3-150x100.gif'),
             $imagine->open($filename)
         );
     }
@@ -125,7 +125,7 @@ class ImageTest extends AbstractImageTest
     public function testAnimatedGifCrop()
     {
         $imagine = $this->getImagine();
-        $image = $imagine->open('tests/Imagine/Fixtures/anima3.gif');
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima3.gif');
         $filename = $this->getTemporaryFilename('.gif');
         $image
             ->crop(
@@ -135,7 +135,7 @@ class ImageTest extends AbstractImageTest
             ->save($filename, array('animated' => true))
         ;
         $this->assertImageEquals(
-            $imagine->open('tests/Imagine/Fixtures/crop/anima3-topleft.gif'),
+            $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/crop/anima3-topleft.gif'),
             $imagine->open($filename)
         );
     }

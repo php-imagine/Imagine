@@ -23,7 +23,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromFile()
     {
-        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/pixel-CMYK.jpg';
         $metadata = $this->getReader()->readFile($source);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
         $this->assertEquals(realpath($source), $metadata['filepath']);
@@ -32,7 +32,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromExifUncompatibleFile()
     {
-        $source = __DIR__ . '/../../../Fixtures/trans.png';
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/trans.png';
         $metadata = $this->getReader()->readFile($source);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
         $this->assertEquals(realpath($source), $metadata['filepath']);
@@ -66,7 +66,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromData()
     {
-        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/pixel-CMYK.jpg';
         $metadata = $this->getReader()->readData(file_get_contents($source));
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
     }
@@ -79,7 +79,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromStream()
     {
-        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/pixel-CMYK.jpg';
         $resource = fopen($source, 'r');
         $metadata = $this->getReader()->readStream($resource);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
