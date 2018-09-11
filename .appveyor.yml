@@ -20,6 +20,8 @@ cache:
 
 install:
   - ps: .\.appveyor\configure.ps1
+  - php --ri gd
+  - php --ri imagick
   - composer self-update
   - composer install --no-progress --no-suggest --optimize-autoloader --no-ansi --no-interaction %PREFER_LOWEST%
 

@@ -28,6 +28,7 @@ install:
             PHPUNIT_EXCLUDED_GROUPS=always-skipped
             if test "${IMAGINE_DRIVER}" = 'imagick'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},ext-imagick"; fi
             if test "${IMAGINE_DRIVER}" = 'gmagick'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},ext-gmagick"; fi
+            php --ri gd || true
             composer --no-interaction remove --dev --no-update --no-scripts friendsofphp/php-cs-fixer
             ;;
     esac

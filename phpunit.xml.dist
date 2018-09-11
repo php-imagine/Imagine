@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="Imagine Test Suite">
-            <directory>./tests/Imagine/</directory>
+            <directory>./tests/tests/</directory>
         </testsuite>
     </testsuites>
 
@@ -21,7 +21,8 @@
         <whitelist>
             <directory>./src/</directory>
             <exclude>
-                <directory>./tests/Imagine/Fixtures</directory>
+                <directory>./tests/fixtures</directory>
+                <directory>./tests/tmp</directory>
             </exclude>
         </whitelist>
     </filter>

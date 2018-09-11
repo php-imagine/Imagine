@@ -19,7 +19,7 @@ abstract class AbstractFontTest extends ImagineTestCase
     public function testShouldDetermineFontSize()
     {
         $palette = new RGB();
-        $path = 'tests/Imagine/Fixtures/font/Arial.ttf';
+        $path = IMAGINE_TEST_FIXTURESFOLDER . '/font/Arial.ttf';
         $black = $palette->color('000');
         $factory = $this->getImagine();
 
@@ -52,7 +52,7 @@ abstract class AbstractFontTest extends ImagineTestCase
     public function testFontWrapText($text, $maxWidth, $expectedText)
     {
         $palette = new RGB();
-        $font = $this->getImagine()->font('tests/Imagine/Fixtures/font/Arial.ttf', 10, $palette->color('000'));
+        $font = $this->getImagine()->font(IMAGINE_TEST_FIXTURESFOLDER . '/font/Arial.ttf', 10, $palette->color('000'));
         $this->assertSame($expectedText, $font->wrapText($text, $maxWidth));
     }
 

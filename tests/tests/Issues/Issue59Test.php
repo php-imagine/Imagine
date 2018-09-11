@@ -9,7 +9,7 @@ use Imagine\Test\ImagineTestCase;
 /**
  * @group ext-gd
  */
-class Issue67Test extends ImagineTestCase
+class Issue59Test extends ImagineTestCase
 {
     private function getImagine()
     {
@@ -23,15 +23,18 @@ class Issue67Test extends ImagineTestCase
     }
 
     /**
-     * @expectedException \Imagine\Exception\RuntimeException
+     * @doesNotPerformAssertions
      */
-    public function testShouldThrowExceptionNotError()
+    public function testShouldResize()
     {
-        $invalidPath = '/thispathdoesnotexist';
-
         $imagine = $this->getImagine();
+        $new = $this->getTemporaryFilename('.jpeg');
 
-        $imagine->open('tests/Imagine/Fixtures/large.jpg')
-            ->save($invalidPath . '/myfile.jpg');
+        $imagine
+            ->open(IMAGINE_TEST_FIXTURESFOLDER . '/sample.gif')
+            ->save($new)
+        ;
+
+        $this->assertFileExists($new);
     }
 }

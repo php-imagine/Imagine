@@ -32,7 +32,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldOpenAnImage()
     {
-        $source = 'tests/Imagine/Fixtures/google.png';
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/google.png';
         $factory = $this->getImagine();
         $image = $factory->open($source);
         $size = $image->getSize();
@@ -49,7 +49,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldOpenAnSplFileResource()
     {
-        $source = 'tests/Imagine/Fixtures/google.png';
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/google.png';
         $resource = new \SplFileInfo($source);
         $factory = $this->getImagine();
         $image = $factory->open($resource);
@@ -75,7 +75,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldFailOnInvalidImage()
     {
-        $source = 'tests/Imagine/Fixtures/invalid-image.jpg';
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/invalid-image.jpg';
 
         $this->isGoingToThrowException('Imagine\Exception\RuntimeException', sprintf('Unable to open image %s', $source));
         $this->getImagine()->open($source);
@@ -107,7 +107,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
     public function testShouldCreateImageFromString()
     {
         $factory = $this->getImagine();
-        $image = $factory->load(file_get_contents('tests/Imagine/Fixtures/google.png'));
+        $image = $factory->load(file_get_contents(IMAGINE_TEST_FIXTURESFOLDER . '/google.png'));
         $size = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
@@ -142,7 +142,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldCreateImageFromResource()
     {
-        $source = 'tests/Imagine/Fixtures/google.png';
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/google.png';
         $factory = $this->getImagine();
         $resource = fopen($source, 'r');
         $image = $factory->read($resource);

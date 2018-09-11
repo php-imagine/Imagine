@@ -155,7 +155,7 @@ abstract class AbstractEffectsTest extends ImagineTestCase
     public function testConvolution()
     {
         $imagine = $this->getImagine();
-        $image = $imagine->open('tests/Imagine/Fixtures/trans.gif');
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/trans.gif');
         $matrix = new Matrix(3, 3, array(
             0, 0.5, 0,
             0.5, 1, 0.5,
@@ -165,7 +165,7 @@ abstract class AbstractEffectsTest extends ImagineTestCase
 
         $this->assertImageEquals(
             $image,
-            $imagine->open('tests/Imagine/Fixtures/convolution/trans-blur.gif')
+            $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/convolution/trans-blur.gif')
         );
     }
 

@@ -29,16 +29,16 @@ class Issue17Test extends ImagineTestCase
         $size = new Box(100, 10);
         $imagine = $this->getImagine();
 
-        $imagine->open('tests/Imagine/Fixtures/large.jpg')
+        $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/large.jpg')
             ->thumbnail($size, ImageInterface::THUMBNAIL_OUTBOUND)
-            ->save('tests/Imagine/Fixtures/resized.jpg');
+            ->save(IMAGINE_TEST_FIXTURESFOLDER . '/resized.jpg');
 
-        $this->assertFileExists('tests/Imagine/Fixtures/resized.jpg');
+        $this->assertFileExists(IMAGINE_TEST_FIXTURESFOLDER . '/resized.jpg');
         $this->assertEquals(
             $size,
-            $imagine->open('tests/Imagine/Fixtures/resized.jpg')->getSize()
+            $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/resized.jpg')->getSize()
         );
 
-        unlink('tests/Imagine/Fixtures/resized.jpg');
+        unlink(IMAGINE_TEST_FIXTURESFOLDER . '/resized.jpg');
     }
 }
