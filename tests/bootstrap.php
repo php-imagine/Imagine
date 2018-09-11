@@ -9,13 +9,12 @@
  * file that was distributed with this source code.
  */
 
+// This should be already included by Composer, but it's here just in case someone calls phpunit in other ways
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
 if ((int) (ini_get('memory_limit')) < 64) {
     ini_set('memory_limit', '64M');
 }
-
-$loader = require __DIR__ . '/../vendor/autoload.php';
-/* @var Composer\Autoload\ClassLoader $loader */
-$loader->addPsr4('Imagine\\Test\\', __DIR__ . DIRECTORY_SEPARATOR . 'tests');
 
 if (!class_exists('PHPUnit\Framework\Constraint\Constraint')) {
     class_alias('PHPUnit_Framework_Constraint', 'PHPUnit\Framework\Constraint\Constraint');
