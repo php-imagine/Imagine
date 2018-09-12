@@ -256,7 +256,8 @@
   <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
   {%- block footer %}
-      <footer>
+      <footer id="bottom-page">
+      Imagine v.{{release}}.
       {%- if show_copyright %}
         {%- if hasdoc('copyright') %}
           {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}

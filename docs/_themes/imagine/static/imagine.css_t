@@ -229,3 +229,8 @@ body {
     float: right;
     margin-right:190px;
 }
+
+footer#bottom-page {
+	margin-top: 20px;
+	font-size: 0.8em;
+}
