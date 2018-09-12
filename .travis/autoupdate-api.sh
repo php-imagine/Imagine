@@ -5,7 +5,7 @@ set -o errexit
 AUTO_REPOSITORY_OWNER='avalanche123'
 AUTO_REPOSITORY_NAME='Imagine'
 AUTO_PROCESS_BRANCH='develop'
-AUTO_COMMIT_NAME='[auto] Update API'
+AUTO_COMMIT_NAME='[skip ci] Automatic API update'
 AUTO_COMMIT_AUTHOR_NAME='Michele Locati'
 AUTO_COMMIT_AUTHOR_EMAIL='michele@locati.it'
 
