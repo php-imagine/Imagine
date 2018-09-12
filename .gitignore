@@ -1,4 +1,6 @@
-/docs/_build/cache
+/docs/_build/cache/
+/docs/_build/doctrees/
+/docs/_build/html/
 composer.lock
 vendor/
 bin/
