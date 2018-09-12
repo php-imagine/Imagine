@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="index, follow, all" />
-    <title>Imagine\Filter\Advanced | Imagine API</title>
+    <title>Imagine\Filter\Advanced | Imagine API v1.0.0-alpha3</title>
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../../index.html">Imagine API</a>
+                <a class="navbar-brand" href="../../index.html">Imagine API v1.0.0-alpha3</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
@@ -81,11 +81,29 @@
     <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-6">
+                                            <a href="../../Imagine/Filter/Advanced/BlackWhite.html"><abbr title="Imagine\Filter\Advanced\BlackWhite">BlackWhite</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    This filter calculates, for each pixel of an image, whether it is ligher or darker than a threshold.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
                                             <a href="../../Imagine/Filter/Advanced/Border.html"><abbr title="Imagine\Filter\Advanced\Border">Border</abbr></a>
                                             
                 </div>
                 <div class="col-md-6">
-                    A border filter
+                    A border filter.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Imagine/Filter/Advanced/BorderDetection.html"><abbr title="Imagine\Filter\Advanced\BorderDetection">BorderDetection</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    BorderDetection based on Laplace-Operator. Three different variants are offered:.
                 </div>
             </div>
                     <div class="row">
@@ -94,7 +112,7 @@
                                             
                 </div>
                 <div class="col-md-6">
-                    A canvas filter
+                    A canvas filter.
                 </div>
             </div>
                     <div class="row">
@@ -108,12 +126,30 @@
             </div>
                     <div class="row">
                 <div class="col-md-6">
+                                            <a href="../../Imagine/Filter/Advanced/Negation.html"><abbr title="Imagine\Filter\Advanced\Negation">Negation</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    This filter negates every color of every pixel of an image.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Imagine/Filter/Advanced/Neighborhood.html"><abbr title="Imagine\Filter\Advanced\Neighborhood">Neighborhood</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The Neighborhood filter takes a matrix and calculates the color current pixel based on its neighborhood.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
                                             <a href="../../Imagine/Filter/Advanced/OnPixelBased.html"><abbr title="Imagine\Filter\Advanced\OnPixelBased">OnPixelBased</abbr></a>
                                             
                 </div>
                 <div class="col-md-6">
                     The OnPixelBased takes a callable, and for each pixel, this callable is called with the
-image  (\Imagine\Image\ImageInterface) and the current point (\Imagine\Image\Point)
+image (\Imagine\Image\ImageInterface) and the current point (\Imagine\Image\Point).
                 </div>
             </div>
                     <div class="row">
@@ -122,8 +158,7 @@ image  (\Imagine\Image\ImageInterface) and the current point (\Imagine\Image\Poi
                                             
                 </div>
                 <div class="col-md-6">
-                    The RelativeResize filter allows images to be resized relative to their
-existing dimensions.
+                    The RelativeResize filter allows images to be resized relative to their existing dimensions.
                 </div>
             </div>
             </div>
