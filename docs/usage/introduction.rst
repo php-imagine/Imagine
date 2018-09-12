@@ -407,7 +407,7 @@ Image Reflection Filter
    ;
 
 .. TIP::
-   For step by step explanation of the above code `see Reflection section of Introduction to Imagine <http://speakerdeck.com/u/avalanche123/p/introduction-to-imagine?slide=31>`_
+   For step by step explanation of the above code `see Reflection section of Introduction to Imagine <https://speakerdeck.com/avalanche123/introduction-to-imagine?slide=31>`_
 
 Architecture
 ------------
@@ -417,7 +417,7 @@ The architecture is very flexible, as the filters don't need any processing logi
 The ``Transformation`` object is an example of a composite filter, representing a stack or queue of filters, that get applied to an Image upon application of the ``Transformation`` itself.
 
 .. TIP::
-   For more information about ``Transformation`` filter `see Transformation section of Introduction to Imagine <http://speakerdeck.com/u/avalanche123/p/introduction-to-imagine?slide=57>`_
+   For more information about ``Transformation`` filter `see Transformation section of Introduction to Imagine <https://speakerdeck.com/avalanche123/introduction-to-imagine?slide=57>`_
 
 .. _ImagineInterface: ../_static/API/Imagine/Image/ImagineInterface.html
 .. _ImageInterface: ../_static/API/Imagine/Image/ImageInterface.html
