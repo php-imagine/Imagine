@@ -9,6 +9,7 @@ then
 else
   GMAGICK_VERSION="1.1.7RC2"
 fi
+PHP_VERSION=`php -r 'echo PHP_VERSION_ID;'`
 
 mkdir -p cache
 cd cache
@@ -28,17 +29,18 @@ fi
 sudo make install
 cd ..
 
-if [ ! -e ./gmagick-$GMAGICK_VERSION ]
+if [ ! -e ./gmagick-$GMAGICK_VERSION-$PHP_VERSION ]
 then
     wget https://pecl.php.net/get/gmagick-$GMAGICK_VERSION.tgz
     tar -xzf gmagick-$GMAGICK_VERSION.tgz
     rm gmagick-$GMAGICK_VERSION.tgz
-    cd gmagick-$GMAGICK_VERSION
+    mv gmagick-$GMAGICK_VERSION gmagick-$GMAGICK_VERSION-$PHP_VERSION
+    cd gmagick-$GMAGICK_VERSION-$PHP_VERSION
     phpize
     ./configure --with-gmagick=/opt/gmagick
     make -j
 else
-    cd gmagick-$GMAGICK_VERSION
+    cd gmagick-$GMAGICK_VERSION-$PHP_VERSION
 fi
 
 sudo make install

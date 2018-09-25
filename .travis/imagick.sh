@@ -4,6 +4,7 @@ set -xe
 
 IMAGEMAGICK_VERSION="6.8.9-10"
 IMAGICK_VERSION="3.4.3"
+PHP_VERSION=`php -r 'echo PHP_VERSION_ID;'`
 
 mkdir -p cache
 cd cache
@@ -25,17 +26,18 @@ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/imagemagick/lib/pkgconfig
 sudo ln -s /opt/imagemagick/include/ImageMagick-6 /opt/imagemagick/include/ImageMagick
 cd ..
 
-if [ ! -e ./imagick-$IMAGICK_VERSION ]
+if [ ! -e ./imagick-$IMAGICK_VERSION-$PHP_VERSION ]
 then
     wget https://pecl.php.net/get/imagick-$IMAGICK_VERSION.tgz
     tar -xzf imagick-$IMAGICK_VERSION.tgz
     rm imagick-$IMAGICK_VERSION.tgz
-    cd imagick-$IMAGICK_VERSION
+    mv imagick-$IMAGICK_VERSION imagick-$IMAGICK_VERSION-$PHP_VERSION
+    cd imagick-$IMAGICK_VERSION-$PHP_VERSION
     phpize
     ./configure --with-imagick=/opt/imagemagick
     make -j
 else
-    cd imagick-$IMAGICK_VERSION
+    cd imagick-$IMAGICK_VERSION-$PHP_VERSION
 fi
 
 sudo make install
