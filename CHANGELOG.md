@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
+### 1.0.0 (2018-09-25)
 * New `FontInterface` method: `wrapText` - split a text into multiple lines, so that it fits a specific width (@mlocati)  
   **BREAKING CHANGE** if you have your own `FontInterface` implementation, it now must implement `wrapText`
 * Drawer methods can now accept a thickness of zero (@mlocati)
