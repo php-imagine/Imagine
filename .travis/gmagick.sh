@@ -16,6 +16,7 @@ cd cache
 
 if [ ! -e ./GraphicsMagick-$GRAPHICSMAGIC_VERSION ]
 then
+    rm -rf ./GraphicsMagick-* || true
     wget http://78.108.103.11/MIRROR/ftp/GraphicsMagick/1.3/GraphicsMagick-$GRAPHICSMAGIC_VERSION.tar.xz
     tar -xf GraphicsMagick-$GRAPHICSMAGIC_VERSION.tar.xz
     rm GraphicsMagick-$GRAPHICSMAGIC_VERSION.tar.xz
@@ -31,6 +32,7 @@ cd ..
 
 if [ ! -e ./gmagick-$GMAGICK_VERSION-$PHP_VERSION ]
 then
+    rm -rf ./gmagick-* || true
     wget https://pecl.php.net/get/gmagick-$GMAGICK_VERSION.tgz
     tar -xzf gmagick-$GMAGICK_VERSION.tgz
     rm gmagick-$GMAGICK_VERSION.tgz
