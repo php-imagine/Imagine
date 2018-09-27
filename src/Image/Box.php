@@ -43,7 +43,6 @@ final class Box implements BoxInterface
         if ($this->width < 1 || $this->height < 1) {
             throw new InvalidArgumentException(sprintf('Length of either side cannot be 0 or negative, current size is %sx%s', $width, $height));
         }
-
     }
 
     /**
