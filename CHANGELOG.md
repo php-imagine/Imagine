@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ### NEXT (YYYY-MM-DD)
+* `Box` now rounds the width/height it receives (previously it discarded the decimal points) (@mlocati)
 
 ### 1.0.0 (2018-09-25)
 * New `FontInterface` method: `wrapText` - split a text into multiple lines, so that it fits a specific width (@mlocati)  

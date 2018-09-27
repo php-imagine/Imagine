@@ -184,4 +184,28 @@ class BoxTest extends ImagineTestCase
             array(25, 40, 50, 80),
         );
     }
+
+    public function boxShouldRoundNumbersProvider()
+    {
+        return array(
+            array(1.1, 5, '1x5 px'),
+            array(1.9, 5, '2x5 px'),
+            array(5, 1.1, '5x1 px'),
+            array(5, 1.9, '5x2 px'),
+        );
+    }
+
+    /**
+     * @dataProvider boxShouldRoundNumbersProvider
+     *
+     * @param int|float $width
+     * @param int|float $height
+     * @param string $expected
+     */
+    public function testBoxShouldRoundNumbers($width, $height, $expected)
+    {
+        $box = new Box($width, $height);
+
+        $this->assertEquals($expected, (string) $box);
+    }
 }
