@@ -3,6 +3,11 @@
 ...
 
 
+### What version of Imagine are you using?
+
+<!-- Look at the VERSION constant of Imagine\Image\ImagineInterface - file src/Image/ImagineInterface.php -->
+
+
 ### What's the PHP version you are using?
 
 output of `php -v`
