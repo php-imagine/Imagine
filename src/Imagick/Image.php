@@ -970,22 +970,13 @@ final class Image extends AbstractImage
         $this->imagick->setType($type);
         $this->imagick->setColorspace($colorspace);
         $numImages = (int) $this->imagick->getNumberImages();
-        if ($numImages > 0) {
-            $doSetImageType = method_exists($this->imagick, 'setImageType');
-            $doSetImageColorspace = method_exists($this->imagick, 'setImageColorspace');
-            if ($doSetImageType || $doSetImageColorspace) {
-                $originalImageIndex = $this->imagick->getIteratorIndex();
-                for ($imageIndex = 0; $imageIndex < $numImages; $imageIndex++) {
-                    $this->imagick->setIteratorIndex($imageIndex);
-                    if ($doSetImageType) {
-                        $this->imagick->setImageType($type);
-                    }
-                    if ($doSetImageColorspace) {
-                        $this->imagick->setImageColorspace($colorspace);
-                    }
-                }
-                $this->imagick->setIteratorIndex($originalImageIndex);
-            }
+        if ($numImages > 0 && method_exists($this->imagick, 'setImageType')) {
+			$originalImageIndex = $this->imagick->getIteratorIndex();
+			for ($imageIndex = 0; $imageIndex < $numImages; $imageIndex++) {
+				$this->imagick->setIteratorIndex($imageIndex);
+				$this->imagick->setImageType($type);
+			}
+			$this->imagick->setIteratorIndex($originalImageIndex);
         }
         $this->palette = $palette;
     }
