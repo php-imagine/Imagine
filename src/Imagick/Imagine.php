@@ -43,6 +43,9 @@ final class Imagine extends AbstractImagine
         if (version_compare('6.2.9', $version) > 0) {
             throw new RuntimeException(sprintf('ImageMagick version 6.2.9 or higher is required, %s provided', $version));
         }
+        if ($version === '7.0.7-32') { // https://github.com/avalanche123/Imagine/issues/689
+            throw new RuntimeException(sprintf('ImageMagick version %s has known bugs that prevent it from working', $version));
+        }
     }
 
     /**
