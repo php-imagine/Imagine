@@ -1,6 +1,7 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
+### 1.0.2 (2018-10-24)
+* Check that the Imagick PHP extension is not compiled using ImageMagick version 7.0.7-32 because it does not work correctly (@mlocati)
 
 ### 1.0.1 (2018-09-27)
 * `Box` now rounds the width/height it receives (previously it discarded the decimal points) (@mlocati)
