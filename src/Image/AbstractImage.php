@@ -40,12 +40,14 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
         $mode = $settings & 0xffff;
 
         $allowUpscale = (bool) ($settings & ImageInterface::THUMBNAIL_FLAG_UPSCALE);
+        $noClone = (bool) ($settings & ImageInterface::THUMBNAIL_FLAG_NOCLONE);
 
         $imageSize = $this->getSize();
+        $palette = $this->palette();
 
-        $thumbnail = $this->copy();
+        $thumbnail = $noClone ? $this : $this->copy();
 
-        $thumbnail->usePalette($this->palette());
+        $thumbnail->usePalette($palette);
         $thumbnail->strip();
 
         if ($size->getWidth() === $imageSize->getWidth() && $size->getHeight() === $imageSize->getHeight()) {

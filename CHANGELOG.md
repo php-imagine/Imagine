@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ### NEXT (YYYY-MM-DD)
+* New `ImageInterface::THUMBNAIL_FLAG_NOCLONE` flag for `thumbnail()` to let it modify the original image instance in order to save memory (@mlocati)
 
 ### 1.0.2 (2018-10-24)
 * Check that the Imagick PHP extension is not compiled using ImageMagick version 7.0.7-32 because it does not work correctly (@mlocati)

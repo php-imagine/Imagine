@@ -41,6 +41,13 @@ interface ManipulatorInterface
     const THUMBNAIL_FLAG_UPSCALE = 0x00010000;
 
     /**
+     * Instead of creating a new image instance, the thumbnail method modifies the original image (saving memory.
+     *
+     * @var int
+     */
+    const THUMBNAIL_FLAG_NOCLONE = 0x00020000;
+
+    /**
      * Copies current source image into a new ImageInterface instance.
      *
      * @throws \Imagine\Exception\RuntimeException
@@ -163,7 +170,7 @@ interface ManipulatorInterface
 
     /**
      * Generates a thumbnail from a current image
-     * Returns it as a new image, doesn't modify the current image.
+     * Returns it as a new image without modifying the current image unless the THUMBNAIL_FLAG_NOCLONE flag is specified.
      *
      * @param \Imagine\Image\BoxInterface $size
      * @param int|string $settings One or more of the ManipulatorInterface::THUMBNAIL_ flags (joined with |). It may be a string for backward compatibility with old constant values that were strings.
