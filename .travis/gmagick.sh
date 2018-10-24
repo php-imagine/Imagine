@@ -10,6 +10,7 @@ else
 fi
 
 PHP_VERSION=`php -r 'echo PHP_VERSION_ID;'`
+CUSTOM_CFLAGS='-Wno-misleading-indentation -Wno-unused-const-variable -Wno-pointer-compare -Wno-tautological-compare'
 
 mkdir -p cache
 cd cache
@@ -20,8 +21,8 @@ if [ ! -e ./GraphicsMagick-$GRAPHICSMAGIC_VERSION ]; then
     tar -xf GraphicsMagick-$GRAPHICSMAGIC_VERSION.tar.xz
     rm GraphicsMagick-$GRAPHICSMAGIC_VERSION.tar.xz
     cd GraphicsMagick-$GRAPHICSMAGIC_VERSION
-    ./configure --prefix=/opt/gmagick --enable-shared --with-lcms2
-    make -j
+    CFLAGS="${CFLAGS:-} ${CUSTOM_CFLAGS:-}" ./configure --prefix=/opt/gmagick --enable-shared --with-lcms2
+    make -j V=0
 else
     cd GraphicsMagick-$GRAPHICSMAGIC_VERSION
 fi
@@ -37,8 +38,8 @@ if [ ! -e ./gmagick-$GMAGICK_VERSION-$PHP_VERSION-$GRAPHICSMAGIC_VERSION ]; then
     mv gmagick-$GMAGICK_VERSION gmagick-$GMAGICK_VERSION-$PHP_VERSION-$GRAPHICSMAGIC_VERSION
     cd gmagick-$GMAGICK_VERSION-$PHP_VERSION-$GRAPHICSMAGIC_VERSION
     phpize
-    ./configure --with-gmagick=/opt/gmagick
-    make -j
+    CFLAGS="${CFLAGS:-} ${CUSTOM_CFLAGS:-}" ./configure --with-gmagick=/opt/gmagick
+    make -j V=0
 else
     cd gmagick-$GMAGICK_VERSION-$PHP_VERSION-$GRAPHICSMAGIC_VERSION
 fi
