@@ -367,7 +367,7 @@ supported.</p>                </div>
                     <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int|string $settings = self::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         
                                             <p>Generates a thumbnail from a current image
-Returns it as a new image, doesn't modify the current image.</p>                </div>
+Returns it as a new image without modifying the current image unless the THUMBNAIL_FLAG_NOCLONE flag is specified.</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Imagine/Image/ManipulatorInterface.html#method_thumbnail"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a></small></div>
             </div>
                     <div class="row">
@@ -542,7 +542,7 @@ image, while keeping the existing image unmodified.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_copy">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_copy"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 50</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_copy"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 57</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>copy</strong>()
         </code>
@@ -581,7 +581,7 @@ image, while keeping the existing image unmodified.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_crop">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_crop"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 64</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_crop"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 71</div>
         <code>                    $this
     <strong>crop</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size)
         </code>
@@ -640,7 +640,7 @@ Returns cropped self.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_resize">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_resize"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 76</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_resize"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 83</div>
         <code>                    $this
     <strong>resize</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, string $filter = ImageInterface::FILTER_UNDEFINED)
         </code>
@@ -694,7 +694,7 @@ Returns cropped self.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_rotate">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_rotate"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 90</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_rotate"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 97</div>
         <code>                    $this
     <strong>rotate</strong>(int $angle, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $background = null)
         </code>
@@ -749,7 +749,7 @@ area of rotated image.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_paste">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_paste"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 108</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_paste"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 115</div>
         <code>                    $this
     <strong>paste</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $image, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, int $alpha = 100)
         </code>
@@ -814,7 +814,7 @@ operation fails.</p>                    <p>Returns source image</p>             
             </div>
                     <div class="method-item">
                     <h3 id="method_save">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_save"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 123</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_save"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 130</div>
         <code>                    $this
     <strong>save</strong>(string $path = null, array $options = array())
         </code>
@@ -870,7 +870,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_show">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_show"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 135</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_show"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 142</div>
         <code>                    $this
     <strong>show</strong>(string $format, array $options = array())
         </code>
@@ -924,7 +924,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_flipHorizontally">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_flipHorizontally"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 144</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_flipHorizontally"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 151</div>
         <code>                    $this
     <strong>flipHorizontally</strong>()
         </code>
@@ -963,7 +963,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_flipVertically">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_flipVertically"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 153</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_flipVertically"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 160</div>
         <code>                    $this
     <strong>flipVertically</strong>()
         </code>
@@ -1002,7 +1002,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_strip">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_strip"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 162</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_strip"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 169</div>
         <code>                    $this
     <strong>strip</strong>()
         </code>
@@ -1041,7 +1041,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
             </div>
                     <div class="method-item">
                     <h3 id="method_thumbnail">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_thumbnail"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 176</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_thumbnail"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 183</div>
         <code>                    <a href="../../Imagine/Image/ManipulatorInterface.html"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a>
     <strong>thumbnail</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int|string $settings = self::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         </code>
@@ -1052,7 +1052,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
 
                     <div class="method-description">
                                     <p>Generates a thumbnail from a current image
-Returns it as a new image, doesn't modify the current image.</p>                                                </div>
+Returns it as a new image without modifying the current image unless the THUMBNAIL_FLAG_NOCLONE flag is specified.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1101,7 +1101,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_applyMask">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_applyMask"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 185</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_applyMask"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 192</div>
         <code>                    $this
     <strong>applyMask</strong>(<a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a> $mask)
         </code>
@@ -1141,7 +1141,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_fill">
-        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_fill"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 196</div>
+        <div class="location">in <a href="../../Imagine/Image/ManipulatorInterface.html#method_fill"><abbr title="Imagine\Image\ManipulatorInterface">ManipulatorInterface</abbr></a> at         line 203</div>
         <code>                    $this
     <strong>fill</strong>(<a href="../../Imagine/Image/Fill/FillInterface.html"><abbr title="Imagine\Image\Fill\FillInterface">FillInterface</abbr></a> $fill)
         </code>

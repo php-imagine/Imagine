@@ -114,7 +114,7 @@
                     <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int|string $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         
                                             <p>Generates a thumbnail from a current image
-Returns it as a new image, doesn't modify the current image.</p>                </div>
+Returns it as a new image without modifying the current image unless the THUMBNAIL_FLAG_NOCLONE flag is specified.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -196,7 +196,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
 
                     <div class="method-description">
                                     <p>Generates a thumbnail from a current image
-Returns it as a new image, doesn't modify the current image.</p>                                                </div>
+Returns it as a new image without modifying the current image unless the THUMBNAIL_FLAG_NOCLONE flag is specified.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -256,7 +256,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_getAllThumbnailModes">
-        <div class="location">at         line 144</div>
+        <div class="location">at         line 146</div>
         <code>            protected        int[]
     <strong>getAllThumbnailModes</strong>()
         </code>
@@ -286,7 +286,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_updateSaveOptions">
-        <div class="location">at         line 159</div>
+        <div class="location">at         line 161</div>
         <code>            protected        array
     <strong>updateSaveOptions</strong>(array $options)
         </code>
@@ -326,7 +326,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_metadata">
-        <div class="location">at         line 174</div>
+        <div class="location">at         line 176</div>
         <code>                    <a href="../../Imagine/Image/Metadata/MetadataBag.html"><abbr title="Imagine\Image\Metadata\MetadataBag">MetadataBag</abbr></a>
     <strong>metadata</strong>()
         </code>
@@ -367,7 +367,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method___clone">
-        <div class="location">at         line 182</div>
+        <div class="location">at         line 184</div>
         <code>                    
     <strong>__clone</strong>()
         </code>
@@ -388,7 +388,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_getClassFactory">
-        <div class="location">at         line 194</div>
+        <div class="location">at         line 196</div>
         <code>                    <a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a>
     <strong>getClassFactory</strong>()
         </code>
@@ -429,7 +429,7 @@ Returns it as a new image, doesn't modify the current image.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_setClassFactory">
-        <div class="location">at         line 208</div>
+        <div class="location">at         line 210</div>
         <code>                    $this
     <strong>setClassFactory</strong>(<a href="../../Imagine/Factory/ClassFactoryInterface.html"><abbr title="Imagine\Factory\ClassFactoryInterface">ClassFactoryInterface</abbr></a> $classFactory)
         </code>

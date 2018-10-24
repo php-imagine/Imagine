@@ -270,7 +270,7 @@ supported.</p>                </div>
                     <a href="#method_thumbnail">thumbnail</a>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int|string $settings = ImageInterface::THUMBNAIL_INSET, string $filter = ImageInterface::FILTER_UNDEFINED)
         
                                             <p>Generates a thumbnail from a current image
-Returns it as a new image, doesn't modify the current image.</p>                </div>
+Returns it as a new image without modifying the current image unless the THUMBNAIL_FLAG_NOCLONE flag is specified.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -1181,7 +1181,7 @@ supported.</p>                    <p>Please remark that bmp is supported by the 
 
                     <div class="method-description">
                                     <p>Generates a thumbnail from a current image
-Returns it as a new image, doesn't modify the current image.</p>                                                </div>
+Returns it as a new image without modifying the current image unless the THUMBNAIL_FLAG_NOCLONE flag is specified.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
