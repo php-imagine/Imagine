@@ -293,6 +293,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         $thumbnail = $image->thumbnail(new Box(20, 20));
 
         $this->assertNotSame($image, $thumbnail);
+
+        $thumbnail = $image->thumbnail(new Box(20, 20), ImageInterface::THUMBNAIL_INSET | ImageInterface::THUMBNAIL_FLAG_NOCLONE);
+        $this->assertSame($image, $thumbnail);
     }
 
     public function testThumbnailWithInvalidSettingShouldThrowAnException()
