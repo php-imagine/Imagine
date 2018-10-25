@@ -3,3 +3,4 @@
 /src/resources/Adobe/Profile[[:space:]]Information.pdf export-ignore
 /tests export-ignore
 /phpunit.xml.dist export-ignore
+/MAINTAINERS.md export-ignore
