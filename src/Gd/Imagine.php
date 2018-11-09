@@ -231,7 +231,9 @@ final class Imagine extends AbstractImagine
         try {
             $result = $callback();
         } catch (\Exception $x) {
+            $result = null;
         } catch (\Throwable $x) {
+            $result = null;
         }
         restore_error_handler();
 
