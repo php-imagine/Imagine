@@ -40,5 +40,3 @@ define('IMAGINE_TEST_TEMPFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'tmp');
 if (!is_dir(IMAGINE_TEST_TEMPFOLDER)) {
     mkdir(IMAGINE_TEST_TEMPFOLDER);
 }
-
-error_reporting(-1);
