@@ -990,6 +990,14 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertLessThan(filesize($filenameBig), filesize($filenameSmall));
     }
 
+    /**
+     * @expectedException \Imagine\Exception\RuntimeException
+     */
+    public function testShouldFailOpeningAnInvalidImageFile()
+    {
+        $this->getImagine()->open(__FILE__);
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()

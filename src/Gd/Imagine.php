@@ -86,7 +86,10 @@ final class Imagine extends AbstractImagine
         $loader = $path instanceof LoaderInterface ? $path : $this->getClassFactory()->createFileLoader($path);
         $path = $loader->getPath();
 
-        $resource = @imagecreatefromstring($loader->getData());
+        $data = $loader->getData();
+        $resource = $this->withoutExceptionHandlers(function () use (&$data) {
+            return @imagecreatefromstring($data);
+        });
 
         if (!is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
@@ -205,12 +208,35 @@ final class Imagine extends AbstractImagine
      */
     private function doLoad($string, MetadataBag $metadata)
     {
-        $resource = @imagecreatefromstring($string);
+        $resource = $this->withoutExceptionHandlers(function () use (&$string) {
+            return @imagecreatefromstring($string);
+        });
 
         if (!is_resource($resource)) {
             throw new RuntimeException('An image could not be created from the given input');
         }
 
         return $this->wrap($resource, new RGB(), $metadata);
+    }
+
+    /**
+     * @param callable $callback
+     *
+     * @return mixed
+     */
+    private function withoutExceptionHandlers($callback)
+    {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+        }, -1);
+        try {
+            $result = $callback();
+        } catch (\Exception $x) {
+            $result = null;
+        } catch (\Throwable $x) {
+            $result = null;
+        }
+        restore_error_handler();
+
+        return $result;
     }
 }
