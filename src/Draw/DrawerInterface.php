@@ -131,6 +131,10 @@ interface DrawerInterface
      * @param \Imagine\Image\Palette\Color\ColorInterface $color
      * @param bool $fill
      * @param int $thickness
+     *
+     * @throws \Imagine\Exception\RuntimeException
+     *
+     * @return $this
      */
     public function rectangle(PointInterface $leftTop, PointInterface $rightBottom, ColorInterface $color, $fill = false, $thickness = 1);
 
