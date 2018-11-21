@@ -12,7 +12,6 @@
 namespace Imagine\Test\Constraint;
 
 use Imagine\Image\Palette\Color\ColorInterface;
-use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Util\InvalidArgumentHelper;
 
 class IsColorSimilar extends Constraint
@@ -77,7 +76,7 @@ class IsColorSimilar extends Constraint
     /**
      * {@inheritdoc}
      */
-    protected function matches($other)
+    protected function _matches($other)
     {
         if (!$other instanceof ColorInterface) {
             throw InvalidArgumentHelper::factory(1, 'Imagine\Image\Palette\Color\ColorInterface', $other);
@@ -95,7 +94,7 @@ class IsColorSimilar extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function toString()
+    protected function _toString()
     {
         return sprintf(
             'is a color with a maximum distance of %s from %s',
@@ -109,7 +108,7 @@ class IsColorSimilar extends Constraint
      *
      * @param \Imagine\Image\Palette\Color\ColorInterface $other
      */
-    public function failureDescription($other)
+    protected function _failureDescription($other)
     {
         return sprintf(
             'the color %s has a distance from %s not greater than %s (actual distance: %s)',

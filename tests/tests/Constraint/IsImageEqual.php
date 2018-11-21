@@ -17,7 +17,6 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Palette\RGB;
-use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Util\InvalidArgumentHelper;
 
 class IsImageEqual extends Constraint
@@ -77,7 +76,7 @@ class IsImageEqual extends Constraint
     /**
      * {@inheritdoc}
      */
-    protected function matches($other)
+    protected function _matches($other)
     {
         if ($this->imagine !== null && is_string($other)) {
             $other = $this->imagine->open($other);
@@ -94,7 +93,7 @@ class IsImageEqual extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function toString()
+    protected function _toString()
     {
         return sprintf('contains color histogram identical to expected %s', $this->exporter->export($this->value));
     }
@@ -102,7 +101,7 @@ class IsImageEqual extends Constraint
     /**
      * {@inheritdoc}
      */
-    protected function failureDescription($other)
+    protected function _failureDescription($other)
     {
         if ($this->imagine !== null && is_string($other)) {
             $other = $this->imagine->open($other);

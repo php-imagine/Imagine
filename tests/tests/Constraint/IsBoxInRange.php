@@ -12,7 +12,6 @@
 namespace Imagine\Test\Constraint;
 
 use Imagine\Image\BoxInterface;
-use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Util\InvalidArgumentHelper;
 
 class IsBoxInRange extends Constraint
@@ -61,7 +60,7 @@ class IsBoxInRange extends Constraint
     /**
      * {@inheritdoc}
      */
-    protected function matches($other)
+    protected function _matches($other)
     {
         if (!$other instanceof BoxInterface) {
             throw InvalidArgumentHelper::factory(1, 'Imagine\Image\BoxInterface');
@@ -77,7 +76,7 @@ class IsBoxInRange extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function toString()
+    protected function _toString()
     {
         return sprintf(
             'is a box with a width between %d and %d, and a height between %d and %d',
@@ -91,7 +90,7 @@ class IsBoxInRange extends Constraint
      *
      * @param \Imagine\Image\BoxInterface $other
      */
-    public function failureDescription($other)
+    protected function _failureDescription($other)
     {
         return sprintf(
             'the box %sx%s has a width between %d and %d, and a height between %d and %d',
