@@ -18,7 +18,6 @@ class MatrixTest extends ImagineTestCase
 {
     /**
      * @dataProvider dataProviderForTestMatrixHasAtLeastOneElement
-     * @doesNotPerformAssertions
      *
      * @param int $width
      * @param int $height
@@ -31,6 +30,9 @@ class MatrixTest extends ImagineTestCase
         }
 
         new Matrix($width, $height);
+        if (null === $exceptionMessage) {
+            $this->assertTrue(true);
+        }
     }
 
     public function dataProviderForTestMatrixHasAtLeastOneElement()
@@ -69,7 +71,6 @@ class MatrixTest extends ImagineTestCase
 
     /**
      * @dataProvider dataProviderForTestMatrixCorrectlyGivesOutOfBoundExceptions
-     * @doesNotPerformAssertions
      *
      * @param mixed $x
      * @param mixed $y

@@ -20,7 +20,7 @@
         "php": ">=5.3.2"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^3.2 || ^4.0",
+        "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.4",
         "friendsofphp/php-cs-fixer": "2.2.*"
     },
     "suggest": {
@@ -56,7 +56,7 @@
         ]
     },
     "scripts": {
-        "test": "simple-phpunit --verbose",
+        "test": "phpunit --verbose",
         "codestyle": "php-cs-fixer fix --path-mode=intersection --config=.php_cs.dist"
     }
 }

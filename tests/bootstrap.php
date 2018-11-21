@@ -32,6 +32,16 @@ if (!class_exists('PHPUnit\Framework\ExpectationFailedException')) {
     class_alias('PHPUnit_Framework_ExpectationFailedException', 'PHPUnit\Framework\ExpectationFailedException');
 }
 
+if (!class_exists('PHPUnit\Runner\Version')) {
+    class_alias('PHPUnit_Runner_Version', 'PHPUnit\Runner\Version');
+}
+
+if (version_compare(PHPUnit\Runner\Version::id(), '7') >= 0) {
+    class_alias('Imagine\Test\Constraint\Constraint_v2', 'Imagine\Test\Constraint\Constraint');
+} else {
+    class_alias('Imagine\Test\Constraint\Constraint_v1', 'Imagine\Test\Constraint\Constraint');
+}
+
 define('IMAGINE_TEST_SRCFOLDER', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src');
 
 define('IMAGINE_TEST_FIXTURESFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'fixtures');
