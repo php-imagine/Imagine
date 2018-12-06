@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ### NEXT (YYYY-MM-DD)
+* `ExifMetadataReader` now returns all the available metadata, not only EXIF and IFD0 (#701, @mlocati)
 
 ### 1.1.0 (2018-10-25)
 * New `ImageInterface::THUMBNAIL_FLAG_NOCLONE` flag for `thumbnail()` to let it modify the original image instance in order to save memory (@mlocati)
