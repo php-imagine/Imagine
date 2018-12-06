@@ -115,14 +115,12 @@ class ExifMetadataReader extends AbstractMetadataReader
         }
 
         $metadata = array();
-        $sources = array('EXIF' => 'exif', 'IFD0' => 'ifd0');
-
-        foreach ($sources as $name => $prefix) {
-            if (!isset($exifData[$name])) {
-                continue;
-            }
-            foreach ($exifData[$name] as $prop => $value) {
-                $metadata[$prefix . '.' . $prop] = $value;
+        foreach ($exifData as $prefix => $values) {
+            if (is_array($values)) {
+                $prefix = strtolower($prefix);
+                foreach ($values as $prop => $value) {
+                    $metadata[$prefix . '.' . $prop] = $value;
+                }
             }
         }
 
