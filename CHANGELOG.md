@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
+### 1.2.0 (2018-12-07)
 * `ExifMetadataReader` now returns all the available metadata, not only EXIF and IFD0 (#701, @mlocati)
 
 ### 1.1.0 (2018-10-25)
