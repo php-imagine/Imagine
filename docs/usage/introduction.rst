@@ -186,7 +186,7 @@ The following example demonstrates the basic quality settings.
    $imagine->open('/path/to/image.jpg')
       ->save('/path/to/image.jpg', array('jpeg_quality' => 50)) // from 0 to 100
       ->save('/path/to/image.png', array('png_compression_level' => 9)); // from 0 to 9
-      ->save('/path/to/image.jpg', array('webp_quality' => 50)) // from 0 to 100
+      ->save('/path/to/image.webp', array('webp_quality' => 50)) // from 0 to 100
 
 The following example opens a Jpg image and saves it with it with 150 dpi horizontal resolution and 120 dpi vertical resolution.
 
