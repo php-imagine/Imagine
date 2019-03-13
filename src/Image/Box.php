@@ -38,8 +38,14 @@ final class Box implements BoxInterface
      */
     public function __construct($width, $height)
     {
-        $this->width = (int) round($width);
-        $this->height = (int) round($height);
+        if (!\is_int($width)) {
+            $width = (int) round($width);
+        }
+        if (!\is_int($height)) {
+            $height = (int) round($height);
+        }
+        $this->width = $width;
+        $this->height = $height;
         if ($this->width < 1 || $this->height < 1) {
             throw new InvalidArgumentException(sprintf('Length of either side cannot be 0 or negative, current size is %sx%s', $width, $height));
         }

@@ -47,6 +47,7 @@ class BoxTest extends ImagineTestCase
             array(1, 1),
             array(10, 10),
             array(15, 36),
+            array(\PHP_INT_MAX, \PHP_INT_MAX),
         );
     }
 
