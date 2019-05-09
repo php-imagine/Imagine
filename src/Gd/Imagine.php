@@ -87,9 +87,14 @@ final class Imagine extends AbstractImagine
         $path = $loader->getPath();
 
         $data = $loader->getData();
-        $resource = $this->withoutExceptionHandlers(function () use (&$data) {
-            return @imagecreatefromstring($data);
-        });
+
+        if($this->isWebp($data)) {
+            $resource = $this->loadWebp($data);
+        } else {
+            $resource = $this->withoutExceptionHandlers(function () use (&$data) {
+                return @imagecreatefromstring($data);
+            });
+        }
 
         if (!is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
@@ -208,9 +213,14 @@ final class Imagine extends AbstractImagine
      */
     private function doLoad($string, MetadataBag $metadata)
     {
-        $resource = $this->withoutExceptionHandlers(function () use (&$string) {
-            return @imagecreatefromstring($string);
-        });
+
+        if($this->isWebp($string)) {
+            $resource = $this->loadWebp($string);
+        } else {
+            $resource = $this->withoutExceptionHandlers(function () use (&$string) {
+                return @imagecreatefromstring($string);
+            });
+        }
 
         if (!is_resource($resource)) {
             throw new RuntimeException('An image could not be created from the given input');
@@ -238,5 +248,20 @@ final class Imagine extends AbstractImagine
         restore_error_handler();
 
         return $result;
+    }
+
+    private function isWebp(string $data)
+    {
+        return strncmp( substr( $data, 8, 7 ), "WEBPVP8", 7 ) === 0;
+    }
+
+    private function loadWebp(string $data)
+    {
+        $tmpfile = tempnam(sys_get_temp_dir(), 'imaginewebp_');
+        file_put_contents($tmpfile, $data);
+        $resource = $this->withoutExceptionHandlers(function () use ($tmpfile) {
+            return @imagecreatefromwebp($tmpfile);
+        });
+        return $resource;
     }
 }
