@@ -28,12 +28,28 @@ use Imagine\Image\Palette\RGB;
  */
 final class Imagine extends AbstractImagine
 {
+
     /**
-     * @throws \Imagine\Exception\RuntimeException
+     * @var string
      */
-    public function __construct()
+    private $tempdir;
+
+    /**
+     * @param null $tempdir Temporary directory for opening webp files
+     */
+    public function __construct($tempdir = null)
     {
         $this->requireGdVersion('2.0.1');
+        $this->tempdir = $tempdir ? $tempdir : sys_get_temp_dir();
+    }
+
+    /**
+     * Allows changing temporary directory for files
+     *
+     * @param $tempdir
+     */
+    public function setTempDir($tempdir) {
+        $this->tempdir = $tempdir;
     }
 
     /**
@@ -88,7 +104,7 @@ final class Imagine extends AbstractImagine
 
         $data = $loader->getData();
 
-        if($this->isWebp($data)) {
+        if(function_exists('imagecreatefromwebp') && $this->isWebp($data)) {
             $resource = $this->loadWebp($data);
         } else {
             $resource = $this->withoutExceptionHandlers(function () use (&$data) {
@@ -214,7 +230,7 @@ final class Imagine extends AbstractImagine
     private function doLoad($string, MetadataBag $metadata)
     {
 
-        if($this->isWebp($string)) {
+        if(function_exists('imagecreatefromwebp') && $this->isWebp($string)) {
             $resource = $this->loadWebp($string);
         } else {
             $resource = $this->withoutExceptionHandlers(function () use (&$string) {
@@ -250,18 +266,27 @@ final class Imagine extends AbstractImagine
         return $result;
     }
 
-    private function isWebp(string $data)
+    /**
+     * @param string $data
+     * @return bool
+     */
+    private function isWebp($data)
     {
         return strncmp( substr( $data, 8, 7 ), "WEBPVP8", 7 ) === 0;
     }
 
-    private function loadWebp(string $data)
+    /**
+     * @param string $data
+     * @return mixed
+     */
+    private function loadWebp($data)
     {
-        $tmpfile = tempnam(sys_get_temp_dir(), 'imaginewebp_');
+        $tmpfile = tempnam($this->tempdir, 'imaginewebp_');
         file_put_contents($tmpfile, $data);
         $resource = $this->withoutExceptionHandlers(function () use ($tmpfile) {
             return @imagecreatefromwebp($tmpfile);
         });
+        @unlink($tmpfile);
         return $resource;
     }
 }
