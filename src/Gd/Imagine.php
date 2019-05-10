@@ -28,14 +28,13 @@ use Imagine\Image\Palette\RGB;
  */
 final class Imagine extends AbstractImagine
 {
-
     /**
      * @var string
      */
     private $tempdir;
 
     /**
-     * @param null $tempdir Temporary directory for opening webp files.
+     * @param null $tempdir temporary directory for opening webp files
      */
     public function __construct($tempdir = null)
     {
@@ -44,7 +43,7 @@ final class Imagine extends AbstractImagine
     }
 
     /**
-     * Allows changing temporary directory for files
+     * Allows changing temporary directory for files.
      *
      * @param $tempdir
      */
@@ -105,7 +104,7 @@ final class Imagine extends AbstractImagine
 
         $data = $loader->getData();
 
-        if (function_exists('imagecreatefromwebp') && $this->isWebp($data)) {
+        if (\function_exists('imagecreatefromwebp') && $this->isWebp($data)) {
             $resource = $this->loadWebp($data);
         } else {
             $resource = $this->withoutExceptionHandlers(function () use (&$data) {
@@ -113,7 +112,7 @@ final class Imagine extends AbstractImagine
             });
         }
 
-        if (!is_resource($resource)) {
+        if (!\is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
@@ -137,7 +136,7 @@ final class Imagine extends AbstractImagine
      */
     public function read($resource)
     {
-        if (!is_resource($resource)) {
+        if (!\is_resource($resource)) {
             throw new InvalidArgumentException('Variable does not contain a stream resource');
         }
 
@@ -172,7 +171,7 @@ final class Imagine extends AbstractImagine
     private function wrap($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
         if (!imageistruecolor($resource)) {
-            if (function_exists('imagepalettetotruecolor')) {
+            if (\function_exists('imagepalettetotruecolor')) {
                 if (false === imagepalettetotruecolor($resource)) {
                     throw new RuntimeException('Could not convert a palette based image to true color');
                 }
@@ -198,7 +197,7 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException('Could not set alphablending, savealpha and antialias values');
         }
 
-        if (function_exists('imageantialias')) {
+        if (\function_exists('imageantialias')) {
             imageantialias($resource, true);
         }
 
@@ -212,7 +211,7 @@ final class Imagine extends AbstractImagine
      */
     private function requireGdVersion($version)
     {
-        if (!function_exists('gd_info')) {
+        if (!\function_exists('gd_info')) {
             throw new RuntimeException('Gd not installed');
         }
         if (version_compare(GD_VERSION, $version, '<')) {
@@ -230,8 +229,7 @@ final class Imagine extends AbstractImagine
      */
     private function doLoad($string, MetadataBag $metadata)
     {
-
-        if (function_exists('imagecreatefromwebp') && $this->isWebp($string)) {
+        if (\function_exists('imagecreatefromwebp') && $this->isWebp($string)) {
             $resource = $this->loadWebp($string);
         } else {
             $resource = $this->withoutExceptionHandlers(function () use (&$string) {
@@ -239,7 +237,7 @@ final class Imagine extends AbstractImagine
             });
         }
 
-        if (!is_resource($resource)) {
+        if (!\is_resource($resource)) {
             throw new RuntimeException('An image could not be created from the given input');
         }
 
@@ -269,12 +267,12 @@ final class Imagine extends AbstractImagine
 
     /**
      * @param string $data
-     * 
+     *
      * @return bool
      */
     private function isWebp($data)
     {
-        return strncmp(substr($data, 8, 7), 'WEBPVP8', 7) === 0;
+        return 0 === strncmp(substr($data, 8, 7), 'WEBPVP8', 7);
     }
 
     /**
