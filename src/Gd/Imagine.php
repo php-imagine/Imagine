@@ -104,7 +104,7 @@ final class Imagine extends AbstractImagine
 
         $data = $loader->getData();
 
-        if(function_exists('imagecreatefromwebp') && $this->isWebp($data)) {
+        if (function_exists('imagecreatefromwebp') && $this->isWebp($data)) {
             $resource = $this->loadWebp($data);
         } else {
             $resource = $this->withoutExceptionHandlers(function () use (&$data) {
@@ -230,7 +230,7 @@ final class Imagine extends AbstractImagine
     private function doLoad($string, MetadataBag $metadata)
     {
 
-        if(function_exists('imagecreatefromwebp') && $this->isWebp($string)) {
+        if (function_exists('imagecreatefromwebp') && $this->isWebp($string)) {
             $resource = $this->loadWebp($string);
         } else {
             $resource = $this->withoutExceptionHandlers(function () use (&$string) {
@@ -272,11 +272,12 @@ final class Imagine extends AbstractImagine
      */
     private function isWebp($data)
     {
-        return strncmp( substr( $data, 8, 7 ), "WEBPVP8", 7 ) === 0;
+        return strncmp(substr($data, 8, 7), 'WEBPVP8', 7) === 0;
     }
 
     /**
      * @param string $data
+     *
      * @return mixed
      */
     private function loadWebp($data)
@@ -287,6 +288,7 @@ final class Imagine extends AbstractImagine
             return @imagecreatefromwebp($tmpfile);
         });
         @unlink($tmpfile);
+
         return $resource;
     }
 }
