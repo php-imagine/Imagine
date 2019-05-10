@@ -35,7 +35,7 @@ final class Imagine extends AbstractImagine
     private $tempdir;
 
     /**
-     * @param null $tempdir Temporary directory for opening webp files
+     * @param null $tempdir Temporary directory for opening webp files.
      */
     public function __construct($tempdir = null)
     {
@@ -48,7 +48,8 @@ final class Imagine extends AbstractImagine
      *
      * @param $tempdir
      */
-    public function setTempDir($tempdir) {
+    public function setTempDir($tempdir)
+    {
         $this->tempdir = $tempdir;
     }
 
@@ -268,6 +269,7 @@ final class Imagine extends AbstractImagine
 
     /**
      * @param string $data
+     * 
      * @return bool
      */
     private function isWebp($data)

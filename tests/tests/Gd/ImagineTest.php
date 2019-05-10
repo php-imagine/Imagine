@@ -31,7 +31,7 @@ class ImagineTest extends AbstractImagineTest
     public function testShouldOpenAWebpImage()
     {
         // skip if not supported
-        if(function_exists('imagecreatefromwebp')) {
+        if (function_exists('imagecreatefromwebp')) {
             $source = IMAGINE_TEST_FIXTURESFOLDER . '/google.webp';
             $factory = $this->getImagine();
             $image = $factory->open($source);
