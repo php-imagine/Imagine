@@ -106,7 +106,7 @@ final class Imagine extends AbstractImagine
                 if (method_exists($imagick, 'setImageAlpha')) {
                     $imagick->setImageAlpha($pixel->getColorValue(\Imagick::COLOR_ALPHA));
                 } else {
-                    $imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
+                    @$imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
                 }
             }
 
