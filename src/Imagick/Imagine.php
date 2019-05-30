@@ -133,24 +133,11 @@ final class Imagine extends AbstractImagine
     private function withExceptionHandler($callback)
     {
         set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            if (0 === error_reporting()) {
-                return;
-            }
-
-            throw new RuntimeException($errstr, $errno, new \ErrorException($errstr, 0, $errno, $errfile, $errline));
-        }, E_WARNING | E_NOTICE);
-        $exception = null;
-        try {
-            $callback();
-        } catch (Exception $x) {
-            $exception = $x;
-        } catch (Throwable $x) {
-            $exception = $x;
-        }
+            // ignore deprecation errors
+            return;
+        }, E_DEPRECATED);
+        $callback();
         restore_error_handler();
-        if ($exception !== null) {
-            throw $exception;
-        }
     }
 
     /**
