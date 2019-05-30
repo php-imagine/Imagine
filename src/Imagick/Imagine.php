@@ -11,6 +11,7 @@
 
 namespace Imagine\Imagick;
 
+use Exception;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
@@ -23,6 +24,7 @@ use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Grayscale;
 use Imagine\Image\Palette\RGB;
+use Throwable;
 
 /**
  * Imagine implementation using the Imagick PHP extension.
@@ -106,7 +108,9 @@ final class Imagine extends AbstractImagine
                 if (method_exists($imagick, 'setImageAlpha')) {
                     $imagick->setImageAlpha($pixel->getColorValue(\Imagick::COLOR_ALPHA));
                 } else {
-                    @$imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
+                    $this->withExceptionHandler(function () use ($imagick) {
+                        $imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
+                    });
                 }
             }
 
@@ -116,6 +120,36 @@ final class Imagine extends AbstractImagine
             return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_IMAGICK, $imagick, $palette, new MetadataBag());
         } catch (\ImagickException $e) {
             throw new RuntimeException('Could not create empty image', $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * @param callable $callback
+     *
+     * @throws \Imagine\Exception\RuntimeException
+     * @throws \Exception
+     * @throws \Throwable
+     */
+    private function withExceptionHandler($callback)
+    {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            if (0 === error_reporting()) {
+                return;
+            }
+
+            throw new RuntimeException($errstr, $errno, new \ErrorException($errstr, 0, $errno, $errfile, $errline));
+        }, E_WARNING | E_NOTICE);
+        $exception = null;
+        try {
+            $callback();
+        } catch (Exception $x) {
+            $exception = $x;
+        } catch (Throwable $x) {
+            $exception = $x;
+        }
+        restore_error_handler();
+        if ($exception !== null) {
+            throw $exception;
         }
     }
 
