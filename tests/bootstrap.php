@@ -42,6 +42,13 @@ if (version_compare(PHPUnit\Runner\Version::id(), '7') >= 0) {
     class_alias('Imagine\Test\Constraint\Constraint_v1', 'Imagine\Test\Constraint\Constraint');
 }
 
+if (!class_exists('PHPUnit\Framework\Error\Deprecated')) {
+    class_alias('PHPUnit_Framework_Error_Deprecated', 'PHPUnit\Framework\Error\Deprecated');
+}
+
+// Do not convert deprecation warnings to exceptions so silencing them works
+\PHPUnit\Framework\Error\Deprecated::$enabled = false;
+
 define('IMAGINE_TEST_SRCFOLDER', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src');
 
 define('IMAGINE_TEST_FIXTURESFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'fixtures');
