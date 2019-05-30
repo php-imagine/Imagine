@@ -11,7 +11,6 @@
 
 namespace Imagine\Imagick;
 
-use Exception;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
@@ -24,7 +23,6 @@ use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Grayscale;
 use Imagine\Image\Palette\RGB;
-use Throwable;
 
 /**
  * Imagine implementation using the Imagick PHP extension.
@@ -132,9 +130,8 @@ final class Imagine extends AbstractImagine
      */
     private function withExceptionHandler($callback)
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+        set_error_handler(function () {
             // ignore deprecation errors
-            return;
         }, E_DEPRECATED);
         $callback();
         restore_error_handler();
