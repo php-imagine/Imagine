@@ -22,6 +22,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Palette\RGB;
+use Imagine\Utils\ErrorHandling;
 
 /**
  * Imagine implementation using the GD library.
@@ -87,7 +88,7 @@ final class Imagine extends AbstractImagine
         $path = $loader->getPath();
 
         $data = $loader->getData();
-        $resource = $this->withoutExceptionHandlers(function () use (&$data) {
+        $resource = ErrorHandling::ignoring(-1, function () use (&$data) {
             return @imagecreatefromstring($data);
         });
 
@@ -208,7 +209,7 @@ final class Imagine extends AbstractImagine
      */
     private function doLoad($string, MetadataBag $metadata)
     {
-        $resource = $this->withoutExceptionHandlers(function () use (&$string) {
+        $resource = ErrorHandling::ignoring(-1, function () use (&$string) {
             return @imagecreatefromstring($string);
         });
 
@@ -217,26 +218,5 @@ final class Imagine extends AbstractImagine
         }
 
         return $this->wrap($resource, new RGB(), $metadata);
-    }
-
-    /**
-     * @param callable $callback
-     *
-     * @return mixed
-     */
-    private function withoutExceptionHandlers($callback)
-    {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-        }, -1);
-        try {
-            $result = $callback();
-        } catch (\Exception $x) {
-            $result = null;
-        } catch (\Throwable $x) {
-            $result = null;
-        }
-        restore_error_handler();
-
-        return $result;
     }
 }

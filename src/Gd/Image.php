@@ -11,7 +11,6 @@
 
 namespace Imagine\Gd;
 
-use Exception;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -28,7 +27,7 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
-use Throwable;
+use Imagine\Utils\ErrorHandling;
 
 /**
  * Image implementation using the GD library.
@@ -666,7 +665,7 @@ final class Image extends AbstractImage
                 break;
         }
 
-        $this->withExceptionHandler(function () use ($save, $args) {
+        ErrorHandling::throwingRuntimeException(E_WARNING | E_NOTICE, function () use ($save, $args) {
             if (false === call_user_func_array($save, $args)) {
                 throw new RuntimeException('Save operation failed');
             }
@@ -765,36 +764,6 @@ final class Image extends AbstractImage
         }
 
         return is_string($format) && isset($formats[$format]);
-    }
-
-    /**
-     * @param callable $callback
-     *
-     * @throws \Imagine\Exception\RuntimeException
-     * @throws \Exception
-     * @throws \Throwable
-     */
-    private function withExceptionHandler($callback)
-    {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            if (0 === error_reporting()) {
-                return;
-            }
-
-            throw new RuntimeException($errstr, $errno, new \ErrorException($errstr, 0, $errno, $errfile, $errline));
-        }, E_WARNING | E_NOTICE);
-        $exception = null;
-        try {
-            $callback();
-        } catch (Exception $x) {
-            $exception = $x;
-        } catch (Throwable $x) {
-            $exception = $x;
-        }
-        restore_error_handler();
-        if ($exception !== null) {
-            throw $exception;
-        }
     }
 
     /**
