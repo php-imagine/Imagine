@@ -179,6 +179,20 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
+     * @dataProvider imageCompressionQualityProvider
+     *
+     * {@inheritdoc}
+     */
+    public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
+    {
+        if ($format === 'webp' && !function_exists('imagewebp')) {
+            $this->markTestSkipped('GD webp support is not enabled');
+        }
+
+        return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
+    }
+
+    /**
      * @group always-skipped
      *
      * {@inheritdoc}

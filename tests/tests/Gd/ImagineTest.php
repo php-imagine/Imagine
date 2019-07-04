@@ -32,4 +32,13 @@ class ImagineTest extends AbstractImagineTest
     {
         return new Imagine();
     }
+
+    public function testShouldOpenAWebpImage()
+    {
+        if (!function_exists('imagewebp')) {
+            $this->markTestSkipped('GD webp support is not enabled');
+        }
+
+        return parent::testShouldOpenAWebpImage();
+    }
 }
