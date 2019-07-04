@@ -226,7 +226,7 @@ final class Imagine extends AbstractImagine
         // imagecreatefromstring() does not support webp images before PHP 7.3.0
         if (PHP_VERSION_ID < 70300 && function_exists('imagecreatefromwebp') && substr($string, 8, 4) === 'WEBP') {
             return ErrorHandling::ignoring(-1, function () use (&$string) {
-                return @imagecreatefromwebp('data:image/webp;base64,'.base64_encode($string));
+                return @imagecreatefromwebp('data:image/webp;base64,' . base64_encode($string));
             });
         }
 
