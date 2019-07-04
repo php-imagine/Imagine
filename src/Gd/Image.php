@@ -659,8 +659,11 @@ final class Image extends AbstractImage
                         $options['webp_quality'] = $options['quality'];
                     }
                 }
-                if ($options['webp_quality'] < 0 || $options['webp_quality'] > 100) {
-                    throw new InvalidArgumentException('webp_quality option should be an integer from 0 to 100');
+                if (isset($options['webp_quality'])) {
+                    if ($options['webp_quality'] < 0 || $options['webp_quality'] > 100) {
+                        throw new InvalidArgumentException('webp_quality option should be an integer from 0 to 100');
+                    }
+                    $args[] = $options['webp_quality'];
                 }
                 break;
         }
