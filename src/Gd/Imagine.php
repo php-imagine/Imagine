@@ -88,9 +88,7 @@ final class Imagine extends AbstractImagine
         $path = $loader->getPath();
 
         $data = $loader->getData();
-        $resource = ErrorHandling::ignoring(-1, function () use (&$data) {
-            return @imagecreatefromstring($data);
-        });
+        $resource = $this->createImageFromString($data);
 
         if (!is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
@@ -209,14 +207,31 @@ final class Imagine extends AbstractImagine
      */
     private function doLoad($string, MetadataBag $metadata)
     {
-        $resource = ErrorHandling::ignoring(-1, function () use (&$string) {
-            return @imagecreatefromstring($string);
-        });
+        $resource = $this->createImageFromString($string);
 
         if (!is_resource($resource)) {
             throw new RuntimeException('An image could not be created from the given input');
         }
 
         return $this->wrap($resource, new RGB(), $metadata);
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return resource|false
+     */
+    private function createImageFromString(&$string)
+    {
+        // imagecreatefromstring() does not support webp images before PHP 7.3.0
+        if (PHP_VERSION_ID < 70300 && substr($string, 8, 4) === 'WEBP') {
+            return ErrorHandling::ignoring(-1, function () use (&$string) {
+                return @imagecreatefromwebp('data:image/webp;base64,'.base64_encode($string));
+            });
+        }
+
+        return ErrorHandling::ignoring(-1, function () use (&$string) {
+            return @imagecreatefromstring($string);
+        });
     }
 }
