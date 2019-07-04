@@ -32,4 +32,13 @@ class ImagineTest extends AbstractImagineTest
     {
         return new Imagine();
     }
+
+    public function testShouldOpenAWebpImage()
+    {
+        if (!in_array('WEBP', \Imagick::queryFormats('WEBP'), true)) {
+            $this->markTestSkipped('Imagick webp support is not enabled');
+        }
+
+        return parent::testShouldOpenAWebpImage();
+    }
 }

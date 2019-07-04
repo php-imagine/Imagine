@@ -132,6 +132,22 @@ class ImageTest extends AbstractImageTest
         );
     }
 
+    /**
+     * @dataProvider imageCompressionQualityProvider
+     *
+     * {@inheritdoc}
+     */
+    public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
+    {
+        $gmagick = new \Gmagick();
+
+        if ($format === 'webp' && !in_array('WEBP', $gmagick->queryformats('WEBP'), true)) {
+            $this->markTestSkipped('Gmagick webp support is not enabled');
+        }
+
+        return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
+    }
+
     protected function getImagine()
     {
         return new Imagine();

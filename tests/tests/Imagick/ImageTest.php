@@ -157,6 +157,20 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
+     * @dataProvider imageCompressionQualityProvider
+     *
+     * {@inheritdoc}
+     */
+    public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
+    {
+        if ($format === 'webp' && !in_array('WEBP', \Imagick::queryFormats('WEBP'), true)) {
+            $this->markTestSkipped('Imagick webp support is not enabled');
+        }
+
+        return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
+    }
+
+    /**
      * @doesNotPerformAssertions
      */
     public function testOptimizeWithDifferentFrameSizes()

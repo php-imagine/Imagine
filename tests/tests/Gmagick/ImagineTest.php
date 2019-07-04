@@ -44,4 +44,15 @@ class ImagineTest extends AbstractImagineTest
     {
         return new Imagine();
     }
+
+    public function testShouldOpenAWebpImage()
+    {
+        $gmagick = new \Gmagick();
+
+        if (!in_array('WEBP', $gmagick->queryformats('WEBP'), true)) {
+            $this->markTestSkipped('Gmagick webp support is not enabled');
+        }
+
+        return parent::testShouldOpenAWebpImage();
+    }
 }
