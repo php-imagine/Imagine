@@ -802,11 +802,13 @@ final class Image extends AbstractImage
                 'jpeg' => array('mimeType' => 'image/jpeg'),
                 'png' => array('mimeType' => 'image/png'),
                 'wbmp' => array('mimeType' => 'image/vnd.wap.wbmp'),
-                'webp' => array('mimeType' => 'image/webp'),
                 'xbm' => array('mimeType' => 'image/xbm'),
             );
             if (function_exists('imagebmp')) {
                 $supportedFormats['bmp'] = array('mimeType' => 'image/bmp');
+            }
+            if (function_exists('imagewebp')) {
+                $supportedFormats['webp'] = array('mimeType' => 'image/webp');
             }
             ksort($supportedFormats);
         }
