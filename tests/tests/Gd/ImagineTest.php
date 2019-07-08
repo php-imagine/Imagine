@@ -28,6 +28,26 @@ class ImagineTest extends AbstractImagineTest
         }
     }
 
+    public function testShouldOpenAWebpImage()
+    {
+        // skip if not supported
+        if (function_exists('imagecreatefromwebp')) {
+            $source = IMAGINE_TEST_FIXTURESFOLDER . '/google.webp';
+            $factory = $this->getImagine();
+            $image = $factory->open($source);
+            $size = $image->getSize();
+
+            $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+            $this->assertEquals(550, $size->getWidth());
+            $this->assertEquals(368, $size->getHeight());
+
+            $metadata = $image->metadata();
+
+            $this->assertEquals($source, $metadata['uri']);
+            $this->assertEquals(realpath($source), $metadata['filepath']);
+        }
+    }
+
     protected function getImagine()
     {
         return new Imagine();

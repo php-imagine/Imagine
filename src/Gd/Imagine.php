@@ -30,11 +30,27 @@ use Imagine\Utils\ErrorHandling;
 final class Imagine extends AbstractImagine
 {
     /**
-     * @throws \Imagine\Exception\RuntimeException
+     * @var string
      */
-    public function __construct()
+    private $tempdir;
+
+    /**
+     * @param null $tempdir temporary directory for opening webp files
+     */
+    public function __construct($tempdir = null)
     {
         $this->requireGdVersion('2.0.1');
+        $this->tempdir = $tempdir ? $tempdir : sys_get_temp_dir();
+    }
+
+    /**
+     * Allows changing temporary directory for files.
+     *
+     * @param $tempdir
+     */
+    public function setTempDir($tempdir)
+    {
+        $this->tempdir = $tempdir;
     }
 
     /**
@@ -88,11 +104,16 @@ final class Imagine extends AbstractImagine
         $path = $loader->getPath();
 
         $data = $loader->getData();
-        $resource = ErrorHandling::ignoring(-1, function () use (&$data) {
-            return @imagecreatefromstring($data);
-        });
 
-        if (!is_resource($resource)) {
+        if (\function_exists('imagecreatefromwebp') && $this->isWebp($data)) {
+            $resource = $this->loadWebp($data);
+        } else {
+            $resource = ErrorHandling::ignoring(-1, function () use (&$data) {
+                return @imagecreatefromstring($data);
+            });
+        }
+
+        if (!\is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
@@ -116,7 +137,7 @@ final class Imagine extends AbstractImagine
      */
     public function read($resource)
     {
-        if (!is_resource($resource)) {
+        if (!\is_resource($resource)) {
             throw new InvalidArgumentException('Variable does not contain a stream resource');
         }
 
@@ -151,7 +172,7 @@ final class Imagine extends AbstractImagine
     private function wrap($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
         if (!imageistruecolor($resource)) {
-            if (function_exists('imagepalettetotruecolor')) {
+            if (\function_exists('imagepalettetotruecolor')) {
                 if (false === imagepalettetotruecolor($resource)) {
                     throw new RuntimeException('Could not convert a palette based image to true color');
                 }
@@ -177,7 +198,7 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException('Could not set alphablending, savealpha and antialias values');
         }
 
-        if (function_exists('imageantialias')) {
+        if (\function_exists('imageantialias')) {
             imageantialias($resource, true);
         }
 
@@ -191,7 +212,7 @@ final class Imagine extends AbstractImagine
      */
     private function requireGdVersion($version)
     {
-        if (!function_exists('gd_info')) {
+        if (!\function_exists('gd_info')) {
             throw new RuntimeException('Gd not installed');
         }
         if (version_compare(GD_VERSION, $version, '<')) {
@@ -209,14 +230,46 @@ final class Imagine extends AbstractImagine
      */
     private function doLoad($string, MetadataBag $metadata)
     {
-        $resource = ErrorHandling::ignoring(-1, function () use (&$string) {
-            return @imagecreatefromstring($string);
-        });
+        if (\function_exists('imagecreatefromwebp') && $this->isWebp($string)) {
+            $resource = $this->loadWebp($string);
+        } else {
+            $resource = ErrorHandling::ignoring(-1, function () use (&$string) {
+                return @imagecreatefromstring($string);
+            });
+        }
 
-        if (!is_resource($resource)) {
+        if (!\is_resource($resource)) {
             throw new RuntimeException('An image could not be created from the given input');
         }
 
         return $this->wrap($resource, new RGB(), $metadata);
+    }
+
+
+    /**
+     * @param string $data
+     *
+     * @return bool
+     */
+    private function isWebp($data)
+    {
+        return substr($data, 8, 7) === 'WEBPVP8';
+    }
+
+    /**
+     * @param string $data
+     *
+     * @return mixed
+     */
+    private function loadWebp($data)
+    {
+        $tmpfile = tempnam($this->tempdir, 'imaginewebp_');
+        file_put_contents($tmpfile, $data);
+        $resource = ErrorHandling::ignoring(-1, function () use ($tmpfile) {
+            return @imagecreatefromwebp($tmpfile);
+        });
+        @unlink($tmpfile);
+
+        return $resource;
     }
 }
