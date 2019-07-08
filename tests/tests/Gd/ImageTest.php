@@ -20,6 +20,11 @@ use Imagine\Test\Image\AbstractImageTest;
  */
 class ImageTest extends AbstractImageTest
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @see \PHPUnit\Framework\TestCase::setUp()
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -176,6 +181,22 @@ class ImageTest extends AbstractImageTest
     public function testResolutionOnSave($source)
     {
         $this->markTestSkipped('GD driver only supports 72 dpi resolution');
+    }
+
+    /**
+     * @dataProvider imageCompressionQualityProvider
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testSaveCompressionQuality()
+     */
+    public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
+    {
+        if ($format === 'webp' && !function_exists('imagewebp')) {
+            $this->markTestSkipped('GD webp support is not enabled');
+        }
+
+        return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
     }
 
     /**

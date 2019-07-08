@@ -30,35 +30,11 @@ use Imagine\Utils\ErrorHandling;
 final class Imagine extends AbstractImagine
 {
     /**
-     * Path to a directory used to store temporary files - with slashes as directory separator - without leading slash.
-     *
-     * @var string
-     */
-    private $temporaryDirectory;
-
-    /**
      * Initialize the class.
-     *
-     * @param string|null $temporaryDirectory path to a directory used to store temporary files (if empty, we'll use the default system temporary directory)
      */
-    public function __construct($temporaryDirectory = null)
+    public function __construct()
     {
         $this->requireGdVersion('2.0.1');
-        $this->setTemporaryDirectory($temporaryDirectory);
-    }
-
-    /**
-     * Set the path to a directory used to store temporary files (if empty, we'll use the default system temporary directory).
-     *
-     * @param string|null $temporaryDirectory
-     *
-     * @return $this
-     */
-    public function setTemporaryDirectory($temporaryDirectory)
-    {
-        $this->temporaryDirectory = rtrim(str_replace('/', DIRECTORY_SEPARATOR, (string) $temporaryDirectory), '/');
-
-        return $this;
     }
 
     /**
@@ -131,13 +107,7 @@ final class Imagine extends AbstractImagine
 
         $data = $loader->getData();
 
-        if (\function_exists('imagecreatefromwebp') && $this->isWebp($data)) {
-            $resource = $this->loadWebp($data);
-        } else {
-            $resource = ErrorHandling::ignoring(-1, function () use (&$data) {
-                return @imagecreatefromstring($data);
-            });
-        }
+        $resource = $this->createImageFromString($data);
 
         if (!\is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
@@ -256,13 +226,7 @@ final class Imagine extends AbstractImagine
      */
     private function doLoad($string, MetadataBag $metadata)
     {
-        if (\function_exists('imagecreatefromwebp') && $this->isWebp($string)) {
-            $resource = $this->loadWebp($string);
-        } else {
-            $resource = ErrorHandling::ignoring(-1, function () use (&$string) {
-                return @imagecreatefromstring($string);
-            });
-        }
+        $resource = $this->createImageFromString($string);
 
         if (!\is_resource($resource)) {
             throw new RuntimeException('An image could not be created from the given input');
@@ -272,32 +236,33 @@ final class Imagine extends AbstractImagine
     }
 
     /**
+     * Check if the raw image data represents an image in WebP format.
+     *
      * @param string $data
      *
      * @return bool
      */
-    private function isWebp($data)
+    private function isWebP(&$data)
     {
         return substr($data, 8, 7) === 'WEBPVP8';
     }
 
     /**
-     * @param string $data
+     * Create an image resource starting from its raw daa.
      *
-     * @return mixed
+     * @param string $string
+     *
+     * @return resource|false
      */
-    private function loadWebp($data)
+    private function createImageFromString(&$string)
     {
-        $tmpfile = @tempnam($this->getTemporaryDirectory(), 'imaginewebp_');
-        if ($tmpfile === false) {
-            throw new RuntimeException('Failed to create a temporary file');
-        }
-        file_put_contents($tmpfile, $data);
-        $resource = ErrorHandling::ignoring(-1, function () use ($tmpfile) {
-            return @imagecreatefromwebp($tmpfile);
-        });
-        @unlink($tmpfile);
+        return ErrorHandling::ignoring(-1, function () use (&$string) {
+            //  imagecreatefromstring() does not support webp images before PHP 7.3.0
+            if (PHP_VERSION_ID < 70300 && function_exists('imagecreatefromwebp') && $this->isWebP($string)) {
+                return @imagecreatefromwebp('data:image/webp;base64,' . base64_encode($string));
+            }
 
-        return $resource;
+            return @imagecreatefromstring($string);
+        });
     }
 }
