@@ -2,6 +2,7 @@
 
 ### NEXT (YYYY-MM-DD)
 * The GD driver can now load WebP files (#711, @lashus)
+* Avoid calling `imageantialias` if it's not available (#713, @ahukkanen)
 
 ### 1.2.1 (2019-06-03)
 * Silence call to `\Imagick::setImageOpacity()` in order to prevent deprecation error with Imagick 3.4.4 and ImageMagick 6 (#715, @samdark, @mlocati)
