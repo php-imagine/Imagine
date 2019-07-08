@@ -22,6 +22,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Palette\RGB;
+use Imagine\Utils\ErrorHandling;
 
 /**
  * Imagine implementation using the GD library.
@@ -107,7 +108,7 @@ final class Imagine extends AbstractImagine
         if (\function_exists('imagecreatefromwebp') && $this->isWebp($data)) {
             $resource = $this->loadWebp($data);
         } else {
-            $resource = $this->withoutExceptionHandlers(function () use (&$data) {
+            $resource = ErrorHandling::ignoring(-1, function () use (&$data) {
                 return @imagecreatefromstring($data);
             });
         }
@@ -232,7 +233,7 @@ final class Imagine extends AbstractImagine
         if (\function_exists('imagecreatefromwebp') && $this->isWebp($string)) {
             $resource = $this->loadWebp($string);
         } else {
-            $resource = $this->withoutExceptionHandlers(function () use (&$string) {
+            $resource = ErrorHandling::ignoring(-1, function () use (&$string) {
                 return @imagecreatefromstring($string);
             });
         }
@@ -244,26 +245,6 @@ final class Imagine extends AbstractImagine
         return $this->wrap($resource, new RGB(), $metadata);
     }
 
-    /**
-     * @param callable $callback
-     *
-     * @return mixed
-     */
-    private function withoutExceptionHandlers($callback)
-    {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-        }, -1);
-        try {
-            $result = $callback();
-        } catch (\Exception $x) {
-            $result = null;
-        } catch (\Throwable $x) {
-            $result = null;
-        }
-        restore_error_handler();
-
-        return $result;
-    }
 
     /**
      * @param string $data
@@ -284,7 +265,7 @@ final class Imagine extends AbstractImagine
     {
         $tmpfile = tempnam($this->tempdir, 'imaginewebp_');
         file_put_contents($tmpfile, $data);
-        $resource = $this->withoutExceptionHandlers(function () use ($tmpfile) {
+        $resource = ErrorHandling::ignoring(-1, function () use ($tmpfile) {
             return @imagecreatefromwebp($tmpfile);
         });
         @unlink($tmpfile);
