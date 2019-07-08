@@ -150,10 +150,29 @@ a proper string.</p>                </div>
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(string|null $temporaryDirectory = null)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Initialize the class.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    $this
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setTemporaryDirectory">setTemporaryDirectory</a>(string|null $temporaryDirectory)
+        
+                                            <p>Set the path to a directory used to store temporary files (if empty, we'll use the default system temporary directory).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTemporaryDirectory">getTemporaryDirectory</a>()
+        
+                                            <p>Get the path to a directory used to store temporary files (with slashes as directory separator - without leading slash).</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -448,27 +467,100 @@ a proper string.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 35</div>
+        <div class="location">at         line 44</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(string|null $temporaryDirectory = null)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Initialize the class.</p>                                                </div>
                 <div class="tags">
-            
-            
-                            <h4>Exceptions</h4>
+                            <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Imagine/Exception/RuntimeException.html"><abbr title="Imagine\Exception\RuntimeException">RuntimeException</abbr></a></td>
+                <td>string|null</td>
+                <td>$temporaryDirectory</td>
+                <td>path to a directory used to store temporary files (if empty, we'll use the default system temporary directory)</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTemporaryDirectory">
+        <div class="location">at         line 57</div>
+        <code>                    $this
+    <strong>setTemporaryDirectory</strong>(string|null $temporaryDirectory)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set the path to a directory used to store temporary files (if empty, we'll use the default system temporary directory).</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|null</td>
+                <td>$temporaryDirectory</td>
                 <td></td>
             </tr>
             </table>
 
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>$this</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTemporaryDirectory">
+        <div class="location">at         line 69</div>
+        <code>            protected        string
+    <strong>getTemporaryDirectory</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get the path to a directory used to store temporary files (with slashes as directory separator - without leading slash).</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
             
                     </div>
     </div>
@@ -476,7 +568,7 @@ a proper string.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_create">
-        <div class="location">at         line 45</div>
+        <div class="location">at         line 87</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>create</strong>(<a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color = null)
         </code>
@@ -545,7 +637,7 @@ a proper string.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_open">
-        <div class="location">at         line 85</div>
+        <div class="location">at         line 127</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>open</strong>(string|<a href="../../Imagine/File/LoaderInterface.html"><abbr title="Imagine\File\LoaderInterface">LoaderInterface</abbr></a>|mixed $path)
         </code>
@@ -605,7 +697,7 @@ a proper string.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_load">
-        <div class="location">at         line 107</div>
+        <div class="location">at         line 154</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>load</strong>(string $string)
         </code>
@@ -665,7 +757,7 @@ a proper string.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_read">
-        <div class="location">at         line 117</div>
+        <div class="location">at         line 164</div>
         <code>                    <a href="../../Imagine/Image/ImageInterface.html"><abbr title="Imagine\Image\ImageInterface">ImageInterface</abbr></a>
     <strong>read</strong>(resource $resource)
         </code>
@@ -725,7 +817,7 @@ a proper string.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_font">
-        <div class="location">at         line 137</div>
+        <div class="location">at         line 184</div>
         <code>                    <a href="../../Imagine/Image/FontInterface.html"><abbr title="Imagine\Image\FontInterface">FontInterface</abbr></a>
     <strong>font</strong>(string $file, int $size, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color)
         </code>
