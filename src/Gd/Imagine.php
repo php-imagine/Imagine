@@ -253,7 +253,7 @@ final class Imagine extends AbstractImagine
      */
     private function isWebp($data)
     {
-        return 0 === strncmp(substr($data, 8, 7), 'WEBPVP8', 7);
+        return substr($data, 8, 7) === 'WEBPVP8';
     }
 
     /**
