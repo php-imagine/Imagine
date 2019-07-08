@@ -30,27 +30,53 @@ use Imagine\Utils\ErrorHandling;
 final class Imagine extends AbstractImagine
 {
     /**
+     * Path to a directory used to store temporary files - with slashes as directory separator - without leading slash.
+     *
      * @var string
      */
-    private $tempdir;
+    private $temporaryDirectory;
 
     /**
-     * @param null $tempdir temporary directory for opening webp files
+     * Initialize the class.
+     *
+     * @param string|null $temporaryDirectory path to a directory used to store temporary files (if empty, we'll use the default system temporary directory)
      */
-    public function __construct($tempdir = null)
+    public function __construct($temporaryDirectory = null)
     {
         $this->requireGdVersion('2.0.1');
-        $this->tempdir = $tempdir ? $tempdir : sys_get_temp_dir();
+        $this->setTemporaryDirectory($temporaryDirectory);
     }
 
     /**
-     * Allows changing temporary directory for files.
+     * Set the path to a directory used to store temporary files (if empty, we'll use the default system temporary directory).
      *
-     * @param $tempdir
+     * @param string|null $temporaryDirectory
+     *
+     * @return $this
      */
-    public function setTempDir($tempdir)
+    public function setTemporaryDirectory($temporaryDirectory)
     {
-        $this->tempdir = $tempdir;
+        $this->temporaryDirectory = rtrim(str_replace('/', DIRECTORY_SEPARATOR, (string) $temporaryDirectory), '/');
+
+        return $this;
+    }
+
+    /**
+     * Get the path to a directory used to store temporary files (with slashes as directory separator - without leading slash).
+     *
+     * @return string
+     */
+    protected function getTemporaryDirectory()
+    {
+        if ($this->temporaryDirectory !== '') {
+            return $this->temporaryDirectory;
+        }
+        $temporaryDirectory = rtrim(str_replace('/', DIRECTORY_SEPARATOR, (string) @sys_get_temp_dir()), '/');
+        if ($temporaryDirectory === '') {
+            throw new RuntimeException('Failed to retrieve the system temporary directory');
+        }
+
+        return $temporaryDirectory;
     }
 
     /**
@@ -245,7 +271,6 @@ final class Imagine extends AbstractImagine
         return $this->wrap($resource, new RGB(), $metadata);
     }
 
-
     /**
      * @param string $data
      *
@@ -263,7 +288,10 @@ final class Imagine extends AbstractImagine
      */
     private function loadWebp($data)
     {
-        $tmpfile = tempnam($this->tempdir, 'imaginewebp_');
+        $tmpfile = @tempnam($this->getTemporaryDirectory(), 'imaginewebp_');
+        if ($tmpfile === false) {
+            throw new RuntimeException('Failed to create a temporary file');
+        }
         file_put_contents($tmpfile, $data);
         $resource = ErrorHandling::ignoring(-1, function () use ($tmpfile) {
             return @imagecreatefromwebp($tmpfile);
