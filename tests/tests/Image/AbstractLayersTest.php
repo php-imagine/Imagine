@@ -126,11 +126,10 @@ abstract class AbstractLayersTest extends ImagineTestCase
      * @dataProvider provideInvalidArguments
      *
      * @param mixed $offset
-     *
-     * @expectedException \Imagine\Exception\InvalidArgumentException
      */
     public function testLayerArrayAccessInvalidArgumentExceptions($offset)
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $firstImage = $this->getImage(IMAGINE_TEST_FIXTURESFOLDER . '/pink.gif');
         $secondImage = $this->getImage(IMAGINE_TEST_FIXTURESFOLDER . '/pink.gif');
 
@@ -143,11 +142,10 @@ abstract class AbstractLayersTest extends ImagineTestCase
      * @dataProvider provideOutOfBoundsArguments
      *
      * @param mixed $offset
-     *
-     * @expectedException \Imagine\Exception\OutOfBoundsException
      */
     public function testLayerArrayAccessOutOfBoundsExceptions($offset)
     {
+        $this->isGoingToThrowException('Imagine\Exception\OutOfBoundsException');
         $firstImage = $this->getImage(IMAGINE_TEST_FIXTURESFOLDER . '/pink.gif');
         $secondImage = $this->getImage(IMAGINE_TEST_FIXTURESFOLDER . '/pink.gif');
 
@@ -210,7 +208,6 @@ abstract class AbstractLayersTest extends ImagineTestCase
     }
 
     /**
-     * @expectedException \Imagine\Exception\InvalidArgumentException
      * @dataProvider provideWrongAnimationParameters
      *
      * @param mixed $delay
@@ -218,6 +215,7 @@ abstract class AbstractLayersTest extends ImagineTestCase
      */
     public function testAnimateWithWrongParameters($delay, $loops)
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $image = $this->getImage(IMAGINE_TEST_FIXTURESFOLDER . '/pink.gif');
         $layers = $image->layers();
 

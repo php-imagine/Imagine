@@ -42,6 +42,12 @@ if (version_compare(PHPUnit\Runner\Version::id(), '7') >= 0) {
     class_alias('Imagine\Test\Constraint\Constraint_v1', 'Imagine\Test\Constraint\Constraint');
 }
 
+if (version_compare(PHPUnit\Runner\Version::id(), '8') >= 0) {
+    class_alias('Imagine\Test\ImagineTestCase_v2', 'Imagine\Test\ImagineTestCase');
+} else {
+    class_alias('Imagine\Test\ImagineTestCase_v1', 'Imagine\Test\ImagineTestCase');
+}
+
 define('IMAGINE_TEST_SRCFOLDER', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src');
 
 define('IMAGINE_TEST_FIXTURESFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'fixtures');

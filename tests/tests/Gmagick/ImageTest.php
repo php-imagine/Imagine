@@ -20,9 +20,14 @@ use Imagine\Test\Image\AbstractImageTest;
  */
 class ImageTest extends AbstractImageTest
 {
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         // disable GC while https://bugs.php.net/bug.php?id=63677 is still open
         // If GC enabled, Gmagick unit tests fail

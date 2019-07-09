@@ -59,8 +59,6 @@ class PointTest extends ImagineTestCase
     /**
      * @covers \Imagine\Image\Point::__construct
      *
-     * @expectedException \Imagine\Exception\InvalidArgumentException
-     *
      * @dataProvider getInvalidCoordinates
      *
      * @param int $x
@@ -68,6 +66,7 @@ class PointTest extends ImagineTestCase
      */
     public function testShouldThrowExceptionOnInvalidCoordinates($x, $y)
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         new Point($x, $y);
     }
 

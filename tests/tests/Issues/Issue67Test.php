@@ -22,11 +22,9 @@ class Issue67Test extends ImagineTestCase
         return $imagine;
     }
 
-    /**
-     * @expectedException \Imagine\Exception\RuntimeException
-     */
     public function testShouldThrowExceptionNotError()
     {
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         $invalidPath = '/thispathdoesnotexist';
 
         $imagine = $this->getImagine();

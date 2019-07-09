@@ -8,9 +8,6 @@ cache:
     - cache
 
 env:
-  matrix:
-  - IMAGINE_DRIVER=imagick
-  - IMAGINE_DRIVER=gmagick
   global:
     secure: HqQihSflXXBGhNuYsUmi8mN3K6Wr5gfgOahzDjxjs5iJGyCr258BLJsEKh90PWIo8yykgW1hyGcBhxom7yjWo8HWyCjJANE0hCwRVGYV7emMwzRzsOAlDTwtjCJPTjEAZrXKQWLYeG+ZdVJqPx1vMdDoyHXW4rU3EZGv76uvHn8=
 
@@ -20,7 +17,7 @@ before_install:
 install:
   - |
     set -o errexit
-    case "${TRAVISOPERATION-}" in
+    case "${TRAVISOPERATION:-}" in
         codestyle)
             ;;
         *)
@@ -29,8 +26,8 @@ install:
             sudo apt-get update -y || true
             sudo apt-get install -y ca-certificates libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev
             PHPUNIT_EXCLUDED_GROUPS=always-skipped
-            if test "${IMAGINE_DRIVER-}" = 'imagick'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},imagick"; fi
-            if test "${IMAGINE_DRIVER-}" = 'gmagick'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},gmagick"; fi
+            if test "${IMAGINE_DRIVER:-}" = 'imagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},imagick"; fi
+            if test "${IMAGINE_DRIVER:-}" = 'gmagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},gmagick"; fi
             php --ri gd || true
             composer --no-interaction remove --dev --no-update --no-scripts friendsofphp/php-cs-fixer
             ;;
@@ -42,7 +39,7 @@ install:
 script:
   - |
     set -o errexit
-    case "${TRAVISOPERATION-}" in
+    case "${TRAVISOPERATION:-}" in
         codestyle)
             composer --no-interaction codestyle -- --no-interaction --dry-run --diff -- .
             ;;
@@ -50,31 +47,68 @@ script:
             composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
             ;;
     esac
-  - if test -n "${AUTOUPDATE_API-}"; then ./.travis/autoupdate-api.sh; fi
-
-php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
-  - 7.3
-  - nightly
+  - if test -n "${AUTOUPDATE_API:-}"; then ./.travis/autoupdate-api.sh; fi
 
 matrix:
+  fast_finish: true
   allow_failures:
-    - php: nightly
+    - name: Test with PHP 7.4 (all drivers)
+    - name: Test with PHP nightly (all drivers)
   include:
-    - php: 5.3
+    -
+      name: Test with PHP 5.3 (all drivers)
       dist: precise
+      php: '5.3'
       env:
-        - IMAGINE_DRIVER=imagick
-    - php: 5.3
-      dist: precise
+        - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP 5.4 (all drivers)
+      php: '5.4'
       env:
-        - IMAGINE_DRIVER=gmagick
-    - php: 7.2
+        - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP 5.5 (all drivers)
+      php: '5.5'
+      env:
+        - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP 5.6 (all drivers)
+      php: '5.6'
+      env:
+        - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP 7.0 (all drivers)
+      php: '7.0'
+      env:
+        - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP 7.1 (all drivers)
+      php: '7.1'
+      env:
+        - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP 7.2 (all drivers)
+      php: '7.2'
+      env:
+        - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP 7.3 (all drivers)
+      php: '7.3'
+      env:
+        - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP 7.4 (all drivers)
+      php: '7.4snapshot'
+      env:
+        - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP nightly (all drivers)
+      php: nightly
+      env:
+        - IMAGINE_DRIVER: all
+    -
+      name: Coding style and docs
+      php: 7.2
       env:
         - TRAVISOPERATION=codestyle
-        - AUTOUPDATE_API=1
+        - AUTOUPDATE_API=yes

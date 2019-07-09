@@ -17,11 +17,9 @@ use Imagine\Image\Palette\Color\ColorInterface;
 
 class CMYKTest extends AbstractColorTest
 {
-    /**
-     * @expectedException \Imagine\Exception\RuntimeException
-     */
     public function testDissolve()
     {
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         $this->getColor()->dissolve(1);
     }
 

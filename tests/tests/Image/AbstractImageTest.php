@@ -145,11 +145,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertNotEquals(md5_file($source), md5_file($tmpFile));
     }
 
-    /**
-     * @expectedException \Imagine\Exception\RuntimeException
-     */
     public function testSaveWithoutPathFileFromImageCreationShouldFail()
     {
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         $image = $this->getImagine()->create(new Box(20, 20));
         $image->save();
     }
@@ -991,11 +989,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertLessThan(filesize($filenameBig), filesize($filenameSmall));
     }
 
-    /**
-     * @expectedException \Imagine\Exception\RuntimeException
-     */
     public function testShouldFailOpeningAnInvalidImageFile()
     {
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         $this->getImagine()->open(__FILE__);
     }
 

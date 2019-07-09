@@ -42,11 +42,9 @@ class RangeTest extends ImagineTestCase
         );
     }
 
-    /**
-     * @expectedException \Imagine\Exception\OutOfBoundsException
-     */
     public function testShouldThrowExceptionIfEndIsSmallerThanStart()
     {
+        $this->isGoingToThrowException('Imagine\Exception\OutOfBoundsException');
         new Range($this->end, $this->start);
     }
 }

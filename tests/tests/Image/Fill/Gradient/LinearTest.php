@@ -34,7 +34,12 @@ abstract class LinearTest extends ImagineTestCase
     private $end;
     protected $palette;
 
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
         $this->start = $this->getStart();
         $this->end = $this->getEnd();

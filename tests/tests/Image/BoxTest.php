@@ -54,8 +54,6 @@ class BoxTest extends ImagineTestCase
     /**
      * @covers \Imagine\Image\Box::__construct
      *
-     * @expectedException \Imagine\Exception\InvalidArgumentException
-     *
      * @dataProvider getInvalidSizes
      *
      * @param int $width
@@ -63,6 +61,7 @@ class BoxTest extends ImagineTestCase
      */
     public function testShouldThrowExceptionOnInvalidSize($width, $height)
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         new Box($width, $height);
     }
 

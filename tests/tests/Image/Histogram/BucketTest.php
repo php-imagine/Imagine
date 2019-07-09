@@ -19,7 +19,12 @@ class BucketTest extends ImagineTestCase
 {
     private $bucket;
 
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
         $this->bucket = new Bucket(new Range(0, 63));
         $this->assertInstanceOf('Countable', $this->bucket);

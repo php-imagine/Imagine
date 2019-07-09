@@ -26,16 +26,26 @@ use Imagine\Test\Image\AbstractImageTest;
  */
 class ImageTest extends AbstractImageTest
 {
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not installed');
         }
     }
 
-    protected function tearDown()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::tearDownBase()
+     */
+    protected function tearDownBase()
     {
         if (class_exists('Imagick')) {
             $prop = new \ReflectionProperty('Imagine\Imagick\Image', 'supportsColorspaceConversion');
@@ -43,7 +53,7 @@ class ImageTest extends AbstractImageTest
             $prop->setValue(null);
         }
 
-        parent::tearDown();
+        parent::tearDownBase();
     }
 
     protected function getImagine()
@@ -112,13 +122,12 @@ class ImageTest extends AbstractImageTest
 
     /**
      * @depends testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct
-     * @expectedException \Imagine\Exception\RuntimeException
-     * @expectedExceptionMessage Your version of Imagick does not support colorspace conversions.
      *
      * @param mixed $image
      */
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnPaletteChange($image)
     {
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException', 'Your version of Imagick does not support colorspace conversions.');
         $image->usePalette(new RGB());
     }
 

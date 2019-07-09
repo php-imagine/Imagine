@@ -39,7 +39,6 @@ class IsColorSimilarTest extends ImagineTestCase
 
     /**
      * @dataProvider isColorSimilarShouldFailProvider
-     * @expectedException \PHPUnit\Framework\ExpectationFailedException
      *
      * @param \Imagine\Image\Palette\Color\ColorInterface $color1
      * @param \Imagine\Image\Palette\Color\ColorInterface $color2
@@ -47,6 +46,7 @@ class IsColorSimilarTest extends ImagineTestCase
      */
     public function testIsColorSimilarShouldFail(ColorInterface $color1, ColorInterface $color2, $maxDistance)
     {
+        $this->isGoingToThrowException('PHPUnit\Framework\ExpectationFailedException');
         $this->assertColorSimilar($color1, $color2, '', $maxDistance);
     }
 

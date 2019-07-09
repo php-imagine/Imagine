@@ -6,6 +6,13 @@ use PHPUnit\Framework\Constraint\Constraint as PHPUnitConstraint;
 
 abstract class Constraint_v2 extends PHPUnitConstraint
 {
+    public function __construct()
+    {
+        if (method_exists('PHPUnit\Framework\Constraint\Constraint', '__construct')) {
+            parent::__construct();
+        }
+    }
+
     /**
      * {@inheritdoc}
      *

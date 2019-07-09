@@ -28,7 +28,6 @@ class IsBoxInRangeTest extends ImagineTestCase
 
     /**
      * @dataProvider isBoxInRangeShouldFailProvider
-     * @expectedException \PHPUnit\Framework\ExpectationFailedException
      *
      * @param int $minWidth
      * @param int $maxWidth
@@ -38,6 +37,7 @@ class IsBoxInRangeTest extends ImagineTestCase
      */
     public function testIsBoxInRangeShouldFail($minWidth, $maxWidth, $minHeight, $maxHeight, BoxInterface $actual)
     {
+        $this->isGoingToThrowException('PHPUnit\Framework\ExpectationFailedException');
         $this->assertBoxInRange($minWidth, $maxWidth, $minHeight, $maxHeight, $actual);
     }
 

@@ -86,12 +86,12 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     public function testName()
     {
-        $this->assertInternalType('string', $this->getPalette()->name());
+        $this->assertPHPType('string', $this->getPalette()->name());
     }
 
     public function testPixelDefinition()
     {
-        $this->assertInternalType('array', $this->getPalette()->pixelDefinition());
+        $this->assertPHPType('array', $this->getPalette()->pixelDefinition());
 
         $available = array(
             ColorInterface::COLOR_RED,
@@ -111,7 +111,7 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     public function testSupportsAlpha()
     {
-        $this->assertInternalType('boolean', $this->getPalette()->supportsAlpha());
+        $this->assertPHPType('boolean', $this->getPalette()->supportsAlpha());
     }
 
     abstract public function provideColorAndAlphaTuples();
