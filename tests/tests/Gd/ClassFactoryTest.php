@@ -19,9 +19,9 @@ use Imagine\Test\Factory\AbstractClassFactoryTest;
  */
 class ClassFactoryTest extends AbstractClassFactoryTest
 {
-    protected function setUp()
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!function_exists('gd_info')) {
             $this->markTestSkipped('Gd not installed');

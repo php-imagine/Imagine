@@ -19,9 +19,14 @@ use Imagine\Test\Effects\AbstractEffectsTest;
  */
 class EffectsTest extends AbstractEffectsTest
 {
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!class_exists('Gmagick')) {
             $this->markTestSkipped('Gmagick is not installed');
@@ -32,11 +37,10 @@ class EffectsTest extends AbstractEffectsTest
      * {@inheritdoc}
      *
      * @see \Imagine\Test\Effects\AbstractEffectsTest::testColorize()
-     *
-     * @expectedException \Imagine\Exception\RuntimeException
      */
     public function testColorize()
     {
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         parent::testColorize();
     }
 

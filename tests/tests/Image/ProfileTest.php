@@ -37,11 +37,9 @@ class ProfileTest extends ImagineTestCase
         $this->assertEquals(file_get_contents($file), $profile->data());
     }
 
-    /**
-     * @expectedException \Imagine\Exception\InvalidArgumentException
-     */
     public function testFromInvalidPath()
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $file = __DIR__ . '/non-existent-profile.icc';
         Profile::fromPath($file);
     }

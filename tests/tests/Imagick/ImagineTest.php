@@ -22,11 +22,11 @@ class ImagineTest extends AbstractImagineTest
     /**
      * {@inheritdoc}
      *
-     * @see \PHPUnit\Framework\TestCase::setUp()
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
      */
-    protected function setUp()
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not installed');

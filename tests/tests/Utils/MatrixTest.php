@@ -44,12 +44,9 @@ class MatrixTest extends ImagineTestCase
         );
     }
 
-    /**
-     * @expectedException \Imagine\Exception\InvalidArgumentException
-     * @expectedExceptionMessage there are more provided elements than space in the matrix
-     */
     public function testMatrixComplainsIfYouGiveToMuchElements()
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', 'there are more provided elements than space in the matrix');
         new Matrix(1, 1, array(1, 1));
     }
 

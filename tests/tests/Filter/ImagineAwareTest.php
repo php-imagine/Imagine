@@ -50,11 +50,10 @@ class ImagineAwareTest extends FilterTestCase
     /**
      * Test if filter throws exception when called directly without
      * passing Imagine instance.
-     *
-     * @expectedException \Imagine\Exception\InvalidArgumentException
      */
     public function testFilterThrowsExceptionWhenCalledDirectly()
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $filter = new DummyImagineAwareFilter();
         $filter->apply($this->getImage());
     }
@@ -62,11 +61,10 @@ class ImagineAwareTest extends FilterTestCase
     /**
      * Test if filter throws exception via Transformation without
      * passing Imagine instance.
-     *
-     * @expectedException \Imagine\Exception\InvalidArgumentException
      */
     public function testFilterThrowsExceptionViaTransformation()
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $filters = new Transformation();
         $filters->add(new DummyImagineAwareFilter());
         $filters->apply($this->getImage());

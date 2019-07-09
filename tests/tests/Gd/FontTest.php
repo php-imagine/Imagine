@@ -21,10 +21,12 @@ class FontTest extends AbstractFontTest
 {
     /**
      * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
      */
-    protected function setUp()
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!function_exists('gd_info')) {
             $this->markTestSkipped('Gd not installed');

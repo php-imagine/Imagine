@@ -16,7 +16,7 @@ use Imagine\Test\Constraint\IsBoxInRange;
 use Imagine\Test\Constraint\IsColorSimilar;
 use Imagine\Test\Constraint\IsImageEqual;
 
-class ImagineTestCase extends \PHPUnit\Framework\TestCase
+abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var string[]
@@ -105,7 +105,7 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
         return $filename;
     }
 
-    public static function tearDownAfterClass()
+    protected static function tearDownAfterClassBase()
     {
         if (!empty(self::$temporaryFiles)) {
             $keepFiles = getenv('IMAGINE_TEST_KEEP_TEMPFILES');
@@ -118,6 +118,20 @@ class ImagineTestCase extends \PHPUnit\Framework\TestCase
                 self::$temporaryFiles = array();
             }
         }
+    }
+
+    /**
+     * Override this method to implement the PHPUnit "setUp" method.
+     */
+    protected function setUpBase()
+    {
+    }
+
+    /**
+     * Override this method to implement the PHPUnit "tearDown" method.
+     */
+    protected function tearDownBase()
+    {
     }
 
     /**
