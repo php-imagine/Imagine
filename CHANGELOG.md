@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
+### 1.2.2 (2019-07-09)
 * The GD driver can now load WebP files (#711, #718, @lashus, @ausi)
 * Avoid calling `imageantialias` if it's not available (#713, @ahukkanen)
 
