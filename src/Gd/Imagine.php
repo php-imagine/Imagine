@@ -38,24 +38,6 @@ final class Imagine extends AbstractImagine
     }
 
     /**
-     * Get the path to a directory used to store temporary files (with slashes as directory separator - without leading slash).
-     *
-     * @return string
-     */
-    protected function getTemporaryDirectory()
-    {
-        if ($this->temporaryDirectory !== '') {
-            return $this->temporaryDirectory;
-        }
-        $temporaryDirectory = rtrim(str_replace('/', DIRECTORY_SEPARATOR, (string) @sys_get_temp_dir()), '/');
-        if ($temporaryDirectory === '') {
-            throw new RuntimeException('Failed to retrieve the system temporary directory');
-        }
-
-        return $temporaryDirectory;
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @see \Imagine\Image\ImagineInterface::create()
