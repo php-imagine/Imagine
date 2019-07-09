@@ -44,7 +44,11 @@ script:
             composer --no-interaction codestyle -- --no-interaction --dry-run --diff -- .
             ;;
         *)
-            composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
+            if test -z "${IMAGINE_PHPUNIT_WITHOUT_COMPOSER:-}"; then
+                composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
+            else
+                ./vendor/bin/phpunit --verbose --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
+            fi
             ;;
     esac
   - if test -n "${AUTOUPDATE_API:-}"; then ./.travis/autoupdate-api.sh; fi
@@ -56,17 +60,12 @@ matrix:
     - name: Test with PHP nightly (all drivers)
   include:
     -
-      name: Test with PHP 5.3 (GD and imagick drivers)
+      name: Test with PHP 5.3 (all drivers)
       dist: precise
       php: '5.3'
       env:
-        - IMAGINE_DRIVER: imagick
-    -
-      name: Test with PHP 5.3 (GD and gmagick drivers)
-      dist: precise
-      php: '5.3'
-      env:
-        - IMAGINE_DRIVER: gmagick
+        - IMAGINE_DRIVER: all
+        - IMAGINE_PHPUNIT_WITHOUT_COMPOSER: yes
     -
       name: Test with PHP 5.4 (all drivers)
       php: '5.4'
