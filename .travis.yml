@@ -56,11 +56,17 @@ matrix:
     - name: Test with PHP nightly (all drivers)
   include:
     -
-      name: Test with PHP 5.3 (all drivers)
+      name: Test with PHP 5.3 (GD and imagick drivers)
       dist: precise
       php: '5.3'
       env:
-        - IMAGINE_DRIVER: all
+        - IMAGINE_DRIVER: imagick
+    -
+      name: Test with PHP 5.3 (GD and gmagick drivers)
+      dist: precise
+      php: '5.3'
+      env:
+        - IMAGINE_DRIVER: gmagick
     -
       name: Test with PHP 5.4 (all drivers)
       php: '5.4'
