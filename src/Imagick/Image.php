@@ -404,10 +404,6 @@ final class Image extends AbstractImage
      */
     private function prepareOutput(array $options, $path = null)
     {
-        if (isset($options['format'])) {
-            $this->imagick->setImageFormat($options['format']);
-        }
-
         if (isset($options['animated']) && true === $options['animated']) {
             $format = isset($options['format']) ? $options['format'] : 'gif';
             $delay = isset($options['animated.delay']) ? $options['animated.delay'] : null;
@@ -424,6 +420,10 @@ final class Image extends AbstractImage
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true) && $this->layers()->count() > 1) {
             $this->flatten();
+        }
+
+        if (isset($options['format'])) {
+            $this->imagick->setImageFormat($options['format']);
         }
     }
 
