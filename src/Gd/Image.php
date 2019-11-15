@@ -744,7 +744,7 @@ final class Image extends AbstractImage
     {
         $format = strtolower($format);
 
-        if ('jpg' === $format || 'pjpeg' === $format) {
+        if ('jpg' === $format || 'pjpeg' === $format || 'jfif' === $format) {
             $format = 'jpeg';
         }
 
