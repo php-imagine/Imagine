@@ -21,9 +21,8 @@ install:
         codestyle)
             ;;
         *)
-            sudo apt-get update
-            sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
             sudo apt-get update -y || true
+            sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
             sudo apt-get install -y ca-certificates libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev
             PHPUNIT_EXCLUDED_GROUPS=always-skipped
             if test "${IMAGINE_DRIVER:-}" = 'imagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},imagick"; fi
@@ -69,11 +68,13 @@ matrix:
         - IMAGINE_DRIVER: gmagick
     -
       name: Test with PHP 5.4 (all drivers)
+      dist: trusty
       php: '5.4'
       env:
         - IMAGINE_DRIVER: all
     -
       name: Test with PHP 5.5 (all drivers)
+      dist: trusty
       php: '5.5'
       env:
         - IMAGINE_DRIVER: all

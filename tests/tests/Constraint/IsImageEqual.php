@@ -17,7 +17,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Palette\RGB;
-use PHPUnit\Util\InvalidArgumentHelper;
+use Imagine\Test\InvalidArgumentFactory;
 
 class IsImageEqual extends Constraint
 {
@@ -57,15 +57,15 @@ class IsImageEqual extends Constraint
             $value = $this->imagine->open($value);
         }
         if (!$value instanceof ImageInterface) {
-            throw InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
+            throw InvalidArgumentFactory::create(1, 'Imagine\Image\ImageInterface');
         }
 
         if (!is_numeric($delta)) {
-            throw InvalidArgumentHelper::factory(2, 'numeric');
+            throw InvalidArgumentFactory::create(2, 'numeric');
         }
 
         if (!is_int($buckets) || $buckets <= 0) {
-            throw InvalidArgumentHelper::factory(4, 'integer');
+            throw InvalidArgumentFactory::create(4, 'integer');
         }
 
         $this->value = $value;
@@ -82,7 +82,7 @@ class IsImageEqual extends Constraint
             $other = $this->imagine->open($other);
         }
         if (!$other instanceof ImageInterface) {
-            throw InvalidArgumentHelper::factory(1, 'Imagine\Image\ImageInterface');
+            throw InvalidArgumentFactory::create(1, 'Imagine\Image\ImageInterface');
         }
 
         $total = $this->getDelta($other);

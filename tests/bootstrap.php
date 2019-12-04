@@ -20,10 +20,6 @@ if (!class_exists('PHPUnit\Framework\Constraint\Constraint')) {
     class_alias('PHPUnit_Framework_Constraint', 'PHPUnit\Framework\Constraint\Constraint');
 }
 
-if (!class_exists('PHPUnit\Util\InvalidArgumentHelper')) {
-    class_alias('PHPUnit_Util_InvalidArgumentHelper', 'PHPUnit\Util\InvalidArgumentHelper');
-}
-
 if (!class_exists('PHPUnit\Framework\Exception')) {
     class_alias('PHPUnit_Framework_Exception', 'PHPUnit\Framework\Exception');
 }

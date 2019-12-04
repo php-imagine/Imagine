@@ -26,9 +26,30 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     public function __construct()
     {
-        if (!self::isSupported()) {
-            throw new NotSupportedException('PHP exif extension is required to use the ExifMetadataReader');
+        $whyNot = static::getUnsupportedReason();
+        if ($whyNot !== '') {
+            throw new NotSupportedException($whyNot);
         }
+    }
+
+    /**
+     * Get the reason why this metadata reader is not supported.
+     *
+     * @return string empty string if the reader is available
+     */
+    public static function getUnsupportedReason()
+    {
+        if (!function_exists('exif_read_data')) {
+            return 'The PHP EXIF extension is required to use the ExifMetadataReader';
+        }
+        if (!in_array('data', stream_get_wrappers(), true)) {
+            return 'The data:// stream wrapper must be enabled';
+        }
+        if (in_array(ini_get('allow_url_fopen'), array('', '0', 0), true)) {
+            return 'The allow_url_fopen php.ini configuration key must be set to 1';
+        }
+
+        return '';
     }
 
     /**
@@ -38,7 +59,7 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     public static function isSupported()
     {
-        return function_exists('exif_read_data');
+        return static::getUnsupportedReason() === '';
     }
 
     /**

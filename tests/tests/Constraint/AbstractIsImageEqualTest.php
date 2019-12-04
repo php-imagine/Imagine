@@ -28,7 +28,7 @@ abstract class AbstractIsImageEqualTest extends ImagineTestCase
             $error = $x;
         }
         $this->assertInstanceOf('PHPUnit\Framework\Exception', $error, 'the first argument should be an ImageInterface instance');
-        $this->assertRegExp('/^Argument #1 .* must be a /', $error->getMessage());
+        $this->assertRegExp('/^Argument #1 .* must be an? /', $error->getMessage());
 
         try {
             $this->assertImageEquals($image, 'invalid 2');
@@ -37,7 +37,7 @@ abstract class AbstractIsImageEqualTest extends ImagineTestCase
             $error = $x;
         }
         $this->assertInstanceOf('PHPUnit\Framework\Exception', $error, 'the second argument should be an ImageInterface instance');
-        $this->assertRegExp('/^Argument #1 .* must be a /', $error->getMessage());
+        $this->assertRegExp('/^Argument #1 .* must be an? /', $error->getMessage());
 
         try {
             $this->assertImageEquals($image, $image, '', 'invalid');
@@ -46,7 +46,7 @@ abstract class AbstractIsImageEqualTest extends ImagineTestCase
             $error = $x;
         }
         $this->assertInstanceOf('PHPUnit\Framework\Exception', $error, 'the third argument should be a number');
-        $this->assertRegExp('/^Argument #2 .* must be a /', $error->getMessage());
+        $this->assertRegExp('/^Argument #2 .* must be an? /', $error->getMessage());
 
         try {
             $this->assertImageEquals($image, $image, '', 0.1, null, 'invalid');
@@ -55,7 +55,7 @@ abstract class AbstractIsImageEqualTest extends ImagineTestCase
             $error = $x;
         }
         $this->assertInstanceOf('PHPUnit\Framework\Exception', $error, 'the fourth argument should be an integer');
-        $this->assertRegExp('/^Argument #4 .* must be a /', $error->getMessage());
+        $this->assertRegExp('/^Argument #4 .* must be an? /', $error->getMessage());
 
         try {
             $this->assertImageEquals($image, $image, '', 0.1, null, 0);
@@ -64,7 +64,7 @@ abstract class AbstractIsImageEqualTest extends ImagineTestCase
             $error = $x;
         }
         $this->assertInstanceOf('PHPUnit\Framework\Exception', $error, 'the fourth argument should be a positive integer');
-        $this->assertRegExp('/^Argument #4 .* must be a /', $error->getMessage());
+        $this->assertRegExp('/^Argument #4 .* must be an? /', $error->getMessage());
 
         try {
             $this->assertImageEquals('foo', 'bar', '', 0, $this->getImagine());
