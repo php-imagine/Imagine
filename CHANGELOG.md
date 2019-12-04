@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.2.3 (2019-12-04)
 * Handle jfif extension in GD driver (#727, @sylvain-msl-talkspirit)
 * Improve detection of unsupported Exit Metadata Reader (#729, @mlocati, @ausi)
