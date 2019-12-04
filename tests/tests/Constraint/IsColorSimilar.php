@@ -12,7 +12,7 @@
 namespace Imagine\Test\Constraint;
 
 use Imagine\Image\Palette\Color\ColorInterface;
-use PHPUnit\Util\InvalidArgumentHelper;
+use Imagine\Test\InvalidArgumentFactory;
 
 class IsColorSimilar extends Constraint
 {
@@ -52,7 +52,7 @@ class IsColorSimilar extends Constraint
     {
         parent::__construct();
         if (!$value instanceof ColorInterface) {
-            throw InvalidArgumentHelper::factory(1, 'Imagine\Image\Palette\Color\ColorInterface', $value);
+            throw InvalidArgumentFactory::create(1, 'Imagine\Image\Palette\Color\ColorInterface', $value);
         }
         $this->value = $value;
 
@@ -62,10 +62,10 @@ class IsColorSimilar extends Constraint
         if (is_int($maxDistance)) {
             $maxDistance = (float) $maxDistance;
         } elseif (!is_float($maxDistance)) {
-            throw InvalidArgumentHelper::factory(2, 'float', $maxDistance);
+            throw InvalidArgumentFactory::create(2, 'float', $maxDistance);
         }
         if ($maxDistance < 0) {
-            throw InvalidArgumentHelper::factory(2, 'float', $maxDistance);
+            throw InvalidArgumentFactory::create(2, 'float', $maxDistance);
         }
         $this->maxDistance = $maxDistance;
         $this->includeAlpha = (bool) $includeAlpha;
@@ -79,11 +79,11 @@ class IsColorSimilar extends Constraint
     protected function _matches($other)
     {
         if (!$other instanceof ColorInterface) {
-            throw InvalidArgumentHelper::factory(1, 'Imagine\Image\Palette\Color\ColorInterface', $other);
+            throw InvalidArgumentFactory::create(1, 'Imagine\Image\Palette\Color\ColorInterface', $other);
         }
         $pixelDefinition = $other->getPalette()->pixelDefinition();
         if ($pixelDefinition !== $this->pixelDefinition) {
-            throw InvalidArgumentHelper::factory(1, 'Imagine\Image\Palette\Color\ColorInterface', $other);
+            throw InvalidArgumentFactory::create(1, 'Imagine\Image\Palette\Color\ColorInterface', $other);
         }
 
         $distance = $this->calculateDistance($other);
