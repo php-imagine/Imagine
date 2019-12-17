@@ -51,7 +51,6 @@ script:
 matrix:
   fast_finish: true
   allow_failures:
-    - name: Test with PHP 7.4 (all drivers)
     - name: Test with PHP nightly (all drivers)
   include:
     -
@@ -105,7 +104,7 @@ matrix:
         - IMAGINE_DRIVER: all
     -
       name: Test with PHP 7.4 (all drivers)
-      php: '7.4snapshot'
+      php: '7.4'
       env:
         - IMAGINE_DRIVER: all
     -
