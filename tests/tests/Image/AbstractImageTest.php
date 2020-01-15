@@ -219,6 +219,18 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertSame(0, $color->getAlpha());
     }
 
+    public function testRotateWithCrop()
+    {
+        $palette = new RGB();
+        $color = $this
+            ->getImagine()
+            ->create(new Box(100, 100), $palette->color('#f00'))
+            ->rotate(45, $palette->color('#fff'))
+            ->crop(new Point(0, 0), new Box(100, 100))
+            ->getColorAt(new Point(0, 50));
+        $this->assertSame('#ffffff', (string) $color);
+    }
+
     /**
      * @doesNotPerformAssertions
      */
