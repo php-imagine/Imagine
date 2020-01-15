@@ -312,11 +312,8 @@ final class Image extends AbstractImage
         try {
             $pixel = $this->getColor($background);
 
-            $imageWidth = $this->imagick->getImageWidth();
-            $imageHeight = $this->imagick->getImageHeight();
-
-            $this->imagick->rotateImage($pixel, $angle);
-            $this->imagick->setImagePage($imageWidth, $imageHeight, 0, 0);
+            $this->imagick->rotateimage($pixel, $angle);
+            $this->imagick->setImagePage(0, 0, 0, 0);
 
             $pixel->clear();
             $pixel->destroy();
