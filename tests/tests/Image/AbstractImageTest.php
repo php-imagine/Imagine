@@ -995,6 +995,34 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->getImagine()->open(__FILE__);
     }
 
+    public function provideExensions()
+    {
+        return array(
+            array('jpg', array('format' => 'jpg')),
+            array('jpeg', array('format' => 'jpeg')),
+            array('JPG', array('format' => 'JPG')),
+            array('JPEG', array('format' => 'JPEG')),
+        );
+    }
+
+    /**
+     * @dataProvider provideExensions
+     * @doesNotPerformAssertions
+     *
+     * @param string $extension
+     * @param array $options
+     */
+    public function testCanSaveExtension($extension, array $options = array())
+    {
+        $suffix = md5(serialize(func_get_args()));
+        $extension = ltrim($extension, '.');
+        if ($extension !== '') {
+            $suffix .= '.' . $extension;
+        }
+        $filename = $this->getTemporaryFilename($suffix);
+        $this->getImagine()->create(new Box(8, 8))->save($filename, $options);
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()
