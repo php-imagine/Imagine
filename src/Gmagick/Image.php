@@ -430,7 +430,7 @@ final class Image extends AbstractImage
     private function prepareOutput(array $options, $path = null)
     {
         if (isset($options['format'])) {
-            $this->gmagick->setimageformat($options['format']);
+            $this->gmagick->setimageformat(strtoupper($options['format']));
         }
 
         if (isset($options['animated']) && true === $options['animated']) {
