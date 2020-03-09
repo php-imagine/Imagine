@@ -12,6 +12,7 @@
 namespace Imagine\Test\Gmagick;
 
 use Imagine\Gmagick\Imagine;
+use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Test\Image\AbstractImageTest;
 
@@ -150,6 +151,32 @@ class ImageTest extends AbstractImageTest
         }
 
         return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
+    }
+
+    public function provideExensions()
+    {
+        return array(
+            array('webp', array('format' => 'webp')),
+            array('WEBP', array('format' => 'WEBP')),
+        );
+    }
+
+    /**
+     * @dataProvider provideExensions
+     * @doesNotPerformAssertions
+     *
+     * @param string $extension
+     * @param array $options
+     */
+    public function testCanSaveExtension($extension, array $options = array())
+    {
+        $suffix = md5(serialize(func_get_args()));
+        $extension = ltrim($extension, '.');
+        if ($extension !== '') {
+            $suffix .= '.' . $extension;
+        }
+        $filename = $this->getTemporaryFilename($suffix);
+        $this->getImagine()->create(new Box(8, 8))->save($filename, $options);
     }
 
     protected function getImagine()
