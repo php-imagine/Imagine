@@ -2,7 +2,7 @@
 
 set -xe
 
-GRAPHICSMAGIC_VERSION='1.3.23'
+GRAPHICSMAGIC_VERSION='1.3.30'
 if [ ${TRAVIS_PHP_VERSION:0:1} = '5' ]; then
   GMAGICK_VERSION='1.1.7RC2'
 else
@@ -15,20 +15,9 @@ CUSTOM_CFLAGS='-Wno-misleading-indentation -Wno-unused-const-variable -Wno-point
 mkdir -p cache
 cd cache
 
-if [ ! -e ./GraphicsMagick-$GRAPHICSMAGIC_VERSION ]; then
-    rm -rf ./GraphicsMagick-* || true
-    wget http://78.108.103.11/MIRROR/ftp/GraphicsMagick/1.3/GraphicsMagick-$GRAPHICSMAGIC_VERSION.tar.xz
-    tar -xf GraphicsMagick-$GRAPHICSMAGIC_VERSION.tar.xz
-    rm GraphicsMagick-$GRAPHICSMAGIC_VERSION.tar.xz
-    cd GraphicsMagick-$GRAPHICSMAGIC_VERSION
-    CFLAGS="${CFLAGS:-} ${CUSTOM_CFLAGS:-}" ./configure --prefix=/opt/gmagick --enable-shared --with-lcms2
-    make -j V=0
-else
-    cd GraphicsMagick-$GRAPHICSMAGIC_VERSION
-fi
-
-sudo make install
-cd ..
+sudo add-apt-repository -y ppa:ondrej/php
+sudo apt-get -q update
+sudo apt-get -y install graphicsmagick graphicsmagick-dbg libgraphicsmagick1-dev
 
 if [ ! -e ./gmagick-$GMAGICK_VERSION-$PHP_VERSION-$GRAPHICSMAGIC_VERSION ]; then
     rm -rf ./gmagick-* || true
