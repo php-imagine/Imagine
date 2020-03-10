@@ -50,71 +50,9 @@ script:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - name: Test with PHP nightly (all drivers)
   include:
-    -
-      name: Test with PHP 5.3 (GD and imagick drivers)
-      dist: precise
-      php: '5.3'
-      env:
-        - IMAGINE_DRIVER: imagick
-    -
-      name: Test with PHP 5.3 (GD and gmagick drivers)
-      dist: precise
-      php: '5.3'
-      env:
-        - IMAGINE_DRIVER: gmagick
-    -
-      name: Test with PHP 5.4 (all drivers)
-      dist: trusty
-      php: '5.4'
-      env:
-        - IMAGINE_DRIVER: all
-    -
-      name: Test with PHP 5.5 (all drivers)
-      dist: trusty
-      php: '5.5'
-      env:
-        - IMAGINE_DRIVER: all
-    -
-      name: Test with PHP 5.6 (all drivers)
-      php: '5.6'
-      env:
-        - IMAGINE_DRIVER: all
-    -
-      name: Test with PHP 7.0 (all drivers)
-      php: '7.0'
-      env:
-        - IMAGINE_DRIVER: all
-    -
-      name: Test with PHP 7.1 (all drivers)
-      php: '7.1'
-      env:
-        - IMAGINE_DRIVER: all
-    -
-      name: Test with PHP 7.2 (all drivers)
-      php: '7.2'
-      env:
-        - IMAGINE_DRIVER: all
     -
       name: Test with PHP 7.3 (all drivers)
       php: '7.3'
       env:
-        - IMAGINE_DRIVER: all
-    -
-      name: Test with PHP 7.4 (all drivers)
-      php: '7.4'
-      env:
-        - IMAGINE_DRIVER: all
-    -
-      name: Test with PHP nightly (all drivers)
-      php: nightly
-      env:
-        - IMAGINE_DRIVER: all
-    -
-      name: Coding style and docs
-      php: 7.2
-      env:
-        - TRAVISOPERATION=codestyle
-        - AUTOUPDATE_API=yes
+        - IMAGINE_DRIVER: gmagick
