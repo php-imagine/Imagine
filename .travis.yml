@@ -43,7 +43,7 @@ script:
             composer --no-interaction codestyle -- --no-interaction --dry-run --diff -- .
             ;;
         *)
-            composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
+            composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}" --filter=testSaveWithoutFileExtension
             ;;
     esac
   - if test -n "${AUTOUPDATE_API:-}"; then ./.travis/autoupdate-api.sh; fi

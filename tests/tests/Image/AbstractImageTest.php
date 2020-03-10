@@ -597,11 +597,20 @@ abstract class AbstractImageTest extends ImagineTestCase
         $factory = $this->getImagine();
         $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . "/{$file}.{$in}");
         $thumb = $image->thumbnail(new Box(50, 50), ImageInterface::THUMBNAIL_OUTBOUND);
-        $filename = $this->getTemporaryFilename("{$file}-{$in}-{$out}");
+        $filename = $this->getTemporaryFilename(md5("{$file}-{$in}-{$out}"));
         $thumb->save($filename, array('format' => $out));
         $imageType = getimagesize($filename);
         $imageType = str_replace('jpeg', 'jpg', substr($imageType['mime'], 6));
         $this->assertSame($out, $imageType);
+    }
+
+    public function testSaveWithoutFileExtensionReproduction()
+    {
+        $gmagick = new \Gmagick();
+        $gmagick->newimage(100, 100, (new \GmagickPixel("#ffffff"))->getcolor(false));
+        $gmagick->setimageformat("jpeg");
+        $gmagick->writeimage(__DIR__."/testimage");
+        unlink(__DIR__."/testimage");
     }
 
     public function testLayerReturnsALayerInterface()

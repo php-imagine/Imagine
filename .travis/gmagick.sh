@@ -52,5 +52,3 @@ fi
 sudo make install
 echo 'extension=gmagick.so' >> `php --ini | grep 'Loaded Configuration' | sed -e 's|.*:\s*||'`
 php --ri gmagick
-
-php -r '$gmagick = new \Gmagick(); $gmagick->newimage(100, 100, (new \GmagickPixel("#ffffff"))->getcolor(false)); $gmagick->setimageformat("jpeg"); $gmagick->writeimage(__DIR__."/testimage");'
