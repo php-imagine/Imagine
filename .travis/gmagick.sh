@@ -31,10 +31,9 @@ cd cache
 
 sudo add-apt-repository -y ppa:ondrej/php
 sudo apt-get -q update
-#sudo apt-get -y install graphicsmagick graphicsmagick-dbg
-#dpkg -L graphicsmagick
-#dpkg -L graphicsmagick-dbg
-apt-file search GraphicsMagick-config
+sudo apt-get -y install graphicsmagick graphicsmagick-dbg libgraphicsmagick1-dev
+dpkg -L graphicsmagick
+dpkg -L graphicsmagick-dbg
 
 cd ..
 
