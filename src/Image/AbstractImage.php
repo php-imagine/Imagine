@@ -33,7 +33,7 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
      *
      * @see \Imagine\Image\ManipulatorInterface::thumbnail()
      */
-    public function thumbnail(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
+    public function thumbnail(BoxInterface $size, $settings = ImageInterface::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED, $border = false)
     {
         $settings = $this->checkThumbnailSettings($settings);
 
@@ -88,7 +88,7 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
                         max(0, round(($imageSize->getWidth() - $size->getWidth()) / 2)),
                         max(0, round(($imageSize->getHeight() - $size->getHeight()) / 2))
                     ),
-                    $thumbnailSize
+                    $thumbnailSize, $border
                 );
                 break;
             case ImageInterface::THUMBNAIL_INSET:
