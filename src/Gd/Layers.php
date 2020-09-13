@@ -50,7 +50,7 @@ class Layers extends AbstractLayers
      */
     public function __construct(Image $image, PaletteInterface $palette, $resource, $initialOffset = 0)
     {
-        if (!is_resource($resource)) {
+        if (!$resource instanceof \GdImage && !is_resource($resource)) {
             throw new RuntimeException('Invalid Gd resource provided');
         }
 
