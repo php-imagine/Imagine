@@ -111,7 +111,7 @@ matrix:
       name: Test with PHP nightly (all drivers)
       php: nightly
       env:
-        - IMAGINE_DRIVER: all
+        - IMAGINE_DRIVER: imagick
     -
       name: Coding style and docs
       php: 7.2
