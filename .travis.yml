@@ -33,7 +33,7 @@ install:
     esac
   - php --ri curl || true
   - ifconfig || true
-  - composer --no-interaction install
+  - composer --no-interaction install --ignore-platform-reqs
 
 script:
   - |
