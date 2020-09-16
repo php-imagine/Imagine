@@ -33,7 +33,7 @@ install:
     esac
   - php --ri curl || true
   - ifconfig || true
-  - composer --no-interaction install --ignore-platform-reqs
+  - composer --no-interaction install
 
 script:
   - |
@@ -110,6 +110,9 @@ matrix:
     -
       name: Test with PHP nightly (all drivers)
       php: nightly
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+        - composer --no-interaction config platform.php 7.4.0
       env:
         - IMAGINE_DRIVER: imagick
     -
