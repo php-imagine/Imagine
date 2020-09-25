@@ -71,6 +71,10 @@ class ExifMetadataReader extends AbstractMetadataReader
     {
         $loader = $file instanceof LoaderInterface ? $file : new Loader($file);
 
+        if ($loader->isLocalFile()) {
+            return $this->extract($loader->getPath());
+        }
+
         return $this->doReadData($loader->getData());
     }
 
