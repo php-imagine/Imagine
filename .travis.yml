@@ -23,7 +23,7 @@ install:
         *)
             sudo apt-get update -y || true
             sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
-            sudo apt-get install -y ca-certificates libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev
+            sudo apt-get install -y ca-certificates libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev autoconf
             PHPUNIT_EXCLUDED_GROUPS=always-skipped
             if test "${IMAGINE_DRIVER:-}" = 'imagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},imagick"; fi
             if test "${IMAGINE_DRIVER:-}" = 'gmagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},gmagick"; fi
@@ -108,10 +108,13 @@ matrix:
       env:
         - IMAGINE_DRIVER: all
     -
-      name: Test with PHP nightly (all drivers)
+      name: Test with PHP nightly (GD and imagick drivers)
       php: nightly
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+        - composer --no-interaction config platform.php 7.4.0
       env:
-        - IMAGINE_DRIVER: all
+        - IMAGINE_DRIVER: imagick
     -
       name: Coding style and docs
       php: 7.2

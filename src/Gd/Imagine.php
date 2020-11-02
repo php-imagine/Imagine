@@ -91,7 +91,7 @@ final class Imagine extends AbstractImagine
 
         $resource = $this->createImageFromString($data);
 
-        if (!\is_resource($resource)) {
+        if (!$resource instanceof \GdImage && !\is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
@@ -139,7 +139,7 @@ final class Imagine extends AbstractImagine
     }
 
     /**
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      * @param \Imagine\Image\Palette\PaletteInterface $palette
      * @param \Imagine\Image\Metadata\MetadataBag $metadata
      *
@@ -210,7 +210,7 @@ final class Imagine extends AbstractImagine
     {
         $resource = $this->createImageFromString($string);
 
-        if (!\is_resource($resource)) {
+        if (!$resource instanceof \GdImage && !\is_resource($resource)) {
             throw new RuntimeException('An image could not be created from the given input');
         }
 
@@ -234,7 +234,7 @@ final class Imagine extends AbstractImagine
      *
      * @param string $string
      *
-     * @return resource|false
+     * @return resource|\GdImage|false
      */
     private function createImageFromString(&$string)
     {

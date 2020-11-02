@@ -27,7 +27,7 @@ use Imagine\Image\PointInterface;
 final class Drawer implements DrawerInterface
 {
     /**
-     * @var resource
+     * @var resource|\GdImage
      */
     private $resource;
 
@@ -39,7 +39,7 @@ final class Drawer implements DrawerInterface
     /**
      * Constructs Drawer with a given gd image resource.
      *
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      */
     public function __construct($resource)
     {

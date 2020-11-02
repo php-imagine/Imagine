@@ -58,15 +58,22 @@ class NeighborhoodTest extends FilterTestCase
             ));
 
             $i = 0;
+            $calls = array();
             for ($y = 0; $y < 3; $y++) {
                 for ($x = 0; $x < 3; $x++) {
-                    $drawer
-                        ->expects($this->at($i++))
-                        ->method('dot')
-                        ->with(new Point($x + 1, $y + 1), $rgb->color($expectedDraw->getElementAt($x, $y)))
-                    ;
+                    $calls[] = array(new Point($x + 1, $y + 1), $rgb->color($expectedDraw->getElementAt($x, $y)));
                 }
             }
+
+            $invocationMocker = $drawer
+                ->expects($this->exactly(\count($calls)))
+                ->method('dot')
+            ;
+
+            $invocationMocker = call_user_func_array(
+                array($invocationMocker, 'withConsecutive'),
+                $calls
+            );
 
             $image
                 ->expects($this->any())
@@ -106,20 +113,33 @@ class NeighborhoodTest extends FilterTestCase
         ;
 
         $i = 2;
+        $calls = array();
+        $returns = array();
         for ($y = 0; $y < 5; $y++) {
             for ($x = 0; $x < 5; $x++) {
                 $element = $tmpMatrix->getElementAt($x, $y);
 
                 $color = $rgb->color($element);
 
-                $image
-                    ->expects($this->at($i++))
-                    ->method('getColorAt')
-                    ->with(new Point($x, $y))
-                    ->will($this->returnValue($color))
-                ;
+                $calls[] = array(new Point($x, $y));
+                $returns[] = $this->returnValue($color);
             }
         }
+
+        $invocationMocker = $image
+            ->expects($this->exactly(\count($calls)))
+            ->method('getColorAt')
+        ;
+
+        $invocationMocker = call_user_func_array(
+            array($invocationMocker, 'withConsecutive'),
+            $calls
+        );
+
+        $invocationMocker = call_user_func_array(
+            array($invocationMocker, 'willReturnOnConsecutiveCalls'),
+            $returns
+        );
 
         return $image;
     }

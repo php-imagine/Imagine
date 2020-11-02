@@ -31,7 +31,7 @@ class Layers extends AbstractLayers
     private $offset;
 
     /**
-     * @var resource
+     * @var resource|\GdImage
      */
     private $resource;
 
@@ -43,14 +43,14 @@ class Layers extends AbstractLayers
     /**
      * @param \Imagine\Gd\Image $image
      * @param \Imagine\Image\Palette\PaletteInterface $palette
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      * @param int $initialOffset
      *
      * @throws \Imagine\Exception\RuntimeException
      */
     public function __construct(Image $image, PaletteInterface $palette, $resource, $initialOffset = 0)
     {
-        if (!is_resource($resource)) {
+        if (!$resource instanceof \GdImage && !is_resource($resource)) {
             throw new RuntimeException('Invalid Gd resource provided');
         }
 
