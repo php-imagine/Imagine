@@ -35,7 +35,7 @@ use Imagine\Utils\ErrorHandling;
 final class Image extends AbstractImage
 {
     /**
-     * @var resource
+     * @var resource|\GdImage
      */
     private $resource;
 
@@ -52,7 +52,7 @@ final class Image extends AbstractImage
     /**
      * Constructs a new Image instance.
      *
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      * @param \Imagine\Image\Palette\PaletteInterface $palette
      * @param \Imagine\Image\Metadata\MetadataBag $metadata
      */

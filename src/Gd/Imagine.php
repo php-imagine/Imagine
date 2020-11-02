@@ -139,7 +139,7 @@ final class Imagine extends AbstractImagine
     }
 
     /**
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      * @param \Imagine\Image\Palette\PaletteInterface $palette
      * @param \Imagine\Image\Metadata\MetadataBag $metadata
      *
@@ -234,7 +234,7 @@ final class Imagine extends AbstractImagine
      *
      * @param string $string
      *
-     * @return resource|false
+     * @return resource|\GdImage|false
      */
     private function createImageFromString(&$string)
     {

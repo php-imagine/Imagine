@@ -31,7 +31,7 @@ class Layers extends AbstractLayers
     private $offset;
 
     /**
-     * @var resource
+     * @var resource|\GdImage
      */
     private $resource;
 
@@ -43,7 +43,7 @@ class Layers extends AbstractLayers
     /**
      * @param \Imagine\Gd\Image $image
      * @param \Imagine\Image\Palette\PaletteInterface $palette
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      * @param int $initialOffset
      *
      * @throws \Imagine\Exception\RuntimeException
