@@ -108,7 +108,7 @@ matrix:
       env:
         - IMAGINE_DRIVER: all
     -
-      name: Test with PHP nightly (all drivers)
+      name: Test with PHP nightly (GD and imagick drivers)
       php: nightly
       before_install:
         - phpenv config-rm xdebug.ini || true
