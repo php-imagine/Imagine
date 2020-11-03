@@ -45,7 +45,7 @@ script:
             composer --no-interaction codestyle -- --no-interaction --dry-run --diff -- .
             ;;
         *)
-            ./vendor/bin/phpunit --verbose --exclude-group="${PHPUNIT_EXCLUDED_GROUPS}" ${PHPUNIT_EXTRA_FLAGS:-}
+            /usr/bin/php7.3 ./vendor/bin/phpunit --verbose --exclude-group="${PHPUNIT_EXCLUDED_GROUPS}" ${PHPUNIT_EXTRA_FLAGS:-}
             ;;
     esac
     set +o errexit
