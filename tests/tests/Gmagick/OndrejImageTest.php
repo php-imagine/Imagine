@@ -30,5 +30,6 @@ class OndrejImageTest extends ImageTest
     public function testSaveWithoutFileExtension($file, $in, $out)
     {
         parent::testSaveWithoutFileExtension($file, $in, $out);
+        $this->abortTest();
     }
 }

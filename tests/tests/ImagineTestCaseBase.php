@@ -15,6 +15,7 @@ use Imagine\Image\ImagineInterface;
 use Imagine\Test\Constraint\IsBoxInRange;
 use Imagine\Test\Constraint\IsColorSimilar;
 use Imagine\Test\Constraint\IsImageEqual;
+use Imagine\Test\Exception\AbortTestException;
 
 abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
 {
@@ -157,5 +158,11 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
         } else {
             parent::setExpectedException($class, $message);
         }
+    }
+
+    protected function abortTest()
+    {
+        $this->isGoingToThrowException('Imagine\Test\Exception\AbortTestException');
+        throw new AbortTestException();
     }
 }
