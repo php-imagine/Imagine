@@ -24,9 +24,10 @@ install:
             sudo apt-get update -y || true
             sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
             sudo apt-get install -y ca-certificates libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev autoconf
-            PHPUNIT_EXCLUDED_GROUPS=always-skipped
-            if test "${IMAGINE_DRIVER:-}" = 'imagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},imagick"; fi
-            if test "${IMAGINE_DRIVER:-}" = 'gmagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},gmagick"; fi
+            PHPUNIT_EXCLUDED_GROUPS_TMP=always-skipped
+            if test "${IMAGINE_DRIVER:-}" = 'imagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS_TMP="${PHPUNIT_EXCLUDED_GROUPS_TMP},imagick"; fi
+            if test "${IMAGINE_DRIVER:-}" = 'gmagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS_TMP="${PHPUNIT_EXCLUDED_GROUPS_TMP},gmagick"; fi
+            if test -z "${PHPUNIT_EXCLUDED_GROUPS:-}"; then PHPUNIT_EXCLUDED_GROUPS="$PHPUNIT_EXCLUDED_GROUPS_TMP"; fi
             php --ri gd || true
             composer --no-interaction remove --dev --no-update --no-scripts friendsofphp/php-cs-fixer
             ;;
@@ -44,7 +45,7 @@ script:
             composer --no-interaction codestyle -- --no-interaction --dry-run --diff -- .
             ;;
         *)
-            composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
+            composer --no-interaction test -- --exclude-group="${PHPUNIT_EXCLUDED_GROUPS}" ${PHPUNIT_EXTRA_FLAGS:-}
             ;;
     esac
     set +o errexit
@@ -104,6 +105,14 @@ matrix:
       php: '7.3'
       env:
         - IMAGINE_DRIVER: all
+    -
+      name: Test with PHP 7.3.15 (gmagick driver, ondrej/php PPA)
+      php: '7.3.15'
+      env:
+        - IMAGINE_DRIVER: gmagick
+        - GRAPHICSMAGIC_VERSION: ondrej
+        - PHPUNIT_EXCLUDED_GROUPS: none
+        - PHPUNIT_EXTRA_FLAGS: --filter=OndrejImageTest::testSaveWithoutFileExtension
     -
       name: Test with PHP 7.4 (all drivers)
       php: '7.4'
