@@ -34,6 +34,7 @@ install:
   - php --ri curl || true
   - ifconfig || true
   - composer --no-interaction install
+  - set +o errexit
 
 script:
   - |
@@ -46,6 +47,7 @@ script:
             composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
             ;;
     esac
+    set +o errexit
   - if test -n "${AUTOUPDATE_API:-}"; then ./.travis/autoupdate-api.sh; fi
 
 matrix:
