@@ -447,7 +447,7 @@ final class Image extends AbstractImage
             $this->flatten();
         }
         if (isset($options['format'])) {
-            $this->gmagick->setimageformat($options['format']);
+            $this->gmagick->setimageformat(strtoupper($options['format']));
         }
     }
 
