@@ -63,7 +63,7 @@ matrix:
         - IMAGINE_DRIVER: all
     -
       name: Test with PHP 7.3 (gmagick driver, ondrej/php PPA)
-      php: '7.3'
+      php: '7.2'
       env:
         - IMAGINE_DRIVER: gmagick
         - GRAPHICSMAGIC_VERSION: ondrej

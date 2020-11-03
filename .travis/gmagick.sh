@@ -20,7 +20,7 @@ cd cache
 if [ "$GRAPHICSMAGIC_VERSION" = 'ondrej' ]; then
     sudo add-apt-repository -y ppa:ondrej/php
     sudo apt-get -q update
-    sudo apt-get -y install graphicsmagick graphicsmagick-dbg libgraphicsmagick1-dev
+    sudo apt-get -y install graphicsmagick graphicsmagick-dbg libgraphicsmagick1-dev php7.3
 else
     if [ ! -e ./GraphicsMagick-$GRAPHICSMAGIC_VERSION ]; then
         rm -rf ./GraphicsMagick-* || true
