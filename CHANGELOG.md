@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.2.4 (2020-11-03)
 * Fix PHP 8.0 compatibility, except gmagick - see  https://bugs.php.net/bug.php?id=80106 (#740, @ausi)
 * Optimize reading EXIF metadata from local files (#741, @jorrit)
