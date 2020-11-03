@@ -1035,6 +1035,18 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->getImagine()->create(new Box(8, 8))->save($filename, $options);
     }
 
+    public function testConvertingAnimgifToJpeg()
+    {
+        $inputImageBytes = file_get_contents(IMAGINE_TEST_FIXTURESFOLDER . '/anima3.gif');
+        $imagine = $this->getImagine();
+        $image = $imagine->load($inputImageBytes);
+        $outputImageBytes = $image->get('jpg');
+        // SOI marker: \xFF \xD8
+        // JFIF-APP0 marker: \xFF \xE0 <length - 2 bytes> 'JFIF'
+        $relevantOutputImageBytes = substr($outputImageBytes, 0, 2 + 2 + 2 + strlen('JFIF'));
+        $this->assertTrue((bool) preg_match("/^\xFF\xD8\XFF\xE0..JFIF$/", $relevantOutputImageBytes), 'Exported image is not in JPEG format');
+    }
+
     abstract protected function getImageResolution(ImageInterface $image);
 
     private function getMonoLayeredImage()
