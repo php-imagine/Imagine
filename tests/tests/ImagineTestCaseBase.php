@@ -56,6 +56,15 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
         self::assertThat($actual, $constraint, $message);
     }
 
+    public static function assertRegularExpression($pattern, $string, $message = '')
+    {
+        if (method_exists(__CLASS__, 'assertMatchesRegularExpression')) {
+            self::assertMatchesRegularExpression($pattern, $string, $message);
+        } else {
+            self::assertRegExp($pattern, $string, $message);
+        }
+    }
+
     /**
      * @param string $suffix
      *
