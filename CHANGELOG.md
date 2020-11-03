@@ -1,7 +1,11 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
-
+### 1.2.4 (2020-11-03)
+* Fix PHP 8.0 compatibility, except gmagick - see  https://bugs.php.net/bug.php?id=80106 (#740, @ausi)
+* Optimize reading EXIF metadata from local files (#741, @jorrit)
+* Fix rotation with imagick (#734, @lashus @ausi)
+* Fix saving multi-layer images (eg animated GIFs) as plain images with gmagick and imagick (#746, @alexander-schranz @mlocati)
+* Fix gmagick not resolving the correct export format in some edge cases (#750, @ausi)
 
 ### 1.2.3 (2019-12-04)
 * Handle jfif extension in GD driver (#727, @sylvain-msl-talkspirit)
