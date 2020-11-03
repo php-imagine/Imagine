@@ -20,6 +20,8 @@ class OndrejImageTest extends ImageTest
      * @dataProvider inOutResultProvider
      * @runInSeparateProcess
      * @preserveGlobalState disabled
+     * @backupGlobals disabled
+     * @backupStaticAttributes disabled
      *
      * {@inheritdoc}
      *
