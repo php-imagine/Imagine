@@ -521,7 +521,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
         $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
 
-        $this->assertEquals(6438, count($image->histogram()));
+        $this->assertCount(6438, $image->histogram());
     }
 
     public function testImageResolutionChange()
@@ -596,7 +596,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testCountAMonoLayeredImage()
     {
-        $this->assertEquals(1, count($this->getMonoLayeredImage()->layers()));
+        $this->assertCount(1, $this->getMonoLayeredImage()->layers());
     }
 
     public function testCountAMultiLayeredImage()
