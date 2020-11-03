@@ -186,7 +186,7 @@ return PhpCsFixer\Config::create()
         // There should be one or no space before colon, and one space after it in return type declarations, according to configuration.
         'return_type_declaration' => true,
         // Inside class or interface element `self` should be preferred to the class name itself.
-        'self_accessor' => true,
+        'self_accessor' => false,
         // Cast `(boolean)` and `(integer)` should be written as `(bool)` and `(int)`, `(double)` and `(real)` as `(float)`.
         'short_scalar_cast' => true,
         // Ensures deprecation notices are silenced.
