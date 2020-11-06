@@ -10,7 +10,7 @@
 
 ### What's the PHP version you are using?
 
-output of `php -v`
+<!-- output of `php -v` -->
 
 
 ### What's the imaging library you are using [gd/imagick/gmagick/any]?
@@ -20,7 +20,7 @@ output of `php -v`
 
 ### What's the imaging library configuration 
 
-For example, for `imagick`, output of `php --ri imagick`
+<!-- For example, for `imagick`, output of `php --ri imagick` -->
 
 
 ### Minimal PHP code to reproduce the error: 

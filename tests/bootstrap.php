@@ -20,10 +20,6 @@ if (!class_exists('PHPUnit\Framework\Constraint\Constraint')) {
     class_alias('PHPUnit_Framework_Constraint', 'PHPUnit\Framework\Constraint\Constraint');
 }
 
-if (!class_exists('PHPUnit\Util\InvalidArgumentHelper')) {
-    class_alias('PHPUnit_Util_InvalidArgumentHelper', 'PHPUnit\Util\InvalidArgumentHelper');
-}
-
 if (!class_exists('PHPUnit\Framework\Exception')) {
     class_alias('PHPUnit_Framework_Exception', 'PHPUnit\Framework\Exception');
 }
@@ -40,6 +36,12 @@ if (version_compare(PHPUnit\Runner\Version::id(), '7') >= 0) {
     class_alias('Imagine\Test\Constraint\Constraint_v2', 'Imagine\Test\Constraint\Constraint');
 } else {
     class_alias('Imagine\Test\Constraint\Constraint_v1', 'Imagine\Test\Constraint\Constraint');
+}
+
+if (version_compare(PHPUnit\Runner\Version::id(), '8') >= 0) {
+    class_alias('Imagine\Test\ImagineTestCase_v2', 'Imagine\Test\ImagineTestCase');
+} else {
+    class_alias('Imagine\Test\ImagineTestCase_v1', 'Imagine\Test\ImagineTestCase');
 }
 
 define('IMAGINE_TEST_SRCFOLDER', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src');

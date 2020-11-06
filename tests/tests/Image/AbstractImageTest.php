@@ -145,11 +145,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertNotEquals(md5_file($source), md5_file($tmpFile));
     }
 
-    /**
-     * @expectedException \Imagine\Exception\RuntimeException
-     */
     public function testSaveWithoutPathFileFromImageCreationShouldFail()
     {
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         $image = $this->getImagine()->create(new Box(20, 20));
         $image->save();
     }
@@ -219,6 +217,18 @@ abstract class AbstractImageTest extends ImagineTestCase
         $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/large.jpg');
         $color = $image->rotate(45, $image->palette()->color('#fff', 0))->getColorAt(new Point(0, 0));
         $this->assertSame(0, $color->getAlpha());
+    }
+
+    public function testRotateWithCrop()
+    {
+        $palette = new RGB();
+        $color = $this
+            ->getImagine()
+            ->create(new Box(100, 100), $palette->color('#f00'))
+            ->rotate(45, $palette->color('#fff'))
+            ->crop(new Point(0, 0), new Box(100, 100))
+            ->getColorAt(new Point(0, 50));
+        $this->assertSame('#ffffff', (string) $color);
     }
 
     /**
@@ -523,7 +533,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
         $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
 
-        $this->assertEquals(6438, count($image->histogram()));
+        $this->assertCount(6438, $image->histogram());
     }
 
     public function testImageResolutionChange()
@@ -598,7 +608,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     public function testCountAMonoLayeredImage()
     {
-        $this->assertEquals(1, count($this->getMonoLayeredImage()->layers()));
+        $this->assertCount(1, $this->getMonoLayeredImage()->layers());
     }
 
     public function testCountAMultiLayeredImage()
@@ -970,6 +980,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         return array(
             array('jpg', array('jpeg_quality' => 0), array('jpeg_quality' => 100)),
             array('png', array('png_compression_level' => 9), array('png_compression_level' => 0)),
+            array('webp', array('webp_quality' => 0), array('webp_quality' => 100)),
         );
     }
 
@@ -990,12 +1001,50 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertLessThan(filesize($filenameBig), filesize($filenameSmall));
     }
 
-    /**
-     * @expectedException \Imagine\Exception\RuntimeException
-     */
     public function testShouldFailOpeningAnInvalidImageFile()
     {
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         $this->getImagine()->open(__FILE__);
+    }
+
+    public function provideExensions()
+    {
+        return array(
+            array('jpg', array('format' => 'jpg')),
+            array('jpeg', array('format' => 'jpeg')),
+            array('JPG', array('format' => 'JPG')),
+            array('JPEG', array('format' => 'JPEG')),
+        );
+    }
+
+    /**
+     * @dataProvider provideExensions
+     * @doesNotPerformAssertions
+     *
+     * @param string $extension
+     * @param array $options
+     */
+    public function testCanSaveExtension($extension, array $options = array())
+    {
+        $suffix = md5(serialize(func_get_args()));
+        $extension = ltrim($extension, '.');
+        if ($extension !== '') {
+            $suffix .= '.' . $extension;
+        }
+        $filename = $this->getTemporaryFilename($suffix);
+        $this->getImagine()->create(new Box(8, 8))->save($filename, $options);
+    }
+
+    public function testConvertingAnimgifToJpeg()
+    {
+        $inputImageBytes = file_get_contents(IMAGINE_TEST_FIXTURESFOLDER . '/anima3.gif');
+        $imagine = $this->getImagine();
+        $image = $imagine->load($inputImageBytes);
+        $outputImageBytes = $image->get('jpg');
+        // SOI marker: \xFF \xD8
+        // JFIF-APP0 marker: \xFF \xE0 <length - 2 bytes> 'JFIF'
+        $relevantOutputImageBytes = substr($outputImageBytes, 0, 2 + 2 + 2 + strlen('JFIF'));
+        $this->assertTrue((bool) preg_match("/^\xFF\xD8\XFF\xE0..JFIF$/", $relevantOutputImageBytes), 'Exported image is not in JPEG format');
     }
 
     abstract protected function getImageResolution(ImageInterface $image);

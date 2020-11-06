@@ -27,7 +27,7 @@ use Imagine\Image\PointInterface;
 final class Drawer implements DrawerInterface
 {
     /**
-     * @var resource
+     * @var resource|\GdImage
      */
     private $resource;
 
@@ -39,7 +39,7 @@ final class Drawer implements DrawerInterface
     /**
      * Constructs Drawer with a given gd image resource.
      *
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      */
     public function __construct($resource)
     {
@@ -140,7 +140,9 @@ final class Drawer implements DrawerInterface
         if ($thickness === 0 && !$fill) {
             return $this;
         }
-        imageantialias($this->resource, true);
+        if (function_exists('imageantialias')) {
+            imageantialias($this->resource, true);
+        }
         imagesetthickness($this->resource, $thickness);
 
         if ($fill) {
@@ -149,12 +151,16 @@ final class Drawer implements DrawerInterface
             $callback = 'imageellipse';
         }
 
-        imageantialias($this->resource, true);
+        if (function_exists('imageantialias')) {
+            imageantialias($this->resource, true);
+        }
         if (false === imagealphablending($this->resource, true)) {
             throw new RuntimeException('Draw ellipse operation failed');
         }
 
-        imageantialias($this->resource, true);
+        if (function_exists('imageantialias')) {
+            imageantialias($this->resource, true);
+        }
         if (false === $callback($this->resource, $center->getX(), $center->getY(), $size->getWidth(), $size->getHeight(), $this->getColor($color))) {
             imagealphablending($this->resource, false);
             throw new RuntimeException('Draw ellipse operation failed');

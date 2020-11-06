@@ -11,7 +11,6 @@
 
 namespace Imagine\Gd;
 
-use Exception;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -28,7 +27,7 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
-use Throwable;
+use Imagine\Utils\ErrorHandling;
 
 /**
  * Image implementation using the GD library.
@@ -36,7 +35,7 @@ use Throwable;
 final class Image extends AbstractImage
 {
     /**
-     * @var resource
+     * @var resource|\GdImage
      */
     private $resource;
 
@@ -53,7 +52,7 @@ final class Image extends AbstractImage
     /**
      * Constructs a new Image instance.
      *
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      * @param \Imagine\Image\Palette\PaletteInterface $palette
      * @param \Imagine\Image\Metadata\MetadataBag $metadata
      */
@@ -660,13 +659,16 @@ final class Image extends AbstractImage
                         $options['webp_quality'] = $options['quality'];
                     }
                 }
-                if ($options['webp_quality'] < 0 || $options['webp_quality'] > 100) {
-                    throw new InvalidArgumentException('webp_quality option should be an integer from 0 to 100');
+                if (isset($options['webp_quality'])) {
+                    if ($options['webp_quality'] < 0 || $options['webp_quality'] > 100) {
+                        throw new InvalidArgumentException('webp_quality option should be an integer from 0 to 100');
+                    }
+                    $args[] = $options['webp_quality'];
                 }
                 break;
         }
 
-        $this->withExceptionHandler(function () use ($save, $args) {
+        ErrorHandling::throwingRuntimeException(E_WARNING | E_NOTICE, function () use ($save, $args) {
             if (false === call_user_func_array($save, $args)) {
                 throw new RuntimeException('Save operation failed');
             }
@@ -742,7 +744,7 @@ final class Image extends AbstractImage
     {
         $format = strtolower($format);
 
-        if ('jpg' === $format || 'pjpeg' === $format) {
+        if ('jpg' === $format || 'pjpeg' === $format || 'jfif' === $format) {
             $format = 'jpeg';
         }
 
@@ -765,36 +767,6 @@ final class Image extends AbstractImage
         }
 
         return is_string($format) && isset($formats[$format]);
-    }
-
-    /**
-     * @param callable $callback
-     *
-     * @throws \Imagine\Exception\RuntimeException
-     * @throws \Exception
-     * @throws \Throwable
-     */
-    private function withExceptionHandler($callback)
-    {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            if (0 === error_reporting()) {
-                return;
-            }
-
-            throw new RuntimeException($errstr, $errno, new \ErrorException($errstr, 0, $errno, $errfile, $errline));
-        }, E_WARNING | E_NOTICE);
-        $exception = null;
-        try {
-            $callback();
-        } catch (Exception $x) {
-            $exception = $x;
-        } catch (Throwable $x) {
-            $exception = $x;
-        }
-        restore_error_handler();
-        if ($exception !== null) {
-            throw $exception;
-        }
     }
 
     /**
@@ -830,11 +802,13 @@ final class Image extends AbstractImage
                 'jpeg' => array('mimeType' => 'image/jpeg'),
                 'png' => array('mimeType' => 'image/png'),
                 'wbmp' => array('mimeType' => 'image/vnd.wap.wbmp'),
-                'webp' => array('mimeType' => 'image/webp'),
                 'xbm' => array('mimeType' => 'image/xbm'),
             );
             if (function_exists('imagebmp')) {
                 $supportedFormats['bmp'] = array('mimeType' => 'image/bmp');
+            }
+            if (function_exists('imagewebp')) {
+                $supportedFormats['webp'] = array('mimeType' => 'image/webp');
             }
             ksort($supportedFormats);
         }

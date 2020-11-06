@@ -59,9 +59,9 @@ class BlackWhiteTest extends FilterTestCase
 
         $drawer = $this->getDrawer();
         $drawer
-            ->expects($this->at(1))
+            ->expects($this->any())
             ->method('dot')
-            ->with(new Point(0, 0), $rgb->color($expectedColor))
+            ->withConsecutive(array(new Point(0, 0), $currentColor), array(new Point(0, 0), $rgb->color($expectedColor)))
         ;
 
         $image

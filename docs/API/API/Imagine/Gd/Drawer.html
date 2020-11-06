@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="index, follow, all" />
-    <title>Imagine\Gd\Drawer | Imagine API v1.2.1-dev</title>
+    <title>Imagine\Gd\Drawer | Imagine API v1.2.4</title>
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../../index.html">Imagine API v1.2.1-dev</a>
+                <a class="navbar-brand" href="../../index.html">Imagine API v1.2.4</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
@@ -100,7 +100,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(resource $resource)
+                    <a href="#method___construct">__construct</a>(resource|GdImage $resource)
         
                                             <p>Constructs Drawer with a given gd image resource.</p>                </div>
                 <div class="col-md-2"></div>
@@ -217,7 +217,7 @@ specified color.</p>                </div>
                     <h3 id="method___construct">
         <div class="location">at         line 44</div>
         <code>                    
-    <strong>__construct</strong>(resource $resource)
+    <strong>__construct</strong>(resource|GdImage $resource)
         </code>
     </h3>
     <div class="details">
@@ -231,7 +231,7 @@ specified color.</p>                </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>resource</td>
+                <td>resource|GdImage</td>
                 <td>$resource</td>
                 <td></td>
             </tr>
@@ -573,7 +573,7 @@ start and end angles.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_line">
-        <div class="location">at         line 175</div>
+        <div class="location">at         line 181</div>
         <code>                    $this
     <strong>line</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $start, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $end, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color, int $thickness = 1)
         </code>
@@ -639,7 +639,7 @@ start and end angles.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_pieSlice">
-        <div class="location">at         line 204</div>
+        <div class="location">at         line 210</div>
         <code>                    $this
     <strong>pieSlice</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $center, <a href="../../Imagine/Image/BoxInterface.html"><abbr title="Imagine\Image\BoxInterface">BoxInterface</abbr></a> $size, int $start, int $end, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color, bool $fill = false, int $thickness = 1)
         </code>
@@ -729,7 +729,7 @@ start and end angles.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_dot">
-        <div class="location">at         line 239</div>
+        <div class="location">at         line 245</div>
         <code>                    $this
     <strong>dot</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $position, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color)
         </code>
@@ -795,7 +795,7 @@ specified color.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_rectangle">
-        <div class="location">at         line 262</div>
+        <div class="location">at         line 268</div>
         <code>                    $this
     <strong>rectangle</strong>(<a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $leftTop, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $rightBottom, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color, bool $fill = false, int $thickness = 1)
         </code>
@@ -875,7 +875,7 @@ specified color.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_polygon">
-        <div class="location">at         line 302</div>
+        <div class="location">at         line 308</div>
         <code>                    $this
     <strong>polygon</strong>(array $coordinates, <a href="../../Imagine/Image/Palette/Color/ColorInterface.html"><abbr title="Imagine\Image\Palette\Color\ColorInterface">ColorInterface</abbr></a> $color, bool $fill = false, int $thickness = 1)
         </code>
@@ -950,7 +950,7 @@ specified color.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_text">
-        <div class="location">at         line 345</div>
+        <div class="location">at         line 351</div>
         <code>                    $this
     <strong>text</strong>(string $string, <a href="../../Imagine/Image/AbstractFont.html"><abbr title="Imagine\Image\AbstractFont">AbstractFont</abbr></a> $font, <a href="../../Imagine/Image/PointInterface.html"><abbr title="Imagine\Image\PointInterface">PointInterface</abbr></a> $position, int $angle = 0, int $width = null)
         </code>

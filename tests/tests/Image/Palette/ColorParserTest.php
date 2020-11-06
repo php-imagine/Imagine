@@ -31,12 +31,12 @@ class ColorParserTest extends ImagineTestCase
 
     /**
      * @dataProvider provideRGBdataThatFail
-     * @expectedException \Imagine\Exception\InvalidArgumentException
      *
      * @param mixed $value
      */
     public function testParseToRGBThatFails($value)
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $parser = new ColorParser();
         $parser->parseToRGB($value);
     }
@@ -56,12 +56,12 @@ class ColorParserTest extends ImagineTestCase
 
     /**
      * @dataProvider provideCMYKdataThatFail
-     * @expectedException \Imagine\Exception\InvalidArgumentException
      *
      * @param mixed $value
      */
     public function testParseToCMYKThatFails($value)
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $parser = new ColorParser();
         $parser->parseToCMYK($value);
     }
@@ -140,12 +140,12 @@ class ColorParserTest extends ImagineTestCase
 
     /**
      * @dataProvider provideGrayscaledataThatFail
-     * @expectedException \Imagine\Exception\InvalidArgumentException
      *
      * @param mixed $value
      */
     public function testParseToGrayscaleThatFails($value)
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException');
         $parser = new ColorParser();
         $parser->parseToGrayscale($value);
     }

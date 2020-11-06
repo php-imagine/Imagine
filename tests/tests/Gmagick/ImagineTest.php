@@ -19,9 +19,14 @@ use Imagine\Test\Image\AbstractImagineTest;
  */
 class ImagineTest extends AbstractImagineTest
 {
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!class_exists('Gmagick')) {
             $this->markTestSkipped('Gmagick is not installed');
@@ -40,6 +45,26 @@ class ImagineTest extends AbstractImagineTest
         $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAWebPImage()
+     */
+    public function testShouldOpenAWebPImage()
+    {
+        $gmagick = new \Gmagick();
+        if (!in_array('WEBP', $gmagick->queryformats('WEBP'), true)) {
+            $this->markTestSkipped('Gmagick webp support is not enabled');
+        }
+
+        return parent::testShouldOpenAWebPImage();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImagineTest::getImagine()
+     */
     protected function getImagine()
     {
         return new Imagine();

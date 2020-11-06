@@ -55,12 +55,9 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
         $this->assertEquals($source, $metadata['uri']);
     }
 
-    /**
-     * @expectedException \Imagine\Exception\InvalidArgumentException
-     * @expectedExceptionMessage File /path/to/no/file does not exist.
-     */
     public function testReadFromInvalidFileThrowsAnException()
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', 'File /path/to/no/file does not exist.');
         $this->getReader()->readFile('/path/to/no/file');
     }
 
@@ -87,12 +84,9 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
         $this->assertEquals($source, $metadata['uri']);
     }
 
-    /**
-     * @expectedException \Imagine\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Invalid resource provided.
-     */
     public function testReadFromInvalidStreamThrowsAnException()
     {
+        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', 'Invalid resource provided.');
         $metadata = $this->getReader()->readStream(false);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
     }

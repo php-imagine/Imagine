@@ -24,14 +24,14 @@ use Imagine\Utils\Matrix;
 class Effects implements EffectsInterface
 {
     /**
-     * @var resource
+     * @var resource|\GdImage
      */
     private $resource;
 
     /**
      * Initialize the instance.
      *
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      */
     public function __construct($resource)
     {

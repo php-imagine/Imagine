@@ -22,6 +22,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Palette\RGB;
+use Imagine\Utils\ErrorHandling;
 
 /**
  * Imagine implementation using the GD library.
@@ -29,7 +30,7 @@ use Imagine\Image\Palette\RGB;
 final class Imagine extends AbstractImagine
 {
     /**
-     * @throws \Imagine\Exception\RuntimeException
+     * Initialize the class.
      */
     public function __construct()
     {
@@ -87,11 +88,10 @@ final class Imagine extends AbstractImagine
         $path = $loader->getPath();
 
         $data = $loader->getData();
-        $resource = $this->withoutExceptionHandlers(function () use (&$data) {
-            return @imagecreatefromstring($data);
-        });
 
-        if (!is_resource($resource)) {
+        $resource = $this->createImageFromString($data);
+
+        if (!$resource instanceof \GdImage && !\is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
@@ -115,7 +115,7 @@ final class Imagine extends AbstractImagine
      */
     public function read($resource)
     {
-        if (!is_resource($resource)) {
+        if (!\is_resource($resource)) {
             throw new InvalidArgumentException('Variable does not contain a stream resource');
         }
 
@@ -139,7 +139,7 @@ final class Imagine extends AbstractImagine
     }
 
     /**
-     * @param resource $resource
+     * @param resource|\GdImage $resource
      * @param \Imagine\Image\Palette\PaletteInterface $palette
      * @param \Imagine\Image\Metadata\MetadataBag $metadata
      *
@@ -150,7 +150,7 @@ final class Imagine extends AbstractImagine
     private function wrap($resource, PaletteInterface $palette, MetadataBag $metadata)
     {
         if (!imageistruecolor($resource)) {
-            if (function_exists('imagepalettetotruecolor')) {
+            if (\function_exists('imagepalettetotruecolor')) {
                 if (false === imagepalettetotruecolor($resource)) {
                     throw new RuntimeException('Could not convert a palette based image to true color');
                 }
@@ -176,7 +176,7 @@ final class Imagine extends AbstractImagine
             throw new RuntimeException('Could not set alphablending, savealpha and antialias values');
         }
 
-        if (function_exists('imageantialias')) {
+        if (\function_exists('imageantialias')) {
             imageantialias($resource, true);
         }
 
@@ -190,7 +190,7 @@ final class Imagine extends AbstractImagine
      */
     private function requireGdVersion($version)
     {
-        if (!function_exists('gd_info')) {
+        if (!\function_exists('gd_info')) {
             throw new RuntimeException('Gd not installed');
         }
         if (version_compare(GD_VERSION, $version, '<')) {
@@ -208,11 +208,9 @@ final class Imagine extends AbstractImagine
      */
     private function doLoad($string, MetadataBag $metadata)
     {
-        $resource = $this->withoutExceptionHandlers(function () use (&$string) {
-            return @imagecreatefromstring($string);
-        });
+        $resource = $this->createImageFromString($string);
 
-        if (!is_resource($resource)) {
+        if (!$resource instanceof \GdImage && !\is_resource($resource)) {
             throw new RuntimeException('An image could not be created from the given input');
         }
 
@@ -220,23 +218,33 @@ final class Imagine extends AbstractImagine
     }
 
     /**
-     * @param callable $callback
+     * Check if the raw image data represents an image in WebP format.
      *
-     * @return mixed
+     * @param string $data
+     *
+     * @return bool
      */
-    private function withoutExceptionHandlers($callback)
+    private function isWebP(&$data)
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-        }, -1);
-        try {
-            $result = $callback();
-        } catch (\Exception $x) {
-            $result = null;
-        } catch (\Throwable $x) {
-            $result = null;
-        }
-        restore_error_handler();
+        return substr($data, 8, 7) === 'WEBPVP8';
+    }
 
-        return $result;
+    /**
+     * Create an image resource starting from its raw daa.
+     *
+     * @param string $string
+     *
+     * @return resource|\GdImage|false
+     */
+    private function createImageFromString(&$string)
+    {
+        return ErrorHandling::ignoring(-1, function () use (&$string) {
+            //  imagecreatefromstring() does not support webp images before PHP 7.3.0
+            if (PHP_VERSION_ID < 70300 && function_exists('imagecreatefromwebp') && $this->isWebP($string)) {
+                return @imagecreatefromwebp('data:image/webp;base64,' . base64_encode($string));
+            }
+
+            return @imagecreatefromstring($string);
+        });
     }
 }

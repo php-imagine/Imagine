@@ -27,6 +27,7 @@ use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
+use Imagine\Utils\ErrorHandling;
 
 /**
  * Image implementation using the Imagick PHP extension.
@@ -243,7 +244,14 @@ final class Image extends AbstractImage
             $pasteMe = $image->imagick;
         } elseif ($alpha > 0) {
             $pasteMe = $image->cloneImagick();
-            $pasteMe->setImageOpacity($alpha / 100);
+            // setImageOpacity was replaced with setImageAlpha in php-imagick v3.4.3
+            if (method_exists($pasteMe, 'setImageAlpha')) {
+                $pasteMe->setImageAlpha($alpha / 100);
+            } else {
+                ErrorHandling::ignoring(E_DEPRECATED, function () use ($pasteMe, $alpha) {
+                    $pasteMe->setImageOpacity($alpha / 100);
+                });
+            }
         } else {
             $pasteMe = null;
         }
@@ -305,6 +313,7 @@ final class Image extends AbstractImage
             $pixel = $this->getColor($background);
 
             $this->imagick->rotateimage($pixel, $angle);
+            $this->imagick->setImagePage(0, 0, 0, 0);
 
             $pixel->clear();
             $pixel->destroy();
@@ -396,10 +405,6 @@ final class Image extends AbstractImage
      */
     private function prepareOutput(array $options, $path = null)
     {
-        if (isset($options['format'])) {
-            $this->imagick->setImageFormat($options['format']);
-        }
-
         if (isset($options['animated']) && true === $options['animated']) {
             $format = isset($options['format']) ? $options['format'] : 'gif';
             $delay = isset($options['animated.delay']) ? $options['animated.delay'] : null;
@@ -416,6 +421,10 @@ final class Image extends AbstractImage
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true) && $this->layers()->count() > 1) {
             $this->flatten();
+        }
+
+        if (isset($options['format'])) {
+            $this->imagick->setImageFormat($options['format']);
         }
     }
 

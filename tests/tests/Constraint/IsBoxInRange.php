@@ -12,7 +12,7 @@
 namespace Imagine\Test\Constraint;
 
 use Imagine\Image\BoxInterface;
-use PHPUnit\Util\InvalidArgumentHelper;
+use Imagine\Test\InvalidArgumentFactory;
 
 class IsBoxInRange extends Constraint
 {
@@ -40,19 +40,19 @@ class IsBoxInRange extends Constraint
     {
         parent::__construct();
         if (!is_int($minWidth) || $minWidth < 0) {
-            throw InvalidArgumentHelper::factory(1, 'integer');
+            throw InvalidArgumentFactory::create(1, 'integer');
         }
         $this->minWidth = $minWidth;
         if (!is_int($maxWidth) || $maxWidth < $minWidth) {
-            throw InvalidArgumentHelper::factory(2, 'integer');
+            throw InvalidArgumentFactory::create(2, 'integer');
         }
         $this->maxWidth = $maxWidth;
         if (!is_int($minHeight) || $minHeight < 0) {
-            throw InvalidArgumentHelper::factory(3, 'integer');
+            throw InvalidArgumentFactory::create(3, 'integer');
         }
         $this->minHeight = $minHeight;
         if (!is_int($maxHeight) || $maxHeight < $minHeight) {
-            throw InvalidArgumentHelper::factory(4, 'integer');
+            throw InvalidArgumentFactory::create(4, 'integer');
         }
         $this->maxHeight = $maxHeight;
     }
@@ -63,7 +63,7 @@ class IsBoxInRange extends Constraint
     protected function _matches($other)
     {
         if (!$other instanceof BoxInterface) {
-            throw InvalidArgumentHelper::factory(1, 'Imagine\Image\BoxInterface');
+            throw InvalidArgumentFactory::create(1, 'Imagine\Image\BoxInterface');
         }
 
         return

@@ -19,9 +19,14 @@ use Imagine\Test\Factory\AbstractClassFactoryTest;
  */
 class ClassFactoryTest extends AbstractClassFactoryTest
 {
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!class_exists('Gmagick')) {
             $this->markTestSkipped('Gmagick is not installed');

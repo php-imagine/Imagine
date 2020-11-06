@@ -1,7 +1,22 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
+### 1.2.4 (2020-11-03)
+* Fix PHP 8.0 compatibility, except gmagick - see  https://bugs.php.net/bug.php?id=80106 (#740, @ausi)
+* Optimize reading EXIF metadata from local files (#741, @jorrit)
+* Fix rotation with imagick (#734, @lashus @ausi)
+* Fix saving multi-layer images (eg animated GIFs) as plain images with gmagick and imagick (#746, @alexander-schranz @mlocati)
+* Fix gmagick not resolving the correct export format in some edge cases (#750, @ausi)
 
+### 1.2.3 (2019-12-04)
+* Handle jfif extension in GD driver (#727, @sylvain-msl-talkspirit)
+* Improve detection of unsupported Exit Metadata Reader (#729, @mlocati, @ausi)
+
+### 1.2.2 (2019-07-09)
+* The GD driver can now load WebP files (#711, #718, @lashus, @ausi)
+* Avoid calling `imageantialias` if it's not available (#713, @ahukkanen)
+
+### 1.2.1 (2019-06-03)
+* Silence call to `\Imagick::setImageOpacity()` in order to prevent deprecation error with Imagick 3.4.4 and ImageMagick 6 (#715, @samdark, @mlocati)
 
 ### 1.2.0 (2018-12-07)
 * `ExifMetadataReader` now returns all the available metadata, not only EXIF and IFD0 (#701, @mlocati)
@@ -78,7 +93,7 @@
 * New filters: `BlackWhite`, `BorderDetection`, `Negation`, `Neighborhood` (@rejinka)
 * Minor optimization of filters based on `OnPixelBased` (@rejinka, @mlocati)
 * Add flag to `thumbnail` to allow upscaling images (@vlakoff)  
-  **NOTE** the `$mode` argument has been renamed to `$settings`, and it's now an integer (but old string values are accepted for backward compatibility)
+   **BREAKING CHANGE** the `$mode` argument has been renamed to `$settings`, and it's now an integer (but old string values are accepted for backward compatibility). In this case the `ManipulatorInterface` constants `THUMBNAIL_INSET`, `THUMBNAIL_OUTBOUND` were changed from string values to integers.
 * New filter: `brightness` (@lenybernard, @mlocati)
 * New filter: `colvolve` available for all graphics libraries except gmagick with version prior to 2.0.1RC2 (@armatronic, @mlocati)
 * Fix bug in Imagine\Image\Palette\RGB::blend() (@dmolineus, @mlocati)

@@ -19,15 +19,39 @@ use Imagine\Test\Image\AbstractImagineTest;
  */
 class ImagineTest extends AbstractImagineTest
 {
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not installed');
         }
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAWebPImage()
+     */
+    public function testShouldOpenAWebPImage()
+    {
+        if (!in_array('WEBP', \Imagick::queryFormats('WEBP'), true)) {
+            $this->markTestSkipped('Imagick webp support is not enabled');
+        }
+
+        return parent::testShouldOpenAWebPImage();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImagineTest::getImagine()
+     */
     protected function getImagine()
     {
         return new Imagine();

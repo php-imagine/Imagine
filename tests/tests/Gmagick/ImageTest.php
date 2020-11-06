@@ -20,9 +20,14 @@ use Imagine\Test\Image\AbstractImageTest;
  */
 class ImageTest extends AbstractImageTest
 {
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         // disable GC while https://bugs.php.net/bug.php?id=63677 is still open
         // If GC enabled, Gmagick unit tests fail
@@ -130,6 +135,21 @@ class ImageTest extends AbstractImageTest
             array(0),
             array(100),
         );
+    }
+
+    /**
+     * @dataProvider imageCompressionQualityProvider
+     *
+     * {@inheritdoc}
+     */
+    public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
+    {
+        $gmagick = new \Gmagick();
+        if ($format === 'webp' && !in_array('WEBP', $gmagick->queryformats('WEBP'), true)) {
+            $this->markTestSkipped('Gmagick webp support is not enabled');
+        }
+
+        return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
     }
 
     protected function getImagine()

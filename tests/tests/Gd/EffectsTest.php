@@ -19,9 +19,14 @@ use Imagine\Test\Effects\AbstractEffectsTest;
  */
 class EffectsTest extends AbstractEffectsTest
 {
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!function_exists('gd_info')) {
             $this->markTestSkipped('Gd not installed');

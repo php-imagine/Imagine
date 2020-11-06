@@ -20,9 +20,14 @@ use Imagine\Test\Image\AbstractImageTest;
  */
 class ImageTest extends AbstractImageTest
 {
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
     {
-        parent::setUp();
+        parent::setUpBase();
 
         if (!function_exists('gd_info')) {
             $this->markTestSkipped('Gd not installed');
@@ -66,11 +71,9 @@ class ImageTest extends AbstractImageTest
         );
     }
 
-    /**
-     * @expectedException \Imagine\Exception\RuntimeException
-     */
     public function testProfile()
     {
+        $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         parent::testProfile();
     }
 
@@ -176,6 +179,22 @@ class ImageTest extends AbstractImageTest
     public function testResolutionOnSave($source)
     {
         $this->markTestSkipped('GD driver only supports 72 dpi resolution');
+    }
+
+    /**
+     * @dataProvider imageCompressionQualityProvider
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testSaveCompressionQuality()
+     */
+    public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
+    {
+        if ($format === 'webp' && !function_exists('imagewebp')) {
+            $this->markTestSkipped('GD webp support is not enabled');
+        }
+
+        return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
     }
 
     /**
