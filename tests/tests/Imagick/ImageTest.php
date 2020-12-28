@@ -192,6 +192,18 @@ class ImageTest extends AbstractImageTest
         $image->save($filename, array('animated' => true, 'optimize' => true));
     }
 
+
+    public function testPaletteIsRGBIfDCIP3Image()
+    {
+        if (!in_array('HEIC', \Imagick::queryFormats('HEIC'), true)) {
+            $this->markTestSkipped('Imagick HEIC support is not enabled');
+        }
+        $imagine = $this->getImagine();
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/image-dci-p3.heic');
+
+        $this->assertInstanceOf('Imagine\\Image\\Palette\\RGB', $image->palette());
+    }
+
     protected function getImageResolution(ImageInterface $image)
     {
         return $image->getImagick()->getImageResolution();

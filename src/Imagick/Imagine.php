@@ -12,7 +12,6 @@
 namespace Imagine\Imagick;
 
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Factory\ClassFactoryInterface;
 use Imagine\File\LoaderInterface;
