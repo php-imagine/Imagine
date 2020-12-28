@@ -194,7 +194,8 @@ final class Imagine extends AbstractImagine
             case \Imagick::COLORSPACE_GRAY:
                 return new Grayscale();
             default:
-                throw new NotSupportedException('Only RGB and CMYK colorspace are currently supported');
+                $imagick->transformImageColorspace(\Imagick::COLORSPACE_SRGB);
+                return new RGB();
         }
     }
 
