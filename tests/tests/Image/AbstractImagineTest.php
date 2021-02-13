@@ -61,6 +61,34 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertEquals(realpath($source), $metadata['filepath']);
     }
 
+    public function testShouldOpenAAvifImage()
+    {
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/avif-image.avif';
+        $factory = $this->getImagine();
+        $image = $factory->open($source);
+        $size = $image->getSize();
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertEquals(100, $size->getWidth());
+        $this->assertEquals(100, $size->getHeight());
+        $metadata = $image->metadata();
+        $this->assertEquals($source, $metadata['uri']);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+    }
+
+    public function testShouldOpenAHeicImage()
+    {
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/heic-image.heic';
+        $factory = $this->getImagine();
+        $image = $factory->open($source);
+        $size = $image->getSize();
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertEquals(100, $size->getWidth());
+        $this->assertEquals(100, $size->getHeight());
+        $metadata = $image->metadata();
+        $this->assertEquals($source, $metadata['uri']);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+    }
+
     public function testShouldOpenAnSplFileResource()
     {
         $source = IMAGINE_TEST_FIXTURESFOLDER . '/google.png';

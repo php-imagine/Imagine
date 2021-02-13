@@ -50,6 +50,26 @@ class ImagineTest extends AbstractImagineTest
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAAvifImage()
+     */
+    public function testShouldOpenAAvifImage()
+    {
+        $this->markTestSkipped('GD does not support AVIF');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAHeicImage()
+     */
+    public function testShouldOpenAHeicImage()
+    {
+        $this->markTestSkipped('GD does not support HEIC');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Test\Image\AbstractImagineTest::getImagine()
      */
     protected function getImagine()
