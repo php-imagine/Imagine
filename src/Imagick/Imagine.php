@@ -193,6 +193,19 @@ final class Imagine extends AbstractImagine
                 return new CMYK();
             case \Imagick::COLORSPACE_GRAY:
                 return new Grayscale();
+            case \Imagick::COLORSPACE_YCBCR:
+                try {
+                    $profile = $imagick->getImageProfile('icc');
+                } catch (\ImagickException $e) {
+                    $profile = null;
+                }
+                $imagick->transformImageColorspace(\Imagick::COLORSPACE_SRGB);
+
+                if ($profile) {
+                    $imagick->setImageProfile('icc', $profile);
+                }
+
+                return new RGB();
             default:
                 throw new NotSupportedException('Only RGB and CMYK colorspace are currently supported');
         }
