@@ -27,6 +27,8 @@ use Imagine\Image\Palette\RGB;
 
 /**
  * Imagine implementation using the Gmagick PHP extension.
+ *
+ * @final
  */
 class Imagine extends AbstractImagine
 {

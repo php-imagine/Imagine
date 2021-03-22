@@ -27,8 +27,10 @@ use Imagine\Utils\ErrorHandling;
 
 /**
  * Imagine implementation using the Imagick PHP extension.
+ *
+ * @final
  */
-final class Imagine extends AbstractImagine
+class Imagine extends AbstractImagine
 {
     /**
      * @throws \Imagine\Exception\RuntimeException
