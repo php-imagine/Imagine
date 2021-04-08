@@ -89,6 +89,20 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $this->assertEquals(realpath($source), $metadata['filepath']);
     }
 
+    public function testShouldOpenAJxlImage()
+    {
+        $source = IMAGINE_TEST_FIXTURESFOLDER . '/jxl-image.jxl';
+        $factory = $this->getImagine();
+        $image = $factory->open($source);
+        $size = $image->getSize();
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
+        $this->assertEquals(100, $size->getWidth());
+        $this->assertEquals(100, $size->getHeight());
+        $metadata = $image->metadata();
+        $this->assertEquals($source, $metadata['uri']);
+        $this->assertEquals(realpath($source), $metadata['filepath']);
+    }
+
     public function testShouldOpenAnSplFileResource()
     {
         $source = IMAGINE_TEST_FIXTURESFOLDER . '/google.png';
