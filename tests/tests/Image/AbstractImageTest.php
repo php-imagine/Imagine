@@ -11,15 +11,16 @@
 
 namespace Imagine\Test\Image;
 
-use Imagine\Image\Box;
-use Imagine\Image\Fill\Gradient\Horizontal;
-use Imagine\Image\ImageInterface;
-use Imagine\Image\Palette\RGB;
-use Imagine\Image\Point;
+use Imagine\Test\ImagineTestCase;
+use Imagine\Image\Profile;
 use Imagine\Image\Point\Center;
 use Imagine\Image\PointSigned;
-use Imagine\Image\Profile;
-use Imagine\Test\ImagineTestCase;
+use Imagine\Image\Point;
+use Imagine\Image\Palette\RGB;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Fill\Gradient\Horizontal;
+use Imagine\Image\Box;
 
 abstract class AbstractImageTest extends ImagineTestCase
 {
@@ -513,18 +514,38 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testMask()
     {
         $factory = $this->getImagine();
+        $palette = new RGB();
+        $box = new Box(3, 1);
 
-        $image = $factory->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
+        // Create 3x1 px red image
+        $image = $factory->create($box, $palette->color('f00')); // red bg
 
-        $filename = $this->getTemporaryFilename('.png');
-        $image->applyMask($image->mask())
-            ->save($filename);
+        // Create 3x1 mask with px values: [000, 808080, fff]
+        $mask = $factory->create($box, $palette->color('000')); // black bg
+        $mask->draw()
+            ->dot(new Point(1, 0), $palette->color('808080'))
+            ->dot(new Point(2, 0), $palette->color('fff'));
 
-        $size = $factory->open($filename)
-            ->getSize();
+        $image->applyMask($mask);
 
-        $this->assertEquals(364, $size->getWidth());
-        $this->assertEquals(126, $size->getHeight());
+        // Test all pixel values
+        $px = $image->getColorAt(new Point(0, 0));
+        $this->assertEquals(100, $px->getAlpha());
+        $this->assertEquals(255, $px->getValue(ColorInterface::COLOR_RED));
+        $this->assertEquals(0, $px->getValue(ColorInterface::COLOR_GREEN));
+        $this->assertEquals(0, $px->getValue(ColorInterface::COLOR_BLUE));
+
+        $px = $image->getColorAt(new Point(1, 0));
+        $this->assertEquals(50, $px->getAlpha());
+        $this->assertEquals(255, $px->getValue(ColorInterface::COLOR_RED));
+        $this->assertEquals(0, $px->getValue(ColorInterface::COLOR_GREEN));
+        $this->assertEquals(0, $px->getValue(ColorInterface::COLOR_BLUE));
+
+        $px = $image->getColorAt(new Point(2, 0));
+        $this->assertEquals(0, $px->getAlpha());
+        $this->assertEquals(255, $px->getValue(ColorInterface::COLOR_RED));
+        $this->assertEquals(0, $px->getValue(ColorInterface::COLOR_GREEN));
+        $this->assertEquals(0, $px->getValue(ColorInterface::COLOR_BLUE));
     }
 
     public function testColorHistogram()
