@@ -331,7 +331,11 @@ final class Drawer implements DrawerInterface
             throw new RuntimeException('Draw polygon operation failed');
         }
 
-        if (false === $callback($this->resource, $points, count($coordinates), $this->getColor($color))) {
+        if (false === (
+            PHP_VERSION_ID < 80000
+                ? $callback($this->resource, $points, count($coordinates), $this->getColor($color))
+                : $callback($this->resource, $points, $this->getColor($color))
+        )) {
             imagealphablending($this->resource, false);
             throw new RuntimeException('Draw polygon operation failed');
         }

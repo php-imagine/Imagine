@@ -53,6 +53,7 @@ final class Bucket implements \Countable
     /**
      * @return int the number of elements in the bucket
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return $this->count;

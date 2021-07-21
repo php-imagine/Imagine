@@ -141,6 +141,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::current()
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->extractAt($this->offset);
@@ -174,6 +175,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::key()
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->offset;
@@ -184,6 +186,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::next()
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         ++$this->offset;
@@ -194,6 +197,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::rewind()
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->offset = 0;
@@ -204,6 +208,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::valid()
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return $this->offset < count($this);
@@ -214,6 +219,7 @@ class Layers extends AbstractLayers
      *
      * @see \Countable::count()
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         try {
@@ -228,6 +234,7 @@ class Layers extends AbstractLayers
      *
      * @see \ArrayAccess::offsetExists()
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return is_int($offset) && $offset >= 0 && $offset < count($this);
@@ -238,6 +245,7 @@ class Layers extends AbstractLayers
      *
      * @see \ArrayAccess::offsetGet()
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->extractAt($offset);
@@ -248,6 +256,7 @@ class Layers extends AbstractLayers
      *
      * @see \ArrayAccess::offsetSet()
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $image)
     {
         if (!$image instanceof Image) {
@@ -290,6 +299,7 @@ class Layers extends AbstractLayers
      *
      * @see \ArrayAccess::offsetUnset()
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         try {
