@@ -45,9 +45,9 @@ class ExifMetadataReader extends AbstractMetadataReader
         if (!in_array('data', stream_get_wrappers(), true)) {
             return 'The data:// stream wrapper must be enabled';
         }
-        if (in_array(ini_get('allow_url_fopen'), array('', '0', 0), true)) {
-            return 'The allow_url_fopen php.ini configuration key must be set to 1';
-        }
+        //if (in_array(ini_get('allow_url_fopen'), array('', '0', 0), true)) {
+        //    return 'The allow_url_fopen php.ini configuration key must be set to 1';
+        //}
 
         return '';
     }
