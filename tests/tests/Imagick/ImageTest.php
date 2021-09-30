@@ -172,8 +172,8 @@ class ImageTest extends AbstractImageTest
      */
     public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
     {
-        if ($format === 'webp' && !in_array('WEBP', \Imagick::queryFormats('WEBP'), true)) {
-            $this->markTestSkipped('Imagick WebP support is not enabled');
+        if (in_array($format, array('webp', 'avif', 'heic'), true) && !in_array(strtoupper($format), \Imagick::queryFormats(strtoupper($format)), true)) {
+            $this->markTestSkipped('Imagick ' . $format . ' support is not enabled');
         }
 
         return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);

@@ -50,6 +50,34 @@ class ImagineTest extends AbstractImagineTest
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAAvifImage()
+     */
+    public function testShouldOpenAAvifImage()
+    {
+        if (!in_array('AVIF', \Imagick::queryFormats('AVIF'), true)) {
+            $this->markTestSkipped('Imagick AVIF support is not enabled');
+        }
+
+        return parent::testShouldOpenAAvifImage();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAHeicImage()
+     */
+    public function testShouldOpenAHeicImage()
+    {
+        if (!in_array('HEIC', \Imagick::queryFormats('HEIC'), true)) {
+            $this->markTestSkipped('Imagick HEIC support is not enabled');
+        }
+
+        return parent::testShouldOpenAHeicImage();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Test\Image\AbstractImagineTest::getImagine()
      */
     protected function getImagine()
