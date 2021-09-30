@@ -832,19 +832,20 @@ final class Image extends AbstractImage
                 break;
             case 'avif':
             case 'heic':
-                if (!isset($options[$format . '_quality'])) {
-                    if (isset($options['quality'])) {
-                        $options[$format . '_quality'] = $options['quality'];
-                    }
-                }
-                if (isset($options[$format . '_quality'])) {
-                    $options[$format . '_quality'] = max(1, min(99, $options[$format . '_quality']));
-                    $image->setimagecompressionquality($options[$format . '_quality']);
-                    $image->setcompressionquality($options[$format . '_quality']);
-                }
                 if (!empty($options[$format . '_lossless'])) {
                     $image->setimagecompressionquality(100);
                     $image->setcompressionquality(100);
+                } else {
+                    if (!isset($options[$format . '_quality'])) {
+                        if (isset($options['quality'])) {
+                            $options[$format . '_quality'] = $options['quality'];
+                        }
+                    }
+                    if (isset($options[$format . '_quality'])) {
+                        $options[$format . '_quality'] = max(1, min(99, $options[$format . '_quality']));
+                        $image->setimagecompressionquality($options[$format . '_quality']);
+                        $image->setcompressionquality($options[$format . '_quality']);
+                    }
                 }
                 break;
         }
