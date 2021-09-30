@@ -26,8 +26,10 @@ use Imagine\Utils\ErrorHandling;
 
 /**
  * Imagine implementation using the GD library.
+ *
+ * @final
  */
-final class Imagine extends AbstractImagine
+class Imagine extends AbstractImagine
 {
     /**
      * Initialize the class.
