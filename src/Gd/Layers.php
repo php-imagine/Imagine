@@ -94,6 +94,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::current()
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $this->resource, $this->palette, new MetadataBag());
@@ -104,6 +105,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::key()
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->offset;
@@ -114,6 +116,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::next()
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         ++$this->offset;
@@ -124,6 +127,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::rewind()
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->offset = 0;
@@ -134,6 +138,7 @@ class Layers extends AbstractLayers
      *
      * @see \Iterator::valid()
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return $this->offset < 1;
@@ -144,6 +149,7 @@ class Layers extends AbstractLayers
      *
      * @see \Countable::count()
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return 1;
@@ -154,6 +160,7 @@ class Layers extends AbstractLayers
      *
      * @see \ArrayAccess::offsetExists()
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return 0 === $offset;
@@ -164,6 +171,7 @@ class Layers extends AbstractLayers
      *
      * @see \ArrayAccess::offsetGet()
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (0 === $offset) {
@@ -178,6 +186,7 @@ class Layers extends AbstractLayers
      *
      * @see \ArrayAccess::offsetSet()
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new NotSupportedException('GD does not support layer set');
@@ -188,6 +197,7 @@ class Layers extends AbstractLayers
      *
      * @see \ArrayAccess::offsetUnset()
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new NotSupportedException('GD does not support layer unset');
