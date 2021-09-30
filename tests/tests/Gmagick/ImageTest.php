@@ -145,7 +145,7 @@ class ImageTest extends AbstractImageTest
     public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
     {
         $gmagick = new \Gmagick();
-        if (in_array($format, array('webp', 'avif', 'heic'), true) && !in_array(strtoupper($format), $gmagick->queryformats(strtoupper($format)), true)) {
+        if (in_array($format, array('webp', 'avif', 'heic', 'jxl'), true) && !in_array(strtoupper($format), $gmagick->queryformats(strtoupper($format)), true)) {
             $this->markTestSkipped('Gmagick ' . $format . ' support is not enabled');
         }
 

@@ -1006,6 +1006,8 @@ abstract class AbstractImageTest extends ImagineTestCase
             array('avif', array('avif_quality' => 0), array('avif_lossless' => true)),
             array('heic', array('heic_quality' => 0), array('heic_quality' => 100)),
             array('heic', array('heic_quality' => 0), array('heic_lossless' => true)),
+            array('jxl', array('jxl_quality' => 0), array('jxl_quality' => 100)),
+            array('jxl', array('jxl_quality' => 0), array('jxl_lossless' => true)),
         );
     }
 

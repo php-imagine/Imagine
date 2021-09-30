@@ -93,6 +93,21 @@ class ImagineTest extends AbstractImagineTest
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAJxlImage()
+     */
+    public function testShouldOpenAJxlImage()
+    {
+        $gmagick = new \Gmagick();
+        if (!in_array('JXL', $gmagick->queryformats('JXL'), true)) {
+            $this->markTestSkipped('Gmagick JXL support is not enabled');
+        }
+
+        return parent::testShouldOpenAJxlImage();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Test\Image\AbstractImagineTest::getImagine()
      */
     protected function getImagine()

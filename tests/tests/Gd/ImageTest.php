@@ -193,7 +193,7 @@ class ImageTest extends AbstractImageTest
         if ($format === 'webp' && !function_exists('imagewebp')) {
             $this->markTestSkipped('GD webp support is not enabled');
         }
-        if ($format === 'avif' || $format === 'heic') {
+        if ($format === 'avif' || $format === 'heic' || $format === 'jxl') {
             $this->markTestSkipped('GD does not support ' . strtoupper($format));
         }
 
