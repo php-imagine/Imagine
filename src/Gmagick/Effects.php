@@ -82,7 +82,7 @@ class Effects implements EffectsInterface
     public function grayscale()
     {
         try {
-            $this->gmagick->setImageType(2);
+            $this->gmagick->setimagetype(2);
         } catch (\GmagickException $e) {
             throw new RuntimeException('Failed to grayscale the image', $e->getCode(), $e);
         }
@@ -118,7 +118,7 @@ class Effects implements EffectsInterface
     public function blur($sigma = 1)
     {
         try {
-            $this->gmagick->blurImage(0, $sigma);
+            $this->gmagick->blurimage(0, $sigma);
         } catch (\GmagickException $e) {
             throw new RuntimeException('Failed to blur the image', $e->getCode(), $e);
         }
@@ -168,7 +168,7 @@ class Effects implements EffectsInterface
         }
         try {
             $this->gmagick->convolveimage($matrix->getValueList());
-        } catch (\ImagickException $e) {
+        } catch (\GmagickException $e) {
             throw new RuntimeException('Failed to convolve the image');
         }
 

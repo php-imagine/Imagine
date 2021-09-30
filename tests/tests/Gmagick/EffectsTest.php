@@ -40,7 +40,7 @@ class EffectsTest extends AbstractEffectsTest
      */
     public function testColorize()
     {
-        $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
+        $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
         parent::testColorize();
     }
 
