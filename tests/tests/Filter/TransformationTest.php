@@ -37,7 +37,9 @@ class TransformationTest extends FilterTestCase
             ->will($this->returnValue($image));
 
         $transformation = new Transformation();
-        $this->assertSame($image, $transformation->resize($size)
+        $this->assertSame(
+            $image,
+            $transformation->resize($size)
             ->save($path)
             ->apply($image)
         );

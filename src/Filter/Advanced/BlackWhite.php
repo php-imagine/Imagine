@@ -39,7 +39,7 @@ class BlackWhite extends OnPixelBased implements FilterInterface
      */
     public function __construct($threshold)
     {
-        if (!(0 <= $threshold && $threshold <= 255)) {
+        if (!($threshold >= 0 && $threshold <= 255)) {
             throw new InvalidArgumentException('$threshold has to be between 0 and 255');
         }
 

@@ -163,7 +163,7 @@ class Layers extends AbstractLayers
     #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
-        return 0 === $offset;
+        return $offset === 0;
     }
 
     /**
@@ -174,7 +174,7 @@ class Layers extends AbstractLayers
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        if (0 === $offset) {
+        if ($offset === 0) {
             return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $this->resource, $this->palette, new MetadataBag());
         }
 

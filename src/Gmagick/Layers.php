@@ -95,7 +95,7 @@ class Layers extends AbstractLayers
      */
     public function animate($format, $delay, $loops)
     {
-        if ('gif' !== strtolower($format)) {
+        if (strtolower($format) !== 'gif') {
             throw new NotSupportedException('Animated picture is currently only supported on gif');
         }
 
@@ -103,7 +103,7 @@ class Layers extends AbstractLayers
             throw new InvalidArgumentException('Loops must be a positive integer.');
         }
 
-        if (null !== $delay && (!is_int($delay) || $delay < 0)) {
+        if ($delay !== null && (!is_int($delay) || $delay < 0)) {
             throw new InvalidArgumentException('Delay must be either null or a positive integer.');
         }
 
@@ -112,7 +112,7 @@ class Layers extends AbstractLayers
                 $this->resource->setimageindex($offset);
                 $this->resource->setimageformat($format);
 
-                if (null !== $delay) {
+                if ($delay !== null) {
                     $this->resource->setimagedelay($delay / 10);
                 }
 
@@ -252,14 +252,14 @@ class Layers extends AbstractLayers
             throw new InvalidArgumentException('Only a Gmagick Image can be used as layer');
         }
 
-        if (null === $offset) {
+        if ($offset === null) {
             $offset = count($this) - 1;
         } else {
             if (!is_int($offset)) {
                 throw new InvalidArgumentException('Invalid offset for layer, it must be an integer');
             }
 
-            if (count($this) < $offset || 0 > $offset) {
+            if (count($this) < $offset || $offset < 0) {
                 throw new OutOfBoundsException(sprintf('Invalid offset for layer, it must be a value between 0 and %d, %d given', count($this), $offset));
             }
 
@@ -278,9 +278,7 @@ class Layers extends AbstractLayers
             }
             $this->resource->addimage($frame);
 
-            /*
-             * ugly hack to bypass issue https://bugs.php.net/bug.php?id=64623
-             */
+            // ugly hack to bypass issue https://bugs.php.net/bug.php?id=64623
             if (count($this) == 2) {
                 $this->resource->setimageindex($offset + 1);
                 $this->resource->nextimage();

@@ -80,8 +80,10 @@ class IsBoxInRange extends Constraint
     {
         return sprintf(
             'is a box with a width between %d and %d, and a height between %d and %d',
-            $this->minWidth, $this->maxWidth,
-            $this->minHeight, $this->maxHeight
+            $this->minWidth,
+            $this->maxWidth,
+            $this->minHeight,
+            $this->maxHeight
         );
     }
 
@@ -94,9 +96,12 @@ class IsBoxInRange extends Constraint
     {
         return sprintf(
             'the box %sx%s has a width between %d and %d, and a height between %d and %d',
-            $other->getWidth(), $other->getHeight(),
-            $this->minWidth, $this->maxWidth,
-            $this->minHeight, $this->maxHeight
+            $other->getWidth(),
+            $other->getHeight(),
+            $this->minWidth,
+            $this->maxWidth,
+            $this->minHeight,
+            $this->maxHeight
         );
     }
 }

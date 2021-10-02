@@ -32,6 +32,7 @@ abstract class LinearTest extends ImagineTestCase
      * @var ColorInterface
      */
     private $end;
+
     protected $palette;
 
     /**

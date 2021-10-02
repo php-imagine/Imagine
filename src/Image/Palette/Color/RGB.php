@@ -147,7 +147,8 @@ final class RGB implements ColorInterface
                 min(255, $this->r + $shade),
                 min(255, $this->g + $shade),
                 min(255, $this->b + $shade),
-            ), $this->alpha
+            ),
+            $this->alpha
         );
     }
 
@@ -163,7 +164,8 @@ final class RGB implements ColorInterface
                 max(0, $this->r - $shade),
                 max(0, $this->g - $shade),
                 max(0, $this->b - $shade),
-            ), $this->alpha
+            ),
+            $this->alpha
         );
     }
 
@@ -186,7 +188,7 @@ final class RGB implements ColorInterface
      */
     public function isOpaque()
     {
-        return 100 === $this->alpha;
+        return $this->alpha === 100;
     }
 
     /**

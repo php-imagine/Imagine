@@ -177,7 +177,8 @@ final class Drawer implements DrawerInterface
                 $center->getY(),
                 $width / 2,
                 $height / 2,
-                0, 360
+                0,
+                360
             );
 
             $this->gmagick->drawImage($ellipse);

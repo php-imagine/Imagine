@@ -11,16 +11,16 @@
 
 namespace Imagine\Test\Image;
 
-use Imagine\Test\ImagineTestCase;
-use Imagine\Image\Profile;
+use Imagine\Image\Box;
+use Imagine\Image\Fill\Gradient\Horizontal;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Palette\Color\ColorInterface;
+use Imagine\Image\Palette\RGB;
+use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
 use Imagine\Image\PointSigned;
-use Imagine\Image\Point;
-use Imagine\Image\Palette\RGB;
-use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\ImageInterface;
-use Imagine\Image\Fill\Gradient\Horizontal;
-use Imagine\Image\Box;
+use Imagine\Image\Profile;
+use Imagine\Test\ImagineTestCase;
 
 abstract class AbstractImageTest extends ImagineTestCase
 {
@@ -57,7 +57,7 @@ abstract class AbstractImageTest extends ImagineTestCase
     public function testPaletteAssociatedIsRelatedToGivenColor($paletteClass, $input)
     {
         $palette = new $paletteClass();
-        /* @var \Imagine\Image\Palette\PaletteInterface $palette */
+        // @var \Imagine\Image\Palette\PaletteInterface $palette
         $palette->profile();
 
         $image = $this
@@ -243,11 +243,11 @@ abstract class AbstractImageTest extends ImagineTestCase
         $size = $image->getSize();
 
         $image->paste(
-                $image->copy()
+            $image->copy()
                     ->resize($size->scale(0.5))
                     ->flipVertically(),
-                new Center($size)
-            );
+            new Center($size)
+        );
     }
 
     /**
@@ -489,7 +489,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $image = $factory->create($size, $palette->color('f00'));
 
         $image->paste(
-                $factory->create($size, $palette->color('ff0'))
+            $factory->create($size, $palette->color('ff0'))
                     ->applyMask(
                         $factory->create($size)
                             ->fill(
@@ -500,8 +500,8 @@ abstract class AbstractImageTest extends ImagineTestCase
                                 )
                             )
                     ),
-                new Point(0, 0)
-            );
+            new Point(0, 0)
+        );
 
         $size = $image->getSize();
 

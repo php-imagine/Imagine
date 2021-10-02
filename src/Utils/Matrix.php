@@ -168,7 +168,7 @@ class Matrix
      */
     protected function calculatePosition($x, $y)
     {
-        if (0 > $x || 0 > $y || $this->width <= $x || $this->height <= $y) {
+        if ($x < 0 || $y < 0 || $this->width <= $x || $this->height <= $y) {
             throw new OutOfBoundsException(sprintf('There is no position (%s, %s) in this matrix', $x, $y));
         }
 

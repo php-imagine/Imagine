@@ -67,7 +67,7 @@ final class PointSigned implements PointInterface
      */
     public function in(BoxInterface $box)
     {
-        return 0 <= $this->x && $this->x < $box->getWidth() && 0 <= $this->y && $this->y < $box->getHeight();
+        return $this->x >= 0 && $this->x < $box->getWidth() && $this->y >= 0 && $this->y < $box->getHeight();
     }
 
     /**

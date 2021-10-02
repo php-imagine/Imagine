@@ -25,12 +25,12 @@ class MatrixTest extends ImagineTestCase
      */
     public function testMatrixHasAtLeastOneElement($width, $height, $exceptionMessage)
     {
-        if (null !== $exceptionMessage) {
+        if ($exceptionMessage !== null) {
             $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', $exceptionMessage);
         }
 
         new Matrix($width, $height);
-        if (null === $exceptionMessage) {
+        if ($exceptionMessage === null) {
             $this->assertTrue(true);
         }
     }

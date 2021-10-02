@@ -31,7 +31,7 @@ class AutorotateTest extends FilterTestCase
             ->method('metadata')
             ->will($this->returnValue($metadata));
 
-        if (null === $expectedRotation) {
+        if ($expectedRotation === null) {
             $image->expects($this->never())
                 ->method('rotate');
         } else {

@@ -63,7 +63,7 @@ class WebOptimization implements FilterInterface
 
         if (is_callable($this->path)) {
             $path = call_user_func($this->path, $image);
-        } elseif (null !== $this->path) {
+        } elseif ($this->path !== null) {
             $path = $this->path;
         } else {
             return $image;

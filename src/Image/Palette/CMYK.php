@@ -95,14 +95,14 @@ class CMYK implements PaletteInterface
      */
     public function color($color, $alpha = null)
     {
-        if (null !== $alpha && $alpha !== 100) {
+        if ($alpha !== null && $alpha !== 100) {
             throw new InvalidArgumentException('CMYK palette does not support alpha');
         }
 
         $color = $this->parser->parseToCMYK($color);
         $index = sprintf('cmyk(%d, %d, %d, %d)', $color[0], $color[1], $color[2], $color[3]);
 
-        if (false === array_key_exists($index, self::$colors)) {
+        if (array_key_exists($index, self::$colors) === false) {
             self::$colors[$index] = new CMYKColor($this, $color);
         }
 

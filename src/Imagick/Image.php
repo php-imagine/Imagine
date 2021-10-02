@@ -331,8 +331,8 @@ final class Image extends AbstractImage
      */
     public function save($path = null, array $options = array())
     {
-        $path = null === $path ? $this->imagick->getImageFilename() : $path;
-        if (null === $path) {
+        $path = $path === null ? $this->imagick->getImageFilename() : $path;
+        if ($path === null) {
             throw new RuntimeException('You can omit save path only if image has been open from a file');
         }
 
@@ -405,7 +405,7 @@ final class Image extends AbstractImage
      */
     private function prepareOutput(array $options, $path = null)
     {
-        if (isset($options['animated']) && true === $options['animated']) {
+        if (isset($options['animated']) && $options['animated'] === true) {
             $format = isset($options['format']) ? $options['format'] : 'gif';
             $delay = isset($options['animated.delay']) ? $options['animated.delay'] : null;
             $loops = isset($options['animated.loops']) ? $options['animated.loops'] : 0;
@@ -732,9 +732,7 @@ final class Image extends AbstractImage
      */
     private function flatten()
     {
-        /*
-         * @see https://github.com/mkoppanen/imagick/issues/45
-         */
+        // @see https://github.com/mkoppanen/imagick/issues/45
         try {
             if (method_exists($this->imagick, 'mergeImageLayers') && defined('Imagick::LAYERMETHOD_UNDEFINED')) {
                 $this->imagick = $this->imagick->mergeImageLayers(\Imagick::LAYERMETHOD_UNDEFINED);
@@ -1025,7 +1023,7 @@ final class Image extends AbstractImage
      */
     private function detectColorspaceConversionSupport()
     {
-        if (null !== static::$supportsColorspaceConversion) {
+        if (static::$supportsColorspaceConversion !== null) {
             return static::$supportsColorspaceConversion;
         }
 
@@ -1040,7 +1038,7 @@ final class Image extends AbstractImage
      */
     private function detectProfilesSupport()
     {
-        if (null !== self::$supportsProfiles) {
+        if (self::$supportsProfiles !== null) {
             return self::$supportsProfiles;
         }
 
