@@ -1,0 +1,125 @@
+name: PHPUnit
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  ubuntu:
+    name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Ubuntu)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version:
+          - "5.3"
+          - "5.4"
+        extensions:
+          - gd,gmagick
+          - gd,imagick
+    steps:
+      - name: Inspect environment
+        id: inspect
+        run: |
+          EXCLUDED_GROUPS=always-skipped
+          AVAILABLE_EXTENSIONS=",${{ matrix.extensions }},"
+          for CHECK_EXTENSION in gd gmagick imagick; do
+            case "$AVAILABLE_EXTENSIONS" in
+              *,$CHECK_EXTENSION,*)
+                ;;
+              *)
+                EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
+                ;;
+            esac
+          done
+          echo "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: exif,${{ matrix.extensions }}
+          tools: composer:v2
+          coverage: none
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install composer dependencies
+        run: composer update --ansi --no-interaction --no-suggest
+      - name: PHPUnit
+        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
+
+  windows:
+    name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Windows)
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        php-version:
+          - "5.6"
+          - "7.4"
+        extensions:
+          - gd,imagick
+    steps:
+      - name: Inspect environment
+        id: inspect
+        run: |
+          $EXCLUDED_GROUPS='always-skipped'
+          $AVAILABLE_EXTENSIONS=",${{ matrix.extensions }},"
+          foreach ($CHECK_EXTENSION in @('gd', 'gmagick', 'imagick')) {
+            if (-not($AVAILABLE_EXTENSIONS -match ",$CHECK_EXTENSION,")) {
+                $EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
+            }
+          }
+          Write-Output "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: exif,${{ matrix.extensions }}
+          tools: composer:v2
+          coverage: none
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install composer dependencies
+        run: composer update --ansi --no-interaction --no-suggest
+      - name: PHPUnit
+        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
+
+  docker:
+    name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Docker)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version:
+          - "5.5"
+          - "5.6"
+          - "7.0"
+          - "7.1"
+          - "7.2"
+          - "7.3"
+          - "7.4"
+          - "8.0"
+          - "8.1"
+        extensions:
+          - gd-gmagick
+          - gd-imagick
+    container: ghcr.io/php-imagine/test:${{ matrix.php-version }}-${{ matrix.extensions }}
+    steps:
+      - name: Inspect environment
+        id: inspect
+        run: |
+          EXCLUDED_GROUPS=always-skipped
+          AVAILABLE_EXTENSIONS="${{ matrix.extensions }}"
+          for CHECK_EXTENSION in gd gmagick imagick; do
+            case "-$AVAILABLE_EXTENSIONS-" in
+              *-$CHECK_EXTENSION-*)
+                ;;
+              *)
+                EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
+                ;;
+            esac
+          done
+          echo "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install composer dependencies
+        run: composer update --ansi --no-interaction --no-suggest
+      - name: PHPUnit
+        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
