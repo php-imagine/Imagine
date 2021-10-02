@@ -92,8 +92,8 @@ class Imagine extends AbstractImagine
         $width = $size->getWidth();
         $height = $size->getHeight();
 
-        $palette = null !== $color ? $color->getPalette() : new RGB();
-        $color = null !== $color ? $color : $palette->color('fff');
+        $palette = $color !== null ? $color->getPalette() : new RGB();
+        $color = $color !== null ? $color : $palette->color('fff');
 
         try {
             $pixel = new \ImagickPixel((string) $color);

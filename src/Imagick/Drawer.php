@@ -176,10 +176,11 @@ final class Drawer implements DrawerInterface
                 $center->getY(),
                 $width / 2,
                 $height / 2,
-                0, 360
+                0,
+                360
             );
 
-            if (false === $this->imagick->drawImage($ellipse)) {
+            if ($this->imagick->drawImage($ellipse) === false) {
                 throw new RuntimeException('Ellipse operation failed');
             }
 
@@ -441,8 +442,11 @@ final class Drawer implements DrawerInterface
             $ydiff = 0 - min($y1, $y2);
 
             $this->imagick->annotateImage(
-                $text, $position->getX() + $x1 + $xdiff,
-                $position->getY() + $y2 + $ydiff, $angle, $string
+                $text,
+                $position->getX() + $x1 + $xdiff,
+                $position->getY() + $y2 + $ydiff,
+                $angle,
+                $string
             );
 
             $pixel->clear();

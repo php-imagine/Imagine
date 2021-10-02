@@ -51,11 +51,11 @@ class Imagine extends AbstractImagine
 
         $resource = imagecreatetruecolor($width, $height);
 
-        if (false === $resource) {
+        if ($resource === false) {
             throw new RuntimeException('Create operation failed');
         }
 
-        $palette = null !== $color ? $color->getPalette() : new RGB();
+        $palette = $color !== null ? $color->getPalette() : new RGB();
         $color = $color ? $color : $palette->color('fff');
 
         if (!$color instanceof RGBColor) {
@@ -64,11 +64,11 @@ class Imagine extends AbstractImagine
 
         $index = imagecolorallocatealpha($resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round(127 * (100 - $color->getAlpha()) / 100));
 
-        if (false === $index) {
+        if ($index === false) {
             throw new RuntimeException('Unable to allocate color');
         }
 
-        if (false === imagefill($resource, 0, 0, $index)) {
+        if (imagefill($resource, 0, 0, $index) === false) {
             throw new RuntimeException('Could not set background color fill');
         }
 
@@ -123,7 +123,7 @@ class Imagine extends AbstractImagine
 
         $content = stream_get_contents($resource);
 
-        if (false === $content) {
+        if ($content === false) {
             throw new InvalidArgumentException('Cannot read resource content');
         }
 
@@ -153,7 +153,7 @@ class Imagine extends AbstractImagine
     {
         if (!imageistruecolor($resource)) {
             if (\function_exists('imagepalettetotruecolor')) {
-                if (false === imagepalettetotruecolor($resource)) {
+                if (imagepalettetotruecolor($resource) === false) {
                     throw new RuntimeException('Could not convert a palette based image to true color');
                 }
             } else {
@@ -174,7 +174,7 @@ class Imagine extends AbstractImagine
             }
         }
 
-        if (false === imagealphablending($resource, false) || false === imagesavealpha($resource, true)) {
+        if (imagealphablending($resource, false) === false || imagesavealpha($resource, true) === false) {
             throw new RuntimeException('Could not set alphablending, savealpha and antialias values');
         }
 

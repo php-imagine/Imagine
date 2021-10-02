@@ -119,14 +119,14 @@ class RGB implements PaletteInterface
      */
     public function color($color, $alpha = null)
     {
-        if (null === $alpha) {
+        if ($alpha === null) {
             $alpha = 100;
         }
 
         $color = $this->parser->parseToRGB($color);
         $index = sprintf('#%02x%02x%02x-%d', $color[0], $color[1], $color[2], $alpha);
 
-        if (false === array_key_exists($index, static::$colors)) {
+        if (array_key_exists($index, static::$colors) === false) {
             static::$colors[$index] = new RGBColor($this, $color, $alpha);
         }
 

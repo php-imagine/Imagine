@@ -45,7 +45,7 @@ class Effects implements EffectsInterface
      */
     public function gamma($correction)
     {
-        if (false === imagegammacorrect($this->resource, 1.0, $correction)) {
+        if (imagegammacorrect($this->resource, 1.0, $correction) === false) {
             throw new RuntimeException('Failed to apply gamma correction to the image');
         }
 
@@ -59,7 +59,7 @@ class Effects implements EffectsInterface
      */
     public function negative()
     {
-        if (false === imagefilter($this->resource, IMG_FILTER_NEGATE)) {
+        if (imagefilter($this->resource, IMG_FILTER_NEGATE) === false) {
             throw new RuntimeException('Failed to negate the image');
         }
 
@@ -73,7 +73,7 @@ class Effects implements EffectsInterface
      */
     public function grayscale()
     {
-        if (false === imagefilter($this->resource, IMG_FILTER_GRAYSCALE)) {
+        if (imagefilter($this->resource, IMG_FILTER_GRAYSCALE) === false) {
             throw new RuntimeException('Failed to grayscale the image');
         }
 
@@ -91,7 +91,7 @@ class Effects implements EffectsInterface
             throw new RuntimeException('Colorize effects only accepts RGB color in GD context');
         }
 
-        if (false === imagefilter($this->resource, IMG_FILTER_COLORIZE, $color->getRed(), $color->getGreen(), $color->getBlue())) {
+        if (imagefilter($this->resource, IMG_FILTER_COLORIZE, $color->getRed(), $color->getGreen(), $color->getBlue()) === false) {
             throw new RuntimeException('Failed to colorize the image');
         }
 
@@ -108,7 +108,7 @@ class Effects implements EffectsInterface
         $sharpenMatrix = array(array(-1, -1, -1), array(-1, 16, -1), array(-1, -1, -1));
         $divisor = array_sum(array_map('array_sum', $sharpenMatrix));
 
-        if (false === imageconvolution($this->resource, $sharpenMatrix, $divisor, 0)) {
+        if (imageconvolution($this->resource, $sharpenMatrix, $divisor, 0) === false) {
             throw new RuntimeException('Failed to sharpen the image');
         }
 
@@ -122,7 +122,7 @@ class Effects implements EffectsInterface
      */
     public function blur($sigma = 1)
     {
-        if (false === imagefilter($this->resource, IMG_FILTER_GAUSSIAN_BLUR)) {
+        if (imagefilter($this->resource, IMG_FILTER_GAUSSIAN_BLUR) === false) {
             throw new RuntimeException('Failed to blur the image');
         }
 
@@ -140,7 +140,7 @@ class Effects implements EffectsInterface
         if ($gdBrightness < -255 || $gdBrightness > 255) {
             throw new InvalidArgumentException(sprintf('The %1$s argument can range from %2$d to %3$d, but you specified %4$d.', '$brightness', -100, 100, $brightness));
         }
-        if (false === imagefilter($this->resource, IMG_FILTER_BRIGHTNESS, $gdBrightness)) {
+        if (imagefilter($this->resource, IMG_FILTER_BRIGHTNESS, $gdBrightness) === false) {
             throw new RuntimeException('Failed to brightness the image');
         }
 
@@ -157,7 +157,7 @@ class Effects implements EffectsInterface
         if ($matrix->getWidth() !== 3 || $matrix->getHeight() !== 3) {
             throw new InvalidArgumentException(sprintf('A convolution matrix must be 3x3 (%dx%d provided).', $matrix->getWidth(), $matrix->getHeight()));
         }
-        if (false === imageconvolution($this->resource, $matrix->getMatrix(), 1, 0)) {
+        if (imageconvolution($this->resource, $matrix->getMatrix(), 1, 0) === false) {
             throw new RuntimeException('Failed to convolve the image');
         }
 

@@ -17,6 +17,7 @@ use Imagine\Test\ImagineTestCase;
 class RangeTest extends ImagineTestCase
 {
     private $start = 0;
+
     private $end = 63;
 
     /**

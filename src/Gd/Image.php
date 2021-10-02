@@ -68,7 +68,7 @@ final class Image extends AbstractImage
      */
     public function __destruct()
     {
-        if (is_resource($this->resource) && 'gd' === get_resource_type($this->resource)) {
+        if (is_resource($this->resource) && get_resource_type($this->resource) === 'gd') {
             imagedestroy($this->resource);
         }
     }
@@ -83,7 +83,7 @@ final class Image extends AbstractImage
         parent::__clone();
         $size = $this->getSize();
         $copy = $this->createImage($size, 'copy');
-        if (false === imagecopy($copy, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight())) {
+        if (imagecopy($copy, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight()) === false) {
             imagedestroy($copy);
             throw new RuntimeException('Image copy operation failed');
         }
@@ -130,7 +130,7 @@ final class Image extends AbstractImage
 
         $dest = $this->createImage($size, 'crop');
 
-        if (false === imagecopy($dest, $this->resource, 0, 0, $start->getX(), $start->getY(), $width, $height)) {
+        if (imagecopy($dest, $this->resource, 0, 0, $start->getX(), $start->getY(), $width, $height) === false) {
             imagedestroy($dest);
             throw new RuntimeException('Image crop operation failed');
         }
@@ -173,7 +173,7 @@ final class Image extends AbstractImage
                 throw new RuntimeException('Image paste operation failed');
             }
         } elseif ($alpha > 0) {
-            if (false === imagecopymerge(/*dst_im*/$this->resource, /*src_im*/$image->resource, /*dst_x*/$start->getX(), /*dst_y*/$start->getY(), /*src_x*/0, /*src_y*/0, /*src_w*/$size->getWidth(), /*src_h*/$size->getHeight(), /*pct*/$alpha)) {
+            if (imagecopymerge(/*dst_im*/$this->resource, /*src_im*/$image->resource, /*dst_x*/$start->getX(), /*dst_y*/$start->getY(), /*src_x*/0, /*src_y*/0, /*src_w*/$size->getWidth(), /*src_h*/$size->getHeight(), /*pct*/$alpha) === false) {
                 throw new RuntimeException('Image paste operation failed');
             }
         }
@@ -188,7 +188,7 @@ final class Image extends AbstractImage
      */
     final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-        if (ImageInterface::FILTER_UNDEFINED !== $filter) {
+        if ($filter !== ImageInterface::FILTER_UNDEFINED) {
             throw new InvalidArgumentException('Unsupported filter type, GD only supports ImageInterface::FILTER_UNDEFINED filter');
         }
 
@@ -230,7 +230,7 @@ final class Image extends AbstractImage
         $color = $this->getColor($background);
         $resource = imagerotate($this->resource, -1 * $angle, $color);
 
-        if (false === $resource) {
+        if ($resource === false) {
             throw new RuntimeException('Image rotate operation failed');
         }
 
@@ -247,9 +247,9 @@ final class Image extends AbstractImage
      */
     final public function save($path = null, array $options = array())
     {
-        $path = null === $path ? (isset($this->metadata['filepath']) ? $this->metadata['filepath'] : $path) : $path;
+        $path = $path === null ? (isset($this->metadata['filepath']) ? $this->metadata['filepath'] : $path) : $path;
 
-        if (null === $path) {
+        if ($path === null) {
             throw new RuntimeException('You can omit save path only if image has been open from a file');
         }
 
@@ -320,7 +320,7 @@ final class Image extends AbstractImage
             $dest = $this->createImage($size, 'flip');
 
             for ($i = 0; $i < $width; $i++) {
-                if (false === imagecopy($dest, $this->resource, $i, 0, ($width - 1) - $i, 0, 1, $height)) {
+                if (imagecopy($dest, $this->resource, $i, 0, ($width - 1) - $i, 0, 1, $height) === false) {
                     imagedestroy($dest);
                     throw new RuntimeException('Horizontal flip operation failed');
                 }
@@ -350,7 +350,7 @@ final class Image extends AbstractImage
             $dest = $this->createImage($size, 'flip');
 
             for ($i = 0; $i < $height; $i++) {
-                if (false === imagecopy($dest, $this->resource, 0, $i, 0, ($height - 1) - $i, $width, 1)) {
+                if (imagecopy($dest, $this->resource, 0, $i, 0, ($height - 1) - $i, $width, 1) === false) {
                     imagedestroy($dest);
                     throw new RuntimeException('Vertical flip operation failed');
                 }
@@ -430,7 +430,7 @@ final class Image extends AbstractImage
                 $maskColor = $mask->getColorAt($position);
                 $delta = (int) round($color->getAlpha() * $maskColor->getRed() / 255) * -1;
 
-                if (false === imagesetpixel($this->resource, $x, $y, $this->getColor($color->dissolve($delta)))) {
+                if (imagesetpixel($this->resource, $x, $y, $this->getColor($color->dissolve($delta))) === false) {
                     throw new RuntimeException('Apply mask operation failed');
                 }
             }
@@ -450,7 +450,7 @@ final class Image extends AbstractImage
 
         for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
             for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
-                if (false === imagesetpixel($this->resource, $x, $y, $this->getColor($fill->getColor(new Point($x, $y))))) {
+                if (imagesetpixel($this->resource, $x, $y, $this->getColor($fill->getColor(new Point($x, $y)))) === false) {
                     throw new RuntimeException('Fill operation failed');
                 }
             }
@@ -468,7 +468,7 @@ final class Image extends AbstractImage
     {
         $mask = $this->copy();
 
-        if (false === imagefilter($mask->resource, IMG_FILTER_GRAYSCALE)) {
+        if (imagefilter($mask->resource, IMG_FILTER_GRAYSCALE) === false) {
             throw new RuntimeException('Mask operation failed');
         }
 
@@ -518,7 +518,7 @@ final class Image extends AbstractImage
      */
     public function layers()
     {
-        if (null === $this->layers) {
+        if ($this->layers === null) {
             $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_GD, $this);
         }
 
@@ -669,7 +669,7 @@ final class Image extends AbstractImage
         }
 
         ErrorHandling::throwingRuntimeException(E_WARNING | E_NOTICE, function () use ($save, $args) {
-            if (false === call_user_func_array($save, $args)) {
+            if (call_user_func_array($save, $args) === false) {
                 throw new RuntimeException('Save operation failed');
             }
         });
@@ -689,11 +689,11 @@ final class Image extends AbstractImage
     {
         $resource = imagecreatetruecolor($size->getWidth(), $size->getHeight());
 
-        if (false === $resource) {
+        if ($resource === false) {
             throw new RuntimeException('Image ' . $operation . ' failed');
         }
 
-        if (false === imagealphablending($resource, false) || false === imagesavealpha($resource, true)) {
+        if (imagealphablending($resource, false) === false || imagesavealpha($resource, true) === false) {
             throw new RuntimeException('Image ' . $operation . ' failed');
         }
 
@@ -726,7 +726,7 @@ final class Image extends AbstractImage
 
         $index = imagecolorallocatealpha($this->resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round(127 * (100 - $color->getAlpha()) / 100));
 
-        if (false === $index) {
+        if ($index === false) {
             throw new RuntimeException(sprintf('Unable to allocate color "RGB(%s, %s, %s)" with transparency of %d percent', $color->getRed(), $color->getGreen(), $color->getBlue(), $color->getAlpha()));
         }
 
@@ -744,7 +744,7 @@ final class Image extends AbstractImage
     {
         $format = strtolower($format);
 
-        if ('jpg' === $format || 'pjpeg' === $format || 'jfif' === $format) {
+        if ($format === 'jpg' || $format === 'pjpeg' || $format === 'jfif') {
             $format = 'jpeg';
         }
 
@@ -762,7 +762,7 @@ final class Image extends AbstractImage
     {
         $formats = self::getSupportedFormats();
 
-        if (null === $format) {
+        if ($format === null) {
             return array_keys($formats);
         }
 

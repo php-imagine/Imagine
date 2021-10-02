@@ -24,8 +24,10 @@ abstract class AbstractFontTest extends ImagineTestCase
         $factory = $this->getImagine();
 
         $this->assertBoxInRange(
-            112, 118,
-            45, 55,
+            112,
+            118,
+            45,
+            55,
             $factory->font($path, 36, $black)->box('string')
         );
     }

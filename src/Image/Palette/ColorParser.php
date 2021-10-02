@@ -28,7 +28,7 @@ class ColorParser
     {
         $color = $this->parse($color);
 
-        if (4 === count($color)) {
+        if (count($color) === 4) {
             $color = array(
                 255 * (1 - $color[0] / 100) * (1 - $color[3] / 100),
                 255 * (1 - $color[1] / 100) * (1 - $color[3] / 100),
@@ -52,7 +52,7 @@ class ColorParser
     {
         $color = $this->parse($color);
 
-        if (3 === count($color)) {
+        if (count($color) === 3) {
             $r = $color[0] / 255;
             $g = $color[1] / 255;
             $b = $color[2] / 255;
@@ -60,9 +60,9 @@ class ColorParser
             $k = 1 - max($r, $g, $b);
 
             $color = array(
-                1 === $k ? 0 : round((1 - $r - $k) / (1 - $k) * 100),
-                1 === $k ? 0 : round((1 - $g - $k) / (1 - $k) * 100),
-                1 === $k ? 0 : round((1 - $b - $k) / (1 - $k) * 100),
+                $k === 1 ? 0 : round((1 - $r - $k) / (1 - $k) * 100),
+                $k === 1 ? 0 : round((1 - $g - $k) / (1 - $k) * 100),
+                $k === 1 ? 0 : round((1 - $b - $k) / (1 - $k) * 100),
                 round($k * 100),
             );
         }
@@ -81,13 +81,13 @@ class ColorParser
      */
     public function parseToGrayscale($color)
     {
-        if (is_array($color) && 1 === count($color)) {
+        if (is_array($color) && count($color) === 1) {
             return array((int) round(array_pop($color)));
         }
 
         $color = array_unique($this->parse($color));
 
-        if (1 !== count($color)) {
+        if (count($color) !== 1) {
             throw new InvalidArgumentException('The provided color has different values of red, green and blue components. Grayscale colors must have the same values for these.');
         }
 
@@ -110,7 +110,7 @@ class ColorParser
         }
 
         if (is_array($color)) {
-            if (3 === count($color) || 4 === count($color)) {
+            if (count($color) === 3 || count($color) === 4) {
                 return array_map(
                     function ($component) {
                         return (int) round($component);
@@ -121,7 +121,7 @@ class ColorParser
             throw new InvalidArgumentException('Color argument if array, must look like array(R, G, B), or array(C, M, Y, K) where R, G, B are the integer values between 0 and 255 for red, green and blue or cyan, magenta, yellow and black color indexes accordingly');
         }
         if (is_string($color)) {
-            if (0 === strpos($color, 'cmyk(')) {
+            if (strpos($color, 'cmyk(') === 0) {
                 $substrColor = substr($color, 5, strlen($color) - 6);
 
                 $components = array_map(function ($component) {
