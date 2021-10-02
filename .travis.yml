@@ -17,20 +17,13 @@ before_install:
 install:
   - |
     set -o errexit
-    case "${TRAVISOPERATION:-}" in
-        codestyle)
-            ;;
-        *)
-            sudo apt-get update -y || true
-            sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
-            sudo apt-get install -y ca-certificates libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev autoconf
-            PHPUNIT_EXCLUDED_GROUPS=always-skipped
-            if test "${IMAGINE_DRIVER:-}" = 'imagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},imagick"; fi
-            if test "${IMAGINE_DRIVER:-}" = 'gmagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},gmagick"; fi
-            php --ri gd || true
-            composer --no-interaction remove --dev --no-update --no-scripts friendsofphp/php-cs-fixer
-            ;;
-    esac
+    sudo apt-get update -y || true
+    sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
+    sudo apt-get install -y ca-certificates libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config liblcms2-dev autoconf
+    PHPUNIT_EXCLUDED_GROUPS=always-skipped
+    if test "${IMAGINE_DRIVER:-}" = 'imagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/imagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},imagick"; fi
+    if test "${IMAGINE_DRIVER:-}" = 'gmagick' -o "${IMAGINE_DRIVER:-}" = 'all'; then ./.travis/gmagick.sh; else PHPUNIT_EXCLUDED_GROUPS="${PHPUNIT_EXCLUDED_GROUPS},gmagick"; fi
+    php --ri gd || true
   - php --ri curl || true
   - ifconfig || true
   - composer --no-interaction install
@@ -39,14 +32,7 @@ install:
 script:
   - |
     set -o errexit
-    case "${TRAVISOPERATION:-}" in
-        codestyle)
-            composer --no-interaction codestyle -- --no-interaction --dry-run --diff -- .
-            ;;
-        *)
-            composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
-            ;;
-    esac
+    composer --no-interaction test -- --exclude-group "${PHPUNIT_EXCLUDED_GROUPS}"
     set +o errexit
   - if test -n "${AUTOUPDATE_API:-}"; then ./.travis/autoupdate-api.sh; fi
 
@@ -118,8 +104,7 @@ matrix:
       env:
         - IMAGINE_DRIVER: imagick
     -
-      name: Coding style and docs
+      name: Docs
       php: 7.2
       env:
-        - TRAVISOPERATION=codestyle
         - AUTOUPDATE_API=yes
