@@ -23,7 +23,7 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
      */
     private static $temporaryFiles = array();
 
-    const HTTP_IMAGE = 'http://imagine.readthedocs.org/en/latest/_static/logo.jpg';
+    const HTTP_IMAGE_PATH = '/fixtures/logo.jpg';
 
     /**
      * Asserts that two images are equal using color histogram comparison method.
@@ -63,6 +63,24 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
         } else {
             self::assertRegExp($pattern, $string, $message);
         }
+    }
+
+    /**
+     * @param string $path
+     *
+     * @throws \PHPUnit_Framework_SkippedTestError
+     * @throws \PHPUnit\Framework\SkippedWithMessageException
+     *
+     * @return string
+     */
+    protected static function getTestWebserverUrl($path)
+    {
+        $testWebServerUrl = getenv('IMAGINE_TEST_WEBSERVERURL');
+        if (empty($testWebServerUrl)) {
+            self::markTestSkipped('The IMAGINE_TEST_WEBSERVERURL environment variable is not set.');
+        }
+
+        return rtrim($testWebServerUrl, '/') . '/' . ltrim($path, '/');
     }
 
     /**
