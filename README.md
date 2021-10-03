@@ -1,5 +1,6 @@
 # Imagine
-[![Travis CI Build Status](https://travis-ci.com/avalanche123/Imagine.svg?branch=develop)](https://travis-ci.com/avalanche123/Imagine) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/avalanche123/Imagine?branch=develop&svg=true)](https://ci.appveyor.com/project/avalanche123/Imagine)
+[![PHPUnit](https://github.com/php-imagine/Imagine/actions/workflows/phpunit.yml/badge.svg)](https://github.com/php-imagine/Imagine/actions/workflows/phpunit.yml)
+[![Coding Style](https://github.com/php-imagine/Imagine/actions/workflows/coding-style.yml/badge.svg)](https://github.com/php-imagine/Imagine/actions/workflows/coding-style.yml)
 
 Tweet about it using the [#php_imagine](https://twitter.com/search?q=%23php_imagine) hashtag.
 
