@@ -26,7 +26,6 @@ jobs:
           - "5.3"
           - "5.4"
         extensions:
-          - gd,gmagick
           - gd,imagick
     steps:
       - name: Inspect environment
