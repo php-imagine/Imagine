@@ -2,7 +2,19 @@ name: PHPUnit
 
 on:
   pull_request:
+    paths:
+      - .github/workflows/phpunit.yml
+      - "src/**"
+      - "tests/**"
+      - composer.json
+      - phpunit.xml.dist
   push:
+    paths:
+      - .github/workflows/phpunit.yml
+      - "src/**"
+      - "tests/**"
+      - composer.json
+      - phpunit.xml.dist
 
 jobs:
   ubuntu:

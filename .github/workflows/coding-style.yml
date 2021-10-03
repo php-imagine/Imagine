@@ -1,6 +1,14 @@
 name: Coding Style
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - .github/workflows/coding-style.yml
+      - "**.php"
+  pull_request:
+    paths:
+      - .github/workflows/coding-style.yml
+      - "**.php"
 
 jobs:
   php:
