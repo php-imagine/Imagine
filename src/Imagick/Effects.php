@@ -179,7 +179,7 @@ class Effects implements EffectsInterface
             throw new InvalidArgumentException(sprintf('A convolution matrix must be 3x3 (%dx%d provided).', $matrix->getWidth(), $matrix->getHeight()));
         }
         try {
-            if (class_exists('ImagickKernel', false) && version_compare($this->getImagickMajorMinorPatchVersion(), '7') >= 0) {
+            if (class_exists('ImagickKernel', false) && version_compare(Imagine::getExtensionInfo()->getImageMagickSemVerVersion(), '7') >= 0) {
                 $kernel = \ImagickKernel::fromMatrix($matrix->getMatrix());
             } else {
                 $kernel = $matrix->getValueList();
@@ -190,19 +190,5 @@ class Effects implements EffectsInterface
         }
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    private function getImagickMajorMinorPatchVersion()
-    {
-        $versionInfo = $this->imagick->getversion();
-        $m = null;
-        if (!preg_match('/(\d+\.\d+\.\d+)/', $versionInfo['versionString'], $m)) {
-            return '';
-        }
-
-        return $m[1];
     }
 }
