@@ -62,7 +62,7 @@ jobs:
           directory: ${{ github.workspace }}/tests
           port: 8013
       - name: PHPUnit
-        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
+        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}" --stop-on-error --stop-on-failure
 
   windows:
     name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Windows)
