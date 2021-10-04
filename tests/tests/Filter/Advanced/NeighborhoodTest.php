@@ -57,7 +57,6 @@ class NeighborhoodTest extends FilterTestCase
                 array(0, 0, 16), array(195, 251, 58), array(0, 0, 0),
             ));
 
-            $i = 0;
             $calls = array();
             for ($y = 0; $y < 3; $y++) {
                 for ($x = 0; $x < 3; $x++) {
@@ -112,7 +111,6 @@ class NeighborhoodTest extends FilterTestCase
             ->will($this->returnValue(new Box(5, 5)))
         ;
 
-        $i = 2;
         $calls = array();
         $returns = array();
         for ($y = 0; $y < 5; $y++) {

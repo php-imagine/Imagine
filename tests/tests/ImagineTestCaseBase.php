@@ -110,7 +110,9 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
         if (isset($bt[1]['function'])) {
             $filenameBase .= '-' . $bt[1]['function'];
         }
+        $m = null;
         if (preg_match('/^(Gd|Gmagick|Imagick)-(.+)$/', $filenameBase, $m)) {
+            $m2 = null;
             if (preg_match('/^(.+)\.(\w+)$/', $suffix, $m2)) {
                 $filenameBase = $m[2];
                 $suffix = $m2[1] . '-' . $m[1] . '.' . $m2[2];
