@@ -1012,12 +1012,14 @@ final class Image extends AbstractImage
 
         $this->imagick->setType($typeMapping[$palette->name()]);
         $this->imagick->setColorspace(static::$colorspaceMapping[$palette->name()]);
-        if ($palette->supportsAlpha() && $this->imagick->getnumberimages() > 0 && method_exists($this->imagick, 'setimagealphachannel') && defined('Imagick::ALPHACHANNEL_ACTIVATE')) {
-            $originalImageIndex = $this->imagick->getiteratorindex();
-            foreach ($this->imagick as $frame) {
-                $frame->setimagealphachannel(\Imagick::ALPHACHANNEL_ACTIVATE);
+        if (version_compare(Imagine::getExtensionInfo()->getImageMagickSemVerVersion(), '7') >= 0) {
+            if ($palette->supportsAlpha() && $this->imagick->getnumberimages() > 0 && method_exists($this->imagick, 'setimagealphachannel') && defined('Imagick::ALPHACHANNEL_ACTIVATE')) {
+                $originalImageIndex = $this->imagick->getiteratorindex();
+                foreach ($this->imagick as $frame) {
+                    $frame->setimagealphachannel(\Imagick::ALPHACHANNEL_ACTIVATE);
+                }
+                $this->imagick->setiteratorindex($originalImageIndex);
             }
-            $this->imagick->setiteratorindex($originalImageIndex);
         }
         $this->palette = $palette;
     }

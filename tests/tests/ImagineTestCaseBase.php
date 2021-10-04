@@ -69,6 +69,7 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
      * @param string $path
      *
      * @throws \PHPUnit_Framework_SkippedTestError
+     * @throws \PHPUnit\Framework\SkippedTestError
      * @throws \PHPUnit\Framework\SkippedWithMessageException
      *
      * @return string
