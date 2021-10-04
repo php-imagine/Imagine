@@ -48,6 +48,8 @@ class ImagineTest extends AbstractImagineTest
     }
 
     /**
+     * @group always-skipped
+     *
      * {@inheritdoc}
      *
      * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAAvifImage()
@@ -58,6 +60,8 @@ class ImagineTest extends AbstractImagineTest
     }
 
     /**
+     * @group always-skipped
+     *
      * {@inheritdoc}
      *
      * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAHeicImage()
@@ -68,6 +72,8 @@ class ImagineTest extends AbstractImagineTest
     }
 
     /**
+     * @group always-skipped
+     *
      * {@inheritdoc}
      *
      * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAJxlImage()
