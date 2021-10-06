@@ -22,6 +22,16 @@ class EffectsTest extends AbstractEffectsTest
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Test\Effects\AbstractEffectsTest::testGrayscale()
+     */
+    public function testGrayscale()
+    {
+        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/777');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
      */
     protected function setUpBase()
