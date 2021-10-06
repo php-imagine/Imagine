@@ -289,6 +289,7 @@ class Loader implements LoaderInterface
         $http_response_header = null;
         $data = @file_get_contents($this->path);
         if ($data === false) {
+            $matches = null;
             if (is_array($http_response_header) && isset($http_response_header[0]) && preg_match('/^HTTP\/\d+(?:\.\d+)*\s+(\d+\s+\w.*)/i', $http_response_header[0], $matches)) {
                 throw new InvalidArgumentException(sprintf('Failed to read from URL %s: %s', $this->path, $matches[1]));
             }

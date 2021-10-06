@@ -42,7 +42,7 @@ class LayersTest extends AbstractLayersTest
         $palette = new RGB();
         $resource = $this->getMockBuilder('\Imagick')->getMock();
 
-        $resource->expects($this->once())
+        $resource->expects($this->atLeastOnce())
             ->method('getNumberImages')
             ->will($this->returnValue(42));
 

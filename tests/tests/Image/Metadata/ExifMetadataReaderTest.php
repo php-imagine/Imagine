@@ -29,7 +29,7 @@ class ExifMetadataReaderTest extends MetadataReaderTestCase
 
     public function testExifDataAreReadWithReadHttpFile()
     {
-        $source = self::HTTP_IMAGE;
+        $source = self::getTestWebserverUrl(self::HTTP_IMAGE_PATH);
 
         try {
             $metadata = $this->getReader()->readFile($source);

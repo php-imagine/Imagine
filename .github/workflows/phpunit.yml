@@ -26,8 +26,9 @@ jobs:
           - "5.3"
           - "5.4"
         extensions:
-          - gd,gmagick
           - gd,imagick
+    env:
+      IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
     steps:
       - name: Inspect environment
         id: inspect
@@ -54,9 +55,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install composer dependencies
-        run: composer update --ansi --no-interaction --no-suggest
+        run: composer update --ansi --no-interaction
+      - name: Start test web server
+        uses: Eun/http-server-action@v1
+        with:
+          directory: ${{ github.workspace }}/tests
+          port: 8013
       - name: PHPUnit
-        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
+        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}" --stop-on-error --stop-on-failure
 
   windows:
     name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Windows)
@@ -68,6 +74,8 @@ jobs:
           - "7.4"
         extensions:
           - gd,imagick
+    env:
+      IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
     steps:
       - name: Inspect environment
         id: inspect
@@ -90,7 +98,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install composer dependencies
-        run: composer update --ansi --no-interaction --no-suggest
+        run: composer update --ansi --no-interaction
+      - name: Start test web server
+        uses: Eun/http-server-action@v1
+        with:
+          directory: ${{ github.workspace }}/tests
+          port: 8013
       - name: PHPUnit
         run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
 
@@ -113,6 +126,8 @@ jobs:
           - gd-gmagick
           - gd-imagick
     container: ghcr.io/php-imagine/test:${{ matrix.php-version }}-${{ matrix.extensions }}
+    env:
+      IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
     steps:
       - name: Inspect environment
         id: inspect
@@ -132,6 +147,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install composer dependencies
-        run: composer update --ansi --no-interaction --no-suggest
+        run: composer update --ansi --no-interaction
+      - name: Start test web server
+        id: start-webserver
+        run: |
+          cd ./tests
+          php -n -S 0.0.0.0:8013 &
+          cd - >/dev/null
       - name: PHPUnit
         run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"

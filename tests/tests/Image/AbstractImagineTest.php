@@ -141,7 +141,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
     {
         $factory = $this->getImagine();
         try {
-            $image = $factory->open(self::HTTP_IMAGE);
+            $image = $factory->open(self::getTestWebserverUrl(self::HTTP_IMAGE_PATH));
         } catch (\Imagine\Exception\RuntimeException $x) {
             if (getenv('TRAVIS') && getenv('CONTINUOUS_INTEGRATION') && $x->getMessage() === 'gnutls_handshake() failed: A TLS packet with unexpected length was received.') {
                 $this->markTestSkipped($x->getMessage());
@@ -156,7 +156,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
         $metadata = $image->metadata();
 
-        $this->assertEquals(self::HTTP_IMAGE, $metadata['uri']);
+        $this->assertEquals(self::getTestWebserverUrl(self::HTTP_IMAGE_PATH), $metadata['uri']);
         $this->assertArrayNotHasKey('filepath', $metadata);
     }
 
@@ -178,8 +178,9 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
     public function testShouldCreateImageFromStreamWithMetadata()
     {
-        $source = 'http://imagine.readthedocs.org/en/latest/_static/exit-90-test.jpg';
+        $source = self::getTestWebserverUrl('/fixtures/exifOrientation/90.jpg');
         $resource = fopen($source, 'r');
+        $this->assertTrue($resource !== false);
 
         $factory = $this->getImagine();
         $image = $factory->read($resource);
@@ -217,7 +218,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
     public function testShouldCreateImageFromHttpResource()
     {
         $factory = $this->getImagine();
-        $resource = fopen(self::HTTP_IMAGE, 'r');
+        $resource = fopen(self::getTestWebserverUrl(self::HTTP_IMAGE_PATH), 'r');
         $image = $factory->read($resource);
         $size = $image->getSize();
 
@@ -227,7 +228,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
 
         $metadata = $image->metadata();
 
-        $this->assertEquals(self::HTTP_IMAGE, $metadata['uri']);
+        $this->assertEquals(self::getTestWebserverUrl(self::HTTP_IMAGE_PATH), $metadata['uri']);
         $this->assertArrayNotHasKey('filepath', $metadata);
     }
 

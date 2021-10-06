@@ -41,7 +41,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromHttpFile()
     {
-        $source = self::HTTP_IMAGE;
+        $source = self::getTestWebserverUrl(self::HTTP_IMAGE_PATH);
         try {
             $metadata = $this->getReader()->readFile($source);
         } catch (\Imagine\Exception\RuntimeException $x) {

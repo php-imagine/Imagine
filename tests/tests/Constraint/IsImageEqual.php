@@ -103,11 +103,16 @@ class IsImageEqual extends Constraint
      */
     protected function _failureDescription($other)
     {
+        if (is_string($other) && getenv('IMAGINE_TEST_KEEP_TEMPFILES')) {
+            $extraMessage = "\nActual file: {$other}";
+        } else {
+            $extraMessage = '';
+        }
         if ($this->imagine !== null && is_string($other)) {
             $other = $this->imagine->open($other);
         }
 
-        return sprintf('contains color histogram identical to the expected one (max delta: %s, actual delta: %s)', $this->delta, $this->getDelta($other));
+        return sprintf('contains color histogram identical to the expected one (max delta: %s, actual delta: %s)', $this->delta, $this->getDelta($other)) . $extraMessage;
     }
 
     /**

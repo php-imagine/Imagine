@@ -108,7 +108,7 @@ class Layers extends AbstractLayers
         }
 
         try {
-            foreach ($this as $offset => $layer) {
+            for ($offset = 0; $offset < $this->count(); $offset++) {
                 $this->resource->setimageindex($offset);
                 $this->resource->setimageformat($format);
 

@@ -97,6 +97,11 @@ abstract class AbstractImageTest extends ImagineTestCase
         $image->usePalette($targetPalette);
 
         $this->assertEquals($targetPalette, $image->palette());
+
+        if ($targetPalette instanceof RGB) {
+            $image->draw()->dot(new Point(1, 0), $targetPalette->color('FF0000'));
+        }
+
         $suffix = array();
         $tmp = explode('\\', $from);
         $suffix[] = array_pop($tmp);

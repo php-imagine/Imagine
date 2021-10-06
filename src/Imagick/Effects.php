@@ -179,7 +179,12 @@ class Effects implements EffectsInterface
             throw new InvalidArgumentException(sprintf('A convolution matrix must be 3x3 (%dx%d provided).', $matrix->getWidth(), $matrix->getHeight()));
         }
         try {
-            $this->imagick->convolveImage($matrix->getValueList());
+            if (class_exists('ImagickKernel', false) && version_compare(Imagine::getExtensionInfo()->getImageMagickSemVerVersion(), '7') >= 0) {
+                $kernel = \ImagickKernel::fromMatrix($matrix->getMatrix());
+            } else {
+                $kernel = $matrix->getValueList();
+            }
+            $this->imagick->convolveImage($kernel);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to convolve the image');
         }

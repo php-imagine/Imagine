@@ -23,7 +23,7 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
      */
     private static $temporaryFiles = array();
 
-    const HTTP_IMAGE = 'http://imagine.readthedocs.org/en/latest/_static/logo.jpg';
+    const HTTP_IMAGE_PATH = '/fixtures/logo.jpg';
 
     /**
      * Asserts that two images are equal using color histogram comparison method.
@@ -37,6 +37,14 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
      */
     public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, ImagineInterface $imagine = null, $buckets = 4)
     {
+        if ($imagine !== null) {
+            if (is_string($expected) && $expected !== '') {
+                $expected = $imagine->open($expected);
+            }
+            if (is_string($actual) && $actual !== '') {
+                $actual = $imagine->open($actual);
+            }
+        }
         $constraint = new IsImageEqual($expected, $delta, $imagine, $buckets);
 
         self::assertThat($actual, $constraint, $message);
@@ -66,6 +74,25 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param string $path
+     *
+     * @throws \PHPUnit_Framework_SkippedTestError
+     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws \PHPUnit\Framework\SkippedWithMessageException
+     *
+     * @return string
+     */
+    protected static function getTestWebserverUrl($path)
+    {
+        $testWebServerUrl = getenv('IMAGINE_TEST_WEBSERVERURL');
+        if (empty($testWebServerUrl)) {
+            self::markTestSkipped('The IMAGINE_TEST_WEBSERVERURL environment variable is not set.');
+        }
+
+        return rtrim($testWebServerUrl, '/') . '/' . ltrim($path, '/');
+    }
+
+    /**
      * @param string $suffix
      *
      * @return string
@@ -91,7 +118,9 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
         if (isset($bt[1]['function'])) {
             $filenameBase .= '-' . $bt[1]['function'];
         }
+        $m = null;
         if (preg_match('/^(Gd|Gmagick|Imagick)-(.+)$/', $filenameBase, $m)) {
+            $m2 = null;
             if (preg_match('/^(.+)\.(\w+)$/', $suffix, $m2)) {
                 $filenameBase = $m[2];
                 $suffix = $m2[1] . '-' . $m[1] . '.' . $m2[2];

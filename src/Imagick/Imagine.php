@@ -33,21 +33,25 @@ use Imagine\Utils\ErrorHandling;
 class Imagine extends AbstractImagine
 {
     /**
+     * @var \Imagine\Imagick\ExtensionInfo|false|null
+     */
+    private static $extensionInfo = false;
+
+    /**
      * @throws \Imagine\Exception\RuntimeException
      */
     public function __construct()
     {
-        if (!class_exists('Imagick')) {
+        $extensionInfo = static::getExtensionInfo();
+        if ($extensionInfo === null) {
             throw new RuntimeException('Imagick not installed');
         }
 
-        $version = $this->getVersion(new \Imagick());
-
-        if (version_compare('6.2.9', $version) > 0) {
-            throw new RuntimeException(sprintf('ImageMagick version 6.2.9 or higher is required, %s provided', $version));
+        if (version_compare($extensionInfo->getImageMagickSemVerVersion(), '6.2.9') < 0) {
+            throw new RuntimeException(sprintf('ImageMagick version 6.2.9 or higher is required, %s provided', $extensionInfo->getImageMagickSemVerVersion()));
         }
-        if ($version === '7.0.7-32') { // https://github.com/avalanche123/Imagine/issues/689
-            throw new RuntimeException(sprintf('ImageMagick version %s has known bugs that prevent it from working', $version));
+        if ($extensionInfo->getImageMagickFullVersion() === '7.0.7-32') { // https://github.com/avalanche123/Imagine/issues/689
+            throw new RuntimeException(sprintf('ImageMagick version %s has known bugs that prevent it from working', $extensionInfo->getImageMagickFullVersion()));
         }
     }
 
@@ -104,7 +108,7 @@ class Imagine extends AbstractImagine
             $imagick->setImageMatte(true);
             $imagick->setImageBackgroundColor($pixel);
 
-            if (version_compare('6.3.1', $this->getVersion($imagick)) < 0) {
+            if (version_compare('6.3.1', static::getExtensionInfo()->getImageMagickSemVerVersion()) < 0) {
                 // setImageOpacity was replaced with setImageAlpha in php-imagick v3.4.3
                 if (method_exists($imagick, 'setImageAlpha')) {
                     $imagick->setImageAlpha($pixel->getColorValue(\Imagick::COLOR_ALPHA));
@@ -177,6 +181,27 @@ class Imagine extends AbstractImagine
     }
 
     /**
+     * Get the info about the Imagick extension.
+     *
+     * @return \Imagine\Imagick\ExtensionInfo|null return NULL if Imagick is not installed
+     */
+    public static function getExtensionInfo()
+    {
+        if (self::$extensionInfo === false) {
+            if (!class_exists('Imagick')) {
+                self::$extensionInfo = null;
+            } else {
+                $imagick = new \Imagick();
+                self::$extensionInfo = new ExtensionInfo($imagick);
+                $imagick->clear();
+                $imagick->destroy();
+            }
+        }
+
+        return self::$extensionInfo;
+    }
+
+    /**
      * Returns the palette corresponding to an \Imagick resource colorspace.
      *
      * @param \Imagick $imagick
@@ -211,20 +236,5 @@ class Imagine extends AbstractImagine
             default:
                 throw new NotSupportedException('Only RGB and CMYK colorspace are currently supported');
         }
-    }
-
-    /**
-     * Returns ImageMagick version.
-     *
-     * @param \Imagick $imagick
-     *
-     * @return string
-     */
-    private function getVersion(\Imagick $imagick)
-    {
-        $v = $imagick->getVersion();
-        list($version) = sscanf($v['versionString'], 'ImageMagick %s %04d-%02d-%02d %s %s');
-
-        return $version;
     }
 }
