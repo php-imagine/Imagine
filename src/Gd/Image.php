@@ -184,12 +184,14 @@ final class Image extends AbstractImage
     /**
      * {@inheritdoc}
      *
+     * Please remark that GD doesn't support different filters, so the $filter argument is ignored.
+     *
      * @see \Imagine\Image\ManipulatorInterface::resize()
      */
     final public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-        if ($filter !== ImageInterface::FILTER_UNDEFINED) {
-            throw new InvalidArgumentException('Unsupported filter type, GD only supports ImageInterface::FILTER_UNDEFINED filter');
+        if (!in_array($filter, static::getAllFilterValues(), true)) {
+            throw new InvalidArgumentException('Unsupported filter type');
         }
 
         $width = $size->getWidth();

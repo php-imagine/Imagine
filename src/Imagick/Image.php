@@ -1095,12 +1095,11 @@ final class Image extends AbstractImage
             ImageInterface::FILTER_SINC => \Imagick::FILTER_SINC,
             ImageInterface::FILTER_TRIANGLE => \Imagick::FILTER_TRIANGLE,
         );
-
+        if (!in_array($filter, static::getAllFilterValues(), true)) {
+            throw new InvalidArgumentException('Unsupported filter type');
+        }
         if (!array_key_exists($filter, $supportedFilters)) {
-            throw new InvalidArgumentException(sprintf(
-                'The resampling filter "%s" is not supported by Imagick driver.',
-                $filter
-            ));
+            $filter = ImageInterface::FILTER_UNDEFINED;
         }
 
         return $supportedFilters[$filter];

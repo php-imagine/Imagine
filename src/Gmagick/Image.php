@@ -222,6 +222,9 @@ final class Image extends AbstractImage
      */
     public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
+        if (!in_array($filter, static::getAllFilterValues(), true)) {
+            throw new InvalidArgumentException('Unsupported filter type');
+        }
         static $supportedFilters = array(
             ImageInterface::FILTER_UNDEFINED => \Gmagick::FILTER_UNDEFINED,
             ImageInterface::FILTER_BESSEL => \Gmagick::FILTER_BESSEL,
@@ -242,7 +245,7 @@ final class Image extends AbstractImage
         );
 
         if (!array_key_exists($filter, $supportedFilters)) {
-            throw new InvalidArgumentException('Unsupported filter type');
+            $filter = ImageInterface::FILTER_UNDEFINED;
         }
 
         try {
