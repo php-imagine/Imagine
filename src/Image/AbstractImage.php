@@ -169,6 +169,28 @@ abstract class AbstractImage implements ImageInterface, ClassFactoryAwareInterfa
     }
 
     /**
+     * Get all the available filter defined in ImageInterface.
+     *
+     * @return string[]
+     */
+    protected static function getAllFilterValues()
+    {
+        static $result;
+        if (!is_array($result)) {
+            $values = array();
+            $interface = new \ReflectionClass('Imagine\Image\ImageInterface');
+            foreach ($interface->getConstants() as $name => $value) {
+                if (strpos($name, 'FILTER_') === 0) {
+                    $values[] = $value;
+                }
+            }
+            $result = $values;
+        }
+
+        return $result;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @see \Imagine\Image\ImageInterface::metadata()
