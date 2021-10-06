@@ -95,6 +95,21 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
+     * @dataProvider provideVariousSources
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testResolutionOnSave()
+     */
+    public function testResolutionOnSave($source)
+    {
+        if (substr($source, -4) === '.svg') {
+            $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/788');
+        }
+        $this->provideVariousSources();
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
