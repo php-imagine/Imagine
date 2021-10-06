@@ -40,6 +40,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testCount()
     {
+        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/787');
         $palette = new RGB();
         $resource = $this->getMockBuilder('\Gmagick')->getMock();
 
@@ -54,6 +55,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testGetLayer()
     {
+        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/787');
         $palette = new RGB();
         $resource = $this->getMockBuilder('\Gmagick')->getMock();
 
