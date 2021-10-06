@@ -27,6 +27,21 @@ use Imagine\Test\Image\AbstractImageTest;
 class ImageTest extends AbstractImageTest
 {
     /**
+     * @dataProvider provideFromAndToPalettes
+     *
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testUsePalette()
+     */
+    public function testUsePalette($from, $to, $color)
+    {
+        if ($from === 'Imagine\\Image\\Palette\\Grayscale' && $to === 'Imagine\\Image\\Palette\\RGB') {
+            $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/780');
+        }
+        parent::testUsePalette($from, $to, $color);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
