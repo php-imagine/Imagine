@@ -87,6 +87,16 @@ class ImageTest extends AbstractImageTest
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Test\Image\AbstractImageTest::testColorHistogram()
+     */
+    public function testColorHistogram()
+    {
+        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/785');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
      */
     protected function setUpBase()
