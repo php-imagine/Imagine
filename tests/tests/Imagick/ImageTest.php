@@ -57,6 +57,16 @@ class ImageTest extends AbstractImageTest
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Test\Image\AbstractImageTest::testGetColorAtGrayScale()
+     */
+    public function testGetColorAtGrayScale()
+    {
+        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/783');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
      */
     protected function setUpBase()
