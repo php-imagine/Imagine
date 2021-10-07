@@ -195,8 +195,9 @@ interface ImageInterface extends ManipulatorInterface
 
     /**
      * Instantiates and returns a DrawerInterface instance for image drawing.
+     * Some drivers may also return a DrawerInterface drawer that's also AlphaBlendingAwareDrawerInterface.
      *
-     * @return \Imagine\Draw\DrawerInterface
+     * @return \Imagine\Draw\DrawerInterface|\Imagine\Draw\AlphaBlendingAwareDrawerInterface
      */
     public function draw();
 
