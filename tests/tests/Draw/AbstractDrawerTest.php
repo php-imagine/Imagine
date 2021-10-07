@@ -54,7 +54,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->arc(new Center($size), $size->scale(0.5), 0, 180, $this->getColor('f00')));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}.png");
         $image->save($filename);
-        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/arc/thinkness{$thickness}.png", $filename, '', 0.25, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/arc/thinkness{$thickness}.png", $filename, '', 0.45, $imagine);
     }
 
     /**
@@ -225,7 +225,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         ));
         $filename = $this->getTemporaryFilename('.png');
         $image->save($filename);
-        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . '/drawer/text/text.png', $filename, '', 0.18, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . '/drawer/text/text.png', $filename, '', 0.9, $imagine);
     }
 
     public function testDrawASmileyFace()
