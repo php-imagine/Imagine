@@ -70,8 +70,14 @@ For example, if you have Imagine locally in the `/home/me/imagine` folder, you c
 2. Inside the docker container, run these commands:
    ```sh
    cd /app
+   # Start a local web server: some tests require it
+   php -n -S 0.0.0.0:8013 >/dev/null 2>&1 &
+   # Tell the tests that the local web server is available at the port 8013
+   export IMAGINE_TEST_WEBSERVERURL=http://localhost:8013
+   # Install the composer dependencies
    composer update
-   compoer run test -- --exclude-group always-skipped,gmagick
+   # Run the tests
+   composer run test -- --exclude-group always-skipped,gmagick
    ```
 
 PS: This approach works on Windows too: simply launch the docker container with
