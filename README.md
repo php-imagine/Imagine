@@ -57,3 +57,25 @@ Some of the ideas for upcoming filters:
 
 New pull requests should be based on the `develop` branch.
 The `master` branch is the stable branch: it usually matches the latest a release but in can be a bit ahead.
+
+Setting up an environment with all the required libraries may be very hard.
+In order to run the tests locally, you can use the same [docker images](https://github.com/php-imagine/docker-builder/pkgs/container/test) used by Imagine to test the pull requests.
+
+For example, if you have Imagine locally in the `/home/me/imagine` folder, you can run tests for PHP 8.1 with the GD and Imagick with this very simple approach:
+
+1. Launch a temporary docker container with:
+   ```sh
+   docker run --rm -it -v /home/me/imagine:/app ghcr.io/php-imagine/test:8.1-gd-imagick bash
+   ```
+2. Inside the docker container, run these commands:
+   ```sh
+   cd /app
+   composer update
+   compoer run test -- --exclude-group always-skipped,gmagick
+   ```
+
+PS: This approach works on Windows too: simply launch the docker container with
+
+```
+docker run --rm -it -v C:\Path\To\Imagine:/app ghcr.io/php-imagine/test:8.1-gd-imagick bash
+```
