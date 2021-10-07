@@ -446,7 +446,7 @@ final class Drawer implements AlphaBlendingAwareDrawerInterface
             throw new InvalidArgumentException('GD driver only supports RGB colors');
         }
 
-        $gdColor = imagecolorallocatealpha($this->resource, $color->getRed(), $color->getGreen(), $color->getBlue(), (100 - $color->getAlpha()) * 127 / 100);
+        $gdColor = imagecolorallocatealpha($this->resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round((100 - $color->getAlpha()) * 127 / 100));
         if ($gdColor === false) {
             throw new RuntimeException(sprintf('Unable to allocate color "RGB(%s, %s, %s)" with transparency of %d percent', $color->getRed(), $color->getGreen(), $color->getBlue(), $color->getAlpha()));
         }

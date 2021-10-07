@@ -608,6 +608,26 @@ final class Image extends AbstractImage
         $args = array(&$this->resource, $filename);
 
         switch ($format) {
+            case 'avif':
+                // ranges from 0 (worst quality, smaller file) to 100 (best quality, larger file). If -1 is provided, the default value is used
+                $quality = -1;
+                // ranges from 0 (slow, smaller file) to 10 (fast, larger file). If -1 is provided, the default value is used
+                $speed = -1;
+                if (!empty($options[$format . '_lossless'])) {
+                    $quality = 100;
+                } else {
+                    if (!isset($options[$format . '_quality'])) {
+                        if (isset($options['quality'])) {
+                            $options[$format . '_quality'] = $options['quality'];
+                        }
+                    }
+                    if (isset($options[$format . '_quality'])) {
+                        $quality = max(0, min(100, $options[$format . '_quality']));
+                    }
+                }
+                $args[] = $quality;
+                $args[] = $speed;
+                break;
             case 'bmp':
                 if (isset($options['compressed'])) {
                     $args[] = (bool) $options['compressed'];
@@ -811,6 +831,9 @@ final class Image extends AbstractImage
             }
             if (function_exists('imagewebp')) {
                 $supportedFormats['webp'] = array('mimeType' => 'image/webp');
+            }
+            if (function_exists('imageavif') && function_exists('imagecreatefromavif')) {
+                $supportedFormats['avif'] = array('mimeType' => 'image/avif');
             }
             ksort($supportedFormats);
         }

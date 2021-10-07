@@ -48,15 +48,17 @@ class ImagineTest extends AbstractImagineTest
     }
 
     /**
-     * @group always-skipped
-     *
      * {@inheritdoc}
      *
      * @see \Imagine\Test\Image\AbstractImagineTest::testShouldOpenAAvifImage()
      */
     public function testShouldOpenAAvifImage()
     {
-        $this->markTestSkipped('GD does not support AVIF');
+        if (!function_exists('imageavif')) {
+            $this->markTestSkipped('GD imageavif support is not enabled');
+        }
+
+        return parent::testShouldOpenAAvifImage();
     }
 
     /**
