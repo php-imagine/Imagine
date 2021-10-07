@@ -225,7 +225,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         ));
         $filename = $this->getTemporaryFilename('.png');
         $image->save($filename);
-        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . '/drawer/text/text.png', $filename, '', 0.18, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . '/drawer/text/text.png', $filename, '', 0.9, $imagine);
     }
 
     public function testDrawASmileyFace()
