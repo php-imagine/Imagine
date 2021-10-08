@@ -17,118 +17,127 @@ on:
       - phpunit.xml.dist
 
 jobs:
-  ubuntu:
-    name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Ubuntu)
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version:
-          - "5.3"
-          - "5.4"
-        extensions:
-          - gd,imagick
-    env:
-      IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
-    steps:
-      - name: Inspect environment
-        id: inspect
-        run: |
-          EXCLUDED_GROUPS=always-skipped
-          AVAILABLE_EXTENSIONS=",${{ matrix.extensions }},"
-          for CHECK_EXTENSION in gd gmagick imagick; do
-            case "$AVAILABLE_EXTENSIONS" in
-              *,$CHECK_EXTENSION,*)
-                ;;
-              *)
-                EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
-                ;;
-            esac
-          done
-          echo "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-          extensions: exif,${{ matrix.extensions }}
-          tools: composer:v2
-          coverage: none
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install composer dependencies
-        run: composer update --ansi --no-interaction
-      - name: Start test web server
-        uses: Eun/http-server-action@v1
-        with:
-          directory: ${{ github.workspace }}/tests
-          port: 8013
-      - name: PHPUnit
-        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}" --stop-on-error --stop-on-failure
+  # ubuntu:
+  #   name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Ubuntu)
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       php-version:
+  #         - "5.3"
+  #         - "5.4"
+  #       extensions:
+  #         - gd,imagick
+  #   env:
+  #     IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
+  #   steps:
+  #     - name: Inspect environment
+  #       id: inspect
+  #       run: |
+  #         EXCLUDED_GROUPS=always-skipped
+  #         AVAILABLE_EXTENSIONS=",${{ matrix.extensions }},"
+  #         for CHECK_EXTENSION in gd gmagick imagick; do
+  #           case "$AVAILABLE_EXTENSIONS" in
+  #             *,$CHECK_EXTENSION,*)
+  #               ;;
+  #             *)
+  #               EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
+  #               ;;
+  #           esac
+  #         done
+  #         echo "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
+  #     - name: Setup PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: ${{ matrix.php-version }}
+  #         extensions: exif,${{ matrix.extensions }}
+  #         tools: composer:v2
+  #         coverage: none
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Install composer dependencies
+  #       run: composer update --ansi --no-interaction
+  #     - name: Start test web server
+  #       uses: Eun/http-server-action@v1
+  #       with:
+  #         directory: ${{ github.workspace }}/tests
+  #         port: 8013
+  #     - name: PHPUnit
+  #       run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}" --stop-on-error --stop-on-failure
 
-  windows:
-    name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Windows)
-    runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version:
-          - "5.6"
-          - "7.4"
-        extensions:
-          - gd,imagick
-    env:
-      IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
-    steps:
-      - name: Inspect environment
-        id: inspect
-        run: |
-          $EXCLUDED_GROUPS='always-skipped'
-          $AVAILABLE_EXTENSIONS=",${{ matrix.extensions }},"
-          foreach ($CHECK_EXTENSION in @('gd', 'gmagick', 'imagick')) {
-            if (-not($AVAILABLE_EXTENSIONS -match ",$CHECK_EXTENSION,")) {
-                $EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
-            }
-          }
-          Write-Output "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-          extensions: exif,${{ matrix.extensions }}
-          tools: composer:v2
-          coverage: none
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install composer dependencies
-        run: composer update --ansi --no-interaction
-      - name: Start test web server
-        uses: Eun/http-server-action@v1
-        with:
-          directory: ${{ github.workspace }}/tests
-          port: 8013
-      - name: PHPUnit
-        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
+  # windows:
+  #   name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Windows)
+  #   runs-on: windows-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       php-version:
+  #         - "5.6"
+  #         - "7.4"
+  #       extensions:
+  #         - gd,imagick
+  #   env:
+  #     IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
+  #   steps:
+  #     - name: Inspect environment
+  #       id: inspect
+  #       run: |
+  #         $EXCLUDED_GROUPS='always-skipped'
+  #         $AVAILABLE_EXTENSIONS=",${{ matrix.extensions }},"
+  #         foreach ($CHECK_EXTENSION in @('gd', 'gmagick', 'imagick')) {
+  #           if (-not($AVAILABLE_EXTENSIONS -match ",$CHECK_EXTENSION,")) {
+  #               $EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
+  #           }
+  #         }
+  #         Write-Output "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
+  #     - name: Setup PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: ${{ matrix.php-version }}
+  #         extensions: exif,${{ matrix.extensions }}
+  #         tools: composer:v2
+  #         coverage: none
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Install composer dependencies
+  #       run: composer update --ansi --no-interaction
+  #     - name: Start test web server
+  #       uses: Eun/http-server-action@v1
+  #       with:
+  #         directory: ${{ github.workspace }}/tests
+  #         port: 8013
+  #     - name: PHPUnit
+  #       run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
 
   docker:
-    name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Docker)
+    name: PHP ${{ matrix.config.php-version }} - ${{ matrix.extensions }} (Docker)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        php-version:
-          - "5.5"
-          - "5.6"
-          - "7.0"
-          - "7.1"
-          - "7.2"
-          - "7.3"
-          - "7.4"
-          - "8.0"
-          - "8.1"
+        config:
+          # - php-version: "5.5"
+          #   code-coverage: "no"
+          # - php-version: "5.6"
+          #   code-coverage: "no"
+          # - php-version: "7.0"
+          #   code-coverage: "no"
+          # - php-version: "7.1"
+          #   code-coverage: "no"
+          # - php-version: "7.2"
+          #   code-coverage: "no"
+          # - php-version: "7.3"
+          #   code-coverage: "no"
+          # - php-version: "7.4"
+          #   code-coverage: "no"
+          - php-version: "8.0"
+            code-coverage: "no"
+          - php-version: "8.1"
+            code-coverage: "yes"
         extensions:
           - gd-gmagick
           - gd-imagick
-    container: ghcr.io/php-imagine/test:${{ matrix.php-version }}-${{ matrix.extensions }}
+    container: ghcr.io/php-imagine/test:${{ matrix.config.php-version }}-${{ matrix.extensions }}
     env:
       IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
     steps:
@@ -158,4 +167,24 @@ jobs:
           php -n -S 0.0.0.0:8013 &
           cd - >/dev/null
       - name: PHPUnit
-        run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
+        run: |
+          FLAGS=''
+          if [ '${{ matrix.config.code-coverage }}' = yes ]; then
+            FLAGS="$FLAGS --coverage-clover=coverage-clover.xml"
+            docker-php-ext-enable-xdebug
+            export XDEBUG_MODE=coverage
+          fi
+          composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}" $FLAGS
+      - name: Install php-coveralls
+        if: matrix.config.code-coverage == 'yes'
+        run: composer global require php-coveralls/php-coveralls:^2.4.3
+      - name: Send code coverage to Coveralls
+        if: matrix.config.code-coverage == 'yes'
+        run: >
+          COVERALLS_PARALLEL=true
+          COVERALLS_FLAG_NAME="${{ matrix.config.php-version }}-${{ matrix.extensions }}"
+          "$(composer global config bin-dir --absolute -q)/php-coveralls"
+          --ansi --no-interaction
+          --coverage_clover=coverage-clover.xml
+          --json_path=coverage.json
+          -v
