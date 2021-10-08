@@ -40,7 +40,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testCount()
     {
-        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/787');
+        $this->checkGmagickMockable();
         $palette = new RGB();
         $resource = $this->getMockBuilder('\Gmagick')->getMock();
 
@@ -55,7 +55,7 @@ class LayersTest extends AbstractLayersTest
 
     public function testGetLayer()
     {
-        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/787');
+        $this->checkGmagickMockable();
         $palette = new RGB();
         $resource = $this->getMockBuilder('\Gmagick')->getMock();
 
@@ -110,5 +110,38 @@ class LayersTest extends AbstractLayersTest
     protected function assertLayersEquals($expected, $actual)
     {
         $this->assertEquals($expected->getGmagick(), $actual->getGmagick());
+    }
+
+    /**
+     * Check if the current Gmagick version is affected by the https://github.com/vitoc/gmagick/issues/55 bug.
+     *
+     * @throws \PHPUnit_Framework_SkippedTestError
+     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws \PHPUnit\Framework\SkippedWithMessageException
+     *
+     * @see https://github.com/vitoc/gmagick/issues/55
+     */
+    protected function checkGmagickMockable()
+    {
+        if (!method_exists('Gmagick', 'thresholdimage')) {
+            return;
+        }
+        $method = new \ReflectionMethod('Gmagick', 'thresholdimage');
+        $parameters = $method->getParameters();
+        if (!isset($parameters[1])) {
+            return;
+        }
+        try {
+            $parameters[1]->getDefaultValue();
+        } catch (\Error $x) {
+            if ($x->getMessage() === 'Undefined constant "CHANNEL_DEFAULT"') {
+                $this->markTestSkipped("Gmagick can't be mocked because of bug https://github.com/vitoc/gmagick/issues/55");
+            }
+        } catch (\Exception $x) {
+            if ($x->getMessage() === 'Undefined constant "CHANNEL_DEFAULT"') {
+                $this->markTestSkipped("Gmagick can't be mocked because of bug https://github.com/vitoc/gmagick/issues/55");
+            }
+        } catch (\Throwable $x) {
+        }
     }
 }
