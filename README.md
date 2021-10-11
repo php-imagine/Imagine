@@ -89,3 +89,4 @@ docker run --rm -it -v C:\Path\To\Imagine:/app ghcr.io/php-imagine/test:8.1-gd-i
 Many tests create temporary files (in the `tests/tmp` directory) containing built images.
 Those temporary files are compared with expected images, and then are deleted.
 If you want to keep those temporary files (for example, to check what's being build), you can set the `IMAGINE_TEST_KEEP_TEMPFILES` environment variable.
+If the `IMAGINE_TEST_KEEP_TEMPFILES` is configured in the GitHub Action tests, those temporary files are attached to tests as an articact.

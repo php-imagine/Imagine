@@ -30,6 +30,8 @@ jobs:
           - gd,imagick
     env:
       IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
+      # Uncomment the following line to save test files as artifacts
+      IMAGINE_TEST_KEEP_TEMPFILES: yes
     steps:
       - name: Inspect environment
         id: inspect
@@ -64,6 +66,13 @@ jobs:
           port: 8013
       - name: PHPUnit
         run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}" --stop-on-error --stop-on-failure
+      - name: Save tests temporary files
+        if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
+        uses: actions/upload-artifact@v2
+        with:
+          name: tmpfiies-${{ matrix.php-version }}-${{ matrix.extensions }}
+          path: tests/tmp/
+          retention-days: 1
 
   windows:
     name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Windows)
@@ -78,6 +87,8 @@ jobs:
           - gd,imagick
     env:
       IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
+      # Uncomment the following line to save test files as artifacts
+      IMAGINE_TEST_KEEP_TEMPFILES: yes
     steps:
       - name: Inspect environment
         id: inspect
@@ -108,6 +119,13 @@ jobs:
           port: 8013
       - name: PHPUnit
         run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
+      - name: Save tests temporary files
+        if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
+        uses: actions/upload-artifact@v2
+        with:
+          name: tmpfiies-${{ matrix.php-version }}-${{ matrix.extensions }}
+          path: tests/tmp/
+          retention-days: 1
 
   docker:
     name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Docker)
@@ -131,6 +149,8 @@ jobs:
     container: ghcr.io/php-imagine/test:${{ matrix.php-version }}-${{ matrix.extensions }}
     env:
       IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
+      # Uncomment the following line to save test files as artifacts
+      IMAGINE_TEST_KEEP_TEMPFILES: yes
     steps:
       - name: Inspect environment
         id: inspect
@@ -159,3 +179,10 @@ jobs:
           cd - >/dev/null
       - name: PHPUnit
         run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
+      - name: Save tests temporary files
+        if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
+        uses: actions/upload-artifact@v2
+        with:
+          name: tmpfiies-${{ matrix.php-version }}-${{ matrix.extensions }}
+          path: tests/tmp/
+          retention-days: 1
