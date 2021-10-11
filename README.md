@@ -85,3 +85,7 @@ PS: This approach works on Windows too: simply launch the docker container with
 ```
 docker run --rm -it -v C:\Path\To\Imagine:/app ghcr.io/php-imagine/test:8.1-gd-imagick bash
 ```
+
+Many tests create temporary files (in the `tests/tmp` directory) containing built images.
+Those temporary files are compared with expected images, and then are deleted.
+If you want to keep those temporary files (for example, to check what's being build), you can set the `IMAGINE_TEST_KEEP_TEMPFILES` environment variable.
