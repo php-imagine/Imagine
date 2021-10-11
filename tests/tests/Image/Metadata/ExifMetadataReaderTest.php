@@ -30,28 +30,13 @@ class ExifMetadataReaderTest extends MetadataReaderTestCase
     public function testExifDataAreReadWithReadHttpFile()
     {
         $source = self::getTestWebserverUrl(self::HTTP_IMAGE_PATH);
-
-        try {
-            $metadata = $this->getReader()->readFile($source);
-        } catch (\Imagine\Exception\RuntimeException $x) {
-            if (getenv('TRAVIS') && getenv('CONTINUOUS_INTEGRATION') && $x->getMessage() === 'gnutls_handshake() failed: A TLS packet with unexpected length was received.') {
-                $this->markTestSkipped($x->getMessage());
-            }
-            throw $x;
-        }
+        $metadata = $this->getReader()->readFile($source);
         $this->assertEquals(1, $metadata['ifd0.Orientation']);
     }
 
     public function testExifDataAreReadWithReadData()
     {
-        try {
-            $metadata = $this->getReader()->readData(file_get_contents(IMAGINE_TEST_FIXTURESFOLDER . '/exifOrientation/90.jpg'));
-        } catch (\Imagine\Exception\RuntimeException $x) {
-            if (getenv('TRAVIS') && getenv('CONTINUOUS_INTEGRATION') && $x->getMessage() === 'gnutls_handshake() failed: A TLS packet with unexpected length was received.') {
-                $this->markTestSkipped($x->getMessage());
-            }
-            throw $x;
-        }
+        $metadata = $this->getReader()->readData(file_get_contents(IMAGINE_TEST_FIXTURESFOLDER . '/exifOrientation/90.jpg'));
         $this->assertTrue(isset($metadata['ifd0.Orientation']));
         $this->assertEquals(6, $metadata['ifd0.Orientation']);
     }

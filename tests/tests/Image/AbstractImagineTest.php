@@ -140,14 +140,7 @@ abstract class AbstractImagineTest extends ImagineTestCase
     public function testShouldOpenAnHttpImage()
     {
         $factory = $this->getImagine();
-        try {
-            $image = $factory->open(self::getTestWebserverUrl(self::HTTP_IMAGE_PATH));
-        } catch (\Imagine\Exception\RuntimeException $x) {
-            if (getenv('TRAVIS') && getenv('CONTINUOUS_INTEGRATION') && $x->getMessage() === 'gnutls_handshake() failed: A TLS packet with unexpected length was received.') {
-                $this->markTestSkipped($x->getMessage());
-            }
-            throw $x;
-        }
+        $image = $factory->open(self::getTestWebserverUrl(self::HTTP_IMAGE_PATH));
         $size = $image->getSize();
 
         $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);

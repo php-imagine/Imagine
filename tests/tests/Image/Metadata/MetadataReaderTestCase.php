@@ -42,14 +42,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
     public function testReadFromHttpFile()
     {
         $source = self::getTestWebserverUrl(self::HTTP_IMAGE_PATH);
-        try {
-            $metadata = $this->getReader()->readFile($source);
-        } catch (\Imagine\Exception\RuntimeException $x) {
-            if (getenv('TRAVIS') && getenv('CONTINUOUS_INTEGRATION') && $x->getMessage() === 'gnutls_handshake() failed: A TLS packet with unexpected length was received.') {
-                $this->markTestSkipped($x->getMessage());
-            }
-            throw $x;
-        }
+        $metadata = $this->getReader()->readFile($source);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
         $this->assertFalse(isset($metadata['filepath']));
         $this->assertEquals($source, $metadata['uri']);
