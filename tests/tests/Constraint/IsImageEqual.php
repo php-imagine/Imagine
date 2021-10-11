@@ -103,7 +103,7 @@ class IsImageEqual extends Constraint
      */
     protected function _failureDescription($other)
     {
-        if (is_string($other) && getenv('IMAGINE_TEST_KEEP_TEMPFILES')) {
+        if (is_string($other) && IMAGINE_TEST_KEEP_TEMPFILES === true) {
             $extraMessage = "\nActual file: {$other}";
         } else {
             $extraMessage = '';

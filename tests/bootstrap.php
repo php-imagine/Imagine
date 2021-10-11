@@ -57,3 +57,7 @@ if (is_dir(IMAGINE_TEST_TEMPFOLDER)) {
     }
 }
 mkdir(IMAGINE_TEST_TEMPFOLDER);
+
+$keepTestFiles = getenv('IMAGINE_TEST_KEEP_TEMPFILES');
+define('IMAGINE_TEST_KEEP_TEMPFILES', !empty($keepTestFiles) && strcasecmp($keepTestFiles, 'no') !== 0 && strcasecmp($keepTestFiles, 'false') !== 0);
+unset($keepTestFiles);

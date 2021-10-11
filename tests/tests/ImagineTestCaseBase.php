@@ -145,16 +145,13 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
 
     protected static function tearDownAfterClassBase()
     {
-        if (!empty(self::$temporaryFiles)) {
-            $keepFiles = getenv('IMAGINE_TEST_KEEP_TEMPFILES');
-            if (empty($keepFiles)) {
-                foreach (self::$temporaryFiles as $temporaryFile) {
-                    if (is_file($temporaryFile)) {
-                        @unlink($temporaryFile);
-                    }
+        if (self::$temporaryFiles !== array() && IMAGINE_TEST_KEEP_TEMPFILES === false) {
+            foreach (self::$temporaryFiles as $temporaryFile) {
+                if (is_file($temporaryFile)) {
+                    @unlink($temporaryFile);
                 }
-                self::$temporaryFiles = array();
             }
+            self::$temporaryFiles = array();
         }
     }
 
