@@ -71,7 +71,7 @@ jobs:
         if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
         uses: actions/upload-artifact@v2
         with:
-          name: tmpfiies-${{ matrix.php-version }}-${{ matrix.extensions }}
+          name: ubuntu-${{ matrix.php-version }}-${{ matrix.extensions }}
           path: tests/tmp/
           retention-days: 1
 
@@ -120,7 +120,7 @@ jobs:
         if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
         uses: actions/upload-artifact@v2
         with:
-          name: tmpfiies-${{ matrix.php-version }}-${{ matrix.extensions }}
+          name: windows-${{ matrix.php-version }}-${{ matrix.extensions }}
           path: tests/tmp/
           retention-days: 1
 
@@ -176,6 +176,6 @@ jobs:
         if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
         uses: actions/upload-artifact@v2
         with:
-          name: tmpfiies-${{ matrix.php-version }}-${{ matrix.extensions }}
+          name: docker-${{ matrix.php-version }}-${{ matrix.extensions }}
           path: tests/tmp/
           retention-days: 1
