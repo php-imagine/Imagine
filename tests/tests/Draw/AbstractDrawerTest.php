@@ -148,7 +148,7 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertSame($drawer, $drawer->pieSlice(new Point($size->getWidth() / 2, 5), $size->scale(0.9), 45, 135, $this->getColor('f00'), $fill, $thickness));
         $filename = $this->getTemporaryFilename("thinkness{$thickness}-fill{$fill01}.png");
         $image->save($filename);
-        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/pieslice/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.20, $imagine);
+        $this->assertImageEquals(IMAGINE_TEST_FIXTURESFOLDER . "/drawer/pieslice/thinkness{$thickness}-fill{$fill01}.png", $filename, '', 0.9, $imagine);
     }
 
     public function testDot()
