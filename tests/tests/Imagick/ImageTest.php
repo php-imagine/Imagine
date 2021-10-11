@@ -106,7 +106,7 @@ class ImageTest extends AbstractImageTest
         if (substr($source, -4) === '.svg') {
             $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/788');
         }
-        $this->provideVariousSources();
+        parent::testResolutionOnSave($source);
     }
 
     /**

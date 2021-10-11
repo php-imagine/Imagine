@@ -55,8 +55,27 @@ Some of the ideas for upcoming filters:
 
 ## Contributing ##
 
+### Branches
+
 New pull requests should be based on the `develop` branch.
 The `master` branch is the stable branch: it usually matches the latest a release but in can be a bit ahead.
+
+### Test groups
+
+Some PHPUnit test is marked as skipped (for example, tests that require a driver that support multiple layers and executed with the GD driver).
+In addition, if you don't have installed gmagick, the gmagick tests will be marked as skipped.
+
+If you don't want to run tests that are marked as "always skipped" you can tell PHPUnit to exclude the `always-skipped` group.
+The same for the tests that require a specific driver (`gd`, `imagick`, `imagick`).
+
+So, for example, to exclude the `always-skipped` and the `gmagick` tests, you can launch phpunit with this command options:
+
+```
+composer run test -- --exclude-group always-skipped,gmagick
+```
+
+
+### Development environment
 
 Setting up an environment with all the required libraries may be very hard.
 In order to run the tests locally, you can use the same [docker images](https://github.com/php-imagine/docker-builder/pkgs/container/test) used by Imagine to test the pull requests.
@@ -80,8 +99,14 @@ For example, if you have Imagine locally in the `/home/me/imagine` folder, you c
    composer run test -- --exclude-group always-skipped,gmagick
    ```
 
-PS: This approach works on Windows too: simply launch the docker container with
+> Note: This approach works on Windows too: simply launch the docker container with
+> ```
+> docker run --rm -it -v C:\Path\To\Imagine:/app ghcr.io/php-imagine/test:8.1-gd-imagick bash
+> ```
 
-```
-docker run --rm -it -v C:\Path\To\Imagine:/app ghcr.io/php-imagine/test:8.1-gd-imagick bash
-```
+### Built test files
+
+Many tests create temporary files (in the `tests/tmp` directory) containing built images.
+Those temporary files are compared with expected images, and then are deleted.
+If you want to keep those temporary files (for example, to check what's being build), you can set the `IMAGINE_TEST_KEEP_TEMPFILES` environment variable.
+If the `IMAGINE_TEST_KEEP_TEMPFILES` is configured in the GitHub Action tests, those temporary files are attached to tests as an articact.
