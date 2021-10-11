@@ -37,14 +37,6 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
      */
     public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, ImagineInterface $imagine = null, $buckets = 4)
     {
-        if ($imagine !== null) {
-            if (is_string($expected) && $expected !== '') {
-                $expected = $imagine->open($expected);
-            }
-            if (is_string($actual) && $actual !== '') {
-                $actual = $imagine->open($actual);
-            }
-        }
         $constraint = new IsImageEqual($expected, $delta, $imagine, $buckets);
 
         self::assertThat($actual, $constraint, $message);

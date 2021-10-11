@@ -29,7 +29,17 @@ class IsImageEqual extends Constraint
     /**
      * @var \Imagine\Image\ImageInterface
      */
-    private $value;
+    private $expectedImage;
+
+    /**
+     * @var string
+     */
+    private $expectedImageFile;
+
+    /**
+     * @var array
+     */
+    private $calculatedDeltas = array();
 
     /**
      * @var float
@@ -42,21 +52,22 @@ class IsImageEqual extends Constraint
     private $buckets;
 
     /**
-     * @param \Imagine\Image\ImageInterface|string $value
+     * @param \Imagine\Image\ImageInterface|string $expected
      * @param float $delta
      * @param \Imagine\Image\ImagineInterface|null $imagine
      * @param int $buckets
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($value, $delta = 0.1, ImagineInterface $imagine = null, $buckets = 4)
+    public function __construct($expected, $delta = 0.1, ImagineInterface $imagine = null, $buckets = 4)
     {
         parent::__construct();
         $this->imagine = $imagine;
-        if ($this->imagine !== null && is_string($value)) {
-            $value = $this->imagine->open($value);
+        $this->expectedImageFile = is_string($expected) ? str_replace('/', DIRECTORY_SEPARATOR, $expected) : '';
+        if ($this->imagine !== null && is_string($expected)) {
+            $expected = $this->imagine->open($expected);
         }
-        if (!$value instanceof ImageInterface) {
+        if (!($expected instanceof ImageInterface)) {
             throw InvalidArgumentFactory::create(1, 'Imagine\Image\ImageInterface');
         }
 
@@ -68,7 +79,7 @@ class IsImageEqual extends Constraint
             throw InvalidArgumentFactory::create(4, 'integer');
         }
 
-        $this->value = $value;
+        $this->expectedImage = $expected;
         $this->delta = $delta;
         $this->buckets = $buckets;
     }
@@ -78,13 +89,6 @@ class IsImageEqual extends Constraint
      */
     protected function _matches($other)
     {
-        if ($this->imagine !== null && is_string($other)) {
-            $other = $this->imagine->open($other);
-        }
-        if (!$other instanceof ImageInterface) {
-            throw InvalidArgumentFactory::create(1, 'Imagine\Image\ImageInterface');
-        }
-
         $total = $this->getDelta($other);
 
         return $total <= $this->delta;
@@ -95,7 +99,7 @@ class IsImageEqual extends Constraint
      */
     protected function _toString()
     {
-        return sprintf('contains color histogram identical to expected %s', $this->exporter->export($this->value));
+        return sprintf('has a color histogram similar to the expected %s', $this->exporter->export($this->expectedImage));
     }
 
     /**
@@ -103,16 +107,28 @@ class IsImageEqual extends Constraint
      */
     protected function _failureDescription($other)
     {
+        $extraMessage = '';
         if (is_string($other) && IMAGINE_TEST_KEEP_TEMPFILES === true) {
-            $extraMessage = "\nActual file: {$other}";
-        } else {
-            $extraMessage = '';
-        }
-        if ($this->imagine !== null && is_string($other)) {
-            $other = $this->imagine->open($other);
+            if ($this->expectedImageFile !== '') {
+                $expectedPrefix = dirname(IMAGINE_TEST_FIXTURESFOLDER) . DIRECTORY_SEPARATOR;
+                if (strlen($this->expectedImageFile) > strlen($expectedPrefix) && strpos($this->expectedImageFile, $expectedPrefix) === 0) {
+                    $expectedBaseName = substr($this->expectedImageFile, strlen($expectedPrefix));
+                } else {
+                    $expectedBaseName = $this->expectedImageFile;
+                }
+                $extraMessage .= "\nExpected file: {$expectedBaseName}";
+            }
+            $otherPrefix = IMAGINE_TEST_TEMPFOLDER . DIRECTORY_SEPARATOR;
+            $other = str_replace('/', DIRECTORY_SEPARATOR, $other);
+            if (strlen($other) > strlen($otherPrefix) && strpos($other, $otherPrefix) === 0) {
+                $otherBaseName = substr($other, strlen($otherPrefix));
+            } else {
+                $otherBaseName = $other;
+            }
+            $extraMessage .= "\nActual file: {$otherBaseName}";
         }
 
-        return sprintf('contains color histogram identical to the expected one (max delta: %s, actual delta: %s)', $this->delta, $this->getDelta($other)) . $extraMessage;
+        return sprintf('has a color histogram similar to the expected one (max delta: %s, actual delta: %s)', $this->delta, $this->getDelta($other)) . $extraMessage;
     }
 
     /**
@@ -172,25 +188,56 @@ class IsImageEqual extends Constraint
         );
     }
 
-    private function getDelta(ImageInterface $other)
+    /**
+     * @param \Imagine\Image\ImageInterface|string $other
+     *
+     * @return float
+     */
+    private function getDelta($other)
     {
-        list($currentRed, $currentGreen, $currentBlue, $currentAlpha) = $this->normalize($this->value);
+        $otherKey = $this->getOtherKey($other);
+        if (!array_key_exists($otherKey, $this->calculatedDeltas)) {
+            if ($this->imagine !== null && is_string($other)) {
+                $other = $this->imagine->open($other);
+            }
+            if (!$other instanceof ImageInterface) {
+                throw InvalidArgumentFactory::create(1, 'Imagine\Image\ImageInterface');
+            }
+            $this->calculatedDeltas[$otherKey] = $this->calculateDelta($other);
+        }
+
+        return $this->calculatedDeltas[$otherKey];
+    }
+
+    /**
+     * Get a string that uniquely identifies the "other" resource.
+     *
+     * @param \Imagine\Image\ImageInterface|string $other
+     */
+    private function getOtherKey($other)
+    {
+        return is_string($other) ? $other : spl_object_hash($other);
+    }
+
+    /**
+     * @param \Imagine\Image\ImageInterface $other
+     *
+     * @return float
+     */
+    private function calculateDelta(ImageInterface $other)
+    {
+        list($currentRed, $currentGreen, $currentBlue, $currentAlpha) = $this->normalize($this->expectedImage);
         list($otherRed, $otherGreen, $otherBlue, $otherAlpha) = $this->normalize($other);
-
-        $total = 0;
-
+        $total = 0.0;
         foreach ($currentRed as $bucket => $count) {
             $total += abs($count - $otherRed[$bucket]);
         }
-
         foreach ($currentGreen as $bucket => $count) {
             $total += abs($count - $otherGreen[$bucket]);
         }
-
         foreach ($currentBlue as $bucket => $count) {
             $total += abs($count - $otherBlue[$bucket]);
         }
-
         foreach ($currentAlpha as $bucket => $count) {
             $total += abs($count - $otherAlpha[$bucket]);
         }
