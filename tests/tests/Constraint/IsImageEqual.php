@@ -170,7 +170,7 @@ class IsImageEqual extends Constraint
             }
 
             foreach ($alpha as $bucket) {
-                $bucket->add($color->getAlpha());
+                $bucket->add(round($color->getAlpha() * 2.55));
             }
         }
 
