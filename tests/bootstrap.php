@@ -49,6 +49,11 @@ define('IMAGINE_TEST_SRCFOLDER', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src')
 define('IMAGINE_TEST_FIXTURESFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'fixtures');
 
 define('IMAGINE_TEST_TEMPFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'tmp');
-if (!is_dir(IMAGINE_TEST_TEMPFOLDER)) {
-    mkdir(IMAGINE_TEST_TEMPFOLDER);
+if (is_dir(IMAGINE_TEST_TEMPFOLDER)) {
+    if (DIRECTORY_SEPARATOR === '\\') {
+        exec('RMDIR /S /Q ' . escapeshellarg(str_replace('/', DIRECTORY_SEPARATOR, IMAGINE_TEST_TEMPFOLDER)));
+    } else {
+        exec('rm -rf ' . escapeshellarg(IMAGINE_TEST_TEMPFOLDER));
+    }
 }
+mkdir(IMAGINE_TEST_TEMPFOLDER);
