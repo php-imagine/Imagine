@@ -109,5 +109,5 @@ For example, if you have Imagine locally in the `/home/me/imagine` folder, you c
 
 Many tests create temporary files (in the `tests/tmp` directory) containing built images.
 Those temporary files are compared with expected images, and then are deleted.
-If you want to keep those temporary files (for example, to check what's being build), you can set the `IMAGINE_TEST_KEEP_TEMPFILES` environment variable.
+If you want to keep those temporary files (for example, to check what's being built), you can set the `IMAGINE_TEST_KEEP_TEMPFILES` environment variable.
 If the `IMAGINE_TEST_KEEP_TEMPFILES` is configured in the GitHub Action tests, those temporary files are attached to tests as an articact.
