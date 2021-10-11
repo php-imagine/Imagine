@@ -155,18 +155,24 @@ class IsImageEqual extends Constraint
             $blue[] = new Bucket($range);
             $alpha[] = new Bucket($range);
         }
-
-        foreach ($image->histogram() as $color) {
+        $colors = $image->histogram();
+        foreach ($colors as $color) {
             foreach ($red as $bucket) {
-                $bucket->add($color->getRed());
+                if ($color->getAlpha() !== 0) {
+                    $bucket->add($color->getRed());
+                }
             }
 
             foreach ($green as $bucket) {
-                $bucket->add($color->getGreen());
+                if ($color->getAlpha() !== 0) {
+                    $bucket->add($color->getGreen());
+                }
             }
 
             foreach ($blue as $bucket) {
-                $bucket->add($color->getBlue());
+                if ($color->getAlpha() !== 0) {
+                    $bucket->add($color->getBlue());
+                }
             }
 
             foreach ($alpha as $bucket) {
