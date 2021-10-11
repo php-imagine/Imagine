@@ -493,7 +493,7 @@ final class Image extends AbstractImage
             }
         }
 
-        return array_unique($colors);
+        return array_values(array_unique($colors));
     }
 
     /**
