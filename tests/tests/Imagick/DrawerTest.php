@@ -31,9 +31,6 @@ class DrawerTest extends AbstractDrawerTest
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not installed');
         }
-        if (DIRECTORY_SEPARATOR === '\\' && PHP_MAJOR_VERSION === 7 && PHP_MINOR_VERSION === 4) {
-            $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/789');
-        }
     }
 
     protected function getImagine()
