@@ -578,9 +578,9 @@ final class Image extends AbstractImage
 
         $image = $this;
 
-        return array_map(function (\ImagickPixel $pixel) use ($image) {
+        return array_values(array_unique(array_map(function (\ImagickPixel $pixel) use ($image) {
             return $image->pixelToColor($pixel);
-        }, $pixels);
+        }, $pixels)));
     }
 
     /**

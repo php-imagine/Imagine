@@ -37,14 +37,6 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
      */
     public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, ImagineInterface $imagine = null, $buckets = 4)
     {
-        if ($imagine !== null) {
-            if (is_string($expected) && $expected !== '') {
-                $expected = $imagine->open($expected);
-            }
-            if (is_string($actual) && $actual !== '') {
-                $actual = $imagine->open($actual);
-            }
-        }
         $constraint = new IsImageEqual($expected, $delta, $imagine, $buckets);
 
         self::assertThat($actual, $constraint, $message);
@@ -128,7 +120,7 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
                 $filenameBase = $m[2] . '-' . $m[1];
             }
         }
-        $filenameBase = IMAGINE_TEST_TEMPFOLDER . '/' . $filenameBase;
+        $filenameBase = IMAGINE_TEST_TEMPFOLDER . DIRECTORY_SEPARATOR . $filenameBase;
         for ($i = 0; ; $i++) {
             $filename = $filenameBase . ($i === 0 ? '' : "-{$i}") . $suffix;
             if (!in_array($filename, self::$temporaryFiles)) {
