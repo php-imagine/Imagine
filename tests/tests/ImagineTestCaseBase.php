@@ -120,7 +120,7 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
                 $filenameBase = $m[2] . '-' . $m[1];
             }
         }
-        $filenameBase = IMAGINE_TEST_TEMPFOLDER . '/' . $filenameBase;
+        $filenameBase = IMAGINE_TEST_TEMPFOLDER . DIRECTORY_SEPARATOR . $filenameBase;
         for ($i = 0; ; $i++) {
             $filename = $filenameBase . ($i === 0 ? '' : "-{$i}") . $suffix;
             if (!in_array($filename, self::$temporaryFiles)) {
