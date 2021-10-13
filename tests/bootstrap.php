@@ -50,11 +50,18 @@ define('IMAGINE_TEST_FIXTURESFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'fixtures'
 
 define('IMAGINE_TEST_TEMPFOLDER', __DIR__ . DIRECTORY_SEPARATOR . 'tmp');
 if (is_dir(IMAGINE_TEST_TEMPFOLDER)) {
+    $rc = -1;
+    $output = array();
     if (DIRECTORY_SEPARATOR === '\\') {
-        exec('RMDIR /S /Q ' . escapeshellarg(str_replace('/', DIRECTORY_SEPARATOR, IMAGINE_TEST_TEMPFOLDER)));
+        exec('RMDIR /S /Q ' . escapeshellarg(str_replace('/', DIRECTORY_SEPARATOR, IMAGINE_TEST_TEMPFOLDER)) . ' 2>&1', $output, $rc);
     } else {
-        exec('rm -rf ' . escapeshellarg(IMAGINE_TEST_TEMPFOLDER));
+        exec('rm -rf ' . escapeshellarg(IMAGINE_TEST_TEMPFOLDER) . ' 2>&1', $output, $rc);
     }
+    if ($rc !== 0) {
+        throw new Exception('Failed to delete directory ' . IMAGINE_TEST_TEMPFOLDER . ":\n" . implode("\n", $output));
+    }
+    unset($rc);
+    unset($output);
 }
 mkdir(IMAGINE_TEST_TEMPFOLDER);
 
