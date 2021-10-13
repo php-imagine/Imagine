@@ -122,6 +122,13 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
      */
     public function testUsePalette($from, $to, $color)
     {
+        if ($from !== $to) {
+            try {
+                $this->getDriverInfo()->requireFeature(Info::FEATURE_COLORSPACECONVERSION);
+            } catch (NotSupportedException $x) {
+                $this->markTestSkipped($x->getMessage());
+            }
+        }
         $palette = new $from();
 
         $image = $this

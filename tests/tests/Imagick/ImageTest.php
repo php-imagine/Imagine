@@ -65,8 +65,6 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
-     * @dataProvider provideFromAndToPalettes
-     *
      * {@inheritdoc}
      *
      * @see \Imagine\Test\Image\AbstractImageTest::testMask()

@@ -72,7 +72,7 @@ final class Image extends AbstractImage implements InfoProvider
         $this->metadata = $metadata;
         $this->imagick = $imagick;
         if (static::getDriverInfo()->hasFeature(DriverInfo::FEATURE_COLORSPACECONVERSION)) {
-            $this->setColorspace($palette);
+            $this->setColorspace($palette, false);
         }
         $this->palette = $palette;
     }
@@ -697,7 +697,7 @@ final class Image extends AbstractImage implements InfoProvider
             }
 
             $this->profile($palette->profile());
-            $this->setColorspace($palette);
+            $this->setColorspace($palette, true);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to set colorspace', $e->getCode(), $e);
         }
@@ -958,10 +958,11 @@ final class Image extends AbstractImage implements InfoProvider
      * Sets colorspace and image type, assigns the palette.
      *
      * @param \Imagine\Image\Palette\PaletteInterface $palette
+     * @param bool $convert
      *
      * @throws \Imagine\Exception\InvalidArgumentException
      */
-    private function setColorspace(PaletteInterface $palette)
+    private function setColorspace(PaletteInterface $palette, $convert)
     {
         $typeMapping = array(
             // We use Matte variants to preserve alpha
@@ -973,24 +974,41 @@ final class Image extends AbstractImage implements InfoProvider
             PaletteInterface::PALETTE_RGB => defined('\Imagick::IMGTYPE_TRUECOLORALPHA') ? \Imagick::IMGTYPE_TRUECOLORALPHA : (defined('\Imagick::IMGTYPE_TRUECOLORMATTE') ? \Imagick::IMGTYPE_TRUECOLORMATTE : 7),
             PaletteInterface::PALETTE_GRAYSCALE => defined('\Imagick::IMGTYPE_GRAYSCALEALPHA') ? \Imagick::IMGTYPE_GRAYSCALEALPHA : (defined('\Imagick::IMGTYPE_GRAYSCALEMATTE') ? \Imagick::IMGTYPE_GRAYSCALEMATTE : 3),
         );
-
         if (!isset(static::$colorspaceMapping[$palette->name()])) {
             throw new InvalidArgumentException(sprintf('The palette %s is not supported by Imagick driver', $palette->name()));
         }
-
-        $this->imagick->setType($typeMapping[$palette->name()]);
-        $this->imagick->setColorspace(static::$colorspaceMapping[$palette->name()]);
-        if ($this->imagick->getnumberimages() > 0 && defined('Imagick::ALPHACHANNEL_REMOVE') && defined('Imagick::ALPHACHANNEL_SET')) {
+        $typeID = $typeMapping[$palette->name()];
+        $colorspaceID = static::$colorspaceMapping[$palette->name()];
+        $this->imagick->setType($typeID);
+        if ($this->imagick->getnumberimages() > 0) {
             $originalImageIndex = $this->imagick->getiteratorindex();
             foreach ($this->imagick as $frame) {
-                if ($palette->supportsAlpha()) {
-                    $frame->setimagealphachannel(\Imagick::ALPHACHANNEL_SET);
-                } else {
-                    $frame->setimagealphachannel(\Imagick::ALPHACHANNEL_REMOVE);
+                if ($convert) {
+                    $frame->transformimagecolorspace($colorspaceID);
+                }
+                try {
+                    if ($palette->supportsAlpha()) {
+                        if (defined('Imagick::ALPHACHANNEL_SET')) {
+                            $frame->setimagealphachannel(\Imagick::ALPHACHANNEL_SET);
+                        }
+                    } else {
+                        if (defined('Imagick::ALPHACHANNEL_REMOVE')) {
+                            $frame->setimagealphachannel(\Imagick::ALPHACHANNEL_REMOVE);
+                        }
+                    }
+                } catch (\ImagickException $x) {
+                    // Old ImageMagick versions ( < 6.8.0-4) were affected by a bug, fixed in https://github.com/ImageMagick/ImageMagick6/commit/8354515c613b61bd52e025ec0f6799cbf0f1a069
+                    if ($x->getMessage() !== 'Unable to set image alpha channel' || version_compare(Imagine::getExtensionInfo()->getImageMagickSemVerVersion(), '6.8.0') > 0) {
+                        throw $x;
+                    }
                 }
             }
             $this->imagick->setiteratorindex($originalImageIndex);
         }
+        if ($convert) {
+            $this->imagick->transformimagecolorspace($colorspaceID);
+        }
+        $this->imagick->setcolorspace($colorspaceID);
         $this->palette = $palette;
     }
 
