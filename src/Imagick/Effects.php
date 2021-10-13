@@ -78,6 +78,9 @@ class Effects implements EffectsInterface
      */
     public function grayscale()
     {
+        if (version_compare(Imagine::getExtensionInfo()->getImageMagickSemVerVersion(), '6.8.5') < 0) {
+            throw new NotSupportedException('Your imagick extension has been compiled with ImageMagick ' . Imagine::getExtensionInfo()->getImageMagickFullVersion() . ' which is too old (you need at least ImageMagick 6.8.5-10)');
+        }
         try {
             $this->imagick->setImageType(\Imagick::IMGTYPE_GRAYSCALE);
         } catch (\ImagickException $e) {

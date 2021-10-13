@@ -22,6 +22,20 @@ class EffectsTest extends AbstractEffectsTest
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Test\Effects\AbstractEffectsTest::testGrayscale()
+     */
+    public function testGrayscale()
+    {
+        $version = Imagine::getExtensionInfo();
+        if (version_compare($version->getImageMagickSemVerVersion(), '6.8.5') < 0) {
+            $this->markTestSkipped("ImageMagick is too old (current version: {$version->getImageMagickFullVersion()}, minimum version: 6.8.5)");
+        }
+        parent::testGrayscale();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
      */
     protected function setUpBase()
