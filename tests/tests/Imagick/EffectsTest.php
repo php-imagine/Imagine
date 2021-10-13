@@ -26,7 +26,11 @@ class EffectsTest extends AbstractEffectsTest
      */
     public function testGrayscale()
     {
-        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/777');
+        $version = Imagine::getExtensionInfo();
+        if (version_compare($version->getImageMagickSemVerVersion(), '6.8.5') < 0) {
+            $this->markTestSkipped("ImageMagick is too old (current version: {$version->getImageMagickFullVersion()}, minimum version: 6.8.5)");
+        }
+        parent::testGrayscale();
     }
 
     /**
