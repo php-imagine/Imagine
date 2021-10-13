@@ -17,6 +17,7 @@ on:
       - phpunit.xml.dist
 
 env:
+  ALL_DRIVERS: "gd gmagick imagick"
   IMAGINE_TEST_WEBSERVERURL: http://localhost:8013
   # Uncomment the following line to save test files as artifacts
   #IMAGINE_TEST_KEEP_TEMPFILES: yes
@@ -34,21 +35,6 @@ jobs:
         extensions:
           - gd,imagick
     steps:
-      - name: Inspect environment
-        id: inspect
-        run: |
-          EXCLUDED_GROUPS=always-skipped
-          AVAILABLE_EXTENSIONS=",${{ matrix.extensions }},"
-          for CHECK_EXTENSION in gd gmagick imagick; do
-            case "$AVAILABLE_EXTENSIONS" in
-              *,$CHECK_EXTENSION,*)
-                ;;
-              *)
-                EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
-                ;;
-            esac
-          done
-          echo "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -56,6 +42,18 @@ jobs:
           extensions: exif,${{ matrix.extensions }}
           tools: composer:v2
           coverage: none
+      - name: Inspect environment
+        id: inspect
+        run: |
+          EXCLUDED_GROUPS=always-skipped
+          for DRIVER in $ALL_DRIVERS; do
+            echo "### CHECKING $DRIVER"
+            if ! php --ri $DRIVER; then
+                EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$DRIVER"
+            fi
+            echo ''
+          done
+          echo "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install composer dependencies
@@ -87,17 +85,6 @@ jobs:
         extensions:
           - gd,imagick
     steps:
-      - name: Inspect environment
-        id: inspect
-        run: |
-          $EXCLUDED_GROUPS='always-skipped'
-          $AVAILABLE_EXTENSIONS=",${{ matrix.extensions }},"
-          foreach ($CHECK_EXTENSION in @('gd', 'gmagick', 'imagick')) {
-            if (-not($AVAILABLE_EXTENSIONS -match ",$CHECK_EXTENSION,")) {
-                $EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
-            }
-          }
-          Write-Output "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -105,6 +92,21 @@ jobs:
           extensions: exif,${{ matrix.extensions }}
           tools: composer:v2
           coverage: none
+      - name: Inspect environment
+        id: inspect
+        run: |
+          $EXCLUDED_GROUPS='always-skipped'
+          foreach ($DRIVER in $Env:ALL_DRIVERS.split()) {
+            Write-Output "### CHECKING $DRIVER"
+            php --ri $DRIVER
+            if ($LASTEXITCODE -ne 0) {
+                $EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$DRIVER"
+                $Global:LASTEXITCODE = 0
+            }
+            Write-Output ''
+          }
+          Write-Output "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
+
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install composer dependencies
@@ -125,7 +127,7 @@ jobs:
           retention-days: 1
 
   docker:
-    name: PHP ${{ matrix.php-version }} - ${{ matrix.extensions }} (Docker)
+    name: PHP ${{ matrix.php-version }} - ${{ matrix.image-suffix }} (Docker)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -140,24 +142,21 @@ jobs:
           - "7.4"
           - "8.0"
           - "8.1"
-        extensions:
+        image-suffix:
           - gd-gmagick
           - gd-imagick
-    container: ghcr.io/php-imagine/test:${{ matrix.php-version }}-${{ matrix.extensions }}
+    container: ghcr.io/php-imagine/test:${{ matrix.php-version }}-${{ matrix.image-suffix }}
     steps:
       - name: Inspect environment
         id: inspect
         run: |
           EXCLUDED_GROUPS=always-skipped
-          AVAILABLE_EXTENSIONS="${{ matrix.extensions }}"
-          for CHECK_EXTENSION in gd gmagick imagick; do
-            case "-$AVAILABLE_EXTENSIONS-" in
-              *-$CHECK_EXTENSION-*)
-                ;;
-              *)
-                EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$CHECK_EXTENSION"
-                ;;
-            esac
+          for DRIVER in $ALL_DRIVERS; do
+            echo "### CHECKING $DRIVER"
+            if ! php --ri $DRIVER; then
+                EXCLUDED_GROUPS="$EXCLUDED_GROUPS,$DRIVER"
+            fi
+            echo ''
           done
           echo "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
       - name: Checkout
@@ -176,6 +175,6 @@ jobs:
         if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
         uses: actions/upload-artifact@v2
         with:
-          name: docker-${{ matrix.php-version }}-${{ matrix.extensions }}
+          name: docker-${{ matrix.php-version }}-${{ matrix.image-suffix }}
           path: tests/tmp/
           retention-days: 1
