@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Imagick\DriverInfo;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Effects\AbstractEffectsTest;
 
@@ -22,31 +23,18 @@ class EffectsTest extends AbstractEffectsTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\Effects\AbstractEffectsTest::testGrayscale()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    public function testGrayscale()
+    public static function getDriverInfo($required = true)
     {
-        $version = Imagine::getExtensionInfo();
-        if (version_compare($version->getImageMagickSemVerVersion(), '6.8.5') < 0) {
-            $this->markTestSkipped("ImageMagick is too old (current version: {$version->getImageMagickFullVersion()}, minimum version: 6.8.5)");
-        }
-        parent::testGrayscale();
+        return DriverInfo::get($required);
     }
 
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Test\Effects\AbstractEffectsTest::getImagine()
      */
-    protected function setUpBase()
-    {
-        parent::setUpBase();
-
-        if (!class_exists('Imagick')) {
-            $this->markTestSkipped('Imagick is not installed');
-        }
-    }
-
     protected function getImagine()
     {
         return new Imagine();

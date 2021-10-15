@@ -11,15 +11,17 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractLayers;
+use Imagine\Image\Format;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
 
-class Layers extends AbstractLayers
+class Layers extends AbstractLayers implements InfoProvider
 {
     /**
      * @var \Imagine\Imagick\Image
@@ -57,6 +59,17 @@ class Layers extends AbstractLayers
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Image\LayersInterface::merge()
      */
     public function merge()
@@ -78,7 +91,8 @@ class Layers extends AbstractLayers
      */
     public function animate($format, $delay, $loops)
     {
-        if (strtolower($format) !== 'gif') {
+        $formatInfo = Format::get($format);
+        if ($formatInfo === null || $formatInfo->getID() !== Format::ID_GIF) {
             throw new InvalidArgumentException('Animated picture is currently only supported on gif');
         }
 
@@ -93,7 +107,7 @@ class Layers extends AbstractLayers
         try {
             foreach ($this as $offset => $layer) {
                 $this->resource->setIteratorIndex($offset);
-                $this->resource->setFormat($format);
+                $this->resource->setFormat(Format::ID_GIF);
 
                 if ($delay !== null) {
                     $layer->getImagick()->setImageDelay($delay / 10);

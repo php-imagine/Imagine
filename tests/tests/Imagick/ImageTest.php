@@ -13,11 +13,9 @@ namespace Imagine\Test\Imagick;
 
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Metadata\MetadataBag;
-use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
-use Imagine\Imagick\Image;
+use Imagine\Imagick\DriverInfo;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Image\AbstractImageTest;
 
@@ -26,6 +24,46 @@ use Imagine\Test\Image\AbstractImageTest;
  */
 class ImageTest extends AbstractImageTest
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::getImagine()
+     */
+    protected function getImagine()
+    {
+        return new Imagine();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::getImageResolution()
+     */
+    protected function getImageResolution(ImageInterface $image)
+    {
+        return $image->getImagick()->getImageResolution();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::getSamplingFactors()
+     */
+    protected function getSamplingFactors(ImageInterface $image)
+    {
+        return $image->getImagick()->getSamplingFactors();
+    }
+
     /**
      * @dataProvider provideFromAndToPalettes
      *
@@ -110,41 +148,6 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
-     */
-    protected function setUpBase()
-    {
-        parent::setUpBase();
-
-        if (!class_exists('Imagick')) {
-            $this->markTestSkipped('Imagick is not installed');
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\ImagineTestCaseBase::tearDownBase()
-     */
-    protected function tearDownBase()
-    {
-        if (class_exists('Imagick')) {
-            $prop = new \ReflectionProperty('Imagine\Imagick\Image', 'supportsColorspaceConversion');
-            $prop->setAccessible(true);
-            $prop->setValue(null);
-        }
-
-        parent::tearDownBase();
-    }
-
-    protected function getImagine()
-    {
-        return new Imagine();
-    }
-
-    /**
      * @doesNotPerformAssertions
      */
     public function testImageResizeUsesProperMethodBasedOnInputAndOutputSizes()
@@ -179,39 +182,6 @@ class ImageTest extends AbstractImageTest
             $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/resize/anima3-150x100.gif'),
             $imagine->open($filename)
         );
-    }
-
-    /**
-     * Older imagemagick versions does not support colorspace conversion.
-     *
-     * @doesNotPerformAssertions
-     *
-     * @return \Imagine\Imagick\Image
-     */
-    public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
-    {
-        $palette = new CMYK();
-        $imagick = $this->getMockBuilder('\Imagick')->getMock();
-        $imagick->expects($this->any())
-            ->method('setColorspace')
-            ->will($this->throwException(new \RuntimeException('Method not supported')));
-
-        $prop = new \ReflectionProperty('Imagine\Imagick\Image', 'supportsColorspaceConversion');
-        $prop->setAccessible(true);
-        $prop->setValue(false);
-
-        return new Image($imagick, $palette, new MetadataBag());
-    }
-
-    /**
-     * @depends testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct
-     *
-     * @param mixed $image
-     */
-    public function testOlderImageMagickDoesNotAffectColorspaceUsageOnPaletteChange($image)
-    {
-        $this->isGoingToThrowException('Imagine\Exception\RuntimeException', 'Your version of Imagick does not support colorspace conversions.');
-        $image->usePalette(new RGB());
     }
 
     public function testAnimatedGifCrop()
@@ -273,15 +243,5 @@ class ImageTest extends AbstractImageTest
         $image->layers()->add($imagine->create($image->getSize()->scale(2)), $rgb->color('#fff'));
         $filename = $this->getTemporaryFilename('.gif');
         $image->save($filename, array('animated' => true, 'optimize' => true));
-    }
-
-    protected function getImageResolution(ImageInterface $image)
-    {
-        return $image->getImagick()->getImageResolution();
-    }
-
-    protected function getSamplingFactors(ImageInterface $image)
-    {
-        return $image->getImagick()->getSamplingFactors();
     }
 }

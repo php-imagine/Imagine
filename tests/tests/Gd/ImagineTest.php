@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Gd;
 
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractImagineTest;
 
@@ -22,15 +23,21 @@ class ImagineTest extends AbstractImagineTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
+        return DriverInfo::get($required);
+    }
 
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
-        }
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImagineTest::getImagine()
+     */
+    protected function getImagine()
+    {
+        return new Imagine();
     }
 
     /**
@@ -83,15 +90,5 @@ class ImagineTest extends AbstractImagineTest
     public function testShouldOpenAJxlImage()
     {
         $this->markTestSkipped('GD does not support JXL');
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImagineTest::getImagine()
-     */
-    protected function getImagine()
-    {
-        return new Imagine();
     }
 }

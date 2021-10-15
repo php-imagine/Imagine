@@ -2,29 +2,29 @@
 
 namespace Imagine\Test\Issues;
 
-use Imagine\Exception\RuntimeException;
+use Imagine\Driver\InfoProvider;
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Test\ImagineTestCase;
 
 /**
  * @group gd
  */
-class Issue59Test extends ImagineTestCase
+class Issue59Test extends ImagineTestCase implements InfoProvider
 {
-    private function getImagine()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     */
+    public static function getDriverInfo($required = true)
     {
-        try {
-            $imagine = new Imagine();
-        } catch (RuntimeException $e) {
-            $this->markTestSkipped($e->getMessage());
-        }
-
-        return $imagine;
+        return DriverInfo::get($required);
     }
 
     public function testShouldResize()
     {
-        $imagine = $this->getImagine();
+        $imagine = new Imagine();
         $new = $this->getTemporaryFilename('.jpeg');
 
         $imagine

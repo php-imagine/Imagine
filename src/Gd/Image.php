@@ -11,6 +11,7 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
@@ -18,12 +19,12 @@ use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractImage;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Fill\FillInterface;
+use Imagine\Image\Format;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\Palette\PaletteInterface;
-use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
@@ -32,7 +33,7 @@ use Imagine\Utils\ErrorHandling;
 /**
  * Image implementation using the GD library.
  */
-final class Image extends AbstractImage
+final class Image extends AbstractImage implements InfoProvider
 {
     /**
      * @var resource|\GdImage
@@ -68,8 +69,11 @@ final class Image extends AbstractImage
      */
     public function __destruct()
     {
-        if (is_resource($this->resource) && get_resource_type($this->resource) === 'gd') {
-            imagedestroy($this->resource);
+        if ($this->resource) {
+            if (is_resource($this->resource) && get_resource_type($this->resource) === 'gd' || $this->resource instanceof \GdImage) {
+                imagedestroy($this->resource);
+            }
+            $this->resource = null;
         }
     }
 
@@ -95,9 +99,20 @@ final class Image extends AbstractImage
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
+    }
+
+    /**
      * Returns Gd resource.
      *
-     * @return resource
+     * @return resource|\GdImage
      */
     public function getGdResource()
     {
@@ -263,8 +278,15 @@ final class Image extends AbstractImage
             $originalPath = isset($this->metadata['filepath']) ? $this->metadata['filepath'] : null;
             $format = pathinfo($originalPath, \PATHINFO_EXTENSION);
         }
-
-        $this->saveOrOutput($format, $options, $path);
+        $formatInfo = static::getDriverInfo()->getSupportedFormats()->find($format);
+        if ($formatInfo === null) {
+            throw new InvalidArgumentException(sprintf(
+                'Saving image in "%s" format is not supported, please use one of the following extensions: "%s"',
+                $format,
+                implode('", "', static::getDriverInfo()->getSupportedFormats()->getAllIDs())
+            ));
+        }
+        $this->saveOrOutput($formatInfo, $options, $path);
 
         return $this;
     }
@@ -276,9 +298,16 @@ final class Image extends AbstractImage
      */
     public function show($format, array $options = array())
     {
-        header('Content-type: ' . $this->getMimeType($format));
-
-        $this->saveOrOutput($format, $options);
+        $formatInfo = static::getDriverInfo()->getSupportedFormats()->find($format);
+        if ($formatInfo === null) {
+            throw new InvalidArgumentException(sprintf(
+                'Displaying an image in "%s" format is not supported, please use one of the following formats: "%s"',
+                $format,
+                implode('", "', static::getDriverInfo()->getSupportedFormats()->getAllIDs())
+            ));
+        }
+        header('Content-type: ' . $formatInfo->getMimeType());
+        $this->saveOrOutput($formatInfo, $options);
 
         return $this;
     }
@@ -290,8 +319,16 @@ final class Image extends AbstractImage
      */
     public function get($format, array $options = array())
     {
+        $formatInfo = static::getDriverInfo()->getSupportedFormats()->find($format);
+        if ($formatInfo === null) {
+            throw new InvalidArgumentException(sprintf(
+                'Creating an image in "%s" format is not supported, please use one of the following formats: "%s"',
+                $format,
+                implode('", "', static::getDriverInfo()->getSupportedFormats()->getAllIDs())
+            ));
+        }
         ob_start();
-        $this->saveOrOutput($format, $options);
+        $this->saveOrOutput($formatInfo, $options);
 
         return ob_get_clean();
     }
@@ -303,7 +340,7 @@ final class Image extends AbstractImage
      */
     public function __toString()
     {
-        return $this->get('png');
+        return $this->get(Format::ID_PNG);
     }
 
     /**
@@ -567,7 +604,7 @@ final class Image extends AbstractImage
      */
     public function profile(ProfileInterface $profile)
     {
-        throw new RuntimeException('GD driver does not support color profiles');
+        static::getDriverInfo()->requireFeature(DriverInfo::FEATURE_COLORPROFILES);
     }
 
     /**
@@ -577,9 +614,11 @@ final class Image extends AbstractImage
      */
     public function usePalette(PaletteInterface $palette)
     {
-        if (!$palette instanceof RGB) {
-            throw new RuntimeException('GD driver only supports RGB palette');
+        if ($this->palette->name() === $palette->name()) {
+            return $this;
         }
+
+        static::getDriverInfo()->checkPaletteSupport($palette);
 
         $this->palette = $palette;
 
@@ -589,51 +628,49 @@ final class Image extends AbstractImage
     /**
      * Performs save or show operation using one of GD's image... functions.
      *
-     * @param string $format
+     * @param \Imagine\Image\Format $format
      * @param array $options
      * @param string $filename
      *
      * @throws \Imagine\Exception\InvalidArgumentException
      * @throws \Imagine\Exception\RuntimeException
      */
-    private function saveOrOutput($format, array $options, $filename = null)
+    private function saveOrOutput(Format $format, array $options, $filename = null)
     {
-        $format = $this->normalizeFormat($format);
-
-        if (!$this->supported($format)) {
-            throw new InvalidArgumentException(sprintf('Saving image in "%s" format is not supported, please use one of the following extensions: "%s"', $format, implode('", "', $this->supported())));
+        switch ($format->getID()) {
+            default:
+                $saveFunction = 'image' . $format->getID();
+                break;
         }
-
-        $save = 'image' . $format;
         $args = array(&$this->resource, $filename);
 
-        switch ($format) {
-            case 'avif':
+        switch ($format->getID()) {
+            case Format::ID_AVIF:
                 // ranges from 0 (worst quality, smaller file) to 100 (best quality, larger file). If -1 is provided, the default value is used
                 $quality = -1;
                 // ranges from 0 (slow, smaller file) to 10 (fast, larger file). If -1 is provided, the default value is used
                 $speed = -1;
-                if (!empty($options[$format . '_lossless'])) {
+                if (!empty($options['avif_lossless'])) {
                     $quality = 100;
                 } else {
-                    if (!isset($options[$format . '_quality'])) {
+                    if (!isset($options['avif_quality'])) {
                         if (isset($options['quality'])) {
-                            $options[$format . '_quality'] = $options['quality'];
+                            $options['avif_quality'] = $options['quality'];
                         }
                     }
-                    if (isset($options[$format . '_quality'])) {
-                        $quality = max(0, min(100, $options[$format . '_quality']));
+                    if (isset($options['avif_quality'])) {
+                        $quality = max(0, min(100, $options['avif_quality']));
                     }
                 }
                 $args[] = $quality;
                 $args[] = $speed;
                 break;
-            case 'bmp':
+            case Format::ID_BMP:
                 if (isset($options['compressed'])) {
                     $args[] = (bool) $options['compressed'];
                 }
                 break;
-            case 'jpeg':
+            case Format::ID_JPEG:
                 if (!isset($options['jpeg_quality'])) {
                     if (isset($options['quality'])) {
                         $options['jpeg_quality'] = $options['quality'];
@@ -643,7 +680,7 @@ final class Image extends AbstractImage
                     $args[] = $options['jpeg_quality'];
                 }
                 break;
-            case 'png':
+            case Format::ID_PNG:
                 if (!isset($options['png_compression_level'])) {
                     if (isset($options['quality'])) {
                         $options['png_compression_level'] = round((100 - $options['quality']) * 9 / 100);
@@ -669,13 +706,13 @@ final class Image extends AbstractImage
                     $args[] = $options['png_compression_filter'];
                 }
                 break;
-            case 'wbmp':
-            case 'xbm':
+            case Format::ID_WBMP:
+            case Format::ID_XBM:
                 if (isset($options['foreground'])) {
                     $args[] = $options['foreground'];
                 }
                 break;
-            case 'webp':
+            case Format::ID_WEBP:
                 if (!isset($options['webp_quality'])) {
                     if (isset($options['quality'])) {
                         $options['webp_quality'] = $options['quality'];
@@ -690,8 +727,8 @@ final class Image extends AbstractImage
                 break;
         }
 
-        ErrorHandling::throwingRuntimeException(E_WARNING | E_NOTICE, function () use ($save, $args) {
-            if (call_user_func_array($save, $args) === false) {
+        ErrorHandling::throwingRuntimeException(E_WARNING | E_NOTICE, function () use ($saveFunction, $args) {
+            if (call_user_func_array($saveFunction, $args) === false) {
                 throw new RuntimeException('Save operation failed');
             }
         });
@@ -705,7 +742,7 @@ final class Image extends AbstractImage
      *
      * @throws \Imagine\Exception\RuntimeException
      *
-     * @return resource
+     * @return resource|\GdImage
      */
     private function createImage(BoxInterface $size, $operation)
     {
@@ -753,91 +790,5 @@ final class Image extends AbstractImage
         }
 
         return $index;
-    }
-
-    /**
-     * Normalizes a given format name.
-     *
-     * @param string $format
-     *
-     * @return string
-     */
-    private function normalizeFormat($format)
-    {
-        $format = strtolower($format);
-
-        if ($format === 'jpg' || $format === 'pjpeg' || $format === 'jfif') {
-            $format = 'jpeg';
-        }
-
-        return $format;
-    }
-
-    /**
-     * Checks whether a given format is supported by GD library.
-     *
-     * @param string $format
-     *
-     * @return bool
-     */
-    private function supported($format = null)
-    {
-        $formats = self::getSupportedFormats();
-
-        if ($format === null) {
-            return array_keys($formats);
-        }
-
-        return is_string($format) && isset($formats[$format]);
-    }
-
-    /**
-     * Get the mime type based on format.
-     *
-     * @param string $format
-     *
-     * @throws \Imagine\Exception\RuntimeException
-     *
-     * @return string mime-type
-     */
-    private function getMimeType($format)
-    {
-        $format = $this->normalizeFormat($format);
-        $formats = self::getSupportedFormats();
-
-        if (!isset($formats[$format])) {
-            throw new RuntimeException('Invalid format');
-        }
-
-        return $formats[$format]['mimeType'];
-    }
-
-    /**
-     * @return array
-     */
-    private static function getSupportedFormats()
-    {
-        static $supportedFormats;
-        if (!isset($supportedFormats)) {
-            $supportedFormats = array(
-                'gif' => array('mimeType' => 'image/gif'),
-                'jpeg' => array('mimeType' => 'image/jpeg'),
-                'png' => array('mimeType' => 'image/png'),
-                'wbmp' => array('mimeType' => 'image/vnd.wap.wbmp'),
-                'xbm' => array('mimeType' => 'image/xbm'),
-            );
-            if (function_exists('imagebmp')) {
-                $supportedFormats['bmp'] = array('mimeType' => 'image/bmp');
-            }
-            if (function_exists('imagewebp')) {
-                $supportedFormats['webp'] = array('mimeType' => 'image/webp');
-            }
-            if (function_exists('imageavif') && function_exists('imagecreatefromavif')) {
-                $supportedFormats['avif'] = array('mimeType' => 'image/avif');
-            }
-            ksort($supportedFormats);
-        }
-
-        return $supportedFormats;
     }
 }

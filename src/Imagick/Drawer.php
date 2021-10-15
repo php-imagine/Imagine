@@ -12,6 +12,7 @@
 namespace Imagine\Imagick;
 
 use Imagine\Draw\DrawerInterface;
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
@@ -24,7 +25,7 @@ use Imagine\Image\PointInterface;
 /**
  * Drawer implementation using the Imagick PHP extension.
  */
-final class Drawer implements DrawerInterface
+final class Drawer implements DrawerInterface, InfoProvider
 {
     /**
      * @var \Imagick
@@ -37,6 +38,17 @@ final class Drawer implements DrawerInterface
     public function __construct(\Imagick $imagick)
     {
         $this->imagick = $imagick;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
     }
 
     /**
@@ -408,12 +420,8 @@ final class Drawer implements DrawerInterface
             $text = new \ImagickDraw();
 
             $text->setFont($font->getFile());
-            /*
-             * @see http://www.php.net/manual/en/imagick.queryfontmetrics.php#101027
-             *
-             * ensure font resolution is the same as GD's hard-coded 96
-             */
-            if (version_compare(phpversion('imagick'), '3.0.2', '>=')) {
+            // Ensure font resolution is the same as GD's hard-coded 96
+            if (static::getDriverInfo()->hasFeature(DriverInfo::FEATURE_CUSTOMRESOLUTION)) {
                 $text->setResolution(96, 96);
                 $text->setFontSize($font->getSize());
             } else {

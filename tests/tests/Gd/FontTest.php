@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Gd;
 
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Image\AbstractFontTest;
 
@@ -22,19 +23,11 @@ class FontTest extends AbstractFontTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
-
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
-        }
-        $infos = gd_info();
-        if (empty($infos['FreeType Support'])) {
-            $this->markTestSkipped('This install does not support font tests');
-        }
+        return DriverInfo::get($required);
     }
 
     /**

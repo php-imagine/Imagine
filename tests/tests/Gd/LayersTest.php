@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Gd;
 
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Gd\Layers;
@@ -27,15 +28,41 @@ class LayersTest extends AbstractLayersTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
+        return DriverInfo::get($required);
+    }
 
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
-        }
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::getImagine()
+     */
+    protected function getImagine()
+    {
+        return new Imagine();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::getImage()
+     */
+    protected function getImage($path = null)
+    {
+        return new Image(imagecreatetruecolor(10, 10), new RGB(), new MetadataBag());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::assertLayersEquals()
+     */
+    protected function assertLayersEquals(ImageInterface $expected, ImageInterface $actual)
+    {
+        $this->assertEquals($expected->getGdResource(), $actual->getGdResource());
     }
 
     public function testCount()
@@ -58,6 +85,11 @@ class LayersTest extends AbstractLayersTest
         }
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::testLayerArrayAccess()
+     */
     public function testLayerArrayAccess()
     {
         $image = $this->getImage(IMAGINE_TEST_FIXTURESFOLDER . '/pink.gif');
@@ -67,6 +99,11 @@ class LayersTest extends AbstractLayersTest
         $this->assertTrue(isset($layers[0]));
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::testLayerAddGetSetRemove()
+     */
     public function testLayerAddGetSetRemove()
     {
         $image = $this->getImage(IMAGINE_TEST_FIXTURESFOLDER . '/pink.gif');
@@ -138,25 +175,5 @@ class LayersTest extends AbstractLayersTest
     public function testAnimateWithWrongParameters($delay, $loops)
     {
         $this->markTestSkipped('GD driver does not support animated gifs');
-    }
-
-    public function getImage($path = null)
-    {
-        return new Image(imagecreatetruecolor(10, 10), new RGB(), new MetadataBag());
-    }
-
-    public function getLayers(ImageInterface $image, $resource)
-    {
-        return new Layers($image, new RGB(), $resource);
-    }
-
-    public function getImagine()
-    {
-        return new Imagine();
-    }
-
-    protected function assertLayersEquals($expected, $actual)
-    {
-        $this->assertEquals($expected->getGdResource(), $actual->getGdResource());
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Imagine\Gd;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Factory\ClassFactoryInterface;
@@ -19,7 +20,6 @@ use Imagine\Image\AbstractImagine;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\Color\ColorInterface;
-use Imagine\Image\Palette\Color\RGB as RGBColor;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Utils\ErrorHandling;
@@ -29,14 +29,25 @@ use Imagine\Utils\ErrorHandling;
  *
  * @final
  */
-class Imagine extends AbstractImagine
+class Imagine extends AbstractImagine implements InfoProvider
 {
     /**
      * Initialize the class.
      */
     public function __construct()
     {
-        $this->requireGdVersion('2.0.1');
+        static::getDriverInfo()->checkVersionIsSupported();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
     }
 
     /**
@@ -55,11 +66,12 @@ class Imagine extends AbstractImagine
             throw new RuntimeException('Create operation failed');
         }
 
-        $palette = $color !== null ? $color->getPalette() : new RGB();
-        $color = $color ? $color : $palette->color('fff');
-
-        if (!$color instanceof RGBColor) {
-            throw new InvalidArgumentException('GD driver only supports RGB colors');
+        if ($color === null) {
+            $palette = new RGB();
+            $color = $palette->color('fff');
+        } else {
+            $palette = $color->getPalette();
+            static::getDriverInfo()->checkPaletteSupport($palette);
         }
 
         $index = imagecolorallocatealpha($resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round(127 * (100 - $color->getAlpha()) / 100));
@@ -93,7 +105,7 @@ class Imagine extends AbstractImagine
 
         $resource = $this->createImageFromString($data);
 
-        if (!$resource instanceof \GdImage && !\is_resource($resource)) {
+        if (!($resource instanceof \GdImage) && !\is_resource($resource)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
@@ -186,21 +198,6 @@ class Imagine extends AbstractImagine
     }
 
     /**
-     * @param string $version
-     *
-     * @throws \Imagine\Exception\RuntimeException
-     */
-    private function requireGdVersion($version)
-    {
-        if (!\function_exists('gd_info')) {
-            throw new RuntimeException('Gd not installed');
-        }
-        if (version_compare(GD_VERSION, $version, '<')) {
-            throw new RuntimeException(sprintf('GD2 version %s or higher is required, %s provided', $version, GD_VERSION));
-        }
-    }
-
-    /**
      * @param string $string
      * @param \Imagine\Image\Metadata\MetadataBag $metadata
      *
@@ -243,10 +240,10 @@ class Imagine extends AbstractImagine
         return ErrorHandling::ignoring(-1, function () use (&$string) {
             //  imagecreatefromstring() does not support webp images before PHP 7.3.0
             if (PHP_VERSION_ID < 70300 && function_exists('imagecreatefromwebp') && $this->isWebP($string)) {
-                return @imagecreatefromwebp('data:image/webp;base64,' . base64_encode($string));
+                return imagecreatefromwebp('data:image/webp;base64,' . base64_encode($string));
             }
 
-            return @imagecreatefromstring($string);
+            return imagecreatefromstring($string);
         });
     }
 }

@@ -11,16 +11,17 @@
 
 namespace Imagine\Gmagick;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Factory\ClassFactoryInterface;
 use Imagine\Image\AbstractLayers;
+use Imagine\Image\Format;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\PaletteInterface;
 
-class Layers extends AbstractLayers
+class Layers extends AbstractLayers implements InfoProvider
 {
     /**
      * @var \Imagine\Gmagick\Image
@@ -64,6 +65,17 @@ class Layers extends AbstractLayers
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Image\LayersInterface::merge()
      */
     public function merge()
@@ -85,7 +97,7 @@ class Layers extends AbstractLayers
      */
     public function coalesce()
     {
-        throw new NotSupportedException('Gmagick does not support coalescing');
+        static::getDriverInfo()->requireFeature(DriverInfo::FEATURE_COALESCELAYERS);
     }
 
     /**
@@ -95,8 +107,9 @@ class Layers extends AbstractLayers
      */
     public function animate($format, $delay, $loops)
     {
-        if (strtolower($format) !== 'gif') {
-            throw new NotSupportedException('Animated picture is currently only supported on gif');
+        $formatInfo = Format::get($format);
+        if ($formatInfo === null || $formatInfo->getID() !== Format::ID_GIF) {
+            throw new InvalidArgumentException('Animated picture is currently only supported on gif');
         }
 
         if (!is_int($loops) || $loops < 0) {

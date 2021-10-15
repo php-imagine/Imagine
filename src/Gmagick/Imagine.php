@@ -11,6 +11,7 @@
 
 namespace Imagine\Gmagick;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
@@ -30,16 +31,25 @@ use Imagine\Image\Palette\RGB;
  *
  * @final
  */
-class Imagine extends AbstractImagine
+class Imagine extends AbstractImagine implements InfoProvider
 {
     /**
      * @throws \Imagine\Exception\RuntimeException
      */
     public function __construct()
     {
-        if (!class_exists('Gmagick')) {
-            throw new RuntimeException('Gmagick not installed');
-        }
+        static::getDriverInfo()->checkVersionIsSupported();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
     }
 
     /**

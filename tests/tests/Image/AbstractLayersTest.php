@@ -11,15 +11,29 @@
 
 namespace Imagine\Test\Image;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractLayersTest extends ImagineTestCase
+abstract class AbstractLayersTest extends ImagineTestCase implements InfoProvider
 {
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
+    abstract protected function getImagine();
+
+    /**
+     * @param string|null $path
+     *
+     * @return \Imagine\Image\ImageInterface
+     */
+    abstract protected function getImage($path = null);
+
+    abstract protected function assertLayersEquals(ImageInterface $expected, ImageInterface $actual);
+
     public function testMerge()
     {
         $palette = new RGB();
@@ -258,18 +272,4 @@ abstract class AbstractLayersTest extends ImagineTestCase
             array(2),
         );
     }
-
-    /**
-     * @param string|null $path
-     *
-     * @return ImageInterface
-     */
-    abstract protected function getImage($path = null);
-
-    /**
-     * @return ImagineInterface
-     */
-    abstract protected function getImagine();
-
-    abstract protected function assertLayersEquals($expected, $actual);
 }

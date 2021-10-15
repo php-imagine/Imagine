@@ -2,6 +2,7 @@
 
 namespace Imagine\Test\Gmagick;
 
+use Imagine\Gmagick\DriverInfo;
 use Imagine\Gmagick\Imagine;
 use Imagine\Test\Draw\AbstractAlphaBlendingAwareDrawerTest;
 
@@ -14,14 +15,11 @@ class AlphaBlendingAwareDrawerTest extends AbstractAlphaBlendingAwareDrawerTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        if (!class_exists('Gmagick')) {
-            $this->markTestSkipped('Gmagick is not installed');
-        }
-        parent::setUpBase();
+        return DriverInfo::get($required);
     }
 
     /**

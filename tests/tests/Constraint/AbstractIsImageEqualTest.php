@@ -11,13 +11,19 @@
 
 namespace Imagine\Test\Constraint;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractIsImageEqualTest extends ImagineTestCase
+abstract class AbstractIsImageEqualTest extends ImagineTestCase implements InfoProvider
 {
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
+    abstract protected function getImagine();
+
     public function testThrowsExceptionWithInvalidArguments()
     {
         $image = $this->getImagine()->create(new Box(1, 1));
@@ -129,9 +135,4 @@ abstract class AbstractIsImageEqualTest extends ImagineTestCase
         }
         $this->assertInstanceOf('PHPUnit\Framework\ExpectationFailedException', $error, 'different images should be detected as different');
     }
-
-    /**
-     * @return \Imagine\Image\ImagineInterface
-     */
-    abstract protected function getImagine();
 }

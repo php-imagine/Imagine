@@ -11,13 +11,23 @@
 
 namespace Imagine\Test\Image;
 
+use Imagine\Driver\Info;
+use Imagine\Driver\InfoProvider;
 use Imagine\Image\Palette\RGB;
 use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractFontTest extends ImagineTestCase
+abstract class AbstractFontTest extends ImagineTestCase implements InfoProvider
 {
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
+    abstract protected function getImagine();
+
     public function testShouldDetermineFontSize()
     {
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_TEXTFUNCTIONS)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        }
         $palette = new RGB();
         $path = IMAGINE_TEST_FIXTURESFOLDER . '/font/Arial.ttf';
         $black = $palette->color('000');
@@ -53,13 +63,11 @@ abstract class AbstractFontTest extends ImagineTestCase
      */
     public function testFontWrapText($text, $maxWidth, $expectedText)
     {
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_TEXTFUNCTIONS)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        }
         $palette = new RGB();
         $font = $this->getImagine()->font(IMAGINE_TEST_FIXTURESFOLDER . '/font/Arial.ttf', 10, $palette->color('000'));
         $this->assertSame($expectedText, $font->wrapText($text, $maxWidth));
     }
-
-    /**
-     * @return \Imagine\Image\ImagineInterface
-     */
-    abstract protected function getImagine();
 }

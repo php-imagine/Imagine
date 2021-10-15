@@ -11,13 +11,14 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Palette\Color\ColorInterface;
 
 /**
  * Font implementation using the Imagick PHP extension.
  */
-final class Font extends AbstractFont
+final class Font extends AbstractFont implements InfoProvider
 {
     /**
      * @var \Imagick
@@ -40,6 +41,17 @@ final class Font extends AbstractFont
     /**
      * {@inheritdoc}
      *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see \Imagine\Image\FontInterface::box()
      */
     public function box($string, $angle = 0)
@@ -48,12 +60,8 @@ final class Font extends AbstractFont
 
         $text->setFont($this->file);
 
-        /*
-         * @see http://www.php.net/manual/en/imagick.queryfontmetrics.php#101027
-         *
-         * ensure font resolution is the same as GD's hard-coded 96
-         */
-        if (version_compare(phpversion('imagick'), '3.0.2', '>=')) {
+        // ensure font resolution is the same as GD's hard-coded 96
+        if (static::getDriverInfo()->hasFeature(DriverInfo::FEATURE_CUSTOMRESOLUTION)) {
             $text->setResolution(96, 96);
             $text->setFontSize($this->size);
         } else {
