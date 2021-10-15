@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Gmagick;
 
+use Imagine\Gmagick\DriverInfo;
 use Imagine\Gmagick\Imagine;
 use Imagine\Image\ImageInterface;
 use Imagine\Test\Image\AbstractImageTest;
@@ -20,6 +21,59 @@ use Imagine\Test\Image\AbstractImageTest;
  */
 class ImageTest extends AbstractImageTest
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     */
+    protected function setUpBase()
+    {
+        parent::setUpBase();
+        // disable GC while https://bugs.php.net/bug.php?id=63677 is still open
+        // If GC enabled, Gmagick unit tests fail
+        gc_disable();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::getImagine()
+     */
+    protected function getImagine()
+    {
+        return new Imagine();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::getImageResolution()
+     */
+    protected function getImageResolution(ImageInterface $image)
+    {
+        return $image->getGmagick()->getimageresolution();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::getSamplingFactors()
+     */
+    protected function getSamplingFactors(ImageInterface $image)
+    {
+        return $image->getGmagick()->getSamplingFactors();
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -43,21 +97,8 @@ class ImageTest extends AbstractImageTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Test\Image\AbstractImageTest::provideFromAndToPalettes()
      */
-    protected function setUpBase()
-    {
-        parent::setUpBase();
-
-        // disable GC while https://bugs.php.net/bug.php?id=63677 is still open
-        // If GC enabled, Gmagick unit tests fail
-        gc_disable();
-
-        if (!class_exists('Gmagick')) {
-            $this->markTestSkipped('Gmagick is not installed');
-        }
-    }
-
     public function provideFromAndToPalettes()
     {
         return array(
@@ -74,6 +115,11 @@ class ImageTest extends AbstractImageTest
         );
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::providePalettes()
+     */
     public function providePalettes()
     {
         return array(
@@ -161,6 +207,8 @@ class ImageTest extends AbstractImageTest
      * @dataProvider imageCompressionQualityProvider
      *
      * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testSaveCompressionQuality()
      */
     public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
     {
@@ -170,20 +218,5 @@ class ImageTest extends AbstractImageTest
         }
 
         return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
-    }
-
-    protected function getImagine()
-    {
-        return new Imagine();
-    }
-
-    protected function getImageResolution(ImageInterface $image)
-    {
-        return $image->getGmagick()->getimageresolution();
-    }
-
-    protected function getSamplingFactors(ImageInterface $image)
-    {
-        return $image->getGmagick()->getSamplingFactors();
     }
 }

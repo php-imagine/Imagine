@@ -11,8 +11,10 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Metadata\MetadataBag;
 use Imagine\Image\Palette\RGB;
+use Imagine\Imagick\DriverInfo;
 use Imagine\Imagick\Image;
 use Imagine\Imagick\Imagine;
 use Imagine\Imagick\Layers;
@@ -26,15 +28,45 @@ class LayersTest extends AbstractLayersTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
+        return DriverInfo::get($required);
+    }
 
-        if (!class_exists('Imagick')) {
-            $this->markTestSkipped('Imagick is not installed');
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::getImagine()
+     */
+    protected function getImagine()
+    {
+        return new Imagine();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::getImage()
+     */
+    protected function getImage($path = null)
+    {
+        if ($path) {
+            return new Image(new \Imagick($path), new RGB(), new MetadataBag());
+        } else {
+            return new Image(new \Imagick(), new RGB(), new MetadataBag());
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::assertLayersEquals()
+     */
+    protected function assertLayersEquals(ImageInterface $expected, ImageInterface $actual)
+    {
+        $this->assertEquals($expected->getImagick(), $actual->getImagick());
     }
 
     public function testCount()
@@ -101,24 +133,5 @@ class LayersTest extends AbstractLayersTest
                 $this->assertEquals($height, $size->getHeight());
             }
         }
-    }
-
-    public function getImage($path = null)
-    {
-        if ($path) {
-            return new Image(new \Imagick($path), new RGB(), new MetadataBag());
-        } else {
-            return new Image(new \Imagick(), new RGB(), new MetadataBag());
-        }
-    }
-
-    protected function getImagine()
-    {
-        return new Imagine();
-    }
-
-    protected function assertLayersEquals($expected, $actual)
-    {
-        $this->assertEquals($expected->getImagick(), $actual->getImagick());
     }
 }

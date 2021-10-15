@@ -11,14 +11,19 @@
 
 namespace Imagine\Test\Image;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Image\Box;
-use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractImagineTest extends ImagineTestCase
+abstract class AbstractImagineTest extends ImagineTestCase implements InfoProvider
 {
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
+    abstract protected function getImagine();
+
     public function testShouldCreateEmptyImage()
     {
         $factory = $this->getImagine();
@@ -233,9 +238,4 @@ abstract class AbstractImagineTest extends ImagineTestCase
         $actualColor = $image->getColorAt(new Point(0, 0));
         $this->assertEquals(17, $actualColor->getAlpha());
     }
-
-    /**
-     * @return ImagineInterface
-     */
-    abstract protected function getImagine();
 }

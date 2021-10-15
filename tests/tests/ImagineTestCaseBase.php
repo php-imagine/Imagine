@@ -11,6 +11,8 @@
 
 namespace Imagine\Test;
 
+use Imagine\Driver\InfoProvider;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Image\ImagineInterface;
 use Imagine\Test\Constraint\IsBoxInRange;
 use Imagine\Test\Constraint\IsColorSimilar;
@@ -152,6 +154,13 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
      */
     protected function setUpBase()
     {
+        if ($this instanceof InfoProvider) {
+            try {
+                $this->getDriverInfo()->checkVersionIsSupported();
+            } catch (NotSupportedException $x) {
+                $this->markTestSkipped($x->getMessage());
+            }
+        }
     }
 
     /**

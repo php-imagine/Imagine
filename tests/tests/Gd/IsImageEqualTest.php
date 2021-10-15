@@ -2,6 +2,7 @@
 
 namespace Imagine\Test\Gd;
 
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Constraint\AbstractIsImageEqualTest;
 
@@ -13,15 +14,11 @@ class IsImageEqualTest extends AbstractIsImageEqualTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
-
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
-        }
+        return DriverInfo::get($required);
     }
 
     /**

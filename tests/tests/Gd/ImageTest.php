@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Gd;
 
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Image\ImageInterface;
 use Imagine\Test\Image\AbstractImageTest;
@@ -23,15 +24,39 @@ class ImageTest extends AbstractImageTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
+        return DriverInfo::get($required);
+    }
 
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
-        }
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::getImagine()
+     */
+    protected function getImagine()
+    {
+        return new Imagine();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::getImageResolution()
+     */
+    protected function getImageResolution(ImageInterface $image)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::getSamplingFactors()
+     */
+    protected function getSamplingFactors(ImageInterface $image)
+    {
     }
 
     /**
@@ -46,6 +71,11 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('GD driver does not support resolution options');
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::provideFilters()
+     */
     public function provideFilters()
     {
         return array(
@@ -53,6 +83,11 @@ class ImageTest extends AbstractImageTest
         );
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::providePalettes()
+     */
     public function providePalettes()
     {
         return array(
@@ -60,6 +95,11 @@ class ImageTest extends AbstractImageTest
         );
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::provideFromAndToPalettes()
+     */
     public function provideFromAndToPalettes()
     {
         return array(
@@ -71,6 +111,11 @@ class ImageTest extends AbstractImageTest
         );
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testProfile()
+     */
     public function testProfile()
     {
         $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
@@ -149,11 +194,11 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('GD driver does not support ICC profiles');
     }
 
-    protected function getImagine()
-    {
-        return new Imagine();
-    }
-
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractImageTest::testRotateWithNoBackgroundColor()
+     */
     public function testRotateWithNoBackgroundColor()
     {
         $vFrom = '5.5';
@@ -237,13 +282,5 @@ class ImageTest extends AbstractImageTest
     public function testResizeAnimatedGifResizeResult()
     {
         $this->markTestSkipped('GD driver does not support multiple layers');
-    }
-
-    protected function getImageResolution(ImageInterface $image)
-    {
-    }
-
-    protected function getSamplingFactors(ImageInterface $image)
-    {
     }
 }

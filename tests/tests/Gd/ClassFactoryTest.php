@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Gd;
 
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Factory\AbstractClassFactoryTest;
 
@@ -19,29 +20,23 @@ use Imagine\Test\Factory\AbstractClassFactoryTest;
  */
 class ClassFactoryTest extends AbstractClassFactoryTest
 {
-    protected function setUpBase()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     */
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
-
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
-        }
-    }
-
-    protected function getImagine()
-    {
-        return new Imagine();
+        return DriverInfo::get($required);
     }
 
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\Factory\AbstractClassFactoryTest::canTestFont()
+     * @see \Imagine\Test\Factory\AbstractClassFactoryTest::getImagine()
      */
-    protected function canTestFont()
+    protected function getImagine()
     {
-        $info = gd_info();
-
-        return (bool) $info['FreeType Support'];
+        return new Imagine();
     }
 }

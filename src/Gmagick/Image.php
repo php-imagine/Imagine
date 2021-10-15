@@ -11,6 +11,7 @@
 
 namespace Imagine\Gmagick;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\OutOfBoundsException;
@@ -30,7 +31,7 @@ use Imagine\Image\ProfileInterface;
 /**
  * Image implementation using the Gmagick PHP extension.
  */
-final class Image extends AbstractImage
+final class Image extends AbstractImage implements InfoProvider
 {
     /**
      * @var \Gmagick
@@ -90,6 +91,17 @@ final class Image extends AbstractImage
         if ($this->layers !== null) {
             $this->layers = $this->getClassFactory()->createLayers(ClassFactoryInterface::HANDLE_GMAGICK, $this, $this->layers->key());
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
     }
 
     /**
@@ -729,13 +741,13 @@ final class Image extends AbstractImage
      */
     public function usePalette(PaletteInterface $palette)
     {
+        if ($this->palette->name() === $palette->name()) {
+            return $this;
+        }
+
         $colorspaceMapping = self::getColorspaceMapping();
         if (!isset($colorspaceMapping[$palette->name()])) {
             throw new InvalidArgumentException(sprintf('The palette %s is not supported by Gmagick driver', $palette->name()));
-        }
-
-        if ($this->palette->name() === $palette->name()) {
-            return $this;
         }
 
         try {

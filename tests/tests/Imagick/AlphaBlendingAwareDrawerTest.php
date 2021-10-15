@@ -2,6 +2,7 @@
 
 namespace Imagine\Test\Imagick;
 
+use Imagine\Imagick\DriverInfo;
 use Imagine\Imagick\Imagine;
 use Imagine\Test\Draw\AbstractAlphaBlendingAwareDrawerTest;
 
@@ -14,14 +15,11 @@ class AlphaBlendingAwareDrawerTest extends AbstractAlphaBlendingAwareDrawerTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        if (!class_exists('Imagick')) {
-            $this->markTestSkipped('Imagick is not installed');
-        }
-        parent::setUpBase();
+        return DriverInfo::get($required);
     }
 
     /**

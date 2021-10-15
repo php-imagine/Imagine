@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Gmagick;
 
+use Imagine\Gmagick\DriverInfo;
 use Imagine\Gmagick\Image;
 use Imagine\Gmagick\Imagine;
 use Imagine\Gmagick\Layers;
@@ -27,15 +28,45 @@ class LayersTest extends AbstractLayersTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
+        return DriverInfo::get($required);
+    }
 
-        if (!class_exists('Gmagick')) {
-            $this->markTestSkipped('Gmagick is not installed');
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::getImagine()
+     */
+    protected function getImagine()
+    {
+        return new Imagine();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::getImage()
+     */
+    protected function getImage($path = null)
+    {
+        if ($path) {
+            return new Image(new \Gmagick($path), new RGB(), new MetadataBag());
+        } else {
+            return new Image(new \Gmagick(), new RGB(), new MetadataBag());
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Image\AbstractLayersTest::assertLayersEquals()
+     */
+    protected function assertLayersEquals(ImageInterface $expected, ImageInterface $actual)
+    {
+        $this->assertEquals($expected->getGmagick(), $actual->getGmagick());
     }
 
     public function testCount()
@@ -86,30 +117,6 @@ class LayersTest extends AbstractLayersTest
     public function testAnimateEmpty()
     {
         $this->markTestSkipped('Animate empty is skipped due to https://bugs.php.net/bug.php?id=62309');
-    }
-
-    public function getImage($path = null)
-    {
-        if ($path) {
-            return new Image(new \Gmagick($path), new RGB(), new MetadataBag());
-        } else {
-            return new Image(new \Gmagick(), new RGB(), new MetadataBag());
-        }
-    }
-
-    public function getImagine()
-    {
-        return new Imagine();
-    }
-
-    public function getLayers(ImageInterface $image, $resource)
-    {
-        return new Layers($image, $resource, new MetadataBag());
-    }
-
-    protected function assertLayersEquals($expected, $actual)
-    {
-        $this->assertEquals($expected->getGmagick(), $actual->getGmagick());
     }
 
     /**

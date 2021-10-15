@@ -11,6 +11,7 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Effects\EffectsInterface;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
@@ -22,7 +23,7 @@ use Imagine\Utils\Matrix;
 /**
  * Effects implementation using the Imagick PHP extension.
  */
-class Effects implements EffectsInterface
+class Effects implements EffectsInterface, InfoProvider
 {
     /**
      * @var \Imagick
@@ -37,6 +38,17 @@ class Effects implements EffectsInterface
     public function __construct(\Imagick $imagick)
     {
         $this->imagick = $imagick;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
     }
 
     /**
@@ -78,9 +90,7 @@ class Effects implements EffectsInterface
      */
     public function grayscale()
     {
-        if (version_compare(Imagine::getExtensionInfo()->getImageMagickSemVerVersion(), '6.8.5') < 0) {
-            throw new NotSupportedException('Your imagick extension has been compiled with ImageMagick ' . Imagine::getExtensionInfo()->getImageMagickFullVersion() . ' which is too old (you need at least ImageMagick 6.8.5-10)');
-        }
+        static::getDriverInfo()->requireFeature(DriverInfo::FEATURE_GRAYSCALEEFFECT);
         try {
             $this->imagick->setImageType(\Imagick::IMGTYPE_GRAYSCALE);
         } catch (\ImagickException $e) {
@@ -182,7 +192,7 @@ class Effects implements EffectsInterface
             throw new InvalidArgumentException(sprintf('A convolution matrix must be 3x3 (%dx%d provided).', $matrix->getWidth(), $matrix->getHeight()));
         }
         try {
-            if (class_exists('ImagickKernel', false) && version_compare(Imagine::getExtensionInfo()->getImageMagickSemVerVersion(), '7') >= 0) {
+            if (class_exists('ImagickKernel', false) && version_compare(static::getDriverInfo()->getEngineVersion(), '7.0.0') >= 0) {
                 $kernel = \ImagickKernel::fromMatrix($matrix->getMatrix());
             } else {
                 $kernel = $matrix->getValueList();

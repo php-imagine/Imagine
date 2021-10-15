@@ -11,7 +11,8 @@
 
 namespace Imagine\Test\Functional;
 
-use Imagine\Exception\RuntimeException;
+use Imagine\Driver\InfoProvider;
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
@@ -19,17 +20,16 @@ use Imagine\Test\ImagineTestCase;
 /**
  * @group gd
  */
-class GdTransparentGifHandlingTest extends ImagineTestCase
+class GdTransparentGifHandlingTest extends ImagineTestCase implements InfoProvider
 {
-    private function getImagine()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     */
+    public static function getDriverInfo($required = true)
     {
-        try {
-            $imagine = new Imagine();
-        } catch (RuntimeException $e) {
-            $this->markTestSkipped($e->getMessage());
-        }
-
-        return $imagine;
+        return DriverInfo::get($required);
     }
 
     /**
@@ -37,7 +37,7 @@ class GdTransparentGifHandlingTest extends ImagineTestCase
      */
     public function testShouldResize()
     {
-        $imagine = $this->getImagine();
+        $imagine = new Imagine();
         $new = $this->getTemporaryFilename('.jpeg');
 
         $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/xparent.gif');

@@ -11,15 +11,21 @@
 
 namespace Imagine\Test\Draw;
 
+use Imagine\Driver\Info;
+use Imagine\Driver\InfoProvider;
 use Imagine\Image\Box;
-use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
 use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractDrawerTest extends ImagineTestCase
+abstract class AbstractDrawerTest extends ImagineTestCase implements InfoProvider
 {
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
+    abstract protected function getImagine();
+
     public function thicknessProvider()
     {
         return array(
@@ -211,8 +217,8 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
     public function testText()
     {
-        if (!$this->isFontTestSupported()) {
-            $this->markTestSkipped('This install does not support font tests');
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_TEXTFUNCTIONS)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
         }
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(60, 60), $this->getColor('fff'));
@@ -247,10 +253,9 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
     public function testText2()
     {
-        if (!$this->isFontTestSupported()) {
-            $this->markTestSkipped('This install does not support font tests');
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_TEXTFUNCTIONS)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
         }
-
         $path = IMAGINE_TEST_FIXTURESFOLDER . '/font/Arial.ttf';
         $black = $this->getColor('000');
         $file36 = $this->getTemporaryFilename('36.png');
@@ -308,6 +313,11 @@ abstract class AbstractDrawerTest extends ImagineTestCase
         $this->assertFileExists($file12);
     }
 
+    /**
+     * @param string|int[]|int $color
+     *
+     * @return \Imagine\Image\Palette\Color\RGB
+     */
     private function getColor($color)
     {
         static $palette;
@@ -318,11 +328,4 @@ abstract class AbstractDrawerTest extends ImagineTestCase
 
         return $palette->color($color);
     }
-
-    /**
-     * @return ImagineInterface
-     */
-    abstract protected function getImagine();
-
-    abstract protected function isFontTestSupported();
 }

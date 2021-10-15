@@ -2,6 +2,7 @@
 
 namespace Imagine\Test\Gmagick;
 
+use Imagine\Gmagick\DriverInfo;
 use Imagine\Gmagick\Imagine;
 use Imagine\Test\Constraint\AbstractIsImageEqualTest;
 
@@ -13,15 +14,11 @@ class IsImageEqualTest extends AbstractIsImageEqualTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
-
-        if (!class_exists('Gmagick')) {
-            $this->markTestSkipped('Gmagick is not installed');
-        }
+        return DriverInfo::get($required);
     }
 
     /**

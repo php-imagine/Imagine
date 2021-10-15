@@ -12,6 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Draw\AlphaBlendingAwareDrawerInterface;
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
@@ -24,17 +25,12 @@ use Imagine\Image\PointInterface;
 /**
  * Drawer implementation using the GD PHP extension.
  */
-final class Drawer implements AlphaBlendingAwareDrawerInterface
+final class Drawer implements AlphaBlendingAwareDrawerInterface, InfoProvider
 {
     /**
      * @var resource|\GdImage
      */
     private $resource;
-
-    /**
-     * @var array
-     */
-    private $info;
 
     /**
      * @var bool
@@ -48,8 +44,18 @@ final class Drawer implements AlphaBlendingAwareDrawerInterface
      */
     public function __construct($resource)
     {
-        $this->loadGdInfo();
         $this->resource = $resource;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
     }
 
     /**
@@ -359,10 +365,7 @@ final class Drawer implements AlphaBlendingAwareDrawerInterface
      */
     public function text($string, AbstractFont $font, PointInterface $position, $angle = 0, $width = null)
     {
-        if (!$this->info['FreeType Support']) {
-            throw new RuntimeException('GD is not compiled with FreeType support');
-        }
-
+        static::getDriverInfo()->requireFeature(DriverInfo::FEATURE_TEXTFUNCTIONS);
         $angle = -1 * $angle;
         $fontsize = $font->getSize();
         $fontfile = $font->getFile();
@@ -452,15 +455,6 @@ final class Drawer implements AlphaBlendingAwareDrawerInterface
         }
 
         return $gdColor;
-    }
-
-    private function loadGdInfo()
-    {
-        if (!function_exists('gd_info')) {
-            throw new RuntimeException('Gd not installed');
-        }
-
-        $this->info = gd_info();
     }
 
     /**

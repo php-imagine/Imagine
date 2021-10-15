@@ -2,8 +2,11 @@
 
 namespace Imagine\Test\Issues;
 
+use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
+use Imagine\Gmagick\DriverInfo as GmagickDriverInfo;
 use Imagine\Gmagick\Imagine as GmagickImagine;
+use Imagine\Imagick\DriverInfo as ImagickDriverInfo;
 use Imagine\Imagick\Imagine as ImagickImagine;
 use Imagine\Test\ImagineTestCase;
 
@@ -35,25 +38,31 @@ class Issue131Test extends ImagineTestCase
     private function getImagickImagine($file)
     {
         try {
-            $imagine = new ImagickImagine();
-            $image = $imagine->open($file);
-        } catch (RuntimeException $e) {
-            $this->markTestSkipped($e->getMessage());
+            ImagickDriverInfo::get()->checkVersionIsSupported();
+        } catch (NotSupportedException $x) {
+            $this->markTestSkipped($x->getMessage());
         }
-
-        return $image;
+        $imagine = new ImagickImagine();
+        try {
+            return $imagine->open($file);
+        } catch (RuntimeException $x) {
+            $this->markTestSkipped($x->getMessage());
+        }
     }
 
     private function getGmagickImagine($file)
     {
         try {
-            $imagine = new GmagickImagine();
-            $image = $imagine->open($file);
-        } catch (RuntimeException $e) {
-            $this->markTestSkipped($e->getMessage());
+            GmagickDriverInfo::get()->checkVersionIsSupported();
+        } catch (NotSupportedException $x) {
+            $this->markTestSkipped($x->getMessage());
         }
-
-        return $image;
+        $imagine = new GmagickImagine();
+        try {
+            return $imagine->open($file);
+        } catch (RuntimeException $x) {
+            $this->markTestSkipped($x->getMessage());
+        }
     }
 
     /**

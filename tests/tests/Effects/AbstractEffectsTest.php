@@ -11,17 +11,26 @@
 
 namespace Imagine\Test\Effects;
 
+use Imagine\Driver\Info;
+use Imagine\Driver\InfoProvider;
 use Imagine\Image\Box;
-use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
 use Imagine\Utils\Matrix;
 
-abstract class AbstractEffectsTest extends ImagineTestCase
+abstract class AbstractEffectsTest extends ImagineTestCase implements InfoProvider
 {
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
+    abstract protected function getImagine();
+
     public function testNegate()
     {
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_NEGATEIMAGE)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        }
         $palette = new RGB();
         $imagine = $this->getImagine();
 
@@ -59,6 +68,9 @@ abstract class AbstractEffectsTest extends ImagineTestCase
 
     public function testGrayscale()
     {
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_GRAYSCALEEFFECT)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        }
         $palette = new RGB();
         $imagine = $this->getImagine();
 
@@ -114,6 +126,9 @@ abstract class AbstractEffectsTest extends ImagineTestCase
 
     public function testColorize()
     {
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_COLORIZEIMAGE)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        }
         $palette = new RGB();
         $imagine = $this->getImagine();
 
@@ -154,6 +169,9 @@ abstract class AbstractEffectsTest extends ImagineTestCase
 
     public function testConvolution()
     {
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_CONVOLVEIMAGE)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        }
         $imagine = $this->getImagine();
         $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/trans.gif');
         $matrix = new Matrix(3, 3, array(
@@ -168,9 +186,4 @@ abstract class AbstractEffectsTest extends ImagineTestCase
             $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/convolution/trans-blur.gif')
         );
     }
-
-    /**
-     * @return ImagineInterface
-     */
-    abstract protected function getImagine();
 }

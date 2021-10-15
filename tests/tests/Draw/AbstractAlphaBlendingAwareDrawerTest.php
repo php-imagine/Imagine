@@ -12,14 +12,20 @@
 namespace Imagine\Test\Draw;
 
 use Imagine\Draw\AlphaBlendingAwareDrawerInterface;
+use Imagine\Driver\InfoProvider;
 use Imagine\Image\Box;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractAlphaBlendingAwareDrawerTest extends ImagineTestCase
+abstract class AbstractAlphaBlendingAwareDrawerTest extends ImagineTestCase implements InfoProvider
 {
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
+    abstract protected function getImagine();
+
     /**
      * {@inheritdoc}
      *
@@ -86,9 +92,4 @@ abstract class AbstractAlphaBlendingAwareDrawerTest extends ImagineTestCase
         $this->assertGreaterThan(0, $blendedColor->getValue(ColorInterface::COLOR_GREEN));
         $this->assertSame(0, $blendedColor->getValue(ColorInterface::COLOR_BLUE));
     }
-
-    /**
-     * @return \Imagine\Image\ImagineInterface
-     */
-    abstract protected function getImagine();
 }

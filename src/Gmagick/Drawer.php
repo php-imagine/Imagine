@@ -12,6 +12,7 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Draw\DrawerInterface;
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\AbstractFont;
@@ -24,7 +25,7 @@ use Imagine\Image\PointInterface;
 /**
  * Drawer implementation using the Gmagick PHP extension.
  */
-final class Drawer implements DrawerInterface
+final class Drawer implements DrawerInterface, InfoProvider
 {
     /**
      * @var \Gmagick
@@ -37,6 +38,17 @@ final class Drawer implements DrawerInterface
     public function __construct(\Gmagick $gmagick)
     {
         $this->gmagick = $gmagick;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
     }
 
     /**

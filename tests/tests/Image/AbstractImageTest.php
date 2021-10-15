@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Image;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Image\Box;
 use Imagine\Image\Fill\Gradient\Horizontal;
 use Imagine\Image\ImageInterface;
@@ -22,8 +23,27 @@ use Imagine\Image\PointSigned;
 use Imagine\Image\Profile;
 use Imagine\Test\ImagineTestCase;
 
-abstract class AbstractImageTest extends ImagineTestCase
+abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
 {
+    /**
+     * @return \Imagine\Image\ImagineInterface
+     */
+    abstract protected function getImagine();
+
+    /**
+     * @param ImageInterface $image
+     *
+     * @return array|null
+     */
+    abstract protected function getImageResolution(ImageInterface $image);
+
+    /**
+     * @param ImageInterface $image
+     *
+     * @return array|null
+     */
+    abstract protected function getSamplingFactors(ImageInterface $image);
+
     public function testPaletteIsRGBIfRGBImage()
     {
         $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
@@ -1079,8 +1099,6 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertTrue((bool) preg_match("/^\xFF\xD8\XFF\xE0..JFIF$/", $relevantOutputImageBytes), 'Exported image is not in JPEG format');
     }
 
-    abstract protected function getImageResolution(ImageInterface $image);
-
     private function getMonoLayeredImage()
     {
         return $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/google.png');
@@ -1095,16 +1113,4 @@ abstract class AbstractImageTest extends ImagineTestCase
     {
         return $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima.gif');
     }
-
-    /**
-     * @return \Imagine\Image\ImagineInterface
-     */
-    abstract protected function getImagine();
-
-    /**
-     * @param ImageInterface $image
-     *
-     * @return array
-     */
-    abstract protected function getSamplingFactors(ImageInterface $image);
 }

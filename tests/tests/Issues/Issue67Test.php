@@ -2,24 +2,24 @@
 
 namespace Imagine\Test\Issues;
 
-use Imagine\Exception\RuntimeException;
+use Imagine\Driver\InfoProvider;
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Test\ImagineTestCase;
 
 /**
  * @group gd
  */
-class Issue67Test extends ImagineTestCase
+class Issue67Test extends ImagineTestCase implements InfoProvider
 {
-    private function getImagine()
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     */
+    public static function getDriverInfo($required = true)
     {
-        try {
-            $imagine = new Imagine();
-        } catch (RuntimeException $e) {
-            $this->markTestSkipped($e->getMessage());
-        }
-
-        return $imagine;
+        return DriverInfo::get($required);
     }
 
     public function testShouldThrowExceptionNotError()
@@ -27,7 +27,7 @@ class Issue67Test extends ImagineTestCase
         $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         $invalidPath = '/thispathdoesnotexist';
 
-        $imagine = $this->getImagine();
+        $imagine = new Imagine();
 
         $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/large.jpg')
             ->save($invalidPath . '/myfile.jpg');

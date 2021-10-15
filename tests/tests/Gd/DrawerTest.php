@@ -11,6 +11,7 @@
 
 namespace Imagine\Test\Gd;
 
+use Imagine\Gd\DriverInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Test\Draw\AbstractDrawerTest;
 
@@ -22,15 +23,21 @@ class DrawerTest extends AbstractDrawerTest
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Test\ImagineTestCaseBase::setUpBase()
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
      */
-    protected function setUpBase()
+    public static function getDriverInfo($required = true)
     {
-        parent::setUpBase();
+        return DriverInfo::get($required);
+    }
 
-        if (!function_exists('gd_info')) {
-            $this->markTestSkipped('Gd not installed');
-        }
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Test\Draw\AbstractDrawerTest::getImagine()
+     */
+    protected function getImagine()
+    {
+        return new Imagine();
     }
 
     /**
@@ -76,17 +83,5 @@ class DrawerTest extends AbstractDrawerTest
             $this->markTestSkipped('The GD Drawer can NOT draw correctly not filled ellipses with a thickness greater than 1');
         }
         parent::testEllipse($thickness, $fill);
-    }
-
-    protected function getImagine()
-    {
-        return new Imagine();
-    }
-
-    protected function isFontTestSupported()
-    {
-        $infos = gd_info();
-
-        return isset($infos['FreeType Support']) ? $infos['FreeType Support'] : false;
     }
 }

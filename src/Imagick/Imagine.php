@@ -11,6 +11,7 @@
 
 namespace Imagine\Imagick;
 
+use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
@@ -30,29 +31,25 @@ use Imagine\Utils\ErrorHandling;
  *
  * @final
  */
-class Imagine extends AbstractImagine
+class Imagine extends AbstractImagine implements InfoProvider
 {
-    /**
-     * @var \Imagine\Imagick\ExtensionInfo|false|null
-     */
-    private static $extensionInfo = false;
-
     /**
      * @throws \Imagine\Exception\RuntimeException
      */
     public function __construct()
     {
-        $extensionInfo = static::getExtensionInfo();
-        if ($extensionInfo === null) {
-            throw new RuntimeException('Imagick not installed');
-        }
+        static::getDriverInfo()->checkVersionIsSupported();
+    }
 
-        if (version_compare($extensionInfo->getImageMagickSemVerVersion(), '6.2.9') < 0) {
-            throw new RuntimeException(sprintf('ImageMagick version 6.2.9 or higher is required, %s provided', $extensionInfo->getImageMagickSemVerVersion()));
-        }
-        if ($extensionInfo->getImageMagickFullVersion() === '7.0.7-32') { // https://github.com/avalanche123/Imagine/issues/689
-            throw new RuntimeException(sprintf('ImageMagick version %s has known bugs that prevent it from working', $extensionInfo->getImageMagickFullVersion()));
-        }
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Imagine\Driver\InfoProvider::getDriverInfo()
+     * @since 1.3.0
+     */
+    public static function getDriverInfo($required = true)
+    {
+        return DriverInfo::get($required);
     }
 
     /**
@@ -67,12 +64,12 @@ class Imagine extends AbstractImagine
 
         try {
             if ($loader->isLocalFile()) {
-                if (DIRECTORY_SEPARATOR === '\\' && PHP_INT_SIZE === 8 && PHP_VERSION_ID >= 70100 && PHP_VERSION_ID < 70200) {
-                    $imagick = new \Imagick();
-                    // PHP 7.1 64 bit on Windows: don't pass the file name to the constructor: it may break PHP - see https://github.com/mkoppanen/imagick/issues/252
-                    $imagick->readImageBlob($loader->getData(), $path);
-                } else {
+                if (DIRECTORY_SEPARATOR === '\\' && PHP_INT_SIZE === 8 && defined('PHP_VERSION_ID') && PHP_VERSION_ID >= 70100 && PHP_VERSION_ID < 70200) {
+                    // Passing the file name to the Imagick constructor may break PHP 7.1 64 bit on Windows - see https://github.com/mkoppanen/imagick/issues/252
                     $imagick = new \Imagick($loader->getPath());
+                } else {
+                    $imagick = new \Imagick();
+                    $imagick->readImageBlob($loader->getData(), $path);
                 }
             } else {
                 $imagick = new \Imagick();
@@ -108,7 +105,8 @@ class Imagine extends AbstractImagine
             $imagick->setImageMatte(true);
             $imagick->setImageBackgroundColor($pixel);
 
-            if (version_compare('6.3.1', static::getExtensionInfo()->getImageMagickSemVerVersion()) < 0) {
+            // Setting image alpha requires ImageMagick version 6.3.1 or higher is required
+            if (version_compare(static::getDriverInfo()->getEngineVersion(), '6.3.1') >= 0) {
                 // setImageOpacity was replaced with setImageAlpha in php-imagick v3.4.3
                 if (method_exists($imagick, 'setImageAlpha')) {
                     $imagick->setImageAlpha($pixel->getColorValue(\Imagick::COLOR_ALPHA));
@@ -181,27 +179,6 @@ class Imagine extends AbstractImagine
     }
 
     /**
-     * Get the info about the Imagick extension.
-     *
-     * @return \Imagine\Imagick\ExtensionInfo|null return NULL if Imagick is not installed
-     */
-    public static function getExtensionInfo()
-    {
-        if (self::$extensionInfo === false) {
-            if (!class_exists('Imagick')) {
-                self::$extensionInfo = null;
-            } else {
-                $imagick = new \Imagick();
-                self::$extensionInfo = new ExtensionInfo($imagick);
-                $imagick->clear();
-                $imagick->destroy();
-            }
-        }
-
-        return self::$extensionInfo;
-    }
-
-    /**
      * Returns the palette corresponding to an \Imagick resource colorspace.
      *
      * @param \Imagick $imagick
@@ -221,6 +198,7 @@ class Imagine extends AbstractImagine
             case \Imagick::COLORSPACE_GRAY:
                 return new Grayscale();
             case \Imagick::COLORSPACE_YCBCR:
+                static::getDriverInfo()->requireFeature(DriverInfo::FEATURE_COLORSPACECONVERSION);
                 try {
                     $profile = $imagick->getImageProfile('icc');
                 } catch (\ImagickException $e) {
@@ -229,6 +207,7 @@ class Imagine extends AbstractImagine
                 $imagick->transformImageColorspace(\Imagick::COLORSPACE_SRGB);
 
                 if ($profile) {
+                    static::getDriverInfo()->requireFeature(DriverInfo::FEATURE_COLORPROFILES);
                     $imagick->setImageProfile('icc', $profile);
                 }
 
