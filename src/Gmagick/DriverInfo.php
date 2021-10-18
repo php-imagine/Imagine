@@ -2,69 +2,50 @@
 
 namespace Imagine\Gmagick;
 
-use Imagine\Driver\Info;
+use Imagine\Driver\AbstractInfo;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Image\Format;
 use Imagine\Image\FormatList;
-use Imagine\Image\Palette\PaletteInterface;
 
 /**
  * Provide information and features supported by the Gmagick graphics driver.
  *
  * @since 1.3.0
  */
-class DriverInfo implements Info
+class DriverInfo extends AbstractInfo
 {
     /**
-     * @var static|null|false
+     * @var static|\Imagine\Exception\NotSupportedException|null
      */
-    private static $instance = false;
-
-    /**
-     * @var string
-     */
-    private $driverRawVersion;
-
-    /**
-     * @var string
-     */
-    private $driverSemverVersion;
-
-    /**
-     * @var string
-     */
-    private $engineRawVersion;
-
-    /**
-     * @var string
-     */
-    private $engineSemverVersion;
-
-    /**
-     * @var \Imagine\Image\FormatList|null
-     */
-    private $supportedFormats = null;
+    private static $instance;
 
     private $availableMethods = array();
 
     /**
-     * @param string $driverRawVersion
-     * @param array $engineRawVersion
+     * @throws \Imagine\Exception\NotSupportedException
      */
-    protected function __construct($driverRawVersion, array $engineRawVersion)
+    protected function __construct()
     {
-        $m = null;
-        $this->driverRawVersion = (string) $driverRawVersion;
-        $this->driverSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $this->driverRawVersion, $m) ? $m[1] : '';
-        $this->engineRawVersion = '';
-        if (isset($engineRawVersion['versionString']) && is_string($engineRawVersion['versionString'])) {
-            if (preg_match('/^.*?(\d+\.\d+\.\d+(-\d+)?(\s+Q\d+)?)/i', $engineRawVersion['versionString'], $m)) {
-                $this->engineRawVersion = $m[1];
-            } else {
-                $this->engineRawVersion = $engineRawVersion['versionString'];
-            }
+        if (!class_exists('Gmagick') || !extension_loaded('gmagick')) {
+            throw new NotSupportedException('Gmagick driver not installed');
         }
-        $this->engineSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $this->engineRawVersion, $m) ? $m[1] : '';
+        $m = null;
+        $extensionVersion = phpversion('gmagick');
+        $driverRawVersion = is_string($extensionVersion) ? $extensionVersion : '';
+        $driverSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $driverRawVersion, $m) ? $m[1] : '';
+        $gmagick = new \Gmagick();
+        $engineVersion = $gmagick->getversion();
+        if (is_array($engineVersion) && isset($engineVersion['versionString']) && is_string($engineVersion['versionString'])) {
+            if (preg_match('/^.*?(\d+\.\d+\.\d+(-\d+)?(\s+Q\d+)?)/i', $engineVersion['versionString'], $m)) {
+                $engineRawVersion = $m[1];
+            } else {
+                $engineRawVersion = $engineRawVersion['versionString'];
+            }
+        } else {
+            $engineRawVersion = '';
+        }
+        $engineSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $engineRawVersion, $m) ? $m[1] : '';
+        parent::__construct($driverRawVersion, $driverSemverVersion, $engineRawVersion, $engineSemverVersion);
     }
 
     /**
@@ -74,113 +55,60 @@ class DriverInfo implements Info
      */
     public static function get($required = true)
     {
-        if (self::$instance === false) {
-            if (class_exists('Gmagick') && extension_loaded('gmagick')) {
-                $extensionVersion = phpversion('gmagick');
-                $gmagick = new \Gmagick();
-                $engineVersion = $gmagick->getversion();
-                self::$instance = new static(is_string($extensionVersion) ? $extensionVersion : '', is_array($engineVersion) ? $engineVersion : array());
-            } else {
-                self::$instance = null;
+        if (self::$instance === null) {
+            try {
+                self::$instance = new static();
+            } catch (NotSupportedException $x) {
+                self::$instance = $x;
             }
         }
-        if (self::$instance === null && $required) {
-            throw new NotSupportedException('Gmagick not installed');
+        if (self::$instance instanceof self) {
+            return self::$instance;
         }
 
-        return self::$instance;
+        if ($required) {
+            throw self::$instance;
+        }
+
+        return null;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Driver\Info::checkVersionIsSupported()
+     * @see \Imagine\Driver\AbstractInfo::checkFeature()
      */
-    public function checkVersionIsSupported()
+    protected function checkFeature($feature)
     {
-        if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
-            throw new NotSupportedException('Imagine requires PHP 5.3 or later');
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::getDriverVersion()
-     */
-    public function getDriverVersion($raw = false)
-    {
-        return $raw ? $this->driverRawVersion : $this->driverSemverVersion;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::getEngineVersion()
-     */
-    public function getEngineVersion($raw = false)
-    {
-        return $raw ? $this->engineRawVersion : $this->engineSemverVersion;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::requireFeature()
-     */
-    public function requireFeature($features)
-    {
-        $features = (int) $features;
-        if ($features & static::FEATURE_COALESCELAYERS) {
-            throw new NotSupportedException('Gmagick does not support coalescing');
-        }
-        if ($features & static::FEATURE_NEGATEIMAGE) {
-            if (!$this->isMethodAvailale('negateimage')) {
-                throw new NotSupportedException('Gmagick version 1.1.0 RC3 is required for negative effect');
-            }
-        }
-        if ($features & static::FEATURE_COLORIZEIMAGE) {
-            throw new NotSupportedException('Gmagick does not support colorize');
-        }
-        if ($features & static::FEATURE_SHARPENIMAGE) {
-            throw new NotSupportedException('Gmagick does not support sharpen yet');
-        }
-        if ($features & static::FEATURE_CONVOLVEIMAGE) {
-            if (!$this->isMethodAvailale('convolveimage')) {
-                throw new NotSupportedException('The version of Gmagick extension is too old: it does not support convolve (you need gmagick 2.0.1RC2 or later.');
-            }
-        }
-        if ($features & static::FEATURE_CUSTOMRESOLUTION) {
-            throw new NotSupportedException('Gmagick does not support setting custom resolutions');
+        switch ($feature) {
+            case static::FEATURE_COALESCELAYERS:
+                throw new NotSupportedException('Gmagick does not support coalescing');
+            case static::FEATURE_NEGATEIMAGE:
+                if (!$this->isMethodAvailale('negateimage')) {
+                    throw new NotSupportedException('Gmagick version 1.1.0 RC3 is required for negative effect');
+                }
+                break;
+            case static::FEATURE_COLORIZEIMAGE:
+                throw new NotSupportedException('Gmagick does not support colorize');
+            case static::FEATURE_SHARPENIMAGE:
+                throw new NotSupportedException('Gmagick does not support sharpen yet');
+            case static::FEATURE_CONVOLVEIMAGE:
+                if (!$this->isMethodAvailale('convolveimage')) {
+                    throw new NotSupportedException('The version of Gmagick extension is too old: it does not support convolve (you need gmagick 2.0.1RC2 or later.');
+                }
+                break;
+            case static::FEATURE_CUSTOMRESOLUTION:
+                throw new NotSupportedException('Gmagick does not support setting custom resolutions');
         }
     }
 
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Driver\Info::hasFeature()
+     * @see \Imagine\Driver\AbstractInfo::buildSupportedFormats()
      */
-    public function hasFeature($features)
+    protected function buildSupportedFormats()
     {
-        try {
-            $this->requireFeature($features);
-        } catch (NotSupportedException $x) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::getSupportedFormats()
-     */
-    public function getSupportedFormats()
-    {
-        if ($this->supportedFormats !== null) {
-            return $this->supportedFormats;
-        }
         $supportedFormats = array();
         $gmagick = new \Gmagick();
         $magickFormats = array_map('strtolower', $gmagick->queryFormats());
@@ -189,44 +117,8 @@ class DriverInfo implements Info
                 $supportedFormats[] = $format;
             }
         }
-        $this->supportedFormats = new FormatList($supportedFormats);
 
-        return $this->supportedFormats;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::isFormatSupported()
-     */
-    public function isFormatSupported($format)
-    {
-        return $this->getSupportedFormats()->find($format) !== null;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::checkPaletteSupport()
-     */
-    public function checkPaletteSupport(PaletteInterface $palette)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::isPaletteSupported()
-     */
-    public function isPaletteSupported(PaletteInterface $palette)
-    {
-        try {
-            $this->checkPaletteSupport($palette);
-        } catch (NotSupportedException $x) {
-            return false;
-        }
-
-        return true;
+        return new FormatList($supportedFormats);
     }
 
     /**

@@ -71,7 +71,7 @@ class Imagine extends AbstractImagine implements InfoProvider
             $color = $palette->color('fff');
         } else {
             $palette = $color->getPalette();
-            static::getDriverInfo()->checkPaletteSupport($palette);
+            static::getDriverInfo()->requirePaletteSupport($palette);
         }
 
         $index = imagecolorallocatealpha($resource, $color->getRed(), $color->getGreen(), $color->getBlue(), round(127 * (100 - $color->getAlpha()) / 100));

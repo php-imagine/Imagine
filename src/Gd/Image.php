@@ -618,7 +618,7 @@ final class Image extends AbstractImage implements InfoProvider
             return $this;
         }
 
-        static::getDriverInfo()->checkPaletteSupport($palette);
+        static::getDriverInfo()->requirePaletteSupport($palette);
 
         $this->palette = $palette;
 

@@ -2,43 +2,22 @@
 
 namespace Imagine\Imagick;
 
-use Imagine\Driver\Info;
+use Imagine\Driver\AbstractInfo;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Image\Format;
 use Imagine\Image\FormatList;
-use Imagine\Image\Palette\PaletteInterface;
 
 /**
  * Provide information and features supported by the Imagick graphics driver.
  *
  * @since 1.3.0
  */
-class DriverInfo implements Info
+class DriverInfo extends AbstractInfo
 {
     /**
-     * @var static|null|false
+     * @var static|\Imagine\Exception\NotSupportedException|null
      */
-    private static $instance = false;
-
-    /**
-     * @var string
-     */
-    private $driverRawVersion;
-
-    /**
-     * @var string
-     */
-    private $driverSemverVersion;
-
-    /**
-     * @var string
-     */
-    private $engineRawVersion;
-
-    /**
-     * @var string
-     */
-    private $engineSemverVersion;
+    private static $instance;
 
     /**
      * @var bool|null
@@ -51,28 +30,30 @@ class DriverInfo implements Info
     private $colorspaceConversionAvailable = null;
 
     /**
-     * @var \Imagine\Image\FormatList|null
+     * @throws \Imagine\Exception\NotSupportedException
      */
-    private $supportedFormats = null;
-
-    /**
-     * @param string $driverRawVersion
-     * @param array $engineRawVersion
-     */
-    protected function __construct($driverRawVersion, array $engineRawVersion)
+    protected function __construct()
     {
-        $m = null;
-        $this->driverRawVersion = (string) $driverRawVersion;
-        $this->driverSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $this->driverRawVersion, $m) ? $m[1] : '';
-        $this->engineRawVersion = '';
-        if (isset($engineRawVersion['versionString']) && is_string($engineRawVersion['versionString'])) {
-            if (preg_match('/^.*?(\d+\.\d+\.\d+(-\d+)?(\s+Q\d+)?)/i', $engineRawVersion['versionString'], $m)) {
-                $this->engineRawVersion = $m[1];
-            } else {
-                $this->engineRawVersion = $engineRawVersion['versionString'];
-            }
+        if (!class_exists('Imagick') || !extension_loaded('imagick')) {
+            throw new NotSupportedException('Imagick driver not installed');
         }
-        $this->engineSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $this->engineRawVersion, $m) ? $m[1] : '';
+        $m = null;
+        $extensionVersion = phpversion('imagick');
+        $driverRawVersion = is_string($extensionVersion) ? $extensionVersion : '';
+        $driverSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $driverRawVersion, $m) ? $m[1] : '';
+        $imagick = new \Imagick();
+        $engineVersion = $imagick->getversion();
+        if (is_array($engineVersion) && isset($engineVersion['versionString']) && is_string($engineVersion['versionString'])) {
+            if (preg_match('/^.*?(\d+\.\d+\.\d+(-\d+)?(\s+Q\d+)?)/i', $engineVersion['versionString'], $m)) {
+                $engineRawVersion = $m[1];
+            } else {
+                $engineRawVersion = $engineRawVersion['versionString'];
+            }
+        } else {
+            $engineRawVersion = '';
+        }
+        $engineSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $engineRawVersion, $m) ? $m[1] : '';
+        parent::__construct($driverRawVersion, $driverSemverVersion, $engineRawVersion, $engineSemverVersion);
     }
 
     /**
@@ -82,33 +63,33 @@ class DriverInfo implements Info
      */
     public static function get($required = true)
     {
-        if (self::$instance === false) {
-            if (class_exists('Imagick') && extension_loaded('imagick')) {
-                $extensionVersion = phpversion('imagick');
-                $imagick = new \Imagick();
-                $engineVersion = $imagick->getversion();
-                self::$instance = new static(is_string($extensionVersion) ? $extensionVersion : '', is_array($engineVersion) ? $engineVersion : array());
-            } else {
-                self::$instance = null;
+        if (self::$instance === null) {
+            try {
+                self::$instance = new static();
+            } catch (NotSupportedException $x) {
+                self::$instance = $x;
             }
         }
-        if (self::$instance === null && $required) {
-            throw new NotSupportedException('Imagick not installed');
+        if (self::$instance instanceof self) {
+            return self::$instance;
         }
 
-        return self::$instance;
+        if ($required) {
+            throw self::$instance;
+        }
+
+        return null;
     }
 
     /**
      * {@inheritdoc}
      *
      * @see \Imagine\Driver\Info::checkVersionIsSupported()
+     * @see \Imagine\Driver\AbstractInfo::checkVersionIsSupported()
      */
     public function checkVersionIsSupported()
     {
-        if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
-            throw new NotSupportedException('Imagine requires PHP 5.3 or later');
-        }
+        parent::checkVersionIsSupported();
         if (version_compare($this->getEngineVersion(), '6.2.9') < 0) {
             throw new NotSupportedException(sprintf('ImageMagick version 6.2.9 or higher is required, %s provided', $this->getEngineVersion()));
         }
@@ -121,82 +102,44 @@ class DriverInfo implements Info
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Driver\Info::getDriverVersion()
+     * @see \Imagine\Driver\AbstractInfo::checkFeature()
      */
-    public function getDriverVersion($raw = false)
+    protected function checkFeature($feature)
     {
-        return $raw ? $this->driverRawVersion : $this->driverSemverVersion;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::getEngineVersion()
-     */
-    public function getEngineVersion($raw = false)
-    {
-        return $raw ? $this->engineRawVersion : $this->engineSemverVersion;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::requireFeature()
-     */
-    public function requireFeature($features)
-    {
-        $features = (int) $features;
-        if ($features & static::FEATURE_COLORPROFILES) {
-            if (!$this->areColorProfilesSupported()) {
-                throw new NotSupportedException('Unable to manage color profiles: be sure to compile ImageMagick with the `--with-lcms2` option');
-            }
-        }
-        if ($features & static::FEATURE_COLORSPACECONVERSION) {
-            if (!$this->isColorspaceConversionAvailable()) {
-                throw new NotSupportedException('Your version of Imagick does not support colorspace conversions.');
-            }
-        }
-        if ($features & static::FEATURE_GRAYSCALEEFFECT) {
-            if (version_compare($this->getEngineVersion(), '6.8.5') <= 0) {
-                throw new NotSupportedException(sprintf('Converting an image to grayscale requires ImageMagick version 6.8.5 or higher is required, %s provided', $this->getEngineVersion()));
-            }
-        }
-        if ($features & static::FEATURE_CUSTOMRESOLUTION) {
-            // We can't do version_compare($this->getDriverVersion(), '3.1.0') < 0 because phpversion('imagick') may return @PACKAGE_VERSION@
-            // @see https://www.php.net/manual/en/imagick.queryfontmetrics.php#101027
-            // So, let's check ImagickDraw::setResolution (which has been introduced in 3.1.0b1
-            if (!method_exists('ImagickDraw', 'setResolution')) {
-                throw new NotSupportedException(sprintf('Setting image resolution requires imagick version 3.1.0 or higher is required, %s provided', $this->getDriverVersion(true)));
-            }
+        switch ($feature) {
+            case static::FEATURE_COLORPROFILES:
+                if (!$this->areColorProfilesSupported()) {
+                    throw new NotSupportedException('Unable to manage color profiles: be sure to compile ImageMagick with the `--with-lcms2` option');
+                }
+                break;
+            case static::FEATURE_COLORSPACECONVERSION:
+                if (!$this->isColorspaceConversionAvailable()) {
+                    throw new NotSupportedException('Your version of Imagick does not support colorspace conversions.');
+                }
+                break;
+            case static::FEATURE_GRAYSCALEEFFECT:
+                if (version_compare($this->getEngineVersion(), '6.8.5') <= 0) {
+                    throw new NotSupportedException(sprintf('Converting an image to grayscale requires ImageMagick version 6.8.5 or higher is required, %s provided', $this->getEngineVersion()));
+                }
+                break;
+            case static::FEATURE_CUSTOMRESOLUTION:
+                // We can't do version_compare($this->getDriverVersion(), '3.1.0') < 0 because phpversion('imagick') may return @PACKAGE_VERSION@
+                // @see https://www.php.net/manual/en/imagick.queryfontmetrics.php#101027
+                // So, let's check ImagickDraw::setResolution (which has been introduced in 3.1.0b1
+                if (!method_exists('ImagickDraw', 'setResolution')) {
+                    throw new NotSupportedException(sprintf('Setting image resolution requires imagick version 3.1.0 or higher is required, %s provided', $this->getDriverVersion(true)));
+                }
+                break;
         }
     }
 
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Driver\Info::hasFeature()
+     * @see \Imagine\Driver\AbstractInfo::buildSupportedFormats()
      */
-    public function hasFeature($features)
+    protected function buildSupportedFormats()
     {
-        try {
-            $this->requireFeature($features);
-        } catch (NotSupportedException $x) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::getSupportedFormats()
-     */
-    public function getSupportedFormats()
-    {
-        if ($this->supportedFormats !== null) {
-            return $this->supportedFormats;
-        }
         $supportedFormats = array();
         $magickFormats = array_map('strtolower', \Imagick::queryFormats());
         foreach (Format::getAll() as $format) {
@@ -204,44 +147,8 @@ class DriverInfo implements Info
                 $supportedFormats[] = $format;
             }
         }
-        $this->supportedFormats = new FormatList($supportedFormats);
 
-        return $this->supportedFormats;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::isFormatSupported()
-     */
-    public function isFormatSupported($format)
-    {
-        return $this->getSupportedFormats()->find($format) !== null;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::checkPaletteSupport()
-     */
-    public function checkPaletteSupport(PaletteInterface $palette)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::isPaletteSupported()
-     */
-    public function isPaletteSupported(PaletteInterface $palette)
-    {
-        try {
-            $this->checkPaletteSupport($palette);
-        } catch (NotSupportedException $x) {
-            return false;
-        }
-
-        return true;
+        return new FormatList($supportedFormats);
     }
 
     /**
