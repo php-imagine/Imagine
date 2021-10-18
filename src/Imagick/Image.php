@@ -71,7 +71,7 @@ final class Image extends AbstractImage implements InfoProvider
     {
         $this->metadata = $metadata;
         $this->imagick = $imagick;
-        if (static::getDriverInfo()->hasFeature(DriverInfo::FEATURE_COLORSPACECONVERSION)) {
+        if (method_exists($imagick, 'setcolorspace')) {
             $this->setColorspace($palette, false);
         }
         $this->palette = $palette;
@@ -998,7 +998,7 @@ final class Image extends AbstractImage implements InfoProvider
                     }
                 } catch (\ImagickException $x) {
                     // Old ImageMagick versions ( < 6.8.0-4) were affected by a bug, fixed in https://github.com/ImageMagick/ImageMagick6/commit/8354515c613b61bd52e025ec0f6799cbf0f1a069
-                    if ($x->getMessage() !== 'Unable to set image alpha channel' || version_compare(Imagine::getExtensionInfo()->getImageMagickSemVerVersion(), '6.8.0') > 0) {
+                    if ($x->getMessage() !== 'Unable to set image alpha channel' || version_compare($this->getDriverInfo()->getEngineVersion(), '6.8.0') > 0) {
                         throw $x;
                     }
                 }
