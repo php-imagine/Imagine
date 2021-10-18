@@ -66,10 +66,10 @@ class Imagine extends AbstractImagine implements InfoProvider
             if ($loader->isLocalFile()) {
                 if (DIRECTORY_SEPARATOR === '\\' && PHP_INT_SIZE === 8 && defined('PHP_VERSION_ID') && PHP_VERSION_ID >= 70100 && PHP_VERSION_ID < 70200) {
                     // Passing the file name to the Imagick constructor may break PHP 7.1 64 bit on Windows - see https://github.com/mkoppanen/imagick/issues/252
-                    $imagick = new \Imagick($loader->getPath());
-                } else {
                     $imagick = new \Imagick();
                     $imagick->readImageBlob($loader->getData(), $path);
+                } else {
+                    $imagick = new \Imagick($path);
                 }
             } else {
                 $imagick = new \Imagick();
