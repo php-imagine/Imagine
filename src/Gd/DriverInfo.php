@@ -2,7 +2,7 @@
 
 namespace Imagine\Gd;
 
-use Imagine\Driver\Info;
+use Imagine\Driver\AbstractInfo;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Image\Format;
 use Imagine\Image\FormatList;
@@ -14,48 +14,27 @@ use Imagine\Image\Palette\RGB;
  *
  * @since 1.3.0
  */
-class DriverInfo implements Info
+class DriverInfo extends AbstractInfo
 {
     /**
-     * @var static|null|false
+     * @var static|\Imagine\Exception\NotSupportedException|null
      */
-    private static $instance = false;
+    private static $instance;
 
     /**
-     * @var string
+     * @throws \Imagine\Exception\NotSupportedException
      */
-    private $driverRawVersion;
-
-    /**
-     * @var string
-     */
-    private $driverSemverVersion;
-
-    /**
-     * @var string
-     */
-    private $engineRawVersion;
-
-    /**
-     * @var string
-     */
-    private $engineSemverVersion;
-
-    /**
-     * @var \Imagine\Image\FormatList|null
-     */
-    private $supportedFormats = null;
-
-    /**
-     * @param string $gdVersion
-     */
-    protected function __construct($gdVersion)
+    protected function __construct()
     {
+        if (!function_exists('gd_info') || !defined('GD_VERSION')) {
+            throw new NotSupportedException('Gd driver not installed');
+        }
         $m = null;
-        $this->driverRawVersion = PHP_VERSION;
-        $this->driverSemverVersion = defined('PHP_MAJOR_VERSION') ? implode('.', array(PHP_MAJOR_VERSION, PHP_MINOR_VERSION, PHP_RELEASE_VERSION)) : '';
-        $this->engineRawVersion = is_string($gdVersion) ? $gdVersion : '';
-        $this->engineSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $this->engineRawVersion, $m) ? $m[1] : '';
+        $driverRawVersion = PHP_VERSION;
+        $driverSemverVersion = defined('PHP_MAJOR_VERSION') ? implode('.', array(PHP_MAJOR_VERSION, PHP_MINOR_VERSION, PHP_RELEASE_VERSION)) : '';
+        $engineRawVersion = is_string(GD_VERSION) ? GD_VERSION : '';
+        $engineSemverVersion = preg_match('/^.*?(\d+\.\d+\.\d+)/', $engineRawVersion, $m) ? $m[1] : '';
+        parent::__construct($driverRawVersion, $driverSemverVersion, $engineRawVersion, $engineSemverVersion);
     }
 
     /**
@@ -65,30 +44,33 @@ class DriverInfo implements Info
      */
     public static function get($required = true)
     {
-        if (self::$instance === false) {
-            if (function_exists('gd_info') && defined('GD_VERSION')) {
-                self::$instance = new static(GD_VERSION);
-            } else {
-                return self::$instance = null;
+        if (self::$instance === null) {
+            try {
+                self::$instance = new static();
+            } catch (NotSupportedException $x) {
+                self::$instance = $x;
             }
         }
-        if (self::$instance === null && $required) {
-            throw new NotSupportedException('Gd not installed');
+        if (self::$instance instanceof self) {
+            return self::$instance;
         }
 
-        return self::$instance;
+        if ($required) {
+            throw self::$instance;
+        }
+
+        return null;
     }
 
     /**
      * {@inheritdoc}
      *
      * @see \Imagine\Driver\Info::checkVersionIsSupported()
+     * @see \Imagine\Driver\AbstractInfo::checkVersionIsSupported()
      */
     public function checkVersionIsSupported()
     {
-        if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
-            throw new NotSupportedException('Imagine requires PHP 5.3 or later');
-        }
+        parent::checkVersionIsSupported();
         if ($this->getEngineVersion() === '' || version_compare($this->getEngineVersion(), '2.0.1') < 0) {
             throw new NotSupportedException(sprintf('GD2 version %s or higher is required, %s provided', '2.0.1', GD_VERSION));
         }
@@ -97,73 +79,32 @@ class DriverInfo implements Info
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Driver\Info::getDriverVersion()
+     * @see \Imagine\Driver\AbstractInfo::checkFeature()
      */
-    public function getDriverVersion($raw = false)
+    protected function checkFeature($feature)
     {
-        return $raw ? $this->driverRawVersion : $this->driverSemverVersion;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::getEngineVersion()
-     */
-    public function getEngineVersion($raw = false)
-    {
-        return $raw ? $this->engineRawVersion : $this->engineSemverVersion;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::requireFeature()
-     */
-    public function requireFeature($features)
-    {
-        $features = (int) $features;
-        if ($features & static::FEATURE_COLORPROFILES) {
-            throw new NotSupportedException('GD driver does not support color profiles');
-        }
-        if ($features & static::FEATURE_TEXTFUNCTIONS) {
-            if (!function_exists('imageftbbox')) {
-                throw new NotSupportedException('GD is not compiled with FreeType support');
-            }
-        }
-        if ($features & static::FEATURE_MULTIPLELAYERS) {
-            throw new NotSupportedException('GD does not support layer sets');
-        }
-        if ($features & static::FEATURE_CUSTOMRESOLUTION) {
-            throw new NotSupportedException('GD does not support setting custom resolutions');
+        switch ($feature) {
+            case static::FEATURE_COLORPROFILES:
+                throw new NotSupportedException('GD driver does not support color profiles');
+            case static::FEATURE_TEXTFUNCTIONS:
+                if (!function_exists('imageftbbox')) {
+                    throw new NotSupportedException('GD is not compiled with FreeType support');
+                }
+                break;
+            case static::FEATURE_MULTIPLELAYERS:
+                throw new NotSupportedException('GD does not support layer sets');
+            case static::FEATURE_CUSTOMRESOLUTION:
+                throw new NotSupportedException('GD does not support setting custom resolutions');
         }
     }
 
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Driver\Info::hasFeature()
+     * @see \Imagine\Driver\AbstractInfo::buildSupportedFormats()
      */
-    public function hasFeature($features)
+    protected function buildSupportedFormats()
     {
-        try {
-            $this->requireFeature($features);
-        } catch (NotSupportedException $x) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::getSupportedFormats()
-     */
-    public function getSupportedFormats()
-    {
-        if ($this->supportedFormats !== null) {
-            return $this->supportedFormats;
-        }
         $supportedFormats = array();
         foreach (array(
             'gif' => Format::ID_GIF,
@@ -179,48 +120,20 @@ class DriverInfo implements Info
                 $supportedFormats[] = Format::get($formatID);
             }
         }
-        $this->supportedFormats = new FormatList($supportedFormats);
 
-        return $this->supportedFormats;
+        return new FormatList($supportedFormats);
     }
 
     /**
      * {@inheritdoc}
      *
-     * @see \Imagine\Driver\Info::isFormatSupported()
+     * @see \Imagine\Driver\Info::requirePaletteSupport()
+     * @see \Imagine\Driver\AbstractInfo::requirePaletteSupport()
      */
-    public function isFormatSupported($format)
-    {
-        return $this->getSupportedFormats()->find($format) !== null;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::checkPaletteSupport()
-     */
-    public function checkPaletteSupport(PaletteInterface $palette)
+    public function requirePaletteSupport(PaletteInterface $palette)
     {
         if (!($palette instanceof RGB)) {
             throw new NotSupportedException('GD driver only supports RGB colors');
         }
-
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Driver\Info::isPaletteSupported()
-     */
-    public function isPaletteSupported(PaletteInterface $palette)
-    {
-        try {
-            $this->checkPaletteSupport($palette);
-        } catch (NotSupportedException $x) {
-            return false;
-        }
-
-        return true;
     }
 }

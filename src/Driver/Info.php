@@ -16,23 +16,23 @@ interface Info
      *
      * @var int
      */
-    const FEATURE_COLORPROFILES = 0x1;
+    const FEATURE_COLORPROFILES = 1;
 
     /**
      * Affected functions: Imagine\Image\ImageInterface::usePalette(), opening images with particular colorspaces.
      *
-     * See also the checkPaletteSupport/isPaletteSupported driver info methods.
+     * See also the requirePaletteSupport/isPaletteSupported driver info methods.
      *
      * @var int
      */
-    const FEATURE_COLORSPACECONVERSION = 0x2;
+    const FEATURE_COLORSPACECONVERSION = 2;
 
     /**
      * Affected functions: Imagine\Effects\EffectsInterface::grayscale().
      *
      * @var int
      */
-    const FEATURE_GRAYSCALEEFFECT = 0x4;
+    const FEATURE_GRAYSCALEEFFECT = 3;
 
     /**
      * Affected functions: Imagine\Image\LayersInterface::coalesce().
@@ -41,56 +41,56 @@ interface Info
      *
      * @var int
      */
-    const FEATURE_COALESCELAYERS = 0x8;
+    const FEATURE_COALESCELAYERS = 4;
 
     /**
      * Affected functions: Imagine\Effects\EffectsInterface::negative().
      *
      * @var int
      */
-    const FEATURE_NEGATEIMAGE = 0x10;
+    const FEATURE_NEGATEIMAGE = 5;
 
     /**
      * Affected functions: Imagine\Effects\EffectsInterface::colorize().
      *
      * @var int
      */
-    const FEATURE_COLORIZEIMAGE = 0x20;
+    const FEATURE_COLORIZEIMAGE = 6;
 
     /**
      * Affected functions: Imagine\Effects\EffectsInterface::sharpen().
      *
      * @var int
      */
-    const FEATURE_SHARPENIMAGE = 0x40;
+    const FEATURE_SHARPENIMAGE = 7;
 
     /**
      * Affected functions: Imagine\Effects\EffectsInterface::convolve().
      *
      * @var int
      */
-    const FEATURE_CONVOLVEIMAGE = 0x80;
+    const FEATURE_CONVOLVEIMAGE = 8;
 
     /**
      * Affected functions: Imagine\Draw\DrawerInterface::text() and Imagine\Image\FontInterface::box().
      *
      * @var int
      */
-    const FEATURE_TEXTFUNCTIONS = 0x100;
+    const FEATURE_TEXTFUNCTIONS = 9;
 
     /**
      * Affected functions: Imagine\Image\LayersInterface methods that would create more that 1 layer or 0 layers.
      *
      * @var int
      */
-    const FEATURE_MULTIPLELAYERS = 0x200;
+    const FEATURE_MULTIPLELAYERS = 10;
 
     /**
      * Affected functions: none at the moment.
      *
      * @var int
      */
-    const FEATURE_CUSTOMRESOLUTION = 0x400;
+    const FEATURE_CUSTOMRESOLUTION = 11;
 
     /**
      * Get the Info instance for a specific driver.
@@ -135,7 +135,7 @@ interface Info
     /**
      * Check if the driver the features requested.
      *
-     * @param int $features A combination of one or more of the FEATURE_... values
+     * @param int|int[] $features The features to be checked (see the Info::FEATURE_... constants)
      *
      * @return bool returns TRUE if the driver supports all the specified features, FALSE otherwise
      */
@@ -144,7 +144,7 @@ interface Info
     /**
      * Check if the driver has the features requested.
      *
-     * @param int $features A combination of one or more of the FEATURE_... values
+     * @param int|int[] $features The features to be checked (see the Info::FEATURE_... constants)
      *
      * @throws \Imagine\Exception\NotSupportedException if any of the requested features is not supported
      */
@@ -173,7 +173,7 @@ interface Info
      *
      * @throws \Imagine\Exception\NotSupportedException if the palette is not supported
      */
-    public function checkPaletteSupport(PaletteInterface $palette);
+    public function requirePaletteSupport(PaletteInterface $palette);
 
     /**
      * Check if a palette is supported.
