@@ -12,6 +12,7 @@
 namespace Imagine\Gd;
 
 use Imagine\Driver\InfoProvider;
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
 use Imagine\Exception\RuntimeException;
 use Imagine\Factory\ClassFactoryInterface;
@@ -190,7 +191,7 @@ class Layers extends AbstractLayers implements InfoProvider
             return $this->getClassFactory()->createImage(ClassFactoryInterface::HANDLE_GD, $this->resource, $this->palette, new MetadataBag());
         }
 
-        throw new RuntimeException('GD only supports one layer at offset 0');
+        throw new InvalidArgumentException('GD only supports one layer at offset 0');
     }
 
     /**

@@ -129,66 +129,6 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
-     * @group always-skipped
-     *
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testRotateWithTransparency()
-     */
-    public function testRotateWithTransparency()
-    {
-        $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
-    }
-
-    /**
-     * @group always-skipped
-     *
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testPaletteIsGrayIfGrayImage()
-     */
-    public function testPaletteIsGrayIfGrayImage()
-    {
-        $this->markTestSkipped('Gmagick does not support Gray colorspace, because of the lack omg image type support');
-    }
-
-    /**
-     * @group always-skipped
-     *
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testGetColorAtCMYK()
-     */
-    public function testGetColorAtCMYK()
-    {
-        $this->markTestSkipped('Gmagick fails to read CMYK colors properly, see https://bugs.php.net/bug.php?id=67435');
-    }
-
-    /**
-     * @group always-skipped
-     *
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testImageCreatedAlpha()
-     */
-    public function testImageCreatedAlpha()
-    {
-        $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
-    }
-
-    /**
-     * @group always-skipped
-     *
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testFillAlphaPrecision()
-     */
-    public function testFillAlphaPrecision()
-    {
-        $this->markTestSkipped('Alpha transparency is not supported by Gmagick');
-    }
-
-    /**
      * Alpha transparency is not supported by Gmagick.
      *
      * {@inheritdoc}
@@ -201,22 +141,5 @@ class ImageTest extends AbstractImageTest
             array(0),
             array(100),
         );
-    }
-
-    /**
-     * @dataProvider imageCompressionQualityProvider
-     *
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testSaveCompressionQuality()
-     */
-    public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
-    {
-        $gmagick = new \Gmagick();
-        if (in_array($format, array('webp', 'avif', 'heic', 'jxl'), true) && !in_array(strtoupper($format), $gmagick->queryformats(strtoupper($format)), true)) {
-            $this->markTestSkipped('Gmagick ' . $format . ' support is not enabled');
-        }
-
-        return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
     }
 }

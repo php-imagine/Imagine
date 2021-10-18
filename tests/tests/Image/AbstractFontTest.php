@@ -14,6 +14,7 @@ namespace Imagine\Test\Image;
 use Imagine\Driver\Info;
 use Imagine\Driver\InfoProvider;
 use Imagine\Image\Palette\RGB;
+use Imagine\Test\Gmagick\FontTest as GmagickFontTest;
 use Imagine\Test\ImagineTestCase;
 
 abstract class AbstractFontTest extends ImagineTestCase implements InfoProvider
@@ -57,14 +58,19 @@ abstract class AbstractFontTest extends ImagineTestCase implements InfoProvider
     /**
      * @dataProvider fontWrapTextProvider
      *
-     * @param mixed $text
-     * @param mixed $maxWidth
-     * @param mixed $expectedText
+     * @param string $text
+     * @param int $maxWidth
+     * @param string $expectedText
      */
     public function testFontWrapText($text, $maxWidth, $expectedText)
     {
         if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_TEXTFUNCTIONS)) {
             $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        }
+        if ($this instanceof GmagickFontTest) {
+            // This is needed because the Gmagick driver sometimes kills the process with
+            // Magick: abort due to signal 11 (SIGSEGV) "Segmentation Fault"
+            gc_disable();
         }
         $palette = new RGB();
         $font = $this->getImagine()->font(IMAGINE_TEST_FIXTURESFOLDER . '/font/Arial.ttf', 10, $palette->color('000'));

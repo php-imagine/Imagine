@@ -11,6 +11,7 @@
 
 namespace Imagine\Gmagick;
 
+use Imagine\Driver\Info;
 use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\NotSupportedException;
@@ -828,7 +829,7 @@ final class Image extends AbstractImage implements InfoProvider
     private function getColor(ColorInterface $color)
     {
         if (!$color->isOpaque()) {
-            throw new InvalidArgumentException('Gmagick doesn\'t support transparency');
+            static::getDriverInfo()->requireFeature(Info::FEATURE_TRANSPARENCY);
         }
 
         return new \GmagickPixel((string) $color);

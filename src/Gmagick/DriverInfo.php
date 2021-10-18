@@ -99,6 +99,14 @@ class DriverInfo extends AbstractInfo
                 break;
             case static::FEATURE_CUSTOMRESOLUTION:
                 throw new NotSupportedException('Gmagick does not support setting custom resolutions');
+            case static::FEATURE_GETCMYKCOLORSCORRECTLY:
+                throw new NotSupportedException('Gmagick fails to read CMYK colors properly, see https://bugs.php.net/bug.php?id=67435');
+            case static::FEATURE_TRANSPARENCY:
+                throw new NotSupportedException("Gmagick doesn't support transparency");
+            case static::FEATURE_ADDLAYERSTOEMPTYIMAGE:
+                throw new NotSupportedException("Can't animate empty images because Gmagick is affected by bug https://bugs.php.net/bug.php?id=62309");
+            case static::FEATURE_DETECTGRAYCOLORSPACE:
+                throw new NotSupportedException('Gmagick does not support gray colorspace, because of the lack of image type support');
         }
     }
 

@@ -219,20 +219,6 @@ class ImageTest extends AbstractImageTest
     }
 
     /**
-     * @dataProvider imageCompressionQualityProvider
-     *
-     * {@inheritdoc}
-     */
-    public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
-    {
-        if (in_array($format, array('webp', 'avif', 'heic', 'jxl'), true) && !in_array(strtoupper($format), \Imagick::queryFormats(strtoupper($format)), true)) {
-            $this->markTestSkipped('Imagick ' . $format . ' support is not enabled');
-        }
-
-        return parent::testSaveCompressionQuality($format, $smallSizeOptions, $bigSizeOptions);
-    }
-
-    /**
      * @doesNotPerformAssertions
      */
     public function testOptimizeWithDifferentFrameSizes()

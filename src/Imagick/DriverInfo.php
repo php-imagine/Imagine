@@ -141,7 +141,8 @@ class DriverInfo extends AbstractInfo
     protected function buildSupportedFormats()
     {
         $supportedFormats = array();
-        $magickFormats = array_map('strtolower', \Imagick::queryFormats());
+        $imagick = new \Imagick();
+        $magickFormats = array_map('strtolower', $imagick->queryformats());
         foreach (Format::getAll() as $format) {
             if (in_array($format->getID(), $magickFormats, true) || array_intersect($magickFormats, $format->getAlternativeIDs()) !== array()) {
                 $supportedFormats[] = $format;
