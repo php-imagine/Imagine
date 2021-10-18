@@ -108,18 +108,6 @@ class LayersTest extends AbstractLayersTest
     }
 
     /**
-     * @group always-skipped
-     *
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractLayersTest::testAnimateEmpty()
-     */
-    public function testAnimateEmpty()
-    {
-        $this->markTestSkipped('Animate empty is skipped due to https://bugs.php.net/bug.php?id=62309');
-    }
-
-    /**
      * Check if the current Gmagick version is affected by the https://github.com/vitoc/gmagick/issues/55 bug.
      *
      * @throws \PHPUnit_Framework_SkippedTestError

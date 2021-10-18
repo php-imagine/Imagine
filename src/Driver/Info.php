@@ -93,6 +93,76 @@ interface Info
     const FEATURE_CUSTOMRESOLUTION = 11;
 
     /**
+     * Affected functions: Imagine\Image\ImageInterface::get(), Imagine\Image\ImageInterface::save(), Imagine\Image\ImageInterface::show().
+     *
+     * @var int
+     */
+    const FEATURE_EXPORTWITHCUSTOMRESOLUTION = 12;
+
+    /**
+     * Affected functions: Imagine\Draw\DrawerInterface::chord() with $fill == true.
+     *
+     * @var int
+     */
+    const FEATURE_DRAWFILLEDCHORDSCORRECTLY = 13;
+
+    /**
+     * Affected functions: Imagine\Draw\DrawerInterface::circle() with $fill == false and $thickness > 1.
+     *
+     * @var int
+     */
+    const FEATURE_DRAWUNFILLEDCIRCLESWITHTICHKESSCORRECTLY = 14;
+
+    /**
+     * Affected functions: Imagine\Draw\DrawerInterface::ellipse() with $fill == false and $thickness > 1.
+     *
+     * @var int
+     */
+    const FEATURE_DRAWUNFILLEDELLIPSESWITHTICHKESSCORRECTLY = 15;
+
+    /**
+     * Affected functions: Imagine\Image\ImageInterface::getColorAt() when the palette is CMYK.
+     *
+     * @var int
+     */
+    const FEATURE_GETCMYKCOLORSCORRECTLY = 16;
+
+    /**
+     * Affected functions: any that uses colors with an alpha channel.
+     *
+     * @var int
+     */
+    const FEATURE_TRANSPARENCY = 17;
+
+    /**
+     * Affected functions: Imagine\Image\ImageInterface::rotate(), Imagine\Filter\Basic\Rotate.
+     *
+     * @var int
+     */
+    const FEATURE_ROTATEIMAGEWITHCORRECTSIZE = 18;
+
+    /**
+     * Affected functions: Imagine\Image\ImageInterface::get(), Imagine\Image\ImageInterface::save(), Imagine\Image\ImageInterface::show().
+     *
+     * @var int
+     */
+    const FEATURE_EXPORTWITHCUSTOMJPEGSAMPLINGFACTORS = 19;
+
+    /**
+     * Adding frames to a image with no previously loaded layers works.
+     *
+     * @var int
+     */
+    const FEATURE_ADDLAYERSTOEMPTYIMAGE = 20;
+
+    /**
+     * Affected functions: Imagine\Image\ImagineInterface::open(), Imagine\Image\ImagineInterface::load(), Imagine\Image\ImagineInterface::read().
+     *
+     * @var int
+     */
+    const FEATURE_DETECTGRAYCOLORSPACE = 21;
+
+    /**
      * Get the Info instance for a specific driver.
      *
      * @param bool $required when the driver is not available: if FALSE the function returns NULL, if TRUE the driver throws a \Imagine\Exception\NotSupportedException

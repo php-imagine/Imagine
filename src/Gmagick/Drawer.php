@@ -12,6 +12,7 @@
 namespace Imagine\Gmagick;
 
 use Imagine\Draw\DrawerInterface;
+use Imagine\Driver\Info;
 use Imagine\Driver\InfoProvider;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -450,7 +451,7 @@ final class Drawer implements DrawerInterface, InfoProvider
     private function getColor(ColorInterface $color)
     {
         if (!$color->isOpaque()) {
-            throw new InvalidArgumentException('Gmagick doesn\'t support transparency');
+            static::getDriverInfo()->requireFeature(Info::FEATURE_TRANSPARENCY);
         }
 
         return new \GmagickPixel((string) $color);

@@ -95,6 +95,24 @@ class DriverInfo extends AbstractInfo
                 throw new NotSupportedException('GD does not support layer sets');
             case static::FEATURE_CUSTOMRESOLUTION:
                 throw new NotSupportedException('GD does not support setting custom resolutions');
+            case static::FEATURE_EXPORTWITHCUSTOMRESOLUTION:
+                throw new NotSupportedException('GD driver does not support exporting images with custom resolutions');
+            case static::FEATURE_DRAWFILLEDCHORDSCORRECTLY:
+                throw new NotSupportedException('The GD Drawer can NOT draw correctly filled chords');
+            case static::FEATURE_DRAWUNFILLEDCIRCLESWITHTICHKESSCORRECTLY:
+                throw new NotSupportedException('The GD Drawer can NOT draw correctly not filled circles with a thickness greater than 1');
+            case static::FEATURE_DRAWUNFILLEDELLIPSESWITHTICHKESSCORRECTLY:
+                throw new NotSupportedException('The GD Drawer can NOT draw correctly not filled ellipses with a thickness greater than 1');
+            case static::FEATURE_ROTATEIMAGEWITHCORRECTSIZE:
+                $vFrom = '5.5';
+                $vTo = '7.1.11';
+                if (version_compare($this->getDriverVersion(), $vFrom) >= 0 && version_compare($this->getDriverVersion(), $vTo) < 0) {
+                    // see https://bugs.php.net/bug.php?id=65148
+                    throw new NotSupportedException("The GD driver is affected by bug https://bugs.php.net/bug.php?id=65148 from PHP version {$vFrom} to PHP version {$vTo}.");
+                }
+                break;
+            case static::FEATURE_EXPORTWITHCUSTOMJPEGSAMPLINGFACTORS:
+                throw new NotSupportedException('The GD driver does not support JPEG sampling factors');
         }
     }
 

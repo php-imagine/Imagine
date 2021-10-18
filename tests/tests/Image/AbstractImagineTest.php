@@ -11,8 +11,11 @@
 
 namespace Imagine\Test\Image;
 
+use Imagine\Driver\Info;
 use Imagine\Driver\InfoProvider;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Image\Box;
+use Imagine\Image\Format;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Test\ImagineTestCase;
@@ -54,6 +57,9 @@ abstract class AbstractImagineTest extends ImagineTestCase implements InfoProvid
 
     public function testShouldOpenAWebPImage()
     {
+        if (!$this->getDriverInfo()->isFormatSupported(Format::ID_WEBP)) {
+            $this->markTestSkipped("This driver can't open WEBP images");
+        }
         $source = IMAGINE_TEST_FIXTURESFOLDER . '/webp-image.webp';
         $factory = $this->getImagine();
         $image = $factory->open($source);
@@ -68,6 +74,9 @@ abstract class AbstractImagineTest extends ImagineTestCase implements InfoProvid
 
     public function testShouldOpenAAvifImage()
     {
+        if (!$this->getDriverInfo()->isFormatSupported(Format::ID_AVIF)) {
+            $this->markTestSkipped("This driver can't open AVIF images");
+        }
         $source = IMAGINE_TEST_FIXTURESFOLDER . '/avif-image.avif';
         $factory = $this->getImagine();
         $image = $factory->open($source);
@@ -82,6 +91,9 @@ abstract class AbstractImagineTest extends ImagineTestCase implements InfoProvid
 
     public function testShouldOpenAHeicImage()
     {
+        if (!$this->getDriverInfo()->isFormatSupported(Format::ID_HEIC)) {
+            $this->markTestSkipped("This driver can't open HEIC images");
+        }
         $source = IMAGINE_TEST_FIXTURESFOLDER . '/heic-image.heic';
         $factory = $this->getImagine();
         $image = $factory->open($source);
@@ -96,6 +108,9 @@ abstract class AbstractImagineTest extends ImagineTestCase implements InfoProvid
 
     public function testShouldOpenAJxlImage()
     {
+        if (!$this->getDriverInfo()->isFormatSupported(Format::ID_JXL)) {
+            $this->markTestSkipped("This driver can't open JXL images");
+        }
         $source = IMAGINE_TEST_FIXTURESFOLDER . '/jxl-image.jxl';
         $factory = $this->getImagine();
         $image = $factory->open($source);
@@ -232,6 +247,11 @@ abstract class AbstractImagineTest extends ImagineTestCase implements InfoProvid
 
     public function testCreateAlphaPrecision()
     {
+        try {
+            $this->getDriverInfo()->requireFeature(Info::FEATURE_TRANSPARENCY);
+        } catch (NotSupportedException $x) {
+            $this->markTestSkipped($x->getMessage());
+        }
         $imagine = $this->getImagine();
         $palette = new RGB();
         $image = $imagine->create(new Box(1, 1), $palette->color('#f00', 17));

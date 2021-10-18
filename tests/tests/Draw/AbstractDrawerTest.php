@@ -13,6 +13,7 @@ namespace Imagine\Test\Draw;
 
 use Imagine\Driver\Info;
 use Imagine\Driver\InfoProvider;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Image\Box;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
@@ -71,6 +72,13 @@ abstract class AbstractDrawerTest extends ImagineTestCase implements InfoProvide
      */
     public function testChord($thickness, $fill)
     {
+        if ($fill) {
+            try {
+                $this->getDriverInfo()->requireFeature(Info::FEATURE_DRAWFILLEDCHORDSCORRECTLY);
+            } catch (NotSupportedException $x) {
+                $this->markTestSkipped($x->getMessage());
+            }
+        }
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(60, 50), $this->getColor('fff'));
         $fill01 = $fill ? 1 : 0;
@@ -90,6 +98,13 @@ abstract class AbstractDrawerTest extends ImagineTestCase implements InfoProvide
      */
     public function testCircle($thickness, $fill)
     {
+        if (!$fill && $thickness > 1) {
+            try {
+                $this->getDriverInfo()->requireFeature(Info::FEATURE_DRAWUNFILLEDCIRCLESWITHTICHKESSCORRECTLY);
+            } catch (NotSupportedException $x) {
+                $this->markTestSkipped($x->getMessage());
+            }
+        }
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(20, 20), $this->getColor('fff'));
         $size = $image->getSize();
@@ -109,6 +124,13 @@ abstract class AbstractDrawerTest extends ImagineTestCase implements InfoProvide
      */
     public function testEllipse($thickness, $fill)
     {
+        if (!$fill && $thickness > 1) {
+            try {
+                $this->getDriverInfo()->requireFeature(Info::FEATURE_DRAWUNFILLEDELLIPSESWITHTICHKESSCORRECTLY);
+            } catch (NotSupportedException $x) {
+                $this->markTestSkipped($x->getMessage());
+            }
+        }
         $imagine = $this->getImagine();
         $image = $imagine->create(new Box(30, 20), $this->getColor('fff'));
         $size = $image->getSize();
