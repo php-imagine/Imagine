@@ -727,7 +727,7 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
     public function testChangeColorSpaceAndStripImage()
     {
         try {
-            $this->getDriverInfo()->requireFeature(Info::FEATURE_COLORPROFILES);
+            $this->getDriverInfo()->requireFeature(array(Info::FEATURE_COLORPROFILES, Info::FEATURE_COLORSPACECONVERSION));
         } catch (NotSupportedException $x) {
             $this->markTestSkipped($x->getMessage());
         }
