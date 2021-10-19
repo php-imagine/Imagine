@@ -138,8 +138,20 @@ class IsImageEqual extends Constraint
      */
     private function normalize(ImageInterface $image)
     {
-        if ($image->palette()->name() !== PaletteInterface::PALETTE_RGB) {
-            $image = $image->copy()->usePalette(new RGB());
+        $paletteName = $image->palette()->name();
+        switch ($paletteName) {
+            case PaletteInterface::PALETTE_RGB:
+                $redGetter = 'getRed';
+                $greenGetter = 'getGreen';
+                $blueGetter = 'getBlue';
+                break;
+            case PaletteInterface::PALETTE_GRAYSCALE:
+                $blueGetter = $greenGetter = $redGetter = 'getGray';
+                break;
+            default:
+                $image = $image->copy()->usePalette(new RGB());
+                $paletteName = PaletteInterface::PALETTE_RGB;
+                break;
         }
         $step = (int) round(255 / $this->buckets);
 
@@ -159,19 +171,19 @@ class IsImageEqual extends Constraint
         foreach ($colors as $color) {
             foreach ($red as $bucket) {
                 if ($color->getAlpha() !== 0) {
-                    $bucket->add($color->getRed());
+                    $bucket->add($color->$redGetter());
                 }
             }
 
             foreach ($green as $bucket) {
                 if ($color->getAlpha() !== 0) {
-                    $bucket->add($color->getGreen());
+                    $bucket->add($color->$greenGetter());
                 }
             }
 
             foreach ($blue as $bucket) {
                 if ($color->getAlpha() !== 0) {
-                    $bucket->add($color->getBlue());
+                    $bucket->add($color->$blueGetter());
                 }
             }
 
