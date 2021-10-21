@@ -19,6 +19,9 @@ Depending on the chosen Image implementation, you may need one of the following 
  - Imagick (with ImageMagick version 6.2.9 or later, except version 7.0.7-32)
  - Gmagick
 
+To read EXIF metadata (e.g. for autorotation), activate the PHP ``exif`` extension. This is optional: Imagine works
+without the PHP ``exif`` extension, but then it can't read and act on image orientation or other EXIF metadata.
+
 ### Installation using composer
 `php composer.phar require imagine/imagine`
 
