@@ -182,9 +182,6 @@ abstract class AbstractLayersTest extends ImagineTestCase implements InfoProvide
         $layers[$offset] = $secondImage;
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
     public function testAnimateEmpty()
     {
         try {
@@ -209,7 +206,6 @@ abstract class AbstractLayersTest extends ImagineTestCase implements InfoProvide
 
     /**
      * @dataProvider provideAnimationParameters
-     * @doesNotPerformAssertions
      *
      * @param mixed $delay
      * @param mixed $loops
