@@ -83,7 +83,7 @@ class LayersTest extends AbstractLayersTest
         $this->assertCount(42, $layers);
     }
 
-    public function testWebpFormatIsAllowedAsAnimatedFormat() 
+    public function testWebpFormatIsAllowedAsAnimatedFormat()
     {
         $palette = new RGB();
         $resource = $this->getMockBuilder('\Imagick')->getMock();
