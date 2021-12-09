@@ -92,8 +92,8 @@ class Layers extends AbstractLayers implements InfoProvider
     public function animate($format, $delay, $loops)
     {
         $formatInfo = Format::get($format);
-        if ($formatInfo === null || !in_array($formatInfo->getID(), [Format::ID_GIF, Format::ID_WEBP])) {
-            throw new InvalidArgumentException('Animated picture is currently only supported on gif and webp');
+        if ($formatInfo === null || $formatInfo->getID() !== Format::ID_GIF) {
+            throw new InvalidArgumentException('Animated picture is currently only supported on gif');
         }
 
         if (!is_int($loops) || $loops < 0) {
@@ -107,7 +107,7 @@ class Layers extends AbstractLayers implements InfoProvider
         try {
             foreach ($this as $offset => $layer) {
                 $this->resource->setIteratorIndex($offset);
-                $this->resource->setFormat($formatInfo->getID());
+                $this->resource->setFormat(Format::ID_GIF);
 
                 if ($delay !== null) {
                     $layer->getImagick()->setImageDelay($delay / 10);
