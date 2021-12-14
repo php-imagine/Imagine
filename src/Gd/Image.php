@@ -188,7 +188,7 @@ final class Image extends AbstractImage implements InfoProvider
                 throw new RuntimeException('Image paste operation failed');
             }
         } elseif ($alpha > 0) {
-            if (imagecopymerge(/*dst_im*/$this->resource, /*src_im*/$image->resource, /*dst_x*/$start->getX(), /*dst_y*/$start->getY(), /*src_x*/0, /*src_y*/0, /*src_w*/$size->getWidth(), /*src_h*/$size->getHeight(), /*pct*/$alpha) === false) {
+            if (imagecopymerge(/*dst_im*/$this->resource, /*src_im*/ $image->resource, /*dst_x*/ $start->getX(), /*dst_y*/ $start->getY(), /*src_x*/ 0, /*src_y*/ 0, /*src_w*/ $size->getWidth(), /*src_h*/ $size->getHeight(), /*pct*/ $alpha) === false) {
                 throw new RuntimeException('Image paste operation failed');
             }
         }
@@ -728,7 +728,6 @@ final class Image extends AbstractImage implements InfoProvider
         }
 
         if (isset($options['resolution-units']) && isset($options['resolution-x']) && function_exists('imageresolution')) {
-
             $resolution_x = $options['resolution-x'];
             $resolution_y = isset($options['resolution-y']) ? $options['resolution-y'] : $resolution_x;
 
