@@ -29,7 +29,7 @@ Install the dependencies using composer.phar and use Imagine :
 .. code-block:: none
 
     php composer.phar install
-    
+
 .. code-block:: php
 
     <?php
@@ -138,7 +138,7 @@ You can optionally specify the fill color for the new image, which defaults to o
    $size  = new Imagine\Image\Box(400, 300);
    $color = $palette->color('#000', 0);
    $image = $imagine->create($size, $color);
-   
+
 To use a solid background color, for example orange, provide an alpha of 100.
 
 .. code-block:: php
@@ -173,7 +173,7 @@ Three options groups are currently supported : quality, resolution and flatten.
    Default values are 75 for Jpeg quality, 7 for Png compression level, 75 for webp quality and 72 dpi for x/y-resolution.
 
 .. NOTE::
-   GD does not support resolution options group
+   GD does support resolution options group only with PHP 7 >= 7.2, PHP 8
 
 The following example demonstrates the basic quality settings.
 

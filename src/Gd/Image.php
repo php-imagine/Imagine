@@ -747,6 +747,19 @@ final class Image extends AbstractImage implements InfoProvider
                 break;
         }
 
+        if (isset($options['resolution-units']) && isset($options['resolution-x']) && function_exists('imageresolution')) {
+
+            $resolution_x = $options['resolution-x'];
+            $resolution_y = isset($options['resolution-y']) ? $options['resolution-y'] : $resolution_x;
+
+            if ($options['resolution-units'] === ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
+                $resolution_x = $resolution_x * ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER;
+                $resolution_y = $resolution_y * ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER;
+            }
+
+            imageresolution($this->resource, $resolution_x, $resolution_y);
+        }
+
         return $result;
     }
 
