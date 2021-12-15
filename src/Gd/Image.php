@@ -728,15 +728,15 @@ final class Image extends AbstractImage implements InfoProvider
         }
 
         if (isset($options['resolution-units']) && isset($options['resolution-x']) && function_exists('imageresolution')) {
-            $resolution_x = $options['resolution-x'];
-            $resolution_y = isset($options['resolution-y']) ? $options['resolution-y'] : $resolution_x;
+            $resolutionX = $options['resolution-x'];
+            $resolutionY = isset($options['resolution-y']) ? $options['resolution-y'] : $resolutionX;
 
             if ($options['resolution-units'] === ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
-                $resolution_x = $resolution_x * ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER;
-                $resolution_y = $resolution_y * ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER;
+                $resolutionX *= ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER;
+                $resolutionY *= ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER;
             }
 
-            imageresolution($this->resource, $resolution_x, $resolution_y);
+            imageresolution($this->resource, $resolutionX, $resolutionY);
         }
 
         ErrorHandling::throwingRuntimeException(E_WARNING | E_NOTICE, function () use ($saveFunction, $args) {
