@@ -113,6 +113,9 @@ class DriverInfo extends AbstractInfo
                 }
                 break;
             case static::FEATURE_COLORSPACECONVERSION:
+                if (version_compare($this->getEngineVersion(), '6.8.4') < 0) {
+                    throw new NotSupportedException('You need at least ImageMagick 6.8.4 to perform colorspace conversions.');
+                }
                 if (!$this->isColorspaceConversionAvailable()) {
                     throw new NotSupportedException('Your version of Imagick does not support colorspace conversions.');
                 }
