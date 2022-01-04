@@ -46,6 +46,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
      * {@inheritdoc}
      *
      * @see \Countable::count()
+     *
+     * @return int
      */
     #[\ReturnTypeWillChange]
     public function count()
@@ -57,6 +59,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
      * {@inheritdoc}
      *
      * @see \IteratorAggregate::getIterator()
+     *
+     * @return \ArrayIterator
      */
     #[\ReturnTypeWillChange]
     public function getIterator()
@@ -68,6 +72,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
      * {@inheritdoc}
      *
      * @see \ArrayAccess::offsetExists()
+     *
+     * @return bool
      */
     #[\ReturnTypeWillChange]
     public function offsetExists($offset)
@@ -79,6 +85,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
      * {@inheritdoc}
      *
      * @see \ArrayAccess::offsetSet()
+     *
+     * @return void
      */
     #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
@@ -90,6 +98,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
      * {@inheritdoc}
      *
      * @see \ArrayAccess::offsetUnset()
+     *
+     * @return void
      */
     #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
@@ -101,6 +111,8 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
      * {@inheritdoc}
      *
      * @see \ArrayAccess::offsetGet()
+     *
+     * @return mixed
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)

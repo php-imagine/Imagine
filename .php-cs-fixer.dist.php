@@ -153,8 +153,9 @@ return (new PhpCsFixer\Config())
         'phpdoc_no_access' => true,
         // No alias PHPDoc tags should be used.
         'phpdoc_no_alias_tag' => true,
-        // `@return void` and `@return null` annotations should be omitted from PHPDoc.
-        'phpdoc_no_empty_return' => true,
+        // We have to support `@return void` to satisfy Symfony deprecations helper.
+        // See https://github.com/stripe/stripe-php/pull/1230
+        'phpdoc_no_empty_return' => false,
         // `@package` and `@subpackage` annotations should be omitted from PHPDoc.
         'phpdoc_no_package' => true,
         // Classy that does not inherit must not have `@inheritdoc` tags.
