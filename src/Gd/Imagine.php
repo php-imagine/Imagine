@@ -19,6 +19,7 @@ use Imagine\File\LoaderInterface;
 use Imagine\Image\AbstractImagine;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Metadata\MetadataBag;
+use Imagine\Image\Palette\CMYK;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Palette\RGB;
@@ -109,7 +110,10 @@ class Imagine extends AbstractImagine implements InfoProvider
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
-        return $this->wrap($resource, new RGB(), $this->getMetadataReader()->readFile($loader));
+        $image = $this->wrap($resource, new RGB(), $this->getMetadataReader()->readFile($loader));
+        $image->usePalette($this->isCMYK($path) ? new CMYK() : new RGB());
+
+        return $image;
     }
 
     /**
@@ -226,6 +230,19 @@ class Imagine extends AbstractImagine implements InfoProvider
     private function isWebP(&$data)
     {
         return substr($data, 8, 7) === 'WEBPVP8';
+    }
+
+    /**
+     * Check if a JPEG image file uses the CMYK colour space.
+     * @param string $path The path to the file.
+     * @return bool
+     */
+    private function isCMYK($path) 
+    {
+        $imagesize = getimagesize($path);
+
+        return array_key_exists('mime', $imagesize) && 'image/jpeg' == $imagesize['mime'] &&
+               array_key_exists('channels', $imagesize) && 4 == $imagesize['channels'];
     }
 
     /**
