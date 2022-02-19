@@ -1144,6 +1144,10 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
      */
     public function testSaveCompressionQuality($format, array $smallSizeOptions, array $bigSizeOptions)
     {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && $format === Format::ID_HEIC) {
+            $this->markTestSkipped('Cannot test HEIC on Windows because of bug https://github.com/ImageMagick/ImageMagick/issues/1648');
+        }
+
         $filenameSmall = $this->getTemporaryFilename('small.' . $format);
         $filenameBig = $this->getTemporaryFilename('big.' . $format);
         $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/xparent.gif');

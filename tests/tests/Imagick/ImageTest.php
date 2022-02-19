@@ -73,63 +73,7 @@ class ImageTest extends AbstractImageTest
      */
     public function testUsePalette($from, $to, $color)
     {
-        if ($from === 'Imagine\\Image\\Palette\\Grayscale' && $to === 'Imagine\\Image\\Palette\\RGB') {
-            $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/780');
-        }
-        if ($from === 'Imagine\\Image\\Palette\\Grayscale' && $to === 'Imagine\Image\Palette\CMYK') {
-            $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/780');
-        }
         parent::testUsePalette($from, $to, $color);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testMask()
-     */
-    public function testMask()
-    {
-        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/781');
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testGetColorAtGrayScale()
-     */
-    public function testGetColorAtGrayScale()
-    {
-        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/783');
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testGetColorAtOpaque()
-     */
-    public function testGetColorAtOpaque()
-    {
-        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/784');
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testStripGBRImageHasGoodColors()
-     */
-    public function testStripGBRImageHasGoodColors()
-    {
-        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/785');
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testColorHistogram()
-     */
-    public function testColorHistogram()
-    {
-        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/785');
     }
 
     /**
@@ -141,9 +85,6 @@ class ImageTest extends AbstractImageTest
      */
     public function testResolutionOnSave($source)
     {
-        if (substr($source, -4) === '.svg') {
-            $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/788');
-        }
         parent::testResolutionOnSave($source);
     }
 
