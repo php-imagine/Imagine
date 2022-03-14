@@ -1021,6 +1021,7 @@ final class Image extends AbstractImage implements InfoProvider
             ImageInterface::FILTER_POINT => \Imagick::FILTER_POINT,
             ImageInterface::FILTER_QUADRATIC => \Imagick::FILTER_QUADRATIC,
             ImageInterface::FILTER_SINC => \Imagick::FILTER_SINC,
+            ImageInterface::FILTER_SINCFAST => \Imagick::FILTER_SINCFAST,
             ImageInterface::FILTER_TRIANGLE => \Imagick::FILTER_TRIANGLE,
         );
         if (!in_array($filter, static::getAllFilterValues(), true)) {

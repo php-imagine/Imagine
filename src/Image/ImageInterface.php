@@ -173,6 +173,13 @@ interface ImageInterface extends ManipulatorInterface
     const FILTER_SINC = 'sinc';
 
     /**
+     * Resampling filter: sincfast.
+     *
+     * @var string
+     */
+    const FILTER_SINCFAST = 'sincfast';
+
+    /**
      * Returns the image content as a binary string.
      *
      * @param string $format
