@@ -47,7 +47,7 @@ class DriverInfo extends AbstractInfo
             if (preg_match('/^.*?(\d+\.\d+\.\d+(-\d+)?(\s+Q\d+)?)/i', $engineVersion['versionString'], $m)) {
                 $engineRawVersion = $m[1];
             } else {
-                $engineRawVersion = $engineRawVersion['versionString'];
+                $engineRawVersion = $engineVersion['versionString'];
             }
         } else {
             $engineRawVersion = '';
