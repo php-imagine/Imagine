@@ -7,7 +7,7 @@ This document contains some instructions for the repository maintainers.
 
 Follow these instructions when publishing a new Imagine release:
 
-1. Be sure that TravisCI jobs succesfully completed in the `develop` branch
+1. Be sure that GitHub Action tests succesfully completed in the `develop` branch
 2. Update the `CHANGELOG.md` file:
     - replace the `### NEXT (YYYY-MM-DD)` line with the release number and date  
 3. Set the new version in the `Imagine\Image\ImagineInterface::VERSION` constant:
