@@ -4,7 +4,7 @@
 
 
 ### 1.3.1 (2022-03-15)
-* Fix Fix undefined variable $engineRawVersion in Imagick/Gmagick DriverInfo (#825, @fxbt)
+* Fix undefined variable $engineRawVersion in Imagick/Gmagick DriverInfo (#825, @fxbt)
 
 ### 1.3.0 (2022-03-15)
 * Minimum PHP supported version is now 5.5 (#820, @PowerKiKi)
