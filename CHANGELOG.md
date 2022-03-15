@@ -1,7 +1,20 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
-
+### 1.3.0 (2022-03-15)
+* Minimum PHP supported version is now 5.5 (#820, @PowerKiKi)
+* Support AVIF, HEIC, and JXL in Imagick driver (#759, #765, @ausi)
+* Support AVIF in GD driver (#791, @mlocati)
+* Make the $filter parameter of the resize method invariant (#776, @mlocati)
+* Ability to specify the alpha-blending of the GD drawer (#790, @mlocati)
+* Add support for SINCFAST filter in Imagick driver (#823, @mlocati)
+* Fix applyMask() for GD driver (#708, @ninze)
+* Fix PHP 8.1 compatibility (#768, #791, @ausi, @mlocati)
+* Fix error handling in grayscale() for Gmagick driver (#757, @dmitry-kulikov)
+* Fix convolve() for Imagick driver (#775, @mlocati)
+* Fix array retuned by histogram() method of GD and Imagick drivers (#797, @mlocati)
+* Fix handling alpha channel in Imagick (#775, #798, @mlocati)
+* New Driver\Info classes to inspect installed drivers (#802, #805, #806, @mlocati)
+* Fix wrong load logic in Imagick (#807, @mlocati)
 
 ### 1.2.4 (2020-11-03)
 * Fix PHP 8.0 compatibility, except gmagick - see  https://bugs.php.net/bug.php?id=80106 (#740, @ausi)
