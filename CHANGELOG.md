@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.3.1 (2022-03-15)
 * Fix Fix undefined variable $engineRawVersion in Imagick/Gmagick DriverInfo (#825, @fxbt)
 
