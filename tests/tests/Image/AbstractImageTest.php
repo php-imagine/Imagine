@@ -230,12 +230,13 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
         );
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
     public function testProfile()
     {
-        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_COLORPROFILES)) {
+        if ($this->getDriverInfo()->hasFeature(Info::FEATURE_COLORPROFILES)) {
+            if (method_exists($this, 'expectNotToPerformAssertions')) {
+                $this->expectNotToPerformAssertions();
+            }
+        } else {
             $this->isGoingToThrowException('Imagine\Exception\RuntimeException');
         }
         $this
