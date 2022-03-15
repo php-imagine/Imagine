@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.3.0 (2022-03-15)
 * Minimum PHP supported version is now 5.5 (#820, @PowerKiKi)
 * Support AVIF, HEIC, and JXL in Imagick driver (#759, #765, @ausi)
