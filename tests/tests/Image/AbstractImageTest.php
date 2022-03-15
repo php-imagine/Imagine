@@ -1021,7 +1021,13 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
         );
     }
 
-    public function testJpegSamplingFactors()
+    /**
+     * @dataProvider jpegSamplingFactorsProvider
+     *
+     * @param array $sampling
+     * @param array $expected
+     */
+    public function testJpegSamplingFactors(array $sampling, array $expected)
     {
         try {
             $this->getDriverInfo()->requireFeature(Info::FEATURE_EXPORTWITHCUSTOMJPEGSAMPLINGFACTORS);
@@ -1030,16 +1036,17 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
         }
         $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/large.jpg');
 
-        $samplings = array(
-            array(1, 1, 1),
-            array(2, 1, 1),
-        );
+        $filename = $this->getTemporaryFilename(implode('-', $sampling) . '.jpg');
+        $image->save($filename, array('jpeg_sampling_factors' => $sampling));
+        $this->assertEquals($expected, $this->getSamplingFactors($image));
+    }
 
-        foreach ($samplings as $sampling) {
-            $filename = $this->getTemporaryFilename(implode('-', $sampling) . '.jpg');
-            $image->save($filename, array('jpeg_sampling_factors' => $sampling));
-            $this->assertEquals($sampling, $this->getSamplingFactors($image));
-        }
+    public function jpegSamplingFactorsProvider()
+    {
+        return array(
+            array(array(1, 1, 1), array(1, 1, 1)),
+            array(array(2, 1, 1), array(2, 1, 1)),
+        );
     }
 
     public function pasteWithAlphaProvider()
