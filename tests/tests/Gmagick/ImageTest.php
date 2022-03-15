@@ -84,14 +84,16 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/778');
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Imagine\Test\Image\AbstractImageTest::testJpegSamplingFactors()
-     */
-    public function testJpegSamplingFactors()
+    public function jpegSamplingFactorsProvider()
     {
-        $this->markTestSkipped('Temporarily skipped - see https://github.com/php-imagine/Imagine/issues/782');
+        if (PHP_VERSION_ID < 50600 || (PHP_VERSION_ID >= 70300 && PHP_VERSION_ID < 70400)) {
+            return parent::jpegSamplingFactorsProvider();
+        }
+
+        return array(
+            array(array(1, 1, 1), array(1, 1)),
+            array(array(2, 1, 1), array(2, 1)),
+        );
     }
 
     /**
