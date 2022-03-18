@@ -4,14 +4,14 @@
 
 Tweet about it using the [#php_imagine](https://twitter.com/search?q=%23php_imagine) hashtag.
 
-Image manipulation library for PHP 5.3 inspired by Python's PIL and other image
+Image manipulation library for PHP inspired by Python's PIL and other image
 libraries.
 
 ## Requirements
 
 The Imagine library has the following requirements:
 
- - PHP 5.3+
+ - PHP 5.5+
 
 Depending on the chosen Image implementation, you may need one of the following PHP extensions:
 
