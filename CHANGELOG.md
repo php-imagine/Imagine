@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.3.2 (2022-04-01)
 * Workaround for a bug in PHP 7.3+opcache that causes segmentation faults (#826, #829, #828, @ausi, @mnocon, @mlocati)
 
