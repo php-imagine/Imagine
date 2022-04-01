@@ -110,6 +110,11 @@ jobs:
             echo ''
           done
           echo "::set-output name=excluded-groups::$EXCLUDED_GROUPS"
+      - name: Enable opcache
+        if: matrix.php-version == '7.3'
+        run: |
+          docker-php-ext-enable opcache
+          echo 'opcache.enable_cli=1' >> "$PHP_INI_DIR/conf.d/docker-php-ext-opcache.ini"
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install composer dependencies
