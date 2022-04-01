@@ -642,8 +642,26 @@ final class Image extends AbstractImage implements InfoProvider
                 $saveFunction = 'image' . $format->getID();
                 break;
         }
-        $args = array(&$this->resource, $filename);
+        $args = array_merge(array(&$this->resource, $filename), $this->finalizeOptions($format, $options));
 
+        ErrorHandling::throwingRuntimeException(E_WARNING | E_NOTICE, function () use ($saveFunction, $args) {
+            if (call_user_func_array($saveFunction, $args) === false) {
+                throw new RuntimeException('Save operation failed');
+            }
+        });
+    }
+
+    /**
+     * @param \Imagine\Image\Format $format
+     * @param array $options
+     *
+     * @throws \Imagine\Exception\InvalidArgumentException
+     *
+     * @return array
+     */
+    private function finalizeOptions(Format $format, array $options)
+    {
+        $result = array();
         switch ($format->getID()) {
             case Format::ID_AVIF:
                 // ranges from 0 (worst quality, smaller file) to 100 (best quality, larger file). If -1 is provided, the default value is used
@@ -662,12 +680,12 @@ final class Image extends AbstractImage implements InfoProvider
                         $quality = max(0, min(100, $options['avif_quality']));
                     }
                 }
-                $args[] = $quality;
-                $args[] = $speed;
+                $result[] = $quality;
+                $result[] = $speed;
                 break;
             case Format::ID_BMP:
                 if (isset($options['compressed'])) {
-                    $args[] = (bool) $options['compressed'];
+                    $result[] = (bool) $options['compressed'];
                 }
                 break;
             case Format::ID_JPEG:
@@ -677,7 +695,7 @@ final class Image extends AbstractImage implements InfoProvider
                     }
                 }
                 if (isset($options['jpeg_quality'])) {
-                    $args[] = $options['jpeg_quality'];
+                    $result[] = $options['jpeg_quality'];
                 }
                 break;
             case Format::ID_PNG:
@@ -690,9 +708,9 @@ final class Image extends AbstractImage implements InfoProvider
                     if ($options['png_compression_level'] < 0 || $options['png_compression_level'] > 9) {
                         throw new InvalidArgumentException('png_compression_level option should be an integer from 0 to 9');
                     }
-                    $args[] = $options['png_compression_level'];
+                    $result[] = $options['png_compression_level'];
                 } else {
-                    $args[] = -1; // use default level
+                    $result[] = -1; // use default level
                 }
                 if (!isset($options['png_compression_filter'])) {
                     if (isset($options['filters'])) {
@@ -703,13 +721,7 @@ final class Image extends AbstractImage implements InfoProvider
                     if (~PNG_ALL_FILTERS & $options['png_compression_filter']) {
                         throw new InvalidArgumentException('png_compression_filter option should be a combination of the PNG_FILTER_XXX constants');
                     }
-                    $args[] = $options['png_compression_filter'];
-                }
-                break;
-            case Format::ID_WBMP:
-            case Format::ID_XBM:
-                if (isset($options['foreground'])) {
-                    $args[] = $options['foreground'];
+                    $result[] = $options['png_compression_filter'];
                 }
                 break;
             case Format::ID_WEBP:
@@ -722,16 +734,18 @@ final class Image extends AbstractImage implements InfoProvider
                     if ($options['webp_quality'] < 0 || $options['webp_quality'] > 100) {
                         throw new InvalidArgumentException('webp_quality option should be an integer from 0 to 100');
                     }
-                    $args[] = $options['webp_quality'];
+                    $result[] = $options['webp_quality'];
+                }
+                break;
+            case Format::ID_XBM:
+            case Format::ID_WBMP:
+                if (isset($options['foreground'])) {
+                    $result[] = $options['foreground'];
                 }
                 break;
         }
 
-        ErrorHandling::throwingRuntimeException(E_WARNING | E_NOTICE, function () use ($saveFunction, $args) {
-            if (call_user_func_array($saveFunction, $args) === false) {
-                throw new RuntimeException('Save operation failed');
-            }
-        });
+        return $result;
     }
 
     /**
