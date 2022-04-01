@@ -739,7 +739,7 @@ final class Image extends AbstractImage implements InfoProvider
                 break;
             case Format::ID_XBM:
             case Format::ID_WBMP:
-                    if (isset($options['foreground'])) {
+                if (isset($options['foreground'])) {
                     $result[] = $options['foreground'];
                 }
                 break;
