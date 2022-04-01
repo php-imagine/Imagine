@@ -642,7 +642,7 @@ final class Image extends AbstractImage implements InfoProvider
                 $saveFunction = 'image' . $format->getID();
                 break;
         }
-        $args = array_merge(array(&$this->resource, $filename), $this->finalizeOptions($options));
+        $args = array_merge(array(&$this->resource, $filename), $this->finalizeOptions($format, $options));
 
         ErrorHandling::throwingRuntimeException(E_WARNING | E_NOTICE, function () use ($saveFunction, $args) {
             if (call_user_func_array($saveFunction, $args) === false) {
