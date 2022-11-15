@@ -154,7 +154,7 @@ class Format
             case static::ID_JPEG:
                 return new static($formatID, 'image/jpeg', 'jpg', array('jpg', 'pjpeg', 'jfif'));
             case static::ID_WBMP:
-                return new static($formatID, 'vnd.wap.wbmp', 'jpg');
+                return new static($formatID, 'image/vnd.wap.wbmp', $formatID);
             default:
                 return new static($formatID, "image/{$formatID}", $formatID);
         }
