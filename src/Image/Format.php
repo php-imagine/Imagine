@@ -152,11 +152,11 @@ class Format
     {
         switch ($formatID) {
             case static::ID_JPEG:
-                return new static($formatID, 'jpg', 'image/jpeg', array('jpg', 'pjpeg', 'jfif'));
+                return new static($formatID, 'image/jpeg', 'jpg', array('jpg', 'pjpeg', 'jfif'));
             case static::ID_WBMP:
-                return new static($formatID, 'jpg', 'vnd.wap.wbmp');
+                return new static($formatID, 'vnd.wap.wbmp', 'jpg');
             default:
-                return new static($formatID, $formatID, "image/{$formatID}");
+                return new static($formatID, "image/{$formatID}", $formatID);
         }
     }
 }
