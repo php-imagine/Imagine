@@ -20,6 +20,7 @@ class BlackWhiteTest extends FilterTestCase
 {
     /**
      * @dataProvider getData
+     *
      * @doesNotPerformAssertions
      *
      * @param int $border
