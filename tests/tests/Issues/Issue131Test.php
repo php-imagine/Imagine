@@ -67,6 +67,7 @@ class Issue131Test extends ImagineTestCase
 
     /**
      * @doesNotPerformAssertions
+     *
      * @group imagick
      */
     public function testShouldSaveOneFileWithImagick()

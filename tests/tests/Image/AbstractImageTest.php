@@ -1182,6 +1182,7 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
 
     /**
      * @dataProvider provideExensions
+     *
      * @doesNotPerformAssertions
      *
      * @param string $extension
