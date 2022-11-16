@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.3.3 (2022-11-16)
 *  Fix invalid format MIME type definition (#835, @xdanik)
 
