@@ -264,17 +264,6 @@ class Loader implements LoaderInterface
         if (!@curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true)) {
             throw new RuntimeException('curl_setopt(CURLOPT_FOLLOWLOCATION) failed.');
         }
-        if (defined('CURL_SSLVERSION_TLSv1_1')) {
-            if (!@curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_1)) {
-                throw new RuntimeException('curl_setopt(CURLOPT_SSLVERSION) failed.');
-            }
-        } else {
-            // Manually checked that CURL_SSLVERSION_TLSv1_1 is 5 for any version of curl from 7.34.0 to 7.61.0
-            // See for example https://github.com/curl/curl/blob/curl-7_34_0/include/curl/curl.h#L1668
-            if (!@curl_setopt($curl, CURLOPT_SSLVERSION, 5)) {
-                throw new RuntimeException('curl_setopt(CURLOPT_SSLVERSION) failed.');
-            }
-        }
     }
 
     /**
