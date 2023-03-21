@@ -38,6 +38,12 @@ final class Point implements PointInterface
      */
     public function __construct($x, $y)
     {
+        if (!\is_int($x)) {
+            $x = (int) round($x);
+        }
+        if (!\is_int($y)) {
+            $y = (int) round($y);
+        }
         if ($x < 0 || $y < 0) {
             throw new InvalidArgumentException(sprintf('A coordinate cannot be positioned outside of a bounding box (x: %s, y: %s given)', $x, $y));
         }

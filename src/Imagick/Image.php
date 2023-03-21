@@ -161,7 +161,7 @@ final class Image extends AbstractImage implements InfoProvider
                 }
                 $this->imagick = $this->imagick->deconstructImages();
             } else {
-                $this->imagick->cropImage((int)$size->getWidth(), (int)$size->getHeight(), (int)$start->getX(), (int)$start->getY());
+                $this->imagick->cropImage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
                 // Reset canvas for gif format
                 $this->imagick->setImagePage(0, 0, 0, 0);
             }
