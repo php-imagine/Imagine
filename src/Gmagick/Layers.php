@@ -142,6 +142,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \Iterator::current()
+     *
+     * @return mixed
      */
     #[\ReturnTypeWillChange]
     public function current()
@@ -176,6 +178,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \Iterator::key()
+     *
+     * @return mixed
      */
     #[\ReturnTypeWillChange]
     public function key()
@@ -187,6 +191,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \Iterator::next()
+     *
+     * @return mixed
      */
     #[\ReturnTypeWillChange]
     public function next()
@@ -198,6 +204,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \Iterator::rewind()
+     *
+     * @return void
      */
     #[\ReturnTypeWillChange]
     public function rewind()
@@ -209,6 +217,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \Iterator::valid()
+     *
+     * @return bool
      */
     #[\ReturnTypeWillChange]
     public function valid()
@@ -220,6 +230,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \Countable::count()
+     *
+     * @return int
      */
     #[\ReturnTypeWillChange]
     public function count()
@@ -235,6 +247,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \ArrayAccess::offsetExists()
+     *
+     * @return bool
      */
     #[\ReturnTypeWillChange]
     public function offsetExists($offset)
@@ -246,6 +260,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \ArrayAccess::offsetGet()
+     *
+     * @return mixed
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
@@ -257,6 +273,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \ArrayAccess::offsetSet()
+     *
+     * @return void
      */
     #[\ReturnTypeWillChange]
     public function offsetSet($offset, $image)
@@ -309,6 +327,8 @@ class Layers extends AbstractLayers implements InfoProvider
      * {@inheritdoc}
      *
      * @see \ArrayAccess::offsetUnset()
+     *
+     * @return void
      */
     #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
