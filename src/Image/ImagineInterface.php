@@ -20,7 +20,7 @@ use Imagine\Image\Palette\Color\ColorInterface;
  */
 interface ImagineInterface extends ClassFactoryAwareInterface
 {
-    const VERSION = '1.3.4-dev';
+    const VERSION = '1.3.4';
 
     /**
      * Creates a new empty image with an optional background color.
