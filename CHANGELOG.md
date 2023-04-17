@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.3.4 (2023-04-17)
 * Let PHP automatically detect the preferred TLS version (#841, @radli)
 * Add @return phpdoc to ReturnTypeWillChange methods (#846, @mlocati)
