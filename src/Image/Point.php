@@ -42,8 +42,8 @@ final class Point implements PointInterface
             throw new InvalidArgumentException(sprintf('A coordinate cannot be positioned outside of a bounding box (x: %s, y: %s given)', $x, $y));
         }
 
-        $this->x = $x;
-        $this->y = $y;
+        $this->x = ceil($x);
+        $this->y = ceil($y);
     }
 
     /**
