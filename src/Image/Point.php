@@ -38,6 +38,13 @@ final class Point implements PointInterface
      */
     public function __construct($x, $y)
     {
+        if (!is_numeric($x) || !is_numeric($y)) {
+            throw new InvalidArgumentException('x or y must be numeric');
+        }
+
+        $x = (int) round((float) $x);
+        $y = (int) round((float) $y);
+
         if ($x < 0 || $y < 0) {
             throw new InvalidArgumentException(sprintf('A coordinate cannot be positioned outside of a bounding box (x: %s, y: %s given)', $x, $y));
         }
