@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.3.5 (2023-06-07)
 * Fix PHP 8.2 warnings with Point class (#847, @anovsiradj)
 
