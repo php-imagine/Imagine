@@ -50,7 +50,7 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
 
     public function testReadFromInvalidFileThrowsAnException()
     {
-        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', 'File /path/to/no/file does not exist.');
+        $this->isGoingToThrowException('Imagine\Exception\NotFoundException', 'File /path/to/no/file does not exist.');
         $this->getReader()->readFile('/path/to/no/file');
     }
 

@@ -145,7 +145,7 @@ abstract class AbstractImagineTest extends ImagineTestCase implements InfoProvid
     {
         $invalidResource = __DIR__ . '/path/that/does/not/exist';
 
-        $this->isGoingToThrowException('Imagine\Exception\InvalidArgumentException', sprintf('File %s does not exist.', $invalidResource));
+        $this->isGoingToThrowException('Imagine\Exception\NotFoundException', sprintf('File %s does not exist.', $invalidResource));
         $this->getImagine()->open($invalidResource);
     }
 
