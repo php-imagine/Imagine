@@ -14,6 +14,6 @@ namespace Imagine\Exception;
 /**
  * Imagine-specific invalid not found exception.
  */
-class NotFoundException implements Exception
+class NotFoundException extends InvalidArgumentException
 {
 }
