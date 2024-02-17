@@ -730,7 +730,9 @@ final class Image extends AbstractImage implements InfoProvider
                         $options['webp_quality'] = $options['quality'];
                     }
                 }
-                if (isset($options['webp_quality'])) {
+                if (!empty($options['webp_lossless'])) {
+                    $result[] = defined('IMG_WEBP_LOSSLESS') ? IMG_WEBP_LOSSLESS : 100;
+                } elseif (isset($options['webp_quality'])) {
                     if ($options['webp_quality'] < 0 || $options['webp_quality'] > 100) {
                         throw new InvalidArgumentException('webp_quality option should be an integer from 0 to 100');
                     }
