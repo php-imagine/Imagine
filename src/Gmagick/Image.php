@@ -368,6 +368,13 @@ final class Image extends AbstractImage implements InfoProvider
                 if (isset($options['webp_quality'])) {
                     $image->setCompressionQuality($options['webp_quality']);
                 }
+                if (isset($options['webp_lossless'])) {
+                    if (method_exists($image, 'setimageoption')) {
+                        $image->setimageoption('webp', 'lossless', $options['webp_lossless'] ? 'true' : 'false');
+                    } elseif ($options['webp_lossless']) {
+                        $image->setCompressionQuality(100);
+                    }
+                }
                 break;
         }
         if (isset($options['resolution-units']) && isset($options['resolution-x']) && isset($options['resolution-y'])) {
