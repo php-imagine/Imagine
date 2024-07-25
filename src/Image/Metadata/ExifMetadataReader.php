@@ -42,11 +42,14 @@ class ExifMetadataReader extends AbstractMetadataReader
         if (!function_exists('exif_read_data')) {
             return 'The PHP EXIF extension is required to use the ExifMetadataReader';
         }
-        if (!in_array('data', stream_get_wrappers(), true)) {
-            return 'The data:// stream wrapper must be enabled';
-        }
-        if (in_array(ini_get('allow_url_fopen'), array('', '0', 0), true)) {
-            return 'The allow_url_fopen php.ini configuration key must be set to 1';
+
+        if (PHP_VERSION_ID < 70200) {
+            if (!in_array('data', stream_get_wrappers(), true)) {
+                return 'The data:// stream wrapper must be enabled';
+            }
+            if (in_array(ini_get('allow_url_fopen'), array('', '0', 0), true)) {
+                return 'The allow_url_fopen php.ini configuration key must be set to 1';
+            }
         }
 
         return '';
@@ -107,6 +110,14 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     private function doReadData($data)
     {
+        if (PHP_VERSION_ID >= 70200) {
+            $stream = fopen('php://memory', 'r+');
+            fwrite($stream, $data);
+            rewind($stream);
+
+            return $this->extract($stream);
+        }
+
         if (substr($data, 0, 2) === 'II') {
             $mime = 'image/tiff';
         } else {
@@ -117,9 +128,9 @@ class ExifMetadataReader extends AbstractMetadataReader
     }
 
     /**
-     * Performs the exif data extraction given a path or data-URI representation.
+     * Performs the exif data extraction given a path, data-URI representation or stream.
      *
-     * @param string $path the path to the file or the data-URI representation
+     * @param string|resource $path the path to the file, the data-URI representation or a stream
      *
      * @return array
      */
