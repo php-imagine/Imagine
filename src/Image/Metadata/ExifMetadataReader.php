@@ -26,10 +26,6 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     public function __construct()
     {
-        $whyNot = static::getUnsupportedReason();
-        if ($whyNot !== '') {
-            throw new NotSupportedException($whyNot);
-        }
     }
 
     /**
@@ -113,7 +109,32 @@ class ExifMetadataReader extends AbstractMetadataReader
             $mime = 'image/jpeg';
         }
 
-        return $this->extract('data://' . $mime . ';base64,' . base64_encode($data));
+        // Convert the image to a form that can be read by exif_read_data()
+        // If allow_url_fopen is available do this using the data:// structure
+
+        $whyNot = static::getUnsupportedReason();
+        if ($whyNot === '') {
+            // allow_url_fopen is available, so use default method
+            $file_handle = $this->extract('data://' . $mime . ';base64,' . base64_encode($data));
+            // Now see if we can extract anything ... 
+            $exifData = $this->extract($file_handle);
+        } elseif(substr($data, 0, 2) === 'II') {
+            // Tiff image - cannot be written by GD so bale
+            throw new NotSupportedException('Tiff file format not supported on GD2');
+        } else {
+            $file_handle = hash('tiger160,3',$data).'jpg';
+            // Write file to temporary file on disk
+            try {
+                imagejpeg(imagecreatefromstring($data),$file_handle,0);
+            } catch (\Exception $e) {
+                // image creation failed so return nothing
+                return array();
+            }
+            // Now see if we can extract anything ... 
+            $exifData = $this->extract($file_handle);
+            unset($file_handle);
+        }
+        return $exifData;
     }
 
     /**
