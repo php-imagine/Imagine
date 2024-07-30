@@ -31,7 +31,7 @@ interface MetadataReaderInterface
      * Reads metadata from a binary string.
      *
      * @param string $data the binary string to read
-     * @param resource $originalResource an optional resource to gather stream metadata
+     * @param resource|null $originalResource an optional resource to gather stream metadata
      *
      * @return \Imagine\Image\Metadata\MetadataBag
      */
