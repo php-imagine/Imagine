@@ -98,7 +98,7 @@ class ExifMetadataReader extends AbstractMetadataReader
      */
     protected function extractFromStream($resource)
     {
-        return $this->doReadData(stream_get_contents($resource));
+        return PHP_VERSION_ID < 70200 ? $this->doReadData(stream_get_contents($resource)) : $this->extract($resource);
     }
 
     /**
