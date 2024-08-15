@@ -229,7 +229,7 @@ class Imagine extends AbstractImagine implements InfoProvider
     }
 
     /**
-     * Create an image resource starting from its raw daa.
+     * Create an image resource starting from its raw data.
      *
      * @param string $string
      *
