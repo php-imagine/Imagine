@@ -84,6 +84,20 @@ class LayersTest extends AbstractLayersTest
         $this->assertCount(42, $layers);
     }
 
+    public function testWebpFormatIsAllowedAsAnimatedFormat()
+    {
+        $palette = new RGB();
+        $resource = $this->getMockBuilder('\Gmagick')->getMock();
+
+        $resource->expects($this->atLeastOnce())
+            ->method('getNumberImages')
+            ->will($this->returnValue(42));
+
+        $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
+
+        $layers->animate('webp', 200, 0);
+    }
+
     public function testGetLayer()
     {
         $this->checkGmagickMockable();
