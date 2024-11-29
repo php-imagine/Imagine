@@ -32,7 +32,11 @@ jobs:
       matrix:
         php-version:
           - "7.4"
+          - "8.0"
           - "8.1"
+          - "8.2"
+          - "8.3"
+          - "8.4"
         extensions:
           - gd,imagick
     steps:
@@ -71,7 +75,7 @@ jobs:
         run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
       - name: Save tests temporary files
         if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: windows-${{ matrix.php-version }}-${{ matrix.extensions }}
           path: tests/tmp/
@@ -93,6 +97,9 @@ jobs:
           - "7.4"
           - "8.0"
           - "8.1"
+          - "8.2"
+          - "8.3"
+          - "8.4"
         image-suffix:
           - gd-gmagick
           - gd-imagick
@@ -129,7 +136,7 @@ jobs:
         run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
       - name: Save tests temporary files
         if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: docker-${{ matrix.php-version }}-${{ matrix.image-suffix }}
           path: tests/tmp/
