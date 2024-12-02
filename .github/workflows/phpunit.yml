@@ -71,7 +71,7 @@ jobs:
         run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
       - name: Save tests temporary files
         if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: windows-${{ matrix.php-version }}-${{ matrix.extensions }}
           path: tests/tmp/
@@ -129,7 +129,7 @@ jobs:
         run: composer run test --ansi --no-interaction -- --exclude-group "${{ steps.inspect.outputs.excluded-groups }}"
       - name: Save tests temporary files
         if: always() && env.IMAGINE_TEST_KEEP_TEMPFILES == 'yes'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: docker-${{ matrix.php-version }}-${{ matrix.image-suffix }}
           path: tests/tmp/
