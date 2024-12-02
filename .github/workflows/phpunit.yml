@@ -79,7 +79,7 @@ jobs:
 
   docker:
     name: PHP ${{ matrix.php-version }} - ${{ matrix.image-suffix }} (Docker)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
