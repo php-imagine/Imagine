@@ -99,7 +99,7 @@ final class Box implements BoxInterface
      *
      * @see \Imagine\Image\BoxInterface::contains()
      */
-    public function contains(BoxInterface $box, PointInterface $start = null)
+    public function contains(BoxInterface $box, ?PointInterface $start = null)
     {
         $start = $start ? $start : new Point(0, 0);
 

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This document has been generated with
  * https://mlocati.github.io/php-cs-fixer-configurator/#version:3.1.0|configurator
@@ -224,6 +225,8 @@ return (new PhpCsFixer\Config())
         'whitespace_after_comma_in_array' => true,
         // Write conditions in Yoda style (`true`), non-Yoda style (`['equal' => false, 'identical' => false, 'less_and_greater' => false]`) or ignore those conditions (`null`) based on configuration.
         'yoda_style' => array('always_move_variable' => false, 'equal' => false, 'identical' => false, 'less_and_greater' => false),
+        // Make type definition of default null also nullable to avoid PHP 8.4 deprecations
+        'nullable_type_declaration_for_default_null_value' => true,
     ))
     ->setFinder(
         PhpCsFixer\Finder::create()
