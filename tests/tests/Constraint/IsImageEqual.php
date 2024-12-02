@@ -59,7 +59,7 @@ class IsImageEqual extends Constraint
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($expected, $delta = 0.1, ImagineInterface $imagine = null, $buckets = 4)
+    public function __construct($expected, $delta = 0.1, ?ImagineInterface $imagine = null, $buckets = 4)
     {
         parent::__construct();
         $this->imagine = $imagine;

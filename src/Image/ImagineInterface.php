@@ -33,7 +33,7 @@ interface ImagineInterface extends ClassFactoryAwareInterface
      *
      * @return \Imagine\Image\ImageInterface
      */
-    public function create(BoxInterface $size, ColorInterface $color = null);
+    public function create(BoxInterface $size, ?ColorInterface $color = null);
 
     /**
      * Opens an existing image from $path.

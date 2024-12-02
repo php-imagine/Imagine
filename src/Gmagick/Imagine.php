@@ -81,7 +81,7 @@ class Imagine extends AbstractImagine implements InfoProvider
      *
      * @see \Imagine\Image\ImagineInterface::create()
      */
-    public function create(BoxInterface $size, ColorInterface $color = null)
+    public function create(BoxInterface $size, ?ColorInterface $color = null)
     {
         $width = $size->getWidth();
         $height = $size->getHeight();

@@ -30,7 +30,7 @@ class CanvasTest extends FilterTestCase
      * @param PointInterface $placement
      * @param ColorInterface $background
      */
-    public function testShouldCanvasImageAndReturnResult(BoxInterface $size, PointInterface $placement = null, ColorInterface $background = null)
+    public function testShouldCanvasImageAndReturnResult(BoxInterface $size, ?PointInterface $placement = null, ?ColorInterface $background = null)
     {
         $placement = $placement ?: new Point(0, 0);
         $image = $this->getImage();

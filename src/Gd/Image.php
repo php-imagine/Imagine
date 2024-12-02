@@ -239,7 +239,7 @@ final class Image extends AbstractImage implements InfoProvider
      *
      * @see \Imagine\Image\ManipulatorInterface::rotate()
      */
-    final public function rotate($angle, ColorInterface $background = null)
+    final public function rotate($angle, ?ColorInterface $background = null)
     {
         if ($background === null) {
             $background = $this->palette->color('fff');
