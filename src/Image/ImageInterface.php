@@ -33,6 +33,13 @@ interface ImageInterface extends ManipulatorInterface
     const RESOLUTION_PIXELSPERCENTIMETER = 'ppc';
 
     /**
+     * Multiplier for converting resolution from ppc to ppi.
+     *
+     * @var float
+     */
+    const RESOLUTION_PPC_TO_PPI_MULTIPLIER = 2.54;
+
+    /**
      * Image interlacing: none.
      *
      * @var string

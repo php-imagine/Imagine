@@ -94,9 +94,15 @@ class DriverInfo extends AbstractInfo
             case static::FEATURE_MULTIPLELAYERS:
                 throw new NotSupportedException('GD does not support layer sets');
             case static::FEATURE_CUSTOMRESOLUTION:
-                throw new NotSupportedException('GD does not support setting custom resolutions');
+                if (!function_exists('imageresolution')) {
+                    throw new NotSupportedException('GD driver for PHP older than 7.2 does not support setting custom resolutions');
+                }
+                break;
             case static::FEATURE_EXPORTWITHCUSTOMRESOLUTION:
-                throw new NotSupportedException('GD driver does not support exporting images with custom resolutions');
+                if (!function_exists('imageresolution')) {
+                    throw new NotSupportedException('GD driver for PHP older than 7.2 does not support exporting images with custom resolutions');
+                }
+                break;
             case static::FEATURE_DRAWFILLEDCHORDSCORRECTLY:
                 throw new NotSupportedException('The GD Drawer can NOT draw correctly filled chords');
             case static::FEATURE_DRAWUNFILLEDCIRCLESWITHTICHKESSCORRECTLY:
