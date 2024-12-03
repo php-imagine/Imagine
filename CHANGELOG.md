@@ -1,7 +1,9 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
-
+### 1.5.0 (2024-12-03)
+- Minimum supported PHP version raised from 5.5 to 7.1 (#865, @alexander-schranz)
+- Fix PHP 8.4 deprecation warnings (#865, @alexander-schranz)
+- The GD driver now supports resolution for PHP >= 7.2 (#813, #866, @gutocf, @mlocati)
 
 ### 1.4.0 (2024-11-10)
 - If a file couldn't be found, we now throw a NotFoundException exception (#853, @playmono)
