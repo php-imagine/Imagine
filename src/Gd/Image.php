@@ -750,13 +750,16 @@ final class Image extends AbstractImage implements InfoProvider
         if (isset($options['resolution-units']) && isset($options['resolution-x']) && function_exists('imageresolution')) {
             $resolutionX = $options['resolution-x'];
             $resolutionY = isset($options['resolution-y']) ? $options['resolution-y'] : $resolutionX;
-
-            if ($options['resolution-units'] === ImageInterface::RESOLUTION_PIXELSPERCENTIMETER) {
-                $resolutionX *= ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER;
-                $resolutionY *= ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER;
+            switch ($options['resolution-units']) {
+                case ImageInterface::RESOLUTION_PIXELSPERCENTIMETER:
+                    imageresolution($this->resource, $resolutionX * ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER, $resolutionY * ImageInterface::RESOLUTION_PPC_TO_PPI_MULTIPLIER);
+                    break;
+                case ImageInterface::RESOLUTION_PIXELSPERINCH:
+                    imageresolution($this->resource, $resolutionX, $resolutionY);
+                    break;
+                default:
+                    throw new RuntimeException('Unsupported image unit format');
             }
-
-            imageresolution($this->resource, $resolutionX, $resolutionY);
         }
 
         return $result;
