@@ -952,10 +952,14 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
 
     public function provideVariousSources()
     {
-        return array(
-            array(IMAGINE_TEST_FIXTURESFOLDER . '/example.svg'),
+        $result = array(
             array(IMAGINE_TEST_FIXTURESFOLDER . '/100-percent-black.png'),
         );
+        if ($this->getImagine() instanceof \Imagine\Imagick\Imagine) {
+            $result[] = array(IMAGINE_TEST_FIXTURESFOLDER . '/example.svg');
+        }
+
+        return $result;
     }
 
     public function testFillAlphaPrecision()

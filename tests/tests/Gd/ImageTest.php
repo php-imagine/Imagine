@@ -48,6 +48,12 @@ class ImageTest extends AbstractImageTest
      */
     protected function getImageResolution(ImageInterface $image)
     {
+        $resolutions = imageresolution($image->getGdResource());
+
+        return array(
+            'x' => $resolutions[0],
+            'y' => $resolutions[1],
+        );
     }
 
     /**
