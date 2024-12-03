@@ -85,20 +85,12 @@ class LayersTest extends AbstractLayersTest
 
     public function testWebpFormatIsAllowedAsAnimatedFormat()
     {
-        $palette = new RGB();
-        $resource = $this->getMockBuilder('\Imagick')->getMock();
-
-        $resource->expects($this->atLeastOnce())
-            ->method('getNumberImages')
-            ->will($this->returnValue(42));
-
-        $resource->expects($this->atLeastOnce())
-            ->method('getImage')
-            ->will($this->returnValue($resource));
-
-        $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
-
-        $layers->animate('webp', 200, 0);
+        $image = $this->getImagine()->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima3.gif');
+        $originalDelayInTicks = $image->layers()->get(0)->getImagick()->getImageDelay();
+        $image->layers()->animate('webp', (int) (1000 + $originalDelayInTicks * 1000 / 20), 0);
+        $this->assertSame('webp', $image->getImagick()->getFormat());
+        $newDelayInTicks = $image->layers()->get(0)->getImagick()->getImageDelay();
+        $this->assertNotEquals($originalDelayInTicks, $newDelayInTicks);
     }
 
     public function testGetLayer()
