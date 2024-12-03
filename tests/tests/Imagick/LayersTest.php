@@ -92,6 +92,10 @@ class LayersTest extends AbstractLayersTest
             ->method('getNumberImages')
             ->will($this->returnValue(42));
 
+        $resource->expects($this->atLeastOnce())
+            ->method('getImage')
+            ->will($this->returnValue($resource));
+
         $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
 
         $layers->animate('webp', 200, 0);
