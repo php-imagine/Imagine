@@ -92,8 +92,8 @@ abstract class AbstractInfo implements Info
      */
     public function checkVersionIsSupported()
     {
-        if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50500) {
-            throw new NotSupportedException('Imagine requires PHP 5.5 or later');
+        if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 70100) {
+            throw new NotSupportedException('Imagine requires PHP 7.1 or later');
         }
     }
 
