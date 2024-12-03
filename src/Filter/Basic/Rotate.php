@@ -36,7 +36,7 @@ class Rotate implements FilterInterface
      * @param int $angle
      * @param \Imagine\Image\Palette\Color\ColorInterface $background
      */
-    public function __construct($angle, ColorInterface $background = null)
+    public function __construct($angle, ?ColorInterface $background = null)
     {
         $this->angle = $angle;
         $this->background = $background;

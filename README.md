@@ -11,7 +11,12 @@ libraries.
 
 The Imagine library has the following requirements:
 
- - PHP 5.5+
+ - PHP 7.1+
+
+Older version of the library support also older PHP Version:
+
+ - PHP 5.5 - 7.0 use version ^1.3
+ - PHP 5.3 - 5.4 use version ^1.2
 
 Depending on the chosen Image implementation, you may need one of the following PHP extensions:
 

@@ -37,7 +37,7 @@ abstract class ImagineTestCaseBase extends \PHPUnit\Framework\TestCase
      * @param \Imagine\Image\ImagineInterface|null $imagine
      * @param int $buckets
      */
-    public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, ImagineInterface $imagine = null, $buckets = 4)
+    public static function assertImageEquals($expected, $actual, $message = '', $delta = 0.1, ?ImagineInterface $imagine = null, $buckets = 4)
     {
         $constraint = new IsImageEqual($expected, $delta, $imagine, $buckets);
 
