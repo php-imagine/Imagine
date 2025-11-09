@@ -1,0 +1,84 @@
+{
+  "project": "STOX Identity Icons",
+  "version": "2.0",
+  "intent": "Generate ultra-premium dual social media identity badge for LINE and Instagram",
+  "output": {
+    "format": "PNG",
+    "background": "transparent",
+    "resolution": "16K UHD",
+    "aspect_ratio": "16:9",
+    "color_profile": "sRGB",
+    "export_ready": true
+  },
+  "layout": {
+    "type": "horizontal",
+    "alignment": "centered",
+    "spacing": "equal-weight"
+  },
+  "elements": [
+    {
+      "platform": "LINE",
+      "icon": {
+        "style": "official",
+        "color": "#00C300",
+        "position": "left"
+      },
+      "text": {
+        "content": "stong009",
+        "font": "Grandover",
+        "style": {
+          "texture": "VVS diamonds",
+          "outline": "polished gold",
+          "depth": "4D embossed",
+          "lighting": "cinematic",
+          "shadow": "soft ambient"
+        },
+        "constraints": {
+          "preserve_spelling": true,
+          "regex": "^stong009$"
+        }
+      }
+    },
+    {
+      "platform": "Instagram",
+      "icon": {
+        "style": "official",
+        "gradient": ["#833AB4", "#FD1D1D", "#FCAF45"],
+        "position": "left"
+      },
+      "text": {
+        "content": "stoxofficial",
+        "font": "Grandover",
+        "style": {
+          "texture": "VVS diamonds",
+          "outline": "polished gold",
+          "depth": "4D embossed",
+          "lighting": "cinematic",
+          "shadow": "soft ambient"
+        },
+        "constraints": {
+          "preserve_spelling": true,
+          "regex": "^stoxofficial$"
+        }
+      }
+    }
+  ],
+  "styling": {
+    "gemstone_behavior": "light-reactive, sparkle on edge facets",
+    "gold_behavior": "beveled, reflective, warm tone",
+    "background_behavior": "fully transparent, no bleed",
+    "composition_balance": "icon-to-text ratio 1:1.2"
+  },
+  "usage_context": [
+    "social media branding",
+    "luxury signage",
+    "apparel printing",
+    "website header",
+    "multi-platform brand deployment"
+  ],
+  "metadata": {
+    "author": "UDS",
+    "branding_tags": ["STOX", "TNOX", "Luxury", "Diamond", "Social Identity"],
+    "version_notes": "Includes regex constraints and cinematic lighting for gemstone realism"
+  }
+}
