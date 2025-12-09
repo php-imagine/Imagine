@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
+
 ### 1.5.1 (2025-12-09)
 - Don't call imagedestroy on PHP 8.5+ (#873, @mlocati)
 
