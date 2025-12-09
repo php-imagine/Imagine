@@ -181,7 +181,9 @@ class Imagine extends AbstractImagine implements InfoProvider
 
                 imagecopy($truecolor, $resource, 0, 0, 0, 0, $width, $height);
 
-                imagedestroy($resource);
+                if (PHP_VERSION_ID < 80500) {
+                    imagedestroy($resource);
+                }
                 $resource = $truecolor;
             }
         }

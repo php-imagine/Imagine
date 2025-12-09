@@ -71,7 +71,7 @@ final class Image extends AbstractImage implements InfoProvider
     {
         if ($this->resource) {
             if (is_resource($this->resource) && get_resource_type($this->resource) === 'gd' || $this->resource instanceof \GdImage) {
-                imagedestroy($this->resource);
+                self::destroyImage($this->resource);
             }
             $this->resource = null;
         }
@@ -88,7 +88,7 @@ final class Image extends AbstractImage implements InfoProvider
         $size = $this->getSize();
         $copy = $this->createImage($size, 'copy');
         if (imagecopy($copy, $this->resource, 0, 0, 0, 0, $size->getWidth(), $size->getHeight()) === false) {
-            imagedestroy($copy);
+            self::destroyImage($copy);
             throw new RuntimeException('Image copy operation failed');
         }
         $this->resource = $copy;
@@ -146,11 +146,11 @@ final class Image extends AbstractImage implements InfoProvider
         $dest = $this->createImage($size, 'crop');
 
         if (imagecopy($dest, $this->resource, 0, 0, $start->getX(), $start->getY(), $width, $height) === false) {
-            imagedestroy($dest);
+            self::destroyImage($dest);
             throw new RuntimeException('Image crop operation failed');
         }
 
-        imagedestroy($this->resource);
+        self::destroyImage($this->resource);
 
         $this->resource = $dest;
 
@@ -223,11 +223,11 @@ final class Image extends AbstractImage implements InfoProvider
         imagealphablending($dest, false);
 
         if ($success === false) {
-            imagedestroy($dest);
+            self::destroyImage($dest);
             throw new RuntimeException('Image resize operation failed');
         }
 
-        imagedestroy($this->resource);
+        self::destroyImage($this->resource);
 
         $this->resource = $dest;
 
@@ -251,7 +251,7 @@ final class Image extends AbstractImage implements InfoProvider
             throw new RuntimeException('Image rotate operation failed');
         }
 
-        imagedestroy($this->resource);
+        self::destroyImage($this->resource);
         $this->resource = $resource;
 
         return $this;
@@ -360,12 +360,12 @@ final class Image extends AbstractImage implements InfoProvider
 
             for ($i = 0; $i < $width; $i++) {
                 if (imagecopy($dest, $this->resource, $i, 0, ($width - 1) - $i, 0, 1, $height) === false) {
-                    imagedestroy($dest);
+                    self::destroyImage($dest);
                     throw new RuntimeException('Horizontal flip operation failed');
                 }
             }
 
-            imagedestroy($this->resource);
+            self::destroyImage($this->resource);
 
             $this->resource = $dest;
         }
@@ -390,12 +390,12 @@ final class Image extends AbstractImage implements InfoProvider
 
             for ($i = 0; $i < $height; $i++) {
                 if (imagecopy($dest, $this->resource, 0, $i, 0, ($height - 1) - $i, $width, 1) === false) {
-                    imagedestroy($dest);
+                    self::destroyImage($dest);
                     throw new RuntimeException('Vertical flip operation failed');
                 }
             }
 
-            imagedestroy($this->resource);
+            self::destroyImage($this->resource);
 
             $this->resource = $dest;
         }
@@ -821,5 +821,17 @@ final class Image extends AbstractImage implements InfoProvider
         }
 
         return $index;
+    }
+
+    /**
+     * @param resource|\GdImage $resource
+     *
+     * @return void
+     */
+    private static function destroyImage($resource)
+    {
+        if (PHP_VERSION_ID < 80500) {
+            imagedestroy($resource);
+        }
     }
 }
