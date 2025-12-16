@@ -292,6 +292,7 @@ final class Image extends AbstractImage implements InfoProvider
                 $this->imagick = $this->imagick->deconstructImages();
             } else {
                 $this->imagick->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
+                $this->imagick->setImagePage(0, 0, 0, 0);
             }
         } catch (\ImagickException $e) {
             throw new RuntimeException('Resize operation failed', $e->getCode(), $e);
