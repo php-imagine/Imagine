@@ -236,11 +236,17 @@ class Loader implements LoaderInterface
                 $errorMessage = 'curl_exec() failed.';
             }
             $errorCode = curl_errno($curl);
-            curl_close($curl);
+            if (PHP_VERSION_ID < 80000) {
+                curl_close($curl);
+            }
+
             throw new RuntimeException($errorMessage, $errorCode);
         }
         $responseInfo = curl_getinfo($curl);
-        curl_close($curl);
+        if (PHP_VERSION_ID < 80000) {
+            curl_close($curl);
+        }
+
         if ($responseInfo['http_code'] == 404) {
             throw new NotFoundException(sprintf('File %s does not exist.', $this->path));
         }
