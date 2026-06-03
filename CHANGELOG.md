@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ### NEXT (YYYY-MM-DD)
+- Fix the Imagick driver inverting the alpha channel in `effects()->negative()` (an opaque image became fully transparent); it now excludes the alpha channel, matching the GD driver
 
 ### 1.5.2 (2026-01-09)
 - Do not call curl_close on PHP 8.0+ (#875, @dmaicher)
