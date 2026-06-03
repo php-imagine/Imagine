@@ -1082,6 +1082,49 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
         $this->assertColorSimilar($expectedColor, $finalColor, '', 1.74);
     }
 
+    /**
+     * Pasting an image that has transparent areas with alpha < 100 must keep
+     * those areas transparent: the opacity has to scale the existing per-pixel
+     * alpha, not overwrite it. Regression test for the Imagick driver, where
+     * setImageAlpha() used to flatten the alpha of every pixel and paint a
+     * semi-opaque "black box" over the transparent surroundings.
+     */
+    public function testPasteWithAlphaPreservesTransparency()
+    {
+        try {
+            $this->getDriverInfo()->requireFeature(Info::FEATURE_TRANSPARENCY);
+        } catch (NotSupportedException $x) {
+            $this->markTestSkipped($x->getMessage());
+        }
+        $palette = new RGB();
+        $imagine = $this->getImagine();
+
+        // Destination: opaque blue.
+        $destination = $imagine->create(new Box(20, 20), $palette->color(array(0, 0, 255)));
+
+        // Source: a fully-transparent canvas with an opaque red square in the
+        // middle, so the corners exercise the transparent-area code path.
+        $source = $imagine->create(new Box(10, 10), $palette->color(array(255, 0, 0), 0));
+        $source->draw()->rectangle(new Point(3, 3), new Point(6, 6), $palette->color(array(255, 0, 0)), true);
+
+        try {
+            $destination->paste($source, new Point(0, 0), 50);
+        } catch (NotSupportedException $x) {
+            // e.g. Gmagick, which does not support pasting with alpha.
+            $this->markTestSkipped($x->getMessage());
+        }
+
+        // The transparent corner must leave the blue destination untouched
+        // (the bug turned it into a ~50% black overlay, e.g. #000080).
+        $corner = $destination->getColorAt(new Point(1, 1));
+        $this->assertColorSimilar($palette->color(array(0, 0, 255)), $corner, 'transparent area was contaminated', 1.74);
+        $this->assertSame(100, $corner->getAlpha());
+
+        // The opaque centre is still blended over the destination (~50% red).
+        $centre = $destination->getColorAt(new Point(4, 4));
+        $this->assertColorSimilar($palette->color(array(128, 0, 128)), $centre, 'opaque area was not blended', 2);
+    }
+
     public function testPasteOutOfBoundaries()
     {
         $imagine = $this->getImagine();
