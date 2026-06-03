@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### NEXT (YYYY-MM-DD)
+
 ### 1.5.3 (2026-06-03)
 - Fix the Imagick driver painting a "black box" when pasting an image with transparent areas at an alpha lower than 100; the opacity now scales the existing per-pixel alpha instead of overwriting it (#878, @nlemoine)
 - Fix the Imagick driver inverting the alpha channel in `effects()->negative()` (an opaque image became fully transparent); it now excludes the alpha channel, matching the GD driver (#877, @nlemoine)
