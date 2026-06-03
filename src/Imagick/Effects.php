@@ -75,7 +75,10 @@ class Effects implements EffectsInterface, InfoProvider
     public function negative()
     {
         try {
-            $this->imagick->negateImage(false, \Imagick::CHANNEL_ALL);
+            // \Imagick::CHANNEL_ALL includes the alpha channel, so a plain negateImage()
+            // call would invert transparency along with the color (an opaque image would
+            // become fully transparent). Exclude the alpha channel to match the GD driver.
+            $this->imagick->negateImage(false, \Imagick::CHANNEL_ALL & ~\Imagick::CHANNEL_ALPHA);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to negate the image', $e->getCode(), $e);
         }
