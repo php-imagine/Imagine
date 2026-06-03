@@ -29,7 +29,6 @@ use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Image\ProfileInterface;
-use Imagine\Utils\ErrorHandling;
 
 /**
  * Image implementation using the Imagick PHP extension.
@@ -246,14 +245,14 @@ final class Image extends AbstractImage implements InfoProvider
             $pasteMe = $image->imagick;
         } elseif ($alpha > 0) {
             $pasteMe = $image->cloneImagick();
-            // setImageOpacity was replaced with setImageAlpha in php-imagick v3.4.3
-            if (method_exists($pasteMe, 'setImageAlpha')) {
-                $pasteMe->setImageAlpha($alpha / 100);
-            } else {
-                ErrorHandling::ignoring(E_DEPRECATED, function () use ($pasteMe, $alpha) {
-                    $pasteMe->setImageOpacity($alpha / 100);
-                });
-            }
+            // Scale the existing per-pixel alpha by the opacity factor instead of
+            // overwriting it. setImageAlpha()/setImageOpacity() set every pixel's
+            // alpha to the same value, so transparent areas of $image become a
+            // semi-opaque rectangle - a "black box" painted over the destination.
+            // Multiplying the alpha channel keeps fully-transparent pixels
+            // transparent while still fading the opaque ones.
+            $pasteMe->setImageAlphaChannel(\Imagick::ALPHACHANNEL_ACTIVATE);
+            $pasteMe->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $alpha / 100, \Imagick::CHANNEL_ALPHA);
         } else {
             $pasteMe = null;
         }
