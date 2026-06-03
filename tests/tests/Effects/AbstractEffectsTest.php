@@ -46,6 +46,27 @@ abstract class AbstractEffectsTest extends ImagineTestCase implements InfoProvid
         $this->assertEquals('#ffff00', (string) $image->getColorAt(new Point(10, 10)));
     }
 
+    public function testNegatePreservesAlpha()
+    {
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_NEGATEIMAGE)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        }
+        $palette = new RGB();
+        $imagine = $this->getImagine();
+
+        // Negating must invert the color channels only, not the alpha channel:
+        // a fully-opaque image must remain fully opaque (see the Imagick driver,
+        // where CHANNEL_ALL used to invert the alpha and turn the image transparent).
+        $image = $imagine->create(new Box(20, 20), $palette->color('ff0'));
+        $image->effects()
+            ->negative();
+
+        $pixel = $image->getColorAt(new Point(10, 10));
+
+        $this->assertEquals('#0000ff', (string) $pixel);
+        $this->assertSame(100, $pixel->getAlpha());
+    }
+
     public function testGamma()
     {
         $palette = new RGB();
