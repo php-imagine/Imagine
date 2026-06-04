@@ -126,6 +126,20 @@ final class Image extends AbstractImage implements InfoProvider
     }
 
     /**
+     * Replaces the underlying \Imagick instance, invalidating the cached
+     * layers (if any) since they wrap the replaced instance.
+     *
+     * @param \Imagick $imagick
+     */
+    private function setImagick(\Imagick $imagick)
+    {
+        if ($imagick !== $this->imagick) {
+            $this->imagick = $imagick;
+            $this->layers = null;
+        }
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @see \Imagine\Image\ManipulatorInterface::copy()
@@ -152,13 +166,13 @@ final class Image extends AbstractImage implements InfoProvider
         try {
             if ($this->layers()->count() > 1) {
                 // Crop each layer separately
-                $this->imagick = $this->imagick->coalesceImages();
+                $this->setImagick($this->imagick->coalesceImages());
                 foreach ($this->imagick as $frame) {
                     $frame->cropImage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
                     // Reset canvas for gif format
                     $frame->setImagePage(0, 0, 0, 0);
                 }
-                $this->imagick = $this->imagick->deconstructImages();
+                $this->setImagick($this->imagick->deconstructImages());
             } else {
                 $this->imagick->cropImage($size->getWidth(), $size->getHeight(), $start->getX(), $start->getY());
                 // Reset canvas for gif format
@@ -284,11 +298,11 @@ final class Image extends AbstractImage implements InfoProvider
     {
         try {
             if ($this->layers()->count() > 1) {
-                $this->imagick = $this->imagick->coalesceImages();
+                $this->setImagick($this->imagick->coalesceImages());
                 foreach ($this->imagick as $frame) {
                     $frame->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
                 }
-                $this->imagick = $this->imagick->deconstructImages();
+                $this->setImagick($this->imagick->deconstructImages());
             } else {
                 $this->imagick->resizeImage($size->getWidth(), $size->getHeight(), $this->getFilter($filter), 1);
             }
@@ -425,7 +439,7 @@ final class Image extends AbstractImage implements InfoProvider
         } else {
             $this->layers()->merge();
         }
-        $this->imagick = $this->applyImageOptions($this->imagick, $options, $path);
+        $this->setImagick($this->applyImageOptions($this->imagick, $options, $path));
 
         // flatten only if image has multiple layers
         if ((!isset($options['flatten']) || $options['flatten'] === true) && $this->layers()->count() > 1) {
@@ -739,9 +753,9 @@ final class Image extends AbstractImage implements InfoProvider
         // @see https://github.com/mkoppanen/imagick/issues/45
         try {
             if (method_exists($this->imagick, 'mergeImageLayers') && defined('Imagick::LAYERMETHOD_UNDEFINED')) {
-                $this->imagick = $this->imagick->mergeImageLayers(\Imagick::LAYERMETHOD_UNDEFINED);
+                $this->setImagick($this->imagick->mergeImageLayers(\Imagick::LAYERMETHOD_UNDEFINED));
             } elseif (method_exists($this->imagick, 'flattenImages')) {
-                $this->imagick = $this->imagick->flattenImages();
+                $this->setImagick($this->imagick->flattenImages());
             }
         } catch (\ImagickException $e) {
             throw new RuntimeException('Flatten operation failed', $e->getCode(), $e);
