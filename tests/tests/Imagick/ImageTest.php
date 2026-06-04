@@ -143,6 +143,49 @@ class ImageTest extends AbstractImageTest
         );
     }
 
+    public function testLayersReflectResizedFramesAfterResize()
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima.gif');
+        $image->resize(new Box(59, 75));
+        $layers = $image->layers();
+        $this->assertCount(3, $layers);
+        $layers->coalesce();
+        foreach ($layers as $index => $frame) {
+            $this->assertEquals(new Box(59, 75), $frame->getSize(), sprintf('Frame %d should have the resized size', $index));
+        }
+    }
+
+    public function testLayersReflectCroppedFramesAfterCrop()
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima.gif');
+        // Crop inside the region where the animation frames actually differ,
+        // so that deconstructImages() keeps all the frames
+        $image->crop(new Point(110, 70), new Box(50, 40));
+        $layers = $image->layers();
+        $this->assertCount(3, $layers);
+        $layers->coalesce();
+        foreach ($layers as $index => $frame) {
+            $this->assertEquals(new Box(50, 40), $frame->getSize(), sprintf('Frame %d should have the cropped size', $index));
+        }
+    }
+
+    public function testAnimatedDelayAndLoopsAreAppliedAfterResize()
+    {
+        $imagine = $this->getImagine();
+        $image = $imagine->open(IMAGINE_TEST_FIXTURESFOLDER . '/anima.gif');
+        $image->resize(new Box(59, 75));
+        $filename = $this->getTemporaryFilename('.gif');
+        $image->save($filename, array('animated' => true, 'animated.delay' => 500, 'animated.loops' => 3));
+        $imagick = new \Imagick($filename);
+        $delay = $imagick->getImageDelay();
+        $iterations = $imagick->getImageIterations();
+        $imagick->clear();
+        $this->assertSame(50, $delay);
+        $this->assertSame(3, $iterations);
+    }
+
     public function testOptimize()
     {
         $imagine = $this->getImagine();
