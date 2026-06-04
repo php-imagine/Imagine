@@ -1,6 +1,7 @@
 # CHANGELOG
 
-### NEXT (YYYY-MM-DD)
+### 1.5.4 (2026-06-04)
+- Fix imagick stale layers (#879, @nlemoine)
 - Fix the Imagick driver deactivating the alpha channel in `effects()->grayscale()` (transparent pixels were encoded as opaque gray); it now uses the alpha-preserving grayscale image type, like `usePalette()` (#880, @nlemoine)
 
 ### 1.5.3 (2026-06-03)
