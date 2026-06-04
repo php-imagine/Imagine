@@ -13,6 +13,7 @@ namespace Imagine\Test\Effects;
 
 use Imagine\Driver\Info;
 use Imagine\Driver\InfoProvider;
+use Imagine\Exception\NotSupportedException;
 use Imagine\Image\Box;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
@@ -115,6 +116,35 @@ abstract class AbstractEffectsTest extends ImagineTestCase implements InfoProvid
         $this->assertEquals($greyR, $greyG);
         $this->assertEquals($greyR, $greyB);
         $this->assertEquals($greyG, $greyB);
+    }
+
+    public function testGrayscalePreservesTransparency()
+    {
+        if (!$this->getDriverInfo()->hasFeature(Info::FEATURE_GRAYSCALEEFFECT)) {
+            $this->isGoingToThrowException('Imagine\Exception\NotSupportedException');
+        } else {
+            try {
+                $this->getDriverInfo()->requireFeature(Info::FEATURE_TRANSPARENCY);
+            } catch (NotSupportedException $x) {
+                $this->markTestSkipped($x->getMessage());
+            }
+        }
+        $palette = new RGB();
+        $imagine = $this->getImagine();
+
+        // Grayscaling must desaturate the color channels without dropping the
+        // alpha channel (on the Imagick driver, IMGTYPE_GRAYSCALE used to
+        // deactivate it, so every transparent pixel was encoded as opaque gray).
+        // The image is saved and reloaded because the defect only shows at
+        // encode time: in-memory pixel reads still expose the stored alpha.
+        $image = $imagine->create(new Box(20, 20), $palette->color('f00', 0));
+        $image->effects()
+            ->grayscale();
+
+        $reloaded = $imagine->load($image->get('png'));
+        $pixel = $reloaded->getColorAt(new Point(10, 10));
+
+        $this->assertSame(0, $pixel->getAlpha());
     }
 
     public function brightnessProvider()
