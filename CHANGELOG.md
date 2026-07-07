@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- Fix the GD driver washing a transparent destination into an opaque block when pasting an image at an alpha lower than 100; the opacity now scales the overlay's per-pixel alpha and composites alpha-aware instead of routing through `imagecopymerge()` (#XXX, @nlemoine)
+
 ### 1.5.4 (2026-06-04)
 - Fix imagick stale layers (#879, @nlemoine)
 - Fix the Imagick driver deactivating the alpha channel in `effects()->grayscale()` (transparent pixels were encoded as opaque gray); it now uses the alpha-preserving grayscale image type, like `usePalette()` (#880, @nlemoine)

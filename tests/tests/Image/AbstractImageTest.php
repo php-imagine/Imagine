@@ -1125,6 +1125,52 @@ abstract class AbstractImageTest extends ImagineTestCase implements InfoProvider
         $this->assertColorSimilar($palette->color(array(128, 0, 128)), $centre, 'opaque area was not blended', 2);
     }
 
+    /**
+     * Companion to testPasteWithAlphaPreservesTransparency for the case where
+     * the *destination* has transparency. Pasting an overlay at an alpha lower
+     * than 100 over a transparent base must keep the base transparent: opacity
+     * has to scale the overlay's per-pixel alpha and composite alpha-aware. The
+     * GD driver used to route this through imagecopymerge(), which ignores the
+     * source alpha and forces every touched destination pixel fully opaque,
+     * washing a transparent base into an opaque block.
+     */
+    public function testPasteWithAlphaPreservesTransparentBase()
+    {
+        try {
+            $this->getDriverInfo()->requireFeature(Info::FEATURE_TRANSPARENCY);
+        } catch (NotSupportedException $x) {
+            $this->markTestSkipped($x->getMessage());
+        }
+        $palette = new RGB();
+        $imagine = $this->getImagine();
+
+        // Destination: a fully-transparent canvas.
+        $destination = $imagine->create(new Box(20, 20), $palette->color(array(255, 255, 255), 0));
+
+        // Overlay: an opaque green square pasted over the top-left corner.
+        $overlay = $imagine->create(new Box(10, 10), $palette->color(array(0, 128, 0)));
+
+        try {
+            $destination->paste($overlay, new Point(0, 0), 40);
+        } catch (NotSupportedException $x) {
+            // e.g. Gmagick, which does not support pasting with alpha.
+            $this->markTestSkipped($x->getMessage());
+        }
+
+        // The area the overlay does not cover stays fully transparent.
+        $gap = $destination->getColorAt(new Point(15, 15));
+        $this->assertSame(0, $gap->getAlpha(), 'area outside the overlay must stay transparent');
+
+        // Under the overlay the base takes the overlay colour at ~40% opacity,
+        // NOT a fully-opaque block. The bug produced alpha=100 here (and washed
+        // the colour towards the base's stored RGB).
+        $covered = $destination->getColorAt(new Point(5, 5));
+        $this->assertColorSimilar($palette->color(array(0, 128, 0)), $covered, 'overlay colour was not preserved under the paste', 2, false);
+        $coveredAlpha = $covered->getAlpha();
+        $this->assertLessThan(100, $coveredAlpha, 'the transparent base was forced fully opaque (imagecopymerge ignores the source alpha)');
+        $this->assertTrue(abs($coveredAlpha - 40) <= 2, 'overlay opacity should scale the alpha to ~40%, got ' . $coveredAlpha);
+    }
+
     public function testPasteOutOfBoundaries()
     {
         $imagine = $this->getImagine();
