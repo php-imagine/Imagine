@@ -188,7 +188,29 @@ final class Image extends AbstractImage implements InfoProvider
                 throw new RuntimeException('Image paste operation failed');
             }
         } elseif ($alpha > 0) {
-            if (imagecopymerge(/*dst_im*/$this->resource, /*src_im*/ $image->resource, /*dst_x*/ $start->getX(), /*dst_y*/ $start->getY(), /*src_x*/ 0, /*src_y*/ 0, /*src_w*/ $size->getWidth(), /*src_h*/ $size->getHeight(), /*pct*/ $alpha) === false) {
+            // Fade the overlay's own alpha channel by the opacity factor, then
+            // paste it at full opacity through the alpha-aware imagecopy() path.
+            // Routing partial alpha through imagecopymerge() instead ignores the
+            // source's per-pixel alpha and resolves every touched destination
+            // pixel as fully opaque, which washes a transparent base into an
+            // opaque block. Mirrors Imagick\Image::paste().
+            $overlay = clone $image;
+
+            imagealphablending($overlay->resource, false);
+            for ($x = 0, $width = $size->getWidth(); $x < $width; $x++) {
+                for ($y = 0, $height = $size->getHeight(); $y < $height; $y++) {
+                    $rgba = imagecolorat($overlay->resource, $x, $y);
+                    $currentAlpha = ($rgba >> 24) & 0x7F;
+                    $fadedAlpha = 127 - (int) round((127 - $currentAlpha) * $alpha / 100);
+                    imagesetpixel($overlay->resource, $x, $y, ($rgba & 0xFFFFFF) | ($fadedAlpha << 24));
+                }
+            }
+
+            imagealphablending($this->resource, true);
+            $success = imagecopy($this->resource, $overlay->resource, $start->getX(), $start->getY(), 0, 0, $size->getWidth(), $size->getHeight());
+            imagealphablending($this->resource, false);
+
+            if ($success === false) {
                 throw new RuntimeException('Image paste operation failed');
             }
         }
